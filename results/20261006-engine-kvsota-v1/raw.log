@@ -1,0 +1,780 @@
+BEGIN_KVSOTA run=1 paragraphs=320 context=32768
+CASE placement=same mode=copy children=8
+PARENT exit=0 text=c646470e58f73411 prefix_tokens=16321 prefix_ms=19744.7 publish_ms=535.79 state_bytes=936173269 model_ms=581.8 context_ms=55.5 suffix_ms=61.4 generation_ms=11910.8 generated=64 generation_tps=5.373 total_ms=47955.7
+CHILD index=0 own_instance=1 exit=0 text=d42c4c07975a6446 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1233.2 context_ms=88.9 state_ms=480.83 prefix_ms=0.0 suffix_ms=650.0 first_token_ms=2769.0 generation_ms=23478.4 generated=64 generation_tps=2.726
+CHILD index=1 own_instance=1 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1067.2 context_ms=66.6 state_ms=250.51 prefix_ms=0.0 suffix_ms=330.4 first_token_ms=1980.8 generation_ms=23185.8 generated=64 generation_tps=2.760
+CHILD index=2 own_instance=1 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1289.3 context_ms=121.4 state_ms=387.83 prefix_ms=0.0 suffix_ms=650.3 first_token_ms=2769.4 generation_ms=23494.5 generated=64 generation_tps=2.724
+CHILD index=3 own_instance=1 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1355.2 context_ms=92.8 state_ms=363.43 prefix_ms=0.0 suffix_ms=633.8 first_token_ms=2753.2 generation_ms=23498.9 generated=64 generation_tps=2.724
+CHILD index=4 own_instance=1 exit=0 text=3e0fd62f5aa50665 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1190.3 context_ms=104.3 state_ms=521.02 prefix_ms=0.0 suffix_ms=620.0 first_token_ms=2738.5 generation_ms=23495.9 generated=64 generation_tps=2.724
+CHILD index=5 own_instance=1 exit=0 text=3e0fd62f5aa50665 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1279.6 context_ms=124.0 state_ms=418.83 prefix_ms=0.0 suffix_ms=640.3 first_token_ms=2758.7 generation_ms=23495.2 generated=64 generation_tps=2.724
+CHILD index=6 own_instance=1 exit=0 text=4a8f18b77dbe0332 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1300.6 context_ms=120.5 state_ms=386.62 prefix_ms=0.0 suffix_ms=619.7 first_token_ms=2738.9 generation_ms=23512.0 generated=64 generation_tps=2.722
+CHILD index=7 own_instance=1 exit=0 text=4a8f18b77dbe0332 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1202.7 context_ms=86.1 state_ms=510.83 prefix_ms=0.0 suffix_ms=605.9 first_token_ms=2724.3 generation_ms=23479.7 generated=64 generation_tps=2.726
+MEMORY mem_available_drop_mib=20345
+END_CASE failed=0 timed_out=0
+CASE placement=same mode=demand children=8
+PARENT exit=0 text=c646470e58f73411 prefix_tokens=16321 prefix_ms=19744.4 publish_ms=557.93 state_bytes=936173269 model_ms=603.3 context_ms=32.6 suffix_ms=61.7 generation_ms=10921.5 generated=64 generation_tps=5.860 total_ms=47779.0
+CHILD index=0 own_instance=1 exit=0 text=d42c4c07975a6446 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1268.8 context_ms=36.4 state_ms=596.33 prefix_ms=0.0 suffix_ms=665.9 first_token_ms=2880.4 generation_ms=23335.0 generated=64 generation_tps=2.743
+CHILD index=1 own_instance=1 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1185.2 context_ms=34.2 state_ms=553.94 prefix_ms=0.0 suffix_ms=491.2 first_token_ms=2571.4 generation_ms=23406.4 generated=64 generation_tps=2.734
+CHILD index=2 own_instance=1 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1280.9 context_ms=49.6 state_ms=593.45 prefix_ms=0.0 suffix_ms=641.3 first_token_ms=2848.8 generation_ms=23361.1 generated=64 generation_tps=2.740
+CHILD index=3 own_instance=1 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1235.9 context_ms=44.6 state_ms=591.44 prefix_ms=0.0 suffix_ms=625.1 first_token_ms=2821.4 generation_ms=23360.4 generated=64 generation_tps=2.740
+CHILD index=4 own_instance=1 exit=0 text=3e0fd62f5aa50665 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1240.2 context_ms=48.5 state_ms=594.73 prefix_ms=0.0 suffix_ms=643.8 first_token_ms=2847.8 generation_ms=23355.7 generated=64 generation_tps=2.740
+CHILD index=5 own_instance=1 exit=0 text=3e0fd62f5aa50665 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1166.5 context_ms=34.1 state_ms=272.92 prefix_ms=0.0 suffix_ms=273.4 first_token_ms=2054.7 generation_ms=23256.1 generated=64 generation_tps=2.752
+CHILD index=6 own_instance=1 exit=0 text=4a8f18b77dbe0332 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1222.7 context_ms=43.3 state_ms=572.15 prefix_ms=0.0 suffix_ms=617.2 first_token_ms=2772.2 generation_ms=23372.2 generated=64 generation_tps=2.738
+CHILD index=7 own_instance=1 exit=0 text=4a8f18b77dbe0332 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1239.1 context_ms=39.3 state_ms=551.37 prefix_ms=0.0 suffix_ms=575.0 first_token_ms=2710.8 generation_ms=23399.3 generated=64 generation_tps=2.735
+MEMORY mem_available_drop_mib=14200
+END_CASE failed=0 timed_out=0
+CASE placement=same mode=device children=8
+PARENT exit=0 text=c646470e58f73411 prefix_tokens=16321 prefix_ms=19750.0 publish_ms=41.35 state_bytes=261845 model_ms=586.1 context_ms=32.0 suffix_ms=61.7 generation_ms=9205.4 generated=64 generation_tps=6.952 total_ms=47090.5
+CHILD index=0 own_instance=1 exit=0 text=d42c4c07975a6446 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1192.9 context_ms=326.1 state_ms=59.76 prefix_ms=0.0 suffix_ms=246.9 first_token_ms=2115.9 generation_ms=22632.8 generated=64 generation_tps=2.828
+CHILD index=1 own_instance=1 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1298.5 context_ms=569.8 state_ms=358.66 prefix_ms=0.0 suffix_ms=659.7 first_token_ms=3204.3 generation_ms=22890.0 generated=64 generation_tps=2.796
+CHILD index=2 own_instance=1 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1224.4 context_ms=534.6 state_ms=193.88 prefix_ms=0.0 suffix_ms=464.3 first_token_ms=2740.2 generation_ms=23152.8 generated=64 generation_tps=2.764
+CHILD index=3 own_instance=1 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1277.4 context_ms=558.1 state_ms=326.54 prefix_ms=0.0 suffix_ms=662.6 first_token_ms=3145.4 generation_ms=22922.9 generated=64 generation_tps=2.792
+CHILD index=4 own_instance=1 exit=0 text=3e0fd62f5aa50665 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1207.8 context_ms=449.9 state_ms=200.78 prefix_ms=0.0 suffix_ms=354.0 first_token_ms=2517.3 generation_ms=23120.1 generated=64 generation_tps=2.768
+CHILD index=5 own_instance=1 exit=0 text=3e0fd62f5aa50665 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1253.6 context_ms=598.4 state_ms=334.44 prefix_ms=0.0 suffix_ms=669.1 first_token_ms=3172.5 generation_ms=22913.8 generated=64 generation_tps=2.793
+CHILD index=6 own_instance=1 exit=0 text=4a8f18b77dbe0332 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1231.5 context_ms=521.1 state_ms=191.21 prefix_ms=0.0 suffix_ms=428.0 first_token_ms=2673.9 generation_ms=23150.8 generated=64 generation_tps=2.764
+CHILD index=7 own_instance=1 exit=0 text=4a8f18b77dbe0332 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1286.9 context_ms=578.8 state_ms=347.51 prefix_ms=0.0 suffix_ms=667.4 first_token_ms=3190.0 generation_ms=22890.9 generated=64 generation_tps=2.796
+MEMORY mem_available_drop_mib=7802
+END_CASE failed=0 timed_out=0
+CASE placement=same mode=cow children=8
+PARENT exit=0 text=c646470e58f73411 prefix_tokens=16321 prefix_ms=19793.2 publish_ms=7.15 state_bytes=261845 model_ms=584.4 context_ms=33.7 suffix_ms=106.8 generation_ms=13417.2 generated=64 generation_tps=4.770 total_ms=47647.5
+CHILD index=0 own_instance=1 exit=0 text=d42c4c07975a6446 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1260.9 context_ms=38.6 state_ms=7.25 prefix_ms=0.0 suffix_ms=1286.0 first_token_ms=2915.2 generation_ms=23699.3 generated=64 generation_tps=2.701
+CHILD index=1 own_instance=1 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1205.6 context_ms=45.4 state_ms=7.66 prefix_ms=0.0 suffix_ms=1247.8 first_token_ms=2824.0 generation_ms=23770.9 generated=64 generation_tps=2.692
+CHILD index=2 own_instance=1 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1268.2 context_ms=37.6 state_ms=7.32 prefix_ms=0.0 suffix_ms=1248.0 first_token_ms=2864.8 generation_ms=23734.7 generated=64 generation_tps=2.696
+CHILD index=3 own_instance=1 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1209.8 context_ms=45.5 state_ms=7.40 prefix_ms=0.0 suffix_ms=1238.0 first_token_ms=2813.1 generation_ms=23757.8 generated=64 generation_tps=2.694
+CHILD index=4 own_instance=1 exit=0 text=3e0fd62f5aa50665 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1213.1 context_ms=39.8 state_ms=7.55 prefix_ms=0.0 suffix_ms=1214.5 first_token_ms=2778.6 generation_ms=23728.2 generated=64 generation_tps=2.697
+CHILD index=5 own_instance=1 exit=0 text=3e0fd62f5aa50665 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1250.8 context_ms=36.8 state_ms=7.59 prefix_ms=0.0 suffix_ms=1250.3 first_token_ms=2854.1 generation_ms=23743.1 generated=64 generation_tps=2.696
+CHILD index=6 own_instance=1 exit=0 text=4a8f18b77dbe0332 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1230.7 context_ms=39.0 state_ms=7.51 prefix_ms=0.0 suffix_ms=1212.2 first_token_ms=2810.7 generation_ms=23770.5 generated=64 generation_tps=2.692
+CHILD index=7 own_instance=1 exit=0 text=4a8f18b77dbe0332 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1185.4 context_ms=36.1 state_ms=7.44 prefix_ms=0.0 suffix_ms=734.3 first_token_ms=2240.5 generation_ms=23971.5 generated=64 generation_tps=2.670
+MEMORY mem_available_drop_mib=6904
+END_CASE failed=0 timed_out=0
+CASE placement=same mode=extent children=8
+PARENT exit=0 text=c646470e58f73411 prefix_tokens=16321 prefix_ms=19809.0 publish_ms=7.49 state_bytes=261845 model_ms=591.9 context_ms=33.6 suffix_ms=103.4 generation_ms=13516.1 generated=64 generation_tps=4.735 total_ms=46834.3
+CHILD index=0 own_instance=1 exit=0 text=d42c4c07975a6446 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1238.0 context_ms=49.7 state_ms=7.31 prefix_ms=0.0 suffix_ms=554.4 first_token_ms=2141.4 generation_ms=23551.3 generated=64 generation_tps=2.717
+CHILD index=1 own_instance=1 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1268.1 context_ms=43.7 state_ms=7.82 prefix_ms=0.0 suffix_ms=650.7 first_token_ms=2271.7 generation_ms=23525.6 generated=64 generation_tps=2.720
+CHILD index=2 own_instance=1 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1130.3 context_ms=35.3 state_ms=7.47 prefix_ms=0.0 suffix_ms=179.6 first_token_ms=1616.7 generation_ms=23616.5 generated=64 generation_tps=2.710
+CHILD index=3 own_instance=1 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1209.8 context_ms=51.6 state_ms=7.71 prefix_ms=0.0 suffix_ms=567.8 first_token_ms=2152.6 generation_ms=23593.4 generated=64 generation_tps=2.713
+CHILD index=4 own_instance=1 exit=0 text=3e0fd62f5aa50665 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1218.2 context_ms=56.1 state_ms=7.34 prefix_ms=0.0 suffix_ms=594.3 first_token_ms=2172.5 generation_ms=23557.6 generated=64 generation_tps=2.717
+CHILD index=5 own_instance=1 exit=0 text=3e0fd62f5aa50665 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1273.8 context_ms=38.0 state_ms=7.46 prefix_ms=0.0 suffix_ms=684.7 first_token_ms=2321.8 generation_ms=23480.7 generated=64 generation_tps=2.726
+CHILD index=6 own_instance=1 exit=0 text=4a8f18b77dbe0332 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1251.6 context_ms=37.6 state_ms=7.58 prefix_ms=0.0 suffix_ms=572.8 first_token_ms=2180.5 generation_ms=23575.0 generated=64 generation_tps=2.715
+CHILD index=7 own_instance=1 exit=0 text=4a8f18b77dbe0332 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1212.0 context_ms=36.7 state_ms=7.56 prefix_ms=0.0 suffix_ms=540.3 first_token_ms=2099.6 generation_ms=23589.5 generated=64 generation_tps=2.713
+MEMORY mem_available_drop_mib=6026
+END_CASE failed=0 timed_out=0
+CASE placement=cross mode=copy children=8
+PARENT exit=0 text=c646470e58f73411 prefix_tokens=16321 prefix_ms=19732.4 publish_ms=549.83 state_bytes=936173269 model_ms=586.0 context_ms=57.5 suffix_ms=61.4 generation_ms=6904.5 generated=64 generation_tps=9.269 total_ms=42327.0
+CHILD index=0 own_instance=1 exit=0 text=d42c4c07975a6446 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1245.0 context_ms=170.4 state_ms=402.29 prefix_ms=0.0 suffix_ms=377.7 first_token_ms=2491.9 generation_ms=13101.5 generated=64 generation_tps=4.885
+CHILD index=1 own_instance=0 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1169.2 context_ms=235.5 state_ms=409.00 prefix_ms=0.0 suffix_ms=472.8 first_token_ms=2588.9 generation_ms=18266.3 generated=64 generation_tps=3.504
+CHILD index=2 own_instance=1 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1245.6 context_ms=150.6 state_ms=401.52 prefix_ms=0.0 suffix_ms=414.8 first_token_ms=2529.3 generation_ms=13182.3 generated=64 generation_tps=4.855
+CHILD index=3 own_instance=0 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1164.1 context_ms=217.0 state_ms=425.28 prefix_ms=0.0 suffix_ms=442.9 first_token_ms=2559.0 generation_ms=18334.9 generated=64 generation_tps=3.491
+CHILD index=4 own_instance=1 exit=0 text=3e0fd62f5aa50665 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1221.8 context_ms=173.3 state_ms=399.89 prefix_ms=0.0 suffix_ms=415.3 first_token_ms=2527.4 generation_ms=13178.4 generated=64 generation_tps=4.856
+CHILD index=5 own_instance=0 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1148.2 context_ms=104.5 state_ms=267.46 prefix_ms=0.0 suffix_ms=183.0 first_token_ms=1986.1 generation_ms=18155.7 generated=64 generation_tps=3.525
+CHILD index=6 own_instance=1 exit=0 text=4a8f18b77dbe0332 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1220.2 context_ms=129.4 state_ms=452.37 prefix_ms=0.0 suffix_ms=405.2 first_token_ms=2516.7 generation_ms=13181.8 generated=64 generation_tps=4.855
+CHILD index=7 own_instance=0 exit=0 text=4a8f18b77dbe0332 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1167.8 context_ms=240.1 state_ms=402.68 prefix_ms=0.0 suffix_ms=467.7 first_token_ms=2584.0 generation_ms=18283.3 generated=64 generation_tps=3.500
+MEMORY mem_available_drop_mib=20255
+END_CASE failed=0 timed_out=0
+CASE placement=cross mode=demand children=8
+PARENT exit=0 text=c646470e58f73411 prefix_tokens=16321 prefix_ms=19750.3 publish_ms=549.62 state_bytes=936173269 model_ms=600.6 context_ms=32.4 suffix_ms=61.9 generation_ms=6909.9 generated=64 generation_tps=9.262 total_ms=42205.3
+CHILD index=0 own_instance=1 exit=0 text=d42c4c07975a6446 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1245.1 context_ms=36.9 state_ms=534.48 prefix_ms=0.0 suffix_ms=415.9 first_token_ms=2557.5 generation_ms=13142.2 generated=64 generation_tps=4.870
+CHILD index=1 own_instance=0 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1227.1 context_ms=35.9 state_ms=554.73 prefix_ms=0.0 suffix_ms=486.3 first_token_ms=2594.1 generation_ms=18194.6 generated=64 generation_tps=3.518
+CHILD index=2 own_instance=1 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1252.5 context_ms=40.3 state_ms=518.50 prefix_ms=0.0 suffix_ms=404.2 first_token_ms=2538.4 generation_ms=13145.3 generated=64 generation_tps=4.869
+CHILD index=3 own_instance=0 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1172.9 context_ms=38.7 state_ms=513.05 prefix_ms=0.0 suffix_ms=464.3 first_token_ms=2507.3 generation_ms=18269.1 generated=64 generation_tps=3.503
+CHILD index=4 own_instance=1 exit=0 text=3e0fd62f5aa50665 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1225.6 context_ms=38.9 state_ms=549.06 prefix_ms=0.0 suffix_ms=394.1 first_token_ms=2520.4 generation_ms=13115.7 generated=64 generation_tps=4.880
+CHILD index=5 own_instance=0 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1131.9 context_ms=32.9 state_ms=210.71 prefix_ms=0.0 suffix_ms=180.2 first_token_ms=1818.7 generation_ms=18195.1 generated=64 generation_tps=3.517
+CHILD index=6 own_instance=1 exit=0 text=4a8f18b77dbe0332 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1179.0 context_ms=35.8 state_ms=541.65 prefix_ms=0.0 suffix_ms=291.5 first_token_ms=2358.6 generation_ms=13246.1 generated=64 generation_tps=4.832
+CHILD index=7 own_instance=0 exit=0 text=4a8f18b77dbe0332 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1147.4 context_ms=33.2 state_ms=375.55 prefix_ms=0.0 suffix_ms=327.0 first_token_ms=2197.7 generation_ms=18464.2 generated=64 generation_tps=3.466
+MEMORY mem_available_drop_mib=13843
+END_CASE failed=0 timed_out=0
+CASE placement=cross mode=device children=8
+PARENT exit=0 text=c646470e58f73411 prefix_tokens=16321 prefix_ms=19751.1 publish_ms=32.21 state_bytes=261845 model_ms=588.8 context_ms=32.8 suffix_ms=61.8 generation_ms=5802.0 generated=64 generation_tps=11.031 total_ms=35356.0
+CHILD index=0 own_instance=1 exit=0 text=d42c4c07975a6446 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1280.7 context_ms=503.6 state_ms=175.74 prefix_ms=0.0 suffix_ms=395.7 first_token_ms=2659.2 generation_ms=11779.1 generated=64 generation_tps=5.433
+STDERR llama_init_from_model: failed to initialize the context: kv cache: cannot map a published allocation
+STDERR kv_fork: cannot create the context
+CHILD index=1 own_instance=0 exit=1 text=e3b0c44298fc1c14 
+CHILD index=2 own_instance=1 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1265.6 context_ms=500.4 state_ms=179.38 prefix_ms=0.0 suffix_ms=411.5 first_token_ms=2677.5 generation_ms=11770.7 generated=64 generation_tps=5.437
+STDERR llama_init_from_model: failed to initialize the context: kv cache: cannot map a published allocation
+STDERR kv_fork: cannot create the context
+CHILD index=3 own_instance=0 exit=1 text=e3b0c44298fc1c14 
+CHILD index=4 own_instance=1 exit=0 text=3e0fd62f5aa50665 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1149.2 context_ms=488.9 state_ms=61.22 prefix_ms=0.0 suffix_ms=218.9 first_token_ms=2200.6 generation_ms=11835.3 generated=64 generation_tps=5.408
+STDERR llama_init_from_model: failed to initialize the context: kv cache: cannot map a published allocation
+STDERR kv_fork: cannot create the context
+CHILD index=5 own_instance=0 exit=1 text=e3b0c44298fc1c14 
+CHILD index=6 own_instance=1 exit=0 text=4a8f18b77dbe0332 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1207.5 context_ms=535.5 state_ms=179.59 prefix_ms=0.0 suffix_ms=386.4 first_token_ms=2622.0 generation_ms=11787.8 generated=64 generation_tps=5.429
+STDERR llama_init_from_model: failed to initialize the context: kv cache: cannot map a published allocation
+STDERR kv_fork: cannot create the context
+CHILD index=7 own_instance=0 exit=1 text=e3b0c44298fc1c14 
+MEMORY mem_available_drop_mib=3991
+END_CASE failed=4 timed_out=0
+CASE placement=cross mode=cow children=8
+PARENT exit=0 text=c646470e58f73411 prefix_tokens=16321 prefix_ms=19822.9 publish_ms=9.00 state_bytes=261845 model_ms=590.6 context_ms=34.7 suffix_ms=109.8 generation_ms=8609.5 generated=64 generation_tps=7.434 total_ms=42474.5
+CHILD index=0 own_instance=1 exit=0 text=d42c4c07975a6446 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1170.8 context_ms=44.1 state_ms=7.41 prefix_ms=0.0 suffix_ms=570.8 first_token_ms=2094.7 generation_ms=13782.5 generated=64 generation_tps=4.644
+CHILD index=1 own_instance=0 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1158.0 context_ms=47.8 state_ms=7.44 prefix_ms=0.0 suffix_ms=683.7 first_token_ms=2206.3 generation_ms=19225.6 generated=64 generation_tps=3.329
+CHILD index=2 own_instance=1 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1257.6 context_ms=41.0 state_ms=7.39 prefix_ms=0.0 suffix_ms=800.4 first_token_ms=2408.8 generation_ms=13647.9 generated=64 generation_tps=4.689
+CHILD index=3 own_instance=0 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1166.5 context_ms=49.4 state_ms=7.43 prefix_ms=0.0 suffix_ms=749.7 first_token_ms=2275.1 generation_ms=19266.1 generated=64 generation_tps=3.322
+CHILD index=4 own_instance=1 exit=0 text=3e0fd62f5aa50665 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1250.7 context_ms=37.4 state_ms=7.30 prefix_ms=0.0 suffix_ms=786.5 first_token_ms=2389.5 generation_ms=13636.4 generated=64 generation_tps=4.693
+CHILD index=5 own_instance=0 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1194.9 context_ms=54.1 state_ms=7.50 prefix_ms=0.0 suffix_ms=759.2 first_token_ms=2302.2 generation_ms=19214.8 generated=64 generation_tps=3.331
+CHILD index=6 own_instance=1 exit=0 text=4a8f18b77dbe0332 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1249.6 context_ms=44.9 state_ms=7.51 prefix_ms=0.0 suffix_ms=802.7 first_token_ms=2417.3 generation_ms=13636.9 generated=64 generation_tps=4.693
+CHILD index=7 own_instance=0 exit=0 text=4a8f18b77dbe0332 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1189.6 context_ms=51.8 state_ms=7.33 prefix_ms=0.0 suffix_ms=792.2 first_token_ms=2321.6 generation_ms=19214.8 generated=64 generation_tps=3.331
+MEMORY mem_available_drop_mib=6788
+END_CASE failed=0 timed_out=0
+CASE placement=cross mode=extent children=8
+PARENT exit=0 text=c646470e58f73411 prefix_tokens=16321 prefix_ms=19764.0 publish_ms=6.96 state_bytes=261845 model_ms=587.1 context_ms=34.0 suffix_ms=97.2 generation_ms=8365.3 generated=64 generation_tps=7.651 total_ms=41829.1
+CHILD index=0 own_instance=1 exit=0 text=d42c4c07975a6446 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1272.5 context_ms=47.9 state_ms=7.48 prefix_ms=0.0 suffix_ms=393.8 first_token_ms=2021.3 generation_ms=13570.4 generated=64 generation_tps=4.716
+CHILD index=1 own_instance=0 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1165.8 context_ms=48.7 state_ms=7.47 prefix_ms=0.0 suffix_ms=402.8 first_token_ms=1925.5 generation_ms=18988.5 generated=64 generation_tps=3.370
+CHILD index=2 own_instance=1 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1251.1 context_ms=46.7 state_ms=7.72 prefix_ms=0.0 suffix_ms=394.9 first_token_ms=2013.1 generation_ms=13544.7 generated=64 generation_tps=4.725
+CHILD index=3 own_instance=0 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1155.8 context_ms=50.3 state_ms=7.43 prefix_ms=0.0 suffix_ms=405.1 first_token_ms=1930.7 generation_ms=18987.3 generated=64 generation_tps=3.371
+CHILD index=4 own_instance=1 exit=0 text=3e0fd62f5aa50665 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1246.6 context_ms=47.8 state_ms=7.58 prefix_ms=0.0 suffix_ms=396.3 first_token_ms=2018.1 generation_ms=13570.6 generated=64 generation_tps=4.716
+CHILD index=5 own_instance=0 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1233.4 context_ms=46.4 state_ms=7.58 prefix_ms=0.0 suffix_ms=484.5 first_token_ms=2080.3 generation_ms=18882.9 generated=64 generation_tps=3.389
+CHILD index=6 own_instance=1 exit=0 text=4a8f18b77dbe0332 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1169.4 context_ms=49.8 state_ms=7.53 prefix_ms=0.0 suffix_ms=232.9 first_token_ms=1757.9 generation_ms=13607.9 generated=64 generation_tps=4.703
+CHILD index=7 own_instance=0 exit=0 text=4a8f18b77dbe0332 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1083.3 context_ms=35.9 state_ms=7.45 prefix_ms=0.0 suffix_ms=128.2 first_token_ms=1519.5 generation_ms=18947.3 generated=64 generation_tps=3.378
+MEMORY mem_available_drop_mib=5918
+END_CASE failed=0 timed_out=0
+END_KVSOTA
+BEGIN_KVSOTA run=2 paragraphs=320 context=32768
+CASE placement=same mode=extent children=8
+PARENT exit=0 text=c646470e58f73411 prefix_tokens=16321 prefix_ms=19813.2 publish_ms=9.22 state_bytes=261845 model_ms=590.5 context_ms=33.8 suffix_ms=110.0 generation_ms=12989.7 generated=64 generation_tps=4.927 total_ms=46860.7
+CHILD index=0 own_instance=1 exit=0 text=d42c4c07975a6446 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1224.5 context_ms=37.1 state_ms=7.40 prefix_ms=0.0 suffix_ms=464.2 first_token_ms=2028.8 generation_ms=23588.9 generated=64 generation_tps=2.713
+CHILD index=1 own_instance=1 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1291.9 context_ms=39.4 state_ms=7.37 prefix_ms=0.0 suffix_ms=684.7 first_token_ms=2326.9 generation_ms=23467.6 generated=64 generation_tps=2.727
+CHILD index=2 own_instance=1 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1211.7 context_ms=39.2 state_ms=7.67 prefix_ms=0.0 suffix_ms=465.3 first_token_ms=2036.9 generation_ms=23589.4 generated=64 generation_tps=2.713
+CHILD index=3 own_instance=1 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1276.8 context_ms=40.8 state_ms=7.45 prefix_ms=0.0 suffix_ms=693.4 first_token_ms=2323.7 generation_ms=23466.1 generated=64 generation_tps=2.727
+CHILD index=4 own_instance=1 exit=0 text=3e0fd62f5aa50665 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1228.4 context_ms=39.1 state_ms=7.72 prefix_ms=0.0 suffix_ms=480.7 first_token_ms=2064.1 generation_ms=23584.9 generated=64 generation_tps=2.714
+CHILD index=5 own_instance=1 exit=0 text=3e0fd62f5aa50665 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1273.4 context_ms=38.9 state_ms=7.47 prefix_ms=0.0 suffix_ms=688.2 first_token_ms=2322.4 generation_ms=23464.3 generated=64 generation_tps=2.728
+CHILD index=6 own_instance=1 exit=0 text=4a8f18b77dbe0332 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1270.5 context_ms=43.4 state_ms=7.47 prefix_ms=0.0 suffix_ms=646.4 first_token_ms=2263.2 generation_ms=23497.7 generated=64 generation_tps=2.724
+CHILD index=7 own_instance=1 exit=0 text=4a8f18b77dbe0332 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1235.7 context_ms=40.4 state_ms=7.50 prefix_ms=0.0 suffix_ms=421.9 first_token_ms=1970.9 generation_ms=23618.6 generated=64 generation_tps=2.710
+MEMORY mem_available_drop_mib=6017
+END_CASE failed=0 timed_out=0
+CASE placement=same mode=cow children=8
+PARENT exit=0 text=c646470e58f73411 prefix_tokens=16321 prefix_ms=19775.1 publish_ms=8.88 state_bytes=261845 model_ms=612.3 context_ms=33.9 suffix_ms=101.0 generation_ms=13336.6 generated=64 generation_tps=4.799 total_ms=47629.5
+CHILD index=0 own_instance=1 exit=0 text=d42c4c07975a6446 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1228.3 context_ms=39.3 state_ms=7.62 prefix_ms=0.0 suffix_ms=1172.7 first_token_ms=2738.6 generation_ms=23777.8 generated=64 generation_tps=2.692
+CHILD index=1 own_instance=1 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1268.0 context_ms=47.0 state_ms=7.65 prefix_ms=0.0 suffix_ms=1307.9 first_token_ms=2939.0 generation_ms=23708.9 generated=64 generation_tps=2.699
+CHILD index=2 own_instance=1 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1266.0 context_ms=39.8 state_ms=7.26 prefix_ms=0.0 suffix_ms=1255.5 first_token_ms=2875.7 generation_ms=23745.6 generated=64 generation_tps=2.695
+CHILD index=3 own_instance=1 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1198.4 context_ms=35.5 state_ms=7.49 prefix_ms=0.0 suffix_ms=788.3 first_token_ms=2300.1 generation_ms=23971.1 generated=64 generation_tps=2.670
+CHILD index=4 own_instance=1 exit=0 text=3e0fd62f5aa50665 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1283.7 context_ms=36.7 state_ms=7.45 prefix_ms=0.0 suffix_ms=1287.8 first_token_ms=2919.9 generation_ms=23720.1 generated=64 generation_tps=2.698
+CHILD index=5 own_instance=1 exit=0 text=3e0fd62f5aa50665 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1250.6 context_ms=42.2 state_ms=7.77 prefix_ms=0.0 suffix_ms=1227.0 first_token_ms=2818.6 generation_ms=23757.4 generated=64 generation_tps=2.694
+CHILD index=6 own_instance=1 exit=0 text=4a8f18b77dbe0332 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1239.1 context_ms=42.8 state_ms=7.70 prefix_ms=0.0 suffix_ms=1239.2 first_token_ms=2831.8 generation_ms=23721.5 generated=64 generation_tps=2.698
+CHILD index=7 own_instance=1 exit=0 text=4a8f18b77dbe0332 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1275.5 context_ms=41.9 state_ms=7.74 prefix_ms=0.0 suffix_ms=1298.3 first_token_ms=2921.6 generation_ms=23720.0 generated=64 generation_tps=2.698
+MEMORY mem_available_drop_mib=6897
+END_CASE failed=0 timed_out=0
+CASE placement=same mode=device children=8
+PARENT exit=0 text=c646470e58f73411 prefix_tokens=16321 prefix_ms=19751.7 publish_ms=41.34 state_bytes=261845 model_ms=585.3 context_ms=32.7 suffix_ms=61.2 generation_ms=9295.7 generated=64 generation_tps=6.885 total_ms=47044.9
+CHILD index=0 own_instance=1 exit=0 text=d42c4c07975a6446 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1311.3 context_ms=614.8 state_ms=327.90 prefix_ms=0.0 suffix_ms=679.0 first_token_ms=3243.1 generation_ms=22840.9 generated=64 generation_tps=2.802
+CHILD index=1 own_instance=1 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1236.2 context_ms=545.9 state_ms=229.47 prefix_ms=0.0 suffix_ms=401.4 first_token_ms=2735.1 generation_ms=23104.0 generated=64 generation_tps=2.770
+CHILD index=2 own_instance=1 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1182.7 context_ms=221.0 state_ms=66.23 prefix_ms=0.0 suffix_ms=244.4 first_token_ms=1997.7 generation_ms=22177.8 generated=64 generation_tps=2.886
+CHILD index=3 own_instance=1 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1302.4 context_ms=604.6 state_ms=330.52 prefix_ms=0.0 suffix_ms=685.5 first_token_ms=3248.8 generation_ms=22853.4 generated=64 generation_tps=2.800
+CHILD index=4 own_instance=1 exit=0 text=3e0fd62f5aa50665 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1297.6 context_ms=594.6 state_ms=289.23 prefix_ms=0.0 suffix_ms=634.4 first_token_ms=3134.0 generation_ms=22900.7 generated=64 generation_tps=2.795
+CHILD index=5 own_instance=1 exit=0 text=3e0fd62f5aa50665 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1278.5 context_ms=573.1 state_ms=258.02 prefix_ms=0.0 suffix_ms=520.2 first_token_ms=2942.7 generation_ms=22989.8 generated=64 generation_tps=2.784
+CHILD index=6 own_instance=1 exit=0 text=4a8f18b77dbe0332 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1240.0 context_ms=480.4 state_ms=224.84 prefix_ms=0.0 suffix_ms=356.5 first_token_ms=2608.4 generation_ms=23048.3 generated=64 generation_tps=2.777
+CHILD index=7 own_instance=1 exit=0 text=4a8f18b77dbe0332 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1294.7 context_ms=613.3 state_ms=327.26 prefix_ms=0.0 suffix_ms=681.6 first_token_ms=3245.8 generation_ms=22856.7 generated=64 generation_tps=2.800
+MEMORY mem_available_drop_mib=7786
+END_CASE failed=0 timed_out=0
+CASE placement=same mode=demand children=8
+PARENT exit=0 text=c646470e58f73411 prefix_tokens=16321 prefix_ms=19752.0 publish_ms=530.49 state_bytes=936173269 model_ms=584.0 context_ms=32.8 suffix_ms=62.0 generation_ms=10156.7 generated=64 generation_tps=6.301 total_ms=47869.6
+CHILD index=0 own_instance=1 exit=0 text=d42c4c07975a6446 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1192.2 context_ms=33.1 state_ms=246.01 prefix_ms=0.0 suffix_ms=261.0 first_token_ms=2013.9 generation_ms=22421.6 generated=64 generation_tps=2.854
+CHILD index=1 own_instance=1 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1313.9 context_ms=38.8 state_ms=716.57 prefix_ms=0.0 suffix_ms=663.4 first_token_ms=3038.5 generation_ms=23170.1 generated=64 generation_tps=2.762
+CHILD index=2 own_instance=1 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1267.7 context_ms=35.4 state_ms=760.55 prefix_ms=0.0 suffix_ms=650.1 first_token_ms=3029.3 generation_ms=23181.0 generated=64 generation_tps=2.761
+CHILD index=3 own_instance=1 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1287.5 context_ms=40.9 state_ms=737.64 prefix_ms=0.0 suffix_ms=638.3 first_token_ms=3013.6 generation_ms=23169.8 generated=64 generation_tps=2.762
+CHILD index=4 own_instance=1 exit=0 text=3e0fd62f5aa50665 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1247.6 context_ms=41.4 state_ms=766.07 prefix_ms=0.0 suffix_ms=602.9 first_token_ms=2979.5 generation_ms=23175.9 generated=64 generation_tps=2.761
+CHILD index=5 own_instance=1 exit=0 text=3e0fd62f5aa50665 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1311.3 context_ms=36.8 state_ms=724.70 prefix_ms=0.0 suffix_ms=638.0 first_token_ms=3017.1 generation_ms=23177.5 generated=64 generation_tps=2.761
+CHILD index=6 own_instance=1 exit=0 text=4a8f18b77dbe0332 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1277.5 context_ms=41.6 state_ms=736.05 prefix_ms=0.0 suffix_ms=609.7 first_token_ms=2985.9 generation_ms=23118.0 generated=64 generation_tps=2.768
+CHILD index=7 own_instance=1 exit=0 text=4a8f18b77dbe0332 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1247.2 context_ms=35.1 state_ms=777.22 prefix_ms=0.0 suffix_ms=650.4 first_token_ms=3030.1 generation_ms=23182.0 generated=64 generation_tps=2.761
+MEMORY mem_available_drop_mib=14228
+END_CASE failed=0 timed_out=0
+CASE placement=same mode=copy children=8
+PARENT exit=0 text=c646470e58f73411 prefix_tokens=16321 prefix_ms=19736.9 publish_ms=555.23 state_bytes=936173269 model_ms=586.0 context_ms=57.1 suffix_ms=61.7 generation_ms=10641.0 generated=64 generation_tps=6.014 total_ms=47978.1
+CHILD index=0 own_instance=1 exit=0 text=d42c4c07975a6446 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1312.3 context_ms=160.6 state_ms=502.54 prefix_ms=0.0 suffix_ms=633.8 first_token_ms=2922.2 generation_ms=23299.6 generated=64 generation_tps=2.747
+CHILD index=1 own_instance=1 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1219.1 context_ms=182.7 state_ms=568.27 prefix_ms=0.0 suffix_ms=634.0 first_token_ms=2925.7 generation_ms=23311.0 generated=64 generation_tps=2.745
+CHILD index=2 own_instance=1 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1154.0 context_ms=71.9 state_ms=334.43 prefix_ms=0.0 suffix_ms=253.7 first_token_ms=2096.9 generation_ms=22881.9 generated=64 generation_tps=2.797
+CHILD index=3 own_instance=1 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1270.5 context_ms=172.5 state_ms=529.90 prefix_ms=0.0 suffix_ms=645.8 first_token_ms=2938.1 generation_ms=23300.6 generated=64 generation_tps=2.747
+CHILD index=4 own_instance=1 exit=0 text=3e0fd62f5aa50665 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1238.7 context_ms=190.8 state_ms=535.93 prefix_ms=0.0 suffix_ms=645.9 first_token_ms=2934.8 generation_ms=23301.5 generated=64 generation_tps=2.747
+CHILD index=5 own_instance=1 exit=0 text=3e0fd62f5aa50665 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1228.8 context_ms=172.5 state_ms=580.00 prefix_ms=0.0 suffix_ms=619.5 first_token_ms=2911.0 generation_ms=23324.4 generated=64 generation_tps=2.744
+CHILD index=6 own_instance=1 exit=0 text=4a8f18b77dbe0332 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1262.0 context_ms=185.7 state_ms=537.16 prefix_ms=0.0 suffix_ms=607.6 first_token_ms=2898.8 generation_ms=23295.8 generated=64 generation_tps=2.747
+CHILD index=7 own_instance=1 exit=0 text=4a8f18b77dbe0332 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1297.8 context_ms=143.8 state_ms=520.87 prefix_ms=0.0 suffix_ms=653.8 first_token_ms=2946.7 generation_ms=23303.0 generated=64 generation_tps=2.746
+MEMORY mem_available_drop_mib=20279
+END_CASE failed=0 timed_out=0
+CASE placement=cross mode=extent children=8
+PARENT exit=0 text=c646470e58f73411 prefix_tokens=16321 prefix_ms=19821.5 publish_ms=8.93 state_bytes=261845 model_ms=603.4 context_ms=33.8 suffix_ms=107.4 generation_ms=8714.6 generated=64 generation_tps=7.344 total_ms=41982.9
+CHILD index=0 own_instance=1 exit=0 text=d42c4c07975a6446 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1251.8 context_ms=39.1 state_ms=7.65 prefix_ms=0.0 suffix_ms=386.8 first_token_ms=2000.8 generation_ms=13599.1 generated=64 generation_tps=4.706
+CHILD index=1 own_instance=0 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1164.0 context_ms=38.1 state_ms=7.49 prefix_ms=0.0 suffix_ms=341.1 first_token_ms=1859.2 generation_ms=19102.4 generated=64 generation_tps=3.350
+CHILD index=2 own_instance=1 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1244.0 context_ms=39.8 state_ms=7.42 prefix_ms=0.0 suffix_ms=387.3 first_token_ms=1983.5 generation_ms=13597.6 generated=64 generation_tps=4.707
+CHILD index=3 own_instance=0 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1251.2 context_ms=38.6 state_ms=7.68 prefix_ms=0.0 suffix_ms=470.5 first_token_ms=2075.4 generation_ms=18993.8 generated=64 generation_tps=3.370
+CHILD index=4 own_instance=1 exit=0 text=3e0fd62f5aa50665 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1147.8 context_ms=36.4 state_ms=7.20 prefix_ms=0.0 suffix_ms=189.0 first_token_ms=1674.2 generation_ms=13733.7 generated=64 generation_tps=4.660
+CHILD index=5 own_instance=0 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1223.9 context_ms=39.8 state_ms=7.63 prefix_ms=0.0 suffix_ms=447.8 first_token_ms=2021.1 generation_ms=19019.0 generated=64 generation_tps=3.365
+CHILD index=6 own_instance=1 exit=0 text=4a8f18b77dbe0332 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1187.4 context_ms=37.9 state_ms=7.71 prefix_ms=0.0 suffix_ms=349.5 first_token_ms=1898.3 generation_ms=13634.4 generated=64 generation_tps=4.694
+CHILD index=7 own_instance=0 exit=0 text=4a8f18b77dbe0332 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1157.2 context_ms=36.5 state_ms=7.47 prefix_ms=0.0 suffix_ms=217.4 first_token_ms=1715.7 generation_ms=19164.8 generated=64 generation_tps=3.339
+MEMORY mem_available_drop_mib=5917
+END_CASE failed=0 timed_out=0
+CASE placement=cross mode=cow children=8
+PARENT exit=0 text=c646470e58f73411 prefix_tokens=16321 prefix_ms=19826.3 publish_ms=8.99 state_bytes=261845 model_ms=587.3 context_ms=34.2 suffix_ms=104.3 generation_ms=8808.4 generated=64 generation_tps=7.266 total_ms=42535.6
+CHILD index=0 own_instance=1 exit=0 text=d42c4c07975a6446 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1191.8 context_ms=38.6 state_ms=7.50 prefix_ms=0.0 suffix_ms=631.7 first_token_ms=2117.0 generation_ms=13771.0 generated=64 generation_tps=4.647
+CHILD index=1 own_instance=0 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1168.6 context_ms=46.8 state_ms=7.46 prefix_ms=0.0 suffix_ms=733.5 first_token_ms=2247.7 generation_ms=19294.4 generated=64 generation_tps=3.317
+CHILD index=2 own_instance=1 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1186.0 context_ms=46.0 state_ms=7.26 prefix_ms=0.0 suffix_ms=674.1 first_token_ms=2203.4 generation_ms=13716.3 generated=64 generation_tps=4.666
+CHILD index=3 own_instance=0 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1162.8 context_ms=46.4 state_ms=8.06 prefix_ms=0.0 suffix_ms=729.3 first_token_ms=2261.1 generation_ms=19306.8 generated=64 generation_tps=3.315
+CHILD index=4 own_instance=1 exit=0 text=3e0fd62f5aa50665 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1200.8 context_ms=54.6 state_ms=7.46 prefix_ms=0.0 suffix_ms=763.8 first_token_ms=2329.8 generation_ms=13686.4 generated=64 generation_tps=4.676
+CHILD index=5 own_instance=0 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1154.7 context_ms=37.9 state_ms=7.80 prefix_ms=0.0 suffix_ms=717.0 first_token_ms=2233.1 generation_ms=19292.9 generated=64 generation_tps=3.317
+CHILD index=6 own_instance=1 exit=0 text=4a8f18b77dbe0332 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1192.0 context_ms=47.1 state_ms=7.37 prefix_ms=0.0 suffix_ms=757.8 first_token_ms=2324.5 generation_ms=13690.3 generated=64 generation_tps=4.675
+CHILD index=7 own_instance=0 exit=0 text=4a8f18b77dbe0332 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1191.2 context_ms=42.9 state_ms=7.47 prefix_ms=0.0 suffix_ms=772.2 first_token_ms=2320.0 generation_ms=19262.5 generated=64 generation_tps=3.323
+MEMORY mem_available_drop_mib=6793
+END_CASE failed=0 timed_out=0
+CASE placement=cross mode=device children=8
+PARENT exit=0 text=c646470e58f73411 prefix_tokens=16321 prefix_ms=19751.2 publish_ms=42.05 state_bytes=261845 model_ms=604.5 context_ms=32.9 suffix_ms=61.7 generation_ms=5738.6 generated=64 generation_tps=11.153 total_ms=35406.6
+CHILD index=0 own_instance=1 exit=0 text=d42c4c07975a6446 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1214.5 context_ms=446.8 state_ms=96.46 prefix_ms=0.0 suffix_ms=299.7 first_token_ms=2376.3 generation_ms=11938.5 generated=64 generation_tps=5.361
+STDERR llama_init_from_model: failed to initialize the context: kv cache: cannot map a published allocation
+STDERR kv_fork: cannot create the context
+CHILD index=1 own_instance=0 exit=1 text=e3b0c44298fc1c14 
+CHILD index=2 own_instance=1 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1268.8 context_ms=472.3 state_ms=115.07 prefix_ms=0.0 suffix_ms=418.9 first_token_ms=2600.8 generation_ms=11838.1 generated=64 generation_tps=5.406
+STDERR llama_init_from_model: failed to initialize the context: kv cache: cannot map a published allocation
+STDERR kv_fork: cannot create the context
+CHILD index=3 own_instance=0 exit=1 text=e3b0c44298fc1c14 
+CHILD index=4 own_instance=1 exit=0 text=3e0fd62f5aa50665 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1263.4 context_ms=481.4 state_ms=114.04 prefix_ms=0.0 suffix_ms=426.1 first_token_ms=2607.4 generation_ms=11818.5 generated=64 generation_tps=5.415
+STDERR llama_init_from_model: failed to initialize the context: kv cache: cannot map a published allocation
+STDERR kv_fork: cannot create the context
+CHILD index=5 own_instance=0 exit=1 text=e3b0c44298fc1c14 
+CHILD index=6 own_instance=1 exit=0 text=4a8f18b77dbe0332 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1270.0 context_ms=426.9 state_ms=93.15 prefix_ms=0.0 suffix_ms=302.3 first_token_ms=2400.7 generation_ms=11918.8 generated=64 generation_tps=5.370
+STDERR llama_init_from_model: failed to initialize the context: kv cache: cannot map a published allocation
+STDERR kv_fork: cannot create the context
+CHILD index=7 own_instance=0 exit=1 text=e3b0c44298fc1c14 
+MEMORY mem_available_drop_mib=3980
+END_CASE failed=4 timed_out=0
+CASE placement=cross mode=demand children=8
+PARENT exit=0 text=c646470e58f73411 prefix_tokens=16321 prefix_ms=19746.3 publish_ms=529.32 state_bytes=936173269 model_ms=585.8 context_ms=33.0 suffix_ms=62.0 generation_ms=7854.8 generated=64 generation_tps=8.148 total_ms=42445.0
+CHILD index=0 own_instance=1 exit=0 text=d42c4c07975a6446 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1229.4 context_ms=42.8 state_ms=595.91 prefix_ms=0.0 suffix_ms=409.2 first_token_ms=2554.7 generation_ms=13098.4 generated=64 generation_tps=4.886
+CHILD index=1 own_instance=0 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1153.0 context_ms=39.0 state_ms=469.80 prefix_ms=0.0 suffix_ms=199.9 first_token_ms=2173.9 generation_ms=18513.9 generated=64 generation_tps=3.457
+CHILD index=2 own_instance=1 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1171.8 context_ms=41.4 state_ms=610.47 prefix_ms=0.0 suffix_ms=428.8 first_token_ms=2575.1 generation_ms=13076.4 generated=64 generation_tps=4.894
+CHILD index=3 own_instance=0 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1158.8 context_ms=42.2 state_ms=513.43 prefix_ms=0.0 suffix_ms=461.9 first_token_ms=2494.8 generation_ms=18498.1 generated=64 generation_tps=3.460
+CHILD index=4 own_instance=1 exit=0 text=3e0fd62f5aa50665 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1223.4 context_ms=34.3 state_ms=578.98 prefix_ms=0.0 suffix_ms=410.7 first_token_ms=2570.1 generation_ms=13047.0 generated=64 generation_tps=4.905
+CHILD index=5 own_instance=0 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1148.6 context_ms=42.0 state_ms=513.01 prefix_ms=0.0 suffix_ms=463.7 first_token_ms=2497.1 generation_ms=18515.2 generated=64 generation_tps=3.457
+CHILD index=6 own_instance=1 exit=0 text=4a8f18b77dbe0332 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=906.1 context_ms=34.3 state_ms=292.90 prefix_ms=0.0 suffix_ms=236.3 first_token_ms=1711.3 generation_ms=12931.4 generated=64 generation_tps=4.949
+CHILD index=7 own_instance=0 exit=0 text=4a8f18b77dbe0332 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1177.5 context_ms=38.9 state_ms=534.05 prefix_ms=0.0 suffix_ms=457.6 first_token_ms=2518.5 generation_ms=18484.8 generated=64 generation_tps=3.462
+MEMORY mem_available_drop_mib=13724
+END_CASE failed=0 timed_out=0
+CASE placement=cross mode=copy children=8
+PARENT exit=0 text=c646470e58f73411 prefix_tokens=16321 prefix_ms=19745.9 publish_ms=554.76 state_bytes=936173269 model_ms=585.5 context_ms=58.4 suffix_ms=61.7 generation_ms=7287.7 generated=64 generation_tps=8.782 total_ms=42199.7
+CHILD index=0 own_instance=1 exit=0 text=d42c4c07975a6446 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1234.1 context_ms=154.0 state_ms=343.62 prefix_ms=0.0 suffix_ms=402.1 first_token_ms=2461.0 generation_ms=13276.9 generated=64 generation_tps=4.820
+CHILD index=1 own_instance=0 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=995.4 context_ms=65.5 state_ms=184.35 prefix_ms=0.0 suffix_ms=272.1 first_token_ms=1779.5 generation_ms=18356.3 generated=64 generation_tps=3.487
+CHILD index=2 own_instance=1 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1245.3 context_ms=148.6 state_ms=344.56 prefix_ms=0.0 suffix_ms=423.2 first_token_ms=2481.5 generation_ms=13250.7 generated=64 generation_tps=4.830
+CHILD index=3 own_instance=0 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1112.0 context_ms=79.2 state_ms=305.53 prefix_ms=0.0 suffix_ms=422.0 first_token_ms=2231.7 generation_ms=18459.0 generated=64 generation_tps=3.467
+CHILD index=4 own_instance=1 exit=0 text=3e0fd62f5aa50665 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1270.0 context_ms=151.6 state_ms=325.39 prefix_ms=0.0 suffix_ms=417.2 first_token_ms=2479.4 generation_ms=13136.0 generated=64 generation_tps=4.872
+CHILD index=5 own_instance=0 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1209.9 context_ms=162.1 state_ms=399.91 prefix_ms=0.0 suffix_ms=484.8 first_token_ms=2580.0 generation_ms=18192.9 generated=64 generation_tps=3.518
+CHILD index=6 own_instance=1 exit=0 text=4a8f18b77dbe0332 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1228.9 context_ms=188.2 state_ms=337.88 prefix_ms=0.0 suffix_ms=415.1 first_token_ms=2472.2 generation_ms=13231.0 generated=64 generation_tps=4.837
+CHILD index=7 own_instance=0 exit=0 text=4a8f18b77dbe0332 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1096.6 context_ms=71.2 state_ms=358.12 prefix_ms=0.0 suffix_ms=416.1 first_token_ms=2228.5 generation_ms=18473.4 generated=64 generation_tps=3.464
+MEMORY mem_available_drop_mib=20275
+END_CASE failed=0 timed_out=0
+END_KVSOTA
+BEGIN_KVSOTA run=3 paragraphs=320 context=32768
+CASE placement=same mode=copy children=8
+PARENT exit=0 text=c646470e58f73411 prefix_tokens=16321 prefix_ms=19738.7 publish_ms=539.17 state_bytes=936173269 model_ms=587.0 context_ms=57.2 suffix_ms=62.0 generation_ms=12375.0 generated=64 generation_tps=5.172 total_ms=47819.0
+CHILD index=0 own_instance=1 exit=0 text=d42c4c07975a6446 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1290.4 context_ms=173.2 state_ms=365.62 prefix_ms=0.0 suffix_ms=664.5 first_token_ms=2801.4 generation_ms=23484.2 generated=64 generation_tps=2.725
+CHILD index=1 own_instance=1 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1022.1 context_ms=70.4 state_ms=291.53 prefix_ms=0.0 suffix_ms=328.4 first_token_ms=1972.4 generation_ms=23458.9 generated=64 generation_tps=2.728
+CHILD index=2 own_instance=1 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1282.8 context_ms=148.0 state_ms=358.00 prefix_ms=0.0 suffix_ms=655.5 first_token_ms=2757.1 generation_ms=23511.2 generated=64 generation_tps=2.722
+CHILD index=3 own_instance=1 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1260.4 context_ms=155.4 state_ms=352.79 prefix_ms=0.0 suffix_ms=646.4 first_token_ms=2730.9 generation_ms=23524.9 generated=64 generation_tps=2.721
+CHILD index=4 own_instance=1 exit=0 text=3e0fd62f5aa50665 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1123.4 context_ms=84.8 state_ms=454.57 prefix_ms=0.0 suffix_ms=468.7 first_token_ms=2439.8 generation_ms=23595.4 generated=64 generation_tps=2.712
+CHILD index=5 own_instance=1 exit=0 text=3e0fd62f5aa50665 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1292.8 context_ms=172.9 state_ms=368.24 prefix_ms=0.0 suffix_ms=664.3 first_token_ms=2800.2 generation_ms=23486.4 generated=64 generation_tps=2.725
+CHILD index=6 own_instance=1 exit=0 text=4a8f18b77dbe0332 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1194.8 context_ms=119.9 state_ms=371.10 prefix_ms=0.0 suffix_ms=472.4 first_token_ms=2459.3 generation_ms=23616.1 generated=64 generation_tps=2.710
+CHILD index=7 own_instance=1 exit=0 text=4a8f18b77dbe0332 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1246.3 context_ms=147.2 state_ms=341.86 prefix_ms=0.0 suffix_ms=613.6 first_token_ms=2668.5 generation_ms=23543.5 generated=64 generation_tps=2.718
+MEMORY mem_available_drop_mib=20294
+END_CASE failed=0 timed_out=0
+CASE placement=same mode=demand children=8
+PARENT exit=0 text=c646470e58f73411 prefix_tokens=16321 prefix_ms=19739.7 publish_ms=540.88 state_bytes=936173269 model_ms=586.6 context_ms=33.3 suffix_ms=61.6 generation_ms=11112.3 generated=64 generation_tps=5.759 total_ms=47797.8
+CHILD index=0 own_instance=1 exit=0 text=d42c4c07975a6446 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1215.1 context_ms=34.8 state_ms=553.21 prefix_ms=0.0 suffix_ms=639.4 first_token_ms=2760.6 generation_ms=23451.0 generated=64 generation_tps=2.729
+CHILD index=1 own_instance=1 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1191.9 context_ms=36.6 state_ms=577.92 prefix_ms=0.0 suffix_ms=638.2 first_token_ms=2754.0 generation_ms=23430.1 generated=64 generation_tps=2.732
+CHILD index=2 own_instance=1 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1208.2 context_ms=36.0 state_ms=577.17 prefix_ms=0.0 suffix_ms=635.5 first_token_ms=2744.9 generation_ms=23268.8 generated=64 generation_tps=2.750
+CHILD index=3 own_instance=1 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1261.4 context_ms=35.8 state_ms=543.85 prefix_ms=0.0 suffix_ms=646.1 first_token_ms=2789.7 generation_ms=23357.6 generated=64 generation_tps=2.740
+CHILD index=4 own_instance=1 exit=0 text=3e0fd62f5aa50665 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1287.2 context_ms=41.3 state_ms=518.03 prefix_ms=0.0 suffix_ms=644.3 first_token_ms=2806.9 generation_ms=23401.5 generated=64 generation_tps=2.735
+CHILD index=5 own_instance=1 exit=0 text=3e0fd62f5aa50665 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1303.2 context_ms=41.6 state_ms=523.91 prefix_ms=0.0 suffix_ms=624.3 first_token_ms=2794.3 generation_ms=23400.6 generated=64 generation_tps=2.735
+CHILD index=6 own_instance=1 exit=0 text=4a8f18b77dbe0332 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1214.8 context_ms=35.3 state_ms=555.54 prefix_ms=0.0 suffix_ms=656.9 first_token_ms=2784.5 generation_ms=23427.5 generated=64 generation_tps=2.732
+CHILD index=7 own_instance=1 exit=0 text=4a8f18b77dbe0332 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1145.8 context_ms=33.9 state_ms=269.62 prefix_ms=0.0 suffix_ms=279.8 first_token_ms=2037.0 generation_ms=23182.0 generated=64 generation_tps=2.761
+MEMORY mem_available_drop_mib=14211
+END_CASE failed=0 timed_out=0
+CASE placement=same mode=device children=8
+PARENT exit=0 text=c646470e58f73411 prefix_tokens=16321 prefix_ms=19759.9 publish_ms=42.78 state_bytes=261845 model_ms=592.4 context_ms=33.5 suffix_ms=62.0 generation_ms=9871.8 generated=64 generation_tps=6.483 total_ms=47102.1
+CHILD index=0 own_instance=1 exit=0 text=d42c4c07975a6446 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1185.8 context_ms=257.6 state_ms=113.63 prefix_ms=0.0 suffix_ms=283.5 first_token_ms=2120.6 generation_ms=22761.6 generated=64 generation_tps=2.812
+CHILD index=1 own_instance=1 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1241.4 context_ms=530.6 state_ms=267.97 prefix_ms=0.0 suffix_ms=526.1 first_token_ms=2871.2 generation_ms=23076.3 generated=64 generation_tps=2.773
+CHILD index=2 own_instance=1 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1292.7 context_ms=551.6 state_ms=342.25 prefix_ms=0.0 suffix_ms=685.0 first_token_ms=3189.2 generation_ms=22914.5 generated=64 generation_tps=2.793
+CHILD index=3 own_instance=1 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1292.7 context_ms=550.8 state_ms=342.47 prefix_ms=0.0 suffix_ms=697.3 first_token_ms=3203.5 generation_ms=22910.0 generated=64 generation_tps=2.794
+CHILD index=4 own_instance=1 exit=0 text=3e0fd62f5aa50665 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1303.7 context_ms=552.6 state_ms=340.76 prefix_ms=0.0 suffix_ms=675.4 first_token_ms=3179.7 generation_ms=22903.5 generated=64 generation_tps=2.794
+CHILD index=5 own_instance=1 exit=0 text=3e0fd62f5aa50665 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1286.9 context_ms=561.5 state_ms=335.62 prefix_ms=0.0 suffix_ms=693.0 first_token_ms=3193.8 generation_ms=22915.3 generated=64 generation_tps=2.793
+CHILD index=6 own_instance=1 exit=0 text=4a8f18b77dbe0332 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1238.6 context_ms=488.0 state_ms=287.51 prefix_ms=0.0 suffix_ms=437.4 first_token_ms=2765.7 generation_ms=23123.5 generated=64 generation_tps=2.768
+CHILD index=7 own_instance=1 exit=0 text=4a8f18b77dbe0332 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1189.0 context_ms=317.0 state_ms=64.09 prefix_ms=0.0 suffix_ms=277.6 first_token_ms=2150.7 generation_ms=22868.7 generated=64 generation_tps=2.799
+MEMORY mem_available_drop_mib=7826
+END_CASE failed=0 timed_out=0
+CASE placement=same mode=cow children=8
+PARENT exit=0 text=c646470e58f73411 prefix_tokens=16321 prefix_ms=19787.6 publish_ms=8.35 state_bytes=261845 model_ms=587.6 context_ms=33.9 suffix_ms=109.8 generation_ms=13878.4 generated=64 generation_tps=4.611 total_ms=47669.7
+CHILD index=0 own_instance=1 exit=0 text=d42c4c07975a6446 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1242.6 context_ms=36.6 state_ms=7.47 prefix_ms=0.0 suffix_ms=1294.3 first_token_ms=2897.3 generation_ms=23752.3 generated=64 generation_tps=2.694
+CHILD index=1 own_instance=1 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1161.2 context_ms=34.5 state_ms=7.46 prefix_ms=0.0 suffix_ms=521.2 first_token_ms=1972.2 generation_ms=24105.7 generated=64 generation_tps=2.655
+CHILD index=2 own_instance=1 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1261.6 context_ms=38.0 state_ms=7.48 prefix_ms=0.0 suffix_ms=1299.0 first_token_ms=2913.1 generation_ms=23734.1 generated=64 generation_tps=2.697
+CHILD index=3 own_instance=1 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1243.1 context_ms=38.6 state_ms=7.38 prefix_ms=0.0 suffix_ms=1277.0 first_token_ms=2857.1 generation_ms=23744.9 generated=64 generation_tps=2.695
+CHILD index=4 own_instance=1 exit=0 text=3e0fd62f5aa50665 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1270.3 context_ms=39.1 state_ms=7.48 prefix_ms=0.0 suffix_ms=1313.3 first_token_ms=2927.2 generation_ms=23717.8 generated=64 generation_tps=2.698
+CHILD index=5 own_instance=1 exit=0 text=3e0fd62f5aa50665 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1201.0 context_ms=36.6 state_ms=7.31 prefix_ms=0.0 suffix_ms=1213.9 first_token_ms=2773.5 generation_ms=23795.8 generated=64 generation_tps=2.690
+CHILD index=6 own_instance=1 exit=0 text=4a8f18b77dbe0332 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1197.1 context_ms=35.5 state_ms=7.44 prefix_ms=0.0 suffix_ms=1199.6 first_token_ms=2739.5 generation_ms=23800.6 generated=64 generation_tps=2.689
+CHILD index=7 own_instance=1 exit=0 text=4a8f18b77dbe0332 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1205.7 context_ms=37.8 state_ms=7.38 prefix_ms=0.0 suffix_ms=1258.5 first_token_ms=2810.2 generation_ms=23796.4 generated=64 generation_tps=2.689
+MEMORY mem_available_drop_mib=6892
+END_CASE failed=0 timed_out=0
+CASE placement=same mode=extent children=8
+PARENT exit=0 text=c646470e58f73411 prefix_tokens=16321 prefix_ms=19810.4 publish_ms=8.96 state_bytes=261845 model_ms=586.8 context_ms=35.7 suffix_ms=102.8 generation_ms=12955.3 generated=64 generation_tps=4.940 total_ms=46792.4
+CHILD index=0 own_instance=1 exit=0 text=d42c4c07975a6446 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1270.1 context_ms=37.7 state_ms=7.51 prefix_ms=0.0 suffix_ms=654.6 first_token_ms=2276.4 generation_ms=23495.2 generated=64 generation_tps=2.724
+CHILD index=1 own_instance=1 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1233.6 context_ms=41.0 state_ms=7.28 prefix_ms=0.0 suffix_ms=532.0 first_token_ms=2112.9 generation_ms=23571.8 generated=64 generation_tps=2.715
+CHILD index=2 own_instance=1 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1240.0 context_ms=40.5 state_ms=7.48 prefix_ms=0.0 suffix_ms=605.2 first_token_ms=2198.7 generation_ms=23545.6 generated=64 generation_tps=2.718
+CHILD index=3 own_instance=1 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1233.2 context_ms=42.1 state_ms=7.53 prefix_ms=0.0 suffix_ms=621.4 first_token_ms=2214.4 generation_ms=23538.1 generated=64 generation_tps=2.719
+CHILD index=4 own_instance=1 exit=0 text=3e0fd62f5aa50665 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1225.6 context_ms=39.4 state_ms=7.22 prefix_ms=0.0 suffix_ms=554.5 first_token_ms=2120.9 generation_ms=23567.8 generated=64 generation_tps=2.716
+CHILD index=5 own_instance=1 exit=0 text=3e0fd62f5aa50665 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1221.3 context_ms=38.5 state_ms=9.47 prefix_ms=0.0 suffix_ms=434.1 first_token_ms=1979.9 generation_ms=23590.9 generated=64 generation_tps=2.713
+CHILD index=6 own_instance=1 exit=0 text=4a8f18b77dbe0332 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1195.0 context_ms=39.2 state_ms=7.58 prefix_ms=0.0 suffix_ms=449.6 first_token_ms=1991.4 generation_ms=23596.2 generated=64 generation_tps=2.712
+CHILD index=7 own_instance=1 exit=0 text=4a8f18b77dbe0332 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1277.0 context_ms=36.5 state_ms=7.47 prefix_ms=0.0 suffix_ms=672.8 first_token_ms=2308.0 generation_ms=23472.0 generated=64 generation_tps=2.727
+MEMORY mem_available_drop_mib=6058
+END_CASE failed=0 timed_out=0
+CASE placement=cross mode=copy children=8
+PARENT exit=0 text=c646470e58f73411 prefix_tokens=16321 prefix_ms=19734.1 publish_ms=550.31 state_bytes=936173269 model_ms=585.8 context_ms=57.1 suffix_ms=61.9 generation_ms=6747.2 generated=64 generation_tps=9.485 total_ms=42490.4
+CHILD index=0 own_instance=1 exit=0 text=d42c4c07975a6446 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1290.2 context_ms=172.4 state_ms=391.44 prefix_ms=0.0 suffix_ms=407.1 first_token_ms=2554.4 generation_ms=13144.7 generated=64 generation_tps=4.869
+CHILD index=1 own_instance=0 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1221.3 context_ms=239.4 state_ms=389.18 prefix_ms=0.0 suffix_ms=465.8 first_token_ms=2613.3 generation_ms=18399.3 generated=64 generation_tps=3.478
+CHILD index=2 own_instance=1 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1264.6 context_ms=194.5 state_ms=370.58 prefix_ms=0.0 suffix_ms=402.1 first_token_ms=2550.6 generation_ms=13143.4 generated=64 generation_tps=4.869
+CHILD index=3 own_instance=0 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1203.3 context_ms=222.8 state_ms=405.05 prefix_ms=0.0 suffix_ms=438.4 first_token_ms=2581.0 generation_ms=18444.6 generated=64 generation_tps=3.470
+CHILD index=4 own_instance=1 exit=0 text=3e0fd62f5aa50665 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1269.2 context_ms=196.9 state_ms=369.38 prefix_ms=0.0 suffix_ms=405.6 first_token_ms=2553.4 generation_ms=13153.4 generated=64 generation_tps=4.866
+CHILD index=5 own_instance=0 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1222.1 context_ms=223.6 state_ms=399.33 prefix_ms=0.0 suffix_ms=459.9 first_token_ms=2607.8 generation_ms=18433.6 generated=64 generation_tps=3.472
+CHILD index=6 own_instance=1 exit=0 text=4a8f18b77dbe0332 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1213.7 context_ms=196.2 state_ms=432.82 prefix_ms=0.0 suffix_ms=392.5 first_token_ms=2540.5 generation_ms=13151.1 generated=64 generation_tps=4.867
+CHILD index=7 own_instance=0 exit=0 text=4a8f18b77dbe0332 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1181.8 context_ms=201.4 state_ms=255.22 prefix_ms=0.0 suffix_ms=178.6 first_token_ms=2123.9 generation_ms=18386.4 generated=64 generation_tps=3.481
+MEMORY mem_available_drop_mib=20255
+END_CASE failed=0 timed_out=0
+CASE placement=cross mode=demand children=8
+PARENT exit=0 text=c646470e58f73411 prefix_tokens=16321 prefix_ms=19750.1 publish_ms=550.60 state_bytes=936173269 model_ms=608.3 context_ms=33.1 suffix_ms=61.9 generation_ms=5962.3 generated=64 generation_tps=10.734 total_ms=42539.9
+CHILD index=0 own_instance=1 exit=0 text=d42c4c07975a6446 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1232.3 context_ms=36.5 state_ms=706.24 prefix_ms=0.0 suffix_ms=394.4 first_token_ms=2687.5 generation_ms=12965.9 generated=64 generation_tps=4.936
+CHILD index=1 own_instance=0 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1263.1 context_ms=36.1 state_ms=685.04 prefix_ms=0.0 suffix_ms=460.5 first_token_ms=2754.4 generation_ms=18328.0 generated=64 generation_tps=3.492
+CHILD index=2 own_instance=1 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1231.3 context_ms=38.0 state_ms=716.03 prefix_ms=0.0 suffix_ms=412.5 first_token_ms=2704.8 generation_ms=12945.5 generated=64 generation_tps=4.944
+CHILD index=3 own_instance=0 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1203.9 context_ms=36.3 state_ms=741.85 prefix_ms=0.0 suffix_ms=447.0 first_token_ms=2741.5 generation_ms=18328.4 generated=64 generation_tps=3.492
+CHILD index=4 own_instance=1 exit=0 text=3e0fd62f5aa50665 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1232.7 context_ms=38.0 state_ms=701.10 prefix_ms=0.0 suffix_ms=381.4 first_token_ms=2669.6 generation_ms=12873.6 generated=64 generation_tps=4.971
+CHILD index=5 own_instance=0 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1206.2 context_ms=34.4 state_ms=457.08 prefix_ms=0.0 suffix_ms=186.4 first_token_ms=2184.0 generation_ms=18108.5 generated=64 generation_tps=3.534
+CHILD index=6 own_instance=1 exit=0 text=4a8f18b77dbe0332 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1279.3 context_ms=35.5 state_ms=653.40 prefix_ms=0.0 suffix_ms=398.4 first_token_ms=2685.7 generation_ms=12963.7 generated=64 generation_tps=4.937
+CHILD index=7 own_instance=0 exit=0 text=4a8f18b77dbe0332 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1217.8 context_ms=39.8 state_ms=734.49 prefix_ms=0.0 suffix_ms=466.9 first_token_ms=2761.4 generation_ms=18326.4 generated=64 generation_tps=3.492
+MEMORY mem_available_drop_mib=13718
+END_CASE failed=0 timed_out=0
+CASE placement=cross mode=device children=8
+PARENT exit=0 text=c646470e58f73411 prefix_tokens=16321 prefix_ms=19760.0 publish_ms=40.07 state_bytes=261845 model_ms=589.6 context_ms=33.8 suffix_ms=61.9 generation_ms=5591.9 generated=64 generation_tps=11.445 total_ms=35323.2
+CHILD index=0 own_instance=1 exit=0 text=d42c4c07975a6446 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1183.7 context_ms=513.0 state_ms=100.69 prefix_ms=0.0 suffix_ms=282.0 first_token_ms=2359.1 generation_ms=11883.9 generated=64 generation_tps=5.385
+STDERR llama_init_from_model: failed to initialize the context: kv cache: cannot map a published allocation
+STDERR kv_fork: cannot create the context
+CHILD index=1 own_instance=0 exit=1 text=e3b0c44298fc1c14 
+CHILD index=2 own_instance=1 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1200.3 context_ms=595.8 state_ms=188.44 prefix_ms=0.0 suffix_ms=402.8 first_token_ms=2702.0 generation_ms=11715.8 generated=64 generation_tps=5.463
+STDERR llama_init_from_model: failed to initialize the context: kv cache: cannot map a published allocation
+STDERR kv_fork: cannot create the context
+CHILD index=3 own_instance=0 exit=1 text=e3b0c44298fc1c14 
+CHILD index=4 own_instance=1 exit=0 text=3e0fd62f5aa50665 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1268.4 context_ms=560.3 state_ms=213.99 prefix_ms=0.0 suffix_ms=383.3 first_token_ms=2727.1 generation_ms=11705.2 generated=64 generation_tps=5.468
+STDERR llama_init_from_model: failed to initialize the context: kv cache: cannot map a published allocation
+STDERR kv_fork: cannot create the context
+CHILD index=5 own_instance=0 exit=1 text=e3b0c44298fc1c14 
+CHILD index=6 own_instance=1 exit=0 text=4a8f18b77dbe0332 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1208.2 context_ms=585.5 state_ms=18.33 prefix_ms=0.0 suffix_ms=274.7 first_token_ms=2388.9 generation_ms=11874.2 generated=64 generation_tps=5.390
+STDERR llama_init_from_model: failed to initialize the context: kv cache: cannot map a published allocation
+STDERR kv_fork: cannot create the context
+CHILD index=7 own_instance=0 exit=1 text=e3b0c44298fc1c14 
+MEMORY mem_available_drop_mib=3990
+END_CASE failed=4 timed_out=0
+CASE placement=cross mode=cow children=8
+PARENT exit=0 text=c646470e58f73411 prefix_tokens=16321 prefix_ms=19789.4 publish_ms=8.28 state_bytes=261845 model_ms=588.8 context_ms=34.2 suffix_ms=114.5 generation_ms=8494.6 generated=64 generation_tps=7.534 total_ms=42452.4
+CHILD index=0 own_instance=1 exit=0 text=d42c4c07975a6446 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1268.3 context_ms=46.0 state_ms=7.66 prefix_ms=0.0 suffix_ms=753.5 first_token_ms=2384.4 generation_ms=13638.2 generated=64 generation_tps=4.693
+CHILD index=1 own_instance=0 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1226.6 context_ms=39.0 state_ms=7.42 prefix_ms=0.0 suffix_ms=769.8 first_token_ms=2356.9 generation_ms=19187.3 generated=64 generation_tps=3.336
+CHILD index=2 own_instance=1 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1278.0 context_ms=45.1 state_ms=7.63 prefix_ms=0.0 suffix_ms=754.7 first_token_ms=2384.3 generation_ms=13644.9 generated=64 generation_tps=4.690
+CHILD index=3 own_instance=0 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1170.9 context_ms=40.5 state_ms=7.65 prefix_ms=0.0 suffix_ms=687.9 first_token_ms=2220.8 generation_ms=19272.0 generated=64 generation_tps=3.321
+CHILD index=4 own_instance=1 exit=0 text=3e0fd62f5aa50665 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1218.5 context_ms=36.9 state_ms=7.35 prefix_ms=0.0 suffix_ms=523.9 first_token_ms=2090.3 generation_ms=13757.6 generated=64 generation_tps=4.652
+CHILD index=5 own_instance=0 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1187.1 context_ms=39.9 state_ms=7.39 prefix_ms=0.0 suffix_ms=699.6 first_token_ms=2227.0 generation_ms=19259.7 generated=64 generation_tps=3.323
+CHILD index=6 own_instance=1 exit=0 text=4a8f18b77dbe0332 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1285.4 context_ms=46.9 state_ms=7.52 prefix_ms=0.0 suffix_ms=757.1 first_token_ms=2390.3 generation_ms=13617.5 generated=64 generation_tps=4.700
+CHILD index=7 own_instance=0 exit=0 text=4a8f18b77dbe0332 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1197.9 context_ms=36.6 state_ms=7.53 prefix_ms=0.0 suffix_ms=730.8 first_token_ms=2280.0 generation_ms=19253.2 generated=64 generation_tps=3.324
+MEMORY mem_available_drop_mib=6766
+END_CASE failed=0 timed_out=0
+CASE placement=cross mode=extent children=8
+PARENT exit=0 text=c646470e58f73411 prefix_tokens=16321 prefix_ms=19797.8 publish_ms=7.14 state_bytes=261845 model_ms=607.2 context_ms=34.9 suffix_ms=104.1 generation_ms=8538.1 generated=64 generation_tps=7.496 total_ms=41890.0
+CHILD index=0 own_instance=1 exit=0 text=d42c4c07975a6446 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1248.3 context_ms=38.7 state_ms=7.64 prefix_ms=0.0 suffix_ms=397.0 first_token_ms=2002.8 generation_ms=13574.7 generated=64 generation_tps=4.715
+CHILD index=1 own_instance=0 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1187.7 context_ms=54.0 state_ms=7.59 prefix_ms=0.0 suffix_ms=418.3 first_token_ms=1975.8 generation_ms=18960.1 generated=64 generation_tps=3.376
+CHILD index=2 own_instance=1 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1179.2 context_ms=47.1 state_ms=7.64 prefix_ms=0.0 suffix_ms=343.3 first_token_ms=1892.5 generation_ms=13650.9 generated=64 generation_tps=4.688
+CHILD index=3 own_instance=0 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1147.8 context_ms=46.7 state_ms=7.49 prefix_ms=0.0 suffix_ms=396.7 first_token_ms=1920.3 generation_ms=18974.8 generated=64 generation_tps=3.373
+CHILD index=4 own_instance=1 exit=0 text=3e0fd62f5aa50665 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1183.6 context_ms=53.9 state_ms=7.70 prefix_ms=0.0 suffix_ms=348.0 first_token_ms=1895.9 generation_ms=13612.3 generated=64 generation_tps=4.702
+CHILD index=5 own_instance=0 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1224.2 context_ms=40.9 state_ms=7.96 prefix_ms=0.0 suffix_ms=487.7 first_token_ms=2078.7 generation_ms=18874.7 generated=64 generation_tps=3.391
+CHILD index=6 own_instance=1 exit=0 text=4a8f18b77dbe0332 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1222.0 context_ms=46.5 state_ms=7.60 prefix_ms=0.0 suffix_ms=370.1 first_token_ms=1948.4 generation_ms=13608.7 generated=64 generation_tps=4.703
+CHILD index=7 own_instance=0 exit=0 text=4a8f18b77dbe0332 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1054.1 context_ms=36.0 state_ms=7.44 prefix_ms=0.0 suffix_ms=131.6 first_token_ms=1489.5 generation_ms=18864.3 generated=64 generation_tps=3.393
+MEMORY mem_available_drop_mib=5926
+END_CASE failed=0 timed_out=0
+END_KVSOTA
+BEGIN_KVSOTA run=4 paragraphs=320 context=32768
+CASE placement=same mode=extent children=8
+PARENT exit=0 text=c646470e58f73411 prefix_tokens=16321 prefix_ms=19796.7 publish_ms=8.83 state_bytes=261845 model_ms=587.0 context_ms=34.2 suffix_ms=118.5 generation_ms=13049.6 generated=64 generation_tps=4.904 total_ms=46765.6
+CHILD index=0 own_instance=1 exit=0 text=d42c4c07975a6446 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1293.0 context_ms=44.8 state_ms=7.65 prefix_ms=0.0 suffix_ms=680.1 first_token_ms=2330.3 generation_ms=23468.2 generated=64 generation_tps=2.727
+CHILD index=1 own_instance=1 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1286.0 context_ms=40.0 state_ms=7.36 prefix_ms=0.0 suffix_ms=668.4 first_token_ms=2316.2 generation_ms=23480.3 generated=64 generation_tps=2.726
+CHILD index=2 own_instance=1 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1216.2 context_ms=38.2 state_ms=7.48 prefix_ms=0.0 suffix_ms=465.2 first_token_ms=2028.1 generation_ms=23593.3 generated=64 generation_tps=2.713
+CHILD index=3 own_instance=1 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1262.9 context_ms=43.3 state_ms=7.54 prefix_ms=0.0 suffix_ms=642.3 first_token_ms=2268.4 generation_ms=23479.7 generated=64 generation_tps=2.726
+CHILD index=4 own_instance=1 exit=0 text=3e0fd62f5aa50665 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1247.6 context_ms=38.3 state_ms=7.62 prefix_ms=0.0 suffix_ms=472.6 first_token_ms=2040.1 generation_ms=23587.1 generated=64 generation_tps=2.713
+CHILD index=5 own_instance=1 exit=0 text=3e0fd62f5aa50665 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1195.0 context_ms=38.3 state_ms=7.50 prefix_ms=0.0 suffix_ms=298.4 first_token_ms=1835.3 generation_ms=23650.7 generated=64 generation_tps=2.706
+CHILD index=6 own_instance=1 exit=0 text=4a8f18b77dbe0332 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1229.8 context_ms=43.6 state_ms=7.65 prefix_ms=0.0 suffix_ms=483.1 first_token_ms=2059.0 generation_ms=23578.7 generated=64 generation_tps=2.714
+CHILD index=7 own_instance=1 exit=0 text=4a8f18b77dbe0332 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1296.6 context_ms=43.8 state_ms=7.38 prefix_ms=0.0 suffix_ms=684.9 first_token_ms=2339.7 generation_ms=23461.6 generated=64 generation_tps=2.728
+MEMORY mem_available_drop_mib=6025
+END_CASE failed=0 timed_out=0
+CASE placement=same mode=cow children=8
+PARENT exit=0 text=c646470e58f73411 prefix_tokens=16321 prefix_ms=19812.4 publish_ms=8.22 state_bytes=261845 model_ms=590.6 context_ms=35.0 suffix_ms=100.3 generation_ms=14333.8 generated=64 generation_tps=4.465 total_ms=47620.6
+CHILD index=0 own_instance=1 exit=0 text=d42c4c07975a6446 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1044.2 context_ms=39.2 state_ms=8.12 prefix_ms=0.0 suffix_ms=274.1 first_token_ms=1621.4 generation_ms=24171.7 generated=64 generation_tps=2.648
+CHILD index=1 own_instance=1 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1254.7 context_ms=40.7 state_ms=7.48 prefix_ms=0.0 suffix_ms=1258.5 first_token_ms=2870.3 generation_ms=23758.4 generated=64 generation_tps=2.694
+CHILD index=2 own_instance=1 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1274.9 context_ms=38.9 state_ms=7.55 prefix_ms=0.0 suffix_ms=1293.0 first_token_ms=2912.9 generation_ms=23728.0 generated=64 generation_tps=2.697
+CHILD index=3 own_instance=1 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1225.2 context_ms=33.9 state_ms=7.26 prefix_ms=0.0 suffix_ms=1157.9 first_token_ms=2711.7 generation_ms=23832.4 generated=64 generation_tps=2.685
+CHILD index=4 own_instance=1 exit=0 text=3e0fd62f5aa50665 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1190.3 context_ms=33.9 state_ms=7.38 prefix_ms=0.0 suffix_ms=1057.0 first_token_ms=2587.7 generation_ms=23882.1 generated=64 generation_tps=2.680
+CHILD index=5 own_instance=1 exit=0 text=3e0fd62f5aa50665 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1144.9 context_ms=34.1 state_ms=7.34 prefix_ms=0.0 suffix_ms=1069.4 first_token_ms=2564.5 generation_ms=23872.5 generated=64 generation_tps=2.681
+CHILD index=6 own_instance=1 exit=0 text=4a8f18b77dbe0332 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1277.7 context_ms=39.3 state_ms=7.39 prefix_ms=0.0 suffix_ms=1260.4 first_token_ms=2891.2 generation_ms=23750.0 generated=64 generation_tps=2.695
+CHILD index=7 own_instance=1 exit=0 text=4a8f18b77dbe0332 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1269.4 context_ms=36.9 state_ms=7.55 prefix_ms=0.0 suffix_ms=1231.5 first_token_ms=2854.7 generation_ms=23780.7 generated=64 generation_tps=2.691
+MEMORY mem_available_drop_mib=6880
+END_CASE failed=0 timed_out=0
+CASE placement=same mode=device children=8
+PARENT exit=0 text=c646470e58f73411 prefix_tokens=16321 prefix_ms=19746.3 publish_ms=36.99 state_bytes=261845 model_ms=587.7 context_ms=34.9 suffix_ms=61.7 generation_ms=8502.7 generated=64 generation_tps=7.527 total_ms=47081.7
+CHILD index=0 own_instance=1 exit=0 text=d42c4c07975a6446 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1288.4 context_ms=629.3 state_ms=291.29 prefix_ms=0.0 suffix_ms=667.6 first_token_ms=3192.1 generation_ms=22920.6 generated=64 generation_tps=2.792
+CHILD index=1 own_instance=1 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1291.3 context_ms=599.9 state_ms=280.80 prefix_ms=0.0 suffix_ms=696.3 first_token_ms=3192.2 generation_ms=22922.4 generated=64 generation_tps=2.792
+CHILD index=2 own_instance=1 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1240.0 context_ms=561.3 state_ms=202.57 prefix_ms=0.0 suffix_ms=463.1 first_token_ms=2777.2 generation_ms=23138.9 generated=64 generation_tps=2.766
+CHILD index=3 own_instance=1 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1227.6 context_ms=554.8 state_ms=173.84 prefix_ms=0.0 suffix_ms=405.2 first_token_ms=2667.9 generation_ms=23180.9 generated=64 generation_tps=2.761
+CHILD index=4 own_instance=1 exit=0 text=3e0fd62f5aa50665 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1235.2 context_ms=460.1 state_ms=68.49 prefix_ms=0.0 suffix_ms=240.9 first_token_ms=2299.0 generation_ms=22980.7 generated=64 generation_tps=2.785
+CHILD index=5 own_instance=1 exit=0 text=3e0fd62f5aa50665 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1272.7 context_ms=578.3 state_ms=211.23 prefix_ms=0.0 suffix_ms=608.3 first_token_ms=2984.9 generation_ms=23021.2 generated=64 generation_tps=2.780
+CHILD index=6 own_instance=1 exit=0 text=4a8f18b77dbe0332 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1202.2 context_ms=563.3 state_ms=183.06 prefix_ms=0.0 suffix_ms=406.9 first_token_ms=2675.7 generation_ms=23187.7 generated=64 generation_tps=2.760
+CHILD index=7 own_instance=1 exit=0 text=4a8f18b77dbe0332 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1287.3 context_ms=613.9 state_ms=275.90 prefix_ms=0.0 suffix_ms=665.1 first_token_ms=3157.6 generation_ms=22931.7 generated=64 generation_tps=2.791
+MEMORY mem_available_drop_mib=7810
+END_CASE failed=0 timed_out=0
+CASE placement=same mode=demand children=8
+PARENT exit=0 text=c646470e58f73411 prefix_tokens=16321 prefix_ms=19755.3 publish_ms=556.29 state_bytes=936173269 model_ms=586.1 context_ms=33.8 suffix_ms=61.6 generation_ms=11215.7 generated=64 generation_tps=5.706 total_ms=47782.7
+CHILD index=0 own_instance=1 exit=0 text=d42c4c07975a6446 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1303.6 context_ms=39.4 state_ms=595.66 prefix_ms=0.0 suffix_ms=663.0 first_token_ms=2917.3 generation_ms=23293.2 generated=64 generation_tps=2.748
+CHILD index=1 own_instance=1 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1129.6 context_ms=32.3 state_ms=260.13 prefix_ms=0.0 suffix_ms=250.3 first_token_ms=1954.0 generation_ms=23053.5 generated=64 generation_tps=2.776
+CHILD index=2 own_instance=1 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1233.8 context_ms=36.2 state_ms=529.58 prefix_ms=0.0 suffix_ms=513.6 first_token_ms=2623.8 generation_ms=23380.9 generated=64 generation_tps=2.737
+CHILD index=3 own_instance=1 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1225.1 context_ms=36.4 state_ms=486.47 prefix_ms=0.0 suffix_ms=411.3 first_token_ms=2463.6 generation_ms=23464.8 generated=64 generation_tps=2.727
+CHILD index=4 own_instance=1 exit=0 text=3e0fd62f5aa50665 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1299.2 context_ms=41.5 state_ms=595.67 prefix_ms=0.0 suffix_ms=663.6 first_token_ms=2918.3 generation_ms=23295.9 generated=64 generation_tps=2.747
+CHILD index=5 own_instance=1 exit=0 text=3e0fd62f5aa50665 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1263.7 context_ms=39.1 state_ms=606.03 prefix_ms=0.0 suffix_ms=647.0 first_token_ms=2855.9 generation_ms=23323.1 generated=64 generation_tps=2.744
+CHILD index=6 own_instance=1 exit=0 text=4a8f18b77dbe0332 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1256.0 context_ms=41.9 state_ms=603.65 prefix_ms=0.0 suffix_ms=649.3 first_token_ms=2863.1 generation_ms=23322.4 generated=64 generation_tps=2.744
+CHILD index=7 own_instance=1 exit=0 text=4a8f18b77dbe0332 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1299.7 context_ms=39.1 state_ms=612.09 prefix_ms=0.0 suffix_ms=667.0 first_token_ms=2917.9 generation_ms=23263.3 generated=64 generation_tps=2.751
+MEMORY mem_available_drop_mib=14203
+END_CASE failed=0 timed_out=0
+CASE placement=same mode=copy children=8
+PARENT exit=0 text=c646470e58f73411 prefix_tokens=16321 prefix_ms=19723.7 publish_ms=529.26 state_bytes=936173269 model_ms=586.4 context_ms=58.4 suffix_ms=61.7 generation_ms=11819.0 generated=64 generation_tps=5.415 total_ms=47792.7
+CHILD index=0 own_instance=1 exit=0 text=d42c4c07975a6446 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1183.3 context_ms=91.4 state_ms=395.41 prefix_ms=0.0 suffix_ms=475.3 first_token_ms=2454.4 generation_ms=23607.2 generated=64 generation_tps=2.711
+CHILD index=1 own_instance=1 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1309.8 context_ms=133.3 state_ms=327.82 prefix_ms=0.0 suffix_ms=605.8 first_token_ms=2680.3 generation_ms=23476.7 generated=64 generation_tps=2.726
+CHILD index=2 own_instance=1 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1296.7 context_ms=184.2 state_ms=333.87 prefix_ms=0.0 suffix_ms=679.5 first_token_ms=2811.5 generation_ms=23472.2 generated=64 generation_tps=2.727
+CHILD index=3 own_instance=1 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1307.5 context_ms=170.8 state_ms=324.38 prefix_ms=0.0 suffix_ms=660.6 first_token_ms=2777.4 generation_ms=23496.7 generated=64 generation_tps=2.724
+CHILD index=4 own_instance=1 exit=0 text=3e0fd62f5aa50665 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1290.6 context_ms=167.1 state_ms=326.57 prefix_ms=0.0 suffix_ms=650.6 first_token_ms=2755.1 generation_ms=23511.2 generated=64 generation_tps=2.722
+CHILD index=5 own_instance=1 exit=0 text=3e0fd62f5aa50665 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1120.7 context_ms=70.4 state_ms=322.51 prefix_ms=0.0 suffix_ms=305.1 first_token_ms=2103.4 generation_ms=23592.2 generated=64 generation_tps=2.713
+CHILD index=6 own_instance=1 exit=0 text=4a8f18b77dbe0332 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1177.6 context_ms=74.6 state_ms=419.61 prefix_ms=0.0 suffix_ms=445.1 first_token_ms=2419.3 generation_ms=23652.4 generated=64 generation_tps=2.706
+CHILD index=7 own_instance=1 exit=0 text=4a8f18b77dbe0332 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1300.6 context_ms=189.2 state_ms=331.23 prefix_ms=0.0 suffix_ms=679.9 first_token_ms=2810.8 generation_ms=23471.9 generated=64 generation_tps=2.727
+MEMORY mem_available_drop_mib=20280
+END_CASE failed=0 timed_out=0
+CASE placement=cross mode=extent children=8
+PARENT exit=0 text=c646470e58f73411 prefix_tokens=16321 prefix_ms=19839.6 publish_ms=9.04 state_bytes=261845 model_ms=587.0 context_ms=34.8 suffix_ms=106.6 generation_ms=8222.6 generated=64 generation_tps=7.783 total_ms=41942.5
+CHILD index=0 own_instance=1 exit=0 text=d42c4c07975a6446 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1264.6 context_ms=49.9 state_ms=7.73 prefix_ms=0.0 suffix_ms=399.5 first_token_ms=2041.5 generation_ms=13555.0 generated=64 generation_tps=4.722
+CHILD index=1 own_instance=0 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1248.6 context_ms=41.9 state_ms=7.58 prefix_ms=0.0 suffix_ms=459.6 first_token_ms=2062.9 generation_ms=18957.6 generated=64 generation_tps=3.376
+CHILD index=2 own_instance=1 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1266.4 context_ms=50.7 state_ms=7.37 prefix_ms=0.0 suffix_ms=372.8 first_token_ms=1999.1 generation_ms=13548.3 generated=64 generation_tps=4.724
+CHILD index=3 own_instance=0 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1213.9 context_ms=43.2 state_ms=7.52 prefix_ms=0.0 suffix_ms=451.9 first_token_ms=2026.3 generation_ms=18964.7 generated=64 generation_tps=3.375
+CHILD index=4 own_instance=1 exit=0 text=3e0fd62f5aa50665 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1264.2 context_ms=52.2 state_ms=7.73 prefix_ms=0.0 suffix_ms=388.7 first_token_ms=2031.0 generation_ms=13559.9 generated=64 generation_tps=4.720
+CHILD index=5 own_instance=0 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1113.1 context_ms=35.1 state_ms=7.48 prefix_ms=0.0 suffix_ms=149.9 first_token_ms=1581.1 generation_ms=19059.4 generated=64 generation_tps=3.358
+CHILD index=6 own_instance=1 exit=0 text=4a8f18b77dbe0332 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1273.7 context_ms=45.7 state_ms=7.44 prefix_ms=0.0 suffix_ms=359.2 first_token_ms=1983.2 generation_ms=13521.2 generated=64 generation_tps=4.733
+CHILD index=7 own_instance=0 exit=0 text=4a8f18b77dbe0332 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1145.7 context_ms=36.0 state_ms=7.51 prefix_ms=0.0 suffix_ms=312.4 first_token_ms=1813.2 generation_ms=19086.3 generated=64 generation_tps=3.353
+MEMORY mem_available_drop_mib=5934
+END_CASE failed=0 timed_out=0
+CASE placement=cross mode=cow children=8
+PARENT exit=0 text=c646470e58f73411 prefix_tokens=16321 prefix_ms=19792.3 publish_ms=8.93 state_bytes=261845 model_ms=587.7 context_ms=35.6 suffix_ms=104.7 generation_ms=8732.6 generated=64 generation_tps=7.329 total_ms=42232.9
+CHILD index=0 own_instance=1 exit=0 text=d42c4c07975a6446 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1262.7 context_ms=37.7 state_ms=7.76 prefix_ms=0.0 suffix_ms=793.6 first_token_ms=2393.7 generation_ms=13659.7 generated=64 generation_tps=4.685
+CHILD index=1 own_instance=0 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1129.5 context_ms=35.4 state_ms=7.65 prefix_ms=0.0 suffix_ms=643.9 first_token_ms=2125.6 generation_ms=19067.6 generated=64 generation_tps=3.356
+CHILD index=2 own_instance=1 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1237.7 context_ms=40.3 state_ms=7.43 prefix_ms=0.0 suffix_ms=819.1 first_token_ms=2424.8 generation_ms=13645.9 generated=64 generation_tps=4.690
+CHILD index=3 own_instance=0 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1198.2 context_ms=44.7 state_ms=7.18 prefix_ms=0.0 suffix_ms=823.6 first_token_ms=2386.5 generation_ms=18933.5 generated=64 generation_tps=3.380
+CHILD index=4 own_instance=1 exit=0 text=3e0fd62f5aa50665 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1190.4 context_ms=46.0 state_ms=7.37 prefix_ms=0.0 suffix_ms=733.0 first_token_ms=2278.0 generation_ms=13747.6 generated=64 generation_tps=4.655
+CHILD index=5 own_instance=0 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1204.3 context_ms=51.4 state_ms=7.83 prefix_ms=0.0 suffix_ms=804.7 first_token_ms=2368.0 generation_ms=18958.6 generated=64 generation_tps=3.376
+CHILD index=6 own_instance=1 exit=0 text=4a8f18b77dbe0332 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1180.8 context_ms=44.6 state_ms=7.53 prefix_ms=0.0 suffix_ms=735.5 first_token_ms=2285.2 generation_ms=13747.0 generated=64 generation_tps=4.656
+CHILD index=7 own_instance=0 exit=0 text=4a8f18b77dbe0332 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=974.5 context_ms=34.5 state_ms=7.37 prefix_ms=0.0 suffix_ms=175.1 first_token_ms=1436.6 generation_ms=19056.9 generated=64 generation_tps=3.358
+MEMORY mem_available_drop_mib=6782
+END_CASE failed=0 timed_out=0
+CASE placement=cross mode=device children=8
+PARENT exit=0 text=c646470e58f73411 prefix_tokens=16321 prefix_ms=19748.1 publish_ms=42.63 state_bytes=261845 model_ms=588.7 context_ms=33.8 suffix_ms=64.7 generation_ms=6253.2 generated=64 generation_tps=10.235 total_ms=35404.1
+CHILD index=0 own_instance=1 exit=0 text=d42c4c07975a6446 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1106.8 context_ms=244.2 state_ms=54.30 prefix_ms=0.0 suffix_ms=254.3 first_token_ms=1954.8 generation_ms=11577.6 generated=64 generation_tps=5.528
+STDERR llama_init_from_model: failed to initialize the context: kv cache: cannot map a published allocation
+STDERR kv_fork: cannot create the context
+CHILD index=1 own_instance=0 exit=1 text=e3b0c44298fc1c14 
+CHILD index=2 own_instance=1 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1268.1 context_ms=538.9 state_ms=228.08 prefix_ms=0.0 suffix_ms=414.0 first_token_ms=2770.6 generation_ms=11674.3 generated=64 generation_tps=5.482
+STDERR llama_init_from_model: failed to initialize the context: kv cache: cannot map a published allocation
+STDERR kv_fork: cannot create the context
+CHILD index=3 own_instance=0 exit=1 text=e3b0c44298fc1c14 
+CHILD index=4 own_instance=1 exit=0 text=3e0fd62f5aa50665 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1293.9 context_ms=521.3 state_ms=225.03 prefix_ms=0.0 suffix_ms=398.1 first_token_ms=2753.4 generation_ms=11681.2 generated=64 generation_tps=5.479
+STDERR llama_init_from_model: failed to initialize the context: kv cache: cannot map a published allocation
+STDERR kv_fork: cannot create the context
+CHILD index=5 own_instance=0 exit=1 text=e3b0c44298fc1c14 
+CHILD index=6 own_instance=1 exit=0 text=4a8f18b77dbe0332 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1278.4 context_ms=539.8 state_ms=229.41 prefix_ms=0.0 suffix_ms=408.3 first_token_ms=2766.4 generation_ms=11689.5 generated=64 generation_tps=5.475
+STDERR llama_init_from_model: failed to initialize the context: kv cache: cannot map a published allocation
+STDERR kv_fork: cannot create the context
+CHILD index=7 own_instance=0 exit=1 text=e3b0c44298fc1c14 
+MEMORY mem_available_drop_mib=3964
+END_CASE failed=4 timed_out=0
+CASE placement=cross mode=demand children=8
+PARENT exit=0 text=c646470e58f73411 prefix_tokens=16321 prefix_ms=19728.5 publish_ms=541.35 state_bytes=936173269 model_ms=588.0 context_ms=34.1 suffix_ms=62.2 generation_ms=7232.0 generated=64 generation_tps=8.850 total_ms=42153.9
+CHILD index=0 own_instance=1 exit=0 text=d42c4c07975a6446 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1289.5 context_ms=39.3 state_ms=468.98 prefix_ms=0.0 suffix_ms=425.8 first_token_ms=2530.7 generation_ms=13131.7 generated=64 generation_tps=4.874
+CHILD index=1 own_instance=0 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1070.1 context_ms=32.8 state_ms=201.66 prefix_ms=0.0 suffix_ms=185.6 first_token_ms=1765.9 generation_ms=18165.0 generated=64 generation_tps=3.523
+CHILD index=2 own_instance=1 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1140.3 context_ms=33.9 state_ms=356.73 prefix_ms=0.0 suffix_ms=235.0 first_token_ms=2078.5 generation_ms=13137.9 generated=64 generation_tps=4.871
+CHILD index=3 own_instance=0 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1185.1 context_ms=33.9 state_ms=346.75 prefix_ms=0.0 suffix_ms=334.6 first_token_ms=2225.2 generation_ms=18373.3 generated=64 generation_tps=3.483
+CHILD index=4 own_instance=1 exit=0 text=3e0fd62f5aa50665 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1278.5 context_ms=39.9 state_ms=474.31 prefix_ms=0.0 suffix_ms=431.0 first_token_ms=2537.0 generation_ms=13132.9 generated=64 generation_tps=4.873
+CHILD index=5 own_instance=0 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1228.4 context_ms=36.0 state_ms=459.49 prefix_ms=0.0 suffix_ms=468.0 first_token_ms=2514.1 generation_ms=18243.9 generated=64 generation_tps=3.508
+CHILD index=6 own_instance=1 exit=0 text=4a8f18b77dbe0332 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1294.4 context_ms=39.7 state_ms=465.33 prefix_ms=0.0 suffix_ms=409.0 first_token_ms=2509.7 generation_ms=13066.6 generated=64 generation_tps=4.898
+CHILD index=7 own_instance=0 exit=0 text=4a8f18b77dbe0332 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1234.1 context_ms=44.6 state_ms=464.98 prefix_ms=0.0 suffix_ms=479.1 first_token_ms=2540.1 generation_ms=18205.3 generated=64 generation_tps=3.515
+MEMORY mem_available_drop_mib=13701
+END_CASE failed=0 timed_out=0
+CASE placement=cross mode=copy children=8
+PARENT exit=0 text=c646470e58f73411 prefix_tokens=16321 prefix_ms=19730.3 publish_ms=550.44 state_bytes=936173269 model_ms=586.2 context_ms=58.0 suffix_ms=61.5 generation_ms=7766.1 generated=64 generation_tps=8.241 total_ms=42362.1
+CHILD index=0 own_instance=1 exit=0 text=d42c4c07975a6446 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1214.5 context_ms=145.8 state_ms=301.93 prefix_ms=0.0 suffix_ms=386.8 first_token_ms=2365.0 generation_ms=13379.9 generated=64 generation_tps=4.783
+CHILD index=1 own_instance=0 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1177.4 context_ms=83.7 state_ms=408.30 prefix_ms=0.0 suffix_ms=439.9 first_token_ms=2412.1 generation_ms=18492.3 generated=64 generation_tps=3.461
+CHILD index=2 own_instance=1 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1169.6 context_ms=118.8 state_ms=360.52 prefix_ms=0.0 suffix_ms=379.7 first_token_ms=2347.0 generation_ms=13382.5 generated=64 generation_tps=4.782
+CHILD index=3 own_instance=0 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1149.3 context_ms=96.9 state_ms=257.53 prefix_ms=0.0 suffix_ms=194.1 first_token_ms=1975.6 generation_ms=18440.1 generated=64 generation_tps=3.471
+CHILD index=4 own_instance=1 exit=0 text=3e0fd62f5aa50665 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1245.7 context_ms=135.4 state_ms=289.16 prefix_ms=0.0 suffix_ms=358.7 first_token_ms=2351.9 generation_ms=13397.0 generated=64 generation_tps=4.777
+CHILD index=5 own_instance=0 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1254.0 context_ms=136.5 state_ms=267.47 prefix_ms=0.0 suffix_ms=441.4 first_token_ms=2413.9 generation_ms=18487.8 generated=64 generation_tps=3.462
+CHILD index=6 own_instance=1 exit=0 text=4a8f18b77dbe0332 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1257.6 context_ms=114.9 state_ms=301.70 prefix_ms=0.0 suffix_ms=366.8 first_token_ms=2341.1 generation_ms=13305.5 generated=64 generation_tps=4.810
+CHILD index=7 own_instance=0 exit=0 text=4a8f18b77dbe0332 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1144.3 context_ms=115.8 state_ms=401.88 prefix_ms=0.0 suffix_ms=420.0 first_token_ms=2390.3 generation_ms=18476.1 generated=64 generation_tps=3.464
+MEMORY mem_available_drop_mib=20279
+END_CASE failed=0 timed_out=0
+END_KVSOTA
+BEGIN_KVSOTA run=5 paragraphs=320 context=32768
+CASE placement=same mode=copy children=8
+PARENT exit=0 text=c646470e58f73411 prefix_tokens=16321 prefix_ms=19733.9 publish_ms=562.98 state_bytes=936173269 model_ms=601.2 context_ms=57.5 suffix_ms=61.7 generation_ms=11169.6 generated=64 generation_tps=5.730 total_ms=47995.7
+CHILD index=0 own_instance=1 exit=0 text=d42c4c07975a6446 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1255.5 context_ms=191.3 state_ms=447.02 prefix_ms=0.0 suffix_ms=652.0 first_token_ms=2854.5 generation_ms=23390.5 generated=64 generation_tps=2.736
+CHILD index=1 own_instance=1 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1296.5 context_ms=190.1 state_ms=393.19 prefix_ms=0.0 suffix_ms=652.1 first_token_ms=2852.5 generation_ms=23381.8 generated=64 generation_tps=2.737
+CHILD index=2 own_instance=1 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1148.8 context_ms=62.6 state_ms=315.58 prefix_ms=0.0 suffix_ms=289.7 first_token_ms=2092.5 generation_ms=23069.8 generated=64 generation_tps=2.774
+CHILD index=3 own_instance=1 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1289.8 context_ms=213.5 state_ms=381.65 prefix_ms=0.0 suffix_ms=617.7 first_token_ms=2818.0 generation_ms=23438.5 generated=64 generation_tps=2.731
+CHILD index=4 own_instance=1 exit=0 text=3e0fd62f5aa50665 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1307.4 context_ms=178.7 state_ms=403.86 prefix_ms=0.0 suffix_ms=651.4 first_token_ms=2850.9 generation_ms=23399.2 generated=64 generation_tps=2.735
+CHILD index=5 own_instance=1 exit=0 text=3e0fd62f5aa50665 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1237.5 context_ms=169.6 state_ms=469.70 prefix_ms=0.0 suffix_ms=652.4 first_token_ms=2852.6 generation_ms=23393.2 generated=64 generation_tps=2.736
+CHILD index=6 own_instance=1 exit=0 text=4a8f18b77dbe0332 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1234.8 context_ms=159.7 state_ms=505.44 prefix_ms=0.0 suffix_ms=665.3 first_token_ms=2867.2 generation_ms=23401.5 generated=64 generation_tps=2.735
+CHILD index=7 own_instance=1 exit=0 text=4a8f18b77dbe0332 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1250.1 context_ms=184.5 state_ms=451.43 prefix_ms=0.0 suffix_ms=635.6 first_token_ms=2833.1 generation_ms=23389.0 generated=64 generation_tps=2.736
+MEMORY mem_available_drop_mib=20290
+END_CASE failed=0 timed_out=0
+CASE placement=same mode=demand children=8
+PARENT exit=0 text=c646470e58f73411 prefix_tokens=16321 prefix_ms=19756.5 publish_ms=515.20 state_bytes=936173269 model_ms=587.2 context_ms=34.2 suffix_ms=61.6 generation_ms=10778.7 generated=64 generation_tps=5.938 total_ms=47778.5
+CHILD index=0 own_instance=1 exit=0 text=d42c4c07975a6446 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1260.5 context_ms=48.6 state_ms=623.98 prefix_ms=0.0 suffix_ms=642.9 first_token_ms=2895.5 generation_ms=23314.9 generated=64 generation_tps=2.745
+CHILD index=1 own_instance=1 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1267.5 context_ms=48.3 state_ms=601.47 prefix_ms=0.0 suffix_ms=639.3 first_token_ms=2866.0 generation_ms=23264.3 generated=64 generation_tps=2.751
+CHILD index=2 own_instance=1 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1252.8 context_ms=49.9 state_ms=622.96 prefix_ms=0.0 suffix_ms=651.3 first_token_ms=2902.0 generation_ms=23299.7 generated=64 generation_tps=2.747
+CHILD index=3 own_instance=1 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1265.6 context_ms=52.9 state_ms=612.00 prefix_ms=0.0 suffix_ms=639.1 first_token_ms=2882.6 generation_ms=23317.5 generated=64 generation_tps=2.745
+CHILD index=4 own_instance=1 exit=0 text=3e0fd62f5aa50665 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1290.9 context_ms=44.9 state_ms=598.84 prefix_ms=0.0 suffix_ms=642.7 first_token_ms=2893.1 generation_ms=23305.4 generated=64 generation_tps=2.746
+CHILD index=5 own_instance=1 exit=0 text=3e0fd62f5aa50665 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1183.5 context_ms=32.7 state_ms=255.76 prefix_ms=0.0 suffix_ms=249.0 first_token_ms=2007.6 generation_ms=22983.2 generated=64 generation_tps=2.785
+CHILD index=6 own_instance=1 exit=0 text=4a8f18b77dbe0332 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1215.7 context_ms=35.9 state_ms=475.27 prefix_ms=0.0 suffix_ms=382.4 first_token_ms=2433.5 generation_ms=23370.0 generated=64 generation_tps=2.739
+CHILD index=7 own_instance=1 exit=0 text=4a8f18b77dbe0332 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1282.6 context_ms=48.2 state_ms=615.36 prefix_ms=0.0 suffix_ms=638.3 first_token_ms=2903.5 generation_ms=23302.7 generated=64 generation_tps=2.746
+MEMORY mem_available_drop_mib=14222
+END_CASE failed=0 timed_out=0
+CASE placement=same mode=device children=8
+PARENT exit=0 text=c646470e58f73411 prefix_tokens=16321 prefix_ms=19751.5 publish_ms=42.76 state_bytes=261845 model_ms=587.6 context_ms=33.5 suffix_ms=61.8 generation_ms=9953.5 generated=64 generation_tps=6.430 total_ms=47151.1
+CHILD index=0 own_instance=1 exit=0 text=d42c4c07975a6446 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1252.9 context_ms=528.6 state_ms=230.93 prefix_ms=0.0 suffix_ms=512.9 first_token_ms=2845.4 generation_ms=23146.3 generated=64 generation_tps=2.765
+CHILD index=1 own_instance=1 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1139.8 context_ms=181.0 state_ms=80.04 prefix_ms=0.0 suffix_ms=238.5 first_token_ms=1926.7 generation_ms=22200.2 generated=64 generation_tps=2.883
+CHILD index=2 own_instance=1 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1279.1 context_ms=547.0 state_ms=231.59 prefix_ms=0.0 suffix_ms=589.6 first_token_ms=2959.7 generation_ms=23100.4 generated=64 generation_tps=2.771
+CHILD index=3 own_instance=1 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1316.6 context_ms=560.5 state_ms=245.81 prefix_ms=0.0 suffix_ms=656.5 first_token_ms=3084.4 generation_ms=23020.8 generated=64 generation_tps=2.780
+CHILD index=4 own_instance=1 exit=0 text=3e0fd62f5aa50665 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1311.3 context_ms=570.6 state_ms=267.33 prefix_ms=0.0 suffix_ms=689.5 first_token_ms=3165.4 generation_ms=22967.7 generated=64 generation_tps=2.787
+CHILD index=5 own_instance=1 exit=0 text=3e0fd62f5aa50665 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1286.6 context_ms=584.4 state_ms=257.63 prefix_ms=0.0 suffix_ms=679.0 first_token_ms=3134.7 generation_ms=22991.0 generated=64 generation_tps=2.784
+CHILD index=6 own_instance=1 exit=0 text=4a8f18b77dbe0332 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1236.7 context_ms=497.6 state_ms=238.39 prefix_ms=0.0 suffix_ms=484.8 first_token_ms=2779.2 generation_ms=23160.5 generated=64 generation_tps=2.763
+CHILD index=7 own_instance=1 exit=0 text=4a8f18b77dbe0332 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1286.8 context_ms=526.1 state_ms=240.03 prefix_ms=0.0 suffix_ms=561.3 first_token_ms=2921.0 generation_ms=23086.1 generated=64 generation_tps=2.772
+MEMORY mem_available_drop_mib=7805
+END_CASE failed=0 timed_out=0
+CASE placement=same mode=cow children=8
+PARENT exit=0 text=c646470e58f73411 prefix_tokens=16321 prefix_ms=19806.1 publish_ms=6.95 state_bytes=261845 model_ms=602.4 context_ms=34.6 suffix_ms=101.6 generation_ms=12955.7 generated=64 generation_tps=4.940 total_ms=47738.2
+CHILD index=0 own_instance=1 exit=0 text=d42c4c07975a6446 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1237.6 context_ms=45.3 state_ms=7.51 prefix_ms=0.0 suffix_ms=1174.2 first_token_ms=2759.8 generation_ms=23773.9 generated=64 generation_tps=2.692
+CHILD index=1 own_instance=1 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1231.6 context_ms=52.2 state_ms=7.52 prefix_ms=0.0 suffix_ms=1188.5 first_token_ms=2800.2 generation_ms=23753.5 generated=64 generation_tps=2.694
+CHILD index=2 own_instance=1 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1235.0 context_ms=53.8 state_ms=7.54 prefix_ms=0.0 suffix_ms=1190.9 first_token_ms=2797.4 generation_ms=23763.5 generated=64 generation_tps=2.693
+CHILD index=3 own_instance=1 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1305.4 context_ms=44.5 state_ms=7.48 prefix_ms=0.0 suffix_ms=1363.6 first_token_ms=3025.8 generation_ms=23613.4 generated=64 generation_tps=2.710
+CHILD index=4 own_instance=1 exit=0 text=3e0fd62f5aa50665 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1293.0 context_ms=44.0 state_ms=7.39 prefix_ms=0.0 suffix_ms=1336.3 first_token_ms=2998.6 generation_ms=23638.8 generated=64 generation_tps=2.707
+CHILD index=5 own_instance=1 exit=0 text=3e0fd62f5aa50665 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1237.5 context_ms=52.0 state_ms=7.40 prefix_ms=0.0 suffix_ms=1207.6 first_token_ms=2803.8 generation_ms=23754.5 generated=64 generation_tps=2.694
+CHILD index=6 own_instance=1 exit=0 text=4a8f18b77dbe0332 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1239.2 context_ms=55.0 state_ms=7.98 prefix_ms=0.0 suffix_ms=1196.5 first_token_ms=2789.4 generation_ms=23752.9 generated=64 generation_tps=2.694
+CHILD index=7 own_instance=1 exit=0 text=4a8f18b77dbe0332 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1255.2 context_ms=47.5 state_ms=8.29 prefix_ms=0.0 suffix_ms=1216.1 first_token_ms=2837.2 generation_ms=23749.2 generated=64 generation_tps=2.695
+MEMORY mem_available_drop_mib=6878
+END_CASE failed=0 timed_out=0
+CASE placement=same mode=extent children=8
+PARENT exit=0 text=c646470e58f73411 prefix_tokens=16321 prefix_ms=19791.1 publish_ms=8.95 state_bytes=261845 model_ms=598.7 context_ms=34.5 suffix_ms=109.8 generation_ms=14034.4 generated=64 generation_tps=4.560 total_ms=46786.7
+CHILD index=0 own_instance=1 exit=0 text=d42c4c07975a6446 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1070.5 context_ms=35.3 state_ms=7.33 prefix_ms=0.0 suffix_ms=177.0 first_token_ms=1522.5 generation_ms=23528.0 generated=64 generation_tps=2.720
+CHILD index=1 own_instance=1 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1237.7 context_ms=41.5 state_ms=7.56 prefix_ms=0.0 suffix_ms=654.0 first_token_ms=2255.1 generation_ms=23523.3 generated=64 generation_tps=2.721
+CHILD index=2 own_instance=1 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1144.5 context_ms=36.8 state_ms=7.36 prefix_ms=0.0 suffix_ms=385.9 first_token_ms=1877.7 generation_ms=23692.7 generated=64 generation_tps=2.701
+CHILD index=3 own_instance=1 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1187.4 context_ms=42.6 state_ms=7.46 prefix_ms=0.0 suffix_ms=614.8 first_token_ms=2166.8 generation_ms=23594.4 generated=64 generation_tps=2.713
+CHILD index=4 own_instance=1 exit=0 text=3e0fd62f5aa50665 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1248.6 context_ms=40.8 state_ms=8.13 prefix_ms=0.0 suffix_ms=646.8 first_token_ms=2248.5 generation_ms=23537.9 generated=64 generation_tps=2.719
+CHILD index=5 own_instance=1 exit=0 text=3e0fd62f5aa50665 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1220.7 context_ms=42.1 state_ms=7.59 prefix_ms=0.0 suffix_ms=575.6 first_token_ms=2131.1 generation_ms=23594.4 generated=64 generation_tps=2.713
+CHILD index=6 own_instance=1 exit=0 text=4a8f18b77dbe0332 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1254.4 context_ms=38.5 state_ms=7.43 prefix_ms=0.0 suffix_ms=671.0 first_token_ms=2291.0 generation_ms=23514.2 generated=64 generation_tps=2.722
+CHILD index=7 own_instance=1 exit=0 text=4a8f18b77dbe0332 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1175.6 context_ms=38.4 state_ms=7.54 prefix_ms=0.0 suffix_ms=531.7 first_token_ms=2054.4 generation_ms=23629.6 generated=64 generation_tps=2.708
+MEMORY mem_available_drop_mib=6051
+END_CASE failed=0 timed_out=0
+CASE placement=cross mode=copy children=8
+PARENT exit=0 text=c646470e58f73411 prefix_tokens=16321 prefix_ms=19744.7 publish_ms=525.23 state_bytes=936173269 model_ms=589.2 context_ms=58.7 suffix_ms=62.2 generation_ms=8115.8 generated=64 generation_tps=7.886 total_ms=42435.8
+CHILD index=0 own_instance=1 exit=0 text=d42c4c07975a6446 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1311.2 context_ms=108.9 state_ms=344.34 prefix_ms=0.0 suffix_ms=419.0 first_token_ms=2482.2 generation_ms=13285.1 generated=64 generation_tps=4.817
+CHILD index=1 own_instance=0 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1151.9 context_ms=106.0 state_ms=354.23 prefix_ms=0.0 suffix_ms=418.0 first_token_ms=2329.9 generation_ms=18610.5 generated=64 generation_tps=3.439
+CHILD index=2 own_instance=1 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1023.6 context_ms=65.9 state_ms=290.84 prefix_ms=0.0 suffix_ms=290.3 first_token_ms=1944.0 generation_ms=13354.0 generated=64 generation_tps=4.793
+CHILD index=3 own_instance=0 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1159.0 context_ms=125.9 state_ms=305.84 prefix_ms=0.0 suffix_ms=421.0 first_token_ms=2331.6 generation_ms=18522.5 generated=64 generation_tps=3.455
+CHILD index=4 own_instance=1 exit=0 text=3e0fd62f5aa50665 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1196.2 context_ms=144.9 state_ms=351.46 prefix_ms=0.0 suffix_ms=400.3 first_token_ms=2404.5 generation_ms=13335.7 generated=64 generation_tps=4.799
+CHILD index=5 own_instance=0 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1260.9 context_ms=145.1 state_ms=231.98 prefix_ms=0.0 suffix_ms=434.0 first_token_ms=2369.2 generation_ms=18591.7 generated=64 generation_tps=3.442
+CHILD index=6 own_instance=1 exit=0 text=4a8f18b77dbe0332 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1191.5 context_ms=142.5 state_ms=328.18 prefix_ms=0.0 suffix_ms=400.6 first_token_ms=2378.7 generation_ms=13364.2 generated=64 generation_tps=4.789
+CHILD index=7 own_instance=0 exit=0 text=4a8f18b77dbe0332 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1251.6 context_ms=140.4 state_ms=229.01 prefix_ms=0.0 suffix_ms=413.9 first_token_ms=2339.6 generation_ms=18603.2 generated=64 generation_tps=3.440
+MEMORY mem_available_drop_mib=20229
+END_CASE failed=0 timed_out=0
+CASE placement=cross mode=demand children=8
+PARENT exit=0 text=c646470e58f73411 prefix_tokens=16321 prefix_ms=19752.3 publish_ms=543.15 state_bytes=936173269 model_ms=597.4 context_ms=35.9 suffix_ms=61.5 generation_ms=6976.7 generated=64 generation_tps=9.173 total_ms=42405.1
+CHILD index=0 own_instance=1 exit=0 text=d42c4c07975a6446 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1227.7 context_ms=40.8 state_ms=592.23 prefix_ms=0.0 suffix_ms=405.5 first_token_ms=2592.0 generation_ms=13094.5 generated=64 generation_tps=4.888
+CHILD index=1 own_instance=0 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1214.4 context_ms=41.3 state_ms=593.12 prefix_ms=0.0 suffix_ms=465.8 first_token_ms=2633.3 generation_ms=18294.3 generated=64 generation_tps=3.498
+CHILD index=2 own_instance=1 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1160.6 context_ms=39.3 state_ms=505.84 prefix_ms=0.0 suffix_ms=243.7 first_token_ms=2234.9 generation_ms=13215.4 generated=64 generation_tps=4.843
+CHILD index=3 own_instance=0 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1129.5 context_ms=38.7 state_ms=314.31 prefix_ms=0.0 suffix_ms=194.4 first_token_ms=1993.9 generation_ms=18087.8 generated=64 generation_tps=3.538
+CHILD index=4 own_instance=1 exit=0 text=3e0fd62f5aa50665 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1186.9 context_ms=40.1 state_ms=604.67 prefix_ms=0.0 suffix_ms=374.8 first_token_ms=2515.7 generation_ms=13117.9 generated=64 generation_tps=4.879
+CHILD index=5 own_instance=0 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1247.1 context_ms=43.4 state_ms=577.15 prefix_ms=0.0 suffix_ms=473.2 first_token_ms=2646.5 generation_ms=18311.7 generated=64 generation_tps=3.495
+CHILD index=6 own_instance=1 exit=0 text=4a8f18b77dbe0332 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1175.9 context_ms=39.1 state_ms=584.76 prefix_ms=0.0 suffix_ms=398.3 first_token_ms=2520.5 generation_ms=13145.2 generated=64 generation_tps=4.869
+CHILD index=7 own_instance=0 exit=0 text=4a8f18b77dbe0332 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1231.6 context_ms=43.0 state_ms=597.73 prefix_ms=0.0 suffix_ms=480.2 first_token_ms=2652.5 generation_ms=18308.7 generated=64 generation_tps=3.496
+MEMORY mem_available_drop_mib=13672
+END_CASE failed=0 timed_out=0
+CASE placement=cross mode=device children=8
+PARENT exit=0 text=c646470e58f73411 prefix_tokens=16321 prefix_ms=19760.7 publish_ms=40.81 state_bytes=261845 model_ms=587.4 context_ms=34.2 suffix_ms=61.6 generation_ms=5475.6 generated=64 generation_tps=11.688 total_ms=35420.3
+CHILD index=0 own_instance=1 exit=0 text=d42c4c07975a6446 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1224.1 context_ms=584.4 state_ms=167.98 prefix_ms=0.0 suffix_ms=376.9 first_token_ms=2663.1 generation_ms=11741.9 generated=64 generation_tps=5.451
+STDERR llama_init_from_model: failed to initialize the context: kv cache: cannot map a published allocation
+STDERR kv_fork: cannot create the context
+CHILD index=1 own_instance=0 exit=1 text=e3b0c44298fc1c14 
+CHILD index=2 own_instance=1 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1235.7 context_ms=562.5 state_ms=170.13 prefix_ms=0.0 suffix_ms=359.9 first_token_ms=2651.3 generation_ms=11768.3 generated=64 generation_tps=5.438
+STDERR llama_init_from_model: failed to initialize the context: kv cache: cannot map a published allocation
+STDERR kv_fork: cannot create the context
+CHILD index=3 own_instance=0 exit=1 text=e3b0c44298fc1c14 
+CHILD index=4 own_instance=1 exit=0 text=3e0fd62f5aa50665 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1236.1 context_ms=552.6 state_ms=19.47 prefix_ms=0.0 suffix_ms=200.2 first_token_ms=2315.8 generation_ms=11794.2 generated=64 generation_tps=5.426
+STDERR llama_init_from_model: failed to initialize the context: kv cache: cannot map a published allocation
+STDERR kv_fork: cannot create the context
+CHILD index=5 own_instance=0 exit=1 text=e3b0c44298fc1c14 
+CHILD index=6 own_instance=1 exit=0 text=4a8f18b77dbe0332 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1266.1 context_ms=546.3 state_ms=178.90 prefix_ms=0.0 suffix_ms=405.1 first_token_ms=2723.0 generation_ms=11709.5 generated=64 generation_tps=5.466
+STDERR llama_init_from_model: failed to initialize the context: kv cache: cannot map a published allocation
+STDERR kv_fork: cannot create the context
+CHILD index=7 own_instance=0 exit=1 text=e3b0c44298fc1c14 
+MEMORY mem_available_drop_mib=3981
+END_CASE failed=4 timed_out=0
+CASE placement=cross mode=cow children=8
+PARENT exit=0 text=c646470e58f73411 prefix_tokens=16321 prefix_ms=19797.1 publish_ms=9.10 state_bytes=261845 model_ms=588.3 context_ms=35.6 suffix_ms=100.2 generation_ms=8492.3 generated=64 generation_tps=7.536 total_ms=42438.1
+CHILD index=0 own_instance=1 exit=0 text=d42c4c07975a6446 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1282.5 context_ms=49.4 state_ms=7.42 prefix_ms=0.0 suffix_ms=802.6 first_token_ms=2448.6 generation_ms=13622.0 generated=64 generation_tps=4.698
+CHILD index=1 own_instance=0 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1263.1 context_ms=50.9 state_ms=7.45 prefix_ms=0.0 suffix_ms=782.5 first_token_ms=2421.6 generation_ms=19103.2 generated=64 generation_tps=3.350
+CHILD index=2 own_instance=1 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1178.7 context_ms=35.0 state_ms=7.43 prefix_ms=0.0 suffix_ms=550.5 first_token_ms=2083.0 generation_ms=13748.3 generated=64 generation_tps=4.655
+CHILD index=3 own_instance=0 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1231.4 context_ms=38.2 state_ms=7.34 prefix_ms=0.0 suffix_ms=735.6 first_token_ms=2333.2 generation_ms=19127.7 generated=64 generation_tps=3.346
+CHILD index=4 own_instance=1 exit=0 text=3e0fd62f5aa50665 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1291.0 context_ms=54.2 state_ms=7.43 prefix_ms=0.0 suffix_ms=782.9 first_token_ms=2424.5 generation_ms=13631.8 generated=64 generation_tps=4.695
+CHILD index=5 own_instance=0 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1132.3 context_ms=35.0 state_ms=7.40 prefix_ms=0.0 suffix_ms=238.7 first_token_ms=1713.7 generation_ms=19363.2 generated=64 generation_tps=3.305
+CHILD index=6 own_instance=1 exit=0 text=4a8f18b77dbe0332 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1284.1 context_ms=49.4 state_ms=7.46 prefix_ms=0.0 suffix_ms=797.1 first_token_ms=2439.2 generation_ms=13580.6 generated=64 generation_tps=4.713
+CHILD index=7 own_instance=0 exit=0 text=4a8f18b77dbe0332 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1233.3 context_ms=53.0 state_ms=8.55 prefix_ms=0.0 suffix_ms=786.7 first_token_ms=2399.4 generation_ms=19106.7 generated=64 generation_tps=3.350
+MEMORY mem_available_drop_mib=6763
+END_CASE failed=0 timed_out=0
+CASE placement=cross mode=extent children=8
+PARENT exit=0 text=c646470e58f73411 prefix_tokens=16321 prefix_ms=19805.5 publish_ms=6.88 state_bytes=261845 model_ms=585.6 context_ms=35.3 suffix_ms=101.1 generation_ms=8459.2 generated=64 generation_tps=7.566 total_ms=41988.8
+CHILD index=0 own_instance=1 exit=0 text=d42c4c07975a6446 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1211.0 context_ms=38.6 state_ms=7.40 prefix_ms=0.0 suffix_ms=286.4 first_token_ms=1838.9 generation_ms=13674.5 generated=64 generation_tps=4.680
+CHILD index=1 own_instance=0 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1166.9 context_ms=42.8 state_ms=8.01 prefix_ms=0.0 suffix_ms=370.6 first_token_ms=1893.7 generation_ms=19117.8 generated=64 generation_tps=3.348
+CHILD index=2 own_instance=1 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1256.4 context_ms=42.6 state_ms=7.51 prefix_ms=0.0 suffix_ms=396.6 first_token_ms=1993.5 generation_ms=13544.8 generated=64 generation_tps=4.725
+CHILD index=3 own_instance=0 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1176.4 context_ms=44.0 state_ms=7.48 prefix_ms=0.0 suffix_ms=394.0 first_token_ms=1932.8 generation_ms=19105.4 generated=64 generation_tps=3.350
+CHILD index=4 own_instance=1 exit=0 text=3e0fd62f5aa50665 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1246.1 context_ms=40.4 state_ms=7.43 prefix_ms=0.0 suffix_ms=422.0 first_token_ms=2025.8 generation_ms=13536.9 generated=64 generation_tps=4.728
+CHILD index=5 own_instance=0 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1170.5 context_ms=37.8 state_ms=7.60 prefix_ms=0.0 suffix_ms=333.6 first_token_ms=1847.6 generation_ms=19091.4 generated=64 generation_tps=3.352
+CHILD index=6 own_instance=1 exit=0 text=4a8f18b77dbe0332 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1208.2 context_ms=46.9 state_ms=7.67 prefix_ms=0.0 suffix_ms=297.9 first_token_ms=1838.4 generation_ms=13624.6 generated=64 generation_tps=4.697
+CHILD index=7 own_instance=0 exit=0 text=4a8f18b77dbe0332 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1219.0 context_ms=43.4 state_ms=7.73 prefix_ms=0.0 suffix_ms=487.4 first_token_ms=2072.5 generation_ms=18999.0 generated=64 generation_tps=3.369
+MEMORY mem_available_drop_mib=5916
+END_CASE failed=0 timed_out=0
+END_KVSOTA
+BEGIN_KVSOTA run=6 paragraphs=320 context=32768
+CASE placement=same mode=extent children=8
+PARENT exit=0 text=c646470e58f73411 prefix_tokens=16321 prefix_ms=19808.9 publish_ms=6.77 state_bytes=261845 model_ms=584.4 context_ms=35.2 suffix_ms=110.2 generation_ms=12944.3 generated=64 generation_tps=4.944 total_ms=46815.8
+CHILD index=0 own_instance=1 exit=0 text=d42c4c07975a6446 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1287.3 context_ms=46.0 state_ms=7.49 prefix_ms=0.0 suffix_ms=683.6 first_token_ms=2336.1 generation_ms=23456.3 generated=64 generation_tps=2.728
+CHILD index=1 own_instance=1 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1268.3 context_ms=40.3 state_ms=7.85 prefix_ms=0.0 suffix_ms=656.7 first_token_ms=2286.3 generation_ms=23479.3 generated=64 generation_tps=2.726
+CHILD index=2 own_instance=1 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1213.7 context_ms=44.0 state_ms=7.50 prefix_ms=0.0 suffix_ms=476.6 first_token_ms=2041.0 generation_ms=23573.1 generated=64 generation_tps=2.715
+CHILD index=3 own_instance=1 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1273.5 context_ms=47.3 state_ms=7.41 prefix_ms=0.0 suffix_ms=685.6 first_token_ms=2326.8 generation_ms=23454.3 generated=64 generation_tps=2.729
+CHILD index=4 own_instance=1 exit=0 text=3e0fd62f5aa50665 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1215.3 context_ms=43.7 state_ms=7.45 prefix_ms=0.0 suffix_ms=466.1 first_token_ms=2033.9 generation_ms=23579.3 generated=64 generation_tps=2.714
+CHILD index=5 own_instance=1 exit=0 text=3e0fd62f5aa50665 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1285.3 context_ms=51.3 state_ms=7.88 prefix_ms=0.0 suffix_ms=689.0 first_token_ms=2338.9 generation_ms=23436.7 generated=64 generation_tps=2.731
+CHILD index=6 own_instance=1 exit=0 text=4a8f18b77dbe0332 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1206.1 context_ms=41.1 state_ms=7.38 prefix_ms=0.0 suffix_ms=374.1 first_token_ms=1916.1 generation_ms=23621.4 generated=64 generation_tps=2.709
+CHILD index=7 own_instance=1 exit=0 text=4a8f18b77dbe0332 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1212.0 context_ms=37.9 state_ms=7.50 prefix_ms=0.0 suffix_ms=458.5 first_token_ms=2033.7 generation_ms=23579.8 generated=64 generation_tps=2.714
+MEMORY mem_available_drop_mib=6038
+END_CASE failed=0 timed_out=0
+CASE placement=same mode=cow children=8
+PARENT exit=0 text=c646470e58f73411 prefix_tokens=16321 prefix_ms=19782.8 publish_ms=9.15 state_bytes=261845 model_ms=601.4 context_ms=34.8 suffix_ms=101.2 generation_ms=12741.8 generated=64 generation_tps=5.023 total_ms=47696.2
+CHILD index=0 own_instance=1 exit=0 text=d42c4c07975a6446 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1268.6 context_ms=62.3 state_ms=7.42 prefix_ms=0.0 suffix_ms=1185.7 first_token_ms=2820.4 generation_ms=23713.8 generated=64 generation_tps=2.699
+CHILD index=1 own_instance=1 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1247.4 context_ms=52.0 state_ms=7.69 prefix_ms=0.0 suffix_ms=1201.8 first_token_ms=2819.8 generation_ms=23713.4 generated=64 generation_tps=2.699
+CHILD index=2 own_instance=1 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1258.2 context_ms=55.3 state_ms=7.34 prefix_ms=0.0 suffix_ms=1196.3 first_token_ms=2821.3 generation_ms=23700.6 generated=64 generation_tps=2.700
+CHILD index=3 own_instance=1 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1274.5 context_ms=54.9 state_ms=7.50 prefix_ms=0.0 suffix_ms=1160.5 first_token_ms=2785.1 generation_ms=23731.8 generated=64 generation_tps=2.697
+CHILD index=4 own_instance=1 exit=0 text=3e0fd62f5aa50665 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1236.9 context_ms=62.3 state_ms=7.36 prefix_ms=0.0 suffix_ms=1201.5 first_token_ms=2824.2 generation_ms=23723.0 generated=64 generation_tps=2.698
+CHILD index=5 own_instance=1 exit=0 text=3e0fd62f5aa50665 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1253.9 context_ms=54.7 state_ms=7.31 prefix_ms=0.0 suffix_ms=1214.9 first_token_ms=2836.6 generation_ms=23710.7 generated=64 generation_tps=2.699
+CHILD index=6 own_instance=1 exit=0 text=4a8f18b77dbe0332 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1304.7 context_ms=42.2 state_ms=7.62 prefix_ms=0.0 suffix_ms=1297.7 first_token_ms=2957.3 generation_ms=23632.9 generated=64 generation_tps=2.708
+CHILD index=7 own_instance=1 exit=0 text=4a8f18b77dbe0332 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1293.9 context_ms=37.6 state_ms=7.54 prefix_ms=0.0 suffix_ms=1295.0 first_token_ms=2936.8 generation_ms=23633.0 generated=64 generation_tps=2.708
+MEMORY mem_available_drop_mib=6901
+END_CASE failed=0 timed_out=0
+CASE placement=same mode=device children=8
+PARENT exit=0 text=c646470e58f73411 prefix_tokens=16321 prefix_ms=19754.0 publish_ms=41.04 state_bytes=261845 model_ms=587.2 context_ms=33.4 suffix_ms=61.7 generation_ms=9456.6 generated=64 generation_tps=6.768 total_ms=47130.7
+CHILD index=0 own_instance=1 exit=0 text=d42c4c07975a6446 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1264.9 context_ms=674.7 state_ms=352.50 prefix_ms=0.0 suffix_ms=719.3 first_token_ms=3336.2 generation_ms=22770.1 generated=64 generation_tps=2.811
+CHILD index=1 own_instance=1 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1255.8 context_ms=623.7 state_ms=296.80 prefix_ms=0.0 suffix_ms=599.2 first_token_ms=3087.0 generation_ms=22922.1 generated=64 generation_tps=2.792
+CHILD index=2 own_instance=1 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1147.6 context_ms=415.7 state_ms=71.62 prefix_ms=0.0 suffix_ms=284.3 first_token_ms=2232.4 generation_ms=22771.2 generated=64 generation_tps=2.811
+CHILD index=3 own_instance=1 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1235.8 context_ms=597.6 state_ms=300.55 prefix_ms=0.0 suffix_ms=593.9 first_token_ms=3033.6 generation_ms=22947.3 generated=64 generation_tps=2.789
+CHILD index=4 own_instance=1 exit=0 text=3e0fd62f5aa50665 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1271.8 context_ms=673.6 state_ms=354.16 prefix_ms=0.0 suffix_ms=702.5 first_token_ms=3321.3 generation_ms=22786.6 generated=64 generation_tps=2.809
+CHILD index=5 own_instance=1 exit=0 text=3e0fd62f5aa50665 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1208.3 context_ms=629.1 state_ms=299.57 prefix_ms=0.0 suffix_ms=596.2 first_token_ms=3059.6 generation_ms=22961.1 generated=64 generation_tps=2.787
+CHILD index=6 own_instance=1 exit=0 text=4a8f18b77dbe0332 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1210.9 context_ms=590.0 state_ms=301.32 prefix_ms=0.0 suffix_ms=580.3 first_token_ms=3003.9 generation_ms=23002.6 generated=64 generation_tps=2.782
+CHILD index=7 own_instance=1 exit=0 text=4a8f18b77dbe0332 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1198.3 context_ms=320.8 state_ms=42.13 prefix_ms=0.0 suffix_ms=237.8 first_token_ms=2068.8 generation_ms=22594.9 generated=64 generation_tps=2.832
+MEMORY mem_available_drop_mib=7821
+END_CASE failed=0 timed_out=0
+CASE placement=same mode=demand children=8
+PARENT exit=0 text=c646470e58f73411 prefix_tokens=16321 prefix_ms=19740.0 publish_ms=556.01 state_bytes=936173269 model_ms=589.3 context_ms=34.2 suffix_ms=61.7 generation_ms=11163.2 generated=64 generation_tps=5.733 total_ms=47839.1
+CHILD index=0 own_instance=1 exit=0 text=d42c4c07975a6446 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1181.5 context_ms=34.5 state_ms=287.52 prefix_ms=0.0 suffix_ms=274.0 first_token_ms=2046.8 generation_ms=23313.7 generated=64 generation_tps=2.745
+CHILD index=1 own_instance=1 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1293.0 context_ms=44.2 state_ms=571.56 prefix_ms=0.0 suffix_ms=644.2 first_token_ms=2867.6 generation_ms=23348.9 generated=64 generation_tps=2.741
+CHILD index=2 own_instance=1 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1238.7 context_ms=41.0 state_ms=549.60 prefix_ms=0.0 suffix_ms=652.5 first_token_ms=2790.5 generation_ms=23396.0 generated=64 generation_tps=2.736
+CHILD index=3 own_instance=1 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1309.4 context_ms=43.3 state_ms=569.85 prefix_ms=0.0 suffix_ms=639.5 first_token_ms=2861.1 generation_ms=23352.8 generated=64 generation_tps=2.741
+CHILD index=4 own_instance=1 exit=0 text=3e0fd62f5aa50665 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1287.4 context_ms=37.9 state_ms=579.57 prefix_ms=0.0 suffix_ms=622.7 first_token_ms=2829.1 generation_ms=23360.7 generated=64 generation_tps=2.740
+CHILD index=5 own_instance=1 exit=0 text=3e0fd62f5aa50665 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1220.3 context_ms=44.1 state_ms=566.84 prefix_ms=0.0 suffix_ms=649.3 first_token_ms=2801.8 generation_ms=23390.9 generated=64 generation_tps=2.736
+CHILD index=6 own_instance=1 exit=0 text=4a8f18b77dbe0332 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1139.3 context_ms=33.4 state_ms=444.41 prefix_ms=0.0 suffix_ms=349.0 first_token_ms=2275.7 generation_ms=23488.3 generated=64 generation_tps=2.725
+CHILD index=7 own_instance=1 exit=0 text=4a8f18b77dbe0332 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1230.9 context_ms=40.5 state_ms=547.01 prefix_ms=0.0 suffix_ms=625.8 first_token_ms=2761.5 generation_ms=23411.3 generated=64 generation_tps=2.734
+MEMORY mem_available_drop_mib=14193
+END_CASE failed=0 timed_out=0
+CASE placement=same mode=copy children=8
+PARENT exit=0 text=c646470e58f73411 prefix_tokens=16321 prefix_ms=19713.9 publish_ms=514.81 state_bytes=936173269 model_ms=585.0 context_ms=58.1 suffix_ms=61.9 generation_ms=12343.1 generated=64 generation_tps=5.185 total_ms=47823.4
+CHILD index=0 own_instance=1 exit=0 text=d42c4c07975a6446 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1107.5 context_ms=73.7 state_ms=408.91 prefix_ms=0.0 suffix_ms=325.4 first_token_ms=2208.9 generation_ms=23565.9 generated=64 generation_tps=2.716
+CHILD index=1 own_instance=1 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=946.9 context_ms=72.0 state_ms=274.45 prefix_ms=0.0 suffix_ms=387.3 first_token_ms=1929.5 generation_ms=23325.6 generated=64 generation_tps=2.744
+CHILD index=2 own_instance=1 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1224.1 context_ms=212.2 state_ms=406.80 prefix_ms=0.0 suffix_ms=656.9 first_token_ms=2810.9 generation_ms=23485.9 generated=64 generation_tps=2.725
+CHILD index=3 own_instance=1 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1285.4 context_ms=142.9 state_ms=416.15 prefix_ms=0.0 suffix_ms=656.6 first_token_ms=2810.9 generation_ms=23489.1 generated=64 generation_tps=2.725
+CHILD index=4 own_instance=1 exit=0 text=3e0fd62f5aa50665 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1218.1 context_ms=156.6 state_ms=409.54 prefix_ms=0.0 suffix_ms=610.9 first_token_ms=2712.6 generation_ms=23444.8 generated=64 generation_tps=2.730
+CHILD index=5 own_instance=1 exit=0 text=3e0fd62f5aa50665 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1322.0 context_ms=113.5 state_ms=403.92 prefix_ms=0.0 suffix_ms=623.3 first_token_ms=2762.1 generation_ms=23492.5 generated=64 generation_tps=2.724
+CHILD index=6 own_instance=1 exit=0 text=4a8f18b77dbe0332 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1229.6 context_ms=207.5 state_ms=425.63 prefix_ms=0.0 suffix_ms=654.7 first_token_ms=2823.5 generation_ms=23476.6 generated=64 generation_tps=2.726
+CHILD index=7 own_instance=1 exit=0 text=4a8f18b77dbe0332 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1304.9 context_ms=140.1 state_ms=397.86 prefix_ms=0.0 suffix_ms=661.3 first_token_ms=2821.4 generation_ms=23476.3 generated=64 generation_tps=2.726
+MEMORY mem_available_drop_mib=20349
+END_CASE failed=0 timed_out=0
+CASE placement=cross mode=extent children=8
+PARENT exit=0 text=c646470e58f73411 prefix_tokens=16321 prefix_ms=19817.0 publish_ms=9.05 state_bytes=261845 model_ms=616.4 context_ms=35.2 suffix_ms=106.1 generation_ms=8596.3 generated=64 generation_tps=7.445 total_ms=42046.2
+CHILD index=0 own_instance=1 exit=0 text=d42c4c07975a6446 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1261.4 context_ms=42.9 state_ms=7.63 prefix_ms=0.0 suffix_ms=395.5 first_token_ms=2021.4 generation_ms=13537.0 generated=64 generation_tps=4.728
+CHILD index=1 own_instance=0 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1222.2 context_ms=38.8 state_ms=7.54 prefix_ms=0.0 suffix_ms=455.8 first_token_ms=2026.8 generation_ms=19095.7 generated=64 generation_tps=3.352
+CHILD index=2 own_instance=1 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1145.7 context_ms=34.9 state_ms=7.39 prefix_ms=0.0 suffix_ms=207.3 first_token_ms=1675.7 generation_ms=13675.2 generated=64 generation_tps=4.680
+CHILD index=3 own_instance=0 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1215.2 context_ms=41.0 state_ms=7.55 prefix_ms=0.0 suffix_ms=460.1 first_token_ms=2021.0 generation_ms=19097.5 generated=64 generation_tps=3.351
+CHILD index=4 own_instance=1 exit=0 text=3e0fd62f5aa50665 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1262.6 context_ms=39.7 state_ms=7.28 prefix_ms=0.0 suffix_ms=405.3 first_token_ms=2031.7 generation_ms=13547.4 generated=64 generation_tps=4.724
+CHILD index=5 own_instance=0 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1166.5 context_ms=40.2 state_ms=7.60 prefix_ms=0.0 suffix_ms=321.6 first_token_ms=1847.3 generation_ms=19111.1 generated=64 generation_tps=3.349
+CHILD index=6 own_instance=1 exit=0 text=4a8f18b77dbe0332 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1194.5 context_ms=41.8 state_ms=7.41 prefix_ms=0.0 suffix_ms=328.3 first_token_ms=1878.7 generation_ms=13620.0 generated=64 generation_tps=4.699
+CHILD index=7 own_instance=0 exit=0 text=4a8f18b77dbe0332 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1179.1 context_ms=41.3 state_ms=7.91 prefix_ms=0.0 suffix_ms=354.4 first_token_ms=1868.1 generation_ms=19174.4 generated=64 generation_tps=3.338
+MEMORY mem_available_drop_mib=5927
+END_CASE failed=0 timed_out=0
+CASE placement=cross mode=cow children=8
+PARENT exit=0 text=c646470e58f73411 prefix_tokens=16321 prefix_ms=19795.9 publish_ms=8.89 state_bytes=261845 model_ms=587.4 context_ms=35.3 suffix_ms=112.0 generation_ms=8675.7 generated=64 generation_tps=7.377 total_ms=42490.8
+CHILD index=0 own_instance=1 exit=0 text=d42c4c07975a6446 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1206.9 context_ms=43.9 state_ms=7.49 prefix_ms=0.0 suffix_ms=677.5 first_token_ms=2217.5 generation_ms=13769.8 generated=64 generation_tps=4.648
+CHILD index=1 own_instance=0 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1154.1 context_ms=36.3 state_ms=7.53 prefix_ms=0.0 suffix_ms=743.1 first_token_ms=2251.1 generation_ms=19274.3 generated=64 generation_tps=3.320
+CHILD index=2 own_instance=1 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1201.3 context_ms=38.8 state_ms=7.39 prefix_ms=0.0 suffix_ms=791.3 first_token_ms=2354.5 generation_ms=13653.4 generated=64 generation_tps=4.687
+CHILD index=3 own_instance=0 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1246.0 context_ms=40.7 state_ms=8.05 prefix_ms=0.0 suffix_ms=825.3 first_token_ms=2420.4 generation_ms=19172.7 generated=64 generation_tps=3.338
+CHILD index=4 own_instance=1 exit=0 text=3e0fd62f5aa50665 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1269.4 context_ms=40.9 state_ms=7.34 prefix_ms=0.0 suffix_ms=853.1 first_token_ms=2472.1 generation_ms=13627.1 generated=64 generation_tps=4.697
+CHILD index=5 own_instance=0 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1149.5 context_ms=36.6 state_ms=8.14 prefix_ms=0.0 suffix_ms=631.0 first_token_ms=2110.0 generation_ms=19270.0 generated=64 generation_tps=3.321
+CHILD index=6 own_instance=1 exit=0 text=4a8f18b77dbe0332 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1263.6 context_ms=42.8 state_ms=7.40 prefix_ms=0.0 suffix_ms=845.2 first_token_ms=2467.3 generation_ms=13635.8 generated=64 generation_tps=4.694
+CHILD index=7 own_instance=0 exit=0 text=4a8f18b77dbe0332 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1183.0 context_ms=39.3 state_ms=7.59 prefix_ms=0.0 suffix_ms=806.3 first_token_ms=2334.6 generation_ms=19218.6 generated=64 generation_tps=3.330
+MEMORY mem_available_drop_mib=6819
+END_CASE failed=0 timed_out=0
+CASE placement=cross mode=device children=8
+PARENT exit=0 text=c646470e58f73411 prefix_tokens=16321 prefix_ms=19758.3 publish_ms=40.62 state_bytes=261845 model_ms=581.9 context_ms=34.6 suffix_ms=61.6 generation_ms=6153.1 generated=64 generation_tps=10.401 total_ms=35400.7
+CHILD index=0 own_instance=1 exit=0 text=d42c4c07975a6446 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1271.5 context_ms=518.7 state_ms=168.23 prefix_ms=0.0 suffix_ms=415.1 first_token_ms=2676.7 generation_ms=11795.0 generated=64 generation_tps=5.426
+STDERR llama_init_from_model: failed to initialize the context: kv cache: cannot map a published allocation
+STDERR kv_fork: cannot create the context
+CHILD index=1 own_instance=0 exit=1 text=e3b0c44298fc1c14 
+CHILD index=2 own_instance=1 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1259.4 context_ms=505.9 state_ms=161.49 prefix_ms=0.0 suffix_ms=398.0 first_token_ms=2636.0 generation_ms=11800.5 generated=64 generation_tps=5.424
+STDERR llama_init_from_model: failed to initialize the context: kv cache: cannot map a published allocation
+STDERR kv_fork: cannot create the context
+CHILD index=3 own_instance=0 exit=1 text=e3b0c44298fc1c14 
+CHILD index=4 own_instance=1 exit=0 text=3e0fd62f5aa50665 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1108.9 context_ms=413.8 state_ms=68.52 prefix_ms=0.0 suffix_ms=215.9 first_token_ms=2089.4 generation_ms=11834.3 generated=64 generation_tps=5.408
+STDERR llama_init_from_model: failed to initialize the context: kv cache: cannot map a published allocation
+STDERR kv_fork: cannot create the context
+CHILD index=5 own_instance=0 exit=1 text=e3b0c44298fc1c14 
+CHILD index=6 own_instance=1 exit=0 text=4a8f18b77dbe0332 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1201.0 context_ms=554.1 state_ms=166.28 prefix_ms=0.0 suffix_ms=410.4 first_token_ms=2651.6 generation_ms=11815.0 generated=64 generation_tps=5.417
+STDERR llama_init_from_model: failed to initialize the context: kv cache: cannot map a published allocation
+STDERR kv_fork: cannot create the context
+CHILD index=7 own_instance=0 exit=1 text=e3b0c44298fc1c14 
+MEMORY mem_available_drop_mib=3999
+END_CASE failed=4 timed_out=0
+CASE placement=cross mode=demand children=8
+PARENT exit=0 text=c646470e58f73411 prefix_tokens=16321 prefix_ms=19748.7 publish_ms=520.69 state_bytes=936173269 model_ms=587.6 context_ms=33.8 suffix_ms=61.9 generation_ms=7234.6 generated=64 generation_tps=8.846 total_ms=42395.3
+CHILD index=0 own_instance=1 exit=0 text=d42c4c07975a6446 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1213.1 context_ms=40.8 state_ms=605.76 prefix_ms=0.0 suffix_ms=424.2 first_token_ms=2603.0 generation_ms=13063.5 generated=64 generation_tps=4.899
+CHILD index=1 own_instance=0 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1171.8 context_ms=33.2 state_ms=425.12 prefix_ms=0.0 suffix_ms=206.5 first_token_ms=2143.8 generation_ms=18532.4 generated=64 generation_tps=3.453
+CHILD index=2 own_instance=1 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1250.1 context_ms=39.0 state_ms=597.05 prefix_ms=0.0 suffix_ms=430.8 first_token_ms=2621.5 generation_ms=13030.4 generated=64 generation_tps=4.912
+CHILD index=3 own_instance=0 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1220.4 context_ms=42.6 state_ms=577.05 prefix_ms=0.0 suffix_ms=465.3 first_token_ms=2614.6 generation_ms=18335.9 generated=64 generation_tps=3.490
+CHILD index=4 own_instance=1 exit=0 text=3e0fd62f5aa50665 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1209.6 context_ms=38.7 state_ms=590.94 prefix_ms=0.0 suffix_ms=406.4 first_token_ms=2560.0 generation_ms=13080.8 generated=64 generation_tps=4.893
+CHILD index=5 own_instance=0 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1186.3 context_ms=40.6 state_ms=456.61 prefix_ms=0.0 suffix_ms=289.4 first_token_ms=2297.0 generation_ms=18494.2 generated=64 generation_tps=3.461
+CHILD index=6 own_instance=1 exit=0 text=4a8f18b77dbe0332 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1171.4 context_ms=33.9 state_ms=273.03 prefix_ms=0.0 suffix_ms=229.5 first_token_ms=1985.6 generation_ms=13024.3 generated=64 generation_tps=4.914
+CHILD index=7 own_instance=0 exit=0 text=4a8f18b77dbe0332 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1250.2 context_ms=36.8 state_ms=569.95 prefix_ms=0.0 suffix_ms=488.8 first_token_ms=2655.8 generation_ms=18337.5 generated=64 generation_tps=3.490
+MEMORY mem_available_drop_mib=13734
+END_CASE failed=0 timed_out=0
+CASE placement=cross mode=copy children=8
+PARENT exit=0 text=c646470e58f73411 prefix_tokens=16321 prefix_ms=19739.7 publish_ms=557.65 state_bytes=936173269 model_ms=592.7 context_ms=57.8 suffix_ms=61.8 generation_ms=7320.5 generated=64 generation_tps=8.743 total_ms=42329.0
+CHILD index=0 own_instance=1 exit=0 text=d42c4c07975a6446 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1254.8 context_ms=195.7 state_ms=357.22 prefix_ms=0.0 suffix_ms=411.0 first_token_ms=2505.4 generation_ms=13232.7 generated=64 generation_tps=4.836
+CHILD index=1 own_instance=0 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1239.1 context_ms=148.0 state_ms=319.96 prefix_ms=0.0 suffix_ms=414.5 first_token_ms=2420.5 generation_ms=18432.5 generated=64 generation_tps=3.472
+CHILD index=2 own_instance=1 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1271.2 context_ms=172.9 state_ms=350.95 prefix_ms=0.0 suffix_ms=414.7 first_token_ms=2527.4 generation_ms=13201.6 generated=64 generation_tps=4.848
+CHILD index=3 own_instance=0 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1174.7 context_ms=139.3 state_ms=388.36 prefix_ms=0.0 suffix_ms=439.6 first_token_ms=2444.8 generation_ms=18388.5 generated=64 generation_tps=3.480
+CHILD index=4 own_instance=1 exit=0 text=3e0fd62f5aa50665 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1189.6 context_ms=135.7 state_ms=359.23 prefix_ms=0.0 suffix_ms=266.9 first_token_ms=2271.2 generation_ms=13292.1 generated=64 generation_tps=4.815
+CHILD index=5 own_instance=0 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1242.9 context_ms=177.1 state_ms=318.23 prefix_ms=0.0 suffix_ms=475.8 first_token_ms=2518.5 generation_ms=18366.4 generated=64 generation_tps=3.485
+CHILD index=6 own_instance=1 exit=0 text=4a8f18b77dbe0332 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1256.6 context_ms=174.9 state_ms=355.93 prefix_ms=0.0 suffix_ms=411.9 first_token_ms=2512.6 generation_ms=13199.6 generated=64 generation_tps=4.849
+CHILD index=7 own_instance=0 exit=0 text=4a8f18b77dbe0332 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1136.4 context_ms=89.5 state_ms=252.23 prefix_ms=0.0 suffix_ms=194.5 first_token_ms=1980.1 generation_ms=18350.6 generated=64 generation_tps=3.488
+MEMORY mem_available_drop_mib=20259
+END_CASE failed=0 timed_out=0
+END_KVSOTA

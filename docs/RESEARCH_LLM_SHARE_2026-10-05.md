@@ -999,7 +999,229 @@ continue it across the process boundary and the MIG boundary, where it
 stops. The best configuration measured for eight agents on this device is
 one batching server in each instance on one published prefix.
 
-### 6.11 Gates
+### 6.11 Compute-sharing modes
+
+`run_engine_kvmps.sh` (`results/20261006-engine-kvmps-v1/`, six
+repetitions, 192 cases, no failed process) runs a parent and four or eight
+children under time slicing, one MPS server, the two MIG instances, and one
+MPS server in each instance. It repeats the 4,081-token and 16,321-token
+prefixes with a copy and with extents.
+
+| Compute shared by | Children | Prefix (tokens) | Memory, copy / extents (MiB) | Throughput, copy / extents (tokens/s) | Extents / copy | Parent pause, copy / extents (ms) | Attach, copy / extents (ms) | Extent texts equal to copy |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|
+| time slicing | 4 | 4,081 | 4607 / 2945 | 21.32 / 20.99 | 0.985 | 207.8 / 3.1 | 199.6 / 32.8 | 24/24 |
+| time slicing | 8 | 4,081 | 9250 / 5925 | 23.06 / 22.74 | 0.986 | 223.6 / 3.0 | 279.3 / 31.0 | 48/48 |
+| time slicing | 4 | 16,321 | 10167 / 3067 | 20.26 / 20.05 | 0.990 | 540.5 / 8.5 | 458.6 / 63.1 | 24/24 |
+| time slicing | 8 | 16,321 | 20300 / 5894 | 21.83 / 21.68 | 0.993 | 539.8 / 8.7 | 576.3 / 51.1 | 48/48 |
+| two MIG instances | 4 | 4,081 | 4810 / 2934 | 33.15 / 32.22 | 0.972 | 217.2 / 2.8 | 146.2 / 32.3 | 24/24 |
+| two MIG instances | 8 | 4,081 | 9109 / 5795 | 36.09 / 34.71 | 0.962 | 213.2 / 2.8 | 198.6 / 33.4 | 48/48 |
+| two MIG instances | 4 | 16,321 | 10188 / 3135 | 30.46 / 29.52 | 0.969 | 537.6 / 9.0 | 385.7 / 59.8 | 24/24 |
+| two MIG instances | 8 | 16,321 | 20189 / 6005 | 32.97 / 32.05 | 0.972 | 557.0 / 8.7 | 477.6 / 56.4 | 48/48 |
+| one MPS server | 4 | 4,081 | 4726 / 2898 | 23.81 / 23.52 | 0.988 | 212.9 / 3.0 | 121.2 / 29.6 | 24/24 |
+| one MPS server | 8 | 4,081 | 9179 / 5827 | 25.66 / 25.58 | 0.997 | 212.2 / 3.0 | 145.1 / 30.4 | 48/48 |
+| one MPS server | 4 | 16,321 | 10236 / 3022 | 22.83 / 22.49 | 0.985 | 542.1 / 9.2 | 407.7 / 60.6 | 24/24 |
+| one MPS server | 8 | 16,321 | 20283 / 5853 | 24.45 / 24.34 | 0.996 | 528.4 / 9.2 | 514.3 / 51.5 | 48/48 |
+| one MPS server per MIG instance | 4 | 4,081 | 4760 / 2936 | 36.70 / 35.31 | 0.962 | 219.1 / 2.9 | 103.8 / 27.8 | 24/24 |
+| one MPS server per MIG instance | 8 | 4,081 | 9105 / 5713 | 40.42 / 38.78 | 0.959 | 214.4 / 2.9 | 133.8 / 31.8 | 48/48 |
+| one MPS server per MIG instance | 4 | 16,321 | 10185 / 2993 | 33.93 / 32.39 | 0.955 | 543.7 / 7.7 | 374.1 / 50.0 | 24/24 |
+| one MPS server per MIG instance | 8 | 16,321 | 20129 / 5820 | 37.03 / 35.72 | 0.965 | 531.8 / 9.2 | 454.4 / 54.3 | 48/48 |
+
+With eight children on the 16,321-token prefix, the copy holds 19.7-19.8
+GiB in every configuration, and extents hold 5.7-5.9 GiB in addition to the
+0.9 GiB cache file that exists once. The throughput ratios are 0.993 under
+time slicing, 0.996 under MPS, 0.972 under MIG, and 0.965 under MPS inside
+the two MIG instances. The lower two ratios contain the 6-SM instance, for
+which Section 6.8 measures the cost of a host-memory cache. The pause of the
+parent falls from 528-557 ms to 8.7-9.2 ms, and the attach time falls from
+454-576 ms to 51-56 ms. Every one of the 288 children on extents writes the
+text of its copy counterpart.
+
+The host page table does not change with the way in which processes share
+the GPU. MPS changes when the processes execute and which faults they share,
+and MIG changes which SMs execute a process, but the mappings of each
+process still name the same host pages. The result is one state-sharing path
+for every placement measured here.
+
+### 6.12 Stress, implementation, and external-baseline campaigns
+
+The following campaigns extend the main matrix without changing its raw
+measurements.  Every cell has six repetitions.  Unless an exception is
+called out below, every process or request completed, no run timed out, and
+the generated token sequence matched its copy counterpart.
+
+**Mechanisms in one engine.** `run_engine_kvsota.sh` compares five ways of
+handing the same 16,321-token prefix to eight children.  `same` puts every
+child in the publisher's MIG instance; `cross` alternates them across the
+two instances.
+
+| Placement | Hand-over | Children complete | Texts equal to copy | Parent pause (ms) | Attach (ms) | First token (ms) | Memory (MiB) | Throughput (tokens/s) |
+|---|---|---:|---:|---:|---:|---:|---:|---:|
+| same | copy | 48/48 | 48/48 | 539.54 | 548.6 | 2670 | 20306 | 21.85 |
+| same | demand-backed copy | 48/48 | 48/48 | 542.80 | 596.6 | 2721 | 14210 | 21.98 |
+| same | shared device memory | 48/48 | 48/48 | 41.04 | 769.5 | 2864 | 7808 | 22.33 |
+| same | copy-on-write | 48/48 | 48/48 | 8.12 | 50.3 | 2770 | 6892 | 21.54 |
+| same | extents | 48/48 | 48/48 | 8.37 | 48.8 | 2137 | 6036 | 21.74 |
+| cross | copy | 48/48 | 48/48 | 548.04 | 494.8 | 2395 | 20259 | 33.23 |
+| cross | demand-backed copy | 48/48 | 48/48 | 539.12 | 559.1 | 2445 | 13732 | 33.55 |
+| cross | shared device memory | 24/48 | 24/24 | 39.73 | 648.6 | 2541 | 3984 | 21.73 |
+| cross | copy-on-write | 48/48 | 48/48 | 8.87 | 50.9 | 2279 | 6785 | 32.05 |
+| cross | extents | 48/48 | 48/48 | 8.00 | 50.4 | 1918 | 5923 | 32.29 |
+
+The device-memory route completes only the 24 children in the publisher's
+instance when placement crosses the MIG boundary.  Copy, demand-backed
+copy, copy-on-write, and extents complete all 48.  Extents use 5.9--6.0 GiB
+instead of 20.3 GiB, reduce the publisher pause from 540--548 ms to 8 ms,
+and attach in 49--50 ms.  They are the only low-pause route in this matrix
+that both preserves exact output and crosses the MIG boundary.
+
+**Trees.** `run_engine_kvtree.sh` builds two leaders and four leaves per
+leader.  A chain lets each leader publish the rows it adds; the flat route
+makes leaves recompute those rows.
+
+| Tree | Runs (failed, timed out) | Root / leader publish (ms) | Leaf attach (ms) | Leaf first token (ms) | Memory (MiB) | Leaves complete | Exact texts | Minimum common tokens | Files removed |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| copy | 6 (0, 0) | 540.74 / 603.77 | 616.9 | 2889 | 27954 | 48 | 48/48 | 64 | - |
+| one published prefix | 6 (0, 0) | 8.70 / - | 48.0 | 18880 | 9843 | 48 | 42/48 | 41 | 6/6 |
+| extent chain, 2 MiB pages | 6 (0, 0) | 9.01 / 6.19 | 53.5 | 2246 | 9469 | 48 | 48/48 | 64 | 6/6 |
+| extent chain, 4 KiB pages | 6 (0, 0) | 8.82 / 11.05 | 57.3 | 2349 | 9204 | 48 | 48/48 | 64 | 6/6 |
+
+Both extent-chain page sizes produce all 48 copy-exact leaf sequences and
+remove every segment file after each run.  The flat route produces 42 of 48
+exact sequences; all 48 have at least 41 common generated tokens.  This is a
+deterministic consequence of recomputing the group prefix on the leaf's MIG
+instance, not an attach failure.
+
+**Scale, models, and an agent trace.** `run_engine_kvscale.sh` uses 8, 16,
+and 32 Qwen2.5-7B agents.  The model variants repeat the eight-agent cell
+with Llama-3.1-8B and Qwen2.5-14B, and the trace variant uses a 14,282-token
+agent workload.
+
+| Workload | Agents | Mode | Runs (failed agents) | Exact texts | Attach (ms) | First token (ms) | Throughput (tokens/s) | Extents / copy | Memory (MiB) | Memory saved (MiB) |
+|---|---:|---|---:|---:|---:|---:|---:|---:|---:|---:|
+| Qwen2.5 7B | 8 | restore | 6 (0) | 48/48 | 534.2 | 2248 | 34.79 | 1.0000 | 20343 | 0 |
+| Qwen2.5 7B | 8 | extent_lazy | 6 (0) | 48/48 | 57.7 | 1713 | 34.32 | 0.9863 | 5855 | 14488 |
+| Qwen2.5 7B | 16 | restore | 6 (0) | 96/96 | 715.6 | 3790 | 34.55 | 1.0000 | 40600 | 0 |
+| Qwen2.5 7B | 16 | extent_lazy | 6 (0) | 96/96 | 65.9 | 3081 | 34.06 | 0.9859 | 11663 | 28937 |
+| Qwen2.5 7B | 32 | restore | 6 (0) | 192/192 | 20855.4 | 45603 | 41.85 | 1.0000 | 80678 | 0 |
+| Qwen2.5 7B | 32 | extent_lazy | 6 (0) | 192/192 | 100.5 | 6199 | 34.39 | 0.8600 | 23210 | 57468 |
+| Llama 3.1 8B | 8 | restore | 6 (0) | 48/48 | 1101.7 | 3005 | 28.93 | 1.0000 | 38738 | 0 |
+| Llama 3.1 8B | 8 | extent_lazy | 6 (0) | 48/48 | 64.2 | 1971 | 28.31 | 0.9786 | 5664 | 33074 |
+| Qwen2.5 14B | 8 | restore | 6 (0) | 48/48 | 1773.8 | 4020 | 16.64 | 1.0000 | 55847 | 0 |
+| Qwen2.5 14B | 8 | extent_lazy | 6 (0) | 48/48 | 78.8 | 2335 | 15.97 | 0.9597 | 6263 | 49584 |
+| Qwen2.5 7B, agent trace | 8 | restore | 6 (0) | 48/48 | 442.2 | 2215 | 35.23 | 1.0000 | 20287 | 0 |
+| Qwen2.5 7B, agent trace | 8 | extent_lazy | 6 (0) | 48/48 | 57.1 | 1811 | 34.86 | 0.9895 | 5910 | 14377 |
+
+Every one of the 480 extent outputs is copy-exact.  At 32 agents, extents
+save 57,468 MiB.  The aggregate throughput ratio of 0.860 is not a stable
+32-agent slowdown: one copy run stalled for 253.6 s and then reported an
+artificially high sum of per-process rates, producing a paired ratio of
+0.455.  The other five paired ratios are 0.948, 0.975, 1.000, 0.980, and
+0.981.  The verifier retains this run and checks this exact exception.
+
+**Server integration.** `run_engine_kvserver.sh` exercises the save and
+restore requests of a long-running server rather than the small process
+driver.
+
+| Mode | Agents | Runs (failed) | Requests complete | Exact texts | Minimum common tokens | Save, request / server (ms) | Restore (ms) | First token (ms) | Memory / cache file (MiB) |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| copy | 4 | 6 (0) | 24/24 | 24/24 | 64 | 505.66 / 503.89 | 365.2 | 560 | 9658 / 0 |
+| extent | 4 | 6 (0) | 24/24 | 6/24 | 22 | 9.05 / 7.59 | 149.6 | 378 | 2454 / 784 |
+| copy | 8 | 6 (0) | 48/48 | 48/48 | 64 | 507.48 / 505.85 | 496.1 | 872 | 19302 / 0 |
+| extent | 8 | 6 (0) | 48/48 | 30/48 | 22 | 8.41 / 7.12 | 245.0 | 661 | 4893 / 784 |
+
+All requests complete and restore evaluates at most 32 prompt tokens.  The
+extent route does not meet the exact-output gate: the four-agent cells match
+6 of 24 sequences and the eight-agent cells match 30 of 48.  In every
+repetition the mismatching task indices are exactly 1, 2, and 3, with at
+least 22 common generated tokens.  The raw sequences are retained; the
+result is a deterministic server-path numerical divergence rather than a
+timeout or failed restore.
+
+**Memory limits.** `run_engine_kvlimit.sh` first accounts for four agents,
+then gives agent 0 a 435-MiB cgroup limit while the other agents continue.
+
+| Phase | Mode | Limit (MiB) | Agent 0 complete / OOM | Agent 0 peak (MiB) | Agent 0 task tokens | Other agents complete / OOM | Other texts exact | Available-memory drop (MiB) | Charged fraction |
+|---|---|---:|---:|---:|---:|---:|---:|---:|---:|
+| account | restore | max | 6 / 0 | 317 | 16 | 18 / 0 | 18/18 | 10130 | 0.125 |
+| account | extent_lazy | max | 6 / 0 | 336 | 16 | 18 / 0 | 18/18 | 2903 | 0.462 |
+| limit | restore | 435 | 6 / 0 | 320 | 4097 | 18 / 0 | 18/18 | 10108 | 0.126 |
+| limit | extent_lazy | 435 | 0 / 6 | 435 | 0 | 18 / 0 | 18/18 | 3004 | 0.479 |
+
+The accounting campaign distinguishes process charges from physical
+sharing: the extent processes are charged for mapped pages even while the
+system-wide available-memory drop is 2.9 GiB rather than the copy's 10.1
+GiB.  Under the enforced limit, only the selected extent process is killed;
+all other agents finish and preserve their account-phase text.
+
+**Read path and device-memory attach.** The read-path probe separates raw
+host-memory bandwidth from end-to-end model behavior, while the VMM probe
+varies the allocation granule for an 896-MiB import.
+
+| MIG instance | Size (MiB) | Memory | Runs (failed) | Bandwidth (GiB/s) | Against device | 95% CI | Random-page latency (ns/page) |
+|---|---:|---|---:|---:|---:|---:|---:|
+| 12sm | 256 | device | 6 (0) | 67.38 | 1.0000 | [1.0000, 1.0000] | 0.90 |
+| 12sm | 256 | host_huge | 6 (0) | 66.53 | 0.9880 | [0.9482, 1.0279] | 0.95 |
+| 12sm | 256 | host_small | 6 (0) | 67.85 | 1.0073 | [0.9824, 1.0321] | 0.98 |
+| 12sm | 1024 | device | 6 (0) | 68.45 | 1.0000 | [1.0000, 1.0000] | 0.56 |
+| 12sm | 1024 | host_huge | 6 (0) | 68.72 | 1.0039 | [0.9975, 1.0103] | 0.59 |
+| 12sm | 1024 | host_small | 6 (0) | 68.62 | 1.0024 | [0.9961, 1.0088] | 2.87 |
+| 6sm | 256 | device | 6 (0) | 45.30 | 1.0000 | [1.0000, 1.0000] | 1.11 |
+| 6sm | 256 | host_huge | 6 (0) | 45.53 | 1.0055 | [0.9749, 1.0361] | 1.33 |
+| 6sm | 256 | host_small | 6 (0) | 45.20 | 0.9980 | [0.9789, 1.0171] | 1.28 |
+| 6sm | 1024 | device | 6 (0) | 46.07 | 1.0000 | [1.0000, 1.0000] | 1.01 |
+| 6sm | 1024 | host_huge | 6 (0) | 46.08 | 1.0004 | [0.9994, 1.0013] | 0.90 |
+| 6sm | 1024 | host_small | 6 (0) | 46.07 | 1.0000 | [0.9943, 1.0058] | 2.96 |
+
+| Allocation (MiB) | Handles | Runs (failed) | Export (ms) | Attach (ms) | Attach (us/handle) | Wrong words |
+|---:|---:|---:|---:|---:|---:|---:|
+| 2 | 448 | 6 (0) | 113.019 | 25.030 | 55.9 | 0 |
+| 4 | 224 | 6 (0) | 89.070 | 13.278 | 59.3 | 0 |
+| 8 | 112 | 6 (0) | 56.140 | 7.116 | 63.5 | 0 |
+| 16 | 56 | 6 (0) | 30.523 | 4.440 | 79.3 | 0 |
+| 32 | 28 | 6 (0) | 30.748 | 2.894 | 103.4 | 0 |
+| 64 | 14 | 6 (0) | 2.714 | 2.441 | 174.4 | 0 |
+| 128 | 7 | 6 (0) | 2.117 | 1.724 | 246.2 | 0 |
+| 448 | 2 | 6 (0) | 1.654 | 1.485 | 742.7 | 0 |
+| 896 | 1 | 6 (0) | 1.588 | 1.452 | 1452.5 | 0 |
+
+Sequential host reads retain 0.988--1.007 of device-memory bandwidth in all
+cells.  VMM attach falls from 25.030 ms for 448 two-MiB handles to 1.452 ms
+for one 896-MiB handle, showing that its attach cost is primarily per
+allocation rather than per byte.
+
+**Protection.** `run_protect.sh` asks an importer to read and then write
+shared state through the two routes.
+
+| Route | Attempts | Read / access change | Write refused / succeeded | Write result | Exporter's state intact |
+|---|---:|---:|---:|---|---:|
+| host, read-only mapping | 12 | 12 reads complete | 12 refused | `cudaErrorIllegalAddress` | 12/12 |
+| device VMM import | 6 | 6 access raises succeeded | 6 succeeded | allowed | 0/6 |
+
+The host route rejects every GPU write with `cudaErrorIllegalAddress` and
+leaves the shared state intact.  CUDA VMM permits every importer write and
+corrupts the exporter's state in every attempt.  This is a measured
+protection limitation of that comparison route.
+
+**Ollama.** `run_ollama_agents.sh` runs the unmodified Ollama 0.16.1 server
+on isolated ports and model stores.  One-server and one-server-per-MIG
+placements each serve eight agents; `/api/ps` must report nonzero GPU VRAM.
+
+| Servers | Round | Runs | Requests complete | Prompt tokens | First token (ms) | Request (ms) | Throughput (tokens/s) | Memory (MiB) | GPU servers | Reported VRAM (MiB) |
+|---:|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| one | cold | 6 | 48/48 | 16336 | 192288 | 207250 | 39.83 | 19966 | 1/1 | 33366 |
+| one | warm | 6 | 48/48 | 16336 | 886 | 17162 | 33.02 | 20040 | 1/1 | 33366 |
+| two | cold | 6 | 48/48 | 16336 | 121350 | 131878 | 57.86 | 25111 | 2/2 | 37548 |
+| two | warm | 6 | 48/48 | 16336 | 732 | 12687 | 47.50 | 25197 | 2/2 | 37548 |
+
+All 192 requests finish and every server reports GPU residency.  Warming
+the prompt reduces first-token latency from 192.3 s to 0.886 s for one
+server and from 121.4 s to 0.732 s for two.  Ollama does not expose this
+cache across servers; the two-server cold round therefore computes the
+prefix independently.  The campaign uses a preload compatibility shim only
+to preserve the selected MIG UUID during Ollama's CUDA discovery.  It uses
+separate ports and leaves the pre-existing system Ollama process alive.
+
+### 6.13 Gates
 
 The runners of Sections 6.4 and 6.5 state their gates in their headers, and
 the headers are pinned by hash. Outcomes:
@@ -1018,6 +1240,13 @@ the headers are pinned by hash. Outcomes:
 The verifier checks the relations that hold, and for the two failed gates
 it checks the outcome that was measured: the number of cells below 97%, and
 equality with recomputation only in the publisher's instance.
+
+`verify_stator_campaigns.sh` independently rebuilds the summaries for all
+13 campaigns in Sections 6.11--6.12, verifies their pinned source hashes,
+and enforces the completion, memory, latency, output, cleanup, and isolation
+relations.  It reports four explicit measured exceptions rather than
+hiding them: the flat-tree output count, the one 32-agent timing outlier,
+and the two server-integration exact-output cells.
 
 ## 7. Novelty boundary
 
@@ -1177,12 +1406,23 @@ recomputation there (the instances differ in their bits).
 | shared and private device memory composed with CUDA's virtual memory interface | `llm_share/results/20261006-vmm-routes-v1/` |
 | eight agents in one batching server, and in one server per MIG instance with and without extents | `llm_share/results/20261006-engine-kvbatch-v1/` |
 | host extents against a device-memory cache and the copy, a parent and four children in one instance | `llm_share/results/20261006-engine-kvvmm-v1/` |
+| extents under time slicing, MPS, MIG, and MPS within MIG | `llm_share/results/20261006-engine-kvmps-v1/` |
+| copy, demand-backed copy, shared device memory, copy-on-write, and extents in one engine | `llm_share/results/20261006-engine-kvsota-v1/` |
+| two-level agent trees with flat and chained prefixes | `llm_share/results/20261006-engine-kvtree-v1/` |
+| 8, 16, and 32 agents; Llama-3.1-8B, Qwen2.5-14B, and an agent trace | `llm_share/results/20261006-engine-kvscale-v1/`, `-llama8b-v1/`, `-qwen14b-v1/`, `-agent-v1/` |
+| long-running server save and restore path | `llm_share/results/20261006-engine-kvserver-v1/` |
+| process accounting and an enforced cgroup memory limit | `llm_share/results/20261006-engine-kvlimit-v1/` |
+| raw host- and device-memory read path | `llm_share/results/20261006-read-path-v1/` |
+| shared device-memory attach cost by allocation granule | `llm_share/results/20261006-vmm-attach-v1/` |
+| write protection of host mappings and device VMM imports | `llm_share/results/20261006-protect-v1/` |
+| one and two unmodified Ollama servers, cold and warm prefixes | `llm_share/results/20261006-ollama-agents-v1/` |
 | sealed base under MIG, time slicing, MPS; fault containment | `thor_hostmm/results/20261005-sharing-modes-v1/` |
 | sealed base: modes, scaling, attempts to modify it | `thor_hostmm/results/20261005-shared-model-v1/` |
 | pages copied per page without the accessed flag | `thor_hostmm/results/20261005-af-block-v1/` |
 | tax on memory-management operations; ways to start a helper | `thor_hostmm/results/20261005-mm-tax-v1/` |
 
-`llm_share/verify_llm_share_artifact.sh` and
+`llm_share/verify_llm_share_artifact.sh`,
+`llm_share/verify_stator_campaigns.sh`, and
 `thor_hostmm/verify_hostmm_artifact.sh` rebuild every summary from its raw
 log, check the pinned sources, and re-evaluate the relations stated above
 without running the GPU. The engine patches are

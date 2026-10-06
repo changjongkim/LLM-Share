@@ -1,0 +1,5 @@
+phase,mode,runs,limit_mib,agent0_completed,agent0_oom_kills,agent0_peak_mib,agent0_task_tokens,others,others_completed,others_oom_kills,others_peak_mib,others_texts_equal_to_account,mem_available_drop_mib,charged_peak_sum_mib,charged_fraction
+account,restore,6,max,6,0,317,16,18,18,0,317,18,10130,1268,0.125
+account,extent_lazy,6,max,6,0,336,16,18,18,0,335,18,2903,1341,0.462
+limit,restore,6,435,6,0,320,4097,18,18,0,317,18,10108,1272,0.126
+limit,extent_lazy,6,435,0,6,435,0,18,18,0,335,18,3004,1440,0.479

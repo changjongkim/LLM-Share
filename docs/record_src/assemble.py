@@ -33,6 +33,12 @@ tables = {
     "@KV_DET@": "kv_det.md", "@VMM_ROUTES@": "vmm_routes.md",
     "@KV_SPEED@": "kv_speed.md", "@KV_COW@": "kv_cow.md",
     "@KV_BATCH@": "kv_batch.md", "@KV_VMM@": "kv_vmm.md",
+    "@KV_MPS@": "kv_mps.md",
+    "@KV_SOTA@": "kv_sota.md", "@KV_TREE@": "kv_tree.md",
+    "@KV_SCALE@": "kv_scale.md", "@KV_SERVER@": "kv_server.md",
+    "@KV_LIMIT@": "kv_limit.md", "@READ_PATH@": "read_path.md",
+    "@VMM_ATTACH@": "vmm_attach.md", "@PROTECT@": "protect.md",
+    "@OLLAMA_AGENTS@": "ollama_agents.md",
 }
 for marker, name in tables.items():
     path = os.path.join(docs, name)

@@ -47,7 +47,8 @@ def wait(port, seconds):
 def completion(port, prompt, n_predict):
     return call(port, "/completion", {
         "prompt": prompt, "n_predict": n_predict, "temperature": 0.0, "top_k": 1,
-        "seed": 1, "cache_prompt": True, "id_slot": 0, "stream": False})
+        "seed": 1, "cache_prompt": True, "id_slot": 0, "stream": False,
+        "return_tokens": True})
 
 
 def publish(port, prefix_file, state_name):
@@ -79,13 +80,15 @@ def agent(index, port, prefix, task, n_gen, state_name, lines, started):
         request_ms = (time.time() - start) * 1000
         timings = answer["timings"]
         text = hashlib.sha256(answer["content"].encode()).hexdigest()[:16]
+        token_ids = ":".join(str(token) for token in answer.get("tokens", []))
+        token_hash = hashlib.sha256(token_ids.encode()).hexdigest()[:16]
         lines[index] = (
             f"AGENT index={index} port={port} exit=0 text={text} restored_tokens={restored} "
             f"restore_ms={restore_ms:.2f} server_restore_ms={server_restore_ms:.2f} "
             f"prompt_evaluated={timings['prompt_n']} prompt_ms={timings['prompt_ms']:.1f} "
             f"first_token_ms={(start - started) * 1000 + timings['prompt_ms']:.1f} "
             f"generated={timings['predicted_n']} generation_tps={timings['predicted_per_second']:.3f} "
-            f"request_ms={request_ms:.1f}")
+            f"request_ms={request_ms:.1f} token_hash={token_hash} token_ids={token_ids}")
     except Exception as error:  # the line records the failure; the runner counts it
         lines[index] = f"AGENT index={index} port={port} exit=1 error={type(error).__name__}"
 

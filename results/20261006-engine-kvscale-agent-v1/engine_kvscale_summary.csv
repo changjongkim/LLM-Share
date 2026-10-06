@@ -1,0 +1,3 @@
+paragraphs,mode,agents,runs,failed_agents,prefix_tokens,texts_equal_to_restore,texts_compared,own_instance_equal_to_recompute,own_instance_compared,other_instance_equal_to_recompute,other_instance_compared,attach_ms,first_token_ms,generation_tps_total,generation_vs_restore,lower_ci95,upper_ci95,memory_mib,memory_saved_vs_restore_mib,prefix_state_mib,prefix_pss_mib,prefix_rss_mib
+320,restore,8,6,0,14282,48,48,0,0,0,0,442.2,2215,35.23,1.0000,1.0000,1.0000,20287,0,781,0,0
+320,extent_lazy,8,6,0,14282,48,48,0,0,0,0,57.1,1811,34.86,0.9895,0.9755,1.0036,5910,14377,781,809,6247

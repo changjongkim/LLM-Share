@@ -40,7 +40,7 @@ repetitions=${REPETITIONS:-6}
 groups=${GROUPS_COUNT:-2}
 leaves=${LEAVES:-4}
 paragraphs=${PARAGRAPHS:-320}
-group_paragraphs=${GROUP_PARAGRAPHS:-20}
+group_paragraphs=${GROUP_PARAGRAPHS:-40}
 n_gen=${N_GEN:-64}
 grow=${GROW_ROWS:-256}
 limit_s=${CASE_LIMIT_S:-900}
@@ -294,14 +294,15 @@ run_case() {  # mode
         failed=$((failed + 1))
         sed 's/^/STDERR /' "${leaf_files[$number]}.err" | tail -n 5
       fi
-      printf 'LEAF index=%s group=%s mig=%s exit=%s text=%s context_ms=%s load_ms=%s decode_ms=%s first_token_ms=%s generation_tps=%s\n' \
+      printf 'LEAF index=%s group=%s mig=%s exit=%s text=%s context_ms=%s load_ms=%s decode_ms=%s first_token_ms=%s generation_tps=%s token_ids=%s\n' \
         "$number" "${leaf_groups[$number]}" "${leaf_migs[$number]:4:8}" "$code" \
         "$(text_of "${leaf_files[$number]}")" \
         "$(field_of context_ms ATTACHED "${leaf_files[$number]}")" \
         "$(field_of load_ms ATTACHED "${leaf_files[$number]}")" \
         "$(field_of decode_ms RESULT "${leaf_files[$number]}")" \
         "$(field_of first_token_ms RESULT "${leaf_files[$number]}")" \
-        "$(field_of generation_tps RESULT "${leaf_files[$number]}")"
+        "$(field_of generation_tps RESULT "${leaf_files[$number]}")" \
+        "$(sed -n 's/^TOKEN_IDS://p' "${leaf_files[$number]}" | head -n 1)"
     done
     printf 'MEMORY tree_drop_mib=%s files_attached_mib=%s files_removed=%s files_end_mib=%s\n' \
       "$(( (before - lowest) / 1024 ))" "$files_attached" "$files_removed" \
@@ -313,8 +314,11 @@ run_case() {  # mode
   rm -f "$work"/state.* "$work/go" "$huge_dir"/* "$small_dir"/*
 }
 
-forward=(copy flat chain chain_small)
-backward=(chain_small chain flat copy)
+read -r -a forward <<<"${MODES:-copy flat chain chain_small}"
+backward=()
+for (( mode_index=${#forward[@]} - 1; mode_index >= 0; --mode_index )); do
+  backward+=("${forward[$mode_index]}")
+done
 for run in $(seq 1 "$repetitions"); do
   if (( run % 2 == 1 )); then modes=("${forward[@]}"); else modes=("${backward[@]}"); fi
   {

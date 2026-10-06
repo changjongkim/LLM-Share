@@ -1,0 +1,4 @@
+# Unified diffs contain one prefix character on otherwise blank context
+# lines; machine logs may end with an intentionally empty key/value field.
+*.patch whitespace=-trailing-space
+results/**/raw.log whitespace=-trailing-space

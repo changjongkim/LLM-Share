@@ -3,6 +3,7 @@
 /llama.cpp-kv/
 /llama.cpp-vmm/
 /llama.cpp-chain/
+/llama.cpp-sota/
 # the model and the generated adapters
 /models/
 /adapters/
@@ -15,9 +16,14 @@
 /kv_batch
 /kv_spawn
 /kv_tree
+/kv_fork_sota
+/kv_spawn_sota
 /cuda_reach_probe
 /cuda_vmm_attach_probe
 /cuda_protect_probe
+/ollama_mig_visible.so
+# the model store of the Ollama baseline
+/ollama_models/
 # what a campaign leaves while it runs
 /mounts/
 /results/*/work.*

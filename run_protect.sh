@@ -83,36 +83,10 @@ for run in $(seq 1 "$repetitions"); do
   } >>"$raw_log"
 done
 
-awk '
-  function field(name, i, pair) {
-    for (i = 1; i <= NF; ++i) { split($i, pair, "="); if (pair[1] == name) return pair[2] }
-    return ""
-  }
-  /^PROBE / && field("route") == "host" {
-    host++
-    if (field("gpu_read") == "cudaSuccess" && field("words_equal") == field("words")) read_ok++
-    if (field("gpu_write") != "cudaSuccess") refused++
-    errors[field("gpu_write")] = 1
-    intact += field("file_intact")
-    next
-  }
-  /^PROBE / && field("route") == "vmm" {
-    vmm++
-    if (field("importer_raise") == "CUDA_SUCCESS") raised++
-    if (field("importer_write") == "CUDA_SUCCESS") written++
-    unchanged += field("exporter_intact")
-    next
-  }
-  END {
-    names = ""
-    for (name in errors) names = names (names == "" ? "" : "+") name
-    print "route,attempts,gpu_reads_complete,writes_refused,write_error,shared_state_intact"
-    printf "host,%d,%d,%d,%s,%d\n", host, read_ok, refused, names, intact
-    print "route,attempts,importer_raised_access,importer_writes_succeeded,exporter_state_intact"
-    printf "vmm,%d,%d,%d,%d\n", vmm, raised, written, unchanged
-  }' "$raw_log" >"$result_dir/protect_summary.csv"
+awk -f "$script_dir/summarize_protect.awk" "$raw_log" \
+  >"$result_dir/protect_summary.csv"
 (
   cd "$script_dir"
-  sha256sum cuda_protect_probe.cu run_protect.sh
+  sha256sum cuda_protect_probe.cu summarize_protect.awk run_protect.sh
 ) >"$result_dir/source_hashes.txt"
 printf 'protect_result_dir=%s\n' "$result_dir"

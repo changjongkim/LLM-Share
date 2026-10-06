@@ -1,0 +1,5 @@
+mode,runs,groups,leaves_per_group,failed_processes,timed_out,root_tokens,leader_tokens,root_publish_ms,root_state_mib,leader_attach_ms,leader_publish_ms,leader_state_mib,leaf_attach_ms,leaf_decode_ms,leaf_first_token_ms,leaf_tps_sum,tree_memory_mib,segment_files_mib,files_removed_runs,files_left_at_end_mib,leaves_finished,leaf_texts_equal_to_copy,own_path_equal_to_alone,own_path_compared,other_path_equal_to_alone,other_path_compared,wall_s,min_common_tokens_to_copy,token_sequences_compared
+copy,6,2,4,0,0,16321,17794,540.74,892.80,238.9,603.77,973.38,616.9,499,2889,27.47,27954,0,0,0,48,48,12,12,18,36,51.3,64,48
+flat,6,2,4,0,0,16321,16321,8.70,0.25,41.7,0.00,0.00,48.0,17423,18880,28.01,9843,896,6,0,48,42,12,12,24,36,66.4,41,48
+chain,6,2,4,0,0,16321,17794,9.01,0.25,44.2,6.19,0.27,53.5,478,2246,26.34,9469,1344,6,0,48,48,12,12,18,36,50.8,64,48
+chain_small,6,2,4,0,0,16321,17794,8.82,0.25,44.7,11.05,0.27,57.3,489,2349,26.52,9204,1071,6,0,48,48,12,12,18,36,50.8,64,48

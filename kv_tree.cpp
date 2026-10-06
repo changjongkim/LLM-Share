@@ -129,6 +129,7 @@ int run(int argc, char** argv) {
   size_t loaded_tokens = 0;
   int generated = 0;
   std::string text;
+  std::vector<llama_token> generated_tokens;
 
   for (int index = 4; index < argc; ++index) {
     const std::string step = argv[index];
@@ -206,6 +207,7 @@ int run(int argc, char** argv) {
           text.append(piece, static_cast<size_t>(length));
         }
         tokens.push_back(token);
+        generated_tokens.push_back(token);
         if (llama_decode(context, llama_batch_get_one(&token, 1)) != 0) {
           throw std::runtime_error("decode failed");
         }
@@ -227,6 +229,11 @@ int run(int argc, char** argv) {
       generation_ms > 0.0 ? generated * 1000.0 / generation_ms : 0.0,
       ms_since(process_start));
   std::printf("TEXT %s\n", one_line(text).c_str());
+  std::printf("TOKEN_IDS");
+  for (const llama_token token : generated_tokens) {
+    std::printf(":%d", token);
+  }
+  std::printf("\n");
   std::fflush(stdout);
 
   llama_free(context);

@@ -4,9 +4,11 @@ NVCCFLAGS := -std=c++17 -O3 -lineinfo -arch=sm_110 \
 
 CXX ?= g++
 CXXFLAGS := -std=c++20 -O2 -Wall -Wextra -Wpedantic -Werror
+CFLAGS := -O2 -Wall -Wextra -Wpedantic -Werror
 KV_ENGINE ?= llama.cpp-kv
 VMM_ENGINE ?= llama.cpp-vmm
 CHAIN_ENGINE ?= llama.cpp-chain
+SOTA_ENGINE ?= llama.cpp-sota
 
 .PHONY: all clean
 
@@ -57,6 +59,21 @@ kv_spawn: kv_spawn.cpp
 	  -L$(VMM_ENGINE)/build/bin -lllama -lggml -lggml-base \
 	  -Wl,-rpath,'$$ORIGIN/$(VMM_ENGINE)/build/bin'
 
+# The comparison of baselines: one engine with every way to hand a prefix
+# over (copy, demand-backed copy, shared device memory, copy-on-write,
+# extents), the parent that starts its children and the child program.
+kv_fork_sota: kv_fork.cpp
+	$(CXX) $(CXXFLAGS) -isystem $(SOTA_ENGINE)/include \
+	  -isystem $(SOTA_ENGINE)/ggml/include $< -o $@ \
+	  -L$(SOTA_ENGINE)/build/bin -lllama -lggml -lggml-base \
+	  -Wl,-rpath,'$$ORIGIN/$(SOTA_ENGINE)/build/bin'
+
+kv_spawn_sota: kv_spawn.cpp
+	$(CXX) $(CXXFLAGS) -isystem $(SOTA_ENGINE)/include \
+	  -isystem $(SOTA_ENGINE)/ggml/include $< -o $@ \
+	  -L$(SOTA_ENGINE)/build/bin -lllama -lggml -lggml-base \
+	  -Wl,-rpath,'$$ORIGIN/$(SOTA_ENGINE)/build/bin'
+
 # A tree of agents: the engine whose agents can publish the rows they add.
 kv_tree: kv_tree.cpp
 	$(CXX) $(CXXFLAGS) -isystem $(CHAIN_ENGINE)/include \
@@ -64,5 +81,10 @@ kv_tree: kv_tree.cpp
 	  -L$(CHAIN_ENGINE)/build/bin -lllama -lggml -lggml-base \
 	  -Wl,-rpath,'$$ORIGIN/$(CHAIN_ENGINE)/build/bin'
 
+# Ollama reports a physical UUID while validating a MIG device. This preload
+# adapter maps that child-runner lookup back to the selected MIG UUID.
+ollama_mig_visible.so: ollama_mig_visible.c
+	$(CC) $(CFLAGS) -shared -fPIC $< -o $@ -ldl
+
 clean:
-	$(RM) cuda_ipc_probe cuda_vmm_probe cuda_share_load_probe kv_fork kv_batch kv_fork_vmm kv_spawn kv_tree cuda_reach_probe cuda_vmm_attach_probe cuda_protect_probe
+	$(RM) cuda_ipc_probe cuda_vmm_probe cuda_share_load_probe kv_fork kv_batch kv_fork_vmm kv_spawn kv_tree kv_fork_sota kv_spawn_sota cuda_reach_probe cuda_vmm_attach_probe cuda_protect_probe ollama_mig_visible.so

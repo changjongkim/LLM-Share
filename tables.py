@@ -352,6 +352,194 @@ if os.path.exists(path):
                  f"{float(r['parent_generation_tps']):.2f} | {r['children_memory_mib']} |\n")
     write("kv_vmm.md", text)
 
+# --- extents under every way of sharing the GPU -------------------------------
+path = os.path.join(engine_root, "20261006-engine-kvmps-v1", "engine_kvmps_summary.csv")
+if os.path.exists(path):
+    data = rows(path)
+    table = {(r["config"], r["children"], r["prefix_tokens"], r["mode"]): r for r in data}
+    names = {"timeslice": "time slicing", "mps": "one MPS server",
+             "mig": "two MIG instances", "mig_mps": "one MPS server per MIG instance"}
+    text = ("| Compute shared by | Children | Prefix (tokens) | Memory, copy / extents (MiB) | "
+            "Throughput, copy / extents (tokens/s) | Extents / copy | "
+            "Parent pause, copy / extents (ms) | Attach, copy / extents (ms) | "
+            "Extent texts equal to copy |\n"
+            "|---|---:|---:|---:|---:|---:|---:|---:|---:|\n")
+    cells = sorted({(r["config"], r["children"], r["prefix_tokens"]) for r in data},
+                   key=lambda cell: (CONFIG_ORDER.index(cell[0]), int(cell[2]), int(cell[1])))
+    for config, children, tokens in cells:
+        copy = table[config, children, tokens, "copy"]
+        extent = table[config, children, tokens, "extent"]
+        text += (f"| {names[config]} | {children} | {int(float(tokens)):,} | "
+                 f"{float(copy['children_memory_mib']):.0f} / "
+                 f"{float(extent['children_memory_mib']):.0f} | "
+                 f"{float(copy['children_tps_sum']):.2f} / "
+                 f"{float(extent['children_tps_sum']):.2f} | "
+                 f"{float(extent['children_tps_sum']) / float(copy['children_tps_sum']):.3f} | "
+                 f"{float(copy['publish_ms']):.1f} / {float(extent['publish_ms']):.1f} | "
+                 f"{float(copy['child_attach_ms']):.1f} / {float(extent['child_attach_ms']):.1f} | "
+                 f"{extent['texts_equal_to_copy']}/{extent['children_finished']} |\n")
+    write("kv_mps.md", text)
+
+# --- five hand-over mechanisms in the same engine ----------------------------
+path = os.path.join(engine_root, "20261006-engine-kvsota-v1", "engine_kvsota_summary.csv")
+if os.path.exists(path):
+    names = {"copy": "copy", "demand": "demand-backed copy",
+             "device": "shared device memory", "cow": "copy-on-write",
+             "extent": "extents"}
+    text = ("| Placement | Hand-over | Children complete | Texts equal to copy | "
+            "Parent pause (ms) | Attach (ms) | First token (ms) | "
+            "Memory (MiB) | Throughput (tokens/s) |\n"
+            "|---|---|---:|---:|---:|---:|---:|---:|---:|\n")
+    for r in rows(path):
+        text += (f"| {r['placement']} | {names[r['mode']]} | "
+                 f"{r['children_finished']}/{r['children_started']} | "
+                 f"{r['texts_equal_to_copy']}/{r['children_finished']} | "
+                 f"{float(r['publish_ms']):.2f} | {float(r['child_attach_ms']):.1f} | "
+                 f"{r['child_first_token_ms']} | {r['children_memory_mib']} | "
+                 f"{float(r['children_tps_sum']):.2f} |\n")
+    write("kv_sota.md", text)
+
+# --- a two-level tree of agents ----------------------------------------------
+path = os.path.join(engine_root, "20261006-engine-kvtree-v1", "engine_kvtree_summary.csv")
+if os.path.exists(path):
+    names = {"copy": "copy", "flat": "one published prefix",
+             "chain": "extent chain, 2 MiB pages",
+             "chain_small": "extent chain, 4 KiB pages"}
+    text = ("| Tree | Runs (failed, timed out) | Root / leader publish (ms) | "
+            "Leaf attach (ms) | Leaf first token (ms) | Memory (MiB) | "
+            "Leaves complete | Exact texts | Minimum common tokens | Files removed |\n"
+            "|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|\n")
+    for r in rows(path):
+        leader = "-" if float(r["leader_publish_ms"]) == 0 else f"{float(r['leader_publish_ms']):.2f}"
+        removed = "-" if r["mode"] == "copy" else f"{r['files_removed_runs']}/{r['runs']}"
+        text += (f"| {names[r['mode']]} | {r['runs']} ({r['failed_processes']}, {r['timed_out']}) | "
+                 f"{float(r['root_publish_ms']):.2f} / {leader} | "
+                 f"{float(r['leaf_attach_ms']):.1f} | {r['leaf_first_token_ms']} | "
+                 f"{r['tree_memory_mib']} | {r['leaves_finished']} | "
+                 f"{r['leaf_texts_equal_to_copy']}/{r['token_sequences_compared']} | "
+                 f"{r['min_common_tokens_to_copy']} | {removed} |\n")
+    write("kv_tree.md", text)
+
+# --- scaling, models, and an agent trace -------------------------------------
+scale_runs = (("Qwen2.5 7B", "20261006-engine-kvscale-v1"),
+              ("Llama 3.1 8B", "20261006-engine-kvscale-llama8b-v1"),
+              ("Qwen2.5 14B", "20261006-engine-kvscale-qwen14b-v1"),
+              ("Qwen2.5 7B, agent trace", "20261006-engine-kvscale-agent-v1"))
+text = ("| Workload | Agents | Mode | Runs (failed agents) | Exact texts | Attach (ms) | "
+        "First token (ms) | Throughput (tokens/s) | Extents / copy | "
+        "Memory (MiB) | Memory saved (MiB) |\n"
+        "|---|---:|---|---:|---:|---:|---:|---:|---:|---:|---:|\n")
+found = False
+for label, directory in scale_runs:
+    path = os.path.join(engine_root, directory, "engine_kvscale_summary.csv")
+    if not os.path.exists(path):
+        continue
+    found = True
+    for r in rows(path):
+        exact = f"{r['texts_equal_to_restore']}/{r['texts_compared']}"
+        text += (f"| {label} | {r['agents']} | {r['mode']} | "
+                 f"{r['runs']} ({r['failed_agents']}) | {exact} | "
+                 f"{float(r['attach_ms']):.1f} | {r['first_token_ms']} | "
+                 f"{float(r['generation_tps_total']):.2f} | "
+                 f"{float(r['generation_vs_restore']):.4f} | {r['memory_mib']} | "
+                 f"{r['memory_saved_vs_restore_mib']} |\n")
+if found:
+    write("kv_scale.md", text)
+
+# --- real server route --------------------------------------------------------
+path = os.path.join(engine_root, "20261006-engine-kvserver-v1", "engine_kvserver_summary.csv")
+if os.path.exists(path):
+    text = ("| Mode | Agents | Runs (failed) | Requests complete | Exact texts | "
+            "Minimum common tokens | Save, request / server (ms) | Restore (ms) | "
+            "First token (ms) | Memory / cache file (MiB) |\n"
+            "|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|\n")
+    for r in rows(path):
+        text += (f"| {r['mode']} | {r['agents']} | {r['runs']} ({r['failed']}) | "
+                 f"{r['agents_finished']}/{int(r['runs']) * int(r['agents'])} | "
+                 f"{r['texts_equal_to_copy']}/{r['token_sequences_compared']} | "
+                 f"{r['min_common_tokens_to_copy']} | {float(r['save_request_ms']):.2f} / "
+                 f"{float(r['server_save_ms']):.2f} | {float(r['restore_request_ms']):.1f} | "
+                 f"{r['first_token_ms']} | {r['agents_memory_mib']} / {r['cache_file_mib']} |\n")
+    write("kv_server.md", text)
+
+# --- memory-accounting and enforced-limit behavior ---------------------------
+path = os.path.join(engine_root, "20261006-engine-kvlimit-v1", "engine_kvlimit_summary.csv")
+if os.path.exists(path):
+    text = ("| Phase | Mode | Limit (MiB) | Agent 0 complete / OOM | Agent 0 peak (MiB) | "
+            "Agent 0 task tokens | Other agents complete / OOM | Other texts exact | "
+            "Available-memory drop (MiB) | Charged fraction |\n"
+            "|---|---|---:|---:|---:|---:|---:|---:|---:|---:|\n")
+    for r in rows(path):
+        text += (f"| {r['phase']} | {r['mode']} | {r['limit_mib']} | "
+                 f"{r['agent0_completed']} / {r['agent0_oom_kills']} | "
+                 f"{r['agent0_peak_mib']} | {r['agent0_task_tokens']} | "
+                 f"{r['others_completed']} / {r['others_oom_kills']} | "
+                 f"{r['others_texts_equal_to_account']}/{r['others']} | "
+                 f"{r['mem_available_drop_mib']} | {float(r['charged_fraction']):.3f} |\n")
+    write("kv_limit.md", text)
+
+# --- raw host/device read path ------------------------------------------------
+path = os.path.join(engine_root, "20261006-read-path-v1", "read_path_summary.csv")
+if os.path.exists(path):
+    text = ("| MIG instance | Size (MiB) | Memory | Runs (failed) | Bandwidth (GiB/s) | "
+            "Against device | 95% CI | Random-page latency (ns/page) |\n"
+            "|---|---:|---|---:|---:|---:|---:|---:|\n")
+    for r in rows(path):
+        text += (f"| {r['instance']} | {r['size_mib']} | {r['kind']} | "
+                 f"{r['runs']} ({r['failed']}) | {float(r['full_gib_per_s']):.2f} | "
+                 f"{float(r['full_vs_device']):.4f} | "
+                 f"[{float(r['lower_ci95']):.4f}, {float(r['upper_ci95']):.4f}] | "
+                 f"{float(r['ns_per_page']):.2f} |\n")
+    write("read_path.md", text)
+
+# --- CUDA VMM attach granularity ---------------------------------------------
+path = os.path.join(engine_root, "20261006-vmm-attach-v1", "vmm_attach_summary.csv")
+if os.path.exists(path):
+    text = ("| Allocation (MiB) | Handles | Runs (failed) | Export (ms) | Attach (ms) | "
+            "Attach (us/handle) | Wrong words |\n"
+            "|---:|---:|---:|---:|---:|---:|---:|\n")
+    for r in rows(path):
+        text += (f"| {r['granule_mib']} | {r['handles']} | {r['runs']} ({r['failed']}) | "
+                 f"{float(r['export_ms']):.3f} | {float(r['attach_ms']):.3f} | "
+                 f"{float(r['attach_us_per_handle']):.1f} | {r['wrong_words']} |\n")
+    write("vmm_attach.md", text)
+
+# --- write protection of imported state --------------------------------------
+path = os.path.join(engine_root, "20261006-protect-v1", "protect_summary.csv")
+if os.path.exists(path):
+    with open(path, newline="") as handle:
+        protected = list(csv.reader(handle))
+    host = dict(zip(protected[0], protected[1]))
+    vmm = dict(zip(protected[2], protected[3]))
+    text = ("| Route | Attempts | Read / access change | Write refused / succeeded | "
+            "Write result | Exporter's state intact |\n"
+            "|---|---:|---:|---:|---|---:|\n"
+            f"| host, read-only mapping | {host['attempts']} | "
+            f"{host['gpu_reads_complete']} reads complete | "
+            f"{host['writes_refused']} refused | `{host['write_error']}` | "
+            f"{host['shared_state_intact']}/{host['attempts']} |\n"
+            f"| device VMM import | {vmm['attempts']} | "
+            f"{vmm['importer_raised_access']} access raises succeeded | "
+            f"{vmm['importer_writes_succeeded']} succeeded | allowed | "
+            f"{vmm['exporter_state_intact']}/{vmm['attempts']} |\n")
+    write("protect.md", text)
+
+# --- unmodified Ollama servers ------------------------------------------------
+path = os.path.join(engine_root, "20261006-ollama-agents-v1", "ollama_agents_summary.csv")
+if os.path.exists(path):
+    text = ("| Servers | Round | Runs | Requests complete | Prompt tokens | First token (ms) | "
+            "Request (ms) | Throughput (tokens/s) | Memory (MiB) | GPU servers | "
+            "Reported VRAM (MiB) |\n"
+            "|---:|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|\n")
+    for r in rows(path):
+        text += (f"| {r['config']} | {r['round']} | {r['runs']} | "
+                 f"{r['agents_finished']}/{r['agents_started']} | {r['prompt_tokens_evaluated']} | "
+                 f"{r['first_token_ms']} | {r['request_ms']} | "
+                 f"{float(r['generation_tps_sum']):.2f} | {r['memory_mib']} | "
+                 f"{float(r['gpu_servers']):.0f}/{float(r['servers']):.0f} | "
+                 f"{float(r['vram_mib']):.0f} |\n")
+    write("ollama_agents.md", text)
+
 # --- adapters --------------------------------------------------------------------
 path = os.path.join(engine_root, "20261005-engine-adapters-v1", "engine_adapters_summary.csv")
 if os.path.exists(path):

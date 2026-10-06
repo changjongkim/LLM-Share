@@ -1,0 +1,5 @@
+config,round,runs,agents_started,agents_finished,prompt_tokens_evaluated,first_token_ms,request_ms,generation_tps_sum,memory_mib,servers,gpu_servers,vram_mib,generated_per_agent,texts_equal_to_first,texts_equal_to_cold
+one,cold,6,48,48,16336,192288,207250,39.83,19966,1.0,1.0,33366,64.0,21/48,-
+one,warm,6,48,48,16336,886,17162,33.02,20040,1.0,1.0,33366,64.0,22/48,24/48
+two,cold,6,48,48,16336,121350,131878,57.86,25111,2.0,2.0,37548,64.0,25/48,-
+two,warm,6,48,48,16336,732,12687,47.50,25197,2.0,2.0,37548,64.0,26/48,20/48

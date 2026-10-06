@@ -47,11 +47,11 @@ END {
       rest = substr(pair, length(modes[m] SUBSEP) + 1)
       if (text[key, rest] != "" && text[key SUBSEP rest] == text["account" SUBSEP modes[m] SUBSEP rest]) equal++
     }
-    printf "%s,%s,%d,%s,%d,%d,%.0f,%.0f,%d,%d,%d,%.0f,%d,%.0f,%.0f,%.3f\n", \
-           phases[p], modes[m], n, phases[p] == "account" ? "max" : sprintf("%.0f", limit[key] / n), \
-           first_done[key] + 0, first_kills[key] + 0, first_peak[key] / n, \
-           first_tokens[key] / n, others[key] + 0, other_done[key] + 0, \
-           other_kills[key] + 0, other_peak[key] / o, equal, drop[key] / n, \
-           charged[key] / n, drop[key] > 0 ? charged[key] / drop[key] : 0
+    limit_out = phases[p] == "account" ? "max" : sprintf("%.0f", limit[key] / n)
+    fraction = drop[key] > 0 ? charged[key] / drop[key] : 0
+    # Compute the conditional first. In a printf argument list, awk can parse
+    # the leading `drop[key] > ...` as output redirection and create a file
+    # named after the conditional result instead of emitting a CSV record.
+    printf "%s,%s,%d,%s,%d,%d,%.0f,%.0f,%d,%d,%d,%.0f,%d,%.0f,%.0f,%.3f\n", phases[p], modes[m], n, limit_out, first_done[key] + 0, first_kills[key] + 0, first_peak[key] / n, first_tokens[key] / n, others[key] + 0, other_done[key] + 0, other_kills[key] + 0, other_peak[key] / o, equal, drop[key] / n, charged[key] / n, fraction
   }
 }

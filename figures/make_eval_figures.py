@@ -58,7 +58,11 @@ def style(ax, grid="y"):
 
 
 def save(fig, name):
-    fig.savefig(os.path.join(HERE, name + ".pdf"), bbox_inches="tight", pad_inches=0.03)
+    # Matplotlib otherwise embeds the wall-clock creation time, which makes
+    # a figure rebuilt from identical CSV inputs differ byte-for-byte.
+    pdf_metadata = {"CreationDate": None, "ModDate": None}
+    fig.savefig(os.path.join(HERE, name + ".pdf"), bbox_inches="tight", pad_inches=0.03,
+                metadata=pdf_metadata)
     fig.savefig(os.path.join(HERE, name + ".png"), bbox_inches="tight", pad_inches=0.06, dpi=200)
     plt.close(fig)
 

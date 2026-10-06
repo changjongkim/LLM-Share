@@ -44,6 +44,7 @@ function field(name, i, pair) {
   first[mode] += field("first_token_ms")
   tps[mode] += field("generation_tps")
   leaf_text[mode, run, field("index")] = field("text")
+  leaf_tokens[mode, run, field("index")] = field("token_ids")
   pairs[run, field("index")] = 1
   if (own[field("index")] == 1) {
     own_compared[mode]++
@@ -77,7 +78,8 @@ END {
         "tree_memory_mib,segment_files_mib,files_removed_runs," \
         "files_left_at_end_mib,leaves_finished,leaf_texts_equal_to_copy," \
         "own_path_equal_to_alone,own_path_compared," \
-        "other_path_equal_to_alone,other_path_compared,wall_s"
+        "other_path_equal_to_alone,other_path_compared,wall_s," \
+        "min_common_tokens_to_copy,token_sequences_compared"
   split("copy flat chain chain_small", order, " ")
   for (m = 1; m <= 4; ++m) {
     mode = order[m]
@@ -88,11 +90,26 @@ END {
     p = published[mode] > 0 ? published[mode] : 1
     f = finished[mode] > 0 ? finished[mode] : 1
     equal = 0
+    token_compared = 0
+    min_common = -1
     for (pair in pairs) {
       if ((mode SUBSEP pair) in leaf_text && \
           leaf_text[mode SUBSEP pair] == leaf_text["copy" SUBSEP pair]) equal++
+      current = leaf_tokens[mode SUBSEP pair]
+      reference_tokens_string = leaf_tokens["copy" SUBSEP pair]
+      if (current != "" && reference_tokens_string != "") {
+        delete current_tokens
+        delete copy_tokens
+        current_n = split(current, current_tokens, ":")
+        copy_n = split(reference_tokens_string, copy_tokens, ":")
+        common = 0
+        while (common < current_n && common < copy_n && \
+               current_tokens[common + 1] == copy_tokens[common + 1]) common++
+        if (min_common < 0 || common < min_common) min_common = common
+        token_compared++
+      }
     }
-    printf "%s,%d,%d,%d,%d,%d,%.0f,%.0f,%.2f,%.2f,%.1f,%.2f,%.2f,%.1f,%.0f,%.0f,%.2f,%.0f,%.0f,%d,%.0f,%d,%d,%d,%d,%d,%d,%.1f\n", \
+    printf "%s,%d,%d,%d,%d,%d,%.0f,%.0f,%.2f,%.2f,%.1f,%.2f,%.2f,%.1f,%.0f,%.0f,%.2f,%.0f,%.0f,%d,%.0f,%d,%d,%d,%d,%d,%d,%.1f,%d,%d\n", \
            mode, n, groups[mode], leaves[mode], failed[mode] + 0, \
            timed_out[mode] + 0, root_tokens[mode] / r, leader_tokens[mode] / l, \
            root_publish[mode] / r, root_state[mode] / r / 1048576, \
@@ -101,6 +118,7 @@ END {
            first[mode] / f, tps[mode] / n, memory[mode] / n, files[mode] / n, \
            removed[mode] + 0, files_end[mode] / n, finished[mode] + 0, equal, \
            own_equal[mode] + 0, own_compared[mode] + 0, other_equal[mode] + 0, \
-           other_compared[mode] + 0, wall[mode] / n / 1000
+           other_compared[mode] + 0, wall[mode] / n / 1000, min_common, \
+           token_compared
   }
 }

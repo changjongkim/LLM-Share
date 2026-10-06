@@ -1,0 +1,4 @@
+route,attempts,gpu_reads_complete,writes_refused,write_error,shared_state_intact
+host,12,12,12,cudaErrorIllegalAddress,12
+route,attempts,importer_raised_access,importer_writes_succeeded,exporter_state_intact
+vmm,6,6,6,0

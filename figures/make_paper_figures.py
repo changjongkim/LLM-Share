@@ -14,6 +14,8 @@ its unit on the axis and the value on the bar.
   eval_cow_*       extents against copy-on-write mappings
   eval_dev_*       host extents against shared device memory
   eval_tree_*      extent chains on a tree of agents
+  eval_sota_*      five ways to hand a prefix over, in one engine
+  eval_attach_*    attach cost of shared device memory by allocation size
   eval_scale_*     more agents; eval_model_*, eval_work_*: other models, workload
 """
 import os
@@ -27,6 +29,7 @@ from make_eval_figures import (AXIS, COPY, COW, DEVICE, GRID, INK, OURS,  # noqa
                                OURS_LIGHT, RES, grouped, rows, save, style, tip)
 
 NAME = "STATOR"
+DEMAND = "#4f86c6"   # a copy into device memory that is backed on demand
 PANEL = (3.6, 2.7)
 
 
@@ -266,6 +269,65 @@ def dev():
     finish(fig, ax, "eval_dev_mem", "", "Memory (GiB)", max(values) * 1.25)
 
 
+# ------------------------------------------------- baselines in one engine
+def sota():
+    directory = "20261006-engine-kvsota-v1"
+    if not have(directory, "engine_kvsota_summary.csv"):
+        return
+    data = {(r["placement"], int(r["children"]), r["mode"]): r
+            for r in rows(directory, "engine_kvsota_summary.csv")}
+    children = max(k[1] for k in data)
+    series_of = (("Copy", COPY, "copy"), ("Demand", DEMAND, "demand"), ("Device", DEVICE, "device"),
+                 ("CoW", COW, "cow"), (NAME, OURS, "extent"))
+    legend("eval_sota_legend", [(label, colour) for label, colour, _ in series_of], 5)
+    placements = [(label, key) for label, key in (("Same\nInstance", "same"), ("Across\nInstances", "cross"))
+                  if (key, children, "copy") in data]
+    for name, column, ylabel, scale, form, log in (
+            ("eval_sota_mem", "children_memory_mib", "Memory (GiB)", 1024.0, "{:.1f}", False),
+            ("eval_sota_pause", "publish_ms", "Parent Pause (ms, log)", 1.0, "{:.0f}", True),
+            ("eval_sota_attach", "child_attach_ms", "Attach Time (ms, log)", 1.0, "{:.0f}", True),
+            ("eval_sota_ttft", "child_first_token_ms", "TTFT (s)", 1000.0, "{:.2f}", False),
+            ("eval_sota_tps", "children_tps_sum", "Throughput (tokens/s)", 1.0, "{:.1f}", False)):
+        fig, ax = panel()
+        series = [(label, colour, [float(data[key, children, m][column]) / scale for _, key in placements])
+                  for label, colour, m in series_of]
+        groups = grouped(ax, [label for label, _ in placements], series, 0.17)
+        for (label, colour, m), group in zip(series_of, groups):
+            for bar, (_, key) in zip(group, placements):
+                row = data[key, children, m]
+                done, started = int(row["children_finished"]), int(row["children_started"])
+                if done < started:
+                    # Not every child completed: the bar covers the children that did.
+                    bar.set_hatch("////")
+                    bar.set_alpha(0.55)
+                    tip(ax, bar, f"{done // int(row['runs'])}/{started // int(row['runs'])}")
+                else:
+                    tip(ax, bar, form.format(bar.get_height()))
+                ax.texts[-1].set_fontsize(8)
+                ax.texts[-1].set_rotation(
+                    90 if log or name.endswith(("ttft", "tps")) else 0)
+        top = max(max(values) for _, _, values in series)
+        if log:
+            ax.set_ylim(1, top * 12)
+        finish(fig, ax, name, "", ylabel, None if log else top * 1.22, log)
+
+
+def attach():
+    directory = "20261006-vmm-attach-v1"
+    if not have(directory, "vmm_attach_summary.csv"):
+        return
+    data = [r for r in rows(directory, "vmm_attach_summary.csv") if int(r["runs"]) > 0]
+    fig, ax = panel()
+    sizes = [int(r["granule_mib"]) for r in data]
+    ax.plot(sizes, [float(r["attach_ms"]) for r in data], color=DEVICE, marker="s", markersize=6,
+            linewidth=2, markeredgecolor="white", markeredgewidth=1.0, label="Device: Import and Map")
+    ax.set_xscale("log", base=2)
+    ax.set_yscale("log")
+    ax.set_xticks(sizes, [str(v) for v in sizes], fontsize=9)
+    ax.legend(loc="upper right", handlelength=1.6, fontsize=10)
+    finish(fig, ax, "eval_attach_granule", "Allocation Size (MiB)", "Attach Time (ms, log)", log=True)
+
+
 # ------------------------------------------------------------ agent tree
 def tree():
     directory = "20261006-engine-kvtree-v1"
@@ -342,6 +404,6 @@ def variants():
 
 
 if __name__ == "__main__":
-    for figure in (mem, weights, hand, speed, reach, mode, cow, dev, tree, scale, variants):
+    for figure in (mem, weights, hand, speed, reach, mode, cow, dev, sota, attach, tree, scale, variants):
         figure()
         print("wrote", figure.__name__)

@@ -442,12 +442,56 @@ copy-on-write는 익스텐트에 근접한다. 그러나 copy-on-write에는 오
 | 모든 에이전트가 프리픽스를 다시 계산한 에이전트와 같은 텍스트를 생성한다 | 다른 MIG 인스턴스의 에이전트에서 통과하지 못하였다(4,081토큰에서 36개 가운데 12개, 16,321토큰에서 36개 가운데 24개 일치). 기존 엔진의 복사도 같다. 게시자의 인스턴스에서는 통과하고(42개 가운데 42개), 복사 대비로는 통과한다(78개 가운데 78개). 원인은 두 인스턴스의 비트 차이이다 |
 | 익스텐트가 복사의 생성 속도의 97%를 유지한다 | 6개 셀 가운데 2개에서 통과하지 못하였다(0.955, 0.970). 원인은 6-SM 인스턴스에서 호스트 메모리의 비용이다 |
 
+### 4.10 확장 캠페인
+
+13개 확장 캠페인은 계산 공유 방식, 다단계 에이전트 트리, 32개 프로세스까지의
+스케일, 8B/14B 모델, 실제 서버 요청 경로, 메모리 제한, CUDA VMM 연결 비용,
+쓰기 보호, Ollama 기준선을 측정한다. 원시 로그와 다시 계산한 요약은 모두
+`results/20261006-*-v1/`에 있고 `verify_stator_campaigns.sh`가 함께 검증한다.
+
+핵심 결과는 다음과 같다.
+
+- 16,321토큰 프리픽스와 에이전트 8개에서 익스텐트는 복사의 19.7--19.8 GiB를
+  5.7--5.9 GiB로 줄인다. 처리량 비는 시분할 0.993, MPS 0.996, MIG 0.972,
+  MIG 안의 MPS 0.965이다. 익스텐트 자식 288개는 모두 복사와 같은 출력을 낸다.
+- 동일 엔진의 다섯 경로 가운데 공유 디바이스 메모리만 MIG 경계를 넘지 못한다.
+  익스텐트는 두 배치 모두에서 요청 48/48과 exact output 48/48을 유지하면서
+  게시 시간을 약 540 ms에서 8 ms로 줄인다.
+- 2단계 익스텐트 체인은 leaf 48/48의 출력을 보존한다. leaf가 중간 프리픽스를
+  다시 계산하는 flat 경로는 42/48만 완전히 일치한다.
+- 32-agent 셀은 80.7 GiB 대신 23.2 GiB를 사용한다. 복사 기준선 한 번이 253.6초
+  정지해 전체 처리량 비가 0.860으로 왜곡되었고, 나머지 다섯 짝의 비는
+  0.948--1.000이다. 이상치를 삭제하지 않고 검증기에 명시하였다.
+- 서버 통합 경로는 모든 요청을 완료하지만 extent 출력이 4-agent에서 6/24,
+  8-agent에서 30/48만 완전히 일치한다. 매 반복에서 같은 작업 1, 2, 3이
+  달라지는 결정적 수치 차이이며, 최소 공통 출력은 22토큰이다.
+- 호스트 읽기 전용 매핑은 GPU 쓰기 12/12를 거부하고 상태를 보존한다. CUDA VMM
+  import는 쓰기 6/6을 허용해 exporter 상태를 모두 변경한다.
+- 격리한 Ollama 0.16.1 서버는 요청 192/192를 GPU에서 완료한다. warm TTFT는
+  1-server 0.886초, 2-server 0.732초이지만 서버 사이 프리픽스 공유는 없다.
+
+<p align="center">
+  <img src="figures/eval_mode_mem.png" width="32%">
+  <img src="figures/eval_mode_tps.png" width="32%">
+  <img src="figures/eval_sota_mem.png" width="32%">
+</p>
+<p align="center"><b>그림 12.</b> 계산 공유 방식별 메모리와 처리량, 그리고 동일 엔진의 다섯 hand-over 경로.</p>
+
+<p align="center">
+  <img src="figures/eval_tree_mem.png" width="32%">
+  <img src="figures/eval_tree_time.png" width="32%">
+  <img src="figures/eval_scale_mem.png" width="32%">
+</p>
+<p align="center"><b>그림 13.</b> 다단계 트리의 메모리와 TTFT, 32-agent까지의 메모리 스케일.</p>
+
 ## 5. 한계
 
-- 장치 한 대, 엔진 하나, 7B 모델 하나에서 측정하였다. DGX Spark, Grace Hopper,
-  Apple 장치에서는 측정하지 않았다.
-- 캐시 실험은 `llama-server`가 아니라 작은 드라이버 프로그램(`kv_fork`,
-  `kv_batch`, `kv_spawn`)으로 수행하였다.
+- 주 평가는 장치 한 대, 엔진 하나, 7B 모델 하나에서 수행했고 8B와 14B는
+  8-agent 셀만 반복하였다. DGX Spark, Grace Hopper, Apple 장치에서는
+  측정하지 않았다.
+- 캐시 실험 대부분은 작은 드라이버 프로그램(`kv_fork`, `kv_batch`,
+  `kv_spawn`)으로 수행하였다. 별도 캠페인이 `llama-server` 요청 경로를
+  검증했지만 그 경로에서는 exact-output 기준을 통과하지 못하였다.
 - 포크는 한 단계만 지원한다. 에이전트는 자신의 행을 게시하지 못한다.
 - 에이전트는 게시자를 신뢰한다. 캐시 파일을 쓸 수 있는 주체는 모든 에이전트의
   프리픽스를 바꿀 수 있다. 캐시를 공유하는 프로세스 사이의 타이밍 채널은 다루지
@@ -469,11 +513,15 @@ copy-on-write는 익스텐트에 근접한다. 그러나 copy-on-write에는 오
 | `llama.cpp/` + `inplace_weights.patch` | llama.cpp 커밋 `6f767fe96`의 클론과 가중치 변경 |
 | `llama.cpp-kv/` + `kv_extents.patch` | 같은 커밋의 두 번째 클론과 가중치 및 캐시 변경 |
 | `llama.cpp-vmm/` + `kv_vmm.patch` | 디바이스 메모리 방식을 더한 세 번째 클론. 캠페인 하나에서만 사용 |
+| `llama.cpp-chain/` + `kv_chain.patch` | 에이전트가 추가한 행을 다시 게시하는 다단계 체인 |
+| `llama.cpp-sota/` + `kv_sota.patch` | 다섯 hand-over 경로를 한 엔진에서 비교하는 클론 |
 | `kv_fork.cpp` | 프리픽스 공유 실험의 한 역할: 단독 계산, 부모로서 게시, 자식으로서 연결 |
 | `kv_batch.cpp` | 여러 시퀀스를 처리하는 배칭 서버의 같은 역할 |
 | `kv_spawn.cpp` | 게시한 뒤 자식을 직접 실행하는 부모. 자식이 공유 디바이스 메모리의 핸들을 상속한다 |
 | `cuda_ipc_probe.cu`, `cuda_vmm_probe.cu` | 주어진 배치에서 GPU 수준 경로가 두 프로세스 사이의 메모리를 공유하는지 확인 |
 | `cuda_share_load_probe.cu` | 세 번째 프로세스가 GPU를 사용하는 동안 공유 메모리를 읽을 수 있는지 확인(진단용, 캠페인 없음) |
+| `cuda_vmm_attach_probe.cu`, `cuda_protect_probe.cu` | VMM 연결 비용과 두 공유 경로의 쓰기 보호를 측정 |
+| `ollama_client.py`, `ollama_mig_visible.c` | Ollama 요청 드라이버와 MIG UUID discovery 호환 shim |
 | `kv_file_diff.py` | 두 캐시 파일을 값 단위로 비교 |
 | `make_lora.py` | GGUF 모델용 합성 LoRA 어댑터 생성 |
 | `models/` | 캠페인에 사용한 모델(내려받은 것이며 저장소에 포함되지 않는다) |
@@ -481,7 +529,7 @@ copy-on-write는 익스텐트에 근접한다. 그러나 copy-on-write에는 오
 | `figures/` | 이 문서의 그림. TikZ 소스는 `figures/src/`, 그래프는 `make_eval_figures.py`(`results/`에서 읽음), `build.sh`가 PDF와 PNG를 만든다 |
 | `docs/` | 연구 기록, 기반 측정 기록, 선행 연구 조사. `docs/record_src/`에 기록의 절과 표, 이를 조립하는 `assemble.py`가 있다 |
 | `results/` | 모든 캠페인의 원시 로그, 요약, 메타데이터, 고정된 소스 해시 |
-| `verify_llm_share_artifact.sh` | GPU 없이 모든 결과를 원시 로그에서 다시 계산 |
+| `verify_llm_share_artifact.sh`, `verify_stator_campaigns.sh` | GPU 없이 모든 결과를 원시 로그에서 다시 계산하고 고정된 source hash 및 gate를 검증 |
 
 | 러너 | 측정 내용 | 절 |
 |---|---|---|
@@ -498,6 +546,11 @@ copy-on-write는 익스텐트에 근접한다. 그러나 copy-on-write에는 오
 | `run_engine_kvspeed.sh` | 캐시를 디바이스 메모리와 호스트 메모리에 둔 경우의 생성 속도 | 4.5 |
 | `run_engine_kvbatch.sh` | 배칭 서버 1개와 MIG 인스턴스마다 1개에서의 에이전트 8개 | 4.6 |
 | `run_engine_kvvmm.sh` | 익스텐트, 디바이스 메모리 방식, 복사의 비교 | 4.7 |
+| `run_engine_kvmps.sh`, `run_engine_kvsota.sh` | 모든 계산 공유 배치와 다섯 hand-over 경로 | 4.10 |
+| `run_engine_kvtree.sh`, `run_engine_kvscale.sh` | 다단계 트리, 32-agent scale, 모델·workload 변형 | 4.10 |
+| `run_engine_kvserver.sh`, `run_engine_kvlimit.sh` | 서버 요청 경로와 cgroup 메모리 제한 | 4.10 |
+| `run_read_path.sh`, `run_vmm_attach.sh`, `run_protect.sh` | 메모리 read path, VMM 연결 크기, 쓰기 보호 | 4.10 |
+| `run_ollama_agents.sh` | 격리한 Ollama 서버의 cold/warm agent 기준선 | 4.10 |
 
 ### 6.2 빌드
 
@@ -525,6 +578,21 @@ cmake -S llama.cpp-vmm -B llama.cpp-vmm/build -DGGML_CUDA=ON -DCMAKE_BUILD_TYPE=
   -DCMAKE_CUDA_ARCHITECTURES=110 -DLLAMA_CURL=OFF
 cmake --build llama.cpp-vmm/build -j 12 --target llama
 make kv_spawn kv_fork_vmm
+
+# 다단계 체인과 다섯 경로 비교용 클론
+git clone <llama.cpp> llama.cpp-chain && git -C llama.cpp-chain checkout 6f767fe96
+git -C llama.cpp-chain apply ../kv_chain.patch
+cmake -S llama.cpp-chain -B llama.cpp-chain/build -DGGML_CUDA=ON \
+  -DCMAKE_BUILD_TYPE=Release -DCMAKE_CUDA_ARCHITECTURES=110 -DLLAMA_CURL=OFF
+cmake --build llama.cpp-chain/build -j 12 --target llama
+make kv_tree
+
+git clone <llama.cpp> llama.cpp-sota && git -C llama.cpp-sota checkout 6f767fe96
+git -C llama.cpp-sota apply ../kv_sota.patch
+cmake -S llama.cpp-sota -B llama.cpp-sota/build -DGGML_CUDA=ON \
+  -DCMAKE_BUILD_TYPE=Release -DCMAKE_CUDA_ARCHITECTURES=110 -DLLAMA_CURL=OFF
+cmake --build llama.cpp-sota/build -j 12 --target llama
+make kv_fork_sota kv_spawn_sota ollama_mig_visible.so
 ```
 
 `kv_extents.patch`는 `inplace_weights.patch`를 포함하고, `kv_vmm.patch`는
@@ -561,7 +629,18 @@ RESULT_TAG=engine-kvcow-rerun    ./run_engine_kvcow.sh
 RESULT_TAG=engine-kvspeed-rerun  ./run_engine_kvspeed.sh
 RESULT_TAG=engine-kvbatch-rerun  ./run_engine_kvbatch.sh
 RESULT_TAG=engine-kvvmm-rerun    ./run_engine_kvvmm.sh
+RESULT_TAG=engine-kvmps-rerun    ./run_engine_kvmps.sh
+RESULT_TAG=engine-kvsota-rerun   ./run_engine_kvsota.sh
+RESULT_TAG=engine-kvtree-rerun   ./run_engine_kvtree.sh
+RESULT_TAG=engine-kvscale-rerun  ./run_engine_kvscale.sh
+RESULT_TAG=engine-kvserver-rerun ./run_engine_kvserver.sh
+RESULT_TAG=engine-kvlimit-rerun  ./run_engine_kvlimit.sh
+RESULT_TAG=read-path-rerun       ./run_read_path.sh
+RESULT_TAG=vmm-attach-rerun      ./run_vmm_attach.sh
+RESULT_TAG=protect-rerun         ./run_protect.sh
+RESULT_TAG=ollama-agents-rerun   ./run_ollama_agents.sh
 ./verify_llm_share_artifact.sh
+./verify_stator_campaigns.sh results
 ```
 
 `verify_llm_share_artifact.sh`는 GPU가 필요하지 않으며 새로 받은 저장소에서

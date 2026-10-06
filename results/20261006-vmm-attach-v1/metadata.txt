@@ -1,0 +1,10 @@
+timestamp=2026-10-07T03:14:25+09:00
+mig=MIG-fafc828a-2a0d-5988-a009-030a36930090
+repetitions=6
+total_mib=896
+granules_mib=2 4 8 16 32 64 128 448 896
+boot_id=0965baa0-3357-48ca-8cea-c958d95b2d3f
+GPU 0: NVIDIA Thor (UUID: GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600)
+  MIG 2g.0gb      Device  0: (UUID: MIG-fafc828a-2a0d-5988-a009-030a36930090)
+  MIG 1g.0gb      Device  1: (UUID: MIG-31ffbfe4-9a85-5f4e-b406-90ffbfa82ca3)
+6f3adfd80312fede5bb954fc3ceb3ba528d8852819daeb574dba38af2b1545a2  /home/thor/kcj/llm_share/cuda_vmm_attach_probe

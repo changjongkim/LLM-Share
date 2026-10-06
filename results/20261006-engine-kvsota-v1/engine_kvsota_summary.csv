@@ -1,0 +1,11 @@
+placement,children,mode,runs,parents_completed,timed_out,prefix_tokens,publish_ms,state_mib,children_started,children_finished,own_instance_finished,own_instance_started,other_instance_finished,other_instance_started,child_attach_ms,child_first_token_ms,children_tps_sum,parent_tps,children_memory_mib,texts_equal_to_copy
+same,8,copy,6,6,0,16321,539.54,892.80,48,48,48,48,0,0,548.6,2670,21.85,5.48,20306,48
+same,8,demand,6,6,0,16321,542.80,892.80,48,48,48,48,0,0,596.6,2721,21.98,5.88,14210,48
+same,8,device,6,6,0,16321,41.04,0.25,48,48,48,48,0,0,769.5,2864,22.33,6.84,7808,48
+same,8,cow,6,6,0,16321,8.12,0.25,48,48,48,48,0,0,50.3,2770,21.54,4.77,6892,48
+same,8,extent,6,6,0,16321,8.37,0.25,48,48,48,48,0,0,48.8,2137,21.74,4.83,6036,48
+cross,8,copy,6,6,0,16321,548.04,892.80,48,48,24,24,24,24,494.8,2395,33.23,8.73,20259,48
+cross,8,demand,6,6,0,16321,539.12,892.80,48,48,24,24,24,24,559.1,2445,33.55,9.17,13732,48
+cross,8,device,6,6,0,16321,39.73,0.25,48,24,24,24,0,24,648.6,2541,21.73,10.99,3984,24
+cross,8,cow,6,6,0,16321,8.87,0.25,48,48,24,24,24,24,50.9,2279,32.05,7.41,6785,48
+cross,8,extent,6,6,0,16321,8.00,0.25,48,48,24,24,24,24,50.4,1918,32.29,7.55,5923,48
