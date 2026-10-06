@@ -1,84 +1,80 @@
-% Overall architecture of STATOR: where the state of N serving processes
-% lives when the GPU follows the host page tables.
-% Build: ../build.sh
+% Overall architecture of STATOR: every serving process maps the model file
+% and the published prefix read-only and writes its own rows to a private
+% tail; the GPU of either MIG instance reads all of it in place through the
+% host page tables.
 \documentclass[border=2pt]{standalone}
 \input{llmshare_style}
 \begin{document}
-\begin{tikzpicture}
+\begin{tikzpicture}[x=1cm, y=1cm]
 
 % ---------------- GPU ----------------
-\draw[layer, fill=cyanp] (0.15,8.45) rectangle (11.45,9.75);
-\node[ttl, anchor=west] at (0.3,9.5) {GPU (Unified Memory)};
-\node[comp, minimum width=5.25cm, minimum height=0.55cm] (miga) at (2.925,8.85) {MIG Instance A (12 SMs)};
-\node[comp, minimum width=5.25cm, minimum height=0.55cm] (migb) at (8.475,8.85) {MIG Instance B (6 SMs)};
-\foreach \x in {1.575,4.275,7.325,10.025} {
-  \draw[arr, {Latex[length=1.6mm]}-{Latex[length=1.6mm]}] (\x,8.45) -- (\x,7.95);
-}
-\node[note] at (5.8,8.2) {reads and writes in place};
+\draw[sub, fill=cyanp] (0,6.55) rectangle (8.9,7.35);
+\node[ttl, anchor=west] at (0.12,6.95) {GPU};
+\node[comp, minimum width=3.55cm, minimum height=0.5cm] (miga) at (2.95,6.95) {MIG Instance A (12 SMs)};
+\node[comp, minimum width=3.55cm, minimum height=0.5cm] (migb) at (6.95,6.95) {MIG Instance B (6 SMs)};
 
 % ---------------- serving processes ----------------
-\draw[layer] (0.15,5.0) rectangle (11.45,7.95);
-\node[ttl, anchor=west] at (0.3,7.7) {Serving Processes (One Address Space Each)};
-
-% one process: its address space as a strip of weights, prefix rows, tail rows
-\newcommand{\process}[4]{% x of the left edge, name, title, label of the last segment
-  \draw[sub, fill=white] (#1,5.15) rectangle ++(2.55,2.25);
-  \node[lbl] at (#1+1.275,7.17) {#3};
-  \node[lbl, text height=1.5ex, text depth=0.3ex] at (#1+0.525,6.68) {Weights};
-  \node[lbl, text height=1.5ex, text depth=0.3ex] at (#1+1.725,6.68) {KV Cache};
-  \node[seg, fill=cyanp, minimum width=0.9cm, minimum height=0.5cm, text height=1.4ex, text depth=0.45ex] (#2w) at (#1+0.525,6.2) {model};
-  \node[seg, fill=bluec, minimum width=0.8cm, minimum height=0.5cm, text height=1.4ex, text depth=0.45ex] (#2p) at (#1+1.4,6.2) {prefix};
-  \node[seg, fill=gold, minimum width=0.7cm, minimum height=0.5cm, text height=1.4ex, text depth=0.45ex] (#2t) at (#1+2.15,6.2) {#4};
+\draw[layer] (0,4.1) rectangle (8.9,6.25);
+\node[ttl, anchor=west] at (0.12,6.03) {Serving Processes};
+\newcommand{\process}[3]{% x of the left edge, node prefix, name
+  \draw[sub, fill=white] (#1,4.25) rectangle (#1+2.75,5.75);
+  \node[ttl] at (#1+1.375,5.52) {#3};
+  \node[tag] at (#1+0.5,5.14) {Weights};
+  \node[tag] at (#1+1.82,5.14) {KV Cache};
+  \node[blk, fill=cyanp, minimum width=0.86cm] (#2m) at (#1+0.5,4.72) {model};
+  \node[blk, fill=bluec, minimum width=0.86cm] (#2p) at (#1+1.39,4.72) {prefix};
+  \node[blk, fill=gold, minimum width=0.86cm] (#2t) at (#1+2.25,4.72) {tail};
 }
-\process{0.3}{pub}{Publisher}{tail}
-\process{3.0}{aga}{Agent 1}{tail}
-\process{6.05}{agb}{Agent 2}{tail}
-\process{8.75}{agc}{Agent 3}{tail}
+\process{0.15}{pub}{Publisher}
+\process{3.075}{one}{Agent 1}
+\process{6.0}{two}{Agent 2}
+\foreach \x in {1.5,4.45,7.4} {
+  \draw[{Latex[length=1.4mm]}-{Latex[length=1.4mm]}, line width=0.6pt] (\x,5.75) -- (\x,6.55);
+}
+\node[note, anchor=west] at (4.52,6.38) {in place};
 
 % ---------------- host page tables ----------------
-\draw[layer, fill=peach] (0.15,4.3) rectangle (11.45,4.8);
-\node[lbl] at (5.8,4.55) {Host Page Tables: one per process, walked by the GPU through the SMMU};
-
-% a mapping per segment: read-only onto shared pages (blue), writable onto pages of one process (red)
-\foreach \p in {pub,aga,agb,agc} {
-  \draw[arr, dblue] (\p w.south) -- (\p w.south |- 0,4.8);
-  \draw[arr, dblue] (\p p.south) -- (\p p.south |- 0,4.8);
-  \draw[arr, dred]  (\p t.south) -- (\p t.south |- 0,4.8);
+\draw[sub, fill=peach] (0,3.35) rectangle (8.9,3.8);
+\node[ttl] at (4.45,3.575) {Host Page Tables (SMMU)};
+\foreach \p in {pub,one,two} {
+  \draw[arr, dblue] (\p m.south) -- (\p m.south |- 0,3.8);
+  \draw[arr, dblue] (\p p.south) -- (\p p.south |- 0,3.8);
+  \draw[arr, dred]  (\p t.south) -- (\p t.south |- 0,3.8);
 }
-\node[num] at ($(pubp.south)+(-0.24,-0.42)$) {1};
-\node[num] at ($(agbp.south)+(-0.24,-0.42)$) {2};
-\node[num] at ($(agbt.south)+(0.24,-0.42)$) {3};
+\node[num] at (1.97,4.02) {1};
+\node[num] at (4.9,4.02) {2};
+\node[num] at (8.58,4.02) {3};
 
-% ---------------- host memory ----------------
-\draw[layer] (0.15,0.25) rectangle (11.45,4.1);
-\node[ttl, anchor=west] at (0.3,0.52) {Host Memory (One DRAM)};
-
-\node[comp, fill=cyanp, minimum width=3.3cm, minimum height=0.95cm] (model) at (2.0,2.75)
-  {Model File\\[-1pt]{\mdseries\itshape one copy, 2 MiB pages}};
-\node[comp, fill=bluec, minimum width=3.3cm, minimum height=0.95cm] (cache) at (5.75,2.75)
-  {Prefix Cache File (tmpfs)\\[-1pt]{\mdseries\itshape one copy, immutable rows}};
-\node[comp, minimum width=3.3cm, minimum height=0.5cm] (state) at (5.75,1.5)
-  {State File: metadata only};
-\foreach \i/\w in {0/0.45,1/0.7,2/0.3} {
-  \node[seg, fill=gold, minimum width=\w cm, minimum height=0.5cm, anchor=west] at (8.05+\i*1.05,2.95) {};
-  \node[free, minimum width=0.9cm-\w cm, minimum height=0.5cm, anchor=west] at (8.05+\i*1.05+\w,2.95) {};
+% ---------------- unified memory ----------------
+\draw[layer] (0,0) rectangle (8.9,3.05);
+\node[ttl, anchor=west] at (0.12,1.12) {Unified Memory};
+\node[comp, fill=cyanp, minimum width=2.3cm, minimum height=0.62cm] (mfile) at (1.5,1.95) {Model File};
+\node[comp, fill=bluec, minimum width=2.5cm, minimum height=0.62cm] (pfile) at (4.45,1.95) {Prefix Cache File};
+\node[comp, minimum width=2.5cm, minimum height=0.42cm] (sfile) at (4.45,1.12) {State File (Metadata)};
+\draw[arr, densely dashed] (pfile.south) -- (sfile.north);
+\node[tag] at (7.4,2.5) {Private Tails};
+\foreach \y/\u in {2.1/1.0,1.75/1.45,1.4/0.6} {
+  \node[seg, fill=gold, minimum width=\u cm, minimum height=0.26cm, anchor=west] at (6.3,\y) {};
+  \node[free, minimum width=2.2cm-\u cm, minimum height=0.26cm, anchor=west] at (6.3+\u,\y) {};
 }
-\node[lbl] at (9.55,2.42) {Private Tails};
-\node[note, align=center] at (9.55,1.9) {anonymous memory,\\[-1pt]grows with the rows in use};
+\draw[fat, dblue] (1.5,3.35) -- (mfile.north);
+\draw[fat, dblue] (4.45,3.35) -- (pfile.north);
+\draw[fat, dred]  (7.4,3.35) -- (7.4,2.72);
+\node[tag, anchor=west] at (1.72,2.8) {$N$\,:\,1};
+\node[tag, anchor=west] at (4.67,2.8) {$N$\,:\,1};
+\node[tag, anchor=west] at (7.62,3.0) {1\,:\,1};
 
-\draw[arr, dblue, line width=1.4pt] (2.0,4.3) -- (model.north);
-\draw[arr, dblue, line width=1.4pt] (5.75,4.3) -- (cache.north);
-\draw[arr, dred, line width=1.4pt] (9.55,4.3) -- (9.55,3.25);
-\node[note, anchor=west] at (2.1,3.72) {4 mappings, 1 copy};
-\node[note, anchor=west] at (5.85,3.72) {4 mappings, 1 copy};
-\node[note, anchor=west] at (9.65,3.72) {1 mapping each};
-\draw[arr, densely dashed] (cache) -- (state) node[midway, right, note, inner sep=2pt] {names the rows};
-
-\node[lbl, anchor=west] at (4.35,0.87) {\textcolor{dblue}{\rule[0.5ex]{0.5cm}{1.2pt}} read-only mapping, shared pages};
-\node[lbl, anchor=west] at (4.35,0.5) {\textcolor{dred}{\rule[0.5ex]{0.5cm}{1.2pt}} writable mapping, pages of one process};
-\node[lbl, anchor=west] at (9.25,1.24) {\tikz[baseline=-0.6ex]\node[num]{1}; publish};
-\node[lbl, anchor=west] at (9.25,0.87) {\tikz[baseline=-0.6ex]\node[num]{2}; attach};
-\node[lbl, anchor=west] at (9.25,0.5) {\tikz[baseline=-0.6ex]\node[num]{3}; grow the tail};
+% ---------------- legend ----------------
+\draw[arr, dblue] (0.2,0.62) -- (0.75,0.62);
+\node[tag, anchor=west] at (0.8,0.62) {Read-Only, Shared};
+\draw[arr, dred] (0.2,0.27) -- (0.75,0.27);
+\node[tag, anchor=west] at (0.8,0.27) {Writable, Private};
+\node[num] at (3.6,0.45) {1};
+\node[tag, anchor=west] at (3.8,0.45) {Publish};
+\node[num] at (5.15,0.45) {2};
+\node[tag, anchor=west] at (5.35,0.45) {Attach};
+\node[num] at (6.6,0.45) {3};
+\node[tag, anchor=west] at (6.8,0.45) {Grow Tail};
 
 \end{tikzpicture}
 \end{document}

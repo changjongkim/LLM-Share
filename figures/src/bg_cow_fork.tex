@@ -1,0 +1,24 @@
+% Background: fork write-protects the memory of the parent, and the next GPU
+% write to it faults on every page.
+\documentclass[border=2pt]{standalone}
+\input{llmshare_style}
+\begin{document}
+\begin{tikzpicture}[x=1cm, y=1cm]
+\draw[layer] (0,0) rectangle (5.8,3.15);
+\node[ttl, anchor=west] at (0.2,2.88) {Memory of the Parent};
+\foreach \k in {0,...,7} {
+  \node[blk, fill=gold] (w\k) at (0.92+\k*0.5,2.4) {};
+}
+\node[tag, anchor=east] at (0.64,2.4) {RW};
+\draw[arr] (2.67,2.18) -- (2.67,1.78);
+\node[note, anchor=west] at (2.75,1.98) {fork};
+\foreach \k in {0,...,7} {
+  \node[hole, fill=gold!40] (q\k) at (0.92+\k*0.5,1.55) {};
+  \draw[arr, dred] (0.92+\k*0.5,0.86) -- (q\k.south);
+}
+\node[tag, anchor=east] at (0.64,1.55) {RO};
+\node[comp, fill=cyanp, minimum width=3.96cm, minimum height=0.5cm] at (2.67,0.6) {GPU Write};
+\node[tag, text=dred, anchor=west] at (4.75,1.12) {fault};
+\node[tag, text=dred, anchor=west] at (4.75,0.6) {2.7 s/GiB};
+\end{tikzpicture}
+\end{document}

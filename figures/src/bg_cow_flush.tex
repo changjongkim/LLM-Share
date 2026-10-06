@@ -1,0 +1,29 @@
+% Background: every page whose entry changes costs the process one SMMU
+% invalidation; an operation on a range pays it once.
+\documentclass[border=2pt]{standalone}
+\input{llmshare_style}
+\begin{document}
+\begin{tikzpicture}[x=1cm, y=1cm]
+\draw[layer] (0,0) rectangle (5.8,3.15);
+% per page
+\node[ttl] at (1.48,2.88) {Per Page};
+\foreach \k in {0,...,4} {
+  \node[blk, fill=hot] (p\k) at (0.48+\k*0.5,2.35) {};
+  \draw[arr, dred] (p\k.south) -- (0.48+\k*0.5,1.42);
+}
+\node[comp, fill=peach, minimum width=2.5cm, minimum height=0.5cm] at (1.48,1.15) {SMMU};
+\node[tag] at (1.48,0.55) {5 Invalidations};
+\node[tag, text=dred] at (1.48,0.22) {9 $\mu$s each};
+% per range
+\draw[black!45, line width=0.3pt, densely dashed] (2.9,0.15) -- (2.9,3.0);
+\node[ttl] at (4.32,2.88) {Per Range};
+\foreach \k in {0,...,4} {
+  \node[blk, fill=gold] (r\k) at (3.32+\k*0.5,2.35) {};
+}
+\draw[decorate, decoration={brace, amplitude=3pt, mirror}] (3.1,2.1) -- (5.54,2.1);
+\draw[arr] (4.32,1.98) -- (4.32,1.42);
+\node[comp, fill=peach, minimum width=2.5cm, minimum height=0.5cm] at (4.32,1.15) {SMMU};
+\node[tag] at (4.32,0.55) {1 Invalidation};
+\node[tag, text=dblue] at (4.32,0.22) {paid once};
+\end{tikzpicture}
+\end{document}

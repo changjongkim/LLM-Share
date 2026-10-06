@@ -156,7 +156,7 @@ MIG 인스턴스 경계의 영향을 받지 않는다.
 copy-on-write는 GPU가 접근하는 메모리에 적합하지 않다
 (`docs/RESEARCH_HOSTMM_2026-10-05.md`).
 
-<p align="center"><img src="figures/bg_cow.png" width="760"></p>
+<p align="center"><img src="figures/bg_cow_read.png" width="32%"> <img src="figures/bg_cow_flush.png" width="32%"> <img src="figures/bg_cow_fork.png" width="32%"></p>
 <p align="center"><b>그림 1.</b> 호스트 페이지 테이블을 따라가는 GPU에서 copy-on-write가 부적합한 세 가지 이유. (a) accessed 플래그가 없는 페이지에 대한 GPU 읽기는 그 페이지가 속한 2 MiB 블록 전체에 대한 쓰기로 처리된다. (b) 소유권이 바뀌는 페이지마다 프로세스 전체의 무효화 비용이 든다. (c) <code>fork</code> 이후 다음 GPU 쓰기가 모든 페이지의 비용을 치른다.</p>
 
 | 성질 | 측정값 |

@@ -22,6 +22,10 @@
   seg/.style={draw=black!70, line width=0.35pt, inner sep=0pt, align=center,
               font=\bfseries\scriptsize, minimum height=0.4cm},
   free/.style={seg, pattern=north east lines, pattern color=black!45},
+  blk/.style={draw=black!70, line width=0.35pt, minimum width=0.42cm, minimum height=0.36cm,
+              inner sep=0pt, font=\bfseries\scriptsize},
+  hole/.style={blk, pattern=north east lines, pattern color=black!50},
+  tag/.style={font=\bfseries\scriptsize, inner sep=1pt},
   ttl/.style={font=\bfseries\small},
   lbl/.style={font=\bfseries\scriptsize},
   note/.style={font=\itshape\bfseries\scriptsize},
@@ -32,3 +36,10 @@
               inner sep=0.6pt, minimum size=0.33cm},
   rnum/.style={num, fill=dred},
 }
+% A legend entry: a filled square and its name, at (x,y).
+\newcommand{\legendfill}[4]{%
+  \draw[black!70, line width=0.35pt, fill=#3] (#1,#2) rectangle ++(0.22,0.2);
+  \node[tag, anchor=west] at (#1+0.26,#2+0.1) {#4};}
+\newcommand{\legendhatch}[3]{%
+  \draw[black!70, line width=0.35pt, pattern=north east lines, pattern color=black!50] (#1,#2) rectangle ++(0.22,0.2);
+  \node[tag, anchor=west] at (#1+0.26,#2+0.1) {#3};}

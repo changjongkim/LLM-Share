@@ -1,66 +1,78 @@
-% Design: one key or value tensor of a leaf as a chain of extents. The rows
-% of the root and the rows that the leader appended are pages of two files,
-% mapped read-only; the pages where two owners meet are copied; what the
-% leaf writes lies in its private tail.
+% Design: an agent tree and the chain of extents of one of its leaves. The
+% rows of the root and the rows that the leader appended are pages of two
+% files, mapped read-only; the pages where two owners meet are copied; what
+% the leaf writes lies in its private tail.
 \documentclass[border=2pt]{standalone}
 \input{llmshare_style}
 \definecolor{segc}{HTML}{A9D18E}
 \begin{document}
-\begin{tikzpicture}
+\begin{tikzpicture}[x=1cm, y=1cm]
+\draw[layer] (0,0) rectangle (8.9,4.0);
 
-% row axis
-\foreach \x/\t in {1.9/row 0, 5.9/row $P$, 7.9/row $Q$, 11.3/context size} {
-  \draw[black!45, line width=0.3pt] (\x,0.2) -- (\x,4.25);
-  \node[lbl] at (\x,4.45) {\t};
+% ---------------- the agent tree ----------------
+\draw[sub, fill=white] (0.1,0.62) rectangle (2.0,3.88);
+\node[ttl] at (1.05,3.65) {Agent Tree};
+\node[blk, fill=bluec, minimum width=0.8cm] (root) at (1.05,3.15) {Root};
+\node[blk, fill=segc, minimum width=0.85cm] (lead) at (0.6,2.25) {Leader};
+\node[blk, fill=white, minimum width=0.85cm, text=black!45, draw=black!35] (lead2) at (1.52,2.25) {Leader};
+\node[blk, fill=gold, minimum width=0.6cm] (leaf) at (0.45,1.3) {Leaf};
+\node[blk, fill=white, minimum width=0.6cm, text=black!45, draw=black!35] (leaf2) at (1.12,1.3) {Leaf};
+\draw[arr, line width=1.0pt] (root.south) -- (lead.north);
+\draw[arr, black!35] (root.south) -- (lead2.north);
+\draw[arr, line width=1.0pt] (lead.south) -- (leaf.north);
+\draw[arr, black!35] (lead.south) -- (leaf2.north);
+\node[num] at (0.52,2.78) {1};
+\node[num] at (0.3,1.78) {2};
+\node[num] at (0.45,0.9) {3};
+
+% ---------------- one tensor of the leaf as a chain ----------------
+\foreach \x in {3.55,6.0,7.2,8.75} {
+  \draw[black!50, line width=0.3pt, densely dashed] (\x,0.62) -- (\x,3.52);
 }
-\draw[decorate, decoration={brace, amplitude=3pt}] (1.95,4.7) -- (5.85,4.7);
-\node[lbl] at (3.9,5.02) {segment of the root};
-\draw[decorate, decoration={brace, amplitude=3pt}] (5.95,4.7) -- (7.85,4.7);
-\node[lbl] at (6.9,5.02) {segment of the leader};
-\draw[decorate, decoration={brace, amplitude=3pt}] (7.95,4.7) -- (11.25,4.7);
-\node[lbl] at (9.6,5.02) {rows of the leaf};
+\node[tag] at (3.55,3.72) {0};
+\node[tag] at (6.0,3.72) {$P$};
+\node[tag] at (7.2,3.72) {$Q$};
+\node[tag, anchor=east] at (8.78,3.72) {Context};
 
 % the file of the root
-\node[lbl, anchor=east, align=right] at (1.75,3.65) {Root's\\[-1pt]cache file};
-\node[seg, fill=bluec, minimum width=4.0cm, minimum height=0.55cm, anchor=west] at (1.9,3.65) {rows of the common prefix};
-\node[seg, fill=gold, minimum width=0.7cm, minimum height=0.55cm, anchor=west] at (5.9,3.65) {};
-\node[free, minimum width=4.7cm, minimum height=0.55cm, anchor=west] at (6.6,3.65) {};
-\node[note, anchor=west] at (6.7,3.65) {\colorbox{white}{the root's own later rows}};
-\node[num] at (1.2,4.25) {1};
+\node[tag, anchor=east, align=right] at (3.45,3.1) {Root\\[-2pt]File};
+\node[num] at (2.3,3.1) {1};
+\node[seg, fill=bluec, minimum width=2.45cm, minimum height=0.44cm, anchor=west] at (3.55,3.1) {};
+\node[seg, fill=gold, minimum width=0.4cm, minimum height=0.44cm, anchor=west] at (6.0,3.1) {};
+\node[free, minimum width=2.35cm, minimum height=0.44cm, anchor=west] at (6.4,3.1) {};
 
-% one tensor of a leaf
-\node[lbl, anchor=east, align=right] at (1.75,2.15) {Leaf of\\[-1pt]the group};
-\node[seg, fill=bluec, minimum width=3.85cm, minimum height=0.55cm, anchor=west] at (1.9,2.15) {read-only mapping};
-\node[seg, fill=peach, minimum width=0.3cm, minimum height=0.55cm, anchor=west] (meet1) at (5.75,2.15) {};
-\node[seg, fill=segc, minimum width=1.7cm, minimum height=0.55cm, anchor=west] at (6.05,2.15) {read-only};
-\node[seg, fill=peach, minimum width=0.3cm, minimum height=0.55cm, anchor=west] (meet2) at (7.75,2.15) {};
-\node[seg, fill=gold, minimum width=1.0cm, minimum height=0.55cm, anchor=west] at (8.05,2.15) {in use};
-\node[seg, fill=gold!40, minimum width=0.45cm, minimum height=0.55cm, anchor=west] at (9.05,2.15) {};
-\node[free, minimum width=1.8cm, minimum height=0.55cm, anchor=west] at (9.5,2.15) {};
-\node[lbl, anchor=west] at (9.55,2.15) {\colorbox{white}{no memory yet}};
-\node[num] at (1.2,2.75) {3};
+% one tensor of the leaf
+\node[tag, anchor=east, align=right] at (3.45,2.1) {Leaf\\[-2pt]Tensor};
+\node[num] at (2.3,2.1) {3};
+\node[seg, fill=bluec, minimum width=2.33cm, minimum height=0.44cm, anchor=west] at (3.55,2.1) {};
+\node[seg, fill=peach, minimum width=0.24cm, minimum height=0.44cm, anchor=west] at (5.88,2.1) {};
+\node[seg, fill=segc, minimum width=0.96cm, minimum height=0.44cm, anchor=west] at (6.12,2.1) {};
+\node[seg, fill=peach, minimum width=0.24cm, minimum height=0.44cm, anchor=west] at (7.08,2.1) {};
+\node[seg, fill=gold, minimum width=0.5cm, minimum height=0.44cm, anchor=west] at (7.32,2.1) {};
+\node[seg, fill=gold!40, minimum width=0.3cm, minimum height=0.44cm, anchor=west] at (7.82,2.1) {};
+\node[free, minimum width=0.63cm, minimum height=0.44cm, anchor=west] at (8.12,2.1) {};
 
 % the segment file of the leader
-\node[lbl, anchor=east, align=right] at (1.75,0.65) {Leader's\\[-1pt]segment file};
-\node[free, minimum width=4.0cm, minimum height=0.55cm, anchor=west] at (1.9,0.65) {};
-\node[lbl] at (3.9,0.65) {\colorbox{white}{hole: no memory}};
-\node[seg, fill=segc, minimum width=2.0cm, minimum height=0.55cm, anchor=west] at (5.9,0.65) {appended rows};
-\node[seg, fill=gold, minimum width=0.6cm, minimum height=0.55cm, anchor=west] at (7.9,0.65) {};
-\node[free, minimum width=2.8cm, minimum height=0.55cm, anchor=west] at (8.5,0.65) {};
-\node[note, anchor=west] at (8.6,0.65) {\colorbox{white}{its own later rows}};
-\node[num] at (1.2,1.25) {2};
+\node[tag, anchor=east, align=right] at (3.45,1.1) {Leader\\[-2pt]File};
+\node[num] at (2.3,1.1) {2};
+\node[free, minimum width=2.45cm, minimum height=0.44cm, anchor=west] at (3.55,1.1) {};
+\node[seg, fill=segc, minimum width=1.2cm, minimum height=0.44cm, anchor=west] at (6.0,1.1) {};
+\node[seg, fill=gold, minimum width=0.4cm, minimum height=0.44cm, anchor=west] at (7.2,1.1) {};
+\node[free, minimum width=1.15cm, minimum height=0.44cm, anchor=west] at (7.6,1.1) {};
 
-% the same pages in every leaf of the group
-\draw[arr, dblue, line width=1.2pt] (2.9,3.375) -- (2.9,2.425);
-\draw[arr, dblue, line width=1.2pt] (4.9,3.375) -- (4.9,2.425);
-\node[note, text=dblue] at (3.9,2.9) {same physical pages};
-\draw[arr, black!65, line width=1.2pt] (6.9,0.925) -- (6.9,1.875);
-\node[note, anchor=east] at (6.75,1.4) {same pages in every leaf of the group};
+% the same pages
+\foreach \x in {4.2,5.3} {
+  \draw[arr, dblue, line width=1.1pt] (\x,2.88) -- (\x,2.32);
+}
+\node[note, text=dblue] at (4.75,2.6) {map};
+\draw[arr, black!70, line width=1.1pt] (6.6,1.32) -- (6.6,1.88);
+\node[note, anchor=west] at (6.66,1.6) {map};
 
-% the pages where two owners meet
-\draw[thin] (6.6,3.0) -- (meet1.north);
-\draw[thin] (7.6,3.0) -- (meet2.north);
-\node[note, anchor=west] at (6.2,3.12) {\colorbox{white}{pages where two owners meet: copied}};
-
+% legend
+\legendfill{0.15}{0.2}{bluec}{Root Segment}
+\legendfill{2.05}{0.2}{segc}{Leader Segment}
+\legendfill{4.2}{0.2}{peach}{Copied Page}
+\legendfill{5.9}{0.2}{gold}{Private Tail}
+\legendhatch{7.55}{0.2}{Unbacked}
 \end{tikzpicture}
 \end{document}
