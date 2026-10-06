@@ -1,0 +1,346 @@
+#!/usr/bin/env python3
+"""Half-column panels for the paper, in the figure style of the PHASOR paper.
+
+Reads the packaged summaries under ../results (nothing is typed in by hand)
+and writes one PDF and one PNG per panel next to this script. A panel whose
+campaign has not been run yet is skipped. Every panel shows one metric with
+its unit on the axis and the value on the bar.
+
+  eval_mem_*       memory of the agents on one prefix
+  eval_weights_*   weights in place against the device copy
+  eval_hand_*      pause of the publisher, attach time, time to first token
+  eval_speed_*     host-mapped cache against device memory; read bandwidth
+  eval_mode_*      time slicing, MPS, MIG, MPS within each MIG instance
+  eval_cow_*       extents against copy-on-write mappings
+  eval_dev_*       host extents against shared device memory
+  eval_tree_*      extent chains on a tree of agents
+  eval_scale_*     more agents; eval_model_*, eval_work_*: other models, workload
+"""
+import os
+import sys
+
+import matplotlib.pyplot as plt
+import numpy as np
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from make_eval_figures import (AXIS, COPY, COW, DEVICE, GRID, INK, OURS,  # noqa: E402
+                               OURS_LIGHT, RES, grouped, rows, save, style, tip)
+
+NAME = "LLM-Share"
+PANEL = (4.3, 3.1)
+
+
+def have(*path):
+    return os.path.exists(os.path.join(RES, *path))
+
+
+def panel(size=PANEL):
+    return plt.subplots(figsize=size)
+
+
+def legend(name, entries, ncol):
+    """A strip that holds only the legend, shared by the panels below it."""
+    fig = plt.figure(figsize=(1.9 * ncol + 0.6, 0.38))
+    handles = [plt.Rectangle((0, 0), 1, 1, color=colour) for _, colour in entries]
+    fig.legend(handles, [label for label, _ in entries], loc="center", ncol=ncol,
+               columnspacing=1.6, handlelength=1.3, fontsize=12.5)
+    save(fig, name)
+
+
+def labels(ax, bars, form="{:.1f}", size=10.5):
+    for bar in bars:
+        tip(ax, bar, form.format(bar.get_height()))
+        ax.texts[-1].set_fontsize(size)
+
+
+def finish(fig, ax, name, xlabel, ylabel, top=None, log=False):
+    ax.set_xlabel(xlabel)
+    ax.set_ylabel(ylabel)
+    if log:
+        ax.set_yscale("log")
+    if top is not None:
+        ax.set_ylim(ax.get_ylim()[0] if log else 0, top)
+    style(ax)
+    fig.tight_layout()
+    save(fig, name)
+
+
+# ------------------------------------------------------------------ memory
+def mem():
+    data = {(r["paragraphs"], r["mode"], int(r["agents"])): r
+            for r in rows("20261006-engine-kvshare-v1", "engine_kvshare_summary.csv")}
+    series_of = (("Copy", COPY, "restore"), ("Extents, Whole Tail", OURS_LIGHT, "extent"),
+                 (NAME, OURS, "extent_lazy"))
+    legend("eval_mem_legend", [(label, colour) for label, colour, _ in series_of], 3)
+    counts = [1, 4, 8]
+    for size, tag in (("80", "4k"), ("320", "16k")):
+        fig, ax = panel()
+        series = [(label, colour, [float(data[size, mode, n]["memory_mib"]) / 1024 for n in counts])
+                  for label, colour, mode in series_of]
+        for group in grouped(ax, [str(n) for n in counts], series, 0.27):
+            labels(ax, group, size=9.5)
+        finish(fig, ax, f"eval_mem_{tag}", "Agents", "Memory (GiB)", 23)
+
+
+def weights():
+    agents = {(r["config"], r["mode"], int(r["agents"])): r
+              for r in rows("20261005-engine-agents-v1", "engine_agents_summary.csv")}
+    counts = sorted({k[2] for k in agents if k[0] == "mig"})
+    fig, ax = panel()
+    series = [(label, colour, [float(agents["mig", mode, n]["memory_total_mib"]) / 1024 for n in counts])
+              for label, colour, mode in (("Device Copy", COPY, "copy"), (NAME, OURS, "inplace"))]
+    for group in grouped(ax, [str(n) for n in counts], series, 0.38):
+        labels(ax, group, size=9.5)
+    ax.legend(loc="upper left", handlelength=1.2)
+    finish(fig, ax, "eval_weights_mem", "Serving Processes", "Memory (GiB)", 47)
+
+    pages = {r["mode"]: r for r in rows("20261005-engine-pages-v1", "engine_pages_summary.csv")}
+    order = (("Device\nCopy", "copy", COPY), ("In Place\n4 KiB Pages", "inplace_4k", OURS_LIGHT),
+             ("In Place\n2 MiB Pages", "inplace_thp", OURS))
+    fig, ax = panel()
+    values = [float(pages[mode]["generation_vs_copy"]) for _, mode, _ in order]
+    low = [v - float(pages[mode]["lower_ci95"]) for v, (_, mode, _) in zip(values, order)]
+    high = [float(pages[mode]["upper_ci95"]) - v for v, (_, mode, _) in zip(values, order)]
+    bars = ax.bar([label for label, _, _ in order], values, 0.6, color=[c for _, _, c in order],
+                  edgecolor="white", linewidth=1.5, yerr=[low, high],
+                  error_kw={"ecolor": INK, "elinewidth": 1.0, "capsize": 3})
+    for bar, high_part in zip(bars, high):
+        ax.annotate(f"{bar.get_height():.3f}", (bar.get_x() + bar.get_width() / 2,
+                                                 bar.get_height() + high_part),
+                    xytext=(0, 3), textcoords="offset points", ha="center", va="bottom",
+                    fontsize=10.5, color=INK)
+    ax.axhline(1.0, color=AXIS, linewidth=1.0)
+    finish(fig, ax, "eval_weights_speed", "", "Speed vs. Device Copy", 1.18)
+
+
+# ---------------------------------------------------------------- handover
+def hand():
+    publish = {(r["paragraphs"], r["store"]): r
+               for r in rows("20261006-engine-kvshare-v1", "engine_kvshare_publish.csv")}
+    share = {(r["paragraphs"], r["mode"], int(r["agents"])): r
+             for r in rows("20261006-engine-kvshare-v1", "engine_kvshare_summary.csv")}
+    pair = (("Copy", COPY, "device", "restore"), (NAME, OURS, "huge", "extent_lazy"))
+    legend("eval_hand_legend", [(label, colour) for label, colour, _, _ in pair], 2)
+    sizes = ("80", "320")
+    tokens = [f"{int(publish[size, 'device']['prefix_tokens']):,}" for size in sizes]
+
+    fig, ax = panel()
+    series = [(label, colour, [float(publish[size, store]["publish_ms"]) for size in sizes])
+              for label, colour, store, _ in pair]
+    for group in grouped(ax, tokens, series, 0.36):
+        labels(ax, group, "{:.0f}")
+    ax.set_ylim(1, 2500)
+    finish(fig, ax, "eval_hand_pause", "Prefix (Tokens)", "Pause (ms, log)", log=True)
+
+    counts = [1, 4, 8]
+    for name, column, ylabel, scale, form, top in (
+            ("eval_hand_attach", "attach_ms", "Attach Time (ms)", 1.0, "{:.0f}", 570),
+            ("eval_hand_ttft", "first_token_ms", "TTFT (s)", 1000.0, "{:.2f}", 2.7)):
+        fig, ax = panel()
+        series = [(label, colour, [float(share["320", mode, n][column]) / scale for n in counts])
+                  for label, colour, _, mode in pair]
+        for group in grouped(ax, [str(n) for n in counts], series, 0.36):
+            labels(ax, group, form)
+        finish(fig, ax, name, "Agents (16,321-Token Prefix)", ylabel, top)
+
+
+# ------------------------------------------------------------------- speed
+def speed():
+    cells = (("12 SMs", "20261006-engine-kvspeed-v1"), ("12 SMs", "20261006-engine-kvspeed-long-v1"),
+             ("6 SMs", "20261006-engine-kvspeed-6sm-v1"), ("6 SMs", "20261006-engine-kvspeed-6sm-long-v1"))
+    names, values, low, high = [], [], [], []
+    for instance, directory in cells:
+        row = next(r for r in rows(directory, "engine_kvspeed_summary.csv")
+                   if r["mode"] == "extent_lazy" and r["processes"] == "1")
+        names.append(f"{instance}\n{int(row['prefix_tokens']):,}")
+        values.append(float(row["generation_vs_device"]))
+        low.append(values[-1] - float(row["lower_ci95"]))
+        high.append(float(row["upper_ci95"]) - values[-1])
+    fig, ax = panel()
+    bars = ax.bar(names, values, 0.6, color=OURS, edgecolor="white", linewidth=1.5,
+                  yerr=[low, high], error_kw={"ecolor": INK, "elinewidth": 1.0, "capsize": 3})
+    for bar, high_part in zip(bars, high):
+        ax.annotate(f"{bar.get_height():.3f}", (bar.get_x() + bar.get_width() / 2,
+                                                 bar.get_height() + high_part),
+                    xytext=(0, 3), textcoords="offset points", ha="center", va="bottom",
+                    fontsize=10.5, color=INK)
+    ax.axhline(1.0, color=AXIS, linewidth=1.0)
+    finish(fig, ax, "eval_speed_host", "MIG Instance and Prefix (Tokens)",
+           "Speed vs. Device Memory", 1.18)
+
+
+def reach():
+    directory = "20261006-read-path-v1"
+    if not have(directory, "read_path_summary.csv"):
+        return
+    data = {(r["instance"], r["kind"], r["size_mib"]): r
+            for r in rows(directory, "read_path_summary.csv")}
+    size = max({k[2] for k in data}, key=int)
+    kinds = (("Device", DEVICE, "device"), ("Host, 2 MiB", OURS, "host_huge"),
+             ("Host, 4 KiB", OURS_LIGHT, "host_small"))
+    fig, ax = panel()
+    series = [(label, colour, [float(data[instance, kind, size]["full_gib_per_s"])
+                               for instance in ("12sm", "6sm")])
+              for label, colour, kind in kinds]
+    for group in grouped(ax, ["12 SMs", "6 SMs"], series, 0.27):
+        labels(ax, group, "{:.0f}", 9.5)
+    ax.legend(loc="upper right", handlelength=1.2, fontsize=10.5)
+    top = max(max(values) for _, _, values in series) * 1.45
+    finish(fig, ax, "eval_speed_reach", "MIG Instance", "Read Bandwidth (GiB/s)", top)
+
+
+# ------------------------------------------------------ GPU sharing modes
+def mode():
+    directory = "20261006-engine-kvmps-v1"
+    if not have(directory, "engine_kvmps_summary.csv"):
+        return
+    data = {(r["config"], int(r["children"]), r["prefix_tokens"], r["mode"]): r
+            for r in rows(directory, "engine_kvmps_summary.csv")}
+    children = max(k[1] for k in data)
+    tokens = max({k[2] for k in data}, key=int)
+    configs = (("Time\nSlicing", "timeslice"), ("MPS", "mps"), ("MIG", "mig"), ("MIG\n+MPS", "mig_mps"))
+    pair = (("Copy", COPY, "copy"), (NAME, OURS, "extent"))
+    legend("eval_mode_legend", [(label, colour) for label, colour, _ in pair], 2)
+    for name, column, ylabel, scale, form in (
+            ("eval_mode_tps", "children_tps_sum", "Throughput (tokens/s)", 1.0, "{:.1f}"),
+            ("eval_mode_mem", "children_memory_mib", "Memory (GiB)", 1024.0, "{:.1f}")):
+        fig, ax = panel()
+        series = [(label, colour, [float(data[config, children, tokens, m][column]) / scale
+                                   for _, config in configs])
+                  for label, colour, m in pair]
+        for group in grouped(ax, [label for label, _ in configs], series, 0.38):
+            labels(ax, group, form, 9.5)
+        top = max(max(values) for _, _, values in series) * 1.18
+        finish(fig, ax, name, "", ylabel, top)
+
+
+# --------------------------------------------------------- copy-on-write
+def cow():
+    data = {(r["mode"], int(r["agents"])): r
+            for r in rows("20261006-engine-kvcow-v1", "engine_kvcow_summary.csv")}
+    order = (("CoW 2M\nNo Read", "cow_noread", COW), ("CoW 4K\n+ Read", "cow_small", COW),
+             ("CoW 2M\n+ Read", "cow", COW), (f"LLM-\nShare", "extent_lazy", OURS))
+    for name, column, ylabel, scale, form in (
+            ("eval_cow_mem", "memory_mib", "Memory (GiB)", 1024.0, "{:.1f}"),
+            ("eval_cow_time", "suffix_ms", "Task Decoding Time (s)", 1000.0, "{:.2f}")):
+        fig, ax = panel()
+        values = [float(data[m, 8][column]) / scale for _, m, _ in order]
+        bars = ax.bar([label for label, _, _ in order], values, 0.62,
+                      color=[c for _, _, c in order], edgecolor="white", linewidth=1.5)
+        labels(ax, bars, form)
+        ax.tick_params(axis="x", labelsize=9.5)
+        finish(fig, ax, name, "", ylabel, max(values) * 1.18)
+
+
+# --------------------------------------------------------- device memory
+def dev():
+    data = {(r["paragraphs"], r["parent_mig"], r["mode"]): r
+            for r in rows("20261006-engine-kvvmm-v1", "engine_kvvmm_summary.csv")}
+    instance = "fafc828a"
+    kinds = (("Copy", COPY, "copy"), ("Device", DEVICE, "vmm"), (NAME, OURS, "extent"))
+    fig, ax = panel()
+    series = [(label, colour, [float(data["320", instance, m]["publish_ms"]),
+                               float(data["320", instance, m]["child_attach_ms"])])
+              for label, colour, m in kinds]
+    for group in grouped(ax, ["Parent Pause", "Child Attach"], series, 0.27):
+        labels(ax, group, "{:.0f}", 9.5)
+    ax.set_ylim(1, 4000)
+    ax.legend(loc="upper center", ncol=3, handlelength=1.0, columnspacing=0.8, fontsize=10,
+              bbox_to_anchor=(0.5, 1.02))
+    finish(fig, ax, "eval_dev_time", "", "Time (ms, log)", log=True)
+
+    fig, ax = panel()
+    values = [float(data["320", instance, m]["children_memory_mib"]) / 1024 for _, _, m in kinds]
+    bars = ax.bar([label for label, _, _ in kinds], values, 0.6, color=[c for _, c, _ in kinds],
+                  edgecolor="white", linewidth=1.5)
+    labels(ax, bars)
+    done = {m: sum(int(data["320", mig, m]["children_finished"]) for mig in ("fafc828a", "31ffbfe4"))
+            for m in ("vmm_cross", "extent_cross")}
+    started = {m: sum(int(data["320", mig, m]["children_started"]) for mig in ("fafc828a", "31ffbfe4"))
+               for m in ("vmm_cross", "extent_cross")}
+    ax.text(0.97, 0.95, "Child in the other MIG instance:\n"
+            f"Device {done['vmm_cross']}/{started['vmm_cross']}, "
+            f"{NAME} {done['extent_cross']}/{started['extent_cross']} complete",
+            transform=ax.transAxes, ha="right", va="top", fontsize=9.5, color=INK)
+    finish(fig, ax, "eval_dev_mem", "", "Memory (GiB)", max(values) * 1.25)
+
+
+# ------------------------------------------------------------ agent tree
+def tree():
+    directory = "20261006-engine-kvtree-v1"
+    if not have(directory, "engine_kvtree_summary.csv"):
+        return
+    data = {r["mode"]: r for r in rows(directory, "engine_kvtree_summary.csv")}
+    order = (("Copy", "copy", COPY), ("Extents\n(One Level)", "flat", OURS_LIGHT),
+             (f"{NAME}\n(Chains)", "chain", OURS))
+    fig, ax = panel()
+    values = [float(data[m]["tree_memory_mib"]) / 1024 for _, m, _ in order]
+    bars = ax.bar([label for label, _, _ in order], values, 0.6, color=[c for _, _, c in order],
+                  edgecolor="white", linewidth=1.5)
+    labels(ax, bars)
+    finish(fig, ax, "eval_tree_mem", "", "Memory of the Tree (GiB)", max(values) * 1.18)
+
+    fig, ax = panel()
+    values = [float(data[m]["leaf_first_token_ms"]) / 1000 for _, m, _ in order]
+    bars = ax.bar([label for label, _, _ in order], values, 0.6, color=[c for _, _, c in order],
+                  edgecolor="white", linewidth=1.5)
+    labels(ax, bars, "{:.2f}")
+    finish(fig, ax, "eval_tree_time", "", "TTFT of a Leaf (s)", max(values) * 1.18)
+
+
+# ------------------------------------------------------------ sensitivity
+def lines(name, directory, summary, column, ylabel, scale, form):
+    data = {(r["mode"], int(r["agents"])): r for r in rows(directory, summary)}
+    counts = sorted({k[1] for k in data})
+    fig, ax = panel()
+    for label, colour, m, marker in (("Copy", COPY, "restore", "s"), (NAME, OURS, "extent_lazy", "o")):
+        points = [(n, float(data[m, n][column]) / scale) for n in counts if (m, n) in data]
+        ax.plot([p[0] for p in points], [p[1] for p in points], color=colour, marker=marker,
+                markersize=7, linewidth=2, label=label, markeredgecolor="white", markeredgewidth=1.2)
+        ax.annotate(form.format(points[-1][1]), points[-1], xytext=(-4, 7),
+                    textcoords="offset points", ha="right", fontsize=10.5, color=INK)
+    ax.set_xticks(counts)
+    ax.legend(loc="upper left", handlelength=1.6)
+    finish(fig, ax, name, "Agents (16,321-Token Prefix)", ylabel,
+           max(float(r[column]) for r in data.values()) / scale * 1.2)
+
+
+def scale():
+    directory = "20261006-engine-kvscale-v1"
+    if not have(directory, "engine_kvscale_summary.csv"):
+        return
+    lines("eval_scale_mem", directory, "engine_kvscale_summary.csv", "memory_mib",
+          "Memory (GiB)", 1024.0, "{:.1f}")
+    lines("eval_scale_tps", directory, "engine_kvscale_summary.csv", "generation_tps_total",
+          "Throughput (tokens/s)", 1.0, "{:.1f}")
+
+
+def variants():
+    """Eight agents: other models and the agent workload, memory by copy and by extents."""
+    cells = (("Qwen2.5\n7B", "20261006-engine-kvshare-v1", "engine_kvshare_summary.csv", "320"),
+             ("Llama-3.1\n8B", "20261006-engine-kvscale-llama8b-v1", "engine_kvscale_summary.csv", None),
+             ("Qwen2.5\n14B", "20261006-engine-kvscale-qwen14b-v1", "engine_kvscale_summary.csv", None),
+             ("Agent\nWorkload", "20261006-engine-kvscale-agent-v1", "engine_kvscale_summary.csv", None))
+    names, copy, ours = [], [], []
+    for label, directory, summary, size in cells:
+        if not have(directory, summary):
+            continue
+        data = {(r["mode"], int(r["agents"])): r for r in rows(directory, summary)
+                if size is None or r["paragraphs"] == size}
+        names.append(label)
+        copy.append(float(data["restore", 8]["memory_mib"]) / 1024)
+        ours.append(float(data["extent_lazy", 8]["memory_mib"]) / 1024)
+    if len(names) < 2:
+        return
+    fig, ax = panel()
+    for group in grouped(ax, names, [("Copy", COPY, copy), (NAME, OURS, ours)], 0.38):
+        labels(ax, group, size=9.5)
+    ax.tick_params(axis="x", labelsize=10)
+    ax.legend(loc="upper left", handlelength=1.2)
+    finish(fig, ax, "eval_model_mem", "", "Memory of Eight Agents (GiB)", max(copy) * 1.25)
+
+
+if __name__ == "__main__":
+    for figure in (mem, weights, hand, speed, reach, mode, cow, dev, tree, scale, variants):
+        figure()
+        print("wrote", figure.__name__)

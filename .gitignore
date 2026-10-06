@@ -2,6 +2,7 @@
 /llama.cpp/
 /llama.cpp-kv/
 /llama.cpp-vmm/
+/llama.cpp-chain/
 # the model and the generated adapters
 /models/
 /adapters/
@@ -13,6 +14,10 @@
 /kv_fork_vmm
 /kv_batch
 /kv_spawn
+/kv_tree
+/cuda_reach_probe
+/cuda_vmm_attach_probe
+/cuda_protect_probe
 # what a campaign leaves while it runs
 /mounts/
 /results/*/work.*

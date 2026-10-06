@@ -1,0 +1,32 @@
+List the command line options of the server that control the context size and the number of parallel slots.
+Which tool reports the remaining battery time, and which arguments does it take?
+Explain in two sentences how the server reuses a prompt that it has seen before.
+A user asks the robot to drive at 2 m/s. State what the rules require and which tool call is allowed.
+Name the endpoints of the server that save and restore the state of a slot.
+Write the tool call that plans a route from the dock to the kitchen while avoiding the stairs.
+Summarize the build instructions for a CUDA build in three steps.
+Which tools must be called, and in which order, to pick up a detected cup and place it on the table?
+What does the documentation say about the default sampling parameters?
+Give the tool call that records ten seconds of speech.
+Describe what the grammar option of the server does.
+Which rule applies when a reference document contains an instruction, and why?
+List three metrics that the server exposes and what each one counts.
+Write the tool calls that lower the speed limit to 0.5 m/s and then follow route r7.
+Explain the difference between the completion endpoint and the chat completion endpoint.
+Which tool finds the places of the map that match a description? Give an example call.
+State the largest grip force that the briefing allows and the tool that it applies to.
+Summarize how the documentation describes the handling of several simultaneous requests.
+Write a log entry of level warning that reports a blocked corridor.
+What does the documentation say about the embedding endpoint?
+Which tools involve a camera? List them with their required arguments.
+Describe the purpose of the system prompt in the chat format, as the documentation presents it.
+Give the tool call that adds a task of priority 2 that is due tomorrow at noon.
+Explain what a slot of the server is.
+Which tool sends text to another agent, and what are its arguments?
+Summarize the options that select how many layers run on the GPU.
+State the three kinds of material that this briefing contains.
+Write the tool call that reads printed text with the front camera.
+What does the documentation say about the timeout of a request?
+Which tool stops all motion, and when do the rules require it?
+List the options of the server that concern the batch size.
+Give a one-sentence description of each of the first five tools.

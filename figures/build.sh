@@ -15,3 +15,5 @@ for source in "$here"/src/*.tex; do
   pdftoppm -r 220 -png -singlefile "$here/$name.pdf" "$here/$name"
 done
 if [[ -f "$here/make_eval_figures.py" ]]; then python3 "$here/make_eval_figures.py"; fi
+# The half-column panels of the paper.
+if [[ -f "$here/make_paper_figures.py" ]]; then python3 "$here/make_paper_figures.py"; fi

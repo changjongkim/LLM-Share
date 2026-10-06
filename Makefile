@@ -6,6 +6,7 @@ CXX ?= g++
 CXXFLAGS := -std=c++20 -O2 -Wall -Wextra -Wpedantic -Werror
 KV_ENGINE ?= llama.cpp-kv
 VMM_ENGINE ?= llama.cpp-vmm
+CHAIN_ENGINE ?= llama.cpp-chain
 
 .PHONY: all clean
 
@@ -18,6 +19,15 @@ cuda_vmm_probe: cuda_vmm_probe.cu
 	$(NVCC) $(NVCCFLAGS) $< -o $@ -lcuda
 
 cuda_share_load_probe: cuda_share_load_probe.cu
+	$(NVCC) $(NVCCFLAGS) $< -o $@ -lcuda
+
+cuda_reach_probe: cuda_reach_probe.cu
+	$(NVCC) $(NVCCFLAGS) $< -o $@
+
+cuda_vmm_attach_probe: cuda_vmm_attach_probe.cu
+	$(NVCC) $(NVCCFLAGS) $< -o $@ -lcuda
+
+cuda_protect_probe: cuda_protect_probe.cu
 	$(NVCC) $(NVCCFLAGS) $< -o $@ -lcuda
 
 # Links against the engine with the cache patch; its headers are not ours.
@@ -47,5 +57,12 @@ kv_spawn: kv_spawn.cpp
 	  -L$(VMM_ENGINE)/build/bin -lllama -lggml -lggml-base \
 	  -Wl,-rpath,'$$ORIGIN/$(VMM_ENGINE)/build/bin'
 
+# A tree of agents: the engine whose agents can publish the rows they add.
+kv_tree: kv_tree.cpp
+	$(CXX) $(CXXFLAGS) -isystem $(CHAIN_ENGINE)/include \
+	  -isystem $(CHAIN_ENGINE)/ggml/include $< -o $@ \
+	  -L$(CHAIN_ENGINE)/build/bin -lllama -lggml -lggml-base \
+	  -Wl,-rpath,'$$ORIGIN/$(CHAIN_ENGINE)/build/bin'
+
 clean:
-	$(RM) cuda_ipc_probe cuda_vmm_probe cuda_share_load_probe kv_fork kv_batch kv_fork_vmm kv_spawn
+	$(RM) cuda_ipc_probe cuda_vmm_probe cuda_share_load_probe kv_fork kv_batch kv_fork_vmm kv_spawn kv_tree cuda_reach_probe cuda_vmm_attach_probe cuda_protect_probe

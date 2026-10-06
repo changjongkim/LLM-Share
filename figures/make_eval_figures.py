@@ -11,6 +11,7 @@ and writes one PDF and one PNG per figure next to this script.
   eval_speed      generation speed of a host-memory cache, by MIG instance
   eval_inproc     eight agents: separate processes, one server, two servers
   eval_vmm        host extents against a device-memory cache and the copy
+  bg_state        background: memory of processes that hold the same state
 """
 import csv
 import os
@@ -357,8 +358,54 @@ def eval_vmm():
     save(fig, "eval_vmm")
 
 
+# ------------------------------------------------------------- background
+def bg_state():
+    """Two half-column panels: what the unmodified engine holds per process."""
+    agents = {(r["config"], r["mode"], int(r["agents"])): r
+              for r in rows("20261005-engine-agents-v1", "engine_agents_summary.csv")}
+    counts = sorted({k[2] for k in agents if k[0] == "mig" and k[1] == "copy"})
+    memory = [float(agents["mig", "copy", n]["memory_total_mib"]) / 1024 for n in counts]
+    fig, ax = plt.subplots(figsize=(4.3, 3.1))
+    bars = ax.bar([str(n) for n in counts], memory, 0.6, color=COPY, edgecolor="white",
+                  linewidth=1.5)
+    for bar in bars:
+        tip(ax, bar, f"{bar.get_height():.1f}")
+    model = float(agents["mig", "inplace", 1]["model_mapped_mib"]) / 1024
+    ax.axhline(model, color=OURS, linewidth=1.6, linestyle=(0, (4, 2)))
+    ax.text(0.04, 0.9, f"dashed: model file ({model:.1f} GiB)", color=OURS, fontsize=11.5,
+            ha="left", va="center", transform=ax.transAxes)
+    ax.set_xlabel("Serving Processes")
+    ax.set_ylabel("Memory (GiB)")
+    ax.set_ylim(0, max(memory) * 1.15)
+    style(ax)
+    fig.tight_layout()
+    save(fig, "bg_state_weights")
+
+    share = {(r["paragraphs"], r["mode"], int(r["agents"])): r
+             for r in rows("20261006-engine-kvshare-v1", "engine_kvshare_summary.csv")}
+    sizes = sorted({k[0] for k in share}, key=int)
+    counts = [1, 4, 8]
+    fig, ax = plt.subplots(figsize=(4.3, 3.1))
+    series = []
+    for size, colour in zip(sizes, ("#c3c2b7", COPY)):
+        tokens = int(share[size, "restore", 1]["prefix_tokens"])
+        series.append((f"{tokens:,} tokens", colour,
+                       [float(share[size, "restore", n]["memory_mib"]) / 1024 for n in counts]))
+    groups = grouped(ax, [str(n) for n in counts], series, 0.36)
+    for group in groups:
+        for bar in group:
+            tip(ax, bar, f"{bar.get_height():.1f}")
+    ax.set_xlabel("Agents on One Prefix")
+    ax.set_ylabel("Memory (GiB)")
+    ax.set_ylim(0, 23)
+    ax.legend(loc="upper left", title="Prefix", title_fontsize=11.5, handlelength=1.2)
+    style(ax)
+    fig.tight_layout()
+    save(fig, "bg_state_kv")
+
+
 if __name__ == "__main__":
     for figure in (eval_weights, eval_memory, eval_handover, eval_cow, eval_speed,
-                   eval_inproc, eval_vmm):
+                   eval_inproc, eval_vmm, bg_state):
         figure()
         print("wrote", figure.__name__)
