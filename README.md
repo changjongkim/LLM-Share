@@ -1,12 +1,19 @@
-# LLM-Share: 온디바이스 LLM 서빙을 위한 익스텐트 기반 모델 상태 공유
+# STATOR: 통합 메모리 엣지 장치의 다중 프로세스 LLM 서빙을 위한 불변 상태 익스텐트
+
+*STATOR: Immutable State Extents for Multi-Process LLM Serving on Unified-Memory Edge Devices*
 
 Jetson AGX Thor에서 같은 LLM을 서빙하는 여러 프로세스가 모델 가중치와 공통
 프롬프트 프리픽스의 KV 캐시를 물리 메모리 한 벌로 공유한다. GPU는 두 상태를
 호스트 페이지 테이블을 통해 제자리에서 읽는다.
 
+STATOR는 전동기에서 회전하지 않는 부분의 이름이다. 공유 상태는 불변으로 고정하고
+각 프로세스가 쓰는 부분만 따로 둔다는 설계 규칙에서 이름을 가져왔다. 저장소
+이름과 일부 스크립트, 기록 파일 이름에 남아 있는 LLM-Share는 이전 작업명이다.
+
 - 연구 기록: [docs/RESEARCH_LLM_SHARE_2026-10-05.md](docs/RESEARCH_LLM_SHARE_2026-10-05.md) (KV 캐시는 6절)
 - 기반 측정 기록: [docs/RESEARCH_HOSTMM_2026-10-05.md](docs/RESEARCH_HOSTMM_2026-10-05.md) (코드와 원시 결과는 `thor_hostmm` 프로젝트에 있으며 이 저장소에 포함되지 않는다)
-- 선행 연구 조사: [docs/SOTA_HOSTMM_2026-10-05.md](docs/SOTA_HOSTMM_2026-10-05.md) 12, 14, 16, 17절
+- 선행 연구 조사: [docs/SOTA_HOSTMM_2026-10-05.md](docs/SOTA_HOSTMM_2026-10-05.md) 12, 14, 16, 17절, [docs/SOTA_AUDIT6_2026-10-06.md](docs/SOTA_AUDIT6_2026-10-06.md)
+- 논문 원고: 별도 저장소에서 관리한다. 논문에 쓰는 그림은 `figures/make_paper_figures.py`로 만들고 `figures/sync_to_paper.sh`로 그 저장소의 `Figures/`에 복사한다.
 
 목차: [1. 서론](#1-서론) | [2. 배경](#2-배경) | [3. 설계](#3-설계) |
 [4. 평가](#4-평가) | [5. 한계](#5-한계) | [6. 구성물과 재현](#6-구성물과-재현) |
@@ -54,7 +61,7 @@ Jetson AGX Thor에서 같은 LLM을 서빙하는 여러 프로세스가 모델 �
 
 Thor의 GPU는 호스트 페이지 테이블을 따라간다. 따라서 호스트 메모리 관리자가
 GPU가 접근하는 메모리를 프로세스 사이에서, 그리고 MIG 인스턴스 사이에서 공유할
-수 있다. 이 연구는 copy-on-write를 쓰지 않는 다음 규칙을 세우고 llama.cpp에 두
+수 있다. STATOR는 copy-on-write를 쓰지 않는 다음 규칙을 세우고 llama.cpp에 두
 가지로 구현한다.
 
 > 공유 상태는 불변이며 읽기 전용으로 매핑한다. 프로세스가 쓰는 내용은 처음부터
@@ -73,7 +80,7 @@ GPU가 접근하는 메모리를 프로세스 사이에서, 그리고 MIG 인스
 
 7B 모델, 셀당 6회 반복, 실패한 실행 없음.
 
-| 항목 | 기존 엔진 | 본 연구 |
+| 항목 | 기존 엔진 | STATOR |
 |---|---:|---:|
 | 프로세스 8개의 메모리 (가중치만) | 40.8 GiB | 10.0 GiB |
 | 16,321토큰 프리픽스 위 에이전트 8개의 메모리 (양쪽 모두 가중치 in-place) | 19.9 GiB | 5.7 GiB + 캐시 파일 0.9 GiB 1회 |

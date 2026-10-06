@@ -26,7 +26,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from make_eval_figures import (AXIS, COPY, COW, DEVICE, GRID, INK, OURS,  # noqa: E402
                                OURS_LIGHT, RES, grouped, rows, save, style, tip)
 
-NAME = "LLM-Share"
+NAME = "STATOR"
 PANEL = (4.3, 3.1)
 
 
@@ -219,7 +219,7 @@ def cow():
     data = {(r["mode"], int(r["agents"])): r
             for r in rows("20261006-engine-kvcow-v1", "engine_kvcow_summary.csv")}
     order = (("CoW 2M\nNo Read", "cow_noread", COW), ("CoW 4K\n+ Read", "cow_small", COW),
-             ("CoW 2M\n+ Read", "cow", COW), (f"LLM-\nShare", "extent_lazy", OURS))
+             ("CoW 2M\n+ Read", "cow", COW), (NAME, "extent_lazy", OURS))
     for name, column, ylabel, scale, form in (
             ("eval_cow_mem", "memory_mib", "Memory (GiB)", 1024.0, "{:.1f}"),
             ("eval_cow_time", "suffix_ms", "Task Decoding Time (s)", 1000.0, "{:.2f}")):

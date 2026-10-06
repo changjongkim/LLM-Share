@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Evaluation graphs of LLM-Share, in the figure style of the PHASOR paper.
+"""Evaluation graphs of STATOR, in the figure style of the PHASOR paper.
 
 Reads the packaged summaries under ../results (nothing is typed in by hand)
 and writes one PDF and one PNG per figure next to this script.
