@@ -1,0 +1,5 @@
+mode,sequences_per_server,runs,failed_runs,generation_tps_total,generation_tps_sd,instance_a_tps,instance_b_tps,device_memory_mib,model_mapped_mib,memory_total_mib
+copy,4,6,0,126.02,0.15,74.96,51.06,11366,0,11366
+inplace,4,6,0,123.46,0.16,73.23,50.23,2324,4460,6784
+copy,8,6,0,149.53,0.05,89.18,60.35,11362,0,11362
+inplace,8,6,0,149.02,0.18,88.90,60.12,2324,4460,6784

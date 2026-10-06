@@ -1,0 +1,20 @@
+# engine checkouts: llama.cpp at commit 6f767fe96, each with one patch of this repository applied
+/llama.cpp/
+/llama.cpp-kv/
+/llama.cpp-vmm/
+# the model and the generated adapters
+/models/
+/adapters/
+# built programs
+/cuda_ipc_probe
+/cuda_vmm_probe
+/cuda_share_load_probe
+/kv_fork
+/kv_fork_vmm
+/kv_batch
+/kv_spawn
+# what a campaign leaves while it runs
+/mounts/
+/results/*/work.*
+__pycache__/
+*.pyc

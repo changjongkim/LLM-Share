@@ -1,0 +1,16 @@
+timestamp=2026-10-05T23:47:31+09:00
+mig_a=MIG-fafc828a-2a0d-5988-a009-030a36930090
+mig_b=MIG-31ffbfe4-9a85-5f4e-b406-90ffbfa82ca3
+repetitions=6
+model=Qwen2.5-7B-Instruct-Q4_K_M.gguf
+model_bytes=4683074240
+engine_commit=6f767fe960c3b97cf37fac4626c86400561ca1e4
+boot_id=0965baa0-3357-48ca-8cea-c958d95b2d3f
+GPU 0: NVIDIA Thor (UUID: GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600)
+  MIG 2g.0gb      Device  0: (UUID: MIG-fafc828a-2a0d-5988-a009-030a36930090)
+  MIG 1g.0gb      Device  1: (UUID: MIG-31ffbfe4-9a85-5f4e-b406-90ffbfa82ca3)
+79c12b376d261f2a07ccebaa8e2bf02a9fb335f4be0f6a4f5aa9db47edf1512a  /home/thor/kcj/llm_share/llama.cpp/build/bin/llama-completion
+591a3d95a430f460bca11a4b193399b61c38149101bfe48d46807d231a0362dc  /home/thor/kcj/llm_share/adapters/lora_1.gguf
+fdccf5b04e16d41d00db244f505bee5af49af30c18dedea42abe57b207250c3c  /home/thor/kcj/llm_share/adapters/lora_2.gguf
+35632ef109d6729b9f1a3152a14129deb808c8a8ec4d0c598c6a404391a70026  /home/thor/kcj/llm_share/adapters/lora_3.gguf
+65b651401b709c64bee696039ecb6964bdefb1282598154824f292183b12a514  /home/thor/kcj/llm_share/adapters/lora_4.gguf

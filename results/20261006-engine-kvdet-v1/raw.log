@@ -1,0 +1,90 @@
+BEGIN_KVDET run=1 paragraphs=5 context=4096
+CACHE instance=a prefix_tokens=256 sha256=70086b53f2f70112
+CACHE instance=b prefix_tokens=256 sha256=3ab92b9d8d5e9c46
+ACROSS bytes_differ=9738569 values_differ=6922004 largest_difference=5.88867 first_tensor=0
+END_KVDET
+BEGIN_KVDET run=2 paragraphs=5 context=4096
+CACHE instance=a prefix_tokens=256 sha256=70086b53f2f70112
+CACHE instance=b prefix_tokens=256 sha256=3ab92b9d8d5e9c46
+ACROSS bytes_differ=9738569 values_differ=6922004 largest_difference=5.88867 first_tensor=0
+END_KVDET
+BEGIN_KVDET run=3 paragraphs=5 context=4096
+CACHE instance=a prefix_tokens=256 sha256=70086b53f2f70112
+CACHE instance=b prefix_tokens=256 sha256=3ab92b9d8d5e9c46
+ACROSS bytes_differ=9738569 values_differ=6922004 largest_difference=5.88867 first_tensor=0
+END_KVDET
+BEGIN_KVDET run=4 paragraphs=5 context=4096
+CACHE instance=a prefix_tokens=256 sha256=70086b53f2f70112
+CACHE instance=b prefix_tokens=256 sha256=3ab92b9d8d5e9c46
+ACROSS bytes_differ=9738569 values_differ=6922004 largest_difference=5.88867 first_tensor=0
+END_KVDET
+BEGIN_KVDET run=5 paragraphs=5 context=4096
+CACHE instance=a prefix_tokens=256 sha256=70086b53f2f70112
+CACHE instance=b prefix_tokens=256 sha256=3ab92b9d8d5e9c46
+ACROSS bytes_differ=9738569 values_differ=6922004 largest_difference=5.88867 first_tensor=0
+END_KVDET
+BEGIN_KVDET run=6 paragraphs=5 context=4096
+CACHE instance=a prefix_tokens=256 sha256=70086b53f2f70112
+CACHE instance=b prefix_tokens=256 sha256=3ab92b9d8d5e9c46
+ACROSS bytes_differ=9738569 values_differ=6922004 largest_difference=5.88867 first_tensor=0
+END_KVDET
+BEGIN_KVDET run=1 paragraphs=20 context=4096
+CACHE instance=a prefix_tokens=1021 sha256=408188d6fab51ff2
+CACHE instance=b prefix_tokens=1021 sha256=fbe1aef31ba94308
+ACROSS bytes_differ=34784901 values_differ=24179266 largest_difference=13.2109 first_tensor=0
+END_KVDET
+BEGIN_KVDET run=2 paragraphs=20 context=4096
+CACHE instance=a prefix_tokens=1021 sha256=408188d6fab51ff2
+CACHE instance=b prefix_tokens=1021 sha256=fbe1aef31ba94308
+ACROSS bytes_differ=34784901 values_differ=24179266 largest_difference=13.2109 first_tensor=0
+END_KVDET
+BEGIN_KVDET run=3 paragraphs=20 context=4096
+CACHE instance=a prefix_tokens=1021 sha256=408188d6fab51ff2
+CACHE instance=b prefix_tokens=1021 sha256=fbe1aef31ba94308
+ACROSS bytes_differ=34784901 values_differ=24179266 largest_difference=13.2109 first_tensor=0
+END_KVDET
+BEGIN_KVDET run=4 paragraphs=20 context=4096
+CACHE instance=a prefix_tokens=1021 sha256=408188d6fab51ff2
+CACHE instance=b prefix_tokens=1021 sha256=fbe1aef31ba94308
+ACROSS bytes_differ=34784901 values_differ=24179266 largest_difference=13.2109 first_tensor=0
+END_KVDET
+BEGIN_KVDET run=5 paragraphs=20 context=4096
+CACHE instance=a prefix_tokens=1021 sha256=408188d6fab51ff2
+CACHE instance=b prefix_tokens=1021 sha256=fbe1aef31ba94308
+ACROSS bytes_differ=34784901 values_differ=24179266 largest_difference=13.2109 first_tensor=0
+END_KVDET
+BEGIN_KVDET run=6 paragraphs=20 context=4096
+CACHE instance=a prefix_tokens=1021 sha256=408188d6fab51ff2
+CACHE instance=b prefix_tokens=1021 sha256=fbe1aef31ba94308
+ACROSS bytes_differ=34784901 values_differ=24179266 largest_difference=13.2109 first_tensor=0
+END_KVDET
+BEGIN_KVDET run=1 paragraphs=80 context=8192
+CACHE instance=a prefix_tokens=4081 sha256=eed7088010ed14b7
+CACHE instance=b prefix_tokens=4081 sha256=b7ab8ea830de65f8
+ACROSS bytes_differ=154217717 values_differ=107376991 largest_difference=13.4688 first_tensor=0
+END_KVDET
+BEGIN_KVDET run=2 paragraphs=80 context=8192
+CACHE instance=a prefix_tokens=4081 sha256=eed7088010ed14b7
+CACHE instance=b prefix_tokens=4081 sha256=b7ab8ea830de65f8
+ACROSS bytes_differ=154217717 values_differ=107376991 largest_difference=13.4688 first_tensor=0
+END_KVDET
+BEGIN_KVDET run=3 paragraphs=80 context=8192
+CACHE instance=a prefix_tokens=4081 sha256=eed7088010ed14b7
+CACHE instance=b prefix_tokens=4081 sha256=b7ab8ea830de65f8
+ACROSS bytes_differ=154217717 values_differ=107376991 largest_difference=13.4688 first_tensor=0
+END_KVDET
+BEGIN_KVDET run=4 paragraphs=80 context=8192
+CACHE instance=a prefix_tokens=4081 sha256=eed7088010ed14b7
+CACHE instance=b prefix_tokens=4081 sha256=b7ab8ea830de65f8
+ACROSS bytes_differ=154217717 values_differ=107376991 largest_difference=13.4688 first_tensor=0
+END_KVDET
+BEGIN_KVDET run=5 paragraphs=80 context=8192
+CACHE instance=a prefix_tokens=4081 sha256=eed7088010ed14b7
+CACHE instance=b prefix_tokens=4081 sha256=b7ab8ea830de65f8
+ACROSS bytes_differ=154217717 values_differ=107376991 largest_difference=13.4688 first_tensor=0
+END_KVDET
+BEGIN_KVDET run=6 paragraphs=80 context=8192
+CACHE instance=a prefix_tokens=4081 sha256=eed7088010ed14b7
+CACHE instance=b prefix_tokens=4081 sha256=b7ab8ea830de65f8
+ACROSS bytes_differ=154217717 values_differ=107376991 largest_difference=13.4688 first_tensor=0
+END_KVDET

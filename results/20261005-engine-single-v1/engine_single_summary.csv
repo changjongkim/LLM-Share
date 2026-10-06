@@ -1,0 +1,4 @@
+mode,runs,failed_runs,identical_text_runs,prompt_tps,generation_tps,generation_vs_copy,lower_ci95,upper_ci95,load_ms,device_memory_mib,model_mapped_mib
+copy,6,0,6,816.97,24.121,1.0000,1.0000,1.0000,942.5,5423,0
+inplace,6,0,6,813.07,22.789,0.9402,0.9145,0.9666,517.2,878,4460
+inplace_noread,6,0,6,811.78,22.796,0.9401,0.9119,0.9691,1013.0,921,4460

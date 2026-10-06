@@ -1,0 +1,3 @@
+mode,runs,failed_runs,runs_with_five_distinct_texts,texts_equal_to_copy,texts_compared,device_memory_mib,model_mapped_mib,memory_total_mib
+copy,6,0,6,30,30,28273,0,28273
+inplace,6,0,6,30,30,5653,4467,10120

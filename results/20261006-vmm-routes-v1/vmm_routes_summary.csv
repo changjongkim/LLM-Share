@@ -1,0 +1,4 @@
+placement,runs,works,refusal,granularity_bytes,read_only_access,producer_intact
+same_instance,6,6,-,2097152,enforced,6
+across_instances,6,0,UNSUPPORTED_at_import_CUDA_ERROR_NOT_INITIALIZED,2097152,-,0
+same_mps_server,6,6,-,2097152,enforced,6

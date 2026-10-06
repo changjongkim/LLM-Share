@@ -1,0 +1,120 @@
+BEGIN_KVSPEED run=1 prefix_tokens=16321 context=32768
+CASE mode=device processes=1
+AGENT index=0 exit=0 role=alone prefix_tokens=16321 suffix_tokens=16 model_ms=607.5 context_ms=62.3 state_ms=0.00 prefix_ms=29139.3 suffix_ms=84.5 first_token_ms=29977.8 generation_ms=8065.4 generated=128 generation_tps=15.870
+END_CASE failed_agents=0
+CASE mode=anon processes=1
+AGENT index=0 exit=0 role=alone prefix_tokens=16321 suffix_tokens=16 model_ms=580.6 context_ms=64.3 state_ms=0.00 prefix_ms=29473.1 suffix_ms=84.5 first_token_ms=30286.7 generation_ms=8605.0 generated=128 generation_tps=14.875
+END_CASE failed_agents=0
+CASE mode=anon_lazy processes=1
+AGENT index=0 exit=0 role=alone prefix_tokens=16321 suffix_tokens=16 model_ms=582.8 context_ms=37.1 state_ms=0.00 prefix_ms=29675.8 suffix_ms=88.0 first_token_ms=30466.3 generation_ms=8611.1 generated=128 generation_tps=14.865
+END_CASE failed_agents=0
+CASE mode=restore processes=1
+AGENT index=0 exit=0 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=582.3 context_ms=62.8 state_ms=192.79 prefix_ms=0.0 suffix_ms=117.7 first_token_ms=993.9 generation_ms=8054.8 generated=128 generation_tps=15.891
+END_CASE failed_agents=0
+CASE mode=extent processes=1
+AGENT index=0 exit=0 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=584.2 context_ms=51.8 state_ms=17.68 prefix_ms=0.0 suffix_ms=118.0 first_token_ms=807.6 generation_ms=8570.1 generated=128 generation_tps=14.936
+END_CASE failed_agents=0
+CASE mode=extent_lazy processes=1
+AGENT index=0 exit=0 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=595.9 context_ms=37.3 state_ms=7.25 prefix_ms=0.0 suffix_ms=117.5 first_token_ms=794.6 generation_ms=8570.7 generated=128 generation_tps=14.935
+END_CASE failed_agents=0
+END_KVSPEED
+BEGIN_KVSPEED run=2 prefix_tokens=16321 context=32768
+CASE mode=extent_lazy processes=1
+AGENT index=0 exit=0 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=581.3 context_ms=37.4 state_ms=7.53 prefix_ms=0.0 suffix_ms=120.9 first_token_ms=784.4 generation_ms=8571.8 generated=128 generation_tps=14.933
+END_CASE failed_agents=0
+CASE mode=extent processes=1
+AGENT index=0 exit=0 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=575.9 context_ms=53.1 state_ms=17.31 prefix_ms=0.0 suffix_ms=118.2 first_token_ms=801.1 generation_ms=8572.6 generated=128 generation_tps=14.931
+END_CASE failed_agents=0
+CASE mode=restore processes=1
+AGENT index=0 exit=0 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=581.0 context_ms=63.8 state_ms=189.07 prefix_ms=0.0 suffix_ms=117.2 first_token_ms=989.3 generation_ms=8062.0 generated=128 generation_tps=15.877
+END_CASE failed_agents=0
+CASE mode=anon_lazy processes=1
+AGENT index=0 exit=0 role=alone prefix_tokens=16321 suffix_tokens=16 model_ms=581.6 context_ms=37.5 state_ms=0.00 prefix_ms=29657.4 suffix_ms=87.4 first_token_ms=30449.1 generation_ms=8536.2 generated=128 generation_tps=14.995
+END_CASE failed_agents=0
+CASE mode=anon processes=1
+AGENT index=0 exit=0 role=alone prefix_tokens=16321 suffix_tokens=16 model_ms=581.0 context_ms=64.6 state_ms=0.00 prefix_ms=29448.2 suffix_ms=84.3 first_token_ms=30262.0 generation_ms=8532.0 generated=128 generation_tps=15.002
+END_CASE failed_agents=0
+CASE mode=device processes=1
+AGENT index=0 exit=0 role=alone prefix_tokens=16321 suffix_tokens=16 model_ms=582.1 context_ms=62.6 state_ms=0.00 prefix_ms=29147.0 suffix_ms=84.2 first_token_ms=29957.9 generation_ms=8045.8 generated=128 generation_tps=15.909
+END_CASE failed_agents=0
+END_KVSPEED
+BEGIN_KVSPEED run=3 prefix_tokens=16321 context=32768
+CASE mode=device processes=1
+AGENT index=0 exit=0 role=alone prefix_tokens=16321 suffix_tokens=16 model_ms=581.3 context_ms=63.1 state_ms=0.00 prefix_ms=29148.6 suffix_ms=84.7 first_token_ms=29961.5 generation_ms=8077.2 generated=128 generation_tps=15.847
+END_CASE failed_agents=0
+CASE mode=anon processes=1
+AGENT index=0 exit=0 role=alone prefix_tokens=16321 suffix_tokens=16 model_ms=583.4 context_ms=64.7 state_ms=0.00 prefix_ms=29464.8 suffix_ms=84.3 first_token_ms=30280.6 generation_ms=8601.4 generated=128 generation_tps=14.881
+END_CASE failed_agents=0
+CASE mode=anon_lazy processes=1
+AGENT index=0 exit=0 role=alone prefix_tokens=16321 suffix_tokens=16 model_ms=584.4 context_ms=36.5 state_ms=0.00 prefix_ms=29675.0 suffix_ms=87.5 first_token_ms=30466.9 generation_ms=8578.6 generated=128 generation_tps=14.921
+END_CASE failed_agents=0
+CASE mode=restore processes=1
+AGENT index=0 exit=0 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=583.4 context_ms=62.5 state_ms=189.37 prefix_ms=0.0 suffix_ms=119.0 first_token_ms=991.6 generation_ms=8052.3 generated=128 generation_tps=15.896
+END_CASE failed_agents=0
+CASE mode=extent processes=1
+AGENT index=0 exit=0 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=581.5 context_ms=53.3 state_ms=17.38 prefix_ms=0.0 suffix_ms=119.1 first_token_ms=807.4 generation_ms=8574.2 generated=128 generation_tps=14.928
+END_CASE failed_agents=0
+CASE mode=extent_lazy processes=1
+AGENT index=0 exit=0 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=599.1 context_ms=37.5 state_ms=7.38 prefix_ms=0.0 suffix_ms=119.7 first_token_ms=800.3 generation_ms=8578.5 generated=128 generation_tps=14.921
+END_CASE failed_agents=0
+END_KVSPEED
+BEGIN_KVSPEED run=4 prefix_tokens=16321 context=32768
+CASE mode=extent_lazy processes=1
+AGENT index=0 exit=0 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=580.5 context_ms=37.6 state_ms=7.40 prefix_ms=0.0 suffix_ms=119.2 first_token_ms=781.6 generation_ms=8577.0 generated=128 generation_tps=14.924
+END_CASE failed_agents=0
+CASE mode=extent processes=1
+AGENT index=0 exit=0 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=579.7 context_ms=52.5 state_ms=17.28 prefix_ms=0.0 suffix_ms=117.0 first_token_ms=803.1 generation_ms=8551.3 generated=128 generation_tps=14.968
+END_CASE failed_agents=0
+CASE mode=restore processes=1
+AGENT index=0 exit=0 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=660.1 context_ms=64.4 state_ms=190.48 prefix_ms=0.0 suffix_ms=118.9 first_token_ms=1070.5 generation_ms=8054.8 generated=128 generation_tps=15.891
+END_CASE failed_agents=0
+CASE mode=anon_lazy processes=1
+AGENT index=0 exit=0 role=alone prefix_tokens=16321 suffix_tokens=16 model_ms=582.2 context_ms=36.9 state_ms=0.00 prefix_ms=29666.3 suffix_ms=87.5 first_token_ms=30456.9 generation_ms=8591.1 generated=128 generation_tps=14.899
+END_CASE failed_agents=0
+CASE mode=anon processes=1
+AGENT index=0 exit=0 role=alone prefix_tokens=16321 suffix_tokens=16 model_ms=602.7 context_ms=64.2 state_ms=0.00 prefix_ms=29457.5 suffix_ms=84.4 first_token_ms=30292.4 generation_ms=8536.3 generated=128 generation_tps=14.995
+END_CASE failed_agents=0
+CASE mode=device processes=1
+AGENT index=0 exit=0 role=alone prefix_tokens=16321 suffix_tokens=16 model_ms=662.0 context_ms=65.4 state_ms=0.00 prefix_ms=29145.7 suffix_ms=84.6 first_token_ms=30041.6 generation_ms=8080.7 generated=128 generation_tps=15.840
+END_CASE failed_agents=0
+END_KVSPEED
+BEGIN_KVSPEED run=5 prefix_tokens=16321 context=32768
+CASE mode=device processes=1
+AGENT index=0 exit=0 role=alone prefix_tokens=16321 suffix_tokens=16 model_ms=583.3 context_ms=63.0 state_ms=0.00 prefix_ms=29168.2 suffix_ms=84.6 first_token_ms=29981.8 generation_ms=8091.6 generated=128 generation_tps=15.819
+END_CASE failed_agents=0
+CASE mode=anon processes=1
+AGENT index=0 exit=0 role=alone prefix_tokens=16321 suffix_tokens=16 model_ms=583.3 context_ms=64.7 state_ms=0.00 prefix_ms=29460.0 suffix_ms=84.1 first_token_ms=30275.8 generation_ms=8538.4 generated=128 generation_tps=14.991
+END_CASE failed_agents=0
+CASE mode=anon_lazy processes=1
+AGENT index=0 exit=0 role=alone prefix_tokens=16321 suffix_tokens=16 model_ms=580.1 context_ms=36.7 state_ms=0.00 prefix_ms=29661.5 suffix_ms=87.4 first_token_ms=30448.6 generation_ms=8576.6 generated=128 generation_tps=14.924
+END_CASE failed_agents=0
+CASE mode=restore processes=1
+AGENT index=0 exit=0 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=581.3 context_ms=63.0 state_ms=189.56 prefix_ms=0.0 suffix_ms=124.5 first_token_ms=994.4 generation_ms=8056.5 generated=128 generation_tps=15.888
+END_CASE failed_agents=0
+CASE mode=extent processes=1
+AGENT index=0 exit=0 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=579.7 context_ms=52.7 state_ms=17.24 prefix_ms=0.0 suffix_ms=117.6 first_token_ms=804.8 generation_ms=8571.3 generated=128 generation_tps=14.934
+END_CASE failed_agents=0
+CASE mode=extent_lazy processes=1
+AGENT index=0 exit=0 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=580.7 context_ms=37.1 state_ms=7.67 prefix_ms=0.0 suffix_ms=119.6 first_token_ms=782.7 generation_ms=8581.4 generated=128 generation_tps=14.916
+END_CASE failed_agents=0
+END_KVSPEED
+BEGIN_KVSPEED run=6 prefix_tokens=16321 context=32768
+CASE mode=extent_lazy processes=1
+AGENT index=0 exit=0 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=581.9 context_ms=37.7 state_ms=7.33 prefix_ms=0.0 suffix_ms=119.0 first_token_ms=782.2 generation_ms=8548.0 generated=128 generation_tps=14.974
+END_CASE failed_agents=0
+CASE mode=extent processes=1
+AGENT index=0 exit=0 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=580.9 context_ms=51.3 state_ms=17.68 prefix_ms=0.0 suffix_ms=118.5 first_token_ms=806.0 generation_ms=8594.7 generated=128 generation_tps=14.893
+END_CASE failed_agents=0
+CASE mode=restore processes=1
+AGENT index=0 exit=0 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=581.7 context_ms=60.9 state_ms=190.86 prefix_ms=0.0 suffix_ms=117.4 first_token_ms=987.3 generation_ms=8059.8 generated=128 generation_tps=15.881
+END_CASE failed_agents=0
+CASE mode=anon_lazy processes=1
+AGENT index=0 exit=0 role=alone prefix_tokens=16321 suffix_tokens=16 model_ms=582.2 context_ms=36.3 state_ms=0.00 prefix_ms=29673.4 suffix_ms=87.3 first_token_ms=30462.8 generation_ms=8607.4 generated=128 generation_tps=14.871
+END_CASE failed_agents=0
+CASE mode=anon processes=1
+AGENT index=0 exit=0 role=alone prefix_tokens=16321 suffix_tokens=16 model_ms=583.3 context_ms=64.3 state_ms=0.00 prefix_ms=29453.1 suffix_ms=84.2 first_token_ms=30268.5 generation_ms=8558.1 generated=128 generation_tps=14.957
+END_CASE failed_agents=0
+CASE mode=device processes=1
+AGENT index=0 exit=0 role=alone prefix_tokens=16321 suffix_tokens=16 model_ms=581.7 context_ms=62.7 state_ms=0.00 prefix_ms=29166.3 suffix_ms=84.6 first_token_ms=29978.3 generation_ms=8087.6 generated=128 generation_tps=15.827
+END_CASE failed_agents=0
+END_KVSPEED

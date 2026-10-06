@@ -1,0 +1,108 @@
+BEGIN_ENGINE_PREFIX run=1 mig=31ffbfe4 paragraphs=20
+CASE mode=recompute wall_ms=2983
+PERF recompute load time =     538.36 ms
+PERF recompute prompt eval time =    1564.40 ms /  1021 tokens (    1.53 ms per token,   652.64 tokens per second)
+CASE mode=save wall_ms=3199 cache_bytes=58565273
+CASE mode=restore wall_ms=1454
+PERF restore load time =     532.62 ms
+PERF restore prompt eval time =       0.00 ms /     1 tokens (    0.00 ms per token,      inf tokens per second)
+END_ENGINE_PREFIX
+BEGIN_ENGINE_PREFIX run=1 mig=31ffbfe4 paragraphs=80
+CASE mode=recompute wall_ms=7837
+PERF recompute load time =     536.34 ms
+PERF recompute prompt eval time =    6397.98 ms /  4081 tokens (    1.57 ms per token,   637.86 tokens per second)
+CASE mode=save wall_ms=8301 cache_bytes=234086873
+CASE mode=restore wall_ms=1497
+PERF restore load time =     533.77 ms
+PERF restore prompt eval time =       0.00 ms /     1 tokens (    0.00 ms per token,      inf tokens per second)
+END_ENGINE_PREFIX
+BEGIN_ENGINE_PREFIX run=2 mig=fafc828a paragraphs=20
+CASE mode=recompute wall_ms=2480
+PERF recompute load time =     510.60 ms
+PERF recompute prompt eval time =    1062.61 ms /  1021 tokens (    1.04 ms per token,   960.85 tokens per second)
+CASE mode=save wall_ms=2711 cache_bytes=58565273
+CASE mode=restore wall_ms=1454
+PERF restore load time =     512.11 ms
+PERF restore prompt eval time =       0.00 ms /     1 tokens (    0.00 ms per token,      inf tokens per second)
+END_ENGINE_PREFIX
+BEGIN_ENGINE_PREFIX run=2 mig=fafc828a paragraphs=80
+CASE mode=recompute wall_ms=5766
+PERF recompute load time =     510.74 ms
+PERF recompute prompt eval time =    4337.55 ms /  4081 tokens (    1.06 ms per token,   940.85 tokens per second)
+CASE mode=save wall_ms=6299 cache_bytes=234086873
+CASE mode=restore wall_ms=1467
+PERF restore load time =     510.44 ms
+PERF restore prompt eval time =       0.00 ms /     1 tokens (    0.00 ms per token,      inf tokens per second)
+END_ENGINE_PREFIX
+BEGIN_ENGINE_PREFIX run=3 mig=31ffbfe4 paragraphs=20
+CASE mode=recompute wall_ms=2964
+PERF recompute load time =     535.10 ms
+PERF recompute prompt eval time =    1562.66 ms /  1021 tokens (    1.53 ms per token,   653.37 tokens per second)
+CASE mode=save wall_ms=3224 cache_bytes=58565273
+CASE mode=restore wall_ms=1457
+PERF restore load time =     530.58 ms
+PERF restore prompt eval time =       0.00 ms /     1 tokens (    0.00 ms per token,      inf tokens per second)
+END_ENGINE_PREFIX
+BEGIN_ENGINE_PREFIX run=3 mig=31ffbfe4 paragraphs=80
+CASE mode=recompute wall_ms=7812
+PERF recompute load time =     530.69 ms
+PERF recompute prompt eval time =    6396.92 ms /  4081 tokens (    1.57 ms per token,   637.96 tokens per second)
+CASE mode=save wall_ms=8317 cache_bytes=234086873
+CASE mode=restore wall_ms=1495
+PERF restore load time =     533.52 ms
+PERF restore prompt eval time =       0.00 ms /     1 tokens (    0.00 ms per token,      inf tokens per second)
+END_ENGINE_PREFIX
+BEGIN_ENGINE_PREFIX run=4 mig=fafc828a paragraphs=20
+CASE mode=recompute wall_ms=2490
+PERF recompute load time =     511.15 ms
+PERF recompute prompt eval time =    1065.11 ms /  1021 tokens (    1.04 ms per token,   958.59 tokens per second)
+CASE mode=save wall_ms=2712 cache_bytes=58565273
+CASE mode=restore wall_ms=1436
+PERF restore load time =     510.70 ms
+PERF restore prompt eval time =       0.00 ms /     1 tokens (    0.00 ms per token,      inf tokens per second)
+END_ENGINE_PREFIX
+BEGIN_ENGINE_PREFIX run=4 mig=fafc828a paragraphs=80
+CASE mode=recompute wall_ms=5761
+PERF recompute load time =     506.77 ms
+PERF recompute prompt eval time =    4340.08 ms /  4081 tokens (    1.06 ms per token,   940.31 tokens per second)
+CASE mode=save wall_ms=6250 cache_bytes=234086873
+CASE mode=restore wall_ms=1451
+PERF restore load time =     508.07 ms
+PERF restore prompt eval time =       0.00 ms /     1 tokens (    0.00 ms per token,      inf tokens per second)
+END_ENGINE_PREFIX
+BEGIN_ENGINE_PREFIX run=5 mig=31ffbfe4 paragraphs=20
+CASE mode=recompute wall_ms=2982
+PERF recompute load time =     537.39 ms
+PERF recompute prompt eval time =    1562.87 ms /  1021 tokens (    1.53 ms per token,   653.28 tokens per second)
+CASE mode=save wall_ms=3220 cache_bytes=58565273
+CASE mode=restore wall_ms=1457
+PERF restore load time =     533.28 ms
+PERF restore prompt eval time =       0.00 ms /     1 tokens (    0.00 ms per token,      inf tokens per second)
+END_ENGINE_PREFIX
+BEGIN_ENGINE_PREFIX run=5 mig=31ffbfe4 paragraphs=80
+CASE mode=recompute wall_ms=7834
+PERF recompute load time =     530.58 ms
+PERF recompute prompt eval time =    6401.86 ms /  4081 tokens (    1.57 ms per token,   637.47 tokens per second)
+CASE mode=save wall_ms=8389 cache_bytes=234086873
+CASE mode=restore wall_ms=1512
+PERF restore load time =     533.16 ms
+PERF restore prompt eval time =       0.00 ms /     1 tokens (    0.00 ms per token,      inf tokens per second)
+END_ENGINE_PREFIX
+BEGIN_ENGINE_PREFIX run=6 mig=fafc828a paragraphs=20
+CASE mode=recompute wall_ms=2485
+PERF recompute load time =     509.82 ms
+PERF recompute prompt eval time =    1065.69 ms /  1021 tokens (    1.04 ms per token,   958.07 tokens per second)
+CASE mode=save wall_ms=2727 cache_bytes=58565273
+CASE mode=restore wall_ms=1430
+PERF restore load time =     509.59 ms
+PERF restore prompt eval time =       0.00 ms /     1 tokens (    0.00 ms per token,      inf tokens per second)
+END_ENGINE_PREFIX
+BEGIN_ENGINE_PREFIX run=6 mig=fafc828a paragraphs=80
+CASE mode=recompute wall_ms=5776
+PERF recompute load time =     509.16 ms
+PERF recompute prompt eval time =    4338.10 ms /  4081 tokens (    1.06 ms per token,   940.73 tokens per second)
+CASE mode=save wall_ms=6268 cache_bytes=234086873
+CASE mode=restore wall_ms=1464
+PERF restore load time =     511.28 ms
+PERF restore prompt eval time =       0.00 ms /     1 tokens (    0.00 ms per token,      inf tokens per second)
+END_ENGINE_PREFIX

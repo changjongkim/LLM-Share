@@ -1,0 +1,14 @@
+timestamp=2026-10-05T23:51:45+09:00
+mig_a=MIG-fafc828a-2a0d-5988-a009-030a36930090
+mig_b=MIG-31ffbfe4-9a85-5f4e-b406-90ffbfa82ca3
+repetitions=6
+n_prompt=512
+n_gen=128
+parallel=1,2,4,8
+model=Qwen2.5-7B-Instruct-Q4_K_M.gguf
+engine_commit=6f767fe960c3b97cf37fac4626c86400561ca1e4
+boot_id=0965baa0-3357-48ca-8cea-c958d95b2d3f
+GPU 0: NVIDIA Thor (UUID: GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600)
+  MIG 2g.0gb      Device  0: (UUID: MIG-fafc828a-2a0d-5988-a009-030a36930090)
+  MIG 1g.0gb      Device  1: (UUID: MIG-31ffbfe4-9a85-5f4e-b406-90ffbfa82ca3)
+bdc646e9b9eef5f9ac8889ab5a2cd464c37a7bdd05636dc6bafc74495ebb117c  /home/thor/kcj/llm_share/llama.cpp/build/bin/llama-batched-bench

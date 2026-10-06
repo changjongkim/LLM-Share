@@ -1,0 +1,7 @@
+processes,mode,runs,failed_agents,prefix_tokens,generation_tps_total,generation_vs_device,lower_ci95,upper_ci95,suffix_ms
+1,device,6,0,4081,16.26,1.0000,1.0000,1.0000,77.5
+1,anon,6,0,4081,15.90,0.9778,0.9718,0.9838,77.0
+1,anon_lazy,6,0,4081,15.78,0.9703,0.9684,0.9721,85.2
+1,restore,6,0,4081,16.28,1.0010,1.0004,1.0015,111.6
+1,extent,6,0,4081,15.90,0.9778,0.9747,0.9808,112.7
+1,extent_lazy,6,0,4081,15.88,0.9764,0.9735,0.9794,116.3

@@ -1,0 +1,120 @@
+BEGIN_ENGINE_GROUPS run=1 mode=copy sequences=4
+ROW instance=a |   512 |    128 |    4 |   2560 |    2.128 |   962.39 |    6.838 |    74.87 |    8.966 |   285.51 |
+ROW instance=b |   512 |    128 |    4 |   2560 |    3.129 |   654.60 |   10.018 |    51.11 |   13.146 |   194.73 |
+MEMORY mem_available_drop_mib=11353 model_mapped_mib=0
+END_ENGINE_GROUPS failed_servers=0
+BEGIN_ENGINE_GROUPS run=1 mode=inplace sequences=4
+ROW instance=a |   512 |    128 |    4 |   2560 |    2.133 |   960.15 |    6.971 |    73.44 |    9.104 |   281.19 |
+ROW instance=b |   512 |    128 |    4 |   2560 |    3.154 |   649.38 |   10.177 |    50.31 |   13.331 |   192.04 |
+MEMORY mem_available_drop_mib=2277 model_mapped_mib=4460
+END_ENGINE_GROUPS failed_servers=0
+BEGIN_ENGINE_GROUPS run=1 mode=copy sequences=8
+ROW instance=a |   512 |    128 |    8 |   5120 |    4.218 |   971.19 |   11.467 |    89.30 |   15.685 |   326.43 |
+ROW instance=b |   512 |    128 |    8 |   5120 |    6.201 |   660.53 |   16.983 |    60.30 |   23.184 |   220.84 |
+MEMORY mem_available_drop_mib=11323 model_mapped_mib=0
+END_ENGINE_GROUPS failed_servers=0
+BEGIN_ENGINE_GROUPS run=1 mode=inplace sequences=8
+ROW instance=a |   512 |    128 |    8 |   5120 |    4.226 |   969.20 |   11.483 |    89.17 |   15.709 |   325.92 |
+ROW instance=b |   512 |    128 |    8 |   5120 |    6.233 |   657.17 |   17.047 |    60.07 |   23.280 |   219.94 |
+MEMORY mem_available_drop_mib=2359 model_mapped_mib=4460
+END_ENGINE_GROUPS failed_servers=0
+BEGIN_ENGINE_GROUPS run=2 mode=inplace sequences=4
+ROW instance=a |   512 |    128 |    4 |   2560 |    2.134 |   959.75 |    6.993 |    73.21 |    9.127 |   280.48 |
+ROW instance=b |   512 |    128 |    4 |   2560 |    3.149 |   650.33 |   10.187 |    50.26 |   13.337 |   191.95 |
+MEMORY mem_available_drop_mib=2334 model_mapped_mib=4460
+END_ENGINE_GROUPS failed_servers=0
+BEGIN_ENGINE_GROUPS run=2 mode=copy sequences=4
+ROW instance=a |   512 |    128 |    4 |   2560 |    2.125 |   963.63 |    6.824 |    75.03 |    8.949 |   286.06 |
+ROW instance=b |   512 |    128 |    4 |   2560 |    3.132 |   653.85 |   10.010 |    51.15 |   13.142 |   194.79 |
+MEMORY mem_available_drop_mib=11360 model_mapped_mib=0
+END_ENGINE_GROUPS failed_servers=0
+BEGIN_ENGINE_GROUPS run=2 mode=inplace sequences=8
+ROW instance=a |   512 |    128 |    8 |   5120 |    4.238 |   966.43 |   11.523 |    88.86 |   15.762 |   324.84 |
+ROW instance=b |   512 |    128 |    8 |   5120 |    6.242 |   656.19 |   17.008 |    60.21 |   23.250 |   220.22 |
+MEMORY mem_available_drop_mib=2311 model_mapped_mib=4460
+END_ENGINE_GROUPS failed_servers=0
+BEGIN_ENGINE_GROUPS run=2 mode=copy sequences=8
+ROW instance=a |   512 |    128 |    8 |   5120 |    4.220 |   970.68 |   11.484 |    89.17 |   15.704 |   326.04 |
+ROW instance=b |   512 |    128 |    8 |   5120 |    6.202 |   660.44 |   16.954 |    60.40 |   23.156 |   221.11 |
+MEMORY mem_available_drop_mib=11361 model_mapped_mib=0
+END_ENGINE_GROUPS failed_servers=0
+BEGIN_ENGINE_GROUPS run=3 mode=copy sequences=4
+ROW instance=a |   512 |    128 |    4 |   2560 |    2.124 |   964.31 |    6.808 |    75.21 |    8.932 |   286.62 |
+ROW instance=b |   512 |    128 |    4 |   2560 |    3.128 |   654.64 |   10.044 |    50.98 |   13.172 |   194.35 |
+MEMORY mem_available_drop_mib=11373 model_mapped_mib=0
+END_ENGINE_GROUPS failed_servers=0
+BEGIN_ENGINE_GROUPS run=3 mode=inplace sequences=4
+ROW instance=a |   512 |    128 |    4 |   2560 |    2.132 |   960.80 |    6.995 |    73.20 |    9.126 |   280.51 |
+ROW instance=b |   512 |    128 |    4 |   2560 |    3.158 |   648.59 |   10.189 |    50.25 |   13.346 |   191.81 |
+MEMORY mem_available_drop_mib=2318 model_mapped_mib=4460
+END_ENGINE_GROUPS failed_servers=0
+BEGIN_ENGINE_GROUPS run=3 mode=copy sequences=8
+ROW instance=a |   512 |    128 |    8 |   5120 |    4.219 |   970.81 |   11.488 |    89.14 |   15.707 |   325.97 |
+ROW instance=b |   512 |    128 |    8 |   5120 |    6.206 |   660.04 |   16.962 |    60.37 |   23.168 |   221.00 |
+MEMORY mem_available_drop_mib=11364 model_mapped_mib=0
+END_ENGINE_GROUPS failed_servers=0
+BEGIN_ENGINE_GROUPS run=3 mode=inplace sequences=8
+ROW instance=a |   512 |    128 |    8 |   5120 |    4.232 |   967.84 |   11.555 |    88.62 |   15.787 |   324.32 |
+ROW instance=b |   512 |    128 |    8 |   5120 |    6.229 |   657.62 |   17.038 |    60.10 |   23.267 |   220.05 |
+MEMORY mem_available_drop_mib=2340 model_mapped_mib=4460
+END_ENGINE_GROUPS failed_servers=0
+BEGIN_ENGINE_GROUPS run=4 mode=inplace sequences=4
+ROW instance=a |   512 |    128 |    4 |   2560 |    2.136 |   958.62 |    7.004 |    73.10 |    9.140 |   280.07 |
+ROW instance=b |   512 |    128 |    4 |   2560 |    3.134 |   653.44 |   10.202 |    50.18 |   13.337 |   191.95 |
+MEMORY mem_available_drop_mib=2345 model_mapped_mib=4460
+END_ENGINE_GROUPS failed_servers=0
+BEGIN_ENGINE_GROUPS run=4 mode=copy sequences=4
+ROW instance=a |   512 |    128 |    4 |   2560 |    2.125 |   963.68 |    6.837 |    74.89 |    8.962 |   285.65 |
+ROW instance=b |   512 |    128 |    4 |   2560 |    3.134 |   653.39 |   10.047 |    50.96 |   13.181 |   194.21 |
+MEMORY mem_available_drop_mib=11363 model_mapped_mib=0
+END_ENGINE_GROUPS failed_servers=0
+BEGIN_ENGINE_GROUPS run=4 mode=inplace sequences=8
+ROW instance=a |   512 |    128 |    8 |   5120 |    4.235 |   967.08 |   11.521 |    88.88 |   15.757 |   324.94 |
+ROW instance=b |   512 |    128 |    8 |   5120 |    6.222 |   658.32 |   17.036 |    60.11 |   23.257 |   220.14 |
+MEMORY mem_available_drop_mib=2298 model_mapped_mib=4460
+END_ENGINE_GROUPS failed_servers=0
+BEGIN_ENGINE_GROUPS run=4 mode=copy sequences=8
+ROW instance=a |   512 |    128 |    8 |   5120 |    4.214 |   972.06 |   11.489 |    89.13 |   15.703 |   326.05 |
+ROW instance=b |   512 |    128 |    8 |   5120 |    6.216 |   658.98 |   16.964 |    60.36 |   23.179 |   220.89 |
+MEMORY mem_available_drop_mib=11365 model_mapped_mib=0
+END_ENGINE_GROUPS failed_servers=0
+BEGIN_ENGINE_GROUPS run=5 mode=copy sequences=4
+ROW instance=a |   512 |    128 |    4 |   2560 |    2.126 |   963.39 |    6.836 |    74.90 |    8.962 |   285.66 |
+ROW instance=b |   512 |    128 |    4 |   2560 |    3.132 |   653.88 |   10.007 |    51.17 |   13.139 |   194.84 |
+MEMORY mem_available_drop_mib=11379 model_mapped_mib=0
+END_ENGINE_GROUPS failed_servers=0
+BEGIN_ENGINE_GROUPS run=5 mode=inplace sequences=4
+ROW instance=a |   512 |    128 |    4 |   2560 |    2.135 |   959.34 |    6.999 |    73.16 |    9.133 |   280.29 |
+ROW instance=b |   512 |    128 |    4 |   2560 |    3.149 |   650.27 |   10.196 |    50.22 |   13.345 |   191.83 |
+MEMORY mem_available_drop_mib=2328 model_mapped_mib=4460
+END_ENGINE_GROUPS failed_servers=0
+BEGIN_ENGINE_GROUPS run=5 mode=copy sequences=8
+ROW instance=a |   512 |    128 |    8 |   5120 |    4.216 |   971.59 |   11.489 |    89.13 |   15.705 |   326.01 |
+ROW instance=b |   512 |    128 |    8 |   5120 |    6.204 |   660.26 |   16.966 |    60.36 |   23.170 |   220.98 |
+MEMORY mem_available_drop_mib=11370 model_mapped_mib=0
+END_ENGINE_GROUPS failed_servers=0
+BEGIN_ENGINE_GROUPS run=5 mode=inplace sequences=8
+ROW instance=a |   512 |    128 |    8 |   5120 |    4.236 |   966.99 |   11.504 |    89.02 |   15.739 |   325.30 |
+ROW instance=b |   512 |    128 |    8 |   5120 |    6.227 |   657.78 |   17.037 |    60.10 |   23.264 |   220.08 |
+MEMORY mem_available_drop_mib=2328 model_mapped_mib=4460
+END_ENGINE_GROUPS failed_servers=0
+BEGIN_ENGINE_GROUPS run=6 mode=inplace sequences=4
+ROW instance=a |   512 |    128 |    4 |   2560 |    2.136 |   958.69 |    6.990 |    73.25 |    9.126 |   280.51 |
+ROW instance=b |   512 |    128 |    4 |   2560 |    3.140 |   652.21 |   10.202 |    50.18 |   13.343 |   191.87 |
+MEMORY mem_available_drop_mib=2340 model_mapped_mib=4460
+END_ENGINE_GROUPS failed_servers=0
+BEGIN_ENGINE_GROUPS run=6 mode=copy sequences=4
+ROW instance=a |   512 |    128 |    4 |   2560 |    2.128 |   962.59 |    6.838 |    74.88 |    8.965 |   285.55 |
+ROW instance=b |   512 |    128 |    4 |   2560 |    3.131 |   654.20 |   10.041 |    50.99 |   13.171 |   194.36 |
+MEMORY mem_available_drop_mib=11366 model_mapped_mib=0
+END_ENGINE_GROUPS failed_servers=0
+BEGIN_ENGINE_GROUPS run=6 mode=inplace sequences=8
+ROW instance=a |   512 |    128 |    8 |   5120 |    4.238 |   966.58 |   11.525 |    88.85 |   15.763 |   324.81 |
+ROW instance=b |   512 |    128 |    8 |   5120 |    6.235 |   656.94 |   17.031 |    60.13 |   23.266 |   220.07 |
+MEMORY mem_available_drop_mib=2308 model_mapped_mib=4460
+END_ENGINE_GROUPS failed_servers=0
+BEGIN_ENGINE_GROUPS run=6 mode=copy sequences=8
+ROW instance=a |   512 |    128 |    8 |   5120 |    4.226 |   969.34 |   11.478 |    89.21 |   15.704 |   326.03 |
+ROW instance=b |   512 |    128 |    8 |   5120 |    6.205 |   660.14 |   16.973 |    60.33 |   23.178 |   220.90 |
+MEMORY mem_available_drop_mib=11388 model_mapped_mib=0
+END_ENGINE_GROUPS failed_servers=0

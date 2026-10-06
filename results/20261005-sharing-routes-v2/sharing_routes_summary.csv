@@ -1,0 +1,7 @@
+route,placement,runs,works,refusal
+cuda_ipc,same_instance,5,5,-
+cuda_ipc,across_instances,5,0,UNSUPPORTED_at_open_cudaErrorInvalidValue
+cuda_ipc,same_mps_server,5,5,-
+host_page_table,same_instance,5,5,-
+host_page_table,across_instances,5,5,-
+host_page_table,same_mps_server,5,5,-

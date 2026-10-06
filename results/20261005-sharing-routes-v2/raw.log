@@ -1,0 +1,95 @@
+RUN 1
+BEGIN_ROUTE route=cuda_ipc placement=same_instance
+probe=cuda_ipc producer=MIG-fafc828a consumer=MIG-fafc828a mps=0 result=PASS stage=none error=none
+END_ROUTE route=cuda_ipc placement=same_instance exit_status=0
+BEGIN_ROUTE route=cuda_ipc placement=across_instances
+probe=cuda_ipc producer=MIG-fafc828a consumer=MIG-31ffbfe4 mps=0 result=UNSUPPORTED stage=open error=cudaErrorInvalidValue
+END_ROUTE route=cuda_ipc placement=across_instances exit_status=0
+BEGIN_ROUTE route=host_page_table placement=same_instance
+probe=sharing_perf config=routes mode=ro_preread tenants=2 bytes=1073741824 rounds=1 attach_ms=11.775 solo_read_ms=16.757 concurrent_read_ms=33.597 round_wall_ms=72.333 memory_mib=1145.5 diverge_ms=22.143 sums_ok=1 diverged=1 isolated_tenants=1 clean_exit=1 base_intact=1
+END_ROUTE route=host_page_table placement=same_instance exit_status=0
+BEGIN_ROUTE route=host_page_table placement=across_instances
+probe=sharing_perf config=routes mode=ro_preread tenants=2 bytes=1073741824 rounds=1 attach_ms=11.718 solo_read_ms=20.764 concurrent_read_ms=20.938 round_wall_ms=50.668 memory_mib=1145.4 diverge_ms=21.379 sums_ok=1 diverged=1 isolated_tenants=1 clean_exit=1 base_intact=1
+END_ROUTE route=host_page_table placement=across_instances exit_status=0
+BEGIN_ROUTE route=cuda_ipc placement=same_mps_server
+probe=cuda_ipc producer=MIG-fafc828a consumer=MIG-fafc828a mps=1 result=PASS stage=none error=none
+END_ROUTE route=cuda_ipc placement=same_mps_server exit_status=0
+BEGIN_ROUTE route=host_page_table placement=same_mps_server
+probe=sharing_perf config=routes mode=ro_preread tenants=2 bytes=1073741824 rounds=1 attach_ms=11.768 solo_read_ms=16.840 concurrent_read_ms=21.668 round_wall_ms=65.792 memory_mib=1128.0 diverge_ms=19.423 sums_ok=1 diverged=1 isolated_tenants=1 clean_exit=1 base_intact=1
+END_ROUTE route=host_page_table placement=same_mps_server exit_status=0
+RUN 2
+BEGIN_ROUTE route=cuda_ipc placement=same_instance
+probe=cuda_ipc producer=MIG-fafc828a consumer=MIG-fafc828a mps=0 result=PASS stage=none error=none
+END_ROUTE route=cuda_ipc placement=same_instance exit_status=0
+BEGIN_ROUTE route=cuda_ipc placement=across_instances
+probe=cuda_ipc producer=MIG-fafc828a consumer=MIG-31ffbfe4 mps=0 result=UNSUPPORTED stage=open error=cudaErrorInvalidValue
+END_ROUTE route=cuda_ipc placement=across_instances exit_status=0
+BEGIN_ROUTE route=host_page_table placement=same_instance
+probe=sharing_perf config=routes mode=ro_preread tenants=2 bytes=1073741824 rounds=1 attach_ms=11.696 solo_read_ms=16.761 concurrent_read_ms=34.762 round_wall_ms=72.812 memory_mib=1145.5 diverge_ms=19.067 sums_ok=1 diverged=1 isolated_tenants=1 clean_exit=1 base_intact=1
+END_ROUTE route=host_page_table placement=same_instance exit_status=0
+BEGIN_ROUTE route=host_page_table placement=across_instances
+probe=sharing_perf config=routes mode=ro_preread tenants=2 bytes=1073741824 rounds=1 attach_ms=12.150 solo_read_ms=20.817 concurrent_read_ms=20.861 round_wall_ms=50.179 memory_mib=1145.5 diverge_ms=22.837 sums_ok=1 diverged=1 isolated_tenants=1 clean_exit=1 base_intact=1
+END_ROUTE route=host_page_table placement=across_instances exit_status=0
+BEGIN_ROUTE route=cuda_ipc placement=same_mps_server
+probe=cuda_ipc producer=MIG-fafc828a consumer=MIG-fafc828a mps=1 result=PASS stage=none error=none
+END_ROUTE route=cuda_ipc placement=same_mps_server exit_status=0
+BEGIN_ROUTE route=host_page_table placement=same_mps_server
+probe=sharing_perf config=routes mode=ro_preread tenants=2 bytes=1073741824 rounds=1 attach_ms=11.928 solo_read_ms=16.836 concurrent_read_ms=21.695 round_wall_ms=65.992 memory_mib=1128.0 diverge_ms=22.075 sums_ok=1 diverged=1 isolated_tenants=1 clean_exit=1 base_intact=1
+END_ROUTE route=host_page_table placement=same_mps_server exit_status=0
+RUN 3
+BEGIN_ROUTE route=cuda_ipc placement=same_instance
+probe=cuda_ipc producer=MIG-fafc828a consumer=MIG-fafc828a mps=0 result=PASS stage=none error=none
+END_ROUTE route=cuda_ipc placement=same_instance exit_status=0
+BEGIN_ROUTE route=cuda_ipc placement=across_instances
+probe=cuda_ipc producer=MIG-fafc828a consumer=MIG-31ffbfe4 mps=0 result=UNSUPPORTED stage=open error=cudaErrorInvalidValue
+END_ROUTE route=cuda_ipc placement=across_instances exit_status=0
+BEGIN_ROUTE route=host_page_table placement=same_instance
+probe=sharing_perf config=routes mode=ro_preread tenants=2 bytes=1073741824 rounds=1 attach_ms=12.310 solo_read_ms=16.792 concurrent_read_ms=35.793 round_wall_ms=72.470 memory_mib=1145.6 diverge_ms=22.535 sums_ok=1 diverged=1 isolated_tenants=1 clean_exit=1 base_intact=1
+END_ROUTE route=host_page_table placement=same_instance exit_status=0
+BEGIN_ROUTE route=host_page_table placement=across_instances
+probe=sharing_perf config=routes mode=ro_preread tenants=2 bytes=1073741824 rounds=1 attach_ms=11.947 solo_read_ms=20.870 concurrent_read_ms=20.839 round_wall_ms=50.386 memory_mib=1145.5 diverge_ms=21.695 sums_ok=1 diverged=1 isolated_tenants=1 clean_exit=1 base_intact=1
+END_ROUTE route=host_page_table placement=across_instances exit_status=0
+BEGIN_ROUTE route=cuda_ipc placement=same_mps_server
+probe=cuda_ipc producer=MIG-fafc828a consumer=MIG-fafc828a mps=1 result=PASS stage=none error=none
+END_ROUTE route=cuda_ipc placement=same_mps_server exit_status=0
+BEGIN_ROUTE route=host_page_table placement=same_mps_server
+probe=sharing_perf config=routes mode=ro_preread tenants=2 bytes=1073741824 rounds=1 attach_ms=11.869 solo_read_ms=16.826 concurrent_read_ms=21.702 round_wall_ms=65.882 memory_mib=1128.0 diverge_ms=22.746 sums_ok=1 diverged=1 isolated_tenants=1 clean_exit=1 base_intact=1
+END_ROUTE route=host_page_table placement=same_mps_server exit_status=0
+RUN 4
+BEGIN_ROUTE route=cuda_ipc placement=same_instance
+probe=cuda_ipc producer=MIG-fafc828a consumer=MIG-fafc828a mps=0 result=PASS stage=none error=none
+END_ROUTE route=cuda_ipc placement=same_instance exit_status=0
+BEGIN_ROUTE route=cuda_ipc placement=across_instances
+probe=cuda_ipc producer=MIG-fafc828a consumer=MIG-31ffbfe4 mps=0 result=UNSUPPORTED stage=open error=cudaErrorInvalidValue
+END_ROUTE route=cuda_ipc placement=across_instances exit_status=0
+BEGIN_ROUTE route=host_page_table placement=same_instance
+probe=sharing_perf config=routes mode=ro_preread tenants=2 bytes=1073741824 rounds=1 attach_ms=12.258 solo_read_ms=16.729 concurrent_read_ms=34.229 round_wall_ms=72.630 memory_mib=1145.5 diverge_ms=22.564 sums_ok=1 diverged=1 isolated_tenants=1 clean_exit=1 base_intact=1
+END_ROUTE route=host_page_table placement=same_instance exit_status=0
+BEGIN_ROUTE route=host_page_table placement=across_instances
+probe=sharing_perf config=routes mode=ro_preread tenants=2 bytes=1073741824 rounds=1 attach_ms=12.434 solo_read_ms=20.870 concurrent_read_ms=20.814 round_wall_ms=50.387 memory_mib=1145.6 diverge_ms=22.755 sums_ok=1 diverged=1 isolated_tenants=1 clean_exit=1 base_intact=1
+END_ROUTE route=host_page_table placement=across_instances exit_status=0
+BEGIN_ROUTE route=cuda_ipc placement=same_mps_server
+probe=cuda_ipc producer=MIG-fafc828a consumer=MIG-fafc828a mps=1 result=PASS stage=none error=none
+END_ROUTE route=cuda_ipc placement=same_mps_server exit_status=0
+BEGIN_ROUTE route=host_page_table placement=same_mps_server
+probe=sharing_perf config=routes mode=ro_preread tenants=2 bytes=1073741824 rounds=1 attach_ms=12.680 solo_read_ms=16.732 concurrent_read_ms=21.678 round_wall_ms=65.935 memory_mib=1128.0 diverge_ms=22.111 sums_ok=1 diverged=1 isolated_tenants=1 clean_exit=1 base_intact=1
+END_ROUTE route=host_page_table placement=same_mps_server exit_status=0
+RUN 5
+BEGIN_ROUTE route=cuda_ipc placement=same_instance
+probe=cuda_ipc producer=MIG-fafc828a consumer=MIG-fafc828a mps=0 result=PASS stage=none error=none
+END_ROUTE route=cuda_ipc placement=same_instance exit_status=0
+BEGIN_ROUTE route=cuda_ipc placement=across_instances
+probe=cuda_ipc producer=MIG-fafc828a consumer=MIG-31ffbfe4 mps=0 result=UNSUPPORTED stage=open error=cudaErrorInvalidValue
+END_ROUTE route=cuda_ipc placement=across_instances exit_status=0
+BEGIN_ROUTE route=host_page_table placement=same_instance
+probe=sharing_perf config=routes mode=ro_preread tenants=2 bytes=1073741824 rounds=1 attach_ms=12.505 solo_read_ms=16.871 concurrent_read_ms=34.575 round_wall_ms=72.212 memory_mib=1145.5 diverge_ms=25.001 sums_ok=1 diverged=1 isolated_tenants=1 clean_exit=1 base_intact=1
+END_ROUTE route=host_page_table placement=same_instance exit_status=0
+BEGIN_ROUTE route=host_page_table placement=across_instances
+probe=sharing_perf config=routes mode=ro_preread tenants=2 bytes=1073741824 rounds=1 attach_ms=12.436 solo_read_ms=20.880 concurrent_read_ms=20.907 round_wall_ms=50.477 memory_mib=1145.4 diverge_ms=25.348 sums_ok=1 diverged=1 isolated_tenants=1 clean_exit=1 base_intact=1
+END_ROUTE route=host_page_table placement=across_instances exit_status=0
+BEGIN_ROUTE route=cuda_ipc placement=same_mps_server
+probe=cuda_ipc producer=MIG-fafc828a consumer=MIG-fafc828a mps=1 result=PASS stage=none error=none
+END_ROUTE route=cuda_ipc placement=same_mps_server exit_status=0
+BEGIN_ROUTE route=host_page_table placement=same_mps_server
+probe=sharing_perf config=routes mode=ro_preread tenants=2 bytes=1073741824 rounds=1 attach_ms=12.408 solo_read_ms=16.758 concurrent_read_ms=21.633 round_wall_ms=65.744 memory_mib=1128.0 diverge_ms=21.151 sums_ok=1 diverged=1 isolated_tenants=1 clean_exit=1 base_intact=1
+END_ROUTE route=host_page_table placement=same_mps_server exit_status=0

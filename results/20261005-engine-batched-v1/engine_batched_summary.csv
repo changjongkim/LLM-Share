@@ -1,0 +1,10 @@
+mode,sequences,runs,prompt_tps_total,generation_tps_total,generation_tps_sd,generation_tps_per_sequence
+copy,1,6,794.6,23.737,4.871,23.737
+inplace,1,6,789.6,22.510,5.259,22.510
+copy,2,6,827.1,49.548,9.978,24.774
+inplace,2,6,823.1,45.840,11.146,22.920
+copy,4,6,825.2,64.095,13.348,16.024
+inplace,4,6,821.3,62.515,12.746,15.629
+copy,8,6,829.2,75.150,15.917,9.394
+inplace,8,6,825.1,75.022,16.007,9.378
+failed_runs,0

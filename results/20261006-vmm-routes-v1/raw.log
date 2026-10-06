@@ -1,0 +1,60 @@
+RUN 1
+BEGIN_VMM placement=same_instance
+probe=cuda_vmm producer=MIG-fafc828a consumer=MIG-fafc828a mps=0 result=PASS stage=none error=none granularity=2097152 readonly=enforced consumer_changed_shared=0
+END_VMM placement=same_instance exit_status=0
+BEGIN_VMM placement=across_instances
+probe=cuda_vmm producer=MIG-fafc828a consumer=MIG-31ffbfe4 mps=0 result=UNSUPPORTED stage=import error=CUDA_ERROR_NOT_INITIALIZED granularity=2097152 readonly=- consumer_changed_shared=-1
+END_VMM placement=across_instances exit_status=0
+BEGIN_VMM placement=same_mps_server
+probe=cuda_vmm producer=MIG-fafc828a consumer=MIG-fafc828a mps=1 result=PASS stage=none error=none granularity=2097152 readonly=enforced consumer_changed_shared=0
+END_VMM placement=same_mps_server exit_status=0
+RUN 2
+BEGIN_VMM placement=same_instance
+probe=cuda_vmm producer=MIG-fafc828a consumer=MIG-fafc828a mps=0 result=PASS stage=none error=none granularity=2097152 readonly=enforced consumer_changed_shared=0
+END_VMM placement=same_instance exit_status=0
+BEGIN_VMM placement=across_instances
+probe=cuda_vmm producer=MIG-fafc828a consumer=MIG-31ffbfe4 mps=0 result=UNSUPPORTED stage=import error=CUDA_ERROR_NOT_INITIALIZED granularity=2097152 readonly=- consumer_changed_shared=-1
+END_VMM placement=across_instances exit_status=0
+BEGIN_VMM placement=same_mps_server
+probe=cuda_vmm producer=MIG-fafc828a consumer=MIG-fafc828a mps=1 result=PASS stage=none error=none granularity=2097152 readonly=enforced consumer_changed_shared=0
+END_VMM placement=same_mps_server exit_status=0
+RUN 3
+BEGIN_VMM placement=same_instance
+probe=cuda_vmm producer=MIG-fafc828a consumer=MIG-fafc828a mps=0 result=PASS stage=none error=none granularity=2097152 readonly=enforced consumer_changed_shared=0
+END_VMM placement=same_instance exit_status=0
+BEGIN_VMM placement=across_instances
+probe=cuda_vmm producer=MIG-fafc828a consumer=MIG-31ffbfe4 mps=0 result=UNSUPPORTED stage=import error=CUDA_ERROR_NOT_INITIALIZED granularity=2097152 readonly=- consumer_changed_shared=-1
+END_VMM placement=across_instances exit_status=0
+BEGIN_VMM placement=same_mps_server
+probe=cuda_vmm producer=MIG-fafc828a consumer=MIG-fafc828a mps=1 result=PASS stage=none error=none granularity=2097152 readonly=enforced consumer_changed_shared=0
+END_VMM placement=same_mps_server exit_status=0
+RUN 4
+BEGIN_VMM placement=same_instance
+probe=cuda_vmm producer=MIG-fafc828a consumer=MIG-fafc828a mps=0 result=PASS stage=none error=none granularity=2097152 readonly=enforced consumer_changed_shared=0
+END_VMM placement=same_instance exit_status=0
+BEGIN_VMM placement=across_instances
+probe=cuda_vmm producer=MIG-fafc828a consumer=MIG-31ffbfe4 mps=0 result=UNSUPPORTED stage=import error=CUDA_ERROR_NOT_INITIALIZED granularity=2097152 readonly=- consumer_changed_shared=-1
+END_VMM placement=across_instances exit_status=0
+BEGIN_VMM placement=same_mps_server
+probe=cuda_vmm producer=MIG-fafc828a consumer=MIG-fafc828a mps=1 result=PASS stage=none error=none granularity=2097152 readonly=enforced consumer_changed_shared=0
+END_VMM placement=same_mps_server exit_status=0
+RUN 5
+BEGIN_VMM placement=same_instance
+probe=cuda_vmm producer=MIG-fafc828a consumer=MIG-fafc828a mps=0 result=PASS stage=none error=none granularity=2097152 readonly=enforced consumer_changed_shared=0
+END_VMM placement=same_instance exit_status=0
+BEGIN_VMM placement=across_instances
+probe=cuda_vmm producer=MIG-fafc828a consumer=MIG-31ffbfe4 mps=0 result=UNSUPPORTED stage=import error=CUDA_ERROR_NOT_INITIALIZED granularity=2097152 readonly=- consumer_changed_shared=-1
+END_VMM placement=across_instances exit_status=0
+BEGIN_VMM placement=same_mps_server
+probe=cuda_vmm producer=MIG-fafc828a consumer=MIG-fafc828a mps=1 result=PASS stage=none error=none granularity=2097152 readonly=enforced consumer_changed_shared=0
+END_VMM placement=same_mps_server exit_status=0
+RUN 6
+BEGIN_VMM placement=same_instance
+probe=cuda_vmm producer=MIG-fafc828a consumer=MIG-fafc828a mps=0 result=PASS stage=none error=none granularity=2097152 readonly=enforced consumer_changed_shared=0
+END_VMM placement=same_instance exit_status=0
+BEGIN_VMM placement=across_instances
+probe=cuda_vmm producer=MIG-fafc828a consumer=MIG-31ffbfe4 mps=0 result=UNSUPPORTED stage=import error=CUDA_ERROR_NOT_INITIALIZED granularity=2097152 readonly=- consumer_changed_shared=-1
+END_VMM placement=across_instances exit_status=0
+BEGIN_VMM placement=same_mps_server
+probe=cuda_vmm producer=MIG-fafc828a consumer=MIG-fafc828a mps=1 result=PASS stage=none error=none granularity=2097152 readonly=enforced consumer_changed_shared=0
+END_VMM placement=same_mps_server exit_status=0

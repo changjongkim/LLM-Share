@@ -1,0 +1,10 @@
+timestamp=2026-10-06T01:25:05+09:00
+mig_a=MIG-fafc828a-2a0d-5988-a009-030a36930090
+mig_b=MIG-31ffbfe4-9a85-5f4e-b406-90ffbfa82ca3
+repetitions=5
+boot_id=0965baa0-3357-48ca-8cea-c958d95b2d3f
+GPU 0: NVIDIA Thor (UUID: GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600)
+  MIG 2g.0gb      Device  0: (UUID: MIG-fafc828a-2a0d-5988-a009-030a36930090)
+  MIG 1g.0gb      Device  1: (UUID: MIG-31ffbfe4-9a85-5f4e-b406-90ffbfa82ca3)
+5022361945dd7f5c60091f403392690ea5f0b640f58cadd0859c4a476962d3b5  /home/thor/kcj/llm_share/cuda_ipc_probe
+361c7afac09c0d8dd8b52ced6ac1ff6e60fef5143f19a91ba701285fd8b2784f  /home/thor/kcj/llm_share/../thor_hostmm/sharing_modes_probe

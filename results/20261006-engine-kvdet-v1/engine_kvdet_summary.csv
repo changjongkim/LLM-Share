@@ -1,0 +1,4 @@
+paragraphs,prefix_tokens,runs,failed,distinct_caches_instance_a,distinct_caches_instance_b,runs_with_equal_caches_across_instances,values_that_differ_mean,largest_difference,first_tensor_that_differs
+5,256,6,0,1,1,0,6922004,5.88867,0
+20,1021,6,0,1,1,0,24179266,13.2109,0
+80,4081,6,0,1,1,0,107376991,13.4688,0
