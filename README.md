@@ -1,399 +1,498 @@
-# llm_share: model state as extents for on-device LLM serving
+# LLM-Share: 온디바이스 LLM 서빙을 위한 익스텐트 기반 모델 상태 공유
 
-Serving processes of one LLM on a Jetson AGX Thor share a single physical
-copy of the model weights and of the key-value cache of a prompt prefix they
-have in common. The GPU reads both in place through the host page tables.
+Jetson AGX Thor에서 같은 LLM을 서빙하는 여러 프로세스가 모델 가중치와 공통
+프롬프트 프리픽스의 KV 캐시를 물리 메모리 한 벌로 공유한다. GPU는 두 상태를
+호스트 페이지 테이블을 통해 제자리에서 읽는다.
 
-Full record: [docs/RESEARCH_LLM_SHARE_2026-10-05.md](docs/RESEARCH_LLM_SHARE_2026-10-05.md)
-(Section 6 for the cache).
-Substrate measurements: [docs/RESEARCH_HOSTMM_2026-10-05.md](docs/RESEARCH_HOSTMM_2026-10-05.md);
-their code and raw results are the `thor_hostmm` project, which is not part of
-this repository.
-Prior-art audits: [docs/SOTA_HOSTMM_2026-10-05.md](docs/SOTA_HOSTMM_2026-10-05.md),
-Sections 12, 14, 16, 17.
+- 연구 기록: [docs/RESEARCH_LLM_SHARE_2026-10-05.md](docs/RESEARCH_LLM_SHARE_2026-10-05.md) (KV 캐시는 6절)
+- 기반 측정 기록: [docs/RESEARCH_HOSTMM_2026-10-05.md](docs/RESEARCH_HOSTMM_2026-10-05.md) (코드와 원시 결과는 `thor_hostmm` 프로젝트에 있으며 이 저장소에 포함되지 않는다)
+- 선행 연구 조사: [docs/SOTA_HOSTMM_2026-10-05.md](docs/SOTA_HOSTMM_2026-10-05.md) 12, 14, 16, 17절
 
-Contents: [1 Introduction](#1-introduction) |
-[2 Background](#2-background) | [3 Design](#3-design) |
-[4 Evaluation](#4-evaluation) | [5 Limits](#5-limits) |
-[6 Artifact](#6-artifact) | [7 Using the paths](#7-using-the-paths)
+목차: [1. 서론](#1-서론) | [2. 배경](#2-배경) | [3. 설계](#3-설계) |
+[4. 평가](#4-평가) | [5. 한계](#5-한계) | [6. 구성물과 재현](#6-구성물과-재현) |
+[7. 사용법](#7-사용법)
 
-## 1. Introduction
+## 1. 서론
 
-**Problem.** On-device assistants are turning into groups of agents: several
-processes that run the same base model and start from the same long prefix (a
-system prompt, tool descriptions, a document). On a device whose CPU and GPU
-share one DRAM, every process that loads the model into device memory pays for
-the weights again, and every process holds its own copy of the prefix state.
-For a 7B model that is 4.4 GiB of weights and, with a 16,321-token prefix,
-0.9 GiB of key-value cache per agent.
+### 1.1 연구의 필요성
 
-**Observation.** On Thor the GPU follows the host page tables, so the host
-memory manager can share GPU-visible memory between processes, also between
-MIG instances, where GPU-level sharing stops. The kernel's own way to do
-that, copy-on-write, is the wrong primitive on this device: a GPU read of a
-private writable mapping can copy it, and every page that changes owner
-through a fault costs the whole process an invalidation.
+온디바이스 어시스턴트는 단일 모델 호출에서 다중 에이전트 구성으로 바뀌고
+있다. 여러 프로세스가 같은 기반 모델을 사용하고, 시스템 프롬프트, 도구 설명,
+참조 문서로 이루어진 같은 긴 프리픽스에서 출발한다.
 
-**Approach.** One rule, built into llama.cpp twice:
+통합 메모리 장치에서는 CPU와 GPU가 하나의 DRAM을 나누어 쓴다. 프로세스마다
+중복해서 보유하는 상태는 그만큼 장치 전체의 메모리를 줄인다. 서빙 프로세스가
+보유하는 상태는 두 가지이다.
 
-> Shared state is immutable and mapped read-only. What a process writes goes
-> to memory that was private from the start. Sharing, forking and moving are
-> range operations on mappings; no page of GPU-visible memory changes owner
-> through a fault.
+- **가중치.** 7B 모델(Q4_K_M)은 4.4 GiB이다. 현재 엔진은 프로세스마다 가중치를
+  디바이스 메모리에 복사한다. 프로세스 8개는 40.8 GiB를 차지한다.
+- **KV 캐시.** 이 모델은 토큰당 56 KiB를 쓴다. 16,321토큰 프리픽스의 캐시는
+  0.9 GiB이고, 32,768토큰 컨텍스트 전체는 1.75 GiB이다. 가중치를 공유한
+  뒤에도 같은 프리픽스에서 출발한 에이전트 8개는 19.9 GiB를 차지한다. 이
+  가운데 프리픽스 부분은 모든 에이전트에서 내용이 같다.
 
-- *Weights in place*: the mapped model file is the weight buffer of every
-  process (`inplace_weights.patch`, 59 lines).
-- *Key-value cache as extents*: a process publishes the rows of a prefix it
-  computed; other processes map them read-only and write their own rows to a
-  private tail that grows with use (`kv_extents.patch`, about 430 lines more).
+에이전트를 한 프로세스에 모으면 엔진이 프리픽스를 시퀀스 사이에서 공유한다.
+그러나 에이전트가 서로 다른 프로그램이거나, 한 에이전트의 GPU 장애가 다른
+에이전트로 전파되지 않아야 하거나, GPU의 두 MIG 인스턴스를 모두 사용해야 하는
+경우에는 프로세스가 분리된다. 이 연구는 분리된 프로세스가 중복 없이 상태를
+공유하는 방법을 다룬다.
 
-<p align="center"><img src="figures/overall_architecture.png" width="720"></p>
-<p align="center"><b>Figure 1.</b> Overall architecture. Every process maps the model file and the published rows of the prefix read-only and writes its own rows to a private tail; the GPU of either MIG instance reads all of it in place through the host page tables. (1) publish, (2) attach, (3) grow the tail.</p>
+### 1.2 기존 방법의 한계
 
-**Results** (7B model, six repetitions per cell, no failed run):
+프로세스 사이에서 상태를 공유하는 기존 수단은 이 장치에서 각각 한계가 있다.
+근거는 2.3절에 있다.
 
-| What | Upstream | Here |
+- 엔진이 제공하는 상태 파일은 프리픽스를 프로세스마다 복사한다.
+- 프로세스 내부의 프리픽스 공유는 프로세스 경계를 넘지 못한다.
+- GPU 수준의 메모리 공유(CUDA IPC, CUDA 가상 메모리 인터페이스)는 MIG 인스턴스
+  경계에서 거부된다.
+- 커널의 copy-on-write는 GPU가 접근하는 메모리에서 정상적으로 동작하지 않는다.
+  GPU의 읽기가 복사를 일으키고, 페이지 소유권이 바뀔 때마다 프로세스 전체의
+  무효화 비용이 든다.
+
+### 1.3 접근
+
+Thor의 GPU는 호스트 페이지 테이블을 따라간다. 따라서 호스트 메모리 관리자가
+GPU가 접근하는 메모리를 프로세스 사이에서, 그리고 MIG 인스턴스 사이에서 공유할
+수 있다. 이 연구는 copy-on-write를 쓰지 않는 다음 규칙을 세우고 llama.cpp에 두
+가지로 구현한다.
+
+> 공유 상태는 불변이며 읽기 전용으로 매핑한다. 프로세스가 쓰는 내용은 처음부터
+> 그 프로세스의 사설 메모리에 둔다. 공유, 포크, 이동은 매핑에 대한 범위
+> 연산으로 수행하며, GPU가 접근하는 페이지의 소유권이 폴트를 통해 바뀌지
+> 않는다.
+
+- **가중치 in-place.** 매핑한 모델 파일을 모든 프로세스의 가중치 버퍼로
+  사용한다(`inplace_weights.patch`, 59줄).
+- **KV 캐시 익스텐트.** 프리픽스를 계산한 프로세스가 그 행을 게시(publish)하고,
+  다른 프로세스는 그 행을 읽기 전용으로 매핑한 뒤 자신이 쓰는 행을 사설
+  테일(tail)에 둔다. 테일의 메모리는 사용하는 만큼만 할당된다
+  (`kv_extents.patch`, 약 430줄 추가).
+
+### 1.4 주요 결과
+
+7B 모델, 셀당 6회 반복, 실패한 실행 없음.
+
+| 항목 | 기존 엔진 | 본 연구 |
 |---|---:|---:|
-| Memory of 8 processes, weights only | 40.8 GiB | 10.0 GiB |
-| Memory of 8 agents on a 16,321-token prefix (weights in place in both) | 19.9 GiB | 5.7 GiB + 0.9 GiB once |
-| Handing a 16,321-token prefix to other processes | 561 ms, 893 MiB file | 9 ms, 0.25 MiB file |
-| Attaching to it, one agent | 225 ms | 43 ms |
-| Pause of a running process that forks its state to four children | 218 ms | 3 ms |
-| Text of every agent | reference | identical |
-| Generation speed | 1.00 | 1.00 in the 12-SM instance, 0.94 to 0.98 in the 6-SM instance |
+| 프로세스 8개의 메모리 (가중치만) | 40.8 GiB | 10.0 GiB |
+| 16,321토큰 프리픽스 위 에이전트 8개의 메모리 (양쪽 모두 가중치 in-place) | 19.9 GiB | 5.7 GiB + 캐시 파일 0.9 GiB 1회 |
+| 16,321토큰 프리픽스를 다른 프로세스에 넘기는 시간과 상태 파일 크기 | 561 ms, 893 MiB | 9 ms, 0.25 MiB |
+| 프리픽스에 연결(attach)하는 시간, 에이전트 1개 | 225 ms | 43 ms |
+| 실행 중인 프로세스가 자식 4개에 상태를 넘길 때의 정지 시간 | 218 ms | 3 ms |
+| 에이전트의 생성 텍스트 | 기준 | 모두 동일 |
+| 생성 속도 | 1.00 | 12-SM 인스턴스 1.00, 6-SM 인스턴스 0.94~0.98 |
 
-**What this is not.** Agents that can live in one process should: the engine
-shares a prefix between the sequences of one process by itself, and batching
-is faster (75.6 tokens/s in 2.5 GiB for eight agents, against 34 tokens/s in
-5.7 GiB for eight processes on extents). Extents continue that sharing across
-the process boundary and the MIG boundary. The best configuration measured,
-one batching server in each MIG instance on one published prefix, generates
-102.9 tokens/s in 2.4 GiB. Every part of the mechanism exists somewhere
-(Section 2.4); what was not found is the combination through host page
-tables. One device, one engine, one model.
+### 1.5 기여와 적용 범위
 
-## 2. Background
+기여는 다음과 같다.
 
-### 2.1 Platform
+1. GPU가 호스트 페이지 테이블을 따라가는 장치에서 copy-on-write가 부적합한
+   원인 세 가지를 측정하였다(2.3절).
+2. 그 측정에서 도출한 설계 규칙과, 이를 KV 캐시에 적용한 익스텐트 메커니즘을
+   제시하였다(3절).
+3. 실제 엔진에 구현하고 기존 엔진의 복사, 커널 copy-on-write, 프로세스 내부
+   공유, 디바이스 메모리 공유의 네 가지 기준선과 비교하였다(4절).
+4. 모든 결과를 원시 로그에서 다시 계산하는 검증기와 함께 공개한다(6절).
 
-NVIDIA Jetson AGX Thor, kernel 6.8.12-1021-tegra, open GPU kernel modules
-595.78 (`uvm_ats_mode=1`), CUDA 13.0. The GPU is bound to the address space of
-a process through the ARM SMMUv3 (shared virtual addressing), so a CUDA kernel
-reads and writes ordinary pageable host memory in place. The GPU is split into
-two MIG instances without memory of their own, `2g.0gb` (12 SMs) and `1g.0gb`
-(6 SMs).
+적용 범위는 다음과 같이 제한된다. 에이전트를 한 프로세스에 둘 수 있으면
+프로세스 내부 공유가 더 낫다(에이전트 8개에 대해 2.5 GiB에서 75.6 tokens/s,
+익스텐트를 쓰는 프로세스 8개는 5.7 GiB에서 34 tokens/s). 익스텐트는 그 공유를
+프로세스 경계와 MIG 경계 너머로 잇는 수단이다. 측정한 구성 가운데 가장 좋은
+것은 MIG 인스턴스마다 배칭 서버를 하나씩 두고 게시된 프리픽스 하나를 공유하는
+구성이며, 2.4 GiB에서 102.9 tokens/s를 낸다. 메커니즘을 이루는 요소는 각각
+선행 연구가 있으며(2.4절), 호스트 페이지 테이블을 통한 조합은 조사한 범위에서
+찾지 못하였다. 측정은 장치 한 대, 엔진 하나, 모델 하나에서 이루어졌다.
 
-### 2.2 What the engine does today
+## 2. 배경
 
-llama.cpp turns memory mapping off on integrated CUDA GPUs and copies the
-weights into device memory; its CUDA backend cannot take a host mapping as a
-buffer. It allocates and zeroes the key-value cache of the whole context when
-the context is created. A prefix moves between processes through a state file
-that holds the rows, which every process copies into its own cache.
+이 절은 설계를 이해하는 데 필요한 네 가지를 다룬다.
 
-### 2.3 Why not copy-on-write
+1. 대상 플랫폼에서 GPU가 호스트 메모리에 접근하는 방식(2.1절)
+2. 서빙 프로세스가 보유하는 상태와 현재 엔진이 그 상태를 다루는 방식(2.2절)
+3. 그 상태를 프로세스 사이에서 공유하는 기존 수단이 이 플랫폼에서 성립하지
+   않는 이유(2.3절)
+4. 가장 가까운 선행 연구가 다루는 범위(2.4절)
 
-Measured on this device (`docs/RESEARCH_HOSTMM_2026-10-05.md`):
+2.5절은 이 네 가지에서 도출되는 설계 요구사항을 정리한다.
+
+### 2.1 플랫폼: 호스트 페이지 테이블을 따라가는 GPU
+
+대상은 NVIDIA Jetson AGX Thor이다(커널 6.8.12-1021-tegra, 오픈 GPU 커널 모듈
+595.78, `uvm_ats_mode=1`, CUDA 13.0). GPU는 ARM SMMUv3의 공유 가상 주소 지정을
+통해 프로세스의 주소 공간에 연결된다. CUDA 커널은 페이지 가능한 일반 호스트
+메모리를 복사 없이 제자리에서 읽고 쓴다. GPU는 자체 메모리가 없는 두 개의 MIG
+인스턴스, `2g.0gb`(12 SM)와 `1g.0gb`(6 SM)로 나뉘어 있다.
+
+이 구조에서 GPU가 접근하는 메모리의 매핑, 보호, 공유는 호스트 메모리 관리자가
+결정한다. 프로세스 사이의 공유도 호스트 페이지 테이블 수준에서 이루어지므로
+MIG 인스턴스 경계의 영향을 받지 않는다.
+
+### 2.2 서빙 프로세스의 상태와 현재 엔진의 처리
+
+서빙 프로세스는 가중치와 KV 캐시를 보유한다.
+
+- **가중치**는 실행 중에 바뀌지 않는다. llama.cpp는 통합 GPU에서 메모리 매핑을
+  끄고 가중치를 디바이스 메모리에 복사한다. CUDA 백엔드는 호스트 매핑을
+  버퍼로 받지 못한다.
+- **KV 캐시**는 실행 중에 계산된다. 캐시의 셀은 해당 토큰이 디코딩될 때 한 번
+  기록되고, 한 시퀀스의 셀은 순서대로 채워진다. 엔진은 컨텍스트를 만들 때
+  컨텍스트 전체 크기의 캐시를 할당하고 0으로 채운다.
+- **프리픽스의 전달.** 프리픽스의 캐시는 행 전체를 담은 상태 파일을 통해 다른
+  프로세스로 전달되며, 받는 프로세스는 그 행을 자신의 캐시에 복사한다.
+
+### 2.3 기존 공유 수단의 한계
+
+**커널의 copy-on-write.** 다른 프로세스의 메모리를 사설로 볼 수 있게 하는
+커널의 기본 수단은 쓰기 가능한 사설 매핑(`MAP_PRIVATE`)과 `fork`이다. 두 수단은
+모두 copy-on-write에 의존한다. 이 장치에서 측정한 세 가지 성질 때문에
+copy-on-write는 GPU가 접근하는 메모리에 적합하지 않다
+(`docs/RESEARCH_HOSTMM_2026-10-05.md`).
 
 <p align="center"><img src="figures/bg_cow.png" width="760"></p>
-<p align="center"><b>Figure 2.</b> Three properties of a GPU that follows the host page tables. (a) A GPU read of a page without the accessed flag is served as a write for its whole 2 MiB block. (b) Every page that changes owner costs the process an invalidation. (c) After <code>fork</code> the next GPU write pays for every page.</p>
+<p align="center"><b>그림 1.</b> 호스트 페이지 테이블을 따라가는 GPU에서 copy-on-write가 부적합한 세 가지 이유. (a) accessed 플래그가 없는 페이지에 대한 GPU 읽기는 그 페이지가 속한 2 MiB 블록 전체에 대한 쓰기로 처리된다. (b) 소유권이 바뀌는 페이지마다 프로세스 전체의 무효화 비용이 든다. (c) <code>fork</code> 이후 다음 GPU 쓰기가 모든 페이지의 비용을 치른다.</p>
 
-| Property | Measurement |
+| 성질 | 측정값 |
 |---|---|
-| The GPU faults on a mapped page whose accessed flag is clear, and the driver serves a fault in a writable mapping as a write for the whole 2 MiB block around it | one such page turns 512 pages into private copies; one per block copies the whole object |
-| A flush of one page costs a process that uses the GPU about 9 us, anywhere in its address space; a range operation costs nothing extra | copy-on-write break, reuse fault, per-page `mprotect` and `MADV_DONTNEED` are 4.3 to 9.0 times slower |
-| After `fork`, the next GPU write to pre-fork memory pays for every page | 2.7 s per GiB; `posix_spawn` or `MADV_DONTFORK` avoid it |
-| GPU-level sharing stops at the MIG boundary | CUDA IPC and CUDA's virtual memory interface share inside one instance and are refused across instances |
-| A GPU fault of one MPS client ends every client of that server | 0 of 18 survive; time-sliced processes and the other MIG instance: 36 of 36 |
+| GPU는 accessed 플래그가 지워진 페이지에서 폴트를 내고, 드라이버는 쓰기 가능한 매핑의 폴트를 주변 2 MiB 블록 전체에 대한 쓰기로 처리한다 | 해당 페이지 1개가 512개 페이지를 사설 복사본으로 만든다. 블록마다 1개씩 있으면 객체 전체가 복사된다 |
+| GPU를 사용하는 프로세스에서 단일 페이지 플러시는 주소 공간의 어느 위치에서든 약 9 us가 든다. 범위 연산에는 추가 비용이 없다 | copy-on-write 해제, 재사용 폴트, 페이지 단위 `mprotect`와 `MADV_DONTNEED`가 4.3~9.0배 느려진다 |
+| `fork` 이후 fork 이전 메모리에 대한 다음 GPU 쓰기는 모든 페이지의 비용을 치른다 | GiB당 2.7초. `posix_spawn`이나 `MADV_DONTFORK`로 피할 수 있다 |
 
-### 2.4 Closest prior work
+**GPU 수준의 공유.** CUDA IPC와 CUDA 가상 메모리 인터페이스는 한 MIG 인스턴스
+안에서는 디바이스 메모리를 공유하지만 인스턴스 사이에서는 거부된다.
 
-| Work | What it does | What it does not |
+**MPS.** MPS 클라이언트 하나의 GPU 폴트는 같은 서버의 모든 클라이언트를
+종료시킨다(18개 가운데 0개 생존). 시분할 프로세스와 다른 MIG 인스턴스의
+프로세스는 영향을 받지 않는다(36개 가운데 36개 생존).
+
+**프로세스 내부의 공유.** vLLM, SGLang, llama.cpp의 슬롯은 한 프로세스의 요청
+사이에서 프리픽스를 공유한다. 이 공유는 프로세스 경계에서 끝난다.
+
+### 2.4 선행 연구
+
+| 연구 | 하는 일 | 다루지 않는 것 |
 |---|---|---|
-| "The Ingestion Tax" (arXiv 2608.12114) | file-backed weights read in place, N processes on one copy, Apple hardware | no CUDA engine on an NVIDIA unified-memory device, no cache |
-| llama.cpp pull request #22120 | host-pointer CUDA buffers on GB10, closed unmeasured | not measured, weights only |
-| Omni-Flow (arXiv 2606.31093) | one copy of a cache pool shared by role processes, device memory, one GPU | no host page tables, no GPU partition boundary |
-| SGLang issue #35648 | proposal: a cache slab exported by CUDA IPC to replicas under MPS | not implemented |
-| llama.cpp pull request #21792 | cache tensors in a `MAP_SHARED` file with a metadata sidecar | CPU only |
-| vAttention (ASPLOS 2025) | cache memory that follows use, device memory | one process |
-| issue #81, MiaAI-Lab/Qwen3.8-Flash-Next-Single-DGX-Spark | reports the write-intent fault service of the driver | no amplification, no design |
-| vLLM, SGLang, llama.cpp slots | a prefix shared between requests inside one process | stops at the process boundary |
+| "The Ingestion Tax" (arXiv 2608.12114) | 파일 기반 가중치를 제자리에서 읽고 N개 프로세스가 한 벌을 공유, Apple 하드웨어 | NVIDIA 통합 메모리 장치의 CUDA 엔진, 캐시 |
+| llama.cpp PR #22120 | GB10에서 호스트 포인터 CUDA 버퍼, 측정 없이 종료 | 측정, 캐시 |
+| Omni-Flow (arXiv 2606.31093) | 역할 프로세스들이 캐시 풀 한 벌을 공유, 디바이스 메모리, 단일 GPU | 호스트 페이지 테이블, GPU 파티션 경계 |
+| SGLang 이슈 #35648 | 제안: CUDA IPC로 캐시 슬랩을 MPS 복제본에 내보냄 | 구현 |
+| llama.cpp PR #21792 | 캐시 텐서를 `MAP_SHARED` 파일에 두고 메타데이터를 별도 파일로 저장 | GPU (CPU 전용) |
+| vAttention (ASPLOS 2025) | 사용량을 따라가는 캐시 메모리, 디바이스 메모리 | 프로세스 간 공유 |
+| MiaAI-Lab/Qwen3.8-Flash-Next-Single-DGX-Spark 이슈 #81 | 드라이버의 쓰기 의도 폴트 처리를 보고 | 증폭의 정량화, 설계 |
+| vLLM, SGLang, llama.cpp 슬롯 | 한 프로세스 안의 요청 사이에서 프리픽스 공유 | 프로세스 경계 |
 
-Not claimed: reading weights in place, an immutable prefix with private
-continuation, a cache that follows use, or cross-process cache sharing as
-such. Claimed, within the audited set: the pages of a computed prefix mapped
-through host page tables into the cache tensors of several GPU-serving
-processes, across GPU partitions, and a running process that hands its state
-on without a copy.
+이 연구가 주장하지 않는 것은 가중치의 제자리 읽기, 불변 프리픽스와 사설 연속
+영역의 배치, 사용량을 따라가는 캐시, 프로세스 간 캐시 공유 자체이다. 조사한
+범위에서 주장하는 것은 계산된 프리픽스의 페이지를 호스트 페이지 테이블을 통해
+여러 GPU 서빙 프로세스의 캐시 텐서에 매핑하는 것, 이를 GPU 파티션 사이에서
+수행하는 것, 실행 중인 프로세스가 복사 없이 상태를 넘기는 것이다.
 
-## 3. Design
+### 2.5 설계 요구사항
 
-### 3.1 Weights in place
+위 내용에서 다음 요구사항이 도출된다.
 
-The CUDA backend accepts a host mapping as a buffer (`GGML_CUDA_HOST_PTR=1`),
-and the engine maps the model file shared and read-only as its weight buffer.
-A read-only mapping cannot be turned into a private copy by a GPU read. One
-pass of CPU reads over the file sets the accessed flags, which the GPU cannot
-set, so that the first kernel does not fault on every page. A model on 2 MiB
-pages (tmpfs with `huge=always`, or hugetlbfs) removes the cost of small
-pages. A quantized tensor whose rows are not a multiple of 512 elements is
-refused, because a read-only mapping has no room for row padding.
+| 요구사항 | 근거 |
+|---|---|
+| 공유 상태는 읽기 전용으로 매핑한다 | 쓰기 가능한 매핑에서는 GPU 읽기가 복사를 일으킨다(2.3절) |
+| 프로세스가 쓰는 내용은 처음부터 사설 메모리에 둔다 | 페이지 소유권이 바뀔 때마다 무효화 비용이 든다(2.3절) |
+| 공유, 포크, 이동은 범위 연산으로 수행한다 | 범위 연산에는 추가 비용이 없다(2.3절) |
+| 프로세스는 `fork`가 아니라 새로 실행한다 | `fork`는 이후의 GPU 쓰기에 비용을 남긴다(2.3절) |
+| 공유 경로는 호스트 페이지 테이블이어야 한다 | GPU 수준 공유는 MIG 경계에서 거부되고, MPS는 장애를 전파한다(2.3절) |
 
-### 3.2 The key-value cache as extents
+## 3. 설계
 
-A cell of the cache is written once, when its token is decoded, and cells are
-filled in order. With flash attention and one stream a cell is a row of every
-key and value tensor, so the cells of a common prefix are a leading range of
-every tensor (Figure 3):
+### 3.1 설계 규칙과 전체 구조
+
+설계 규칙은 2.5절의 요구사항을 하나로 묶은 것이다.
+
+> 공유 상태는 불변이며 읽기 전용으로 매핑한다. 프로세스가 쓰는 내용은 처음부터
+> 그 프로세스의 사설 메모리에 둔다. 공유, 포크, 이동은 매핑에 대한 범위
+> 연산으로 수행하며, GPU가 접근하는 페이지의 소유권이 폴트를 통해 바뀌지
+> 않는다.
+
+<p align="center"><img src="figures/overall_architecture.png" width="720"></p>
+<p align="center"><b>그림 2.</b> 전체 구조. 각 프로세스는 모델 파일과 게시된 프리픽스의 행을 읽기 전용으로 매핑하고, 자신이 쓰는 행을 사설 테일에 둔다. 두 MIG 인스턴스의 GPU는 호스트 페이지 테이블을 통해 이 메모리를 제자리에서 읽는다. (1) 게시, (2) 연결, (3) 테일 확장.</p>
+
+그림 2는 세 층으로 구성된다. 위층은 두 MIG 인스턴스로 나뉜 GPU이다. 가운데
+층은 서빙 프로세스의 주소 공간이며, 각 주소 공간은 가중치, 프리픽스의 행,
+테일의 행으로 이루어진다. 아래층은 호스트 물리 메모리이다. 가중치 영역과
+프리픽스 영역의 매핑은 읽기 전용이고 모든 프로세스가 같은 물리 페이지를
+가리킨다. 테일 영역의 매핑은 쓰기 가능하며 프로세스마다 다른 페이지를
+가리킨다. 프로세스 사이의 공유가 호스트 페이지 테이블에서 이루어지므로 두
+MIG 인스턴스의 프로세스가 같은 페이지를 공유한다.
+
+### 3.2 가중치 in-place
+
+CUDA 백엔드가 호스트 매핑을 버퍼로 받도록 한다(`GGML_CUDA_HOST_PTR=1`). 엔진은
+모델 파일을 공유 읽기 전용으로 매핑하여 가중치 버퍼로 사용한다. 읽기 전용
+매핑은 GPU 읽기에 의해 사설 복사본으로 바뀌지 않는다. GPU는 accessed 플래그를
+설정하지 못하므로, 로드할 때 CPU가 파일 전체를 한 번 읽어 플래그를 설정한다.
+이 과정이 없으면 첫 커널이 모든 페이지에서 폴트를 낸다. 모델을 2 MiB 페이지
+(`huge=always`로 마운트한 tmpfs 또는 hugetlbfs)에 두면 작은 페이지의 비용이
+없어진다. 행 길이가 512의 배수가 아닌 양자화 텐서는 거부한다. 읽기 전용
+매핑에는 행 패딩을 둘 공간이 없기 때문이다.
+
+### 3.3 KV 캐시 익스텐트
+
+캐시의 셀은 한 번 기록되고 순서대로 채워진다(2.2절). flash attention과 단일
+스트림을 사용할 때 셀은 모든 키 텐서와 값 텐서의 한 행이다. 따라서 공통
+프리픽스의 셀은 모든 텐서의 앞부분 범위가 되고, 에이전트가 추가하는 내용은 그
+뒤에 놓인다(그림 3).
 
 <p align="center"><img src="figures/design_layout.png" width="760"></p>
-<p align="center"><b>Figure 3.</b> One key or value tensor of the cache as extents. The rows of the prefix are the same physical pages in every agent, mapped read-only from the file of the publisher; the rows an agent writes lie in private memory that the CPU populates ahead of the GPU.</p>
+<p align="center"><b>그림 3.</b> 캐시의 키 또는 값 텐서 하나를 익스텐트로 구성한 모습. 프리픽스의 행은 게시자의 파일에서 읽기 전용으로 매핑되어 모든 에이전트에서 같은 물리 페이지이다. 에이전트가 쓰는 행은 CPU가 GPU보다 앞서 채워 두는 사설 메모리에 놓인다.</p>
 
-- **Publish.** The cache of a publisher is a file on a tmpfs. Saving the state
-  of its context writes the metadata of the cells (16 bytes per cell) and none
-  of their rows, makes the rows in use read-only in the publisher with one
-  `mprotect` per tensor, and marks their cells frozen.
-- **Attach.** An agent maps the whole pages of the prefix rows from the file,
-  private and read-only, at the start of each tensor, copies the last, partly
-  filled page, and keeps the rest private. A CPU read pass sets the accessed
-  flags. Loading the state file restores the metadata; no row is read.
-- **Frozen cells.** The cache never hands out a frozen cell, so an agent that
-  drops or rewrites tokens of the prefix gets cells in its own tail. Behind
-  that sits the page protection: a write through the mapping is a fault in the
-  process that tried.
-- **A tail that follows use.** The private part starts without memory; before
-  the device writes the cells of a batch, the CPU populates their pages.
-  Populating absent pages needs no invalidation.
-- **Fork.** A publisher that has saved its state keeps running; its next cells
-  lie after the frozen ones. Children attach as agents.
-- **Move.** Publish, attach in another process, end the publisher. The file
-  outlives the process that filled it.
+- **게시(publish).** 게시자의 캐시는 tmpfs의 파일이다. 컨텍스트의 상태를
+  저장하면 셀의 메타데이터(셀당 16바이트)만 기록되고 행은 기록되지 않는다.
+  사용 중인 행은 텐서마다 `mprotect` 한 번으로 게시자 자신에게도 읽기 전용이
+  되고, 해당 셀은 동결된다.
+- **연결(attach).** 에이전트는 프리픽스 행의 온전한 페이지를 파일에서 사설
+  읽기 전용으로 각 텐서의 시작 위치에 매핑한다. 일부만 채워진 마지막 페이지는
+  복사하고, 텐서의 나머지는 사설 메모리로 둔다. CPU가 매핑한 페이지를 한 번
+  읽어 accessed 플래그를 설정한다. 상태 파일을 읽으면 메타데이터가 복원되며
+  행은 읽지 않는다.
+- **동결 셀.** 캐시는 동결된 셀을 다시 내주지 않는다. 에이전트가 프리픽스의
+  토큰을 버리거나 다시 쓰면 새 셀은 자신의 테일에 놓인다. 매핑이 읽기
+  전용이므로 이를 통한 쓰기는 시도한 프로세스의 폴트가 된다.
+- **사용량을 따라가는 테일.** 사설 영역은 메모리 없이 시작한다. 디바이스가
+  배치의 셀을 쓰기 전에 CPU가 해당 행의 페이지를 256행 앞서 채운다. 비어 있는
+  페이지를 채우는 데에는 무효화가 필요하지 않다.
+- **포크(fork).** 상태를 저장한 게시자는 계속 실행된다. 게시자의 다음 셀은
+  동결된 셀 뒤에 놓인다. 자식은 에이전트로 연결한다.
+- **이동(move).** 게시하고, 다른 프로세스에서 연결한 뒤, 게시자를 종료한다.
+  파일은 그것을 채운 프로세스가 종료된 뒤에도 유지된다.
 
-All of it is host mappings, so it holds between the two MIG instances.
+이 동작은 모두 호스트 매핑이므로 두 MIG 인스턴스 사이에서도 성립한다.
 
 <p align="center"><img src="figures/design_lifecycle.png" width="720"></p>
-<p align="center"><b>Figure 4.</b> Publish and attach as operations on mappings. A fork is the same with the publisher still running; a move ends the publisher.</p>
+<p align="center"><b>그림 4.</b> 매핑에 대한 연산으로서의 게시와 연결. 포크는 게시자가 계속 실행되는 경우이고, 이동은 게시자가 종료되는 경우이다.</p>
 
-### 3.3 Implementation
+### 3.4 구현
 
-| Piece | Where |
+| 구성 요소 | 위치 |
 |---|---|
-| weights in place | `inplace_weights.patch`: 59 lines added to `ggml-cuda.cu`; clone `llama.cpp/` |
-| cache as extents | `kv_extents.patch`: the above plus 30 lines in `ggml-cuda.cu`, 397 in `llama-kv-cache.cpp`, 3 in its header; clone `llama.cpp-kv/` |
-| device-memory counterpart, for comparison only | `kv_vmm.patch`: the above plus a cache made of 2 MiB allocations of CUDA's virtual memory interface; clone `llama.cpp-vmm/` |
+| 가중치 in-place | `inplace_weights.patch`: `ggml-cuda.cu`에 59줄 추가. 클론 `llama.cpp/` |
+| 캐시 익스텐트 | `kv_extents.patch`: 위 변경에 더해 `ggml-cuda.cu` 30줄, `llama-kv-cache.cpp` 397줄, 헤더 3줄. 클론 `llama.cpp-kv/` |
+| 디바이스 메모리 방식(비교용) | `kv_vmm.patch`: 위 변경에 더해 CUDA 가상 메모리 인터페이스의 2 MiB 할당으로 구성한 캐시. 클론 `llama.cpp-vmm/` |
 
-The computation graph is unchanged. The mode is chosen by the environment of
-the process (Section 7); without it the engine behaves as upstream.
+계산 그래프는 바꾸지 않는다. 동작 방식은 프로세스의 환경 변수로 선택하며(7절),
+환경 변수가 없으면 엔진은 원본과 같이 동작한다.
 
-## 4. Evaluation
+## 4. 평가
 
-Model: Qwen2.5-7B-Instruct, Q4_K_M (4.36 GiB). Six repetitions per cell with
-alternating order and, where two instances are involved, alternating roles;
-ratios are paired with 95% confidence intervals. Gates are written into the
-runners before a campaign and the runners are pinned by hash.
-`verify_llm_share_artifact.sh` rebuilds every summary from its raw log and
-re-evaluates the relations below without the GPU.
+모델은 Qwen2.5-7B-Instruct Q4_K_M(4.36 GiB)이다. 셀마다 6회 반복하였고, 실행
+순서를 번갈아 바꾸었으며, 두 인스턴스가 관여하는 실험에서는 역할을 번갈아
+바꾸었다. 비율은 같은 반복 안에서 짝지어 계산하고 95% 신뢰구간을 붙였다.
+통과 기준은 캠페인을 실행하기 전에 러너에 기록하였고, 러너는 해시로 고정된다.
+`verify_llm_share_artifact.sh`는 GPU 없이 모든 요약을 원시 로그에서 다시
+계산하고 아래의 관계를 다시 평가한다.
 
-### 4.1 Weights in place (record Sections 3 to 5)
+### 4.1 가중치 in-place (기록 3~5절)
 
 <p align="center"><img src="figures/eval_weights.png" width="760"></p>
-<p align="center"><b>Figure 5.</b> Weights in place. Left: memory of N serving processes, placed in the two MIG instances alternately. Right: generation speed against the device copy by the page size of the mapped model.</p>
+<p align="center"><b>그림 5.</b> 가중치 in-place. 왼쪽: 두 MIG 인스턴스에 번갈아 배치한 서빙 프로세스 N개의 메모리. 오른쪽: 매핑한 모델의 페이지 크기에 따른 생성 속도(디바이스 복사 대비).</p>
 
-| Weights | Generation against device copy | Load (ms) | Memory outside the model file (MiB) |
+| 가중치 | 디바이스 복사 대비 생성 속도 | 로드 (ms) | 모델 파일 외 메모리 (MiB) |
 |---|---|---:|---:|
-| device copy (upstream) | 1.000 | 943 | 5,423 |
-| in place, 4 KiB page cache | 0.943 [0.918, 0.969] | 516 | 878 |
-| in place, 2 MiB pages (tmpfs) | 0.997 [0.971, 1.025] | 270 | not measured |
+| 디바이스 복사 (기존 엔진) | 1.000 | 943 | 5,423 |
+| in-place, 4 KiB 페이지 캐시 | 0.943 [0.918, 0.969] | 516 | 878 |
+| in-place, 2 MiB 페이지 (tmpfs) | 0.997 [0.971, 1.025] | 270 | 측정하지 않음 |
 
-Text is identical. Eight processes hold 10.0 GiB instead of 40.8 GiB, under
-MIG, time slicing and MPS alike; five processes with four adapters hold
-9.9 GiB instead of 27.6 GiB and write the texts of their device-copy
-counterparts (30 of 30).
+생성 텍스트는 동일하다. 프로세스 8개는 40.8 GiB 대신 10.0 GiB를 차지하며, 이
+값은 MIG, 시분할, MPS에서 같다. 어댑터 4개를 쓰는 프로세스 5개는 27.6 GiB 대신
+9.9 GiB를 차지하고, 디바이스 복사를 쓴 경우와 같은 텍스트를 생성한다(30개
+가운데 30개).
 
-### 4.2 Agents on one published prefix (record Section 6.4)
+### 4.2 게시된 프리픽스 위의 에이전트 (기록 6.4절)
 
-A publisher computes the prefix and exits; 1, 4 or 8 agent processes, every
-second one in the other MIG instance, continue it with their own task.
+게시자가 프리픽스를 계산하고 종료한다. 에이전트 프로세스 1, 4, 8개가 각자의
+작업을 덧붙여 프리픽스를 이어 간다. 에이전트는 하나씩 번갈아 다른 MIG
+인스턴스에 배치하였다.
 
 <p align="center"><img src="figures/eval_memory.png" width="760"></p>
-<p align="center"><b>Figure 6.</b> Memory of the agents on one published prefix. The cache file (0.2 and 0.9 GiB) exists once and is not included.</p>
+<p align="center"><b>그림 6.</b> 게시된 프리픽스 하나 위에 있는 에이전트들의 메모리. 캐시 파일(0.2 GiB와 0.9 GiB)은 한 번만 존재하며 포함하지 않았다.</p>
 <p align="center"><img src="figures/eval_handover.png" width="820"></p>
-<p align="center"><b>Figure 7.</b> Handing a prefix over, attaching to it, and the first token after process start.</p>
+<p align="center"><b>그림 7.</b> 프리픽스를 넘기는 시간, 연결하는 시간, 프로세스 시작 후 첫 토큰까지의 시간.</p>
 
-| 16,321-token prefix | Copy from the state file (upstream) | Extents, whole tail | Extents, tail follows use |
+| 16,321토큰 프리픽스 | 상태 파일 복사 (기존 엔진) | 익스텐트, 테일 전체 할당 | 익스텐트, 사용량을 따라가는 테일 |
 |---|---:|---:|---:|
-| Handing over (ms) / state file (MiB) | 561 / 893 | 9 / 0.25 | 9 / 0.25 |
-| Attach, 1 / 4 / 8 agents (ms) | 225 / 396 / 484 | 70 / 93 / 92 | 43 / 57 / 65 |
-| First token after process start, 1 / 8 agents (ms) | 964 / 2,205 | 845 / 1,774 | 791 / 1,778 |
-| Memory of 8 agents (GiB) | 19.9 | 12.7 | 5.7 |
-| Pages of the prefix mapped by 8 agents: resident sum / proportional share (MiB) | - | 7,140 / 1,025 | 7,140 / 908 |
-| Texts equal to the copy | reference | 78 of 78 | 78 of 78 |
+| 넘기는 시간 (ms) / 상태 파일 (MiB) | 561 / 893 | 9 / 0.25 | 9 / 0.25 |
+| 연결, 에이전트 1 / 4 / 8개 (ms) | 225 / 396 / 484 | 70 / 93 / 92 | 43 / 57 / 65 |
+| 프로세스 시작 후 첫 토큰, 에이전트 1 / 8개 (ms) | 964 / 2,205 | 845 / 1,774 | 791 / 1,778 |
+| 에이전트 8개의 메모리 (GiB) | 19.9 | 12.7 | 5.7 |
+| 에이전트 8개가 매핑한 프리픽스 페이지: 상주 합계 / 비례 몫 (MiB) | - | 7,140 / 1,025 | 7,140 / 908 |
+| 복사와 텍스트가 같은 에이전트 | 기준 | 78개 가운데 78개 | 78개 가운데 78개 |
 
-With a 4,081-token prefix: 231 ms against 3 ms to hand over, and 9.0, 7.1 and
-5.5 GiB for eight agents. The first token moves by only 4 to 23%, because
-loading the model dominates it; the gain is memory.
+4,081토큰 프리픽스에서는 넘기는 시간이 231 ms에서 3 ms로 줄고, 에이전트 8개의
+메모리는 9.0, 7.1, 5.5 GiB이다. 첫 토큰까지의 시간은 4~23%만 줄어든다. 모델
+로드가 이 시간의 대부분을 차지하기 때문이다. 이 메커니즘의 이득은 메모리에
+있다.
 
-### 4.3 Against copy-on-write (record Section 6.7)
+### 4.3 copy-on-write와의 비교 (기록 6.7절)
 
-Eight agents obtain the 16,321-token prefix through a private writable
-mapping of the publisher's cache file.
+에이전트 8개가 게시자 캐시 파일의 쓰기 가능한 사설 매핑을 통해 16,321토큰
+프리픽스를 얻는 경우이다.
 
 <p align="center"><img src="figures/eval_cow.png" width="800"></p>
-<p align="center"><b>Figure 8.</b> Extents against copy-on-write mappings, eight agents on a 16,321-token prefix.</p>
+<p align="center"><b>그림 8.</b> 익스텐트와 copy-on-write 매핑의 비교. 16,321토큰 프리픽스 위의 에이전트 8개.</p>
 
-| Way | Memory (GiB) | First token (s) | Decode of the agent's own task (s) |
+| 방식 | 메모리 (GiB) | 첫 토큰 (초) | 에이전트 자신의 작업 디코딩 (초) |
 |---|---:|---:|---:|
-| extents | 5.6 | 1.7 | 0.32 |
-| copy-on-write, 2 MiB file, CPU read pass | 6.5 | 2.0 | 0.60 |
-| copy-on-write, 4 KiB file, CPU read pass | 6.6 | 3.9 | 2.5 |
-| copy-on-write, no read pass (either page size) | 12.7 | 4.9 to 5.2 | 3.5 to 3.7 |
+| 익스텐트 | 5.6 | 1.7 | 0.32 |
+| copy-on-write, 2 MiB 파일, CPU 읽기 수행 | 6.5 | 2.0 | 0.60 |
+| copy-on-write, 4 KiB 파일, CPU 읽기 수행 | 6.6 | 3.9 | 2.5 |
+| copy-on-write, CPU 읽기 없음 (두 페이지 크기 모두) | 12.7 | 4.9~5.2 | 3.5~3.7 |
 
-Without the read pass the mapping copies on read: every agent ends with a
-private copy of the whole prefix although none of them writes it. With every
-remedy applied copy-on-write comes close to extents; it has a state in which
-the sharing is lost without an error, and extents do not.
+CPU 읽기가 없으면 매핑은 읽기에서 복사를 일으킨다. 에이전트는 프리픽스에 쓰지
+않는데도 프리픽스 전체의 사설 복사본을 갖게 된다. 모든 보완 조치를 적용한
+copy-on-write는 익스텐트에 근접한다. 그러나 copy-on-write에는 오류 없이 공유가
+사라지는 상태가 있고, 익스텐트에는 그런 상태가 없다.
 
-### 4.4 A parent that forks while it runs (record Section 6.5)
+### 4.4 실행 중인 부모의 포크 (기록 6.5절)
 
-A parent hands a 4,081-token prefix to four children, two in the other MIG
-instance, and generates its own continuation while they generate theirs. It
-pauses for 3 ms instead of 218 ms and writes the text of a process alone in
-6 of 6 repetitions. Every child writes the text of the child that copies
-(24 of 24). The children hold 2.8 GiB instead of 4.4 GiB.
+부모가 4,081토큰 프리픽스를 자식 4개에 넘기고, 자식이 생성하는 동안 자신도
+이어서 생성한다. 자식 가운데 2개는 다른 MIG 인스턴스에 있다. 부모의 정지
+시간은 218 ms에서 3 ms로 줄고, 부모는 6회 모두 단독으로 계산한 프로세스와 같은
+텍스트를 생성한다. 모든 자식은 복사로 상태를 받은 자식과 같은 텍스트를
+생성한다(24개 가운데 24개). 자식들의 메모리는 4.4 GiB에서 2.8 GiB로 줄어든다.
 
-### 4.5 Generation speed (record Section 6.8)
+### 4.5 생성 속도 (기록 6.8절)
 
-One process, cache in host memory against cache in device memory:
+프로세스 1개에서 캐시를 호스트 메모리에 둔 경우와 디바이스 메모리에 둔 경우를
+비교하였다.
 
 <p align="center"><img src="figures/eval_speed.png" width="640"></p>
-<p align="center"><b>Figure 9.</b> Generation speed with the cache in host memory, relative to a cache in device memory.</p>
+<p align="center"><b>그림 9.</b> 캐시를 호스트 메모리에 둔 경우의 생성 속도(캐시를 디바이스 메모리에 둔 경우 대비).</p>
 
-| MIG instance | 4,081-token prefix | 16,321-token prefix |
+| MIG 인스턴스 | 4,081토큰 프리픽스 | 16,321토큰 프리픽스 |
 |---|---|---|
 | 12-SM | 0.996 [0.992, 0.999] | 1.002 [0.997, 1.006] |
 | 6-SM | 0.976 [0.974, 0.979] | 0.942 [0.940, 0.945] |
 
-A private host-memory cache with nothing shared loses the same in the 6-SM
-instance, so the cost belongs to host memory there and not to the mapping.
-Its cause inside the GPU was not found. Two time-sliced processes in the
-12-SM instance: 1.002.
+아무것도 공유하지 않는 사설 호스트 메모리 캐시도 6-SM 인스턴스에서 같은 폭으로
+느려진다. 따라서 이 비용은 매핑이 아니라 6-SM 인스턴스의 호스트 메모리 접근에서
+발생한다. GPU 내부의 원인은 찾지 못하였다. 12-SM 인스턴스에서 시분할되는
+프로세스 2개의 속도는 1.002이다.
 
-### 4.6 Against sharing inside one process (record Section 6.10)
+### 4.6 프로세스 내부 공유와의 비교 (기록 6.10절)
 
-Eight agents on the 16,321-token prefix, 64 tokens each.
+16,321토큰 프리픽스 위의 에이전트 8개가 각각 64토큰을 생성한다.
 
 <p align="center"><img src="figures/eval_inproc.png" width="620"></p>
-<p align="center"><b>Figure 10.</b> Throughput against memory. Circles: eight processes; square: one batching server; triangles: one batching server in each MIG instance. The memory of the eight processes on extents includes the cache file.</p>
+<p align="center"><b>그림 10.</b> 메모리 대비 처리량. 원: 프로세스 8개. 사각형: 배칭 서버 1개. 삼각형: MIG 인스턴스마다 배칭 서버 1개. 익스텐트를 쓰는 프로세스 8개의 메모리에는 캐시 파일이 포함된다.</p>
 
-| Configuration | Generation (tokens/s) | Memory (GiB) | All agents ready (s) |
+| 구성 | 생성 (tokens/s) | 메모리 (GiB) | 전체 에이전트 준비 (초) |
 |---|---:|---:|---:|
-| 8 processes, each copies the prefix | 35.0 | 19.9 | - |
-| 8 processes on extents | 34.4 | 5.7 | - |
-| one batching server, 8 sequences | 75.6 | 2.5 | 20.7 |
-| a server in each MIG instance, each computes the prefix | 106.2 | 5.0 | 30.6 |
-| a server in each MIG instance, the second copies | 105.0 | 5.0 | 22.2 |
-| a server in each MIG instance, the second maps the prefix | 102.9 | 2.4 | 21.4 |
+| 프로세스 8개, 각자 프리픽스 복사 | 35.0 | 19.9 | - |
+| 프로세스 8개, 익스텐트 | 34.4 | 5.7 (캐시 파일 포함 6.6) | - |
+| 배칭 서버 1개, 시퀀스 8개 | 75.6 | 2.5 | 20.7 |
+| MIG 인스턴스마다 서버 1개, 각자 프리픽스 계산 | 106.2 | 5.0 | 30.6 |
+| MIG 인스턴스마다 서버 1개, 둘째 서버가 복사 | 105.0 | 5.0 | 22.2 |
+| MIG 인스턴스마다 서버 1개, 둘째 서버가 프리픽스 매핑 | 102.9 | 2.4 | 21.4 |
 
-### 4.7 Against sharing in device memory (record Section 6.9)
+### 4.7 디바이스 메모리 공유와의 비교 (기록 6.9절)
 
-The closest prior designs share a cache between processes in device memory.
-`kv_vmm.patch` builds that into the same engine as a baseline of our own: the
-cache consists of 2 MiB allocations of CUDA's virtual memory interface, and
-a child maps the ones a prefix fills read-only. A parent and four children in
-one MIG instance, 16,321-token prefix (12-SM / 6-SM instance):
+가장 가까운 선행 설계는 프로세스 사이에서 캐시를 디바이스 메모리로 공유한다.
+`kv_vmm.patch`는 이 방식을 같은 엔진에 기준선으로 구현한 것이다. 캐시는 CUDA
+가상 메모리 인터페이스의 2 MiB 할당으로 구성되고, 자식은 프리픽스가 채운
+할당을 읽기 전용으로 매핑한다. 아래는 한 MIG 인스턴스 안의 부모 1개와 자식
+4개, 16,321토큰 프리픽스의 결과이다(12-SM / 6-SM 인스턴스).
 
 <p align="center"><img src="figures/eval_vmm.png" width="820"></p>
-<p align="center"><b>Figure 11.</b> Host extents against a cache in shared device memory and against the copy.</p>
+<p align="center"><b>그림 11.</b> 호스트 익스텐트, 공유 디바이스 메모리 캐시, 복사의 비교.</p>
 
-| | Copy (upstream) | Device-memory cache | Host extents |
+| | 복사 (기존 엔진) | 디바이스 메모리 캐시 | 호스트 익스텐트 |
 |---|---:|---:|---:|
-| Pause of the parent (ms) | 551 / 571 | 41 / 39 | 8 / 9 |
-| Child attach (ms) | 501 / 524 | 438 / 435 | 48 / 49 |
-| Child first token (s) | 1.88 / 2.00 | 1.84 / 1.92 | 1.43 / 1.55 |
-| Memory of the four children (GiB) | 9.9 / 9.9 | 3.9 / 3.8 | 3.0 / 3.0 |
-| Child generation against the copy | 1.00 | 1.01 / 1.00 | 0.98 / 0.92 |
-| Child texts equal to the copy | reference | 12 of 12 | 12 of 12 |
-| A child in the other MIG instance | copies | refused (0 of 12) | runs (12 of 12) |
+| 부모의 정지 시간 (ms) | 551 / 571 | 41 / 39 | 8 / 9 |
+| 자식의 연결 시간 (ms) | 501 / 524 | 438 / 435 | 48 / 49 |
+| 자식의 첫 토큰 (초) | 1.88 / 2.00 | 1.84 / 1.92 | 1.43 / 1.55 |
+| 자식 4개의 메모리 (GiB) | 9.9 / 9.9 | 3.9 / 3.8 | 3.0 / 3.0 |
+| 자식의 생성 속도 (복사 대비) | 1.00 | 1.01 / 1.00 | 0.98 / 0.92 |
+| 복사와 텍스트가 같은 자식 | 기준 | 12개 가운데 12개 | 12개 가운데 12개 |
+| 다른 MIG 인스턴스의 자식 | 복사 | 거부 (12회 가운데 0회) | 실행 (12회 가운데 12회) |
 
-Inside one instance both work. Device memory keeps the generation speed of
-device memory; host extents attach an order of magnitude faster, hold about a
-fifth less, need a path and not a live exporter, and are the only one of the
-two that reaches the other instance.
+한 인스턴스 안에서는 두 방식이 모두 동작한다. 디바이스 메모리 방식은 디바이스
+메모리의 생성 속도를 유지한다. 호스트 익스텐트는 연결이 약 10배 빠르고,
+메모리를 약 5분의 1 적게 쓰며, 살아 있는 내보내기 프로세스 대신 파일 경로만
+필요하고, 둘 가운데 다른 인스턴스에 도달하는 유일한 방식이다.
 
-### 4.8 Isolation and placement (record Sections 4 and 5)
+### 4.8 격리와 배치 (기록 4, 5절)
 
-- A GPU fault of one MPS client ends the other clients of that server (0 of
-  18 survive) and nobody else (36 of 36). The sharing of memory is the same
-  under MIG, time slicing and MPS.
-- Separate processes do not raise throughput: one MIG instance stays at 25 to
-  29 tokens/s in total, however many processes share it.
-- Each MIG instance computes the same cache bits every time; the two
-  instances never compute the same bits (0 of 6). An agent that continues a
-  prefix from the other instance writes what an agent that copies that state
-  writes, not always what a recomputation in its own instance writes.
+- MPS 클라이언트 하나의 GPU 폴트는 같은 서버의 다른 클라이언트를 종료시키고
+  (18개 가운데 0개 생존) 그 밖의 프로세스에는 영향을 주지 않는다(36개 가운데
+  36개). 메모리 공유는 MIG, 시분할, MPS에서 같다.
+- 프로세스를 분리해도 처리량은 늘지 않는다. MIG 인스턴스 하나의 합계는 공유하는
+  프로세스 수와 무관하게 25~29 tokens/s이다.
+- 각 MIG 인스턴스는 매번 같은 캐시 비트를 계산하지만, 두 인스턴스가 같은 비트를
+  계산한 경우는 없다(6회 가운데 0회). 다른 인스턴스의 프리픽스를 이어 가는
+  에이전트는 그 상태를 복사한 에이전트와 같은 텍스트를 생성하며, 자신의
+  인스턴스에서 다시 계산한 텍스트와는 다를 수 있다.
 
-### 4.9 Gates that failed
+### 4.9 통과하지 못한 사전 기준
 
-| Gate, as stated before the campaign | Outcome |
+| 캠페인 전에 정한 기준 | 결과 |
 |---|---|
-| every agent writes the text of an agent that recomputes the prefix | fails for agents in the other MIG instance (12 of 36 and 24 of 36 equal), for the upstream copy as well; holds in the publisher's instance (42 of 42) and against the copy (78 of 78). Cause: the instances differ in their bits |
-| extents keep 97% of the generation speed of the copy | fails in 2 of 6 cells (0.955, 0.970). Cause: the cost of host memory in the 6-SM instance |
+| 모든 에이전트가 프리픽스를 다시 계산한 에이전트와 같은 텍스트를 생성한다 | 다른 MIG 인스턴스의 에이전트에서 통과하지 못하였다(4,081토큰에서 36개 가운데 12개, 16,321토큰에서 36개 가운데 24개 일치). 기존 엔진의 복사도 같다. 게시자의 인스턴스에서는 통과하고(42개 가운데 42개), 복사 대비로는 통과한다(78개 가운데 78개). 원인은 두 인스턴스의 비트 차이이다 |
+| 익스텐트가 복사의 생성 속도의 97%를 유지한다 | 6개 셀 가운데 2개에서 통과하지 못하였다(0.955, 0.970). 원인은 6-SM 인스턴스에서 호스트 메모리의 비용이다 |
 
-## 5. Limits
+## 5. 한계
 
-- One device, one engine, one 7B model. Nothing was measured on DGX Spark,
-  Grace Hopper or an Apple device.
-- The cache experiments are driven by small programs (`kv_fork`, `kv_batch`,
-  `kv_spawn`), not by `llama-server`.
-- One level of fork: an agent cannot publish its own rows.
-- Agents trust the publisher; whoever can write the cache file changes the
-  prefix for all. Timing channels between processes that share a cache are
-  not addressed. Sharing across MIG instances is for agents of one tenant.
-- The cost of a host-memory cache in the 6-SM instance is measured, not
-  explained.
-- The cache must use flash attention and one stream; a frozen cell is lost to
-  its agent; the cache file is unevictable memory on a device without swap.
+- 장치 한 대, 엔진 하나, 7B 모델 하나에서 측정하였다. DGX Spark, Grace Hopper,
+  Apple 장치에서는 측정하지 않았다.
+- 캐시 실험은 `llama-server`가 아니라 작은 드라이버 프로그램(`kv_fork`,
+  `kv_batch`, `kv_spawn`)으로 수행하였다.
+- 포크는 한 단계만 지원한다. 에이전트는 자신의 행을 게시하지 못한다.
+- 에이전트는 게시자를 신뢰한다. 캐시 파일을 쓸 수 있는 주체는 모든 에이전트의
+  프리픽스를 바꿀 수 있다. 캐시를 공유하는 프로세스 사이의 타이밍 채널은 다루지
+  않는다. MIG 인스턴스 사이의 공유는 한 테넌트의 에이전트를 대상으로 한다.
+- 6-SM 인스턴스에서 호스트 메모리 캐시의 비용은 측정하였으나 원인을 설명하지
+  못하였다.
+- 캐시는 flash attention과 단일 스트림을 사용해야 한다. 동결된 셀은 해당
+  에이전트가 다시 쓰지 못한다. 캐시 파일은 스왑이 없는 장치에서 회수되지 않는
+  메모리이다.
+- 디바이스 메모리 방식의 기준선은 이 연구에서 직접 구현한 것이며 조정하지
+  않았다. 해당 선행 연구의 코드가 아니다.
 
-## 6. Artifact
+## 6. 구성물과 재현
 
-### 6.1 Layout
+### 6.1 파일 구성
 
-| File | Role |
+| 파일 | 역할 |
 |---|---|
-| `llama.cpp/` + `inplace_weights.patch` | clone of llama.cpp at commit `6f767fe96` with the weights change |
-| `llama.cpp-kv/` + `kv_extents.patch` | second clone at the same commit with the weights and the cache change |
-| `llama.cpp-vmm/` + `kv_vmm.patch` | third clone with the device-memory counterpart as well; used by one campaign |
-| `kv_fork.cpp` | one role of a prefix-sharing experiment: compute alone, publish as a parent, or attach as a child |
-| `kv_batch.cpp` | the same roles for a batching server with several sequences |
-| `kv_spawn.cpp` | a parent that publishes and starts its children itself, so that they inherit handles of shared device memory |
-| `cuda_ipc_probe.cu`, `cuda_vmm_probe.cu` | which GPU-level route can share memory between two processes in a given placement |
-| `cuda_share_load_probe.cu` | whether memory shared that way stays readable while a third process keeps the GPU busy (a diagnostic; no campaign) |
-| `kv_file_diff.py` | compares two cache files value by value |
-| `make_lora.py` | writes synthetic LoRA adapters for a GGUF model |
-| `models/` | the model used by the campaigns (downloaded; not part of the artifact) |
-| `summarize_*.awk`, `tables.py` | analysis and the tables of the record |
-| `figures/` | the figures of this page: TikZ sources in `figures/src/`, `make_eval_figures.py` for the graphs (read from `results/`), `build.sh` builds both as PDF and PNG |
-| `docs/` | the record, the substrate record and the prior-art audits; `docs/record_src/` holds the sections and tables of the record and `assemble.py`, which builds it |
-| `results/` | raw logs, summaries, metadata and pinned source hashes of every campaign |
-| `verify_llm_share_artifact.sh` | re-derives every packaged result from its raw log, no GPU |
+| `llama.cpp/` + `inplace_weights.patch` | llama.cpp 커밋 `6f767fe96`의 클론과 가중치 변경 |
+| `llama.cpp-kv/` + `kv_extents.patch` | 같은 커밋의 두 번째 클론과 가중치 및 캐시 변경 |
+| `llama.cpp-vmm/` + `kv_vmm.patch` | 디바이스 메모리 방식을 더한 세 번째 클론. 캠페인 하나에서만 사용 |
+| `kv_fork.cpp` | 프리픽스 공유 실험의 한 역할: 단독 계산, 부모로서 게시, 자식으로서 연결 |
+| `kv_batch.cpp` | 여러 시퀀스를 처리하는 배칭 서버의 같은 역할 |
+| `kv_spawn.cpp` | 게시한 뒤 자식을 직접 실행하는 부모. 자식이 공유 디바이스 메모리의 핸들을 상속한다 |
+| `cuda_ipc_probe.cu`, `cuda_vmm_probe.cu` | 주어진 배치에서 GPU 수준 경로가 두 프로세스 사이의 메모리를 공유하는지 확인 |
+| `cuda_share_load_probe.cu` | 세 번째 프로세스가 GPU를 사용하는 동안 공유 메모리를 읽을 수 있는지 확인(진단용, 캠페인 없음) |
+| `kv_file_diff.py` | 두 캐시 파일을 값 단위로 비교 |
+| `make_lora.py` | GGUF 모델용 합성 LoRA 어댑터 생성 |
+| `models/` | 캠페인에 사용한 모델(내려받은 것이며 저장소에 포함되지 않는다) |
+| `summarize_*.awk`, `tables.py` | 분석과 기록의 표 |
+| `figures/` | 이 문서의 그림. TikZ 소스는 `figures/src/`, 그래프는 `make_eval_figures.py`(`results/`에서 읽음), `build.sh`가 PDF와 PNG를 만든다 |
+| `docs/` | 연구 기록, 기반 측정 기록, 선행 연구 조사. `docs/record_src/`에 기록의 절과 표, 이를 조립하는 `assemble.py`가 있다 |
+| `results/` | 모든 캠페인의 원시 로그, 요약, 메타데이터, 고정된 소스 해시 |
+| `verify_llm_share_artifact.sh` | GPU 없이 모든 결과를 원시 로그에서 다시 계산 |
 
-| Runner | Measures | Section |
+| 러너 | 측정 내용 | 절 |
 |---|---|---|
-| `run_engine_single.sh`, `run_engine_pages.sh` | one process, device copy against in place; page size of the mapped model | 4.1 |
-| `run_engine_adapters.sh` | five processes, four adapters, one base | 4.1 |
-| `run_engine_agents.sh` | N processes under MIG, time slicing, MPS | 4.1, 4.8 |
-| `run_engine_batched.sh`, `run_engine_groups.sh` | one process with N sequences; a batching server per MIG instance | 4.8 |
-| `run_sharing_routes.sh`, `run_vmm_routes.sh` | CUDA IPC, CUDA's virtual memory interface, and the host page table for three placements | 2.3, 4.7 |
-| `run_engine_prefix.sh` | a shared prefix with the engine's own tools | 4.2 |
-| `run_engine_kvshare.sh` | N agents on one published prefix: recompute, copy, copy-on-write, extents | 4.2 |
-| `run_engine_kvfork.sh` | a parent that hands its state to children and keeps generating | 4.4 |
-| `run_engine_kvdet.sh` | the bits of a prefix cache across repetitions and MIG instances | 4.8 |
-| `run_engine_kvcow.sh` | copy-on-write with and without the CPU read pass | 4.3 |
-| `run_engine_kvspeed.sh` | generation speed with the cache in device and in host memory | 4.5 |
-| `run_engine_kvbatch.sh` | eight agents in one batching server, and in one per MIG instance | 4.6 |
-| `run_engine_kvvmm.sh` | extents against their device-memory counterpart and the copy | 4.7 |
+| `run_engine_single.sh`, `run_engine_pages.sh` | 프로세스 1개에서 디바이스 복사와 in-place 비교, 매핑한 모델의 페이지 크기 | 4.1 |
+| `run_engine_adapters.sh` | 프로세스 5개, 어댑터 4개, 기반 모델 1개 | 4.1 |
+| `run_engine_agents.sh` | MIG, 시분할, MPS에서 프로세스 N개 | 4.1, 4.8 |
+| `run_engine_batched.sh`, `run_engine_groups.sh` | 시퀀스 N개를 처리하는 프로세스 1개, MIG 인스턴스마다 배칭 서버 1개 | 4.8 |
+| `run_sharing_routes.sh`, `run_vmm_routes.sh` | 세 가지 배치에서 CUDA IPC, CUDA 가상 메모리 인터페이스, 호스트 페이지 테이블 | 2.3, 4.7 |
+| `run_engine_prefix.sh` | 엔진의 기존 도구를 사용한 프리픽스 공유 | 4.2 |
+| `run_engine_kvshare.sh` | 게시된 프리픽스 위의 에이전트 N개: 재계산, 복사, copy-on-write, 익스텐트 | 4.2 |
+| `run_engine_kvfork.sh` | 자식에게 상태를 넘기고 계속 생성하는 부모 | 4.4 |
+| `run_engine_kvdet.sh` | 반복과 MIG 인스턴스에 따른 프리픽스 캐시의 비트 | 4.8 |
+| `run_engine_kvcow.sh` | CPU 읽기 유무에 따른 copy-on-write | 4.3 |
+| `run_engine_kvspeed.sh` | 캐시를 디바이스 메모리와 호스트 메모리에 둔 경우의 생성 속도 | 4.5 |
+| `run_engine_kvbatch.sh` | 배칭 서버 1개와 MIG 인스턴스마다 1개에서의 에이전트 8개 | 4.6 |
+| `run_engine_kvvmm.sh` | 익스텐트, 디바이스 메모리 방식, 복사의 비교 | 4.7 |
 
-### 6.2 Build
+### 6.2 빌드
 
 ```bash
 git clone <llama.cpp> llama.cpp && git -C llama.cpp checkout 6f767fe96
@@ -404,15 +503,15 @@ cmake --build llama.cpp/build -j 12 --target llama-bench llama-completion \
   llama-batched-bench
 python3 make_lora.py models/MODEL.gguf adapters/lora_1.gguf 1
 
-# the engine with the cache change, and the drivers that link against it
+# 캐시 변경을 적용한 엔진과 이를 링크하는 드라이버
 git clone <llama.cpp> llama.cpp-kv && git -C llama.cpp-kv checkout 6f767fe96
 git -C llama.cpp-kv apply ../kv_extents.patch
 cmake -S llama.cpp-kv -B llama.cpp-kv/build -DGGML_CUDA=ON -DCMAKE_BUILD_TYPE=Release \
   -DCMAKE_CUDA_ARCHITECTURES=110 -DLLAMA_CURL=OFF
 cmake --build llama.cpp-kv/build -j 12 --target llama-completion llama-bench
-make                      # the probes, kv_fork, kv_batch
+make                      # 프로브, kv_fork, kv_batch
 
-# the engine with the device-memory cache as well, and its two drivers
+# 디바이스 메모리 캐시를 더한 엔진과 그 드라이버 두 개
 git clone <llama.cpp> llama.cpp-vmm && git -C llama.cpp-vmm checkout 6f767fe96
 git -C llama.cpp-vmm apply ../kv_vmm.patch
 cmake -S llama.cpp-vmm -B llama.cpp-vmm/build -DGGML_CUDA=ON -DCMAKE_BUILD_TYPE=Release \
@@ -421,19 +520,19 @@ cmake --build llama.cpp-vmm/build -j 12 --target llama
 make kv_spawn kv_fork_vmm
 ```
 
-`kv_extents.patch` contains `inplace_weights.patch`, and `kv_vmm.patch`
-contains `kv_extents.patch`. Each clone carries exactly its patch. The clones,
-the model, the adapters and the built programs are not in the repository.
+`kv_extents.patch`는 `inplace_weights.patch`를 포함하고, `kv_vmm.patch`는
+`kv_extents.patch`를 포함한다. 각 클론에는 해당 패치만 적용되어 있다. 클론,
+모델, 어댑터, 빌드된 프로그램은 저장소에 포함되지 않는다.
 
-### 6.3 Campaigns
+### 6.3 캠페인
 
-GPU campaigns must not overlap. Campaigns that start MPS servers need a short
-directory for the control socket (`MPS_ROOT`, at most about 85 characters) and
-refuse to run while another MPS daemon is active. `run_engine_pages.sh` mounts
-a tmpfs and a hugetlbfs and reserves a hugetlb pool with `sudo`; the
-`run_engine_kv*.sh` runners except `run_engine_kvdet.sh` mount a tmpfs for the
-cache files; all remove what they made on exit. Do not edit a runner while it
-runs: the shell reads it as it goes.
+GPU 캠페인은 동시에 실행하지 않는다. MPS 서버를 시작하는 캠페인은 제어 소켓을
+둘 짧은 디렉터리가 필요하고(`MPS_ROOT`, 약 85자 이하), 다른 MPS 데몬이 실행
+중이면 실행을 거부한다. `run_engine_pages.sh`는 `sudo`로 tmpfs와 hugetlbfs를
+마운트하고 hugetlb 풀을 예약한다. `run_engine_kvdet.sh`를 제외한
+`run_engine_kv*.sh` 러너는 캐시 파일용 tmpfs를 마운트한다. 모든 러너는 종료할
+때 자신이 만든 것을 제거한다. 실행 중인 러너 스크립트는 편집하지 않는다. 셸이
+스크립트를 실행하면서 읽기 때문이다.
 
 ```bash
 RESULT_TAG=engine-single-rerun   ./run_engine_single.sh
@@ -458,68 +557,68 @@ RESULT_TAG=engine-kvvmm-rerun    ./run_engine_kvvmm.sh
 ./verify_llm_share_artifact.sh
 ```
 
-`verify_llm_share_artifact.sh` needs no GPU and runs on a fresh clone. It
-checks each patch against its engine checkout when the checkout is present,
-and the pinned sources of the substrate project when that project lies next
-to this repository; it reports how many of the latter it skipped. Two runners
-(`run_sharing_routes.sh`, and `tables.py` for two tables of Section 5 of the
-record) use the substrate project and need it at `../thor_hostmm`.
+`verify_llm_share_artifact.sh`는 GPU가 필요하지 않으며 새로 받은 저장소에서
+실행된다. 엔진 클론이 있으면 각 패치를 클론과 대조하고, 기반 측정 프로젝트가
+이 저장소 옆에 있으면 그 프로젝트의 고정된 소스를 확인한다. 건너뛴 소스의 수는
+출력에 표시된다. 러너 두 개(`run_sharing_routes.sh`와, 기록 5절의 표 두 개를
+만드는 `tables.py`)는 기반 측정 프로젝트를 사용하며 `../thor_hostmm`에 있어야
+한다.
 
-To rebuild the record and the figures after a campaign:
+캠페인 이후 기록과 그림을 다시 만드는 방법은 다음과 같다.
 
 ```bash
 python3 tables.py results ../thor_hostmm/results docs/record_src
 python3 docs/record_src/assemble.py
-figures/build.sh          # needs pdflatex, pdftoppm, matplotlib
+figures/build.sh          # pdflatex, pdftoppm, matplotlib 필요
 ```
 
-## 7. Using the paths
+## 7. 사용법
 
-### 7.1 Weights in place
+### 7.1 가중치 in-place
 
 ```bash
 GGML_CUDA_HOST_PTR=1 llama.cpp/build/bin/llama-completion -m MODEL.gguf -ngl 99 ...
 ```
 
-- Every process that maps the same file shares its pages. Keep the file
-  unwritable for the serving processes; whoever can write it changes the
-  model for all of them.
-- Put the model on a tmpfs mounted with `huge=always`, or on hugetlbfs, to
-  remove the cost of 4 KiB pages.
-- `GGML_CUDA_HOST_PTR_PREREAD=0` skips the CPU read of every page.
-- Under MPS a GPU fault of one client ends the work of every client of that
-  server. Put processes that must survive each other's faults into different
-  MIG instances or run them without MPS.
+- 같은 파일을 매핑한 모든 프로세스가 그 페이지를 공유한다. 서빙 프로세스가
+  파일을 쓸 수 없게 유지한다. 파일을 쓸 수 있는 주체는 모든 프로세스의 모델을
+  바꿀 수 있다.
+- 4 KiB 페이지의 비용을 없애려면 모델을 `huge=always`로 마운트한 tmpfs나
+  hugetlbfs에 둔다.
+- `GGML_CUDA_HOST_PTR_PREREAD=0`은 CPU가 모든 페이지를 읽는 과정을 생략한다.
+- MPS에서는 클라이언트 하나의 GPU 폴트가 같은 서버의 모든 클라이언트를
+  종료시킨다. 서로의 장애에서 살아남아야 하는 프로세스는 다른 MIG 인스턴스에
+  두거나 MPS 없이 실행한다.
 
-### 7.2 The cache as extents
+### 7.2 캐시 익스텐트
 
-The cache change is selected by the environment of a process that uses
-`llama.cpp-kv`; without `LLAMA_KV_HOST` the engine behaves as upstream.
+캐시 변경은 `llama.cpp-kv`를 사용하는 프로세스의 환경 변수로 선택한다.
+`LLAMA_KV_HOST`가 없으면 엔진은 원본과 같이 동작한다.
 
 ```bash
-# publisher: computes the prefix; its cache is the file /mnt/kv/prefix.0
+# 게시자: 프리픽스를 계산한다. 캐시는 파일 /mnt/kv/prefix.0 이다
 GGML_CUDA_HOST_PTR=1 LLAMA_KV_HOST=/mnt/kv/prefix LLAMA_KV_GROW=256 \
   ./kv_fork parent MODEL.gguf 8192 prefix.txt prefix.state "" 0
-# agent: maps the first 4081 rows read-only, writes its own rows after them
+# 에이전트: 앞의 4081행을 읽기 전용으로 매핑하고 그 뒤에 자신의 행을 쓴다
 GGML_CUDA_HOST_PTR=1 LLAMA_KV_HOST=/mnt/kv/prefix LLAMA_KV_PREFIX=4081 \
   LLAMA_KV_GROW=256 ./kv_fork child MODEL.gguf 8192 prefix.state "QUESTION" 64
 ```
 
-| Variable | Meaning |
+| 환경 변수 | 의미 |
 |---|---|
-| `LLAMA_KV_HOST=anon` | the cache is private host memory |
-| `LLAMA_KV_HOST=PATH` | publisher: the cache is the file `PATH.0`; saving the state of the context publishes the rows in use |
-| `LLAMA_KV_PREFIX=ROWS` | with the above: agent; the first `ROWS` rows are a read-only mapping of the file |
-| `LLAMA_KV_GROW=ROWS` | memory follows the rows in use, `ROWS` at a time |
-| `LLAMA_KV_COW=1` or `2` | the alternative the measurements argue against: the agent maps the whole file writable and private; `2` leaves out the CPU read pass |
-| `LLAMA_KV_VMM=1`, `LLAMA_KV_VMM_IMPORT` | `llama.cpp-vmm` only: the device-memory counterpart |
+| `LLAMA_KV_HOST=anon` | 캐시를 사설 호스트 메모리에 둔다 |
+| `LLAMA_KV_HOST=PATH` | 게시자. 캐시는 파일 `PATH.0`이다. 컨텍스트의 상태를 저장하면 사용 중인 행이 게시된다 |
+| `LLAMA_KV_PREFIX=ROWS` | 위 변수와 함께 쓰면 에이전트. 앞의 `ROWS`행은 파일의 읽기 전용 매핑이다 |
+| `LLAMA_KV_GROW=ROWS` | 메모리가 사용 중인 행을 `ROWS`행 단위로 따라간다 |
+| `LLAMA_KV_COW=1` 또는 `2` | 측정 결과가 반대하는 대안. 에이전트가 파일 전체를 쓰기 가능한 사설 매핑으로 매핑한다. `2`는 CPU 읽기를 생략한다 |
+| `LLAMA_KV_VMM=1`, `LLAMA_KV_VMM_IMPORT` | `llama.cpp-vmm` 전용. 디바이스 메모리 방식 |
 
-- Saving the state of a publisher (`llama_state_save_file`, or
-  `--prompt-cache` of `llama-completion`) publishes. An agent loads that
-  state file and no other; an agent cannot save its own state.
-- Put the cache file on a tmpfs mounted with `huge=always` and keep it
-  unwritable for the agents.
-- Put agents with a long shared prefix into the 12-SM instance (Section 4.5).
-- Start agents with `posix_spawn` or `exec`, not with `fork` of a process
-  that has used the GPU.
-- Agents that can live in one process should (Section 4.6).
+- 게시자의 상태를 저장하면(`llama_state_save_file` 또는 `llama-completion`의
+  `--prompt-cache`) 게시된다. 에이전트는 그 상태 파일만 읽을 수 있고, 자신의
+  상태를 저장하지 못한다.
+- 캐시 파일은 `huge=always`로 마운트한 tmpfs에 두고, 에이전트가 쓸 수 없게
+  유지한다.
+- 긴 프리픽스를 공유하는 에이전트는 12-SM 인스턴스에 둔다(4.5절).
+- 에이전트는 GPU를 사용한 프로세스의 `fork`가 아니라 `posix_spawn`이나 `exec`로
+  시작한다.
+- 한 프로세스에 둘 수 있는 에이전트는 한 프로세스에 둔다(4.6절).
