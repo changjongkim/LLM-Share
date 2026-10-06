@@ -1,45 +1,49 @@
-% Shared TikZ style of the STATOR design figures (the look of the PHASOR
-% and CASCADE figures).
+% Shared TikZ style of the STATOR design figures. Teal marks shared,
+% immutable state; amber marks what one process writes; violet marks a
+% second level of sharing; text is regular weight except the panel titles.
 \usepackage{newtxtext}
 \usepackage{tikz}
 \usetikzlibrary{arrows.meta, positioning, fit, calc, patterns, shapes.geometric, decorations.pathreplacing}
 
-\definecolor{panel}{gray}{0.94}
-\definecolor{cyanp}{HTML}{BFE6EC}
-\definecolor{peach}{HTML}{FBE1D2}
-\definecolor{hot}{HTML}{E8735A}
-\definecolor{gold}{HTML}{FFD966}
-\definecolor{bluec}{HTML}{8FAADC}
-\definecolor{greenc}{HTML}{A9D18E}
-\definecolor{dred}{HTML}{C00000}
-\definecolor{dblue}{HTML}{2E75B6}
+\definecolor{panel}{HTML}{F3F4F6}   % a group of components
+\definecolor{gpuc}{HTML}{E4E0F6}    % the GPU
+\definecolor{ptc}{HTML}{FAF0DC}     % page tables and the SMMU
+\definecolor{modelc}{HTML}{CDEBE6}  % the weights
+\definecolor{sharedc}{HTML}{7FCBC1} % shared rows, read-only
+\definecolor{tailc}{HTML}{F7B955}   % rows of one process, in use
+\definecolor{aheadc}{HTML}{FCE6C2}  % populated ahead, or write-protected
+\definecolor{copyc}{HTML}{F4BFCB}   % a copied page
+\definecolor{segc}{HTML}{B7A9E8}    % the segment of a second ancestor
+\definecolor{faultc}{HTML}{E8736A}  % a private copy made by a fault
+\definecolor{actc}{HTML}{FDE9C9}    % an operation of the design
+\definecolor{roline}{HTML}{14786F}  % read-only mappings
+\definecolor{rwline}{HTML}{C5432F}  % writable mappings and faults
 
 \tikzset{
-  layer/.style={draw=black!70, fill=panel, line width=0.5pt},
-  sub/.style={draw=black!60, line width=0.4pt},
-  comp/.style={draw=black, fill=white, line width=0.4pt, align=center,
-               font=\bfseries\scriptsize, inner sep=1.5pt, minimum height=0.5cm},
-  seg/.style={draw=black!70, line width=0.35pt, inner sep=0pt, align=center,
-              font=\bfseries\scriptsize, minimum height=0.4cm},
-  free/.style={seg, pattern=north east lines, pattern color=black!45},
-  blk/.style={draw=black!70, line width=0.35pt, minimum width=0.42cm, minimum height=0.36cm,
-              inner sep=0pt, font=\bfseries\scriptsize},
-  hole/.style={blk, pattern=north east lines, pattern color=black!50},
-  tag/.style={font=\bfseries\scriptsize, inner sep=1pt},
+  layer/.style={draw=black!60, fill=panel, line width=0.5pt},
+  sub/.style={draw=black!55, line width=0.4pt},
+  comp/.style={draw=black!85, fill=white, line width=0.4pt, align=center,
+               font=\scriptsize, inner xsep=3pt, inner ysep=1.5pt, minimum height=0.5cm},
+  seg/.style={draw=black!65, line width=0.35pt, inner sep=0pt, align=center,
+              font=\scriptsize, minimum height=0.4cm},
+  free/.style={seg, pattern=north east lines, pattern color=black!40},
+  blk/.style={draw=black!65, line width=0.35pt, minimum width=0.42cm, minimum height=0.36cm,
+              inner xsep=2pt, inner ysep=0pt, font=\scriptsize},
+  hole/.style={blk, pattern=north east lines, pattern color=black!45},
+  tag/.style={font=\scriptsize, inner sep=1pt},
   ttl/.style={font=\bfseries\small},
-  lbl/.style={font=\bfseries\scriptsize},
-  note/.style={font=\itshape\bfseries\scriptsize},
+  lbl/.style={font=\scriptsize},
+  note/.style={font=\itshape\scriptsize, inner sep=1pt},
   arr/.style={-{Latex[length=1.6mm]}, line width=0.8pt},
   thin/.style={-{Latex[length=1.3mm]}, line width=0.5pt},
   fat/.style={-{Triangle[length=2.2mm,width=3.4mm]}, line width=2.4pt},
   num/.style={circle, fill=black, text=white, font=\bfseries\scriptsize,
               inner sep=0.6pt, minimum size=0.33cm},
-  rnum/.style={num, fill=dred},
 }
 % A legend entry: a filled square and its name, at (x,y).
 \newcommand{\legendfill}[4]{%
-  \draw[black!70, line width=0.35pt, fill=#3] (#1,#2) rectangle ++(0.22,0.2);
-  \node[tag, anchor=west] at (#1+0.26,#2+0.1) {#4};}
+  \draw[black!65, line width=0.35pt, fill=#3] (#1,#2) rectangle ++(0.22,0.2);
+  \node[tag, anchor=west] at (#1+0.27,#2+0.1) {#4};}
 \newcommand{\legendhatch}[3]{%
-  \draw[black!70, line width=0.35pt, pattern=north east lines, pattern color=black!50] (#1,#2) rectangle ++(0.22,0.2);
-  \node[tag, anchor=west] at (#1+0.26,#2+0.1) {#3};}
+  \draw[black!65, line width=0.35pt, pattern=north east lines, pattern color=black!45] (#1,#2) rectangle ++(0.22,0.2);
+  \node[tag, anchor=west] at (#1+0.27,#2+0.1) {#3};}

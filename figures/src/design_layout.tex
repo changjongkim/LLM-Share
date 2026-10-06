@@ -18,42 +18,42 @@
 
 % one tensor of an agent: prefix, copied page, rows in use, populated, unbacked
 \newcommand{\tensor}[3]{% y, width of the rows in use, name
-  \node[seg, fill=bluec, minimum width=3.6cm, minimum height=0.44cm, anchor=west] (#3p) at (1.7,#1) {};
-  \node[seg, fill=peach, minimum width=0.2cm, minimum height=0.44cm, anchor=west] (#3l) at (5.3,#1) {};
-  \node[seg, fill=gold, minimum width=#2 cm, minimum height=0.44cm, anchor=west] (#3u) at (5.5,#1) {};
-  \node[seg, fill=gold!40, minimum width=0.45cm, minimum height=0.44cm, anchor=west] (#3a) at (5.5+#2,#1) {};
+  \node[seg, fill=sharedc, minimum width=3.6cm, minimum height=0.44cm, anchor=west] (#3p) at (1.7,#1) {};
+  \node[seg, fill=copyc, minimum width=0.2cm, minimum height=0.44cm, anchor=west] (#3l) at (5.3,#1) {};
+  \node[seg, fill=tailc, minimum width=#2 cm, minimum height=0.44cm, anchor=west] (#3u) at (5.5,#1) {};
+  \node[seg, fill=aheadc, minimum width=0.45cm, minimum height=0.44cm, anchor=west] (#3a) at (5.5+#2,#1) {};
   \node[free, minimum width=2.75cm-#2 cm, minimum height=0.44cm, anchor=west] (#3f) at (5.95+#2,#1) {};
 }
-\node[ttl, anchor=east] at (1.55,2.85) {Agent 1};
+\node[font=\small, anchor=east] at (1.55,2.85) {Agent 1};
 \tensor{2.85}{1.2}{one}
-\node[ttl, anchor=east] at (1.55,1.0) {Agent 2};
+\node[font=\small, anchor=east] at (1.55,1.0) {Agent 2};
 \tensor{1.0}{0.5}{two}
 
 % the cache file of the publisher
-\node[ttl, anchor=east, align=right] at (1.55,1.925) {Prefix\\[-2pt]Cache File};
-\node[seg, fill=bluec, minimum width=3.8cm, minimum height=0.44cm, anchor=west] (filep) at (1.7,1.925) {};
-\node[seg, fill=gold, minimum width=0.8cm, minimum height=0.44cm, anchor=west] at (5.5,1.925) {};
+\node[font=\small, anchor=east, align=right] at (1.55,1.925) {Prefix\\[-2pt]Cache File};
+\node[seg, fill=sharedc, minimum width=3.8cm, minimum height=0.44cm, anchor=west] (filep) at (1.7,1.925) {};
+\node[seg, fill=tailc, minimum width=0.8cm, minimum height=0.44cm, anchor=west] at (5.5,1.925) {};
 \node[free, minimum width=2.4cm, minimum height=0.44cm, anchor=west] at (6.3,1.925) {};
 
 % the same pages in every agent
 \foreach \x in {2.6,4.4} {
-  \draw[arr, dblue, line width=1.1pt] (\x,2.145) -- (\x,2.63);
-  \draw[arr, dblue, line width=1.1pt] (\x,1.705) -- (\x,1.22);
+  \draw[arr, roline, line width=1.1pt] (\x,2.145) -- (\x,2.63);
+  \draw[arr, roline, line width=1.1pt] (\x,1.705) -- (\x,1.22);
 }
-\node[note, text=dblue] at (3.5,2.39) {same pages};
-\node[note, text=dblue] at (3.5,1.46) {same pages};
+\node[note, text=roline] at (3.5,2.39) {same pages};
+\node[note, text=roline] at (3.5,1.46) {same pages};
 
 % the GPU writes behind the CPU
-\draw[arr, dred] (6.7,2.32) -- (6.7,2.63);
-\node[tag, text=dred, anchor=east] at (6.64,2.4) {GPU Write};
+\draw[arr, rwline] (6.7,2.32) -- (6.7,2.63);
+\node[tag, text=rwline, anchor=east] at (6.64,2.4) {GPU Write};
 \draw[arr] (7.15,2.32) -- (7.15,2.63);
 \node[tag, anchor=west] at (7.21,2.4) {CPU Populate};
 
 % legend
-\legendfill{0.2}{0.2}{bluec}{Shared (RO)}
-\legendfill{2.0}{0.2}{peach}{Copied Page}
-\legendfill{3.85}{0.2}{gold}{In Use}
-\legendfill{5.15}{0.2}{gold!40}{Populated}
+\legendfill{0.2}{0.2}{sharedc}{Shared (RO)}
+\legendfill{2.0}{0.2}{copyc}{Copied Page}
+\legendfill{3.85}{0.2}{tailc}{In Use}
+\legendfill{5.15}{0.2}{aheadc}{Populated}
 \legendhatch{6.95}{0.2}{Unbacked}
 \end{tikzpicture}
 \end{document}

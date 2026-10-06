@@ -6,25 +6,25 @@
 \begin{tikzpicture}[x=1cm, y=1cm]
 \draw[layer] (0,0) rectangle (5.8,3.15);
 \node[ttl, anchor=west] at (1.5,2.88) {Private Writable Mapping};
-\node[comp, fill=cyanp, minimum width=0.95cm, minimum height=0.5cm] (gpu) at (0.68,1.55) {GPU};
+\node[comp, fill=gpuc, minimum width=0.95cm, minimum height=0.5cm] (gpu) at (0.68,1.55) {GPU};
 % before: shared pages, one without the accessed flag
 \foreach \k in {0,...,7} {
-  \node[blk, fill=bluec] (b\k) at (1.78+\k*0.5,2.3) {};
+  \node[blk, fill=sharedc] (b\k) at (1.78+\k*0.5,2.3) {};
 }
-\node[blk, fill=white, draw=dred, line width=0.9pt] (flag) at (b3) {};
-\node[tag, text=dred, anchor=south west] at (3.62,2.56) {A = 0};
-\draw[thin, dred] (3.64,2.62) -- (b3.north east);
-\draw[arr, dblue] (gpu.north) |- (b0.west);
-\node[note, text=dblue, anchor=south] at (0.68,2.32) {read};
+\node[blk, fill=white, draw=rwline, line width=0.9pt] (flag) at (b3) {};
+\node[tag, text=rwline, anchor=south west] at (3.62,2.56) {A = 0};
+\draw[thin, rwline] (3.64,2.62) -- (b3.north east);
+\draw[arr, roline] (gpu.north) |- (b0.west);
+\node[note, text=roline, anchor=south] at (0.68,2.32) {read};
 % after: the whole block is copied
-\draw[arr, dred] (3.53,2.08) -- (3.53,1.42);
-\node[note, text=dred, anchor=west] at (3.6,1.75) {write fault};
+\draw[arr, rwline] (3.53,2.08) -- (3.53,1.42);
+\node[note, text=rwline, anchor=west] at (3.6,1.75) {write fault};
 \foreach \k in {0,...,7} {
-  \node[blk, fill=hot] (c\k) at (1.78+\k*0.5,1.2) {};
+  \node[blk, fill=faultc] (c\k) at (1.78+\k*0.5,1.2) {};
 }
 \draw[decorate, decoration={brace, amplitude=3pt, mirror}] (1.56,0.95) -- (5.5,0.95);
 \node[tag] at (3.53,0.62) {2 MiB Block: 512 Copies};
-\legendfill{1.0}{0.12}{bluec}{Shared}
-\legendfill{2.4}{0.12}{hot}{Private Copy}
+\legendfill{1.0}{0.12}{sharedc}{Shared}
+\legendfill{2.4}{0.12}{faultc}{Private Copy}
 \end{tikzpicture}
 \end{document}

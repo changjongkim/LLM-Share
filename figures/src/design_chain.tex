@@ -4,7 +4,6 @@
 % the leaf writes lies in its private tail.
 \documentclass[border=2pt]{standalone}
 \input{llmshare_style}
-\definecolor{segc}{HTML}{A9D18E}
 \begin{document}
 \begin{tikzpicture}[x=1cm, y=1cm]
 \draw[layer] (0,0) rectangle (8.9,4.0);
@@ -12,10 +11,10 @@
 % ---------------- the agent tree ----------------
 \draw[sub, fill=white] (0.1,0.62) rectangle (2.0,3.88);
 \node[ttl] at (1.05,3.65) {Agent Tree};
-\node[blk, fill=bluec, minimum width=0.8cm] (root) at (1.05,3.15) {Root};
+\node[blk, fill=sharedc, minimum width=0.8cm] (root) at (1.05,3.15) {Root};
 \node[blk, fill=segc, minimum width=0.85cm] (lead) at (0.6,2.25) {Leader};
 \node[blk, fill=white, minimum width=0.85cm, text=black!45, draw=black!35] (lead2) at (1.52,2.25) {Leader};
-\node[blk, fill=gold, minimum width=0.6cm] (leaf) at (0.45,1.3) {Leaf};
+\node[blk, fill=tailc, minimum width=0.6cm] (leaf) at (0.45,1.3) {Leaf};
 \node[blk, fill=white, minimum width=0.6cm, text=black!45, draw=black!35] (leaf2) at (1.12,1.3) {Leaf};
 \draw[arr, line width=1.0pt] (root.south) -- (lead.north);
 \draw[arr, black!35] (root.south) -- (lead2.north);
@@ -37,19 +36,19 @@
 % the file of the root
 \node[tag, anchor=east, align=right] at (3.45,3.1) {Root\\[-2pt]File};
 \node[num] at (2.3,3.1) {1};
-\node[seg, fill=bluec, minimum width=2.45cm, minimum height=0.44cm, anchor=west] at (3.55,3.1) {};
-\node[seg, fill=gold, minimum width=0.4cm, minimum height=0.44cm, anchor=west] at (6.0,3.1) {};
+\node[seg, fill=sharedc, minimum width=2.45cm, minimum height=0.44cm, anchor=west] at (3.55,3.1) {};
+\node[seg, fill=tailc, minimum width=0.4cm, minimum height=0.44cm, anchor=west] at (6.0,3.1) {};
 \node[free, minimum width=2.35cm, minimum height=0.44cm, anchor=west] at (6.4,3.1) {};
 
 % one tensor of the leaf
 \node[tag, anchor=east, align=right] at (3.45,2.1) {Leaf\\[-2pt]Tensor};
 \node[num] at (2.3,2.1) {3};
-\node[seg, fill=bluec, minimum width=2.33cm, minimum height=0.44cm, anchor=west] at (3.55,2.1) {};
-\node[seg, fill=peach, minimum width=0.24cm, minimum height=0.44cm, anchor=west] at (5.88,2.1) {};
+\node[seg, fill=sharedc, minimum width=2.33cm, minimum height=0.44cm, anchor=west] at (3.55,2.1) {};
+\node[seg, fill=copyc, minimum width=0.24cm, minimum height=0.44cm, anchor=west] at (5.88,2.1) {};
 \node[seg, fill=segc, minimum width=0.96cm, minimum height=0.44cm, anchor=west] at (6.12,2.1) {};
-\node[seg, fill=peach, minimum width=0.24cm, minimum height=0.44cm, anchor=west] at (7.08,2.1) {};
-\node[seg, fill=gold, minimum width=0.5cm, minimum height=0.44cm, anchor=west] at (7.32,2.1) {};
-\node[seg, fill=gold!40, minimum width=0.3cm, minimum height=0.44cm, anchor=west] at (7.82,2.1) {};
+\node[seg, fill=copyc, minimum width=0.24cm, minimum height=0.44cm, anchor=west] at (7.08,2.1) {};
+\node[seg, fill=tailc, minimum width=0.5cm, minimum height=0.44cm, anchor=west] at (7.32,2.1) {};
+\node[seg, fill=aheadc, minimum width=0.3cm, minimum height=0.44cm, anchor=west] at (7.82,2.1) {};
 \node[free, minimum width=0.63cm, minimum height=0.44cm, anchor=west] at (8.12,2.1) {};
 
 % the segment file of the leader
@@ -57,22 +56,22 @@
 \node[num] at (2.3,1.1) {2};
 \node[free, minimum width=2.45cm, minimum height=0.44cm, anchor=west] at (3.55,1.1) {};
 \node[seg, fill=segc, minimum width=1.2cm, minimum height=0.44cm, anchor=west] at (6.0,1.1) {};
-\node[seg, fill=gold, minimum width=0.4cm, minimum height=0.44cm, anchor=west] at (7.2,1.1) {};
+\node[seg, fill=tailc, minimum width=0.4cm, minimum height=0.44cm, anchor=west] at (7.2,1.1) {};
 \node[free, minimum width=1.15cm, minimum height=0.44cm, anchor=west] at (7.6,1.1) {};
 
 % the same pages
 \foreach \x in {4.2,5.3} {
-  \draw[arr, dblue, line width=1.1pt] (\x,2.88) -- (\x,2.32);
+  \draw[arr, roline, line width=1.1pt] (\x,2.88) -- (\x,2.32);
 }
-\node[note, text=dblue] at (4.75,2.6) {map};
+\node[note, text=roline] at (4.75,2.6) {map};
 \draw[arr, black!70, line width=1.1pt] (6.6,1.32) -- (6.6,1.88);
 \node[note, anchor=west] at (6.66,1.6) {map};
 
 % legend
-\legendfill{0.15}{0.2}{bluec}{Root Segment}
+\legendfill{0.15}{0.2}{sharedc}{Root Segment}
 \legendfill{2.05}{0.2}{segc}{Leader Segment}
-\legendfill{4.2}{0.2}{peach}{Copied Page}
-\legendfill{5.9}{0.2}{gold}{Private Tail}
+\legendfill{4.2}{0.2}{copyc}{Copied Page}
+\legendfill{5.9}{0.2}{tailc}{Private Tail}
 \legendhatch{7.55}{0.2}{Unbacked}
 \end{tikzpicture}
 \end{document}

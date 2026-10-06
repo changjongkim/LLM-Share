@@ -8,7 +8,7 @@
 \begin{tikzpicture}[x=1cm, y=1cm]
 
 % ---------------- GPU ----------------
-\draw[sub, fill=cyanp] (0,6.55) rectangle (8.9,7.35);
+\draw[sub, fill=gpuc] (0,6.55) rectangle (8.9,7.35);
 \node[ttl, anchor=west] at (0.12,6.95) {GPU};
 \node[comp, minimum width=3.55cm, minimum height=0.5cm] (miga) at (2.95,6.95) {MIG Instance A (12 SMs)};
 \node[comp, minimum width=3.55cm, minimum height=0.5cm] (migb) at (6.95,6.95) {MIG Instance B (6 SMs)};
@@ -19,27 +19,27 @@
 \newcommand{\process}[3]{% x of the left edge, node prefix, name
   \draw[sub, fill=white] (#1,4.25) rectangle (#1+2.75,5.75);
   \node[ttl] at (#1+1.375,5.52) {#3};
-  \node[tag] at (#1+0.5,5.14) {Weights};
-  \node[tag] at (#1+1.82,5.14) {KV Cache};
-  \node[blk, fill=cyanp, minimum width=0.86cm] (#2m) at (#1+0.5,4.72) {model};
-  \node[blk, fill=bluec, minimum width=0.86cm] (#2p) at (#1+1.39,4.72) {prefix};
-  \node[blk, fill=gold, minimum width=0.86cm] (#2t) at (#1+2.25,4.72) {tail};
+  \node[tag, anchor=base] at (#1+0.5,5.08) {Weights};
+  \node[tag, anchor=base] at (#1+1.82,5.08) {KV Cache};
+  \node[blk, fill=modelc, minimum width=0.86cm] (#2m) at (#1+0.5,4.72) {model};
+  \node[blk, fill=sharedc, minimum width=0.86cm] (#2p) at (#1+1.39,4.72) {prefix};
+  \node[blk, fill=tailc, minimum width=0.86cm] (#2t) at (#1+2.25,4.72) {tail};
 }
 \process{0.15}{pub}{Publisher}
 \process{3.075}{one}{Agent 1}
 \process{6.0}{two}{Agent 2}
-\foreach \x in {1.5,4.45,7.4} {
+\foreach \x in {2.72,5.65,8.57} {
   \draw[{Latex[length=1.4mm]}-{Latex[length=1.4mm]}, line width=0.6pt] (\x,5.75) -- (\x,6.55);
 }
-\node[note, anchor=west] at (4.52,6.38) {in place};
+\node[note, anchor=west] at (5.75,6.4) {in place};
 
 % ---------------- host page tables ----------------
-\draw[sub, fill=peach] (0,3.35) rectangle (8.9,3.8);
+\draw[sub, fill=ptc] (0,3.35) rectangle (8.9,3.8);
 \node[ttl] at (4.45,3.575) {Host Page Tables (SMMU)};
 \foreach \p in {pub,one,two} {
-  \draw[arr, dblue] (\p m.south) -- (\p m.south |- 0,3.8);
-  \draw[arr, dblue] (\p p.south) -- (\p p.south |- 0,3.8);
-  \draw[arr, dred]  (\p t.south) -- (\p t.south |- 0,3.8);
+  \draw[arr, roline] (\p m.south) -- (\p m.south |- 0,3.8);
+  \draw[arr, roline] (\p p.south) -- (\p p.south |- 0,3.8);
+  \draw[arr, rwline]  (\p t.south) -- (\p t.south |- 0,3.8);
 }
 \node[num] at (1.97,4.02) {1};
 \node[num] at (4.9,4.02) {2};
@@ -48,26 +48,26 @@
 % ---------------- unified memory ----------------
 \draw[layer] (0,0) rectangle (8.9,3.05);
 \node[ttl, anchor=west] at (0.12,1.12) {Unified Memory};
-\node[comp, fill=cyanp, minimum width=2.3cm, minimum height=0.62cm] (mfile) at (1.5,1.95) {Model File};
-\node[comp, fill=bluec, minimum width=2.5cm, minimum height=0.62cm] (pfile) at (4.45,1.95) {Prefix Cache File};
+\node[comp, fill=modelc, minimum width=2.3cm, minimum height=0.62cm] (mfile) at (1.5,1.95) {Model File};
+\node[comp, fill=sharedc, minimum width=2.5cm, minimum height=0.62cm] (pfile) at (4.45,1.95) {Prefix Cache File};
 \node[comp, minimum width=2.5cm, minimum height=0.42cm] (sfile) at (4.45,1.12) {State File (Metadata)};
 \draw[arr, densely dashed] (pfile.south) -- (sfile.north);
 \node[tag] at (7.4,2.5) {Private Tails};
 \foreach \y/\u in {2.1/1.0,1.75/1.45,1.4/0.6} {
-  \node[seg, fill=gold, minimum width=\u cm, minimum height=0.26cm, anchor=west] at (6.3,\y) {};
+  \node[seg, fill=tailc, minimum width=\u cm, minimum height=0.26cm, anchor=west] at (6.3,\y) {};
   \node[free, minimum width=2.2cm-\u cm, minimum height=0.26cm, anchor=west] at (6.3+\u,\y) {};
 }
-\draw[fat, dblue] (1.5,3.35) -- (mfile.north);
-\draw[fat, dblue] (4.45,3.35) -- (pfile.north);
-\draw[fat, dred]  (7.4,3.35) -- (7.4,2.72);
+\draw[fat, roline] (1.5,3.35) -- (mfile.north);
+\draw[fat, roline] (4.45,3.35) -- (pfile.north);
+\draw[fat, rwline]  (7.4,3.35) -- (7.4,2.72);
 \node[tag, anchor=west] at (1.72,2.8) {$N$\,:\,1};
 \node[tag, anchor=west] at (4.67,2.8) {$N$\,:\,1};
 \node[tag, anchor=west] at (7.62,3.0) {1\,:\,1};
 
 % ---------------- legend ----------------
-\draw[arr, dblue] (0.2,0.62) -- (0.75,0.62);
+\draw[arr, roline] (0.2,0.62) -- (0.75,0.62);
 \node[tag, anchor=west] at (0.8,0.62) {Read-Only, Shared};
-\draw[arr, dred] (0.2,0.27) -- (0.75,0.27);
+\draw[arr, rwline] (0.2,0.27) -- (0.75,0.27);
 \node[tag, anchor=west] at (0.8,0.27) {Writable, Private};
 \node[num] at (3.6,0.45) {1};
 \node[tag, anchor=west] at (3.8,0.45) {Publish};

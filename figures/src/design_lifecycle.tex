@@ -8,44 +8,44 @@
 \begin{tikzpicture}[x=1cm, y=1cm]
 
 % lanes
-\draw[layer] (0,3.05) rectangle (8.9,4.3);
-\draw[sub, fill=white] (0,1.5) rectangle (8.9,2.6);
+\draw[layer] (0,3.4) rectangle (8.9,4.65);
+\draw[sub, fill=white] (0,1.65) rectangle (8.9,2.75);
 \draw[layer] (0,0) rectangle (8.9,1.05);
-\node[ttl, anchor=west] at (0.1,4.07) {Publisher};
-\node[ttl, anchor=west] at (0.1,2.37) {Files};
+\node[ttl, anchor=west] at (0.1,4.42) {Publisher};
+\node[ttl, anchor=west] at (0.1,2.52) {Files};
 \node[ttl, anchor=west] at (0.1,0.82) {Agent};
 
 % publisher
-\node[comp, minimum width=2.0cm] (compute) at (1.5,3.5) {Compute Prefix};
-\node[comp, fill=peach, minimum width=1.4cm] (publish) at (4.2,3.5) {Publish};
-\node[comp, minimum width=2.0cm] (forkgen) at (7.4,3.8) {Fork: Generate};
-\node[comp, minimum width=2.0cm, densely dashed] (moveexit) at (7.4,3.3) {Move: Exit};
+\node[comp, minimum width=2.0cm] (compute) at (1.5,3.85) {Compute Prefix};
+\node[comp, fill=actc, minimum width=1.4cm] (publish) at (4.2,3.85) {Publish};
+\node[comp, minimum width=2.0cm] (forkgen) at (7.4,4.15) {Fork: Generate};
+\node[comp, minimum width=2.0cm, densely dashed] (moveexit) at (7.4,3.65) {Move: Exit};
 \draw[arr] (compute) -- (publish);
 \draw[arr] (publish.east) -- ++(0.6,0) |- (forkgen.west);
 \draw[arr] (publish.east) -- ++(0.6,0) |- (moveexit.west);
-\node[num] at (3.55,3.92) {1};
+\node[num] at (3.55,4.27) {1};
 
 % files
-\node[comp, fill=bluec, minimum width=2.9cm] (cache) at (2.4,1.95) {Prefix Cache File};
-\node[comp, minimum width=2.3cm] (state) at (6.0,1.95) {State File};
-\draw[arr] (1.5,3.225) -- (1.5,2.225);
-\node[note, anchor=west] at (1.56,2.82) {rows};
-\draw[arr] (3.6,3.225) -- (3.6,2.225);
-\node[note, anchor=east] at (3.54,2.82) {mprotect};
-\draw[arr] (4.6,3.225) -- (4.6,2.82) -| (state.north);
-\node[note, anchor=south] at (5.4,2.8) {metadata};
+\node[comp, fill=sharedc, minimum width=2.9cm] (cache) at (2.4,2.1) {Prefix Cache File};
+\node[comp, minimum width=2.3cm] (state) at (6.0,2.1) {State File};
+\draw[arr] (1.5,3.575) -- (1.5,2.375);
+\node[note, anchor=west] at (1.58,3.07) {rows};
+\draw[arr] (3.6,3.575) -- (3.6,2.375);
+\node[note, anchor=east] at (3.52,3.07) {mprotect};
+\draw[arr] (4.6,3.575) -- (4.6,3.07) -| (state.north);
+\node[note, anchor=west] at (6.08,3.07) {metadata};
 
 % agent
 \node[comp, minimum width=1.2cm] (start) at (1.5,0.42) {Spawn};
-\node[comp, fill=peach, minimum width=1.4cm] (attach) at (4.2,0.42) {Attach};
+\node[comp, fill=actc, minimum width=1.4cm] (attach) at (4.2,0.42) {Attach};
 \node[comp, minimum width=2.9cm] (gen) at (7.1,0.42) {Generate in Private Tail};
 \draw[arr] (start) -- (attach);
 \draw[arr] (attach) -- (gen);
 \node[num] at (3.55,0.84) {2};
-\draw[arr, dblue] (3.0,1.675) -- (3.0,1.28) -| (4.0,0.695);
-\node[note, text=dblue, anchor=east] at (2.94,1.27) {mmap};
-\draw[arr, densely dashed] (state.south) -- (6.0,1.28) -| (4.4,0.695);
-\node[note, anchor=west] at (6.06,1.27) {cell metadata};
+\draw[arr, roline] (3.0,1.825) -- (3.0,1.35) -| (4.0,0.695);
+\node[note, text=roline, anchor=east] at (2.92,1.5) {mmap};
+\draw[arr, densely dashed] (state.south) -- (6.0,1.35) -| (4.4,0.695);
+\node[note, anchor=west] at (6.08,1.5) {cell metadata};
 
 \end{tikzpicture}
 \end{document}

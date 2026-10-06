@@ -25,17 +25,17 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 RES = os.path.join(HERE, "..", "results")
 
 # One colour per entity, the same in every figure. The proposed design is
-# blue; a lighter step of the same hue is its variant with the whole tail
+# teal; a lighter step of the same hue is its variant with the whole tail
 # allocated. Upstream (copy) is the neutral grey.
-OURS, OURS_LIGHT = "#2a78d6", "#86b6ef"
+OURS, OURS_LIGHT = "#1a9a8f", "#8fd3cb"
 COPY = "#898781"
 COW = "#eb6834"
-DEVICE = "#1baf7a"
+DEVICE = "#7b61c9"
 INK, MUTED, GRID, AXIS = "#0b0b0b", "#52514e", "#e1e0d9", "#c3c2b7"
 
 plt.rcParams.update({
-    "font.family": "DejaVu Sans", "font.size": 12, "font.weight": "bold",
-    "axes.labelweight": "bold", "axes.labelsize": 12.5, "axes.linewidth": 0.8,
+    "font.family": "DejaVu Sans", "font.size": 12, "font.weight": "normal",
+    "axes.labelweight": "normal", "axes.labelsize": 12.5, "axes.linewidth": 0.8,
     "axes.edgecolor": AXIS, "axes.labelcolor": INK, "text.color": INK,
     "xtick.labelsize": 11.5, "ytick.labelsize": 11.5, "xtick.color": INK,
     "ytick.color": INK, "legend.fontsize": 11.5, "legend.frameon": False,
@@ -365,14 +365,14 @@ def bg_state():
               for r in rows("20261005-engine-agents-v1", "engine_agents_summary.csv")}
     counts = sorted({k[2] for k in agents if k[0] == "mig" and k[1] == "copy"})
     memory = [float(agents["mig", "copy", n]["memory_total_mib"]) / 1024 for n in counts]
-    fig, ax = plt.subplots(figsize=(4.3, 3.1))
+    fig, ax = plt.subplots(figsize=(3.6, 2.7))
     bars = ax.bar([str(n) for n in counts], memory, 0.6, color=COPY, edgecolor="white",
                   linewidth=1.5)
     for bar in bars:
         tip(ax, bar, f"{bar.get_height():.1f}")
     model = float(agents["mig", "inplace", 1]["model_mapped_mib"]) / 1024
     ax.axhline(model, color=OURS, linewidth=1.6, linestyle=(0, (4, 2)))
-    ax.text(0.04, 0.9, f"dashed: model file ({model:.1f} GiB)", color=OURS, fontsize=11.5,
+    ax.text(0.04, 0.72, f"dashed: model file\n({model:.1f} GiB)", color=OURS, fontsize=11,
             ha="left", va="center", transform=ax.transAxes)
     ax.set_xlabel("Serving Processes")
     ax.set_ylabel("Memory (GiB)")
@@ -385,7 +385,7 @@ def bg_state():
              for r in rows("20261006-engine-kvshare-v1", "engine_kvshare_summary.csv")}
     sizes = sorted({k[0] for k in share}, key=int)
     counts = [1, 4, 8]
-    fig, ax = plt.subplots(figsize=(4.3, 3.1))
+    fig, ax = plt.subplots(figsize=(3.6, 2.7))
     series = []
     for size, colour in zip(sizes, ("#c3c2b7", COPY)):
         tokens = int(share[size, "restore", 1]["prefix_tokens"])

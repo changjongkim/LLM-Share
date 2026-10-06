@@ -27,7 +27,7 @@ from make_eval_figures import (AXIS, COPY, COW, DEVICE, GRID, INK, OURS,  # noqa
                                OURS_LIGHT, RES, grouped, rows, save, style, tip)
 
 NAME = "STATOR"
-PANEL = (4.3, 3.1)
+PANEL = (3.6, 2.7)
 
 
 def have(*path):
@@ -95,8 +95,8 @@ def weights():
     finish(fig, ax, "eval_weights_mem", "Serving Processes", "Memory (GiB)", 47)
 
     pages = {r["mode"]: r for r in rows("20261005-engine-pages-v1", "engine_pages_summary.csv")}
-    order = (("Device\nCopy", "copy", COPY), ("In Place\n4 KiB Pages", "inplace_4k", OURS_LIGHT),
-             ("In Place\n2 MiB Pages", "inplace_thp", OURS))
+    order = (("Device\nCopy", "copy", COPY), ("In Place\n4 KiB", "inplace_4k", OURS_LIGHT),
+             ("In Place\n2 MiB", "inplace_thp", OURS))
     fig, ax = panel()
     values = [float(pages[mode]["generation_vs_copy"]) for _, mode, _ in order]
     low = [v - float(pages[mode]["lower_ci95"]) for v, (_, mode, _) in zip(values, order)]
@@ -110,7 +110,7 @@ def weights():
                     xytext=(0, 3), textcoords="offset points", ha="center", va="bottom",
                     fontsize=10.5, color=INK)
     ax.axhline(1.0, color=AXIS, linewidth=1.0)
-    finish(fig, ax, "eval_weights_speed", "", "Speed vs. Device Copy", 1.18)
+    finish(fig, ax, "eval_weights_speed", "", "Relative Speed", 1.18)
 
 
 # ---------------------------------------------------------------- handover
@@ -166,7 +166,7 @@ def speed():
                     fontsize=10.5, color=INK)
     ax.axhline(1.0, color=AXIS, linewidth=1.0)
     finish(fig, ax, "eval_speed_host", "MIG Instance and Prefix (Tokens)",
-           "Speed vs. Device Memory", 1.18)
+           "Relative Speed", 1.18)
 
 
 def reach():
@@ -258,10 +258,11 @@ def dev():
             for m in ("vmm_cross", "extent_cross")}
     started = {m: sum(int(data["320", mig, m]["children_started"]) for mig in ("fafc828a", "31ffbfe4"))
                for m in ("vmm_cross", "extent_cross")}
-    ax.text(0.97, 0.95, "Child in the other MIG instance:\n"
-            f"Device {done['vmm_cross']}/{started['vmm_cross']}, "
-            f"{NAME} {done['extent_cross']}/{started['extent_cross']} complete",
-            transform=ax.transAxes, ha="right", va="top", fontsize=9.5, color=INK)
+    ax.text(0.97, 0.95, "Child in the Other MIG Instance\n"
+            f"Device: {done['vmm_cross']}/{started['vmm_cross']} Complete\n"
+            f"{NAME}: {done['extent_cross']}/{started['extent_cross']} Complete",
+            transform=ax.transAxes, ha="right", va="top", fontsize=10, color=INK,
+            linespacing=1.35)
     finish(fig, ax, "eval_dev_mem", "", "Memory (GiB)", max(values) * 1.25)
 
 
