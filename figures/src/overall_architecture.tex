@@ -6,32 +6,36 @@
 \input{llmshare_style}
 \begin{document}
 \begin{tikzpicture}[x=1cm, y=1cm]
+% One arrow for every single mapping, one for every group of mappings.
+\tikzset{both/.style={{Latex[length=1.6mm]}-{Latex[length=1.6mm]}, line width=0.8pt}}
 
 % ---------------- GPU ----------------
-\draw[sub, fill=gpuc] (0,6.55) rectangle (8.9,7.35);
-\node[ttl, anchor=west] at (0.12,6.95) {GPU};
-\node[comp, minimum width=3.55cm, minimum height=0.5cm] (miga) at (2.95,6.95) {MIG Instance A (12 SMs)};
-\node[comp, minimum width=3.55cm, minimum height=0.5cm] (migb) at (6.95,6.95) {MIG Instance B (6 SMs)};
+\draw[sub, fill=gpuc] (0,6.95) rectangle (8.9,7.75);
+\node[ttl, anchor=west] at (0.12,7.35) {GPU};
+\node[comp, minimum width=3.55cm, minimum height=0.5cm] (miga) at (2.95,7.35) {MIG Instance A (12 SMs)};
+\node[comp, minimum width=3.55cm, minimum height=0.5cm] (migb) at (6.95,7.35) {MIG Instance B (6 SMs)};
 
 % ---------------- serving processes ----------------
-\draw[layer] (0,4.1) rectangle (8.9,6.25);
-\node[ttl, anchor=west] at (0.12,6.03) {Serving Processes};
+\draw[layer] (0,4.3) rectangle (8.9,6.45);
+\node[ttl, anchor=west] at (0.12,6.22) {Serving Processes};
 \newcommand{\process}[3]{% x of the left edge, node prefix, name
-  \draw[sub, fill=white] (#1,4.25) rectangle (#1+2.75,5.75);
-  \node[ttl] at (#1+1.375,5.52) {#3};
-  \node[tag, anchor=base] at (#1+0.5,5.08) {Weights};
-  \node[tag, anchor=base] at (#1+1.82,5.08) {KV Cache};
-  \node[blk, fill=modelc, minimum width=0.86cm] (#2m) at (#1+0.5,4.72) {model};
-  \node[blk, fill=sharedc, minimum width=0.86cm] (#2p) at (#1+1.39,4.72) {prefix};
-  \node[blk, fill=tailc, minimum width=0.86cm] (#2t) at (#1+2.25,4.72) {tail};
+  \draw[sub, fill=white] (#1,4.45) rectangle (#1+2.55,5.92);
+  \node[ttl] at (#1+1.275,5.68) {#3};
+  \node[tag, anchor=base] at (#1+0.47,5.23) {Weights};
+  \node[tag, anchor=base] at (#1+1.72,5.23) {KV Cache};
+  \node[blk, fill=modelc, minimum width=0.78cm] (#2m) at (#1+0.47,4.88) {model};
+  \node[blk, fill=sharedc, minimum width=0.78cm] (#2p) at (#1+1.33,4.88) {prefix};
+  \node[blk, fill=tailc, minimum width=0.78cm] (#2t) at (#1+2.11,4.88) {tail};
 }
 \process{0.15}{pub}{Publisher}
-\process{3.075}{one}{Agent 1}
-\process{6.0}{two}{Agent 2}
-\foreach \x in {2.72,5.65,8.57} {
-  \draw[{Latex[length=1.4mm]}-{Latex[length=1.4mm]}, line width=0.6pt] (\x,5.75) -- (\x,6.55);
+\process{2.85}{one}{Agent 1}
+\process{5.55}{two}{Agent 2}
+\node[ttl] at (8.5,5.18) {$\cdots$};
+% the GPU reads and writes the memory of every process in place
+\foreach \x in {1.425,4.125,6.825} {
+  \draw[both] (\x,6.45) -- (\x,6.95);
 }
-\node[note, anchor=west] at (5.75,6.4) {in place};
+\node[note, anchor=west] at (4.25,6.7) {in place};
 
 % ---------------- host page tables ----------------
 \draw[sub, fill=ptc] (0,3.35) rectangle (8.9,3.8);
@@ -39,11 +43,11 @@
 \foreach \p in {pub,one,two} {
   \draw[arr, roline] (\p m.south) -- (\p m.south |- 0,3.8);
   \draw[arr, roline] (\p p.south) -- (\p p.south |- 0,3.8);
-  \draw[arr, rwline]  (\p t.south) -- (\p t.south |- 0,3.8);
+  \draw[arr, rwline] (\p t.south) -- (\p t.south |- 0,3.8);
 }
-\node[num] at (1.97,4.02) {1};
-\node[num] at (4.9,4.02) {2};
-\node[num] at (8.58,4.02) {3};
+\node[num] at (1.87,4.05) {1};
+\node[num] at (4.57,4.05) {2};
+\node[num] at (8.03,4.05) {3};
 
 % ---------------- unified memory ----------------
 \draw[layer] (0,0) rectangle (8.9,3.05);
@@ -52,17 +56,19 @@
 \node[comp, fill=sharedc, minimum width=2.5cm, minimum height=0.62cm] (pfile) at (4.45,1.95) {Prefix Cache File};
 \node[comp, minimum width=2.5cm, minimum height=0.42cm] (sfile) at (4.45,1.12) {State File (Metadata)};
 \draw[arr, densely dashed] (pfile.south) -- (sfile.north);
-\node[tag] at (7.4,2.5) {Private Tails};
-\foreach \y/\u in {2.1/1.0,1.75/1.45,1.4/0.6} {
-  \node[seg, fill=tailc, minimum width=\u cm, minimum height=0.26cm, anchor=west] at (6.3,\y) {};
-  \node[free, minimum width=2.2cm-\u cm, minimum height=0.26cm, anchor=west] at (6.3+\u,\y) {};
+% the private tails: one per process, backed up to the rows in use
+\draw[sub, fill=white] (6.2,0.95) rectangle (8.6,2.26);
+\node[tag] at (7.4,2.04) {Private Tails};
+\foreach \y/\u in {1.72/1.0,1.44/1.45,1.16/0.6} {
+  \node[seg, fill=tailc, minimum width=\u cm, minimum height=0.2cm, anchor=west] at (6.35,\y) {};
+  \node[free, minimum width=2.1cm-\u cm, minimum height=0.2cm, anchor=west] at (6.35+\u,\y) {};
 }
-\draw[fat, roline] (1.5,3.35) -- (mfile.north);
-\draw[fat, roline] (4.45,3.35) -- (pfile.north);
-\draw[fat, rwline]  (7.4,3.35) -- (7.4,2.72);
-\node[tag, anchor=west] at (1.72,2.8) {$N$\,:\,1};
-\node[tag, anchor=west] at (4.67,2.8) {$N$\,:\,1};
-\node[tag, anchor=west] at (7.62,3.0) {1\,:\,1};
+\draw[fat, roline] (1.5,3.35) -- (1.5,2.26);
+\draw[fat, roline] (4.45,3.35) -- (4.45,2.26);
+\draw[fat, rwline] (7.4,3.35) -- (7.4,2.26);
+\node[tag, anchor=west] at (1.75,2.72) {$N$\,:\,1};
+\node[tag, anchor=west] at (4.7,2.72) {$N$\,:\,1};
+\node[tag, anchor=west] at (7.65,2.72) {1\,:\,1};
 
 % ---------------- legend ----------------
 \draw[arr, roline] (0.2,0.62) -- (0.75,0.62);
