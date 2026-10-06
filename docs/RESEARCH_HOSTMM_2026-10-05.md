@@ -1092,8 +1092,8 @@ Nothing in Section 8.2 depends on MIG: the host MMU isolates processes.
 instance, as clients of one MPS server, and with an MPS server in each MIG
 instance (`results/20261005-sharing-modes-v1/`, 174 runs, none failed).
 Memory, divergence, isolation, and the accessed-flag amplification are the
-same in every configuration: 4.2 to 4.6 GiB for 2 to 8 tenants of the
-shared base against 8.3 to 33.2 GiB for copies. What differs is how long
+same in every configuration: 4.1 to 4.5 GiB for 2 to 8 tenants of the
+shared base against 8.1 to 32.5 GiB for copies. What differs is how long
 tenants wait for each other and what a GPU fault of one tenant does to the
 others: clients of the faulting client's MPS server do not survive (0 of
 18), time-sliced processes and the clients of an MPS server in the other
@@ -1219,7 +1219,7 @@ Permitted:
 > state copy-on-write across MIG instances through the host MMU. Tenants in
 > separate MIG instances read one sealed physical copy of a model through
 > read-only private mappings and diverge by replacing the extents they will
-> write. Eight tenants of a 4 GiB model occupy 4.6 GiB instead of 33.2 GiB,
+> write. Eight tenants of a 4 GiB model occupy 4.5 GiB instead of 32.5 GiB,
 > and neither a tenant's CPU nor its GPU kernels can change what another
 > tenant reads.
 

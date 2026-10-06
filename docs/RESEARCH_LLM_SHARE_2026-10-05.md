@@ -35,7 +35,7 @@ to hold. The claim, with the scope that the evidence supports:
 > Text is identical; generation is 6% slower when the file is mapped with
 > 4 KiB pages and not slower with 2 MiB pages; a process starts in half the
 > time or less; and every further process needs 4.4 GiB less memory for a
-> 4.36 GiB model, so that eight processes hold 10 GiB instead of 42 GiB.
+> 4.36 GiB model, so that eight processes hold 10 GiB instead of 41 GiB.
 > The processes may sit in different MIG instances, be time-sliced in one,
 > or be clients of an MPS server; the host MMU shares and isolates them in
 > every case. Three properties of a GPU that follows the host page tables
@@ -106,7 +106,7 @@ names the section there.
 | A flush of one page costs a process that uses the GPU about 9 us, anywhere in its address space; a range operation costs nothing extra | four operations, 4.3 to 9.0 times slower | 3.2 |
 | The GPU faults on a mapped page whose accessed flag is clear, and the driver serves a fault in a writable mapping as a write for its whole 2 MiB prefetch block | one such page turns 512 pages into private copies | 8.2 |
 | After `fork`, the next GPU write to pre-fork memory costs 2.7 s per GiB; `posix_spawn`, `MADV_DONTFORK`, or one remap pass avoid it | 2,680 against 6.6 to 6.8 ms | 6.1 |
-| A sealed `memfd` mapped private and read-only is shared by any number of processes and cannot be changed by a tenant's CPU or GPU | 9 attempts, 36 runs; 8 tenants hold 4.6 instead of 33.2 GiB | 8.2 |
+| A sealed `memfd` mapped private and read-only is shared by any number of processes and cannot be changed by a tenant's CPU or GPU | 9 attempts, 36 runs; 8 tenants hold 4.5 instead of 32.5 GiB | 8.2 |
 
 ## 3. One process: weights read in place
 
@@ -165,7 +165,7 @@ size of the mapping.
 - **Generation is 6.0% slower**, 95% CI of the paired ratio [0.914, 0.967].
   It is 3.7% on the 12-SM instance (28.7 to 27.6 tokens/s) and 8.2% on the
   6-SM instance (19.6 to 18.0). Prompt processing is unchanged (0.5%).
-- **4.5 GiB leave the process.** Memory outside the model file falls from
+- **4.4 GiB leave the process.** Memory outside the model file falls from
   5,423 to 878 MiB, and the 4,460 MiB of weights are page cache that other
   processes can map.
 - **Load takes 517 ms instead of 942 ms.** Without the CPU read it takes
@@ -220,7 +220,7 @@ quality.
 
 Every process produces its own text in 6 of 6 runs, and each text equals
 the text of the same adapter over a device copy in 30 of 30 comparisons.
-The five processes hold 10.1 GiB instead of 28.3 GiB: one mapped base and
+The five processes hold 9.9 GiB instead of 27.6 GiB: one mapped base and
 1.1 GiB each for context, compute buffers, and adapter.
 
 ## 4. Several agents
@@ -254,8 +254,8 @@ the proportional size of the model mapping.
 | two MIG instances, an MPS server in each | 4 | 45.7 +/- 0.1 | 45.1 +/- 0.0 | 0.986x | 20847 | 7218 |
 | two MIG instances, an MPS server in each | 8 | 45.9 +/- 0.2 | 45.4 +/- 0.0 | 0.989x | 41680 | 10138 |
 
-- **Memory.** Eight processes hold 10.1 to 10.3 GiB with the weights in
-  place and 41.7 to 41.9 GiB with device copies, in every configuration:
+- **Memory.** Eight processes hold 9.9 to 10.1 GiB with the weights in
+  place and 40.7 to 40.9 GiB with device copies, in every configuration:
   one mapped model and about 0.7 GiB per process.
 - **Reading in place costs 1 to 5% of the total generation rate**, least
   with an MPS server in each MIG instance (0.989 times at eight agents) and
@@ -312,10 +312,10 @@ same time (`results/20261005-engine-groups-v1/`, six repetitions):
   12-SM instance and 60 in the 6-SM instance, with the weights in place or
   copied (0.997 times). With four sequences each they generate 123 tokens/s
   in place (0.980 times).
-- **In place the two servers hold 6.8 GiB instead of 11.4 GiB**: one mapped
-  model and 1.2 GiB each.
+- **In place the two servers hold 6.6 GiB instead of 11.1 GiB**: one mapped
+  model and 1.1 GiB each.
 - Against eight separate processes with an MPS server in each instance
-  (Section 4.1: 45.4 tokens/s, 10.1 GiB), this configuration generates
+  (Section 4.1: 45.4 tokens/s, 10.0 GiB), this configuration generates
   3.3 times as much, for twice as many sequences, in two thirds of the
   memory, and a fault in one server cannot reach the other (Section 5.2).
 
@@ -347,8 +347,8 @@ the base is unchanged at the end.
 | two MIG instances, an MPS server in each | 4 | 107.0 | 112.1 | 1.25x | 16587 | 4299 |
 | two MIG instances, an MPS server in each | 8 | 178.6 | 187.1 | 2.09x | 33169 | 4497 |
 
-- **Memory does not depend on the configuration**: 4.2 to 4.6 GiB for the
-  shared base against 8.3, 16.6, and 33.2 GiB for copies.
+- **Memory does not depend on the configuration**: 4.1 to 4.5 GiB for the
+  shared base against 8.1, 16.2, and 32.5 GiB for copies.
 - **Throughput does.** Time slicing inside one MIG instance multiplies a
   tenant's read time by the number of tenants. One MPS server halves that.
   An MPS server in each MIG instance halves it again: eight tenants read in
@@ -1056,7 +1056,7 @@ Permitted wording:
 > Separate serving processes do not raise throughput on this GPU; one
 > batching process generates about three times as much as eight processes.
 > One batching server per MIG instance, both reading one copy of the
-> weights in place, generates 149 tokens/s for sixteen sequences in 6.8 GiB.
+> weights in place, generates 149 tokens/s for sixteen sequences in 6.6 GiB.
 
 > On this driver a writable private mapping of the weights is not a safe
 > way to share them: one page per 2 MiB block without the accessed flag

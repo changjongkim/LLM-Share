@@ -47,11 +47,14 @@ through a fault costs the whole process an invalidation.
   computed; other processes map them read-only and write their own rows to a
   private tail that grows with use (`kv_extents.patch`, about 430 lines more).
 
+<p align="center"><img src="figures/overall_architecture.png" width="720"></p>
+<p align="center"><b>Figure 1.</b> Overall architecture. Every process maps the model file and the published rows of the prefix read-only and writes its own rows to a private tail; the GPU of either MIG instance reads all of it in place through the host page tables. (1) publish, (2) attach, (3) grow the tail.</p>
+
 **Results** (7B model, six repetitions per cell, no failed run):
 
 | What | Upstream | Here |
 |---|---:|---:|
-| Memory of 8 processes, weights only | 41.8 GiB | 10.2 GiB |
+| Memory of 8 processes, weights only | 40.8 GiB | 10.0 GiB |
 | Memory of 8 agents on a 16,321-token prefix (weights in place in both) | 19.9 GiB | 5.7 GiB + 0.9 GiB once |
 | Handing a 16,321-token prefix to other processes | 561 ms, 893 MiB file | 9 ms, 0.25 MiB file |
 | Attaching to it, one agent | 225 ms | 43 ms |
@@ -91,6 +94,9 @@ that holds the rows, which every process copies into its own cache.
 ### 2.3 Why not copy-on-write
 
 Measured on this device (`docs/RESEARCH_HOSTMM_2026-10-05.md`):
+
+<p align="center"><img src="figures/bg_cow.png" width="760"></p>
+<p align="center"><b>Figure 2.</b> Three properties of a GPU that follows the host page tables. (a) A GPU read of a page without the accessed flag is served as a write for its whole 2 MiB block. (b) Every page that changes owner costs the process an invalidation. (c) After <code>fork</code> the next GPU write pays for every page.</p>
 
 | Property | Measurement |
 |---|---|
@@ -138,18 +144,10 @@ refused, because a read-only mapping has no room for row padding.
 A cell of the cache is written once, when its token is decoded, and cells are
 filled in order. With flash attention and one stream a cell is a row of every
 key and value tensor, so the cells of a common prefix are a leading range of
-every tensor:
+every tensor (Figure 3):
 
-```
-one key or value tensor of an agent
-+------------------------------+------+-----------------------------+
-| rows of the prefix           | last | rows this agent writes      |
-| pages of the publisher's     | page | private memory; the CPU     |
-| file, read-only, shared      | copy | populates it ahead of the   |
-| by every agent               |      | GPU, 256 rows at a time     |
-+------------------------------+------+-----------------------------+
-row 0                          P                          context size
-```
+<p align="center"><img src="figures/design_layout.png" width="760"></p>
+<p align="center"><b>Figure 3.</b> One key or value tensor of the cache as extents. The rows of the prefix are the same physical pages in every agent, mapped read-only from the file of the publisher; the rows an agent writes lie in private memory that the CPU populates ahead of the GPU.</p>
 
 - **Publish.** The cache of a publisher is a file on a tmpfs. Saving the state
   of its context writes the metadata of the cells (16 bytes per cell) and none
@@ -173,6 +171,9 @@ row 0                          P                          context size
 
 All of it is host mappings, so it holds between the two MIG instances.
 
+<p align="center"><img src="figures/design_lifecycle.png" width="720"></p>
+<p align="center"><b>Figure 4.</b> Publish and attach as operations on mappings. A fork is the same with the publisher still running; a move ends the publisher.</p>
+
 ### 3.3 Implementation
 
 | Piece | Where |
@@ -195,21 +196,29 @@ re-evaluates the relations below without the GPU.
 
 ### 4.1 Weights in place (record Sections 3 to 5)
 
+<p align="center"><img src="figures/eval_weights.png" width="760"></p>
+<p align="center"><b>Figure 5.</b> Weights in place. Left: memory of N serving processes, placed in the two MIG instances alternately. Right: generation speed against the device copy by the page size of the mapped model.</p>
+
 | Weights | Generation against device copy | Load (ms) | Memory outside the model file (MiB) |
 |---|---|---:|---:|
-| device copy (upstream) | 1.000 | 942 | 5,423 |
-| in place, 4 KiB page cache | 0.940 [0.914, 0.967] | 517 | 878 |
+| device copy (upstream) | 1.000 | 943 | 5,423 |
+| in place, 4 KiB page cache | 0.943 [0.918, 0.969] | 516 | 878 |
 | in place, 2 MiB pages (tmpfs) | 0.997 [0.971, 1.025] | 270 | not measured |
 
-Text is identical. Eight processes hold 10.2 GiB instead of 41.8 GiB, under
+Text is identical. Eight processes hold 10.0 GiB instead of 40.8 GiB, under
 MIG, time slicing and MPS alike; five processes with four adapters hold
-10.1 GiB instead of 28.3 GiB and write the texts of their device-copy
+9.9 GiB instead of 27.6 GiB and write the texts of their device-copy
 counterparts (30 of 30).
 
 ### 4.2 Agents on one published prefix (record Section 6.4)
 
 A publisher computes the prefix and exits; 1, 4 or 8 agent processes, every
 second one in the other MIG instance, continue it with their own task.
+
+<p align="center"><img src="figures/eval_memory.png" width="760"></p>
+<p align="center"><b>Figure 6.</b> Memory of the agents on one published prefix. The cache file (0.2 and 0.9 GiB) exists once and is not included.</p>
+<p align="center"><img src="figures/eval_handover.png" width="820"></p>
+<p align="center"><b>Figure 7.</b> Handing a prefix over, attaching to it, and the first token after process start.</p>
 
 | 16,321-token prefix | Copy from the state file (upstream) | Extents, whole tail | Extents, tail follows use |
 |---|---:|---:|---:|
@@ -228,6 +237,9 @@ loading the model dominates it; the gain is memory.
 
 Eight agents obtain the 16,321-token prefix through a private writable
 mapping of the publisher's cache file.
+
+<p align="center"><img src="figures/eval_cow.png" width="800"></p>
+<p align="center"><b>Figure 8.</b> Extents against copy-on-write mappings, eight agents on a 16,321-token prefix.</p>
 
 | Way | Memory (GiB) | First token (s) | Decode of the agent's own task (s) |
 |---|---:|---:|---:|
@@ -253,6 +265,9 @@ pauses for 3 ms instead of 218 ms and writes the text of a process alone in
 
 One process, cache in host memory against cache in device memory:
 
+<p align="center"><img src="figures/eval_speed.png" width="640"></p>
+<p align="center"><b>Figure 9.</b> Generation speed with the cache in host memory, relative to a cache in device memory.</p>
+
 | MIG instance | 4,081-token prefix | 16,321-token prefix |
 |---|---|---|
 | 12-SM | 0.996 [0.992, 0.999] | 1.002 [0.997, 1.006] |
@@ -266,6 +281,9 @@ Its cause inside the GPU was not found. Two time-sliced processes in the
 ### 4.6 Against sharing inside one process (record Section 6.10)
 
 Eight agents on the 16,321-token prefix, 64 tokens each.
+
+<p align="center"><img src="figures/eval_inproc.png" width="620"></p>
+<p align="center"><b>Figure 10.</b> Throughput against memory. Circles: eight processes; square: one batching server; triangles: one batching server in each MIG instance. The memory of the eight processes on extents includes the cache file.</p>
 
 | Configuration | Generation (tokens/s) | Memory (GiB) | All agents ready (s) |
 |---|---:|---:|---:|
@@ -283,6 +301,9 @@ The closest prior designs share a cache between processes in device memory.
 cache consists of 2 MiB allocations of CUDA's virtual memory interface, and
 a child maps the ones a prefix fills read-only. A parent and four children in
 one MIG instance, 16,321-token prefix (12-SM / 6-SM instance):
+
+<p align="center"><img src="figures/eval_vmm.png" width="820"></p>
+<p align="center"><b>Figure 11.</b> Host extents against a cache in shared device memory and against the copy.</p>
 
 | | Copy (upstream) | Device-memory cache | Host extents |
 |---|---:|---:|---:|
@@ -351,6 +372,7 @@ two that reaches the other instance.
 | `make_lora.py` | writes synthetic LoRA adapters for a GGUF model |
 | `models/` | the model used by the campaigns (downloaded; not part of the artifact) |
 | `summarize_*.awk`, `tables.py` | analysis and the tables of the record |
+| `figures/` | the figures of this page: TikZ sources in `figures/src/`, `make_eval_figures.py` for the graphs (read from `results/`), `build.sh` builds both as PDF and PNG |
 | `docs/` | the record, the substrate record and the prior-art audits; `docs/record_src/` holds the sections and tables of the record and `assemble.py`, which builds it |
 | `results/` | raw logs, summaries, metadata and pinned source hashes of every campaign |
 | `verify_llm_share_artifact.sh` | re-derives every packaged result from its raw log, no GPU |
@@ -443,11 +465,12 @@ to this repository; it reports how many of the latter it skipped. Two runners
 (`run_sharing_routes.sh`, and `tables.py` for two tables of Section 5 of the
 record) use the substrate project and need it at `../thor_hostmm`.
 
-To rebuild the record after a campaign:
+To rebuild the record and the figures after a campaign:
 
 ```bash
 python3 tables.py results ../thor_hostmm/results docs/record_src
 python3 docs/record_src/assemble.py
+figures/build.sh          # needs pdflatex, pdftoppm, matplotlib
 ```
 
 ## 7. Using the paths

@@ -1174,8 +1174,8 @@ The record for this concept is `RESEARCH_LLM_SHARE_2026-10-05.md`.
    (`llm_share/inplace_weights.patch`). Six paired repetitions: identical
    text, generation 0.940 times the device copy on 4 KiB pages
    [0.914, 0.967] and 0.997 times on 2 MiB pages [0.971, 1.025], load 942 to
-   517 ms (270 ms on 2 MiB pages), 4.5 GiB less memory per process. Eight
-   processes hold 10.2 instead of 41.8 GiB. Five processes with four
+   517 ms (270 ms on 2 MiB pages), 4.4 GiB less memory per process. Eight
+   processes hold 10.0 instead of 40.8 GiB. Five processes with four
    adapters produce the texts of their device-copy counterparts in 30 of 30
    comparisons.
 3. **"Why not one server process?" is measured, and the answer limits the
@@ -1184,7 +1184,7 @@ The record for this concept is `RESEARCH_LLM_SHARE_2026-10-05.md`.
    instance). Separate processes do not raise throughput on this GPU. The
    record therefore positions in-place sharing for agents that are separate
    programs anyway and for one batching server per MIG instance, which is
-   measured at 149 tokens/s for sixteen sequences in 6.8 instead of 11.4 GiB.
+   measured at 149 tokens/s for sixteen sequences in 6.6 instead of 11.1 GiB.
 4. **"Why not CUDA IPC?" is measured, and one expectation of Section 14 did
    not hold.** CUDA IPC shared a device allocation between two processes of
    one MIG instance, also when both were clients of one MPS server (5 of 5),

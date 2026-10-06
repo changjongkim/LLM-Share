@@ -1,0 +1,55 @@
+% Design: publish, attach, fork and move as operations on mappings.
+\documentclass[border=2pt]{standalone}
+\input{llmshare_style}
+\begin{document}
+\begin{tikzpicture}
+
+% lanes
+\draw[layer] (0.0,3.55) rectangle (11.6,5.05);
+\draw[layer, fill=white] (0.0,1.95) rectangle (11.6,3.35);
+\draw[layer] (0.0,0.25) rectangle (11.6,1.75);
+\node[ttl, rotate=90] at (0.28,4.3) {Publisher};
+\node[ttl, rotate=90] at (0.28,2.65) {Files};
+\node[ttl, rotate=90] at (0.28,1.0) {Agent};
+
+% publisher
+\node[comp, minimum width=2.9cm, minimum height=1.0cm] (compute) at (2.25,4.3)
+  {Compute the Prefix\\[-1pt]{\mdseries\itshape the GPU writes its rows}};
+\node[comp, fill=peach, minimum width=3.5cm, minimum height=1.0cm] (publish) at (5.9,4.3)
+  {Publish\\[-1pt]{\mdseries\itshape write metadata, one mprotect}\\[-1pt]{\mdseries\itshape per tensor, freeze the cells}};
+\node[comp, minimum width=2.9cm, minimum height=1.0cm] (keep) at (9.75,4.3)
+  {Keep Generating\\[-1pt]{\mdseries\itshape own rows after the prefix}};
+\draw[arr] (compute) -- (publish);
+\draw[arr] (publish) -- (keep);
+\node[rnum] at (4.15,4.8) {1};
+\node[rnum] at (0.2,5.27) {1};
+\node[note, anchor=west] at (0.4,5.27) {3 to 9 ms (copy: 231 to 561 ms)};
+
+% files
+\node[comp, fill=bluec, minimum width=3.6cm, minimum height=0.7cm] (cache) at (2.9,2.65)
+  {Prefix Cache File (tmpfs)};
+\node[comp, minimum width=3.6cm, minimum height=0.7cm] (state) at (7.6,2.65)
+  {State File: 16 bytes per cell};
+\draw[arr] (2.25,3.8) -- (2.25,3.0) node[midway, right, note, inner sep=2pt] {rows};
+\draw[arr] (7.2,3.8) -- (7.2,3.0) node[midway, right, note, inner sep=2pt] {metadata};
+
+% agent
+\node[comp, minimum width=1.9cm, minimum height=1.0cm] (start) at (1.75,1.0)
+  {Start\\[-1pt]{\mdseries\itshape spawn, not fork}};
+\node[comp, fill=peach, minimum width=4.2cm, minimum height=1.0cm] (attach) at (5.55,1.0)
+  {Attach\\[-1pt]{\mdseries\itshape map the prefix read-only, copy the last}\\[-1pt]{\mdseries\itshape page, CPU read pass, load metadata}};
+\node[comp, minimum width=2.9cm, minimum height=1.0cm] (gen) at (9.75,1.0)
+  {Generate\\[-1pt]{\mdseries\itshape rows to the private tail}};
+\draw[arr] (start) -- (attach);
+\draw[arr] (attach) -- (gen);
+\node[rnum] at (3.45,1.5) {2};
+\node[rnum] at (0.2,0.03) {2};
+\node[note, anchor=west] at (0.4,0.03) {25 to 65 ms (copy: 81 to 484 ms)};
+\draw[arr, dblue] (4.2,2.3) -- (4.2,1.5) node[midway, right, note, text=dblue, inner sep=2pt] {read-only mapping};
+\draw[arr, densely dashed] (7.0,2.3) -- (7.0,1.5) node[midway, right, note, inner sep=2pt] {names the rows};
+
+\node[note, anchor=east] at (11.55,5.27) {fork: the publisher keeps running};
+\node[note, anchor=east] at (11.55,0.03) {move: the publisher exits};
+
+\end{tikzpicture}
+\end{document}

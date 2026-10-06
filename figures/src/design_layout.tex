@@ -1,0 +1,58 @@
+% Design: one key or value tensor of the cache as extents. The rows of the
+% prefix are pages of the publisher's file, mapped read-only by every agent;
+% what an agent writes lies in a private tail that grows with use.
+\documentclass[border=2pt]{standalone}
+\input{llmshare_style}
+\begin{document}
+\begin{tikzpicture}
+
+% row axis
+\foreach \x/\t in {1.9/row 0, 6.5/row $P$, 11.3/context size} {
+  \draw[black!45, line width=0.3pt] (\x,0.25) -- (\x,4.55);
+  \node[lbl] at (\x,4.75) {\t};
+}
+\draw[decorate, decoration={brace, amplitude=3pt}] (1.95,5.0) -- (6.45,5.0);
+\node[lbl] at (4.2,5.32) {cells of the prefix: frozen, never handed out again};
+\draw[decorate, decoration={brace, amplitude=3pt}] (6.55,5.0) -- (11.25,5.0);
+\node[lbl] at (8.9,5.32) {cells this process fills};
+
+% one tensor: prefix, last page, rows in use, populated ahead, not backed
+\newcommand{\tensor}[4]{% y, width of the rows in use, name, label
+  \node[lbl, anchor=east, align=right] at (1.75,#1) {#4};
+  \node[seg, fill=bluec, minimum width=4.6cm, minimum height=0.55cm, anchor=west] (#3p) at (1.9,#1) {};
+  \node[seg, fill=peach, minimum width=0.25cm, minimum height=0.55cm, anchor=west] (#3l) at (6.5,#1) {};
+  \node[seg, fill=gold, minimum width=#2 cm, minimum height=0.55cm, anchor=west] (#3u) at (6.75,#1) {};
+  \node[seg, fill=gold!40, minimum width=0.5cm, minimum height=0.55cm, anchor=west] (#3a) at (6.75+#2,#1) {};
+  \node[free, minimum width=4.05cm-#2 cm, minimum height=0.55cm, anchor=west] (#3f) at (7.25+#2,#1) {};
+}
+\tensor{3.75}{1.3}{one}{Agent 1}
+\tensor{0.85}{0.55}{two}{Agent 2}
+\node[lbl] at (4.2,3.75) {read-only mapping};
+\node[lbl] at (4.2,0.85) {read-only mapping};
+
+% the publisher's file
+\node[lbl, anchor=east, align=right] at (1.75,2.3) {Publisher's\\[-1pt]cache file};
+\node[seg, fill=bluec, minimum width=4.85cm, minimum height=0.55cm, anchor=west] (filep) at (1.9,2.3) {rows of the prefix (read-only after publish)};
+\node[seg, fill=gold, minimum width=0.9cm, minimum height=0.55cm, anchor=west] (fileu) at (6.75,2.3) {};
+\node[free, minimum width=3.65cm, minimum height=0.55cm, anchor=west] at (7.65,2.3) {};
+\node[note, anchor=west] at (6.8,1.82) {the publisher's own later rows};
+
+% the same pages in every agent
+\draw[arr, dblue, line width=1.2pt] (3.0,2.575) -- (3.0,3.475);
+\draw[arr, dblue, line width=1.2pt] (5.4,2.575) -- (5.4,3.475);
+\draw[arr, dblue, line width=1.2pt] (3.0,2.025) -- (3.0,1.125);
+\draw[arr, dblue, line width=1.2pt] (5.4,2.025) -- (5.4,1.125);
+\node[note, text=dblue] at (4.2,3.02) {same physical pages};
+\node[note, text=dblue] at (4.2,1.58) {same physical pages};
+
+% the parts of the private tail
+\draw[thin] (6.625,4.35) -- (onel.north);
+\node[note, anchor=west] at (6.72,4.3) {last page copied};
+\node[lbl] at (7.4,3.75) {in use};
+\draw[thin] (8.9,3.12) -- (onea.south);
+\node[note, anchor=west] at (8.55,2.98) {populated ahead by the CPU (256 rows)};
+\node[lbl, fill=white, inner sep=1.2pt] at (10.05,3.75) {no memory yet};
+\node[lbl, fill=white, inner sep=1.2pt] at (9.7,0.85) {no memory yet};
+
+\end{tikzpicture}
+\end{document}
