@@ -24,7 +24,6 @@
 }
 \draw[decorate, decoration={brace, amplitude=3pt, mirror}] (1.56,0.95) -- (5.5,0.95);
 \node[tag] at (3.53,0.62) {2 MiB Block: 512 Copies};
-\legendfill{1.0}{0.12}{sharedc}{Shared}
-\legendfill{2.4}{0.12}{faultc}{Private Copy}
+\node[tag] at (2.9,0.22) {\lgdfill{sharedc}\,Shared\qquad\lgdfill{faultc}\,Private Copy};
 \end{tikzpicture}
 \end{document}

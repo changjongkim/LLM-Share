@@ -50,10 +50,6 @@
 \node[tag, anchor=west] at (7.21,2.4) {CPU Populate};
 
 % legend
-\legendfill{0.2}{0.2}{sharedc}{Shared (RO)}
-\legendfill{2.0}{0.2}{copyc}{Copied Page}
-\legendfill{3.85}{0.2}{tailc}{In Use}
-\legendfill{5.15}{0.2}{aheadc}{Populated}
-\legendhatch{6.95}{0.2}{Unbacked}
+\node[tag] at (4.45,0.3) {\lgdfill{sharedc}\,Shared (RO)\qquad\lgdfill{copyc}\,Copied Page\qquad\lgdfill{tailc}\,In Use\qquad\lgdfill{aheadc}\,Populated\qquad\lgdhatch\,Unbacked};
 \end{tikzpicture}
 \end{document}
