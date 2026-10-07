@@ -528,6 +528,229 @@ verify_stack 20261007-engine-kvstack-v1 kvstack all
 verify_stack 20261007-engine-kvstack-huge-v1 kvstack-huge all
 verify_stack 20261007-engine-kvstack-capacity-v1 kvstack-capacity both
 
+# Evaluates gates on a summary that has a header line. The awk program sees
+# a field of a row by its name, as $c["name"], and prints one line for every
+# gate that is not met. A line that starts with "!" is a relation that must
+# hold and fails the verification; any other line is reported as a measured
+# exception.
+gates() {  # label file program
+  local label=$1 file=$2 program=$3 line
+  while IFS= read -r line; do
+    [[ -n "$line" ]] || continue
+    if [[ "$line" == '!'* ]]; then fail "$label: ${line#!}"; fi
+    exceptions+=("${label}:${line// /_}")
+  done < <(awk -F, "NR == 1 { for (i = 1; i <= NF; ++i) c[\$i] = i; next } $program" "$file")
+}
+
+# --- mechanisms in one engine: baselines, ablation, locality -----------------
+verify_mech() {  # campaign label set
+  present "$1" || return 0
+  local dir="$results/$1" label=$2 order
+  check_hashes "$dir"
+  order=$(awk -F= '$1 == "modes" { print $2 }' "$dir/metadata.txt")
+  awk -v order="$order" -f "$script_dir/summarize_engine_kvmech.awk" "$dir/raw.log" >"$scratch/$label.csv"
+  same "$scratch/$label.csv" "$dir/engine_kvmech_summary.csv"
+  case $3 in
+    baselines)
+      gates "$label" "$dir/engine_kvmech_summary.csv" '
+        {
+          cell = $c["placement"] ":" $c["children"] ":" $c["paragraphs"]; mode = $c["mode"]
+          device = (mode ~ /^device/)
+          # B1 and B5: completion.
+          if ($c["parents_completed"] != $c["runs"] || $c["timed_out"] != 0) print "!B1 parent " cell " " mode
+          if (!device && $c["children_finished"] != $c["children_started"]) print "!B1 children " cell " " mode
+          if (device && ($c["own_instance_finished"] != $c["own_instance_started"] || $c["other_instance_finished"] != 0))
+            print "!B5 " cell " " mode
+          # B2: texts.
+          if ($c["texts_equal_to_copy"] != $c["texts_compared"] || $c["texts_compared"] != $c["children_finished"])
+            print "!B2 " cell " " mode " " $c["texts_equal_to_copy"] "/" $c["children_finished"]
+          memory[cell, mode] = $c["children_memory_mib"]; attach[cell, mode] = $c["child_attach_ms"]
+          pause[cell, mode] = $c["publish_ms"]; cells[cell] = $c["placement"]
+        }
+        END {
+          split("copy demand device device_tuned device_merged cow", others, " ")
+          for (cell in cells) {
+            if (cells[cell] == "same") {
+              # B3: memory.
+              if (!(memory[cell, "extent"] < memory[cell, "device_merged"] && memory[cell, "extent"] < memory[cell, "device_tuned"]))
+                print "B3 " cell " extent=" memory[cell, "extent"] " device_tuned=" memory[cell, "device_tuned"]
+              if (memory[cell, "device_tuned"] > memory[cell, "device"])
+                print "B3 " cell " device_tuned=" memory[cell, "device_tuned"] " device=" memory[cell, "device"]
+              if (!(memory[cell, "device"] < memory[cell, "demand"] && memory[cell, "demand"] < memory[cell, "copy"]))
+                print "B3 " cell " device=" memory[cell, "device"] " demand=" memory[cell, "demand"] " copy=" memory[cell, "copy"]
+              if (memory[cell, "extent"] > memory[cell, "cow"])
+                print "B3 " cell " extent=" memory[cell, "extent"] " cow=" memory[cell, "cow"]
+              # B6: the tuning has an effect.
+              if (!(attach[cell, "device_merged"] < 0.5 * attach[cell, "device"]))
+                print "B6 " cell " device_merged=" attach[cell, "device_merged"] " device=" attach[cell, "device"]
+            }
+            # B4: attach and pause.
+            for (o = 1; o <= 6; ++o) {
+              if (!(attach[cell, "extent"] < attach[cell, others[o]]))
+                print "B4 attach " cell " extent=" attach[cell, "extent"] " " others[o] "=" attach[cell, others[o]]
+              if (others[o] != "cow" && !(pause[cell, "extent"] < pause[cell, others[o]]))
+                print "B4 pause " cell " extent=" pause[cell, "extent"] " " others[o] "=" pause[cell, others[o]]
+            }
+          }
+        }' ;;
+    ablation)
+      gates "$label" "$dir/engine_kvmech_summary.csv" '
+        {
+          mode = $c["mode"]; kept = (mode !~ /^(no_read|no_populate|writable_no_read)$/)
+          complete = ($c["parents_completed"] == $c["runs"] && $c["timed_out"] == 0 && $c["children_finished"] == $c["children_started"])
+          equal = ($c["texts_equal_to_copy"] == $c["texts_compared"] && $c["texts_compared"] == $c["children_finished"])
+          if (kept && !complete) print "!A1 " mode
+          if (kept && !equal) print "!A2 " mode " " $c["texts_equal_to_copy"] "/" $c["children_finished"]
+          if (!kept && !(complete && equal))
+            print "counted " mode " finished=" $c["children_finished"] "/" $c["children_started"] " equal=" $c["texts_equal_to_copy"]
+          memory[mode] = $c["children_memory_mib"]; attach[mode] = $c["child_attach_ms"]
+        }
+        END {
+          if (!(memory["extent"] <= memory["grow_1024"] && memory["grow_1024"] <= memory["grow_4096"] && memory["grow_4096"] <= memory["grow_all"]))
+            print "A3 extent=" memory["extent"] " grow_1024=" memory["grow_1024"] " grow_4096=" memory["grow_4096"] " grow_all=" memory["grow_all"]
+          if (!(attach["extent"] < attach["small_pages"]))
+            print "A4 extent=" attach["extent"] " small_pages=" attach["small_pages"]
+        }' ;;
+    locality)
+      gates "$label" "$dir/engine_kvmech_summary.csv" '
+        {
+          if ($c["parents_completed"] != $c["runs"] || $c["timed_out"] != 0 || $c["children_finished"] != $c["children_started"])
+            print "!L1 " $c["mode"]
+          if ($c["texts_equal_to_copy"] != $c["texts_compared"] || $c["texts_compared"] != $c["children_finished"])
+            print "!L2 " $c["mode"] " " $c["texts_equal_to_copy"] "/" $c["children_finished"]
+        }' ;;
+  esac
+}
+verify_mech 20261007-engine-kvmech-v1 kvmech baselines
+verify_mech 20261007-engine-kvablate-v1 kvablate ablation
+verify_mech 20261007-engine-kvlocal-6sm-v1 kvlocal-6sm locality
+verify_mech 20261007-engine-kvlocal-12sm-v1 kvlocal-12sm locality
+
+# --- scattered reads and writes by the kind of memory -------------------------
+if present 20261007-tlb-probe-v1; then
+  dir="$results/20261007-tlb-probe-v1"
+  check_hashes "$dir"
+  awk -f "$script_dir/summarize_tlb_probe.awk" "$dir/raw.log" >"$scratch/tlb.csv"
+  same "$scratch/tlb.csv" "$dir/tlb_probe_summary.csv"
+  gates tlb "$dir/tlb_probe_summary.csv" '{ if ($c["failed_probes"] != 0 || $c["runs"] != 6) print "!probe " $c["sms"] " " $c["kind"] }'
+fi
+
+# --- a pipeline of agents on a public workload --------------------------------
+verify_pipe() {  # campaign label
+  present "$1" || return 0
+  local dir="$results/$1" label=$2
+  check_hashes "$dir"
+  awk -f "$script_dir/summarize_engine_kvpipe.awk" "$dir/raw.log" >"$scratch/$label.csv"
+  same "$scratch/$label.csv" "$dir/engine_kvpipe_summary.csv"
+  gates "$label" "$dir/engine_kvpipe_summary.csv" '
+    {
+      mode = $c["mode"]
+      if ($c["failed_processes"] != 0 || $c["timed_out"] != 0 || $c["workers_finished"] != $c["workers_started"]) print "!P1 " mode
+      if ($c["worker_texts_equal_to_stock"] != $c["worker_texts_compared"] || $c["worker_texts_compared"] != $c["workers_finished"])
+        print "!P2 " mode " " $c["worker_texts_equal_to_stock"] "/" $c["workers_finished"]
+      memory[mode] = $c["memory_mib"] + $c["files_mib"]; wall[mode] = $c["wall_vs_stock"]; energy[mode] = $c["vin_vs_stock"]
+    }
+    END {
+      if (!(memory["chain"] < memory["copy"] && memory["copy"] < memory["stock"]))
+        print "!P3 chain=" memory["chain"] " copy=" memory["copy"] " stock=" memory["stock"]
+      if (!(wall["chain"] <= 1.10)) print "P4 wall_vs_stock=" wall["chain"]
+      if (!(energy["chain"] <= 1.10)) print "P5 energy_vs_stock=" energy["chain"]
+    }'
+}
+verify_pipe 20261007-engine-kvpipe-v1 kvpipe
+verify_pipe 20261007-engine-kvpipe-huge-v1 kvpipe-huge
+
+# --- faults among agents that share a prefix ------------------------------------
+if present 20261007-engine-kvfault-v1; then
+  dir="$results/20261007-engine-kvfault-v1"
+  check_hashes "$dir"
+  awk -f "$script_dir/summarize_engine_kvfault.awk" "$dir/raw.log" >"$scratch/kvfault.csv"
+  same "$scratch/kvfault.csv" "$dir/engine_kvfault_summary.csv"
+  gates kvfault "$dir/engine_kvfault_summary.csv" '
+    {
+      config = $c["config"]; fault = $c["fault"]; isolated = (config == "timeslice" || config == "mig")
+      # F1: without a fault every agent completes.
+      if (fault == "none" && $c["agents_completed"] != $c["agents_started"]) print "!F1 " config
+      # F2: the write is refused and the file keeps its contents.
+      if (fault == "write" && $c["writes_refused"] != $c["writes_injected"]) print "!F2 write " config
+      if ($c["file_intact_runs"] != $c["runs"]) print "!F2 file " config " " fault
+      # F3: without MPS the other agents complete with the text of the run without a fault.
+      if (isolated && fault != "none" && ($c["others_completed"] != $c["others_started"] || $c["others_with_reference_text"] != $c["others_started"]))
+        print "!F3 " config " " fault " " $c["others_completed"] "/" $c["others_started"]
+      if (!isolated && fault != "none" && $c["others_completed"] != $c["others_started"])
+        print "counted " config " " fault " others_completed=" $c["others_completed"] "/" $c["others_started"]
+    }'
+fi
+
+# --- deeper and wider trees -----------------------------------------------------
+verify_deep() {  # campaign label
+  present "$1" || return 0
+  local dir="$results/$1" label=$2
+  check_hashes "$dir"
+  awk -f "$script_dir/summarize_engine_kvdeep.awk" "$dir/raw.log" >"$scratch/$label.csv"
+  same "$scratch/$label.csv" "$dir/engine_kvdeep_summary.csv"
+  gates "$label" "$dir/engine_kvdeep_summary.csv" '
+    {
+      mode = $c["mode"]
+      if ($c["failed_processes"] != 0 || $c["timed_out"] != 0) print "!D1 " mode
+      if ($c["leaf_texts_equal_to_copy"] != $c["leaf_texts_compared"] || $c["leaf_texts_compared"] != $c["leaves_finished"])
+        print "D2 " mode " " $c["leaf_texts_equal_to_copy"] "/" $c["leaves_finished"]
+      memory[mode] = $c["tree_memory_mib"] + $c["files_attached_mib"]; first[mode] = $c["leaf_first_token_ms"]
+      if (mode == "chain") { all = $c["files_all_alive_mib"]; left = $c["files_first_subtree_left_mib"]; end = $c["files_end_mib"] }
+    }
+    END {
+      if (!(memory["chain"] < memory["copy"])) print "!D3 chain=" memory["chain"] " copy=" memory["copy"]
+      if (!(first["chain"] <= first["copy"])) print "D4 chain=" first["chain"] " copy=" first["copy"]
+      if (end != 0 || (left >= 0 && !(left < all))) print "!D5 all=" all " left=" left " end=" end
+    }'
+}
+verify_deep 20261007-engine-kvdeep-v1 kvdeep
+verify_deep 20261007-engine-kvdeep-wide-v1 kvdeep-wide
+
+# --- more prefix lengths, a longer generation, 32 agents again -----------------
+verify_scale 20261007-engine-kvscale-p20-v1 kvscale-p20
+verify_scale 20261007-engine-kvscale-p80-v1 kvscale-p80
+verify_scale 20261007-engine-kvscale-p600-v1 kvscale-p600
+verify_scale 20261007-engine-kvscale-gen2k-v1 kvscale-gen2k
+verify_scale 20261007-engine-kvscale-32-v2 kvscale-32-v2
+
+# --- an external weight-sharing library, a weights publisher, vLLM --------------
+if present 20261007-ext-weightshare-v1; then
+  dir="$results/20261007-ext-weightshare-v1"
+  check_hashes "$dir"
+  awk -f "$script_dir/summarize_ext_weightshare.awk" "$dir/raw.log" >"$scratch/wshare.csv"
+  same "$scratch/wshare.csv" "$dir/ext_weightshare_summary.csv"
+  gates wshare "$dir/ext_weightshare_summary.csv" '
+    {
+      stack = $c["stack"]
+      if (stack != "ipc" && ($c["agents_finished"] != $c["agents_started"] || $c["timed_out"] != 0)) print "!W1 " $c["placement"] " " stack
+      if ($c["texts_equal_to_stock"] != $c["texts_compared"]) print "!W2 " $c["placement"] " " stack
+      if (stack == "ipc" && $c["agents_finished"] != $c["agents_started"])
+        print "counted ipc " $c["placement"] " finished=" $c["agents_finished"] "/" $c["agents_started"] " workers=" $c["library_workers"]
+    }'
+fi
+if present 20261007-weights-publish-v1; then
+  dir="$results/20261007-weights-publish-v1"
+  check_hashes "$dir"
+  awk -f "$script_dir/summarize_weights_publish.awk" "$dir/raw.log" >"$scratch/publish.csv"
+  same "$scratch/publish.csv" "$dir/weights_publish_summary.csv"
+  gates publish "$dir/weights_publish_summary.csv" '
+    {
+      method = $c["method"]
+      if ($c["failed"] != 0 || $c["identical"] != $c["runs"]) print "!L1 " $c["file"] " " method
+      if (method == "cp" && !($c["page_cache_left_share"] > 0.90)) print "L2 cp " $c["file"] " share=" $c["page_cache_left_share"]
+      if (method != "cp" && !($c["page_cache_left_share"] < 0.05)) print "L2 " method " " $c["file"] " share=" $c["page_cache_left_share"]
+      if (method == "publish" && !($c["speedup_vs_cp"] >= 1.0)) print "L3 " $c["file"] " speedup_vs_cp=" $c["speedup_vs_cp"]
+    }'
+fi
+if present 20261007-ext-vllm-v1; then
+  dir="$results/20261007-ext-vllm-v1"
+  check_hashes "$dir"
+  awk -f "$script_dir/summarize_ext_vllm.awk" "$dir/raw.log" >"$scratch/vllm.csv"
+  same "$scratch/vllm.csv" "$dir/ext_vllm_summary.csv"
+  gates vllm "$dir/ext_vllm_summary.csv" '{ if ($c["servers_ready"] != $c["runs"] || $c["agents_finished"] != $c["agents_started"]) print "!X1 " $c["round"] }'
+fi
+
 echo "stator_campaign_verification=PASS"
 echo "campaigns_verified=${#verified[@]} ${verified[*]:-}"
 echo "campaigns_absent=${#absent[@]} ${absent[*]:-}"

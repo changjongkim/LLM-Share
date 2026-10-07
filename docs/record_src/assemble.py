@@ -41,6 +41,14 @@ tables = {
     "@OLLAMA_AGENTS@": "ollama_agents.md",
     "@KV_STACK@": "kv_stack.md", "@KV_STACK_FIT@": "kv_stack_fit.md",
     "@KV_STACK_HUGE@": "kv_stack_huge.md", "@KV_STACK_CAPACITY@": "kv_stack_capacity.md",
+    "@KV_MECH@": "kv_mech.md", "@KV_ABLATE@": "kv_ablate.md",
+    "@KV_LOCAL_6SM@": "kv_local_6sm.md", "@KV_LOCAL_12SM@": "kv_local_12sm.md",
+    "@TLB_PROBE@": "tlb_probe.md", "@KV_PIPE@": "kv_pipe.md", "@KV_PIPE_HUGE@": "kv_pipe_huge.md",
+    "@KV_FAULT@": "kv_fault.md", "@KV_DEEP@": "kv_deep.md", "@KV_DEEP_WIDE@": "kv_deep_wide.md",
+    "@KV_SCALE_P20@": "kv_scale_p20.md", "@KV_SCALE_P80@": "kv_scale_p80.md",
+    "@KV_SCALE_P600@": "kv_scale_p600.md", "@KV_SCALE_GEN2K@": "kv_scale_gen2k.md",
+    "@KV_SCALE_32V2@": "kv_scale_32v2.md", "@EXT_WEIGHTSHARE@": "ext_weightshare.md",
+    "@WEIGHTS_PUBLISH@": "weights_publish.md", "@EXT_VLLM@": "ext_vllm.md",
 }
 for marker, name in tables.items():
     path = os.path.join(docs, name)

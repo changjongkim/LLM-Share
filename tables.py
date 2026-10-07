@@ -665,4 +665,126 @@ for tag, name in (("20261007-engine-kvstack-v1", "kv_stack"),
                  + f" | {shared:.0f} | {r['memory_available_mib']} | {r['agents_that_fit_by_line']} |\n")
     write(name + "_fit.md", text)
 
+
+
+def render(name, path, columns):
+    """A markdown table of a summary: columns are (header, function of a row)."""
+    if not os.path.exists(path):
+        return
+    text = "| " + " | ".join(header for header, _ in columns) + " |\n"
+    text += "|" + "|".join("---" if index == 0 else "---:" for index in range(len(columns))) + "|\n"
+    for r in rows(path):
+        text += "| " + " | ".join(str(value(r)) for _, value in columns) + " |\n"
+    write(name + ".md", text)
+
+
+def num(key, digits=0, scale=1.0):
+    return lambda r: f"{float(r[key]) / scale:.{digits}f}"
+
+
+def part(done, total):
+    return lambda r: f"{r[done]}/{r[total]}"
+
+
+MECH_COLUMNS = [
+    ("Placement", lambda r: r["placement"]), ("Children", lambda r: r["children"]),
+    ("Prefix (tokens)", lambda r: r["prefix_tokens"]), ("Mode", lambda r: r["mode"]),
+    ("Children complete", part("children_finished", "children_started")),
+    ("Texts equal to copy", part("texts_equal_to_copy", "texts_compared")),
+    ("Parent pause (ms)", num("publish_ms", 2)), ("Attach (ms)", num("child_attach_ms", 1)),
+    ("95% CI", num("child_attach_ci95", 1)), ("First token (ms)", num("child_first_token_ms")),
+    ("Memory (MiB)", num("children_memory_mib")), ("95% CI", num("children_memory_ci95")),
+    ("Throughput (tokens/s)", num("children_tps_sum", 2)),
+    ("Speed vs copy", num("children_tps_vs_copy", 4)), ("median", num("vs_copy_median", 4)),
+]
+for tag, name in (("20261007-engine-kvmech-v1", "kv_mech"), ("20261007-engine-kvablate-v1", "kv_ablate"),
+                  ("20261007-engine-kvlocal-6sm-v1", "kv_local_6sm"),
+                  ("20261007-engine-kvlocal-12sm-v1", "kv_local_12sm")):
+    render(name, os.path.join(engine_root, tag, "engine_kvmech_summary.csv"), MECH_COLUMNS)
+
+render("tlb_probe", os.path.join(engine_root, "20261007-tlb-probe-v1", "tlb_probe_summary.csv"), [
+    ("SMs (runtime)", lambda r: r["sms"]), ("Buffer (MiB)", lambda r: r["size_mib"]),
+    ("Stride (KiB)", lambda r: r["stride_kib"]), ("Memory", lambda r: r["kind"]),
+    ("Runs", lambda r: r["runs"]), ("Scattered reads (Mwords/s)", num("gather_mwords_s", 1)),
+    ("vs device", num("gather_vs_device", 3)), ("low", num("gather_low", 3)), ("high", num("gather_high", 3)),
+    ("Scattered writes (Mwords/s)", num("scatter_mwords_s", 1)),
+    ("vs device", num("scatter_vs_device", 3)), ("low", num("scatter_low", 3)), ("high", num("scatter_high", 3)),
+])
+
+PIPE_COLUMNS = [
+    ("Stack", lambda r: r["mode"]), ("Groups x workers x turns", lambda r: r["shape"]),
+    ("Runs (failed)", lambda r: f"{r['runs']} ({r['failed_processes']})"),
+    ("Prefix (tokens)", lambda r: r["planner_tokens"]),
+    ("Completion (s)", num("wall_s", 1)), ("95% CI", num("wall_ci95", 1)),
+    ("vs stock", num("wall_vs_stock", 3)), ("Memory (MiB)", num("memory_mib")),
+    ("Files (MiB)", num("files_mib")), ("Worker attach (ms)", num("worker_attach_ms", 1)),
+    ("Worker first token (ms)", num("worker_first_token_ms")),
+    ("Energy, input rail (J)", num("vin_total_j")), ("prefix / leaders / workers (J)",
+                                                    lambda r: f"{r['vin_prefix_j']} / {r['vin_leaders_j']} / {r['vin_workers_j']}"),
+    ("vs stock", num("vin_vs_stock", 3)), ("GPU rail (J)", num("gpu_total_j")),
+    ("Worker texts equal to stock", part("worker_texts_equal_to_stock", "worker_texts_compared")),
+]
+for tag, name in (("20261007-engine-kvpipe-v1", "kv_pipe"), ("20261007-engine-kvpipe-huge-v1", "kv_pipe_huge")):
+    render(name, os.path.join(engine_root, tag, "engine_kvpipe_summary.csv"), PIPE_COLUMNS)
+
+render("kv_fault", os.path.join(engine_root, "20261007-engine-kvfault-v1", "engine_kvfault_summary.csv"), [
+    ("GPU sharing", lambda r: r["config"]), ("Fault", lambda r: r["fault"]), ("Runs", lambda r: r["runs"]),
+    ("Agents complete", part("agents_completed", "agents_started")),
+    ("Others complete", part("others_completed", "others_started")),
+    ("Others with the text of the run without a fault", part("others_with_reference_text", "others_started")),
+    ("Writes refused", part("writes_refused", "writes_injected")), ("Error of the write", lambda r: r["write_error"]),
+    ("File intact (runs)", part("file_intact_runs", "runs")),
+])
+
+DEEP_COLUMNS = [
+    ("Hand-over", lambda r: r["mode"]), ("Fan-outs", lambda r: r["fanouts"]),
+    ("Processes (leaves)", lambda r: f"{r['processes']} ({r['leaves']})"),
+    ("Runs (failed)", lambda r: f"{r['runs']} ({r['failed_processes']})"),
+    ("Inner attach / publish (ms)", lambda r: f"{float(r['inner_attach_ms']):.1f} / {float(r['inner_publish_ms']):.2f}"),
+    ("Leaf attach (ms)", num("leaf_attach_ms", 1)), ("Leaf first token (ms)", num("leaf_first_token_ms")),
+    ("Memory (MiB)", num("tree_memory_mib")), ("95% CI", num("tree_memory_ci95")),
+    ("Files: all alive / first subtree left / end (MiB)",
+     lambda r: f"{r['files_all_alive_mib']} / {r['files_first_subtree_left_mib']} / {r['files_end_mib']}"),
+    ("Leaf texts equal to copy", part("leaf_texts_equal_to_copy", "leaf_texts_compared")),
+]
+for tag, name in (("20261007-engine-kvdeep-v1", "kv_deep"), ("20261007-engine-kvdeep-wide-v1", "kv_deep_wide")):
+    render(name, os.path.join(engine_root, tag, "engine_kvdeep_summary.csv"), DEEP_COLUMNS)
+
+SCALE_COLUMNS = [
+    ("Prefix (tokens)", lambda r: r["prefix_tokens"]), ("Agents", lambda r: r["agents"]),
+    ("Mode", lambda r: r["mode"]), ("Runs (failed agents)", lambda r: f"{r['runs']} ({r['failed_agents']})"),
+    ("Exact texts", part("texts_equal_to_restore", "texts_compared")), ("Attach (ms)", num("attach_ms", 1)),
+    ("First token (ms)", num("first_token_ms")), ("Throughput (tokens/s)", num("generation_tps_total", 2)),
+    ("Extents / copy", num("generation_vs_restore", 4)), ("Memory (MiB)", num("memory_mib")),
+]
+for tag, name in (("20261007-engine-kvscale-p20-v1", "kv_scale_p20"), ("20261007-engine-kvscale-p80-v1", "kv_scale_p80"),
+                  ("20261007-engine-kvscale-p600-v1", "kv_scale_p600"),
+                  ("20261007-engine-kvscale-gen2k-v1", "kv_scale_gen2k"),
+                  ("20261007-engine-kvscale-32-v2", "kv_scale_32v2")):
+    render(name, os.path.join(engine_root, tag, "engine_kvscale_summary.csv"), SCALE_COLUMNS)
+
+render("ext_weightshare", os.path.join(engine_root, "20261007-ext-weightshare-v1", "ext_weightshare_summary.csv"), [
+    ("Placement", lambda r: r["placement"]), ("Stack", lambda r: r["stack"]), ("Runs", lambda r: r["runs"]),
+    ("Agents complete", part("agents_finished", "agents_started")),
+    ("In the other instance", part("other_instance_finished", "other_instance_started")),
+    ("Library: workers / fallbacks", lambda r: f"{r['library_workers']} / {r['library_fallbacks']}"),
+    ("Weights load (ms)", num("weights_load_ms")), ("First token (ms)", num("first_token_ms")),
+    ("Throughput (tokens/s)", num("agents_tps_sum", 2)), ("Memory (MiB)", num("memory_mib")),
+    ("95% CI", num("memory_ci95")), ("Texts equal to stock", part("texts_equal_to_stock", "texts_compared")),
+])
+render("weights_publish", os.path.join(engine_root, "20261007-weights-publish-v1", "weights_publish_summary.csv"), [
+    ("File", lambda r: r["file"]), ("Size (GiB)", lambda r: r["gib"]), ("Method", lambda r: r["method"]),
+    ("Runs (failed)", lambda r: f"{r['runs']} ({r['failed']})"), ("Time (s)", num("seconds", 3)),
+    ("95% CI", num("seconds_ci95", 3)), ("GiB/s", num("gib_per_s", 2)), ("Speed-up vs cp", num("speedup_vs_cp", 2)),
+    ("Page cache left (MiB)", num("page_cache_left_mib")), ("Share of the file", num("page_cache_left_share", 3)),
+    ("Largest drop of MemFree (MiB)", num("free_drop_mib")), ("Identical", part("identical", "runs")),
+])
+render("ext_vllm", os.path.join(engine_root, "20261007-ext-vllm-v1", "ext_vllm_summary.csv"), [
+    ("Round", lambda r: r["round"]), ("Servers ready", part("servers_ready", "runs")),
+    ("Agents complete", part("agents_finished", "agents_started")), ("Start-up (ms)", num("startup_ms")),
+    ("Memory when ready (MiB)", num("ready_memory_mib")), ("First token (ms)", num("first_token_ms")),
+    ("Prompt tokens (cached)", lambda r: f"{r['prompt_tokens']} ({r['prompt_cached']})"),
+    ("Throughput (tokens/s)", num("agents_tps_sum", 2)), ("Peak memory (MiB)", num("peak_memory_mib")),
+])
+
 print("tables written to", out)

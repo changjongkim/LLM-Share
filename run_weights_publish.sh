@@ -127,7 +127,7 @@ run_case() {  # run file method
   if (( code == 0 )) && cmp -s "$file" "$target"; then identical=1; fi
   printf 'PUBLISH run=%s file=%s bytes=%s method=%s exit=%s seconds=%s gib_per_s=%s page_cache_left_mib=%s free_drop_mib=%s identical=%s\n' \
     "$run" "$(basename "$file")" "$bytes" "$method" "$code" "$seconds" \
-    "$(awk -v b="$bytes" -v s="$seconds" 'BEGIN { printf "%.2f", s > 0 ? b / 1073741824 / s : 0 }')" \
+    "$(awk -v b="$bytes" -v s="$seconds" 'BEGIN { printf "%.2f", (s > 0 ? b / 1073741824 / s : 0) }')" \
     "$(( (cache_after - cache_before) / 1024 ))" "$(( (free_before - lowest) / 1024 ))" \
     "$identical" >>"$raw_log"
   sudo -n umount "$target_dir"

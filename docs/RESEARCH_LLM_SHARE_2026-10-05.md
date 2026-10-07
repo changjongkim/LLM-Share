@@ -1424,6 +1424,77 @@ agents that fit is not taken from this campaign: the tmpfs copy of the
 model is not available memory, and the summary subtracts the model file
 once more.
 
+**Mechanisms with a tuned device-memory baseline
+(`run_engine_kvmech.sh`, `20261007-engine-kvmech-v1`).** The comparison of
+Section 6.12 again, in an engine that adds two steps of tuning to the
+device-memory path (`llama.cpp-tuned`, `kv_tuned.patch`): `device_tuned`
+sets the access of the allocations of a tensor in one call, copies the
+allocations that the prefix ends in with one wait for the device, zeroes
+with one wait and gives a child's own memory one allocation per tensor and
+step (`LLAMA_KV_VMM_BATCH=1`); `device_merged` also makes the publisher copy
+the rows it publishes into one allocation per tensor, so that a child
+imports one handle per tensor (`=2`). Cells: 8 children in the parent's
+instance and across instances on the 16,321-token prefix, 4 and 1 children,
+and 8 children on the 4,081-token prefix.
+
+| Placement | Children | Prefix (tokens) | Mode | Children complete | Texts equal to copy | Parent pause (ms) | Attach (ms) | 95% CI | First token (ms) | Memory (MiB) | 95% CI | Throughput (tokens/s) | Speed vs copy | median |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| same | 8 | 16321 | copy | 48/48 | 48/48 | 553.01 | 645.4 | 78.7 | 2748 | 20309 | 30 | 21.54 | 1.0000 | 1.0000 |
+| same | 8 | 16321 | demand | 48/48 | 48/48 | 549.38 | 792.7 | 63.1 | 2936 | 14227 | 76 | 21.74 | 1.0093 | 1.0095 |
+| same | 8 | 16321 | device | 48/48 | 48/48 | 39.48 | 811.4 | 51.4 | 2906 | 7803 | 11 | 21.85 | 1.0145 | 1.0160 |
+| same | 8 | 16321 | device_tuned | 48/48 | 48/48 | 36.60 | 473.3 | 98.6 | 2548 | 7804 | 19 | 21.65 | 1.0054 | 1.0078 |
+| same | 8 | 16321 | device_merged | 48/48 | 48/48 | 114.63 | 194.6 | 30.6 | 2285 | 7741 | 10 | 21.31 | 0.9895 | 0.9902 |
+| same | 8 | 16321 | cow | 48/48 | 48/48 | 8.77 | 57.7 | 9.2 | 2780 | 6906 | 48 | 21.14 | 0.9818 | 0.9819 |
+| same | 8 | 16321 | extent | 48/48 | 48/48 | 8.61 | 54.0 | 6.1 | 2123 | 6036 | 29 | 21.33 | 0.9904 | 0.9911 |
+| cross | 8 | 16321 | copy | 48/48 | 48/48 | 547.42 | 527.7 | 60.9 | 2372 | 20252 | 31 | 32.64 | 1.0000 | 1.0000 |
+| cross | 8 | 16321 | demand | 48/48 | 48/48 | 551.92 | 598.7 | 112.5 | 2463 | 13740 | 64 | 32.82 | 1.0055 | 1.0052 |
+| cross | 8 | 16321 | device | 24/48 | 24/24 | 39.97 | 638.0 | 38.8 | 2506 | 3962 | 15 | 21.11 | 0.6466 | 0.6459 |
+| cross | 8 | 16321 | device_tuned | 24/48 | 24/24 | 41.19 | 456.7 | 88.8 | 2318 | 3977 | 16 | 20.87 | 0.6393 | 0.6395 |
+| cross | 8 | 16321 | device_merged | 24/48 | 24/24 | 116.05 | 260.3 | 34.9 | 2149 | 3946 | 34 | 20.52 | 0.6286 | 0.6299 |
+| cross | 8 | 16321 | cow | 48/48 | 48/48 | 8.61 | 51.7 | 6.7 | 2243 | 6774 | 18 | 31.33 | 0.9597 | 0.9608 |
+| cross | 8 | 16321 | extent | 48/48 | 48/48 | 8.68 | 56.7 | 6.4 | 1897 | 5918 | 16 | 31.57 | 0.9672 | 0.9722 |
+| same | 4 | 16321 | copy | 24/24 | 24/24 | 551.69 | 491.2 | 54.2 | 1905 | 10185 | 62 | 20.04 | 1.0000 | 1.0000 |
+| same | 4 | 16321 | demand | 24/24 | 24/24 | 548.53 | 435.5 | 89.6 | 1845 | 7179 | 9 | 20.01 | 0.9987 | 0.9949 |
+| same | 4 | 16321 | device | 24/24 | 24/24 | 40.16 | 424.6 | 15.3 | 1846 | 3970 | 12 | 20.12 | 1.0039 | 1.0019 |
+| same | 4 | 16321 | device_tuned | 24/24 | 24/24 | 37.78 | 165.0 | 26.8 | 1575 | 3980 | 17 | 19.69 | 0.9826 | 0.9803 |
+| same | 4 | 16321 | device_merged | 24/24 | 24/24 | 117.23 | 106.9 | 31.3 | 1518 | 3939 | 20 | 19.58 | 0.9771 | 0.9750 |
+| same | 4 | 16321 | cow | 24/24 | 24/24 | 8.33 | 49.9 | 4.9 | 1817 | 3514 | 30 | 19.57 | 0.9766 | 0.9746 |
+| same | 4 | 16321 | extent | 24/24 | 24/24 | 8.50 | 49.1 | 3.7 | 1438 | 3087 | 20 | 19.66 | 0.9811 | 0.9797 |
+| same | 1 | 16321 | copy | 6/6 | 6/6 | 546.59 | 333.0 | 4.2 | 1188 | 2538 | 4 | 14.02 | 1.0000 | 1.0000 |
+| same | 1 | 16321 | demand | 6/6 | 6/6 | 547.90 | 315.7 | 4.8 | 1162 | 1867 | 17 | 13.94 | 0.9943 | 0.9958 |
+| same | 1 | 16321 | device | 6/6 | 6/6 | 41.91 | 219.3 | 14.4 | 1075 | 1077 | 12 | 13.69 | 0.9763 | 0.9765 |
+| same | 1 | 16321 | device_tuned | 6/6 | 6/6 | 39.02 | 78.8 | 1.1 | 892 | 1072 | 8 | 13.17 | 0.9392 | 0.9396 |
+| same | 1 | 16321 | device_merged | 6/6 | 6/6 | 112.80 | 59.7 | 1.2 | 864 | 1071 | 10 | 13.10 | 0.9344 | 0.9348 |
+| same | 1 | 16321 | cow | 6/6 | 6/6 | 8.73 | 42.3 | 0.7 | 986 | 954 | 8 | 13.14 | 0.9370 | 0.9398 |
+| same | 1 | 16321 | extent | 6/6 | 6/6 | 8.82 | 43.5 | 0.5 | 850 | 850 | 13 | 13.11 | 0.9346 | 0.9347 |
+| same | 8 | 4081 | copy | 48/48 | 48/48 | 210.45 | 263.4 | 19.2 | 2294 | 9157 | 44 | 22.60 | 1.0000 | 1.0000 |
+| same | 8 | 4081 | demand | 48/48 | 48/48 | 221.45 | 292.2 | 25.0 | 2328 | 8448 | 9 | 22.59 | 0.9994 | 0.9994 |
+| same | 8 | 4081 | device | 48/48 | 48/48 | 6.81 | 450.6 | 17.6 | 2444 | 7556 | 27 | 22.67 | 1.0029 | 1.0031 |
+| same | 8 | 4081 | device_tuned | 48/48 | 48/48 | 6.61 | 137.9 | 32.4 | 2141 | 7557 | 17 | 22.42 | 0.9920 | 0.9914 |
+| same | 8 | 4081 | device_merged | 48/48 | 48/48 | 24.52 | 167.4 | 54.0 | 2193 | 7574 | 46 | 22.47 | 0.9940 | 0.9950 |
+| same | 8 | 4081 | cow | 48/48 | 48/48 | 2.95 | 31.5 | 4.6 | 2883 | 6709 | 9 | 22.33 | 0.9878 | 0.9883 |
+| same | 8 | 4081 | extent | 48/48 | 48/48 | 3.08 | 29.7 | 2.4 | 2011 | 5757 | 46 | 22.33 | 0.9881 | 0.9874 |
+
+With 8 children the attach time of the device path falls from 811 to 473
+to 195 ms. The first step removes one access setting and one wait per 2 MiB
+allocation. What remains is the import of 392 handles, which the driver
+serializes across the children: one child alone attaches in 79 ms. One
+allocation per tensor leaves 56 handles; the copy that makes it raises the
+pause of the parent from 37 to 115 ms. An allocation cannot be extended or
+joined with another, and 2 MiB is the smallest one, so a child still copies
+the allocation that the prefix ends in for each of the 56 tensors, which is
+why the children hold 7.6 GiB against 5.9 GiB on extents. Across instances
+the import is refused at every step of the tuning (24 of 48 children
+complete). All 1,146 children that complete write the text of copy.
+
+Gates that are not met, as the verifier reports them: B3 in three cells,
+where `device_tuned` holds 1 to 10 MiB more than `device` (7,804 against
+7,803 MiB with 8 children); B4 in two cells, where a child attaches faster
+on the copy-on-write mapping than on extents (51.7 against 56.7 ms across
+instances, 42.3 against 43.5 ms with one child). The copy-on-write mapping
+and the extents do the same work at attach; they differ in memory (6.7
+against 5.9 GiB) and in the first token (2.78 against 2.12 s).
+
 ## 7. Novelty boundary
 
 `SOTA_HOSTMM_2026-10-05.md` Section 14 is the audit for this concept, its
