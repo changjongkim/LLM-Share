@@ -1,0 +1,3 @@
+round,runs,servers_ready,agents_started,agents_finished,startup_ms,ready_memory_mib,first_token_ms,request_ms,prompt_tokens,prompt_cached,generated,agents_tps_sum,peak_memory_mib
+cold,6,6,48,48,23291,15519,9834,12940,14307,12488,61.6,156.10,15618
+warm,6,6,48,48,23291,15519,676,3831,14307,14298,61.6,153.57,15618

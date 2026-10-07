@@ -437,16 +437,20 @@ def scale():
 
 def prefix_length():
     """Eight agents by the length of the prefix they start from."""
-    cells = [d for d in ("20261007-engine-kvscale-p20-v1", "20261007-engine-kvscale-p80-v1",
-                         "20261006-engine-kvscale-v1", "20261007-engine-kvscale-p600-v1")
-             if have(d, "engine_kvscale_summary.csv")]
-    if len(cells) < 3:
+    # 1k and 30k tokens are campaigns of their own; 4k and 16k are the cells
+    # with eight agents of the sharing and of the scale campaign
+    cells = [(d, f) for d, f in (("20261007-engine-kvscale-p20-v1", "engine_kvscale_summary.csv"),
+                                 ("20261006-engine-kvshare-v1", "engine_kvshare_summary.csv"),
+                                 ("20261006-engine-kvscale-v1", "engine_kvscale_summary.csv"),
+                                 ("20261007-engine-kvscale-p600-v1", "engine_kvscale_summary.csv"))
+             if have(d, f)]
+    if len(cells) < 4:
         return
     points = {}
-    for directory in cells:
-        for r in rows(directory, "engine_kvscale_summary.csv"):
-            if int(r["agents"]) == 8:
-                points[int(float(r["prefix_tokens"])), r["mode"]] = r
+    for directory, summary in cells:
+        for r in rows(directory, summary):
+            if int(r["agents"]) == 8 and r["mode"] in ("restore", "extent_lazy"):
+                points.setdefault((int(float(r["prefix_tokens"])), r["mode"]), r)
     tokens = sorted({k[0] for k in points})
     for name, column, ylabel, scale, form in (
             ("eval_prefix_mem", "memory_mib", "Memory (GiB)", 1024.0, "{:.1f}"),
@@ -521,6 +525,13 @@ def inproc():
             ("2 Servers", gib(ollama["two", "warm"]), float(ollama["two", "warm"]["generation_tps_sum"]),
              "^", DEMAND, (0, 9), "center"),
         ]
+    # vLLM: one server; the campaign on the same prefix when it has been run
+    vllm = next((d for d in ("20261007-ext-vllm-synth-v1", "20261007-ext-vllm-v1")
+                 if have(d, "ext_vllm_summary.csv")), None)
+    if vllm is not None:
+        warm = {r["round"]: r for r in rows(vllm, "ext_vllm_summary.csv")}["warm"]
+        points.append(("1 Server", gib(warm, "peak_memory_mib"), float(warm["agents_tps_sum"]),
+                       "s", DEVICE, (11, -4), "left"))
     fig, ax = plt.subplots(figsize=(7.4, 3.0))
     for label, memory, speed, marker, colour, offset, align in points:
         ax.scatter([memory], [speed], s=130, marker=marker, color=colour, edgecolor="white",
@@ -529,10 +540,12 @@ def inproc():
                     fontsize=10.5)
     handles = [plt.Line2D([], [], marker="o", linestyle="", color=colour, markersize=9,
                           markeredgecolor="white", label=label)
-               for label, colour in (("llama.cpp, Copy", COPY), (f"llama.cpp, {NAME}", OURS), ("Ollama", DEMAND))]
-    ax.legend(handles=handles, loc="upper right", handlelength=1.0)
+               for label, colour in (("llama.cpp, Copy", COPY), (f"llama.cpp, {NAME}", OURS), ("Ollama", DEMAND))
+               + ((("vLLM", DEVICE),) if vllm is not None else ())]
+    ax.legend(handles=handles, loc="center right" if vllm is not None else "upper right", handlelength=1.0,
+              ncol=2 if vllm is not None else 1, columnspacing=1.0, bbox_to_anchor=(1.0, 0.56))
     ax.set_xlim(0, 27)
-    ax.set_ylim(0, 125)
+    ax.set_ylim(0, 190 if vllm is not None else 125)
     ax.set_xlabel("Memory (GiB)")
     ax.set_ylabel("Throughput (tokens/s)")
     style(ax, "both")
