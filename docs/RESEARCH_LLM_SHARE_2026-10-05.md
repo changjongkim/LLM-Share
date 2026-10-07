@@ -1820,6 +1820,25 @@ host memory costs speed, and a longer prefix means more rows read from
 it; the campaign does not separate the two instances. All 96 agents write the text of the
 copy.
 
+**The 32-agent cell again (`20261007-engine-kvscale-32-v2`).** In the first
+measurement of 32 agents (Section 6.12) the agents of the copy waited up to
+240 s for their memory in one repetition, which spread their generation over
+time; the paired ratio of that repetition was 0.455 and the gate S4 failed
+on the mean (0.860, median 0.978). The cell was measured again with the
+page cache dropped and the model file read again before the campaign.
+
+| Prefix (tokens) | Agents | Mode | Runs (failed agents) | Exact texts | Attach (ms) | First token (ms) | Throughput (tokens/s) | Extents / copy | Memory (MiB) |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| 16321 | 32 | restore | 6 (0) | 192/192 | 1233.6 | 7641 | 35.36 | 1.0000 | 81034 |
+| 16321 | 32 | extent_lazy | 6 (0) | 192/192 | 88.6 | 6295 | 34.09 | 0.9641 | 23237 |
+
+No repetition stalls: the first tokens arrive after 7.6 s with copies and
+6.3 s with extents. The 32 agents hold 79.1 GiB with copies and 22.7 GiB
+with extents, attach in 89 ms against 1,234 ms, and generate at 0.964 of
+the summed speed of the copies (interval 0.952 to 0.976). All 192 agents
+write the text of the copy. The first measurement stays in the record with
+its failed gate; the figure of the paper takes this cell from the rerun.
+
 ### 6.15 vLLM servers on extents
 
 The servers of the sections above belong to the engine that this work

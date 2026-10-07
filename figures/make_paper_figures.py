@@ -415,8 +415,11 @@ def tree():
 
 
 # ------------------------------------------------------------ sensitivity
-def lines(name, directory, summary, column, ylabel, scale, form):
+def lines(name, directory, summary, column, ylabel, scale, form, replace=None):
     data = {(r["mode"], int(r["agents"])): r for r in rows(directory, summary)}
+    # A cell that was measured again takes the place of the first measurement.
+    if replace is not None and have(replace, summary):
+        data.update({(r["mode"], int(r["agents"])): r for r in rows(replace, summary)})
     counts = sorted({k[1] for k in data})
     fig, ax = panel()
     for label, colour, m, marker in (("Copy", COPY, "restore", "s"), (NAME, OURS, "extent_lazy", "o")):
@@ -435,10 +438,12 @@ def scale():
     directory = "20261006-engine-kvscale-v1"
     if not have(directory, "engine_kvscale_summary.csv"):
         return
+    # The 32-agent cell is that of the rerun, in which no repetition stalled.
+    rerun = "20261007-engine-kvscale-32-v2"
     lines("eval_scale_mem", directory, "engine_kvscale_summary.csv", "memory_mib",
-          "Memory (GiB)", 1024.0, "{:.1f}")
+          "Memory (GiB)", 1024.0, "{:.1f}", replace=rerun)
     lines("eval_scale_tps", directory, "engine_kvscale_summary.csv", "generation_tps_total",
-          "Throughput (tokens/s)", 1.0, "{:.1f}")
+          "Throughput (tokens/s)", 1.0, "{:.1f}", replace=rerun)
 
 
 def prefix_length():
