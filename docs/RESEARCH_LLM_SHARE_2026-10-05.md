@@ -1532,7 +1532,8 @@ of the same model, one server in the 12-SM instance, eight concurrent
 requests on the agent workload, twice. It does not start on this platform
 as installed. Needed: the modules xgrammar, compressed-tensors and triton;
 the device by index (vLLM parses `CUDA_VISIBLE_DEVICES` as integers; index
-0 is the 12-SM instance, and the 6-SM instance cannot be selected);
+0 is the 12-SM instance, and the 6-SM instance cannot be selected; Section
+6.15 lifts this with a launcher);
 `TRITON_CUDART_PATH` for the CUDA headers, because a kernel of its block
 table is a Triton kernel; `-O0`, which switches the Inductor compilation
 off. `--kv-cache-memory-bytes` reserves 8 GiB.
@@ -1580,6 +1581,161 @@ pages) hold. Without the CPU read a child attaches 5 ms earlier and
 produces its first token 0.60 s later. Without populate-ahead the first
 token is 0.16 s later and the summed generation speed is 0.947 of copy
 against 0.964.
+
+### 6.15 vLLM servers on extents
+
+The servers of the sections above belong to the engine that this work
+changes. This section applies the design to vLLM 0.20.0, a batching server
+that shares the blocks of a prefix between the sequences of one process and
+nothing between processes. With one server in each MIG instance, the
+weights and the prefix exist once per server.
+
+**The plugin (`vllm_stator/`, 460 lines of Python).** No file of vLLM is
+edited. The package registers under `vllm.general_plugins` and wraps three
+places, each only when its environment variable is set.
+
+- Weights. The first server lets vLLM load and convert the model (AWQ to
+  the layout of its Marlin kernels), then writes the 283 parameters and
+  buffers of at least 64 KiB to one file on a tmpfs with 2 MiB pages, each
+  at a 4 KiB offset. The file is mapped and the device copies each tensor
+  into the mapping, so 5.19 GiB are written in 0.15 s (a copy through
+  `tensor.cpu()` took 21 s). Every server then maps the file read-only and
+  shared, wraps the mapping in CUDA tensors (`__cuda_array_interface__`,
+  no registration, no copy) and assigns them to the parameters. After the
+  attach torch reports 17 MiB allocated on the device, down from 5,343 MiB,
+  and vLLM logs "Model loading took 0.0 GiB memory".
+- Prefix. vLLM is asked for the cache layout in which a block is one
+  contiguous range over all layers (a connector with
+  `prefer_cross_layer_blocks`); a block of 16 tokens is then 917,504 bytes.
+  The one allocation of that layout is replaced: in the first server by a
+  shared mapping of a file, in a later server by private anonymous memory in
+  which the range of the published blocks is a read-only shared mapping of
+  that file. When the first request of the first server finishes, the
+  connector records the hashes of its full blocks, keeps a reference on
+  them and write-protects their range. A later server registers these
+  hashes in its block pool with a reference of its own, so vLLM's prefix
+  caching finds them and never hands them out. The connector moves no data;
+  its load and save functions are empty.
+- Device names. vLLM parses `CUDA_VISIBLE_DEVICES` as integers while it
+  imports its layers, which is before plugins load, and the engine is a
+  spawned child. `python -m stator_vllm.serve` accepts a name first and then
+  runs vLLM's command line; a spawned child imports the main module of its
+  parent before it reads its arguments, so the engine inherits the change.
+  Every configuration below starts this way, the baselines included.
+
+Both servers need the same `PYTHONHASHSEED`, since vLLM seeds its block
+hashes from it. A server attaches when it starts: the prefix has to be
+published before a later server allocates its cache.
+
+**Campaign (`run_vllm_share.sh`, `20261007-vllm-share-v1`).** Qwen2.5-7B-
+Instruct from its 4-bit AWQ weights, a cache of 2 GiB per server, `-O0`,
+`--gpu-memory-utilization 0.4` (vLLM otherwise refuses to start a second
+server on unified memory). Server 1 starts in the 12-SM instance and
+answers the 14,282-token prefix of the agent workload alone; server 2
+starts in the 6-SM instance. Round `first`: four agents on server 2, which
+has not computed the prefix. Round `both`: four other agents on each
+server at the same time. Rounds `alone1`, `alone2`: one agent on a server
+with nothing else running. Six configurations, six repetitions, the order
+of the configurations turning with the repetition:
+
+- `vllm`: two unmodified servers;
+- `cpu`: vLLM's own offloading of cache blocks to host memory, 2 GiB per
+  server (`--kv-offloading-backend native`, which needs
+  `--disable-hybrid-kv-cache-manager`); the buffer belongs to one server;
+- `lmcache`: LMCache 0.5.5 through vLLM's `LMCacheConnectorV1`, with a
+  store process in host memory that both servers reach (`lm://`), chunks of
+  256 tokens, no compression, no cache of its own in a server and a staging
+  pool of 1 GiB per server. The multiprocess mode of LMCache was not used:
+  its server opens the cache of a vLLM worker through CUDA IPC, which the
+  two MIG instances do not accept from each other (Section 5.3);
+- `stator_weights`, `stator_kv`, `stator`: the plugin with the weights
+  only, the prefix only, and both.
+
+| Mode | Servers | Cases (failed) | Requests complete | Memory (MiB) | 95% CI | vs vllm (MiB) | Peak (MiB) | Shared files (MiB) | Mapped by a later server: weights, prefix (MiB) | First token, second server (ms) | 95% CI | Smallest cached share | Throughput (tokens/s) | 95% CI | vs vllm | median | 12-SM, 6-SM (tokens/s) | Start-up, first and later server (ms) | Weights publish, attach (ms) | Prefix attach (ms) | LMCache store, retrieve (ms) | Texts equal to vllm: first, both, alone1, alone2 |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| vllm | 2 | 6 (0) | 84/84 | 21205 | 317 | 0 | 21665 | 0 | 0, 0 | 14126 | 38 | 0.0000 | 145.67 | 0.25 | 1.0000 | 1.0000 | 85.68, 60.00 | 24029, 24834 | 0, 0 | 0 | 0, 0 | 24/24, 48/48, 6/6, 6/6 |
+| cpu | 2 | 6 (0) | 84/84 | 25414 | 49 | 4209 | 25449 | 0 | 0, 0 | 14163 | 20 | 0.0000 | 146.05 | 0.67 | 1.0026 | 1.0035 | 85.63, 60.43 | 25125, 26079 | 0, 0 | 0 | 0, 0 | 21/24, 46/48, 6/6, 6/6 |
+| lmcache | 2 | 6 (0) | 84/84 | 26633 | 357 | 5428 | 26683 | 0 | 0, 0 | 1792 | 89 | 0.9837 | 145.12 | 0.82 | 0.9962 | 0.9956 | 85.21, 59.91 | 25533, 26699 | 0, 0 | 0 | 411, 898 | 22/24, 47/48, 6/6, 6/6 |
+| stator_weights | 2 | 6 (0) | 84/84 | 15583 | 36 | -5623 | 21517 | 5320 | 5317, 0 | 14189 | 25 | 0.0000 | 137.87 | 1.09 | 0.9464 | 0.9488 | 86.27, 51.60 | 24029, 25008 | 151, 98 | 0 | 0, 0 | 20/24, 46/48, 6/6, 6/6 |
+| stator_kv | 2 | 6 (0) | 84/84 | 20479 | 58 | -727 | 21730 | 2050 | 0, 780 | 629 | 64 | 0.9971 | 142.37 | 1.03 | 0.9773 | 0.9769 | 85.39, 56.99 | 24131, 24808 | 0, 0 | 23 | 0, 0 | 20/24, 47/48, 6/6, 6/6 |
+| stator | 2 | 6 (0) | 84/84 | 14805 | 328 | -6400 | 21496 | 7370 | 5317, 780 | 646 | 59 | 0.9971 | 138.38 | 1.66 | 0.9499 | 0.9510 | 89.19, 49.19 | 24184, 25266 | 148, 98 | 23 | 0, 0 | 20/24, 47/48, 6/6, 6/6 |
+
+Memory is the drop of MemAvailable from before server 1 starts to the end
+of the case, shared files included; the peak is the largest drop during
+the case, the start of the servers included.
+
+*Memory.* Two unmodified servers hold 20.71 GiB. vLLM's offloading adds its
+buffers (24.82 GiB) and LMCache its staging pools, its process and a third
+copy of the prefix in the store (26.01 GiB). With the plugin the servers
+hold 14.46 GiB, 6.25 GiB less: the second server maps 5.19 GiB of weights
+and 0.76 GiB of prefix blocks that exist once. The weights alone account
+for 5.49 GiB and the prefix alone for 0.71 GiB. The peak is not lower
+(20.99 GiB against 21.16 GiB): vLLM's loader runs unchanged, so a starting
+server holds a device copy of the weights until the plugin replaces it.
+
+*First token of the second server.* It computes the prefix itself in `vllm`,
+`cpu` and `stator_weights` (14.1 to 14.2 s). With LMCache it copies 14,080
+tokens from the store in 0.90 s and answers after 1.79 s; storing them had
+cost the first server 0.41 s inside its request. With the plugin the
+server maps the 892 blocks in 23 ms when it starts and answers after
+0.65 s; publishing copies nothing.
+
+*Throughput.* The summed generation speed of the eight agents of round
+`both` is 138.4 tokens/s with the plugin against 145.7 tokens/s, a paired
+ratio of 0.950 (median 0.951). The loss is in the 6-SM instance: its
+server generates at 0.820 of its speed in `vllm`, the server of the 12-SM
+instance at 1.041. With the weights alone the 6-SM server is at 0.860,
+with the prefix alone at 0.950. This is the cost of host memory in that
+instance that Section 6.8 measures for the engine, larger here because the weights
+are read from host memory as well.
+
+*Texts.* In `alone1` and `alone2` every configuration writes the text of
+`vllm` in all six repetitions, in both instances; in `alone2` the prefix of
+the plugin and of LMCache comes from the other instance. With concurrent
+agents the texts differ in a few cases in every configuration that is not
+`vllm` itself, the ones that share nothing included (`cpu`: 67 of 72
+equal; `lmcache`: 69; the three plugin modes: 66 to 67), because vLLM
+batches the sequences of a server and the batches differ between runs.
+
+All gates hold: V1 (every server starts, every request completes), V2
+(every agent of `stator` in `first` is served at least 99.7% of its prompt
+from the cache; the first agent of `vllm` none), V3 (first token 0.65 s
+against 14.13 s), V4 (6.25 GiB saved against 5.95 GiB mapped), V5 (0.950)
+and V6 (`alone1` equal in every mode).
+
+**Four servers (`SERVERS=4`, `20261007-vllm-share-4srv-v1`, two
+repetitions).** Servers 3 and 4 start after server 2, in the 12-SM and the
+6-SM instance, and attach like server 2.
+
+| Mode | Servers | Cases (failed) | Requests complete | Memory (MiB) | 95% CI | vs vllm (MiB) | Peak (MiB) | Shared files (MiB) | Mapped by a later server: weights, prefix (MiB) | First token, second server (ms) | 95% CI | Smallest cached share | Throughput (tokens/s) | 95% CI | vs vllm | median | 12-SM, 6-SM (tokens/s) | Start-up, first and later server (ms) | Weights publish, attach (ms) | Prefix attach (ms) | LMCache store, retrieve (ms) | Texts equal to vllm: first, both, alone1, alone2 |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| vllm | 4 | 2 (0) | 44/44 | 42620 | 267 | 0 | 42647 | 0 | 0, 0 | 14067 | 395 | 0.0000 | 237.19 | 4.20 | 1.0000 | 1.0000 | 131.74, 105.44 | 23985, 25016 | 0, 0 | 0 | 0, 0 | 8/8, 32/32, 2/2, 2/2 |
+| lmcache | 4 | 2 (0) | 44/44 | 51551 | 165 | 8931 | 51574 | 0 | 0, 0 | 1739 | 40 | 0.9841 | 288.64 | 0.24 | 1.2169 | 1.2169 | 165.88, 122.76 | 25515, 26321 | 0, 0 | 0 | 415, 841 | 7/8, 31/32, 2/2, 2/2 |
+| stator | 4 | 2 (0) | 44/44 | 23269 | 305 | -19351 | 29843 | 7370 | 5317, 780 | 658 | 758 | 0.9971 | 123.05 | 0.47 | 0.5188 | 0.5188 | 77.10, 45.95 | 23946, 25542 | 152, 97 | 23 | 0, 0 | 6/8, 29/32, 2/2, 2/2 |
+
+Four unmodified servers hold 41.62 GiB, four with LMCache 50.34 GiB and
+four with the plugin 22.72 GiB. From two to four servers the memory grows
+by 10.5 GiB per server unmodified and by 4.1 GiB per server with the
+plugin (the cache reservation of 2 GiB less the prefix, and the process).
+The largest drop during the case is 29.14 GiB with the plugin against
+41.65 GiB: the device copy of a starting server exists once at a time. The
+first token of server 2 and the texts of the two rounds with one agent are
+as with two servers.
+
+The throughput column of this campaign does not compare the
+configurations, and the gate V5 fails on it (0.519). Round `both` sends
+four agents to every server, but only servers 1 and 2 have the prefix in
+`vllm` and `lmcache`: servers 3 and 4 compute it (first tokens after 13.8
+and 20.2 s) or fetch it from the store (4.9 and 6.8 s) during the round,
+and their agents generate after those of servers 1 and 2 have finished.
+The sum of the rates of these two configurations therefore adds rates of
+different times (237.2 and 288.6 tokens/s) and is not a throughput. Only
+with the plugin do all 16 agents generate at the same time, at
+123.1 tokens/s. The like-for-like part of the round is the rate of an
+agent on servers 1 and 2 while the other server of its instance is busy:
+9.3 tokens/s (12-SM) and 6.7 tokens/s (6-SM) in `vllm`, 9.6 and 5.6
+tokens/s with the plugin. A campaign in which every server holds the
+prefix before the round is needed for the comparison and has not been run.
 
 ## 7. Novelty boundary
 

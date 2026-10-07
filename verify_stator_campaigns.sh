@@ -751,6 +751,41 @@ if present 20261007-ext-vllm-v1; then
   gates vllm "$dir/ext_vllm_summary.csv" '{ if ($c["servers_ready"] != $c["runs"] || $c["agents_finished"] != $c["agents_started"]) print "!X1 " $c["round"] }'
 fi
 
+# --- two vLLM servers that share weights and a prefix -------------------------
+verify_vshare() {  # campaign label
+  present "$1" || return 0
+  local dir="$results/$1" label=$2
+  check_hashes "$dir"
+  awk -f "$script_dir/summarize_vllm_share.awk" "$dir/raw.log" >"$scratch/$label.csv"
+  same "$scratch/$label.csv" "$dir/vllm_share_summary.csv"
+  gates "$label" "$dir/vllm_share_summary.csv" '
+    {
+      mode = $c["mode"]; seen[mode] = 1
+      if ($c["failed_cases"] != 0 || $c["servers_ready"] != $c["servers"] * $c["runs"] || $c["requests_finished"] != $c["requests_started"])
+        print "!V1 " mode
+      if ($c["alone1_texts_equal"] != $c["alone1_texts_compared"] || $c["alone1_texts_compared"] != $c["runs"])
+        print "V6 " mode " alone1_texts=" $c["alone1_texts_equal"] "/" $c["runs"]
+      attachers = $c["servers"] - 1
+      first[mode] = $c["first_token_ms"]; cached[mode] = $c["first_cached_lowest"]
+      uncached[mode] = $c["first_cached_lowest_of_any_run"]
+      memory[mode] = $c["memory_mib"]; mapped[mode] = $c["shared_weights_mib"] + $c["shared_kv_mib"]
+      ratio[mode] = $c["both_tps_vs_vllm"]
+    }
+    END {
+      if (!("vllm" in seen)) print "!V1 no vllm row"
+      if ("stator" in seen) {
+        if (!(cached["stator"] >= 0.90)) print "!V2 stator cached=" cached["stator"]
+        if (!(uncached["vllm"] == 0)) print "!V2 vllm cached=" uncached["vllm"]
+        if (!(first["stator"] <= 0.5 * first["vllm"])) print "V3 first_token_ms " first["stator"] " vs " first["vllm"]
+        if (!(memory["vllm"] - memory["stator"] >= 0.8 * attachers * mapped["stator"]))
+          print "V4 saved_mib=" (memory["vllm"] - memory["stator"]) " mapped_mib=" attachers * mapped["stator"]
+        if (!(ratio["stator"] >= 0.90)) print "V5 tps_vs_vllm=" ratio["stator"]
+      }
+    }'
+}
+verify_vshare 20261007-vllm-share-v1 vshare
+verify_vshare 20261007-vllm-share-4srv-v1 vshare4
+
 echo "stator_campaign_verification=PASS"
 echo "campaigns_verified=${#verified[@]} ${verified[*]:-}"
 echo "campaigns_absent=${#absent[@]} ${absent[*]:-}"

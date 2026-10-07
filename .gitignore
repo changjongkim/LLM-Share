@@ -43,3 +43,7 @@ __pycache__/
 *.pyc
 # the model file on huge pages while a campaign reads it from there
 /model_mount/
+# the shared mappings of the vLLM servers while a campaign runs, and the
+# metadata of the editable installation of the plugin
+/vllm_share_mount/
+*.egg-info/

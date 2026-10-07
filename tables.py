@@ -787,4 +787,27 @@ render("ext_vllm", os.path.join(engine_root, "20261007-ext-vllm-v1", "ext_vllm_s
     ("Throughput (tokens/s)", num("agents_tps_sum", 2)), ("Peak memory (MiB)", num("peak_memory_mib")),
 ])
 
+VSHARE_COLUMNS = [
+    ("Mode", lambda r: r["mode"]), ("Servers", lambda r: r["servers"]),
+    ("Cases (failed)", lambda r: f"{r['runs']} ({r['failed_cases']})"),
+    ("Requests complete", part("requests_finished", "requests_started")),
+    ("Memory (MiB)", num("memory_mib")), ("95% CI", num("memory_ci95")),
+    ("vs vllm (MiB)", num("memory_minus_vllm_mib")), ("Peak (MiB)", num("peak_memory_mib")),
+    ("Shared files (MiB)", num("files_mib")),
+    ("Mapped by a later server: weights, prefix (MiB)", lambda r: f"{r['shared_weights_mib']}, {r['shared_kv_mib']}"),
+    ("First token, second server (ms)", num("first_token_ms")), ("95% CI", num("first_token_ci95")),
+    ("Smallest cached share", num("first_cached_lowest", 4)),
+    ("Throughput (tokens/s)", num("both_tps_sum", 2)), ("95% CI", num("both_tps_ci95", 2)),
+    ("vs vllm", num("both_tps_vs_vllm", 4)), ("median", num("both_tps_vs_vllm_median", 4)),
+    ("12-SM, 6-SM (tokens/s)", lambda r: f"{r['tps_first_instance']}, {r['tps_second_instance']}"),
+    ("Start-up, first and later server (ms)", lambda r: f"{r['startup1_ms']}, {r['startup2_ms']}"),
+    ("Weights publish, attach (ms)", lambda r: f"{r['weights_publish_ms']}, {r['weights_attach_ms']}"),
+    ("Prefix attach (ms)", num("kv_attach_ms")),
+    ("LMCache store, retrieve (ms)", lambda r: f"{r['lmcache_store_ms']}, {r['lmcache_retrieve_ms']}"),
+    ("Texts equal to vllm: first, both, alone1, alone2",
+     lambda r: ", ".join(f"{r[k + '_texts_equal']}/{r[k + '_texts_compared']}" for k in ("first", "both", "alone1", "alone2"))),
+]
+for tag, name in (("20261007-vllm-share-v1", "vllm_share"), ("20261007-vllm-share-4srv-v1", "vllm_share_4srv")):
+    render(name, os.path.join(engine_root, tag, "vllm_share_summary.csv"), VSHARE_COLUMNS)
+
 print("tables written to", out)

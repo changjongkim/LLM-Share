@@ -57,7 +57,7 @@ def labels(ax, bars, form="{:.1f}", size=10.5):
         ax.texts[-1].set_fontsize(size)
 
 
-def finish(fig, ax, name, xlabel, ylabel, top=None, log=False):
+def finish(fig, ax, name, xlabel, ylabel, top=None, log=False, xtick=None):
     ax.set_xlabel(xlabel)
     ax.set_ylabel(ylabel)
     if log:
@@ -65,6 +65,8 @@ def finish(fig, ax, name, xlabel, ylabel, top=None, log=False):
     if top is not None:
         ax.set_ylim(ax.get_ylim()[0] if log else 0, top)
     style(ax)
+    if xtick is not None:
+        ax.tick_params(axis="x", labelsize=xtick)
     fig.tight_layout()
     save(fig, name)
 
@@ -906,8 +908,53 @@ def wshare():
     finish(fig, ax, "eval_wshare_mem", "", "Memory (GiB)", max(max(v) for _, _, v in series) * 1.3)
 
 
+# ------------------------------------------------------- vLLM servers on extents
+VLLM_MODES = (("vLLM", COPY, "vllm"), ("vLLM-\nCPU", "#b7b5af", "cpu"), ("vLLM-\nLMCache", DEMAND, "lmcache"),
+              ("vLLM-\n" + NAME, OURS, "stator"))
+VLLM_TICK = 10.5
+
+
+def vshare():
+    """Two vLLM servers, one per MIG instance, on one prefix."""
+    directory = "20261007-vllm-share-v1"
+    if not have(directory, "vllm_share_summary.csv"):
+        return
+    data = {r["mode"]: r for r in rows(directory, "vllm_share_summary.csv")}
+    modes = [(label, colour, m) for label, colour, m in VLLM_MODES if m in data and int(data[m]["failed_cases"]) == 0]
+    names = [label for label, _, _ in modes]
+    colours = [colour for _, colour, _ in modes]
+
+    def bars(name, values, ylabel, form, log=False):
+        fig, ax = panel()
+        drawn = ax.bar(names, values, 0.58, color=colours, edgecolor="white", linewidth=1.5)
+        labels(ax, drawn, form)
+        if log:
+            ax.set_yscale("log")
+            ax.set_ylim(0.1, max(values) * 4.0)
+        finish(fig, ax, name, "", ylabel, max(values) * (4.0 if log else 1.18), log=log, xtick=VLLM_TICK)
+
+    bars("eval_vllm_mem", [float(data[m]["memory_mib"]) / 1024 for _, _, m in modes], "Memory (GiB)", "{:.1f}")
+    bars("eval_vllm_ttft", [float(data[m]["first_token_ms"]) / 1000 for _, _, m in modes],
+         "Time to First Token (s)", "{:.2f}", log=True)
+    fig, ax = panel()
+    bottom = np.zeros(len(modes))
+    for label, column, colour in (("12-SM Instance", "tps_first_instance", "#6f6d68"),
+                                  ("6-SM Instance", "tps_second_instance", "#b7b5af")):
+        values = np.array([float(data[m][column]) for _, _, m in modes])
+        ax.bar(names, values, 0.58, bottom=bottom, color=colour, edgecolor="white", linewidth=1.5, label=label)
+        for x, (value, base) in enumerate(zip(values, bottom)):
+            ax.annotate(f"{value:.0f}", (x, base + value / 2), ha="center", va="center", fontsize=9.5,
+                        color="white" if colour == "#6f6d68" else INK)
+        bottom += values
+    for x, total in enumerate(bottom):
+        ax.annotate(f"{total:.0f}", (x, total), xytext=(0, 3), textcoords="offset points", ha="center",
+                    va="bottom", fontsize=10.5, color=INK)
+    ax.legend(loc="upper center", ncol=2, handlelength=1.0, fontsize=9.5, columnspacing=1.0)
+    finish(fig, ax, "eval_vllm_tps", "", "Generation (tokens/s)", bottom.max() * 1.3, xtick=VLLM_TICK)
+
+
 if __name__ == "__main__":
     for figure in (mem, weights, hand, speed, reach, mode, cow, dev, sota, attach, protect, tree, scale,
-                   variants, inproc, server, limit, stack, local, pipe, deep, wshare, prefix_length):
+                   variants, inproc, server, limit, stack, local, pipe, deep, wshare, prefix_length, vshare):
         figure()
         print("wrote", figure.__name__)

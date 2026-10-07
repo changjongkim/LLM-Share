@@ -49,6 +49,7 @@ tables = {
     "@KV_SCALE_P600@": "kv_scale_p600.md", "@KV_SCALE_GEN2K@": "kv_scale_gen2k.md",
     "@KV_SCALE_32V2@": "kv_scale_32v2.md", "@EXT_WEIGHTSHARE@": "ext_weightshare.md",
     "@WEIGHTS_PUBLISH@": "weights_publish.md", "@EXT_VLLM@": "ext_vllm.md",
+    "@VLLM_SHARE@": "vllm_share.md", "@VLLM_SHARE_4SRV@": "vllm_share_4srv.md",
 }
 for marker, name in tables.items():
     path = os.path.join(docs, name)
