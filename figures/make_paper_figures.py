@@ -525,9 +525,10 @@ def inproc():
             ("2 Servers", gib(ollama["two", "warm"]), float(ollama["two", "warm"]["generation_tps_sum"]),
              "^", DEMAND, (0, 9), "center"),
         ]
-    # vLLM: one server; the campaign on the same prefix when it has been run
+    # vLLM is another engine with other weights; the paper reports it in the
+    # text, and the figure shows it only on request (INPROC_VLLM=1)
     vllm = next((d for d in ("20261007-ext-vllm-synth-v1", "20261007-ext-vllm-v1")
-                 if have(d, "ext_vllm_summary.csv")), None)
+                 if have(d, "ext_vllm_summary.csv")), None) if os.environ.get("INPROC_VLLM") == "1" else None
     if vllm is not None:
         warm = {r["round"]: r for r in rows(vllm, "ext_vllm_summary.csv")}["warm"]
         points.append(("1 Server", gib(warm, "peak_memory_mib"), float(warm["agents_tps_sum"]),
@@ -542,8 +543,11 @@ def inproc():
                           markeredgecolor="white", label=label)
                for label, colour in (("llama.cpp, Copy", COPY), (f"llama.cpp, {NAME}", OURS), ("Ollama", DEMAND))
                + ((("vLLM", DEVICE),) if vllm is not None else ())]
-    ax.legend(handles=handles, loc="center right" if vllm is not None else "upper right", handlelength=1.0,
-              ncol=2 if vllm is not None else 1, columnspacing=1.0, bbox_to_anchor=(1.0, 0.56))
+    if vllm is not None:
+        ax.legend(handles=handles, loc="center right", handlelength=1.0, ncol=2, columnspacing=1.0,
+                  bbox_to_anchor=(1.0, 0.56))
+    else:
+        ax.legend(handles=handles, loc="upper right", handlelength=1.0)
     ax.set_xlim(0, 27)
     ax.set_ylim(0, 190 if vllm is not None else 125)
     ax.set_xlabel("Memory (GiB)")
