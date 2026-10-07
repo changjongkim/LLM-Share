@@ -29,9 +29,24 @@ from make_eval_figures import (AXIS, COPY, COW, DEVICE, GRID, INK, OURS,  # noqa
                                OURS_LIGHT, RES, grouped, rows, save, style, tip)
 
 NAME = "STATOR"
-DEMAND = "#4f86c6"   # a copy into device memory that is backed on demand
-WEIGHTS_ONLY = "#d99a2b"   # the stack that shares the weights and copies the cache
+# One palette for every panel, in a fixed order: grey for what copies the
+# state (Copy, Unmodified, vLLM), then blue, violet and orange for the other
+# mechanisms or systems of a panel, and teal for STATOR. A lighter tint of a
+# colour is a variant of the same thing (other page size, a part left out).
+DEMAND = "#4f86c6"         # blue: Demand; the second entry of a panel
+DEMAND_LIGHT = "#b9cfe9"
+DEVICE_LIGHT = "#c9bdf0"   # violet (DEVICE) is the third entry
+COPY_LIGHT = "#b7b5af"
+COPY_PALE = "#d9d7d1"
+# Text sizes in points on a canvas that the paper places at 0.48 of its size
+# (a quarter of the page or half a column), so that all panels print alike.
+# A legend that two panels share is a strip above them (legend()).
+VALUE = 9.5     # a value on a mark
+DENSE = 8.5     # a value above one of five bars of a group, set upright
+LEGEND = 10
+TICK2 = 10      # tick labels of two lines
 PANEL = (3.6, 2.7)
+plt.rcParams.update({"legend.fontsize": LEGEND})
 
 
 def have(*path):
@@ -47,11 +62,15 @@ def legend(name, entries, ncol):
     fig = plt.figure(figsize=(1.9 * ncol + 0.6, 0.38))
     handles = [plt.Rectangle((0, 0), 1, 1, color=colour) for _, colour in entries]
     fig.legend(handles, [label for label, _ in entries], loc="center", ncol=ncol,
-               columnspacing=1.6, handlelength=1.3, fontsize=12.5)
+               columnspacing=1.6, handlelength=1.3, fontsize=11.5)
     save(fig, name)
 
 
-def labels(ax, bars, form="{:.1f}", size=10.5):
+def pair_legend():
+    legend("eval_pair_legend", [("Copy", COPY), (NAME, OURS)], 2)
+
+
+def labels(ax, bars, form="{:.1f}", size=VALUE):
     for bar in bars:
         tip(ax, bar, form.format(bar.get_height()))
         ax.texts[-1].set_fontsize(size)
@@ -84,7 +103,7 @@ def mem():
         series = [(label, colour, [float(data[size, mode, n]["memory_mib"]) / 1024 for n in counts])
                   for label, colour, mode in series_of]
         for group in grouped(ax, [str(n) for n in counts], series, 0.27):
-            labels(ax, group, size=9.5)
+            labels(ax, group)
         finish(fig, ax, f"eval_mem_{tag}", "Agents", "Memory (GiB)", 23)
 
 
@@ -96,7 +115,7 @@ def weights():
     series = [(label, colour, [float(agents["mig", mode, n]["memory_total_mib"]) / 1024 for n in counts])
               for label, colour, mode in (("Device Copy", COPY, "copy"), (NAME, OURS, "inplace"))]
     for group in grouped(ax, [str(n) for n in counts], series, 0.38):
-        labels(ax, group, size=9.5)
+        labels(ax, group)
     ax.legend(loc="upper left", handlelength=1.2)
     finish(fig, ax, "eval_weights_mem", "Serving Processes", "Memory (GiB)", 47)
 
@@ -114,7 +133,7 @@ def weights():
         ax.annotate(f"{bar.get_height():.3f}", (bar.get_x() + bar.get_width() / 2,
                                                  bar.get_height() + high_part),
                     xytext=(0, 3), textcoords="offset points", ha="center", va="bottom",
-                    fontsize=10.5, color=INK)
+                    fontsize=VALUE, color=INK)
     ax.axhline(1.0, color=AXIS, linewidth=1.0)
     finish(fig, ax, "eval_weights_speed", "", "Relative Speed", 1.18)
 
@@ -146,7 +165,7 @@ def hand():
         series = [(label, colour, [float(data[cell + (m,)][column]) / scale for cell in cells])
                   for label, colour, m in MECHANISMS]
         for group in grouped(ax, groups, series, 0.17):
-            labels(ax, group, form, 8)
+            labels(ax, group, form, DENSE)
             for text in ax.texts[-len(group):]:
                 text.set_rotation(90)
         top = max(max(values) for _, _, values in series)
@@ -183,7 +202,7 @@ def speed():
         ax.annotate(f"{bar.get_height():.3f}", (bar.get_x() + bar.get_width() / 2,
                                                  bar.get_height() + high_part),
                     xytext=(0, 3), textcoords="offset points", ha="center", va="bottom",
-                    fontsize=10.5, color=INK)
+                    fontsize=VALUE, color=INK)
     ax.axhline(1.0, color=AXIS, linewidth=1.0)
     finish(fig, ax, "eval_speed_host", "MIG Instance and Prefix (Tokens)",
            "Relative Speed", 1.18)
@@ -203,8 +222,8 @@ def reach():
                                for instance in ("12sm", "6sm")])
               for label, colour, kind in kinds]
     for group in grouped(ax, ["12 SMs", "6 SMs"], series, 0.27):
-        labels(ax, group, "{:.0f}", 9.5)
-    ax.legend(loc="upper right", handlelength=1.2, fontsize=10.5)
+        labels(ax, group, "{:.0f}")
+    ax.legend(loc="upper right", handlelength=1.2, fontsize=LEGEND)
     top = max(max(values) for _, _, values in series) * 1.45
     finish(fig, ax, "eval_speed_reach", "MIG Instance", "Read Bandwidth (GiB/s)", top)
 
@@ -229,7 +248,7 @@ def mode():
                                    for _, config in configs])
                   for label, colour, m in pair]
         for group in grouped(ax, [label for label, _ in configs], series, 0.38):
-            labels(ax, group, form, 9)
+            labels(ax, group, form)
         for text in ax.texts:
             text.set_rotation(90)
         top = max(max(values) for _, _, values in series) * 1.3
@@ -244,16 +263,16 @@ def cow():
              ("2M\nRead", "cow", COW), (NAME, "extent_lazy", OURS))
     for name, column, ylabel, scale, form in (
             ("eval_cow_mem", "memory_mib", "Memory (GiB)", 1024.0, "{:.1f}"),
-            ("eval_cow_time", "suffix_ms", "Task Decoding Time (s)", 1000.0, "{:.2f}")):
+            ("eval_cow_time", "suffix_ms", "Task Decoding (s)", 1000.0, "{:.2f}")):
         fig, ax = panel()
         values = [float(data[m, 8][column]) / scale for _, m, _ in order]
         bars = ax.bar([label for label, _, _ in order], values, 0.62,
                       color=[c for _, _, c in order], edgecolor="white", linewidth=1.5)
         labels(ax, bars, form)
-        ax.tick_params(axis="x", labelsize=10)
+        ax.tick_params(axis="x", labelsize=TICK2)
         # the three orange bars are the copy-on-write mapping by page size and CPU read
         ax.annotate("CoW Map", (1, 0), xytext=(0, -38), textcoords="offset points", ha="center",
-                    va="top", fontsize=10.5, color=INK, xycoords=("data", "axes fraction"),
+                    va="top", fontsize=VALUE, color=INK, xycoords=("data", "axes fraction"),
                     annotation_clip=False)
         finish(fig, ax, name, "", ylabel, max(values) * 1.18)
 
@@ -269,9 +288,9 @@ def dev():
                                float(data["320", instance, m]["child_attach_ms"])])
               for label, colour, m in kinds]
     for group in grouped(ax, ["Parent Pause", "Child Attach"], series, 0.27):
-        labels(ax, group, "{:.0f}", 9.5)
+        labels(ax, group, "{:.0f}")
     ax.set_ylim(1, 4000)
-    ax.legend(loc="upper center", ncol=3, handlelength=1.0, columnspacing=0.8, fontsize=10,
+    ax.legend(loc="upper center", ncol=3, handlelength=1.0, columnspacing=0.8, fontsize=LEGEND,
               bbox_to_anchor=(0.5, 1.02))
     finish(fig, ax, "eval_dev_time", "", "Time (ms, log)", log=True)
 
@@ -287,7 +306,7 @@ def dev():
     ax.text(0.97, 0.95, "Child in the Other MIG Instance\n"
             f"Device: {done['vmm_cross']}/{started['vmm_cross']} Complete\n"
             f"{NAME}: {done['extent_cross']}/{started['extent_cross']} Complete",
-            transform=ax.transAxes, ha="right", va="top", fontsize=10, color=INK,
+            transform=ax.transAxes, ha="right", va="top", fontsize=VALUE, color=INK,
             linespacing=1.35)
     finish(fig, ax, "eval_dev_mem", "", "Memory (GiB)", max(values) * 1.25)
 
@@ -323,7 +342,7 @@ def sota():
                     tip(ax, bar, f"{done // int(row['runs'])}/{started // int(row['runs'])}")
                 else:
                     tip(ax, bar, form.format(bar.get_height()))
-                ax.texts[-1].set_fontsize(8)
+                ax.texts[-1].set_fontsize(DENSE)
                 ax.texts[-1].set_rotation(90 if log or name.endswith(("ttft", "tps")) else 0)
         top = max(max(values) for _, _, values in series)
         if log:
@@ -331,16 +350,16 @@ def sota():
         finish(fig, ax, name, "", ylabel, None if log else top * 1.22, log)
 
     # the device-memory baseline by how far it is tuned, against the extents
-    stages = (("Device", "#c9bdf0", "device"), ("+ Batched", "#a18fe0", "device_tuned"),
+    stages = (("Device", DEVICE_LIGHT, "device"), ("+ Batched", "#a18fe0", "device_tuned"),
               ("+ One Allocation", DEVICE, "device_merged"), (NAME, OURS, "extent"))
     fig, ax = panel()
     cell = ("same", children, size)
     series = [(label, colour, [float(data[cell + (m,)]["publish_ms"]), float(data[cell + (m,)]["child_attach_ms"])])
               for label, colour, m in stages]
     for group in grouped(ax, ["Parent Pause", "Child Attach"], series, 0.2):
-        labels(ax, group, "{:.0f}", 9)
+        labels(ax, group, "{:.0f}")
     ax.set_ylim(1, max(max(v) for _, _, v in series) * 30)
-    ax.legend(loc="upper left", handlelength=1.1, fontsize=9, labelspacing=0.25, ncol=2,
+    ax.legend(loc="upper left", handlelength=1.1, fontsize=LEGEND, labelspacing=0.25, ncol=2,
               columnspacing=0.9)
     finish(fig, ax, "eval_dev_tune", "", "Time (ms, log)", log=True)
 
@@ -359,10 +378,11 @@ def attach():
         ax.annotate(f"{times[index]:.1f} ms\n{data[index]['handles']} handle" + ("s" if index == 0 else ""),
                     (sizes[index], times[index]), xytext=(8 if index == 0 else -6, 4 if index == 0 else 10),
                     textcoords="offset points", ha="left" if index == 0 else "right", va="bottom",
-                    fontsize=9.5, color=INK)
+                    fontsize=VALUE, color=INK)
     ax.set_xscale("log", base=2)
     ax.set_yscale("log")
-    ax.set_xticks(sizes, [str(v) for v in sizes], fontsize=9)
+    ax.set_xticks(sizes, [str(v) for v in sizes])
+    ax.tick_params(axis="x", labelsize=9)
     ax.set_yticks([1, 2, 5, 10, 20, 50], ["1", "2", "5", "10", "20", "50"])
     ax.minorticks_off()
     ax.set_ylim(1, 60)
@@ -427,9 +447,8 @@ def lines(name, directory, summary, column, ylabel, scale, form, replace=None):
         ax.plot([p[0] for p in points], [p[1] for p in points], color=colour, marker=marker,
                 markersize=7, linewidth=2, label=label, markeredgecolor="white", markeredgewidth=1.2)
         ax.annotate(form.format(points[-1][1]), points[-1], xytext=(-4, 7),
-                    textcoords="offset points", ha="right", fontsize=10.5, color=INK)
+                    textcoords="offset points", ha="right", fontsize=VALUE, color=INK)
     ax.set_xticks(counts)
-    ax.legend(loc="upper left", handlelength=1.6)
     finish(fig, ax, name, "Agents (16,321-Token Prefix)", ylabel,
            max(float(r[column]) for r in data.values()) / scale * 1.2)
 
@@ -473,7 +492,7 @@ def prefix_length():
                     label=label, markeredgecolor="white", markeredgewidth=1.2)
             for x, value in enumerate(values):
                 ax.annotate(form.format(value), (x, value), xytext=(0, 7 if m == "restore" else -14),
-                            textcoords="offset points", ha="center", fontsize=9.5, color=INK)
+                            textcoords="offset points", ha="center", fontsize=VALUE, color=INK)
         ax.set_xticks(range(len(tokens)), [f"{t / 1000:.0f}k" for t in tokens])
         ax.legend(loc="upper left", handlelength=1.6)
         finish(fig, ax, name, "Prefix (Tokens)", ylabel,
@@ -499,10 +518,9 @@ def variants():
         return
     fig, ax = panel()
     for group in grouped(ax, names, [("Copy", COPY, copy), (NAME, OURS, ours)], 0.38):
-        labels(ax, group, size=9.5)
-    ax.tick_params(axis="x", labelsize=10)
-    ax.legend(loc="upper left", handlelength=1.2)
-    finish(fig, ax, "eval_model_mem", "", "Memory (GiB)", max(copy) * 1.25)
+        labels(ax, group)
+    ax.tick_params(axis="x", labelsize=TICK2)
+    finish(fig, ax, "eval_model_mem", "", "Memory (GiB)", max(copy) * 1.18)
 
 
 def inproc():
@@ -549,7 +567,7 @@ def inproc():
         ax.scatter([memory], [speed], s=130, marker=marker, color=colour, edgecolor="white",
                    linewidth=1.5, zorder=3)
         ax.annotate(label, (memory, speed), xytext=offset, textcoords="offset points", ha=align,
-                    fontsize=10.5)
+                    fontsize=VALUE)
     handles = [plt.Line2D([], [], marker="o", linestyle="", color=colour, markersize=9,
                           markeredgecolor="white", label=label)
                for label, colour in (("llama.cpp, Copy", COPY), (f"llama.cpp, {NAME}", OURS), ("Ollama", DEMAND))
@@ -585,9 +603,8 @@ def server():
     series = [(label, colour, [float(data[m, most][column]) for _, column in steps])
               for label, colour, m in pair]
     for group in grouped(ax, [label for label, _ in steps], series, 0.36):
-        labels(ax, group, "{:.0f}", 9.5)
-    ax.set_ylim(1, 6000)
-    ax.legend(loc="upper left", handlelength=1.2, ncol=2, columnspacing=1.0, fontsize=10.5)
+        labels(ax, group, "{:.0f}")
+    ax.set_ylim(1, 3000)
     finish(fig, ax, "eval_server_time", "", "Time (ms, log)", log=True)
 
     counts = sorted({k[1] for k in data})
@@ -596,9 +613,8 @@ def server():
               for label, colour, m in pair]
     for group in grouped(ax, [str(n) for n in counts], series, 0.36):
         labels(ax, group)
-    ax.legend(loc="upper left", handlelength=1.2)
     finish(fig, ax, "eval_server_mem", "Agent Servers", "Memory (GiB)",
-           max(max(values) for _, _, values in series) * 1.22)
+           max(max(values) for _, _, values in series) * 1.18)
 
 
 def limit():
@@ -634,16 +650,16 @@ def limit():
         done, runs = int(row["agent0_completed"]), int(row["runs"])
         outcome = f"completes {done}/{runs}" if done else f"ended {row['agent0_oom_kills']}/{runs}"
         tip(ax, bar, f"{bar.get_height():.0f}, {outcome}")
-        ax.texts[-1].set_fontsize(9.5)
+        ax.texts[-1].set_fontsize(VALUE)
     ax.axhline(cap, color=INK, linewidth=1.2, linestyle=(0, (4, 2)))
-    ax.text(0.03, cap * 1.02, f"limit: {cap:.0f} MiB", ha="left", va="bottom", fontsize=10,
+    ax.text(0.03, cap * 1.02, f"limit: {cap:.0f} MiB", ha="left", va="bottom", fontsize=VALUE,
             transform=ax.get_yaxis_transform())
     finish(fig, ax, "eval_limit_peak", "", "Peak Charge (MiB)", cap * 1.55)
 
 
 # ------------------------------------------------------------ whole stack
 STACKS = (("Unmodified", COPY, "none", "s"), ("KV Shared", DEMAND, "kv", "D"),
-          ("Weights Shared", WEIGHTS_ONLY, "weights", "^"), (NAME, OURS, "both", "o"))
+          ("Weights Shared", DEVICE, "weights", "^"), (NAME, OURS, "both", "o"))
 
 
 def stack():
@@ -678,7 +694,7 @@ def stack():
                 color=colour, marker=marker, markersize=5.5, linewidth=2, markeredgecolor="white",
                 markeredgewidth=0.9, label=label)
     ax.axhline(room, color=INK, linewidth=1.1, linestyle=(0, (4, 2)))
-    ax.text(0.03, room * 1.015, f"Available: {room:.0f} GiB", ha="left", va="bottom", fontsize=9.5,
+    ax.text(0.03, room * 1.015, f"Available: {room:.0f} GiB", ha="left", va="bottom", fontsize=VALUE,
             color=INK, transform=ax.get_yaxis_transform())
     ax.set_xscale("log", base=2)
     ticks = [1, 4, 16, 64, 256]
@@ -693,10 +709,11 @@ def stack():
                                          for m in ("none", "weights", "kv", "both"))
     model_file = float(fit["both"]["model_file_shared_mib"]) / 1024
     cache_file = float(fit["both"]["cache_file_shared_mib"]) / 1024
+    # greys for what every agent holds for itself, teal for what is held once
     parts = (("Weight Copies", COPY, (none - weights_only, kv_only - both, 0.0, 0.0)),
-             ("KV Copies", "#c9c7c1", (weights_only - both, 0.0, weights_only - both, 0.0)),
-             ("Shared Files", OURS_LIGHT, (0.0, cache_file, model_file, model_file + cache_file)),
-             ("Agent State", OURS, (both, both, both, both)))
+             ("KV Copies", COPY_LIGHT, (weights_only - both, 0.0, weights_only - both, 0.0)),
+             ("Agent State", COPY_PALE, (both, both, both, both)),
+             ("Shared Files", OURS, (0.0, cache_file, model_file, model_file + cache_file)))
     fig, ax = panel()
     names = ["Unmodified", "KV\nShared", "Weights\nShared", NAME]
     bottom = np.zeros(4)
@@ -706,9 +723,9 @@ def stack():
         bottom += np.array(values)
     for x, total in enumerate(bottom):
         ax.annotate(f"{total:.1f}", (x, total), xytext=(0, 3), textcoords="offset points",
-                    ha="center", va="bottom", fontsize=10.5, color=INK)
-    ax.legend(loc="upper right", handlelength=1.1, fontsize=9.5, labelspacing=0.3)
-    ax.tick_params(axis="x", labelsize=9.5)
+                    ha="center", va="bottom", fontsize=VALUE, color=INK)
+    ax.legend(loc="upper right", handlelength=1.1, fontsize=LEGEND, labelspacing=0.3)
+    ax.tick_params(axis="x", labelsize=TICK2)
     finish(fig, ax, "eval_stack_parts", "", "Memory (GiB)", bottom.max() * 1.18)
 
     # how many agents fit by the line of each stack
@@ -718,7 +735,7 @@ def stack():
                   linewidth=1.5)
     for bar, (_, _, m, _) in zip(bars, STACKS):
         tip(ax, bar, f"{bar.get_height():.0f}")
-    ax.tick_params(axis="x", labelsize=9.5)
+    ax.tick_params(axis="x", labelsize=TICK2)
     finish(fig, ax, "eval_stack_fit", "", "Agents That Fit", max(fits) * 1.18)
 
     # generation speed of eight agents relative to the unmodified stack, with
@@ -729,7 +746,7 @@ def stack():
              for r in rows(huge_dir, "engine_kvstack_summary.csv") if int(r["runs"]) > 0}
             if have(huge_dir, "engine_kvstack_summary.csv") else {})
     fig, ax = panel()
-    shown = [("KV\nShared", "kv", DEMAND, "#b9cfe9"), ("Weights\nShared", "weights", WEIGHTS_ONLY, "#f0d6a4"),
+    shown = [("KV\nShared", "kv", DEMAND, DEMAND_LIGHT), ("Weights\nShared", "weights", DEVICE, DEVICE_LIGHT),
              (NAME, "both", OURS, OURS_LIGHT)]
     width = 0.36
     for x, (label, m, full, light) in enumerate(shown):
@@ -744,47 +761,47 @@ def stack():
                          error_kw={"ecolor": INK, "elinewidth": 1.0, "capsize": 2.5})[0]
             ax.annotate(f"{value:.2f}", (bar.get_x() + bar.get_width() / 2, float(row["vs_none_high"])),
                         xytext=(0, 3), textcoords="offset points", ha="center", va="bottom",
-                        fontsize=9.5, color=INK)
+                        fontsize=VALUE, color=INK)
     ax.set_xticks(range(len(shown)), [label for label, _, _, _ in shown])
-    ax.tick_params(axis="x", labelsize=9.5)
+    ax.tick_params(axis="x", labelsize=TICK2)
     ax.axhline(1.0, color=AXIS, linewidth=1.0)
-    handles = [plt.Rectangle((0, 0), 1, 1, color="#c9c7c1"), plt.Rectangle((0, 0), 1, 1, color=COPY)]
+    handles = [plt.Rectangle((0, 0), 1, 1, color=COPY_PALE), plt.Rectangle((0, 0), 1, 1, color=COPY)]
     ax.legend(handles, ["4 KiB Pages", "2 MiB Pages"], loc="upper center", ncol=2,
-              handlelength=1.1, fontsize=9.5, columnspacing=1.2)
+              handlelength=1.1, fontsize=LEGEND, columnspacing=1.2)
     finish(fig, ax, "eval_stack_speed", "", "Speed vs. Unmodified", 1.42)
 
 
 # ------------------------------------------------- loss in the 6-SM instance
 def local():
     """Where the loss of speed with host memory comes from, by MIG instance."""
-    cells = (("12 SMs", "20261007-engine-kvlocal-12sm-v1"), ("6 SMs", "20261007-engine-kvlocal-6sm-v1"))
-    tints = ("#c9c7c1", COPY)
+    cells = (("12-SM\nInstance", "20261007-engine-kvlocal-12sm-v1"), ("6-SM\nInstance", "20261007-engine-kvlocal-6sm-v1"))
     if all(have(d, "engine_kvmech_summary.csv") for _, d in cells):
-        # The two variants of the extent page sizes (grow_all, small_pages) equal
-        # extent within 0.003 in both instances; the record has their rows.
-        modes = (("Private\n2 MiB", "host_copy_huge"), ("Private\n4 KiB", "host_copy"), (NAME, "extent"))
+        # A private cache in host memory is a copy (grey, lighter on 4 KiB
+        # pages). The two variants of the extent page sizes (grow_all,
+        # small_pages) equal extent within 0.003; the record has their rows.
+        forms = (("Private 2 MiB", COPY, "host_copy_huge"), ("Private 4 KiB", COPY_LIGHT, "host_copy"),
+                 (NAME, OURS, "extent"))
+        data = {label: {r["mode"]: r for r in rows(d, "engine_kvmech_summary.csv")} for label, d in cells}
         fig, ax = panel()
-        width = 0.38
-        for index, ((label, directory), colour) in enumerate(zip(cells, tints)):
-            data = {r["mode"]: r for r in rows(directory, "engine_kvmech_summary.csv")}
-            values = [float(data[m]["children_tps_vs_copy"]) for _, m in modes]
-            low = [v - float(data[m]["vs_copy_low"]) for v, (_, m) in zip(values, modes)]
-            high = [float(data[m]["vs_copy_high"]) - v for v, (_, m) in zip(values, modes)]
-            ax.bar(np.arange(len(modes)) + (index - 0.5) * width, values, width, color=colour,
-                   edgecolor="white", linewidth=1.5, label=label, yerr=[low, high],
-                   error_kw={"ecolor": INK, "elinewidth": 1.0, "capsize": 2})
-        ax.set_xticks(range(len(modes)), [label for label, _ in modes])
-        ax.tick_params(axis="x", labelsize=11.5)
-        for index, (label, directory) in enumerate(cells):
-            data = {r["mode"]: r for r in rows(directory, "engine_kvmech_summary.csv")}
-            for x, (_, m) in enumerate(modes):
-                value = float(data[m]["children_tps_vs_copy"])
-                ax.annotate(f"{value:.3f}", (x + (index - 0.5) * width, value), xytext=(0, 5),
-                            textcoords="offset points", ha="center", va="bottom", fontsize=9.5, color=INK)
+        width = 0.27
+        for index, (label, colour, m) in enumerate(forms):
+            values = [float(data[cell][m]["children_tps_vs_copy"]) for cell, _ in cells]
+            low = [v - float(data[cell][m]["vs_copy_low"]) for v, (cell, _) in zip(values, cells)]
+            high = [float(data[cell][m]["vs_copy_high"]) - v for v, (cell, _) in zip(values, cells)]
+            x = np.arange(len(cells)) + (index - 1) * width
+            ax.bar(x, values, width, color=colour, edgecolor="white", linewidth=1.5, label=label,
+                   yerr=[low, high], error_kw={"ecolor": INK, "elinewidth": 1.0, "capsize": 2})
+            for position, value in zip(x, values):
+                ax.annotate(f"{value:.3f}", (position, value), xytext=(0, 5), textcoords="offset points",
+                            ha="center", va="bottom", fontsize=DENSE, color=INK, rotation=90)
+        ax.set_xticks(range(len(cells)), [cell for cell, _ in cells])
+        ax.tick_params(axis="x", labelsize=TICK2)
         ax.axhline(1.0, color=AXIS, linewidth=1.0)
-        ax.set_ylim(0.8, 1.12)
-        ax.legend(loc="upper right", ncol=2, handlelength=1.1, fontsize=9.5, columnspacing=1.0)
-        ax.set_ylabel("Speed vs. Device Cache")
+        ax.set_ylim(0.8, 1.2)
+        ax.set_yticks([0.8, 0.9, 1.0, 1.1])
+        ax.legend(loc="upper center", ncol=3, handlelength=1.0, columnspacing=0.7, handletextpad=0.4,
+                  fontsize=LEGEND, borderaxespad=0.1)
+        ax.set_ylabel("Speed vs. Device")
         style(ax)
         fig.tight_layout()
         save(fig, "eval_local_speed")
@@ -799,7 +816,7 @@ def local():
         sms = sorted({k[0] for k in cell}, reverse=True)
         groups, order = [], []
         for kernel, name in (("gather", "Read"), ("scatter", "Write")):
-            for count, label in zip(sms, ("12 SMs", "6 SMs")):
+            for count, label in zip(sms, ("12 SM", "6 SM")):
                 groups.append(f"{name}\n{label}")
                 order.append((kernel, count))
         series = [(label, colour, [float(cell[count, kind][f"{kernel}_vs_device"]) for kernel, count in order])
@@ -807,10 +824,10 @@ def local():
                                                ("Host, 4 KiB Pages", OURS_LIGHT, "host_small"))]
         fig, ax = panel()
         for group in grouped(ax, groups, series, 0.36):
-            labels(ax, group, "{:.2f}", 9)
+            labels(ax, group, "{:.2f}")
         ax.axhline(1.0, color=AXIS, linewidth=1.0)
-        ax.tick_params(axis="x", labelsize=9)
-        ax.legend(loc="upper right", handlelength=1.1, fontsize=9, labelspacing=0.25)
+        ax.tick_params(axis="x", labelsize=TICK2)
+        ax.legend(loc="upper right", handlelength=1.1, fontsize=LEGEND, labelspacing=0.25)
         finish(fig, ax, "eval_local_probe", "", "Rate vs. Device Memory", 1.45)
 
 
@@ -821,10 +838,10 @@ def pipe():
     if not have(directory, "engine_kvpipe_summary.csv"):
         return
     data = {r["mode"]: r for r in rows(directory, "engine_kvpipe_summary.csv")}
-    stacks = [(label, m, colour) for label, m, colour in (("Unmodified", "stock", COPY), ("Copy", "copy", "#b7b5af"),
+    stacks = [(label, m, colour) for label, m, colour in (("Unmodified", "stock", COPY), ("Copy", "copy", COPY_LIGHT),
                                                            (NAME, "chain", OURS)) if m in data]
     names = [label for label, _, _ in stacks]
-    phases = (("Prefix", "prefix", "#d9d7d1"), ("Leaders", "leaders", "#a9a7a1"), ("Workers", "workers", "#6f6d68"))
+    phases = (("Prefix", "prefix", COPY_PALE), ("Leaders", "leaders", COPY_LIGHT), ("Workers", "workers", COPY))
 
     def stacked(name, column, ylabel, scale, form):
         fig, ax = panel()
@@ -836,8 +853,8 @@ def pipe():
             bottom += values
         for x, total in enumerate(bottom):
             ax.annotate(form.format(total), (x, total), xytext=(0, 3), textcoords="offset points",
-                        ha="center", va="bottom", fontsize=10.5, color=INK)
-        ax.legend(loc="upper center", ncol=3, handlelength=1.0, fontsize=9.5, columnspacing=1.0)
+                        ha="center", va="bottom", fontsize=VALUE, color=INK)
+        ax.legend(loc="upper center", ncol=3, handlelength=1.0, fontsize=LEGEND, columnspacing=1.0)
         finish(fig, ax, name, "", ylabel, bottom.max() * 1.36)
 
     stacked("eval_pipe_time", "{}_s", "Completion Time (s)", 1.0, "{:.1f}")
@@ -869,8 +886,8 @@ def deep():
                   for label, colour, m in (("Copy", COPY, "copy"), (NAME, OURS, "chain"))]
         for group in grouped(ax, [cell for cell, _ in cells], series, 0.36):
             labels(ax, group, form)
-        ax.legend(loc="upper right", handlelength=1.1, fontsize=10)
-        ax.tick_params(axis="x", labelsize=9.5)
+        ax.legend(loc="upper right", handlelength=1.1, fontsize=LEGEND)
+        ax.tick_params(axis="x", labelsize=TICK2)
         finish(fig, ax, name, "", ylabel, max(max(v) for _, _, v in series) * 1.2)
 
     # the pages of the segment files while the subtrees of one tree leave
@@ -886,9 +903,9 @@ def deep():
         last = next((i for i, p in enumerate(points) if p[2] == 0), len(points) - 1)
         if first is not None and first < last:
             ax.text((seconds[0] + seconds[first]) / 2, full / 1024, "Every Process\nRuns", ha="center",
-                    va="bottom", fontsize=9, color=INK, linespacing=1.0)
+                    va="bottom", fontsize=VALUE, color=INK, linespacing=1.0)
             ax.text((seconds[first] + seconds[last]) / 2, points[first][2] / 1024, "First Subtree\nHas Left",
-                    ha="center", va="bottom", fontsize=9, color=INK, linespacing=1.0)
+                    ha="center", va="bottom", fontsize=VALUE, color=INK, linespacing=1.0)
         finish(fig, ax, "eval_deep_return", "Time (s)", "Segment Files (GiB)", full / 1024 * 1.4)
 
 
@@ -916,15 +933,15 @@ def wshare():
                 tip(ax, bar, f"{done // int(row['runs'])}/{started // int(row['runs'])}")
             else:
                 tip(ax, bar, f"{bar.get_height():.1f}")
-            ax.texts[-1].set_fontsize(9.5)
-    ax.legend(loc="upper center", ncol=3, handlelength=1.0, fontsize=8.5, columnspacing=0.8)
+            ax.texts[-1].set_fontsize(VALUE)
+    ax.legend(loc="upper center", ncol=3, handlelength=1.0, fontsize=LEGEND, columnspacing=0.8)
     finish(fig, ax, "eval_wshare_mem", "", "Memory (GiB)", max(max(v) for _, _, v in series) * 1.3)
 
 
 # ------------------------------------------------------- vLLM servers on extents
-VLLM_MODES = (("vLLM", COPY, "vllm"), ("vLLM-\nCPU", "#b7b5af", "cpu"), ("vLLM-\nLMCache", DEMAND, "lmcache"),
+VLLM_MODES = (("vLLM", COPY, "vllm"), ("vLLM-\nCPU", COPY_LIGHT, "cpu"), ("vLLM-\nLMCache", DEMAND, "lmcache"),
               ("vLLM-\n" + NAME, OURS, "stator"))
-VLLM_TICK = 10.5
+VLLM_TICK = TICK2
 
 
 def vshare():
@@ -951,23 +968,23 @@ def vshare():
          "Time to First Token (s)", "{:.2f}", log=True)
     fig, ax = panel()
     bottom = np.zeros(len(modes))
-    for label, column, colour in (("12-SM Instance", "tps_first_instance", "#6f6d68"),
-                                  ("6-SM Instance", "tps_second_instance", "#b7b5af")):
+    for label, column, colour in (("12-SM Instance", "tps_first_instance", COPY),
+                                  ("6-SM Instance", "tps_second_instance", COPY_PALE)):
         values = np.array([float(data[m][column]) for _, _, m in modes])
         ax.bar(names, values, 0.58, bottom=bottom, color=colour, edgecolor="white", linewidth=1.5, label=label)
         for x, (value, base) in enumerate(zip(values, bottom)):
-            ax.annotate(f"{value:.0f}", (x, base + value / 2), ha="center", va="center", fontsize=9.5,
-                        color="white" if colour == "#6f6d68" else INK)
+            ax.annotate(f"{value:.0f}", (x, base + value / 2), ha="center", va="center", fontsize=VALUE,
+                        color="white" if colour == COPY else INK)
         bottom += values
     for x, total in enumerate(bottom):
         ax.annotate(f"{total:.0f}", (x, total), xytext=(0, 3), textcoords="offset points", ha="center",
-                    va="bottom", fontsize=10.5, color=INK)
-    ax.legend(loc="upper center", ncol=2, handlelength=1.0, fontsize=9.5, columnspacing=1.0)
+                    va="bottom", fontsize=VALUE, color=INK)
+    ax.legend(loc="upper center", ncol=2, handlelength=1.0, fontsize=LEGEND, columnspacing=1.0)
     finish(fig, ax, "eval_vllm_tps", "", "Generation (tokens/s)", bottom.max() * 1.3, xtick=VLLM_TICK)
 
 
 if __name__ == "__main__":
-    for figure in (mem, weights, hand, speed, reach, mode, cow, dev, sota, attach, protect, tree, scale,
+    for figure in (pair_legend, mem, weights, hand, speed, reach, mode, cow, dev, sota, attach, protect, tree, scale,
                    variants, inproc, server, limit, stack, local, pipe, deep, wshare, prefix_length, vshare):
         figure()
         print("wrote", figure.__name__)

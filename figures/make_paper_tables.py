@@ -43,10 +43,10 @@ def ablation():
              ("grow_all", "Tail allocated at once"),
              ("small_pages", "Cache file on 4~KiB pages"),
              ("copy", r"\textit{Copy}"))
-    lines = [r"\begin{tabular}{@{}lrrrrr@{}}", r"\toprule",
+    lines = [r"\begin{tabular}{@{}lrrrrr@{}}", r"\hline",
              r"Configuration & \makecell[r]{Attach\\(ms)} & \makecell[r]{TTFT\\(s)} & "
              r"\makecell[r]{Memory\\(GiB)} & \makecell[r]{Speed\\vs. \textit{Copy}} & "
-             r"\makecell[r]{Equal\\Texts} \\", r"\midrule"]
+             r"\makecell[r]{Equal\\Texts} \\", r"\hline"]
     for mode, label in order:
         if mode not in data:
             continue
@@ -58,8 +58,8 @@ def ablation():
             f"{float(r['children_tps_vs_copy']):.3f} & "
             f"{r['texts_equal_to_copy']}/{r['children_finished']} \\\\")
         if mode == "extent":
-            lines.append(r"\midrule")
-    lines += [r"\bottomrule", r"\end{tabular}"]
+            lines.append(r"\hline")
+    lines += [r"\hline", r"\end{tabular}"]
     write("tab_ablation", lines)
 
 
@@ -70,9 +70,9 @@ def fault():
     data = {(r["config"], r["fault"]): r for r in rows(directory, "engine_kvfault_summary.csv")}
     names = (("timeslice", "Time slicing"), ("mps", "MPS"), ("mig", "MIG"),
              ("mig_mps", "MIG with MPS"))
-    lines = [r"\begin{tabular}{@{}lrrrr@{}}", r"\toprule",
+    lines = [r"\begin{tabular}{@{}lrrrr@{}}", r"\hline",
              r"GPU Sharing & \makecell[r]{No\\Fault} & \makecell[r]{GPU Write\\by a Co-Tenant} & "
-             r"\makecell[r]{Agent\\Killed} & \makecell[r]{Writes\\Refused} \\", r"\midrule"]
+             r"\makecell[r]{Agent\\Killed} & \makecell[r]{Writes\\Refused} \\", r"\hline"]
     for config, label in names:
         if (config, "none") not in data:
             continue
@@ -82,7 +82,7 @@ def fault():
             f"{write_case['agents_completed']}/{write_case['agents_started']} & "
             f"{kill['others_completed']}/{kill['others_started']} & "
             f"{write_case['writes_refused']}/{write_case['writes_injected']} \\\\")
-    lines += [r"\bottomrule", r"\end{tabular}"]
+    lines += [r"\hline", r"\end{tabular}"]
     write("tab_fault", lines)
 
 

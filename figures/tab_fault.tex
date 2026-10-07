@@ -1,0 +1,10 @@
+\begin{tabular}{@{}lrrrr@{}}
+\hline
+GPU Sharing & \makecell[r]{No\\Fault} & \makecell[r]{GPU Write\\by a Co-Tenant} & \makecell[r]{Agent\\Killed} & \makecell[r]{Writes\\Refused} \\
+\hline
+Time slicing & 48/48 & 48/48 & 42/42 & 6/6 \\
+MPS & 48/48 & 0/48 & 0/42 & 6/6 \\
+MIG & 48/48 & 48/48 & 42/42 & 6/6 \\
+MIG with MPS & 48/48 & 24/48 & 30/42 & 6/6 \\
+\hline
+\end{tabular}
