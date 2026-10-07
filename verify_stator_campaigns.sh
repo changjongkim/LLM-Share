@@ -25,8 +25,10 @@ fail() {
 }
 check_hashes() {
   [[ -f "$1/source_hashes.txt" ]] || fail "missing hashes in $1"
-  (cd "$script_dir" && sha256sum -c "$1/source_hashes.txt" >/dev/null) ||
-    fail "pinned sources of $1 do not match the tree"
+  # A runner may have recorded a workload file by the absolute path of the
+  # tree it ran in; the file is checked in this tree.
+  (cd "$script_dir" && sed -E 's#  /.*/(workloads/[^/]+)$#  \1#' "$1/source_hashes.txt" |
+    sha256sum -c - >/dev/null) || fail "pinned sources of $1 do not match the tree"
 }
 same() {
   cmp -s "$1" "$2" || fail "$2 is not reproducible from its raw log"
@@ -43,7 +45,8 @@ present() {
 
 # The patch in the tree must be the difference between each engine checkout
 # and its recorded commit.
-for pair in llama.cpp-chain:kv_chain.patch llama.cpp-sota:kv_sota.patch; do
+for pair in llama.cpp-chain:kv_chain.patch llama.cpp-sota:kv_sota.patch \
+            llama.cpp-tuned:kv_tuned.patch; do
   clone=${pair%%:*} patch=${pair##*:}
   if [[ -d "$script_dir/$clone/.git" ]]; then
     git -C "$script_dir/$clone" diff >"$scratch/patch"
@@ -474,6 +477,56 @@ if present 20261006-ollama-agents-v1; then
   [[ -n "$before" && "$before" == "$after" && "$alive" == 1 ]] ||
     fail "the machine Ollama service did not remain unchanged"
 fi
+
+# --- the memory of the whole stack and how many agents fit -------------------
+verify_stack() {  # campaign label gates-on-all-stacks
+  present "$1" || return 0
+  local dir="$results/$1" label=$2 model_bytes total
+  check_hashes "$dir"
+  model_bytes=$(awk -F= '$1 == "model_bytes" { print $2 }' "$dir/metadata.txt")
+  total=$(awk -F= '$1 == "mem_total_kib" { print $2 }' "$dir/metadata.txt")
+  awk -f "$script_dir/summarize_engine_kvstack.awk" "$dir/raw.log" >"$scratch/$label.csv"
+  same "$scratch/$label.csv" "$dir/engine_kvstack_summary.csv"
+  awk -v table=fit -v model_bytes="$model_bytes" -v mem_total_kib="$total" \
+    -f "$script_dir/summarize_engine_kvstack.awk" "$dir/raw.log" >"$scratch/$label.fit.csv"
+  same "$scratch/$label.fit.csv" "$dir/engine_kvstack_fit.csv"
+  awk -v table=texts -f "$script_dir/summarize_engine_kvstack.awk" "$dir/raw.log" \
+    >"$scratch/$label.texts.csv"
+  same "$scratch/$label.texts.csv" "$dir/engine_kvstack_texts.csv"
+  # K1: no agent fails; K2: one text per agent index within a repetition.
+  awk -F, 'NR > 1 && $3 > 0 { rows++; if ($5 != 0) bad++ } END { exit (bad || !rows) ? 1 : 0 }' \
+    "$dir/engine_kvstack_summary.csv" || fail "K1 does not hold in $label"
+  awk -F, 'NR > 1 { rows++; if ($2 != $3) bad++ } END { exit (bad || !rows) ? 1 : 0 }' \
+    "$dir/engine_kvstack_texts.csv" || fail "K2 does not hold in $label"
+  [[ "$3" == all ]] || return 0
+  # K3: the order of the stacks by memory at every common count.
+  awk -F, '
+    NR > 1 && $3 > 0 { memory[$1, $2] = $18; counts[$2] = 1 }
+    END {
+      for (n in counts) {
+        if ((("both", n) in memory) && (("weights", n) in memory) && memory["both", n] >= memory["weights", n]) bad++
+        if ((("both", n) in memory) && (("kv", n) in memory) && memory["both", n] >= memory["kv", n]) bad++
+        if ((("weights", n) in memory) && (("none", n) in memory) && memory["weights", n] >= memory["none", n]) bad++
+        if ((("kv", n) in memory) && (("none", n) in memory) && memory["kv", n] >= memory["none", n]) bad++
+      }
+      exit bad ? 1 : 0
+    }' "$dir/engine_kvstack_summary.csv" || fail "K3 does not hold in $label"
+  # K4: the memory per added agent of both is at most 0.20 of that of none.
+  awk -F, '$1 == "both" { rows++; if ($9 > 0.20 || $9 <= 0) bad++ } END { exit (bad || rows != 1) ? 1 : 0 }' \
+    "$dir/engine_kvstack_fit.csv" || fail "K4 does not hold in $label"
+  # K5: generation speed of both against none; a cell below 0.92 is an
+  # exception that is reported with its value.
+  while IFS=, read -r mode agents runs _ _ _ _ _ _ ratio _ _ median _; do
+    [[ "$mode" == both && "$runs" -gt 0 ]] || continue
+    awk -v r="$ratio" 'BEGIN { exit (r > 0) ? 0 : 1 }' || continue
+    if awk -v r="$ratio" 'BEGIN { exit (r < 0.92) ? 0 : 1 }'; then
+      exceptions+=("K5 campaign=$label agents=$agents speed_vs_none=$ratio median=$median")
+    fi
+  done < <(tail -n +2 "$dir/engine_kvstack_summary.csv")
+}
+verify_stack 20261007-engine-kvstack-v1 kvstack all
+verify_stack 20261007-engine-kvstack-huge-v1 kvstack-huge all
+verify_stack 20261007-engine-kvstack-capacity-v1 kvstack-capacity both
 
 echo "stator_campaign_verification=PASS"
 echo "campaigns_verified=${#verified[@]} ${verified[*]:-}"

@@ -1,0 +1,3 @@
+mode,agents,runs,skipped_runs,failed_agents,weights_load_ms,attach_ms,first_token_ms,generation_tps_total,vs_none,vs_none_low,vs_none_high,vs_none_median,vs_weights,vs_weights_low,vs_weights_high,vs_weights_median,memory_mib,memory_ci95,memory_per_agent_mib,pss_anon_mib,pss_file_mib,pss_shmem_mib,device_mib,sampled_runs,wall_s
+both,96,2,0,0,12228,396.4,20655,35.81,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,67572,2967,703.9,23012,6568,6368,37152,2,248.1
+both,128,2,0,0,17375,654.4,28793,36.25,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,89852,3748,702.0,30248,7205,8230,49536,2,330.9

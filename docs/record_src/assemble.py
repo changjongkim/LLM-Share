@@ -39,6 +39,8 @@ tables = {
     "@KV_LIMIT@": "kv_limit.md", "@READ_PATH@": "read_path.md",
     "@VMM_ATTACH@": "vmm_attach.md", "@PROTECT@": "protect.md",
     "@OLLAMA_AGENTS@": "ollama_agents.md",
+    "@KV_STACK@": "kv_stack.md", "@KV_STACK_FIT@": "kv_stack_fit.md",
+    "@KV_STACK_HUGE@": "kv_stack_huge.md", "@KV_STACK_CAPACITY@": "kv_stack_capacity.md",
 }
 for marker, name in tables.items():
     path = os.path.join(docs, name)

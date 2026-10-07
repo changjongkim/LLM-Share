@@ -1,0 +1,106 @@
+Source of bfcl_prefix.txt and bfcl_tasks.txt (written by make_workload_bfcl.py)
+
+dataset: Berkeley Function Calling Leaderboard (BFCL v4), category simple_python
+repository: https://github.com/ShishirPatil/gorilla
+revision: 6ea57973c7a6097fd7c5915698c54c17c5b1b6c8
+license: Apache-2.0 (https://raw.githubusercontent.com/ShishirPatil/gorilla/6ea57973c7a6097fd7c5915698c54c17c5b1b6c8/LICENSE)
+prefix: 47495 bytes of at most 48000, 90 functions, 90 tasks
+
+# Raw files: sha256, bytes, name in SRC_DIR, URL
+
+82dd63ba502eb2520c6b5d1d9a5c4b590e03ff261565175561f6228a367d1991 283274 BFCL_v4_simple_python.json https://raw.githubusercontent.com/ShishirPatil/gorilla/6ea57973c7a6097fd7c5915698c54c17c5b1b6c8/berkeley-function-call-leaderboard/bfcl_eval/data/BFCL_v4_simple_python.json
+90cd5bc653690ee8e459b5b3f3fc9458606f7f3fcbf795bb51b7dc581f8c86dc 63627 possible_answer/BFCL_v4_simple_python.json https://raw.githubusercontent.com/ShishirPatil/gorilla/6ea57973c7a6097fd7c5915698c54c17c5b1b6c8/berkeley-function-call-leaderboard/bfcl_eval/data/possible_answer/BFCL_v4_simple_python.json
+c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4 11357 LICENSE https://raw.githubusercontent.com/ShishirPatil/gorilla/6ea57973c7a6097fd7c5915698c54c17c5b1b6c8/LICENSE
+
+# Tasks: line of bfcl_tasks.txt, dataset entry, function in bfcl_prefix.txt
+
+1 simple_python_0 calculate_triangle_area
+2 simple_python_249 religion.history_info
+3 simple_python_96 database.query
+4 simple_python_342 game_list.get_games
+5 simple_python_193 local_nursery.find
+6 simple_python_40 calculate_magnetic_field
+7 simple_python_286 concert.get_details
+8 simple_python_134 investment.predictProfit
+9 simple_python_378 timezone.convert
+10 simple_python_230 historic_leader_search
+11 simple_python_77 restaurant.find_nearby
+12 simple_python_320 sports_ranking.get_team_position
+13 simple_python_172 legal_case.fetch
+14 simple_python_17 get_prime_factors
+15 simple_python_265 sculpture_search
+16 simple_python_114 prob_dist.binomial
+17 simple_python_357 get_recipe
+18 simple_python_209 public_library.find_nearby
+19 simple_python_58 cell_biology.function_lookup
+20 simple_python_301 get_third_chord
+21 simple_python_151 highest_grossing_banks
+22 simple_python_396 hospital.locate
+23 simple_python_245 discoverer.get
+24 simple_python_92 imdb.find_movies_by_actor
+25 simple_python_337 poker_game_winner
+26 simple_python_189 weather_forecast_detailed
+27 simple_python_36 get_shortest_driving_distance
+28 simple_python_282 find_flute
+29 simple_python_130 finance_calculator.npv
+30 simple_python_374 grocery_info.nutritional_info
+31 simple_python_225 psych_research.get_preference
+32 simple_python_73 population_projections
+33 simple_python_316 get_sport_ranking
+34 simple_python_168 lawsuit_search
+35 simple_python_13 calculate_area_under_curve
+36 simple_python_261 draw_rectangle
+37 simple_python_110 predict_house_price
+38 simple_python_353 find_recipes
+39 simple_python_205 get_traffic_info
+40 simple_python_54 get_protein_sequence
+41 simple_python_297 music.theory.chordProgression
+42 simple_python_146 stock_price
+43 simple_python_392 latest_exchange_rate
+44 simple_python_241 US_President_During_Event
+45 simple_python_88 calculate_BMI
+46 simple_python_332 chess.rating
+47 simple_python_185 detailed_weather_forecast
+48 simple_python_30 kinematics.final_velocity_from_distance
+49 simple_python_278 get_instrument_details
+50 simple_python_126 linear_regression.get_r_squared
+51 simple_python_370 safeway.order
+52 simple_python_220 calculate_neuronal_activity
+53 simple_python_69 ecology.get_turtle_population
+54 simple_python_312 player_statistic
+55 simple_python_164 get_crime_rate
+56 simple_python_8 geometry.area_circle
+57 simple_python_257 identify_color_rgb
+58 simple_python_105 math.power
+59 simple_python_349 game_score.highest
+60 simple_python_200 calculate_emissions
+61 simple_python_49 calc_absolute_pressure
+62 simple_python_293 music_composer.create_mix
+63 simple_python_141 get_metal_price
+64 simple_python_388 currency_exchange.convert
+65 simple_python_237 get_historical_GDP
+66 simple_python_84 calculate_bmi
+67 simple_python_328 boardgame.get_info
+68 simple_python_179 find_latest_court_case
+69 simple_python_26 calculate_velocity
+70 simple_python_273 museum.get_hours
+71 simple_python_121 calc_binomial_prob
+72 simple_python_365 cooking_conversion.convert
+73 simple_python_216 sentiment_analysis
+74 simple_python_65 calculate_density
+75 simple_python_308 sports.match_schedule
+76 simple_python_160 get_case_info
+77 simple_python_3 algebra.quadratic_roots
+78 simple_python_252 get_religion_history
+79 simple_python_100 light_travel_time
+80 simple_python_345 game_valuation
+81 simple_python_196 air_quality
+82 simple_python_44 calculate_electric_field_strength
+83 simple_python_289 concert.find_nearby
+84 simple_python_137 calculate_stock_return
+85 simple_python_382 book_hotel
+86 simple_python_233 european_history.get_event_date
+87 simple_python_80 find_restaurants
+88 simple_python_324 team_score.get_latest
+89 simple_python_175 lawyer.get_experience
+90 simple_python_20 math.hcf

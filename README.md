@@ -92,6 +92,10 @@ GPU가 접근하는 메모리를 프로세스 사이에서, 그리고 MIG 인스
 | Qwen2.5-14B에서 에이전트 8개의 메모리 | 54.5 GiB | 6.1 GiB + 캐시 파일 3.0 GiB 1회 |
 | 에이전트 트리(프로세스 11개)의 메모리 | 27.3 GiB | 9.2 GiB |
 | 수정하지 않은 `llama-server`의 슬롯 저장 시간 | 505 ms | 9.6 ms |
+| 전체 스택(가중치와 KV 캐시 모두 복사하는 무수정 엔진 대비)의 에이전트 8개 메모리 | 47.8 GiB | 10.8 GiB (공유 파일 포함) |
+| 전체 스택에서 에이전트 1개당 추가 메모리 | 5.99 GiB | 0.69 GiB |
+| 가용 메모리 117.2 GiB에 들어가는 에이전트 수 (직선 외삽) | 19 | 163 (128개까지 실측) |
+| 전체 스택의 생성 속도, 에이전트 8개 (모델 파일이 2 MiB 페이지 위에 있을 때) | 1.00 | 0.994 (4 KiB 페이지 캐시에서는 0.926) |
 
 ### 1.5 기여와 적용 범위
 
@@ -618,6 +622,57 @@ Ollama는 슬롯마다 프리픽스를 따로 계산하고 서버 사이에서 �
 <p align="center"><img src="figures/eval_proc.png" width="62%"></p>
 <p align="center"><b>그림 20.</b> 에이전트 8개의 처리량과 메모리. 원: 프로세스 8개, 사각형: 서버 1개, 삼각형: MIG 인스턴스마다 서버 1개.</p>
 
+### 4.11 보강 캠페인 (2026-10-07, 기록 6.14절)
+
+앞 절까지의 비교는 대부분 가중치를 양쪽 모두 in-place로 둔 상태에서 KV 캐시만
+비교하였다. 이 절은 수정하지 않은 엔진 전체와의 비교, 조정한 기준선, 구성 요소별
+기여, 결함 격리, 실제 파이프라인을 다룬다. 모두 셀당 6회 반복이다.
+
+**전체 스택의 메모리와 수용 한계.** 에이전트가 무엇을 공유하는지에 따라 네 스택을
+비교한다. `무수정`은 패치를 적용하지 않은 같은 커밋의 엔진으로, 에이전트마다
+가중치를 디바이스 메모리에 복사하고 프리픽스를 상태 파일에서 복사한다. `KV 공유`와
+`가중치 공유`는 두 메커니즘 중 하나만 적용하고, STATOR는 둘 다 적용한다. 에이전트
+워크로드(프리픽스 14,282토큰, 컨텍스트 16,384)를 사용하며, 반복마다 페이지 캐시를
+비우고 모델 파일을 다시 읽은 뒤 측정한다.
+
+| 스택 | 에이전트 1개당 증가 (GiB) | 에이전트 8개 (GiB, 공유 파일 포함) | 가용 메모리 117.2 GiB에 들어가는 에이전트 수 (직선 외삽) | 측정한 최대 개수 |
+|---|---:|---:|---:|---:|
+| 무수정 | 5.99 | 47.8 | 19 | 12 (71.9 GiB) |
+| KV 공유 | 5.11 | 41.6 | 22 | 12 |
+| 가중치 공유 | 1.57 | 16.9 | 71 | 32 |
+| STATOR | 0.69 | 10.8 | 163 | 128 (87.7 GiB + 파일 5.1 GiB) |
+
+에이전트 8개의 47.8 GiB 가운데 35.2 GiB는 가중치 복사 8개이고 7.0 GiB는 KV 캐시
+복사 8개이다. STATOR의 10.8 GiB는 한 번만 존재하는 모델 파일 4.4 GiB와 캐시 파일
+0.8 GiB, 그리고 에이전트 고유 상태 5.6 GiB로 이루어진다. 두 메커니즘의 절감은
+서로 다른 부분에서 나오며, 둘을 함께 적용한 절감은 각각의 절감을 더한 값과
+0.1% 차이이다. 복사하는 스택은 장치 메모리를 소진하므로 12개를 넘겨 실행하지
+않았고, 수용 한계는 측정점에 맞춘 직선을 가용 메모리까지 연장한 값이다. STATOR는
+별도 캠페인(`20261007-engine-kvstack-capacity-v1`, 2회 반복)에서 96개와 128개를
+실행하였다. 실패 없이 66.0 GiB와 87.7 GiB를 사용하였고 직선과의 차이는 1%
+이내이며, 128개의 처리량 합은 36.3 tokens/s이다. 모든
+스택과 개수에서 같은 번호의 에이전트는 같은 텍스트를 생성한다.
+
+생성 속도는 무수정 대비 `KV 공유` 0.96~0.98, `가중치 공유` 0.93~0.97, STATOR
+0.91~0.95이다. 사전 기준(모든 개수에서 0.92 이상)은 에이전트 1개인 칸(0.913)에서
+충족되지 않는다. 손실은 인스턴스에 따라 다르다. 에이전트 하나가 12-SM
+인스턴스에서 실행되면 4.5%를 잃고 그 전부가 4 KiB 페이지 캐시에 놓인 가중치에서
+나온다. 6-SM 인스턴스에서는 12.7%를 잃으며 가중치가 7.7%, 캐시가 5.3%를 차지한다.
+에이전트 8개가 함께 시작할 때 첫 토큰은 3.39 s에서 1.83 s로 앞당겨진다. 모델
+적재가 2.43 s에서 1.08 s로, 프리픽스 연결이 275 ms에서 44 ms로 줄어들기 때문이다.
+
+가중치에서 나오는 손실은 모델 파일의 페이지 크기에 따른 것이다. 모델 파일을 2 MiB
+페이지를 쓰는 tmpfs(`huge=always`)에 두고 같은 캠페인을 반복하면
+(`20261007-engine-kvstack-huge-v1`), 에이전트 8개의 생성 속도는 무수정 대비 `가중치
+공유` 1.006(95% 신뢰구간 0.980~1.033), STATOR 0.994(0.969~1.020)이다. 메모리는
+같다(에이전트 8개 5.6 GiB, 1개당 0.69 GiB). 에이전트 하나는 12-SM 인스턴스에서
+1.02, 6-SM 인스턴스에서 0.90이며, 6-SM 인스턴스에 남는 손실은 호스트 페이지
+테이블을 거치는 메모리의 비용이다(아래 원인 분리 참조). 첫 토큰은 3.32 s에서
+1.65 s로 앞당겨진다. 따라서 권장 구성은 모델 파일을 2 MiB 페이지 위에 두는 것이다.
+
+<p align="center"><img src="figures/eval_stack_mem.png" width="24%"> <img src="figures/eval_stack_parts.png" width="24%"> <img src="figures/eval_stack_fit.png" width="24%"> <img src="figures/eval_stack_speed.png" width="24%"></p>
+<p align="center"><b>그림 21.</b> 전체 스택의 메모리(에이전트 수별, 에이전트 8개의 구성), 가용 메모리에 들어가는 에이전트 수, 무수정 대비 생성 속도. 회색: 무수정, 파랑: KV 공유, 노랑: 가중치 공유, 청록: STATOR.</p>
+
 ## 5. 한계
 
 - 주 평가는 장치 한 대, 엔진 하나, 7B 모델 하나에서 수행하였고, 8B와 14B
@@ -652,9 +707,16 @@ Ollama는 슬롯마다 프리픽스를 따로 계산하고 서버 사이에서 �
 | `llama.cpp-vmm/` + `kv_vmm.patch` | 디바이스 메모리 방식을 더한 세 번째 클론. 캠페인 하나에서만 사용 |
 | `llama.cpp-chain/` + `kv_chain.patch` | 에이전트가 추가한 행을 다시 게시하는 다단계 체인 |
 | `llama.cpp-sota/` + `kv_sota.patch` | 프리픽스를 넘기는 다섯 방식을 한 엔진에서 비교하는 클론 |
+| `llama.cpp-tuned/` + `kv_tuned.patch` | 위 클론에 Device 기준선의 조정(`LLAMA_KV_VMM_BATCH`)과 단계 제거 스위치(`LLAMA_KV_TOUCH=0`, `LLAMA_KV_POPULATE=0`)를 더한 클론 |
+| `llama.cpp-stock/` | 패치를 적용하지 않은 같은 커밋의 클론. 무수정 스택의 기준 |
 | `kv_fork.cpp` | 프리픽스 공유 실험의 한 역할: 단독 계산, 부모로서 게시, 자식으로서 연결 |
 | `kv_batch.cpp` | 여러 시퀀스를 처리하는 배칭 서버의 같은 역할 |
 | `kv_spawn.cpp` | 게시한 뒤 자식을 직접 실행하는 부모. 자식이 공유 디바이스 메모리의 핸들을 상속한다 |
+| `kv_tree.cpp` | 에이전트 트리와 파이프라인의 한 프로세스. 텍스트 디코딩, 상태 적재·저장, 대기, 생성 단계를 인자로 받는다 |
+| `kv_fork_nommap.cpp` | 모델 파일을 매핑하지 않고 읽는 `kv_fork`. 프리픽스만 공유하는 스택에 사용 |
+| `cuda_tlb_probe.cu` | 메모리 종류별로 연속 읽기, 흩어진 읽기, 흩어진 쓰기의 속도를 측정 |
+| `make_workload.py`, `make_workload_bfcl.py`, `workloads/` | 에이전트 워크로드와, 공개 함수 호출 벤치마크(BFCL v4, Apache-2.0)의 도구 스키마와 요청으로 만든 워크로드 |
+| `openai_client.py`, `throughput_ratios.py` | OpenAI 호환 서버의 요청 드라이버, 원시 로그에서 반복별 처리량 비와 중앙값을 계산하는 도구 |
 | `cuda_ipc_probe.cu`, `cuda_vmm_probe.cu` | 주어진 배치에서 GPU 수준 경로가 두 프로세스 사이의 메모리를 공유하는지 확인 |
 | `cuda_share_load_probe.cu` | 세 번째 프로세스가 GPU를 사용하는 동안 공유 메모리를 읽을 수 있는지 확인(진단용, 캠페인 없음) |
 | `cuda_vmm_attach_probe.cu`, `cuda_protect_probe.cu` | VMM 연결 비용과 두 공유 경로의 쓰기 보호를 측정 |
@@ -688,6 +750,13 @@ Ollama는 슬롯마다 프리픽스를 따로 계산하고 서버 사이에서 �
 | `run_engine_kvserver.sh`, `run_engine_kvserver2.sh`, `run_engine_kvlimit.sh` | 기존 서버의 슬롯 저장·복원(두 번째는 토큰 경계에서 게시), cgroup 메모리 한도 | 4.10 |
 | `run_read_path.sh`, `run_vmm_attach.sh`, `run_protect.sh` | 읽기 경로, 디바이스 메모리 연결 비용, 쓰기 보호 탐침 | 4.10 |
 | `run_ollama_agents.sh` | 별도 인스턴스로 실행한 Ollama 기준선(첫 요청과 재요청) | 4.10 |
+| `run_engine_kvstack.sh` | 무수정 엔진을 포함한 전체 스택의 메모리와 수용 한계 | 4.11 |
+| `run_engine_kvmech.sh` | 조정한 Device를 포함한 메커니즘 비교(프리픽스 길이와 에이전트 수 변화), 단계 제거, 6-SM 손실의 원인 분리 | 4.11 |
+| `run_tlb_probe.sh` | 흩어진 접근의 메모리 종류별 속도 | 4.11 |
+| `run_engine_kvpipe.sh` | 공개 벤치마크 도구 위의 계획자·리더·작업자 파이프라인, 단계별 에너지 | 4.11 |
+| `run_engine_kvfault.sh` | GPU 공유 방식별 결함 주입과 생존한 에이전트 수 | 4.11 |
+| `run_engine_kvdeep.sh` | 깊거나 넓은 트리, 서브트리 종료 시 메모리 반환 | 4.11 |
+| `run_ext_weightshare.sh` | CUDA IPC로 가중치를 공유하는 공개 라이브러리 기준선 | 4.11 |
 
 ### 6.2 빌드
 
@@ -730,10 +799,22 @@ cmake -S llama.cpp-sota -B llama.cpp-sota/build -DGGML_CUDA=ON \
   -DCMAKE_BUILD_TYPE=Release -DCMAKE_CUDA_ARCHITECTURES=110 -DLLAMA_CURL=OFF
 cmake --build llama.cpp-sota/build -j 12 --target llama
 make kv_fork_sota kv_spawn_sota ollama_mig_visible.so
+
+# 조정한 Device와 단계 제거 스위치를 더한 클론, 패치하지 않은 클론
+git clone <llama.cpp> llama.cpp-tuned && git -C llama.cpp-tuned checkout 6f767fe96
+git -C llama.cpp-tuned apply ../kv_tuned.patch
+cmake -S llama.cpp-tuned -B llama.cpp-tuned/build -DGGML_CUDA=ON \
+  -DCMAKE_BUILD_TYPE=Release -DCMAKE_CUDA_ARCHITECTURES=110 -DLLAMA_CURL=OFF
+cmake --build llama.cpp-tuned/build -j 12 --target llama
+git clone <llama.cpp> llama.cpp-stock && git -C llama.cpp-stock checkout 6f767fe96
+cmake -S llama.cpp-stock -B llama.cpp-stock/build -DGGML_CUDA=ON \
+  -DCMAKE_BUILD_TYPE=Release -DCMAKE_CUDA_ARCHITECTURES=110 -DLLAMA_CURL=OFF
+cmake --build llama.cpp-stock/build -j 12 --target llama
+make kv_fork_tuned kv_spawn_tuned kv_fork_stock kv_tree_stock kv_fork_nommap cuda_tlb_probe
 ```
 
 `kv_extents.patch`는 `inplace_weights.patch`를 포함하고, `kv_vmm.patch`는
-`kv_extents.patch`를 포함한다. 각 클론에는 해당 패치만 적용되어 있다. 클론,
+`kv_extents.patch`를 포함하며, `kv_tuned.patch`는 `kv_sota.patch`를 포함한다. 각 클론에는 해당 패치만 적용되어 있다. 클론,
 모델, 어댑터, 빌드된 프로그램은 저장소에 포함되지 않는다.
 
 ### 6.3 캠페인
@@ -776,6 +857,15 @@ RESULT_TAG=read-path-rerun       ./run_read_path.sh
 RESULT_TAG=vmm-attach-rerun      ./run_vmm_attach.sh
 RESULT_TAG=protect-rerun         ./run_protect.sh
 RESULT_TAG=ollama-agents-rerun   ./run_ollama_agents.sh
+RESULT_TAG=engine-kvstack-rerun  ./run_engine_kvstack.sh
+RESULT_TAG=engine-kvmech-rerun   ./run_engine_kvmech.sh
+MODE_SET=ablation RESULT_TAG=engine-kvablate-rerun ./run_engine_kvmech.sh
+MODE_SET=locality N_GEN=128 RESULT_TAG=engine-kvlocal-rerun ./run_engine_kvmech.sh
+RESULT_TAG=tlb-probe-rerun       ./run_tlb_probe.sh
+RESULT_TAG=engine-kvpipe-rerun   ./run_engine_kvpipe.sh
+MPS_ROOT=/tmp/kf RESULT_TAG=engine-kvfault-rerun ./run_engine_kvfault.sh
+RESULT_TAG=engine-kvdeep-rerun   ./run_engine_kvdeep.sh
+RESULT_TAG=ext-weightshare-rerun ./run_ext_weightshare.sh
 ./verify_llm_share_artifact.sh
 ./verify_stator_campaigns.sh results
 ```

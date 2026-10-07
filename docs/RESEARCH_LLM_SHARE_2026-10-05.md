@@ -1300,6 +1300,130 @@ relations.  It reports four explicit measured exceptions rather than
 hiding them: the flat-tree output count, the one 32-agent timing outlier,
 and the two server-integration exact-output cells.
 
+### 6.14 Improvement campaigns of 2026-10-07
+
+The comparisons above keep the weights in place on both sides and compare
+ways to hand a prefix over. The campaigns of this section add the
+unmodified engine as a whole, a tuned device-memory baseline, the steps of
+the mechanism left out one at a time, faults, deeper trees and a pipeline on
+a public workload. Their runners state their gates in their headers, and
+`verify_stator_campaigns.sh` rebuilds every summary and evaluates the gates
+again.
+
+**Whole stack (`run_engine_kvstack.sh`, `20261007-engine-kvstack-v1`).**
+Four stacks by what an agent shares: `unmodified` is the engine at the same
+commit with no patch of this repository applied (`llama.cpp-stock`), in
+which every agent copies the weights to device memory and restores the
+prefix from the state file; `prefix mapped` and `weights in place` apply
+one of the two mechanisms (the first reads the model file without mapping
+it, `kv_fork_nommap.cpp`, so that the weights are copied although the
+device accepts host memory); `both` is STATOR. The agent workload (14,282
+tokens), a context of 16,384 tokens, every second agent in the 6-SM
+instance. The page cache is dropped and the model file read again before
+every repetition. Stacks that copy are not run at counts that would leave
+less than 20 GiB available.
+
+| Stack | Agents | Failed | Memory (MiB) | 95% CI | Per agent (MiB) | Weights load (ms) | Attach (ms) | First token (ms) | Throughput (tokens/s) | Speed vs unmodified | median |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| unmodified | 1 | 0 | 6162 | 6 | 6162 | 1147 | 151.3 | 1470 | 21.10 | 1.000 | 1.000 |
+| prefix mapped | 1 | 0 | 5277 | 16 | 5277 | 1154 | 32.5 | 1362 | 20.68 | 0.975 | 0.974 |
+| weights in place | 1 | 0 | 1655 | 12 | 1655 | 634 | 152.7 | 963 | 19.91 | 0.940 | 0.939 |
+| both (STATOR) | 1 | 0 | 751 | 31 | 751 | 628 | 32.7 | 836 | 19.44 | 0.913 | 0.914 |
+| unmodified | 2 | 0 | 12249 | 23 | 6124 | 1291 | 189.4 | 1688 | 38.12 | 1.000 | 1.000 |
+| prefix mapped | 2 | 0 | 10481 | 31 | 5241 | 1298 | 32.9 | 1550 | 37.03 | 0.971 | 0.972 |
+| weights in place | 2 | 0 | 3244 | 24 | 1622 | 706 | 244.5 | 1161 | 36.99 | 0.970 | 0.972 |
+| both (STATOR) | 2 | 0 | 1470 | 20 | 735 | 711 | 37.2 | 962 | 36.02 | 0.945 | 0.945 |
+| unmodified | 4 | 0 | 24488 | 43 | 6122 | 1616 | 189.5 | 2170 | 36.59 | 1.000 | 1.000 |
+| prefix mapped | 4 | 0 | 20829 | 144 | 5207 | 1617 | 34.4 | 2017 | 35.46 | 0.969 | 0.967 |
+| weights in place | 4 | 0 | 6411 | 32 | 1603 | 867 | 211.1 | 1468 | 34.93 | 0.954 | 0.954 |
+| both (STATOR) | 4 | 0 | 2831 | 38 | 708 | 862 | 41.3 | 1301 | 34.65 | 0.947 | 0.947 |
+| unmodified | 8 | 0 | 48981 | 96 | 6123 | 2429 | 275.2 | 3385 | 37.25 | 1.000 | 1.000 |
+| prefix mapped | 8 | 0 | 41796 | 167 | 5224 | 2432 | 38.6 | 3146 | 35.73 | 0.959 | 0.964 |
+| weights in place | 8 | 0 | 12888 | 30 | 1611 | 1134 | 307.9 | 2172 | 34.71 | 0.932 | 0.935 |
+| both (STATOR) | 8 | 0 | 5759 | 25 | 720 | 1081 | 43.7 | 1834 | 34.48 | 0.926 | 0.931 |
+| unmodified | 12 | 0 | 73594 | 20 | 6133 | 3384 | 347.1 | 4745 | 37.32 | 1.000 | 1.000 |
+| prefix mapped | 12 | 0 | 62894 | 39 | 5241 | 3616 | 42.0 | 4624 | 36.52 | 0.979 | 0.977 |
+| weights in place | 12 | 0 | 19370 | 32 | 1614 | 1376 | 366.7 | 2776 | 34.85 | 0.934 | 0.936 |
+| both (STATOR) | 12 | 0 | 8662 | 42 | 722 | 1388 | 51.4 | 2490 | 34.48 | 0.924 | 0.927 |
+| weights in place | 16 | 0 | 25803 | 26 | 1613 | 1791 | 444.5 | 3558 | 35.05 | - | - |
+| both (STATOR) | 16 | 0 | 11534 | 36 | 721 | 1782 | 55.8 | 3192 | 34.33 | - | - |
+| weights in place | 32 | 0 | 51460 | 41 | 1608 | 3669 | 896.6 | 7171 | 35.98 | - | - |
+| both (STATOR) | 32 | 0 | 22869 | 78 | 715 | 3560 | 74.2 | 6228 | 34.80 | - | - |
+| both (STATOR) | 64 | 0 | 45252 | 179 | 707 | 7659 | 200.2 | 13096 | 35.75 | - | - |
+
+The memory of every stack is linear in the number of agents; the line is
+fitted per repetition:
+
+| Stack | Counts | Largest count | Memory per added agent (MiB) | 95% CI | Ratio to unmodified | Shared files (MiB) | Available (MiB) | Agents that fit by the line |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|
+| unmodified | 5 | 12 | 6130.2 | 4.1 | 1.0000 | 0 | 120032 | 19 |
+| prefix mapped | 5 | 12 | 5237.5 | 3.7 | 0.8544 | 784 | 119998 | 22 |
+| weights in place | 7 | 32 | 1607.9 | 1.3 | 0.2623 | 4466 | 120093 | 71 |
+| both (STATOR) | 8 | 64 | 707.0 | 2.6 | 0.1153 | 5250 | 120094 | 163 |
+
+`Agents that fit by the line` extends the line to the memory that was
+available before the cases (the model file is subtracted for the stacks
+that read it in place, since its pages count as available although they
+are in use). It is an extrapolation above the largest count that was run.
+At 8 agents the saving of both mechanisms together (43,222 MiB) differs
+from the sum of the two separate savings (43,278 MiB) by 0.1%. Within a
+repetition every agent index writes one text in all stacks and counts
+(32 of 32 indices, 268 texts per repetition).
+
+Gate K5 (summed generation speed of `both` at least 0.92 of `unmodified`
+at every common count) is not met at one agent: 0.913 (median 0.914). The
+single agent runs in the 12-SM instance in the odd repetitions and in the
+6-SM instance in the even ones: `prefix mapped` 1.00 / 0.947, `weights in
+place` 0.958 / 0.923, `both` 0.955 / 0.873. The weights are read from the 4
+KiB pages of the ext4 page cache in this campaign.
+
+The GPU driver keeps device memory that processes have freed as
+reclaimable kernel memory: `KReclaimable` stays at 68 GiB between cases
+while `MemFree` is 41 to 48 GiB and `MemAvailable` 117 GiB. This is why the
+drop of `MemAvailable` is the measure, and it is the likely cause of the
+stall of the first repetition of the 32-agent copy cell in Section 6.12
+(demand above the pool and the free pages has to wait for the reclaim of
+page cache).
+
+According to the MIG profile table the two instances have 12 and 6 SMs;
+`cudaDevAttrMultiProcessorCount` reports 12 and 8.
+
+**Larger counts (`20261007-engine-kvstack-capacity-v1`, two repetitions).**
+The stack that shares both with 96 and 128 agents, 64 processes in each MIG
+instance at the larger count:
+
+| Stack | Agents | Failed | Memory (MiB) | 95% CI | Per agent (MiB) | Weights load (ms) | Attach (ms) | First token (ms) | Throughput (tokens/s) | Speed vs unmodified | median |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| both (STATOR) | 96 | 0 | 67572 | 2967 | 704 | 12228 | 396.4 | 20655 | 35.81 | - | - |
+| both (STATOR) | 128 | 0 | 89852 | 3748 | 702 | 17375 | 654.4 | 28793 | 36.25 | - | - |
+
+No agent fails. The memory is within 1% of the line of the campaign above
+(67,979 and 90,603 MiB by the line).
+
+**The same with the model file on 2 MiB pages
+(`20261007-engine-kvstack-huge-v1`).** The model file is copied to a tmpfs
+mounted with `huge=always` and every stack reads it from there; the runner
+is unchanged (`MODEL=`, counts 1 and 8, and 32 for `both`).
+
+| Stack | Agents | Failed | Memory (MiB) | 95% CI | Per agent (MiB) | Weights load (ms) | Attach (ms) | First token (ms) | Throughput (tokens/s) | Speed vs unmodified | median |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| unmodified | 1 | 0 | 6147 | 31 | 6147 | 1003 | 187.1 | 1362 | 21.10 | 1.000 | 1.000 |
+| weights in place | 1 | 0 | 1642 | 15 | 1642 | 355 | 179.8 | 709 | 21.13 | 0.997 | 0.994 |
+| both (STATOR) | 1 | 0 | 715 | 33 | 715 | 350 | 34.7 | 562 | 20.49 | 0.959 | 0.969 |
+| unmodified | 8 | 0 | 48852 | 165 | 6106 | 2313 | 328.2 | 3319 | 37.02 | 1.000 | 1.000 |
+| weights in place | 8 | 0 | 12833 | 34 | 1604 | 897 | 314.5 | 1911 | 37.24 | 1.006 | 1.017 |
+| both (STATOR) | 8 | 0 | 5693 | 35 | 712 | 903 | 38.6 | 1645 | 36.78 | 0.994 | 1.007 |
+| both (STATOR) | 32 | 0 | 22576 | 41 | 706 | 3177 | 85.0 | 5839 | 36.87 | - | - |
+
+At 8 agents `weights in place` generates at 1.006 (0.980 to 1.033) and
+`both` at 0.994 (0.969 to 1.020) of `unmodified`; K5 holds in both cells.
+The single agent: `weights in place` 1.02 in the 12-SM instance and 0.974
+in the 6-SM instance, `both` 1.02 and 0.90. The loss of the campaign above
+that comes from the weights is therefore one of 4 KiB pages. The count of
+agents that fit is not taken from this campaign: the tmpfs copy of the
+model is not available memory, and the summary subtracts the model file
+once more.
+
 ## 7. Novelty boundary
 
 `SOTA_HOSTMM_2026-10-05.md` Section 14 is the audit for this concept, its

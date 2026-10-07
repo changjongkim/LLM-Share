@@ -630,4 +630,39 @@ if os.path.exists(path):
                      f"{r['base_intact']}/{r['victims']} |\n")
     write("modes_fault.md", text)
 
+# --- campaigns of 2026-10-07 ---------------------------------------------------
+STACK_NAMES = {"none": "unmodified", "kv": "prefix mapped", "weights": "weights in place",
+               "both": "both (STATOR)"}
+for tag, name in (("20261007-engine-kvstack-v1", "kv_stack"),
+                  ("20261007-engine-kvstack-huge-v1", "kv_stack_huge"),
+                  ("20261007-engine-kvstack-capacity-v1", "kv_stack_capacity")):
+    directory = os.path.join(engine_root, tag)
+    if not os.path.exists(os.path.join(directory, "engine_kvstack_summary.csv")):
+        continue
+    text = ("| Stack | Agents | Failed | Memory (MiB) | 95% CI | Per agent (MiB) | "
+            "Weights load (ms) | Attach (ms) | First token (ms) | Throughput (tokens/s) | "
+            "Speed vs unmodified | median |\n"
+            "|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|\n")
+    for r in rows(os.path.join(directory, "engine_kvstack_summary.csv")):
+        if int(r["runs"]) == 0:
+            continue
+        ratio = float(r["vs_none"])
+        text += (f"| {STACK_NAMES[r['mode']]} | {r['agents']} | {r['failed_agents']} | "
+                 f"{r['memory_mib']} | {r['memory_ci95']} | {float(r['memory_per_agent_mib']):.0f} | "
+                 f"{r['weights_load_ms']} | {float(r['attach_ms']):.1f} | {r['first_token_ms']} | "
+                 f"{float(r['generation_tps_total']):.2f} | "
+                 + (f"{ratio:.3f} | {float(r['vs_none_median']):.3f} |\n" if ratio > 0 else "- | - |\n"))
+    write(name + ".md", text)
+    text = ("| Stack | Counts | Largest count | Memory per added agent (MiB) | 95% CI | "
+            "Ratio to unmodified | Shared files (MiB) | Available (MiB) | Agents that fit by the line |\n"
+            "|---|---:|---:|---:|---:|---:|---:|---:|---:|\n")
+    for r in rows(os.path.join(directory, "engine_kvstack_fit.csv")):
+        shared = float(r["model_file_shared_mib"]) + float(r["cache_file_shared_mib"])
+        versus = float(r["slope_vs_none"])
+        text += (f"| {STACK_NAMES[r['mode']]} | {r['counts']} | {r['largest_count']} | "
+                 f"{float(r['slope_mib_per_agent']):.1f} | {float(r['slope_ci95']):.1f} | "
+                 + (f"{versus:.4f}" if versus > 0 else "-")
+                 + f" | {shared:.0f} | {r['memory_available_mib']} | {r['agents_that_fit_by_line']} |\n")
+    write(name + "_fit.md", text)
+
 print("tables written to", out)

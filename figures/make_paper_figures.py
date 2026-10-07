@@ -30,6 +30,7 @@ from make_eval_figures import (AXIS, COPY, COW, DEVICE, GRID, INK, OURS,  # noqa
 
 NAME = "STATOR"
 DEMAND = "#4f86c6"   # a copy into device memory that is backed on demand
+WEIGHTS_ONLY = "#d99a2b"   # the stack that shares the weights and copies the cache
 PANEL = (3.6, 2.7)
 
 
@@ -117,34 +118,48 @@ def weights():
 
 
 # ---------------------------------------------------------------- handover
+MECHANISMS = (("Copy", COPY, "copy"), ("Demand", DEMAND, "demand"), ("Device", DEVICE, "device_merged"),
+              ("CoW", COW, "cow"), (NAME, OURS, "extent"))
+MECH = "20261007-engine-kvmech-v1"
+
+
+def mechanisms():
+    """The campaign that runs every mechanism in one engine, by cell and mode."""
+    return {(r["placement"], int(r["children"]), int(r["paragraphs"]), r["mode"]): r
+            for r in rows(MECH, "engine_kvmech_summary.csv")}
+
+
 def hand():
-    publish = {(r["paragraphs"], r["store"]): r
-               for r in rows("20261006-engine-kvshare-v1", "engine_kvshare_publish.csv")}
-    share = {(r["paragraphs"], r["mode"], int(r["agents"])): r
-             for r in rows("20261006-engine-kvshare-v1", "engine_kvshare_summary.csv")}
-    pair = (("Copy", COPY, "device", "restore"), (NAME, OURS, "huge", "extent_lazy"))
-    legend("eval_hand_legend", [(label, colour) for label, colour, _, _ in pair], 2)
-    sizes = ("80", "320")
-    tokens = [f"{int(publish[size, 'device']['prefix_tokens']):,}" for size in sizes]
+    """Handing a prefix over with every mechanism: pause, attach, first token."""
+    if not have(MECH, "engine_kvmech_summary.csv"):
+        return
+    data = mechanisms()
+    legend("eval_hand_legend", [(label, colour) for label, colour, _ in MECHANISMS], 5)
+    sizes = sorted({k[2] for k in data if k[0] == "same" and k[1] == 8})
+    counts = sorted({k[1] for k in data if k[0] == "same" and k[2] == max(sizes)})
+    long_tokens = int(float(data["same", 8, max(sizes), "copy"]["prefix_tokens"]))
 
-    fig, ax = panel()
-    series = [(label, colour, [float(publish[size, store]["publish_ms"]) for size in sizes])
-              for label, colour, store, _ in pair]
-    for group in grouped(ax, tokens, series, 0.36):
-        labels(ax, group, "{:.0f}")
-    ax.set_ylim(1, 2500)
-    finish(fig, ax, "eval_hand_pause", "Prefix (Tokens)", "Pause (ms, log)", log=True)
-
-    counts = [1, 4, 8]
-    for name, column, ylabel, scale, form, top in (
-            ("eval_hand_attach", "attach_ms", "Attach Time (ms)", 1.0, "{:.0f}", 570),
-            ("eval_hand_ttft", "first_token_ms", "TTFT (s)", 1000.0, "{:.2f}", 2.7)):
+    def bars(name, groups, cells, column, ylabel, scale, form, log, xlabel):
         fig, ax = panel()
-        series = [(label, colour, [float(share["320", mode, n][column]) / scale for n in counts])
-                  for label, colour, _, mode in pair]
-        for group in grouped(ax, [str(n) for n in counts], series, 0.36):
-            labels(ax, group, form)
-        finish(fig, ax, name, "Agents (16,321-Token Prefix)", ylabel, top)
+        series = [(label, colour, [float(data[cell + (m,)][column]) / scale for cell in cells])
+                  for label, colour, m in MECHANISMS]
+        for group in grouped(ax, groups, series, 0.17):
+            labels(ax, group, form, 8)
+            for text in ax.texts[-len(group):]:
+                text.set_rotation(90)
+        top = max(max(values) for _, _, values in series)
+        if log:
+            ax.set_ylim(1, top * 14)
+        finish(fig, ax, name, xlabel, ylabel, None if log else top * 1.3, log)
+
+    bars("eval_hand_pause", [f"{int(float(data['same', 8, size, 'copy']['prefix_tokens'])):,}" for size in sizes],
+         [("same", 8, size) for size in sizes], "publish_ms", "Pause (ms, log)", 1.0, "{:.0f}", True,
+         "Prefix (Tokens)")
+    cells = [("same", n, max(sizes)) for n in counts]
+    bars("eval_hand_attach", [str(n) for n in counts], cells, "child_attach_ms", "Attach Time (ms, log)",
+         1.0, "{:.0f}", True, f"Agents ({long_tokens:,}-Token Prefix)")
+    bars("eval_hand_ttft", [str(n) for n in counts], cells, "child_first_token_ms", "TTFT (s)",
+         1000.0, "{:.2f}", False, f"Agents ({long_tokens:,}-Token Prefix)")
 
 
 # ------------------------------------------------------------------- speed
@@ -273,32 +288,29 @@ def dev():
 
 # ------------------------------------------------- baselines in one engine
 def sota():
-    directory = "20261006-engine-kvsota-v1"
-    if not have(directory, "engine_kvsota_summary.csv"):
+    """Every mechanism with eight children, in the parent's instance and across instances."""
+    if not have(MECH, "engine_kvmech_summary.csv"):
         return
-    data = {(r["placement"], int(r["children"]), r["mode"]): r
-            for r in rows(directory, "engine_kvsota_summary.csv")}
-    children = max(k[1] for k in data)
-    series_of = (("Copy", COPY, "copy"), ("Demand", DEMAND, "demand"), ("Device", DEVICE, "device"),
-                 ("CoW", COW, "cow"), (NAME, OURS, "extent"))
-    legend("eval_sota_legend", [(label, colour) for label, colour, _ in series_of], 5)
+    data = mechanisms()
+    size = max(k[2] for k in data)
+    children = 8
+    legend("eval_sota_legend", [(label, colour) for label, colour, _ in MECHANISMS], 5)
     placements = [(label, key) for label, key in (("Same\nInstance", "same"), ("Across\nInstances", "cross"))
-                  if (key, children, "copy") in data]
+                  if (key, children, size, "copy") in data]
     for name, column, ylabel, scale, form, log in (
             ("eval_sota_mem", "children_memory_mib", "Memory (GiB)", 1024.0, "{:.1f}", False),
-            ("eval_sota_pause", "publish_ms", "Parent Pause (ms, log)", 1.0, "{:.0f}", True),
             ("eval_sota_attach", "child_attach_ms", "Attach Time (ms, log)", 1.0, "{:.0f}", True),
             ("eval_sota_ttft", "child_first_token_ms", "TTFT (s)", 1000.0, "{:.2f}", False),
             ("eval_sota_tps", "children_tps_sum", "Throughput (tokens/s)", 1.0, "{:.1f}", False)):
         fig, ax = panel()
-        series = [(label, colour, [float(data[key, children, m][column]) / scale for _, key in placements])
-                  for label, colour, m in series_of]
+        series = [(label, colour, [float(data[key, children, size, m][column]) / scale for _, key in placements])
+                  for label, colour, m in MECHANISMS]
         groups = grouped(ax, [label for label, _ in placements], series, 0.17)
-        for (label, colour, m), group in zip(series_of, groups):
+        for (label, colour, m), group in zip(MECHANISMS, groups):
             for bar, (_, key) in zip(group, placements):
-                row = data[key, children, m]
+                row = data[key, children, size, m]
                 done, started = int(row["children_finished"]), int(row["children_started"])
-                if done < started and column != "publish_ms":
+                if done < started:
                     # Not every child completed: the bar covers the children that did.
                     bar.set_hatch("////")
                     bar.set_alpha(0.55)
@@ -306,12 +318,25 @@ def sota():
                 else:
                     tip(ax, bar, form.format(bar.get_height()))
                 ax.texts[-1].set_fontsize(8)
-                ax.texts[-1].set_rotation(
-                    90 if log or name.endswith(("ttft", "tps")) else 0)
+                ax.texts[-1].set_rotation(90 if log or name.endswith(("ttft", "tps")) else 0)
         top = max(max(values) for _, _, values in series)
         if log:
             ax.set_ylim(1, top * 12)
         finish(fig, ax, name, "", ylabel, None if log else top * 1.22, log)
+
+    # the device-memory baseline by how far it is tuned, against the extents
+    stages = (("Device", "#c9bdf0", "device"), ("+ Batched", "#a18fe0", "device_tuned"),
+              ("+ One Allocation", DEVICE, "device_merged"), (NAME, OURS, "extent"))
+    fig, ax = panel()
+    cell = ("same", children, size)
+    series = [(label, colour, [float(data[cell + (m,)]["publish_ms"]), float(data[cell + (m,)]["child_attach_ms"])])
+              for label, colour, m in stages]
+    for group in grouped(ax, ["Parent Pause", "Child Attach"], series, 0.2):
+        labels(ax, group, "{:.0f}", 9)
+    ax.set_ylim(1, max(max(v) for _, _, v in series) * 30)
+    ax.legend(loc="upper left", handlelength=1.1, fontsize=9, labelspacing=0.25, ncol=2,
+              columnspacing=0.9)
+    finish(fig, ax, "eval_dev_tune", "", "Time (ms, log)", log=True)
 
 
 def attach():
@@ -558,8 +583,121 @@ def limit():
     finish(fig, ax, "eval_limit_peak", "", "Peak Charge (MiB)", cap * 1.55)
 
 
+# ------------------------------------------------------------ whole stack
+STACKS = (("Unmodified", COPY, "none", "s"), ("KV Shared", DEMAND, "kv", "D"),
+          ("Weights Shared", WEIGHTS_ONLY, "weights", "^"), (NAME, OURS, "both", "o"))
+
+
+def stack():
+    """The memory of the whole serving stack by what the agents share."""
+    directory = "20261007-engine-kvstack-v1"
+    if not have(directory, "engine_kvstack_summary.csv"):
+        return
+    data = {(r["mode"], int(r["agents"])): r
+            for r in rows(directory, "engine_kvstack_summary.csv") if int(r["runs"]) > 0}
+    fit = {r["mode"]: r for r in rows(directory, "engine_kvstack_fit.csv")}
+    legend("eval_stack_legend", [(label, colour) for label, colour, _, _ in STACKS], 4)
+    # the larger counts of the stack that shares both, run as a campaign of their own
+    more = "20261007-engine-kvstack-capacity-v1"
+    line = dict(data)
+    if have(more, "engine_kvstack_summary.csv"):
+        line.update({(r["mode"], int(r["agents"])): r
+                     for r in rows(more, "engine_kvstack_summary.csv") if int(r["runs"]) > 0})
+
+    # memory against the number of agents; the line of the fit goes on to the
+    # memory that was available, where the stack stops fitting
+    fig, ax = panel()
+    room = float(fit["none"]["memory_available_mib"]) / 1024
+    for label, colour, m, marker in STACKS:
+        counts = sorted(n for mode, n in line if mode == m)
+        slope = float(fit[m]["slope_mib_per_agent"]) / 1024
+        shared = float(fit[m]["model_file_shared_mib"]) + float(fit[m]["cache_file_shared_mib"])
+        start = (float(fit[m]["intercept_mib"]) + shared) / 1024
+        fits = int(fit[m]["agents_that_fit_by_line"])
+        ax.plot([counts[-1], fits], [start + slope * counts[-1], start + slope * fits], color=colour,
+                linewidth=1.4, linestyle=(0, (3, 2)))
+        ax.plot(counts, [(float(line[m, n]["memory_mib"]) + shared) / 1024 for n in counts],
+                color=colour, marker=marker, markersize=5.5, linewidth=2, markeredgecolor="white",
+                markeredgewidth=0.9, label=label)
+    ax.axhline(room, color=INK, linewidth=1.1, linestyle=(0, (4, 2)))
+    ax.text(0.03, room * 1.015, f"Available: {room:.0f} GiB", ha="left", va="bottom", fontsize=9.5,
+            color=INK, transform=ax.get_yaxis_transform())
+    ax.set_xscale("log", base=2)
+    ticks = [1, 4, 16, 64, 256]
+    ax.set_xticks(ticks, [str(t) for t in ticks])
+    ax.minorticks_off()
+    ax.set_xlim(0.8, 256)
+    finish(fig, ax, "eval_stack_mem", "Agents (log)", "Memory (GiB)", room * 1.16)
+
+    # what the memory of 8 agents consists of
+    count = 8
+    none, weights_only, kv_only, both = (float(data[m, count]["memory_mib"]) / 1024
+                                         for m in ("none", "weights", "kv", "both"))
+    model_file = float(fit["both"]["model_file_shared_mib"]) / 1024
+    cache_file = float(fit["both"]["cache_file_shared_mib"]) / 1024
+    parts = (("Weight Copies", COPY, (none - weights_only, kv_only - both, 0.0, 0.0)),
+             ("KV Copies", "#c9c7c1", (weights_only - both, 0.0, weights_only - both, 0.0)),
+             ("Shared Files", OURS_LIGHT, (0.0, cache_file, model_file, model_file + cache_file)),
+             ("Agent State", OURS, (both, both, both, both)))
+    fig, ax = panel()
+    names = ["Unmodified", "KV\nShared", "Weights\nShared", NAME]
+    bottom = np.zeros(4)
+    for label, colour, values in parts:
+        ax.bar(names, values, 0.58, bottom=bottom, color=colour, edgecolor="white", linewidth=1.5,
+               label=label)
+        bottom += np.array(values)
+    for x, total in enumerate(bottom):
+        ax.annotate(f"{total:.1f}", (x, total), xytext=(0, 3), textcoords="offset points",
+                    ha="center", va="bottom", fontsize=10.5, color=INK)
+    ax.legend(loc="upper right", handlelength=1.1, fontsize=9.5, labelspacing=0.3)
+    ax.tick_params(axis="x", labelsize=9.5)
+    finish(fig, ax, "eval_stack_parts", "", "Memory (GiB)", bottom.max() * 1.18)
+
+    # how many agents fit by the line of each stack
+    fig, ax = panel()
+    fits = [int(fit[m]["agents_that_fit_by_line"]) for _, _, m, _ in STACKS]
+    bars = ax.bar(names, fits, 0.58, color=[colour for _, colour, _, _ in STACKS], edgecolor="white",
+                  linewidth=1.5)
+    for bar, (_, _, m, _) in zip(bars, STACKS):
+        tip(ax, bar, f"{bar.get_height():.0f}")
+    ax.tick_params(axis="x", labelsize=9.5)
+    finish(fig, ax, "eval_stack_fit", "", "Agents That Fit", max(fits) * 1.18)
+
+    # generation speed of eight agents relative to the unmodified stack, with
+    # the model file in the page cache (4 KiB pages) and on a tmpfs with 2 MiB
+    # pages; a stack that copies the weights does not depend on the page size
+    huge_dir = "20261007-engine-kvstack-huge-v1"
+    huge = ({(r["mode"], int(r["agents"])): r
+             for r in rows(huge_dir, "engine_kvstack_summary.csv") if int(r["runs"]) > 0}
+            if have(huge_dir, "engine_kvstack_summary.csv") else {})
+    fig, ax = panel()
+    shown = [("KV\nShared", "kv", DEMAND, "#b9cfe9"), ("Weights\nShared", "weights", WEIGHTS_ONLY, "#f0d6a4"),
+             (NAME, "both", OURS, OURS_LIGHT)]
+    width = 0.36
+    for x, (label, m, full, light) in enumerate(shown):
+        cells = [(data, light, -width / 2)] + ([(huge, full, width / 2)] if (m, count) in huge else [])
+        if len(cells) == 1:
+            cells = [(data, full, 0.0)]
+        for source, colour, offset in cells:
+            row = source[m, count]
+            value = float(row["vs_none"])
+            bar = ax.bar(x + offset, value, width, color=colour, edgecolor="white", linewidth=1.5,
+                         yerr=[[value - float(row["vs_none_low"])], [float(row["vs_none_high"]) - value]],
+                         error_kw={"ecolor": INK, "elinewidth": 1.0, "capsize": 2.5})[0]
+            ax.annotate(f"{value:.2f}", (bar.get_x() + bar.get_width() / 2, float(row["vs_none_high"])),
+                        xytext=(0, 3), textcoords="offset points", ha="center", va="bottom",
+                        fontsize=9.5, color=INK)
+    ax.set_xticks(range(len(shown)), [label for label, _, _, _ in shown])
+    ax.tick_params(axis="x", labelsize=9.5)
+    ax.axhline(1.0, color=AXIS, linewidth=1.0)
+    handles = [plt.Rectangle((0, 0), 1, 1, color="#c9c7c1"), plt.Rectangle((0, 0), 1, 1, color=COPY)]
+    ax.legend(handles, ["4 KiB Pages", "2 MiB Pages"], loc="upper center", ncol=2,
+              handlelength=1.1, fontsize=9.5, columnspacing=1.2)
+    finish(fig, ax, "eval_stack_speed", "", "Speed vs. Unmodified", 1.42)
+
+
 if __name__ == "__main__":
     for figure in (mem, weights, hand, speed, reach, mode, cow, dev, sota, attach, protect, tree, scale,
-                   variants, inproc, server, limit):
+                   variants, inproc, server, limit, stack):
         figure()
         print("wrote", figure.__name__)

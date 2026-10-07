@@ -1,0 +1,90 @@
+Find the area of a triangle with a base of 10 units and height of 5 units.
+Tell me more about Christianity and its history till the 14th century
+Find records in database in user table where age is greater than 25 and job is 'engineer'.
+Find all multi-player games released in 2019 with an ESRB rating of 'Everyone'
+Find the best local nurseries in Toronto with a good variety of annual plants.
+Calculate the magnetic field produced at the center of a circular loop carrying current of 5 Ampere with a radius of 4 meters
+Get concert details for the artist Beyonce performing in San Diego next month (April 2022).
+Predict the total expected profit of stocks XYZ in 5 years given I have invested $5000 and annual return rate is 7%.
+Convert time 3pm from New York time zone to London time zone.
+Who was the King of France in 1510?
+Find a nearby restaurant that serves vegan food in Los Angeles.
+Fetch the basketball league standings, where Golden State Warriors stand in current 2022-2023 season with details
+How to obtain the detailed case information of the 'R vs Adams' legal case?
+Find the prime factors of 450
+Find me sculptures near Chicago that were made in the 19th century.
+Find the probability of getting exactly 5 heads in 10 fair coin tosses.
+Get the recipe for vegan chocolate cake including the steps for preparation.
+Locate the nearest public library in Boston, Massachusetts with English fiction section and free Wi-Fi.
+What is the function of ATP synthase in mitochondria?
+What is the third major chord in C major scale?
+Find the highest grossing bank in the U.S for year 2020.
+Find a hospital within 5 km radius around Denver, Colorado with pediatrics department.
+Who discovered radium?
+Find all movies starring Leonardo DiCaprio in the year 2010 from IMDB database.
+In a texas holdem game, Who won in the poker game with players Alex, Sam, Robert and Steve given the cards Alex':['A of spades', 'K of spades'], 'Sam': ['2 of diamonds', '3 of clubs'], 'Robert': ['Q of hearts', '10 of hearts'], 'Steve': ['4 of spades', '5 of spades']?
+Get weather information for New York, USA for the next 3 days with details.
+Find the shortest driving distance between New York City and Washington D.C.
+Find a Yamaha flute with the specifications of open hole, C foot, and silver headjoint available for sale.
+What's the NPV (Net Present Value) of a series of cash flows: [-50000, 10000, 15000, 20000, 25000, 30000] discounted at 8% annually?
+Check the amount of protein, calories and carbs in an avocado from Walmart.
+What is the percentage of population preferring digital reading over physical books?
+What's the projected population growth in United States in the next 20 years?
+Find the current world rank of a Tennis player, Serena Williams.
+Search for ongoing lawsuits related to the company 'Google' filed after January 1, 2021 in California.
+Calculate the area under the curve y=x^2 from x=1 to x=3.
+Draw a rectangle with a width of 20 units and height of 10 units in red.
+Predict the price of the house in San Francisco with 3 bedrooms, 2 bathrooms and area of 1800 square feet.
+What are some gluten-free recipes for dinner?
+Find out the current traffic situation from Boston driving to New York.
+Identify the protein sequence of a given human gene 'BRCA1'.
+music.theory.chordProgression(progression=['I', 'V', 'vi', 'IV'])
+What's the price of Amazon stock for the last 3 days?
+Get me the latest exchange rate from British Pounds to Japanese Yen.
+Who was the U.S. president during the Civil War?
+Calculate the BMI (Body Mass Index) of a person who weighs 70kg and is 1.75m tall.
+What's the chess classical rating of Magnus Carlsen?
+What will be the weather in New York in the next 72 hours including the precipitation?
+What is the final velocity of a vehicle that started from rest and accelerated at 4 m/s^2 for a distance of 300 meters?
+Find me the average price and ratings of piano from Yamaha.
+What is the coefficient of determination (R-squared) for a model using engine size and fuel economy variables to predict car_price with a dataset in path C:/data/cars.csv?
+Order three bottles of olive oil and a five pound bag of rice from Safeway in Palo Alto.
+Calculate the neuronal activity based on synaptic input rate of 200 and weight 0.5 and decay rate of 0.1.
+Find out the population and species of turtles in Mississippi river in 2020.
+What are the statistics of Ronaldo's matches in 2021?
+Provide me the official crime rate of violent crime in San Francisco in 2020.
+What's the area of a circle with a radius of 10?
+Can you help me identify the basic RGB value of Sea Green color?
+Calculate the power of 3 raised to the power 4.
+Find the highest score achieved by any player in the online game 'Overwatch' on PC globally.
+How much CO2 is produced annually by a gas-fueled car that travels 12,000 miles per year, with fuel efficiency of 25 MPG ?
+Calculate the absolute pressure in pascals given atmospheric pressure of 1 atm and a gauge pressure of 2 atm.
+Create a mix track using notes of C major scale and duration of each note being quarter of a second with a duration of 3 minutes.
+Get current Gold price per ounce.
+How many Canadian dollars can I get for 500 US dollars?
+Get historical GDP data for United States from 1960 to 2000.
+Calculate the Body Mass Index (BMI) of a person with a weight of 85 kilograms and height of 180 cm.
+Find the rating and player count of the board game 'Ticket to Ride'.
+Find the latest court case between Apple and Samsung occured in USA.
+Calculate the velocity of a car that travels a distance of 50 kilometers for a duration of 2 hours?
+Find out the open hours for the Louvre Museum in Paris.
+Calculate the probability of observing 60 heads if I flip a coin 100 times with probability of heads 0.5.
+How many ounces in 2 pounds of butter?
+Analyze the sentiment of a customer review 'I love the food here! It's always fresh and delicious.'.
+Calculate the Population Density for Brazil in 2022 if the population is 213 million and the land area is 8.5 million square kilometers.
+What are the next five matches for Manchester United and who are they playing against in the English Premier League?
+Who was the victim in the case docket numbered 2022/AL2562 in California?
+Find the roots of a quadratic equation with coefficients a=1, b=-3, c=2.
+Find ten major historical events related to Christianity in the 16th century sort by importance.
+How much time will it take for the light to reach earth from a star 4 light years away?
+Find the value of a vintage Super Mario Bros. game from 1985 like new.
+What is the air quality index in London 2022/08/16?
+Calculate the electric field strength 4 meters away from a charge of 0.01 Coulombs.
+Find concerts near me in Seattle that plays jazz music.
+Calculate the projected return on a $5000 investment in ABC company's stock, if the expected annual growth rate is 6% and the holding period is 5 years.
+Book a single room for two nights at the Hilton Hotel in Chicago, starting from 10th December 2022.
+When did the Treaty of Tordesillas take place? Put it in the format of YYYY.
+I want to find 5 restaurants nearby my location, Manhattan, offering Thai food and a vegan menu.
+Find the score of last game for Los Angeles Lakers including its opponent name.
+How many months of experience a Lawyer John Doe has on handling Bankruptcy cases.
+Find the highest common factor of 36 and 24.
