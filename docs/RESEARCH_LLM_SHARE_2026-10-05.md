@@ -1745,6 +1745,48 @@ the agents of the instance without the fault complete after the write (24
 of 42) and 30 of 42 after the kill. The gates F1 to F3 hold; the counts
 under MPS were to be reported and are not gated.
 
+**Deeper and wider trees, and when the memory of a subtree comes back
+(`run_engine_kvdeep.sh`, `20261007-engine-kvdeep-v1` and `-wide-v1`).** The
+tree of Section 6.12 has three levels and 11 processes. Here a root
+publishes the 16,321-token prefix; every inner agent attaches to what its
+parent published, appends the context of its subtree and publishes again;
+a leaf attaches, appends its task and generates. `2 2 4` is a tree of four
+levels with 23 processes and 16 leaves, `1 16` one leader with 16 leaves.
+The agents of a level alternate between the two MIG instances. The agents
+below the first child of the root generate 64 tokens and the others three
+times as many, so that the first subtree leaves while the others run. With
+chains the files are removed from their directory as soon as every leaf
+has attached, and the pages that the tmpfs holds are sampled every 0.2 s.
+
+Four levels:
+
+| Hand-over | Fan-outs | Processes (leaves) | Runs (failed) | Inner attach / publish (ms) | Leaf attach (ms) | Leaf first token (ms) | Memory (MiB) | 95% CI | Files: all alive / first subtree left / end (MiB) | Leaf texts equal to copy |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| copy | 2x2x4 | 23 (16) | 6 (0) | 288.5 / 611.10 | 1008.2 | 4982 | 58289 | 52 | 0 / 0 / 0 | 96/96 |
+| chain | 2x2x4 | 23 (16) | 6 (0) | 49.5 / 7.80 | 61.2 | 4050 | 19166 | 23 | 2352 / 1680 / 0 | 96/96 |
+
+One leader with 16 leaves:
+
+| Hand-over | Fan-outs | Processes (leaves) | Runs (failed) | Inner attach / publish (ms) | Leaf attach (ms) | Leaf first token (ms) | Memory (MiB) | 95% CI | Files: all alive / first subtree left / end (MiB) | Leaf texts equal to copy |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| copy | 1x16 | 18 (16) | 6 (0) | 216.3 / 563.36 | 708.2 | 4030 | 45658 | 20 | 0 / -1 / 0 | 96/96 |
+| chain | 1x16 | 18 (16) | 6 (0) | 45.2 / 6.36 | 57.8 | 3287 | 14258 | 18 | 1232 / -1 / 0 | 96/96 |
+
+The tree of four levels holds 18.7 GiB with chains against 56.9 GiB with
+copies, the wide tree 13.9 GiB against 44.6 GiB. An inner agent publishes
+in 7.8 ms against 611 ms and attaches in 50 ms against 289 ms; a leaf
+attaches to the segments of its three ancestors in 61 ms against 1,008 ms
+and produces its first token after 4.05 s against 4.98 s. The leaves
+generate at the same summed speed (30.2 against 30.5 tokens/s). All 192
+leaves write the text of the leaf that received copies.
+
+Memory return in the tree of four levels: the tmpfs holds 2,352 MiB while
+every process runs, 1,680 MiB after the first subtree has left, and nothing
+after the last process. The segments of a subtree are released when its
+last sharer leaves, although the files have no name any more; the segments
+of the ancestors that the other subtree still maps remain. The gates D1 to
+D5 hold in both campaigns.
+
 ### 6.15 vLLM servers on extents
 
 The servers of the sections above belong to the engine that this work
