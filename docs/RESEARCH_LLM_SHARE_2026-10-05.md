@@ -1549,6 +1549,38 @@ second of eight separate processes on the engine. The texts are not
 compared with those of the engine: the weights and their quantization
 differ.
 
+**The steps of the mechanism, one at a time (`MODE_SET=ablation`,
+`20261007-engine-kvablate-v1`).** A parent and eight children, every second
+child in the 6-SM instance, the 16,321-token prefix. `no_read` leaves out the
+CPU read of the mapped rows (`LLAMA_KV_TOUCH=0`), `no_populate` leaves out
+the memory that a child puts behind its own rows before the device writes
+them (`LLAMA_KV_POPULATE=0`), `writable` and `writable_no_read` are the
+copy-on-write mapping with and without the CPU read, `grow_*` change the
+step in which a child's memory follows use, and `small_pages` puts the file
+on a tmpfs with 4 KiB pages.
+
+| Placement | Children | Prefix (tokens) | Mode | Children complete | Texts equal to copy | Parent pause (ms) | Attach (ms) | 95% CI | First token (ms) | Memory (MiB) | 95% CI | Throughput (tokens/s) | Speed vs copy | median |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| cross | 8 | 16321 | copy | 48/48 | 48/48 | 536.35 | 529.8 | 78.6 | 2447 | 20241 | 36 | 32.94 | 1.0000 | 1.0000 |
+| cross | 8 | 16321 | extent | 48/48 | 48/48 | 8.96 | 50.6 | 3.6 | 1827 | 5913 | 28 | 31.74 | 0.9636 | 0.9656 |
+| cross | 8 | 16321 | no_read | 48/48 | 48/48 | 8.99 | 45.5 | 1.2 | 2427 | 5933 | 18 | 31.78 | 0.9648 | 0.9695 |
+| cross | 8 | 16321 | no_populate | 48/48 | 48/48 | 8.51 | 49.9 | 2.0 | 1982 | 5929 | 18 | 31.20 | 0.9472 | 0.9513 |
+| cross | 8 | 16321 | writable | 48/48 | 48/48 | 8.88 | 49.1 | 3.2 | 2212 | 6799 | 12 | 31.51 | 0.9567 | 0.9597 |
+| cross | 8 | 16321 | writable_no_read | 48/48 | 48/48 | 9.07 | 47.7 | 4.7 | 5174 | 13074 | 23 | 32.01 | 0.9719 | 0.9760 |
+| cross | 8 | 16321 | grow_1024 | 48/48 | 48/48 | 8.47 | 48.5 | 2.0 | 1840 | 6079 | 23 | 31.71 | 0.9626 | 0.9656 |
+| cross | 8 | 16321 | grow_4096 | 48/48 | 48/48 | 8.69 | 49.6 | 2.6 | 1845 | 6880 | 40 | 31.74 | 0.9634 | 0.9668 |
+| cross | 8 | 16321 | grow_all | 48/48 | 48/48 | 9.14 | 86.6 | 5.4 | 1908 | 12932 | 22 | 31.68 | 0.9617 | 0.9652 |
+| cross | 8 | 16321 | small_pages | 48/48 | 48/48 | 13.15 | 63.6 | 3.6 | 1885 | 5841 | 15 | 31.63 | 0.9603 | 0.9639 |
+
+Every case completes and every child writes the text of copy (480 of 480),
+also in the modes that leave a step out, so the gates A1 and A2 hold and the
+counts that were to be reported are zero failures. A3 (memory does not fall
+with a larger step) and A4 (attach is faster on 2 MiB pages than on 4 KiB
+pages) hold. Without the CPU read a child attaches 5 ms earlier and
+produces its first token 0.60 s later. Without populate-ahead the first
+token is 0.16 s later and the summed generation speed is 0.947 of copy
+against 0.964.
+
 ## 7. Novelty boundary
 
 `SOTA_HOSTMM_2026-10-05.md` Section 14 is the audit for this concept, its

@@ -238,8 +238,8 @@ def mode():
 def cow():
     data = {(r["mode"], int(r["agents"])): r
             for r in rows("20261006-engine-kvcow-v1", "engine_kvcow_summary.csv")}
-    order = (("CoW Map\n2M\nNo Read", "cow_noread", COW), ("CoW Map\n4K\nRead", "cow_small", COW),
-             ("CoW Map\n2M\nRead", "cow", COW), (NAME, "extent_lazy", OURS))
+    order = (("2M\nNo Read", "cow_noread", COW), ("4K\nRead", "cow_small", COW),
+             ("2M\nRead", "cow", COW), (NAME, "extent_lazy", OURS))
     for name, column, ylabel, scale, form in (
             ("eval_cow_mem", "memory_mib", "Memory (GiB)", 1024.0, "{:.1f}"),
             ("eval_cow_time", "suffix_ms", "Task Decoding Time (s)", 1000.0, "{:.2f}")):
@@ -248,7 +248,11 @@ def cow():
         bars = ax.bar([label for label, _, _ in order], values, 0.62,
                       color=[c for _, _, c in order], edgecolor="white", linewidth=1.5)
         labels(ax, bars, form)
-        ax.tick_params(axis="x", labelsize=9.5)
+        ax.tick_params(axis="x", labelsize=10)
+        # the three orange bars are the copy-on-write mapping by page size and CPU read
+        ax.annotate("CoW Map", (1, 0), xytext=(0, -38), textcoords="offset points", ha="center",
+                    va="top", fontsize=10.5, color=INK, xycoords=("data", "axes fraction"),
+                    annotation_clip=False)
         finish(fig, ax, name, "", ylabel, max(values) * 1.18)
 
 
