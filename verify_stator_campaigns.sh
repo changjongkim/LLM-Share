@@ -785,6 +785,7 @@ verify_vshare() {  # campaign label
 }
 verify_vshare 20261007-vllm-share-v1 vshare
 verify_vshare 20261007-vllm-share-4srv-v1 vshare4
+verify_vshare 20261007-vllm-share-4srv-v2 vshare4w
 
 echo "stator_campaign_verification=PASS"
 echo "campaigns_verified=${#verified[@]} ${verified[*]:-}"

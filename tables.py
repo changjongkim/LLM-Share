@@ -807,7 +807,8 @@ VSHARE_COLUMNS = [
     ("Texts equal to vllm: first, both, alone1, alone2",
      lambda r: ", ".join(f"{r[k + '_texts_equal']}/{r[k + '_texts_compared']}" for k in ("first", "both", "alone1", "alone2"))),
 ]
-for tag, name in (("20261007-vllm-share-v1", "vllm_share"), ("20261007-vllm-share-4srv-v1", "vllm_share_4srv")):
+for tag, name in (("20261007-vllm-share-v1", "vllm_share"), ("20261007-vllm-share-4srv-v1", "vllm_share_4srv"),
+                  ("20261007-vllm-share-4srv-v2", "vllm_share_4srv_warm")):
     render(name, os.path.join(engine_root, tag, "vllm_share_summary.csv"), VSHARE_COLUMNS)
 
 print("tables written to", out)

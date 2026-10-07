@@ -1582,6 +1582,131 @@ produces its first token 0.60 s later. Without populate-ahead the first
 token is 0.16 s later and the summed generation speed is 0.947 of copy
 against 0.964.
 
+**Where the loss of speed with host memory comes from (`MODE_SET=locality`,
+`20261007-engine-kvlocal-12sm-v1` and `-6sm-v1`).** Section 6.8 found that a
+cache in host memory costs generation speed in the 6-SM instance and not in
+the 12-SM instance, and did not find the cause. This campaign separates
+four candidates with a parent and four children in one instance, a
+16,321-token prefix and 128 generated tokens: host memory against device
+memory (`host_copy_huge`, a private cache in 2 MiB pages that receives a
+copy of the rows, against `copy`), the page size of private memory
+(`host_copy`, 4 KiB pages), sharing (`extent` against `host_copy`), the
+page size of an agent's own rows (`grow_all`) and the page size of the
+shared rows (`small_pages`). The ratios are the summed generation speed of
+the children against `copy` in the same repetition.
+
+12-SM instance:
+
+| Placement | Children | Prefix (tokens) | Mode | Children complete | Texts equal to copy | Parent pause (ms) | Attach (ms) | 95% CI | First token (ms) | Memory (MiB) | 95% CI | Throughput (tokens/s) | Speed vs copy | median |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| same | 4 | 16321 | copy | 24/24 | 24/24 | 560.45 | 463.6 | 58.0 | 1837 | 10147 | 21 | 18.98 | 1.0000 | 1.0000 |
+| same | 4 | 16321 | host_copy_huge | 24/24 | 24/24 | 514.82 | 384.8 | 22.2 | 1744 | 10094 | 28 | 19.25 | 1.0143 | 1.0142 |
+| same | 4 | 16321 | host_copy | 24/24 | 24/24 | 515.05 | 513.4 | 30.8 | 1873 | 6581 | 55 | 19.35 | 1.0192 | 1.0192 |
+| same | 4 | 16321 | extent | 24/24 | 24/24 | 8.70 | 46.1 | 1.0 | 1392 | 3093 | 22 | 18.93 | 0.9971 | 0.9989 |
+| same | 4 | 16321 | grow_all | 24/24 | 24/24 | 8.68 | 76.0 | 4.4 | 1430 | 6517 | 24 | 18.96 | 0.9991 | 1.0006 |
+| same | 4 | 16321 | small_pages | 24/24 | 24/24 | 12.22 | 55.8 | 2.8 | 1426 | 2952 | 25 | 18.98 | 0.9999 | 1.0018 |
+
+6-SM instance:
+
+| Placement | Children | Prefix (tokens) | Mode | Children complete | Texts equal to copy | Parent pause (ms) | Attach (ms) | 95% CI | First token (ms) | Memory (MiB) | 95% CI | Throughput (tokens/s) | Speed vs copy | median |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| same | 4 | 16321 | copy | 24/24 | 24/24 | 549.33 | 440.6 | 24.1 | 1898 | 10166 | 103 | 12.40 | 1.0000 | 1.0000 |
+| same | 4 | 16321 | host_copy_huge | 24/24 | 24/24 | 518.83 | 362.1 | 33.0 | 1828 | 10044 | 18 | 11.65 | 0.9401 | 0.9401 |
+| same | 4 | 16321 | host_copy | 24/24 | 24/24 | 516.85 | 483.7 | 23.4 | 1971 | 6591 | 145 | 11.69 | 0.9426 | 0.9430 |
+| same | 4 | 16321 | extent | 24/24 | 24/24 | 8.59 | 44.4 | 0.9 | 1501 | 3080 | 168 | 11.55 | 0.9316 | 0.9319 |
+| same | 4 | 16321 | grow_all | 24/24 | 24/24 | 9.06 | 73.5 | 3.0 | 1534 | 6454 | 14 | 11.55 | 0.9319 | 0.9325 |
+| same | 4 | 16321 | small_pages | 24/24 | 24/24 | 12.76 | 54.2 | 2.8 | 1560 | 3324 | 1064 | 11.56 | 0.9325 | 0.9325 |
+
+In the 12-SM instance no form of host memory costs speed: the private
+caches are at 1.014 and 1.019 of the device cache, the three forms of
+extents at 0.997 to 1.000 with intervals that contain 1. In the 6-SM
+instance every form costs: a private cache in host memory generates at
+0.940 (2 MiB pages) and 0.943 (4 KiB pages) of the device cache, and the
+three forms of extents at 0.932 (0.9316 to 0.9325). So the loss is a property of
+host memory in that instance (6.0%); sharing adds 0.9 points; the page
+size of the private memory, of an agent's own rows and of the shared rows
+changes it by 0.3 points or less. The intervals are narrow (half-widths of
+0.001 to 0.002 in the 6-SM instance). All 288 children write the text of
+the child that received a copy, and both gates hold in both campaigns.
+
+**Scattered reads and writes by the kind of memory (`run_tlb_probe.sh`,
+`20261007-tlb-probe-v1`).** The read-path probe of Section 6.8 scans a
+buffer and found host memory as fast as device memory in both instances.
+This probe adds accesses that jump: it reads consecutive words (scan),
+reads words at pseudo-random strides of 4 and 64 KiB (gather) and writes at
+the same strides (scatter) over 1 GiB, in device memory and in pageable
+host memory with 2 MiB and with 4 KiB pages (private anonymous memory that
+the CPU has written), in each instance. All threads work on the buffer at
+the same time, each on its share (scan) or on all of it. The rates are
+relative to device memory in the same instance and repetition; the CUDA
+runtime reports the 6-SM instance as 8 SMs.
+
+| SMs (runtime) | Buffer (MiB) | Stride (KiB) | Memory | Runs | Scattered reads (Mwords/s) | vs device | low | high | Scattered writes (Mwords/s) | vs device | low | high |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| 12 | 1024 | 4 | device | 6 | 3414.8 | 1.000 | 1.000 | 1.000 | 1495.2 | 1.000 | 1.000 | 1.000 |
+| 12 | 1024 | 4 | host_huge | 6 | 3252.2 | 0.952 | 0.911 | 0.994 | 1388.9 | 0.929 | 0.927 | 0.930 |
+| 12 | 1024 | 4 | host_small | 6 | 37.1 | 0.011 | 0.011 | 0.011 | 37.2 | 0.025 | 0.025 | 0.025 |
+| 12 | 1024 | 64 | device | 6 | 3387.3 | 1.000 | 1.000 | 1.000 | 1489.2 | 1.000 | 1.000 | 1.000 |
+| 12 | 1024 | 64 | host_huge | 6 | 3289.1 | 0.971 | 0.961 | 0.981 | 1387.2 | 0.931 | 0.931 | 0.932 |
+| 12 | 1024 | 64 | host_small | 6 | 41.9 | 0.012 | 0.012 | 0.013 | 41.3 | 0.028 | 0.028 | 0.028 |
+| 8 | 1024 | 4 | device | 6 | 1920.4 | 1.000 | 1.000 | 1.000 | 1473.4 | 1.000 | 1.000 | 1.000 |
+| 8 | 1024 | 4 | host_huge | 6 | 1571.3 | 0.818 | 0.815 | 0.822 | 1376.1 | 0.934 | 0.931 | 0.937 |
+| 8 | 1024 | 4 | host_small | 6 | 33.3 | 0.017 | 0.017 | 0.017 | 33.3 | 0.023 | 0.022 | 0.023 |
+| 8 | 1024 | 64 | device | 6 | 1818.9 | 1.000 | 1.000 | 1.000 | 1472.7 | 1.000 | 1.000 | 1.000 |
+| 8 | 1024 | 64 | host_huge | 6 | 1565.2 | 0.861 | 0.857 | 0.864 | 1375.4 | 0.934 | 0.931 | 0.937 |
+| 8 | 1024 | 64 | host_small | 6 | 43.7 | 0.024 | 0.024 | 0.024 | 38.2 | 0.026 | 0.026 | 0.026 |
+
+With 2 MiB pages, host memory is scanned as fast as device memory or faster
+(1.21 to 1.27 in the 12-SM instance, 0.97 to 0.99 in the 6-SM instance) and
+written at scattered addresses at 0.93 of device memory in both instances.
+Scattered reads separate the instances: 0.95 to 0.97 of device memory in
+the 12-SM instance and 0.82 to 0.86 in the 6-SM instance. H1 holds for
+reads and not for writes. With 4 KiB pages every rate is 0.01 to 0.03 of
+device memory in both instances, so H2 holds as well: a buffer of 262,144
+pages that all threads use at once is far slower than the same buffer in
+512 pages.
+
+The engine does not show the second effect. With the shared prefix on 4 KiB
+pages (`small_pages`) and with a private cache on 4 KiB pages
+(`host_copy`) it generates as fast as with 2 MiB pages in both instances
+(the locality campaign above); its kernels use the tensors of one layer at
+a time and not the whole cache at once. The probe therefore gives one
+difference between the two instances that has the direction of the loss,
+scattered reads of host memory, and it explains neither the size of the
+loss in the engine nor why the page size does not matter there. What the
+6-SM instance does differently when it reads host memory at addresses that
+jump was not examined below the CUDA interface.
+
+**A pipeline of agents on the tools of a public benchmark
+(`run_engine_kvpipe.sh`, `20261007-engine-kvpipe-huge-v1`).** A planner
+computes a prefix of a system prompt and the schemas of 90 tools of BFCL v4
+(11,788 tokens) and publishes it. Two leaders attach, add a plan and publish
+again; four workers per leader attach to what their leader published and
+work through three turns of requests and tool results. The processes
+alternate between the two MIG instances, and the model file is on a tmpfs
+with 2 MiB pages for all three stacks. The power rails of the board are
+sampled with `tegrastats` while a case runs. Memory is the largest drop of
+MemAvailable from before the planner starts, so the cache files of `chain`
+are in it.
+
+| Stack | Groups x workers x turns | Runs (failed) | Prefix (tokens) | Completion (s) | 95% CI | vs stock | Memory (MiB) | Files (MiB) | Worker attach (ms) | Worker first token (ms) | Energy, input rail (J) | prefix / leaders / workers (J) | vs stock | GPU rail (J) | Worker texts equal to stock |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| stock | 2x4x3 | 6 (0) | 11788 | 80.3 | 0.2 | 1.000 | 67384 | 0 | 376.3 | 6305 | 5906 | 833 / 394 / 4679 | 1.000 | 2545 | 48/48 |
+| copy | 2x4x3 | 6 (0) | 11788 | 77.9 | 0.1 | 0.970 | 17635 | 0 | 380.0 | 2312 | 5834 | 832 / 373 / 4630 | 0.988 | 2580 | 48/48 |
+| chain | 2x4x3 | 6 (0) | 11788 | 77.9 | 0.1 | 0.971 | 8577 | 896 | 36.3 | 1926 | 5880 | 859 / 359 / 4662 | 0.996 | 2602 | 48/48 |
+
+The unmodified engine holds 65.8 GiB for the pipeline, the stack with the
+weights in place and state copies 17.2 GiB, and extent chains 8.4 GiB. The
+planner publishes in 6.7 ms against 422 ms, a leader in 4.6 ms against
+448 ms, and a worker attaches in 36 ms against 376 ms; the first token of
+a worker comes after 1.93 s against 6.31 s. The workers generate at 0.936
+of their summed speed on the unmodified engine (half of them run in the
+6-SM instance), and the pipeline still completes in 0.970 of its time
+(77.9 s against 80.3 s), because the hand-overs are shorter. The energy of
+the input rail is 5,880 J against 5,906 J, a paired ratio of 0.996. All 48
+workers and 12 leaders write the text of the unmodified engine. The gates
+P1 to P5 hold.
+
 ### 6.15 vLLM servers on extents
 
 The servers of the sections above belong to the engine that this work
@@ -1734,8 +1859,29 @@ with the plugin do all 16 agents generate at the same time, at
 123.1 tokens/s. The like-for-like part of the round is the rate of an
 agent on servers 1 and 2 while the other server of its instance is busy:
 9.3 tokens/s (12-SM) and 6.7 tokens/s (6-SM) in `vllm`, 9.6 and 5.6
-tokens/s with the plugin. A campaign in which every server holds the
-prefix before the round is needed for the comparison and has not been run.
+tokens/s with the plugin. The next campaign repeats the case with every
+server holding the prefix before the round.
+
+**Four servers that all hold the prefix (`run_vllm_share2.sh`,
+`20261007-vllm-share-4srv-v2`, two repetitions).** The runner is
+`run_vllm_share.sh` with one addition: after round `first`, servers 3 and 4
+each answer one agent alone, so that every server holds the prefix when
+round `both` starts.
+
+| Mode | Servers | Cases (failed) | Requests complete | Memory (MiB) | 95% CI | vs vllm (MiB) | Peak (MiB) | Shared files (MiB) | Mapped by a later server: weights, prefix (MiB) | First token, second server (ms) | 95% CI | Smallest cached share | Throughput (tokens/s) | 95% CI | vs vllm | median | 12-SM, 6-SM (tokens/s) | Start-up, first and later server (ms) | Weights publish, attach (ms) | Prefix attach (ms) | LMCache store, retrieve (ms) | Texts equal to vllm: first, both, alone1, alone2 |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| vllm | 4 | 2 (0) | 48/48 | 42682 | 1315 | 0 | 42736 | 0 | 0, 0 | 14076 | 783 | 0.0000 | 131.53 | 2.45 | 1.0000 | 1.0000 | 76.39, 55.14 | 23922, 24988 | 0, 0 | 0 | 0, 0 | 8/8, 32/32, 2/2, 2/2 |
+| lmcache | 4 | 2 (0) | 48/48 | 51554 | 229 | 8872 | 51578 | 0 | 0, 0 | 1856 | 135 | 0.9837 | 131.02 | 2.76 | 0.9961 | 0.9961 | 75.96, 55.06 | 25822, 26679 | 0, 0 | 0 | 405, 934 | 7/8, 26/32, 2/2, 2/2 |
+| stator | 4 | 2 (0) | 48/48 | 23281 | 25 | -19400 | 29978 | 7370 | 5317, 780 | 656 | 179 | 0.9971 | 121.77 | 1.97 | 0.9258 | 0.9258 | 76.37, 45.40 | 23948, 25584 | 152, 99 | 24 | 0, 0 | 6/8, 28/32, 2/2, 2/2 |
+
+The 16 agents of every configuration now generate at the same time: 131.5
+tokens/s unmodified, 131.0 tokens/s with LMCache and 121.8 tokens/s with
+the plugin, a paired ratio of 0.926. The two servers of the 12-SM instance
+are at 1.000 of their speed in `vllm` and the two of the 6-SM instance at
+0.823, as with two servers (1.041 and 0.820). Memory and first token repeat
+the first run: 41.68, 50.35 and 22.74 GiB; 14.08, 1.86 and 0.66 s; the
+largest drop with the plugin is 29.28 GiB. All gates hold in this
+campaign, V5 included.
 
 ## 7. Novelty boundary
 

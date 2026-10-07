@@ -755,8 +755,9 @@ def local():
     cells = (("12 SMs", "20261007-engine-kvlocal-12sm-v1"), ("6 SMs", "20261007-engine-kvlocal-6sm-v1"))
     tints = ("#c9c7c1", COPY)
     if all(have(d, "engine_kvmech_summary.csv") for _, d in cells):
-        modes = (("Private\n2 MiB", "host_copy_huge"), ("Private\n4 KiB", "host_copy"),
-                 (NAME, "extent"), ("Tail\n2 MiB", "grow_all"), ("Prefix\n4 KiB", "small_pages"))
+        # The two variants of the extent page sizes (grow_all, small_pages) equal
+        # extent within 0.003 in both instances; the record has their rows.
+        modes = (("Private\n2 MiB", "host_copy_huge"), ("Private\n4 KiB", "host_copy"), (NAME, "extent"))
         fig, ax = panel()
         width = 0.38
         for index, ((label, directory), colour) in enumerate(zip(cells, tints)):
@@ -768,9 +769,15 @@ def local():
                    edgecolor="white", linewidth=1.5, label=label, yerr=[low, high],
                    error_kw={"ecolor": INK, "elinewidth": 1.0, "capsize": 2})
         ax.set_xticks(range(len(modes)), [label for label, _ in modes])
-        ax.tick_params(axis="x", labelsize=8.5)
+        ax.tick_params(axis="x", labelsize=11.5)
+        for index, (label, directory) in enumerate(cells):
+            data = {r["mode"]: r for r in rows(directory, "engine_kvmech_summary.csv")}
+            for x, (_, m) in enumerate(modes):
+                value = float(data[m]["children_tps_vs_copy"])
+                ax.annotate(f"{value:.3f}", (x + (index - 0.5) * width, value), xytext=(0, 5),
+                            textcoords="offset points", ha="center", va="bottom", fontsize=9.5, color=INK)
         ax.axhline(1.0, color=AXIS, linewidth=1.0)
-        ax.set_ylim(0.8, 1.06)
+        ax.set_ylim(0.8, 1.12)
         ax.legend(loc="upper right", ncol=2, handlelength=1.1, fontsize=9.5, columnspacing=1.0)
         ax.set_ylabel("Speed vs. Device Cache")
         style(ax)
@@ -805,7 +812,7 @@ def local():
 # ------------------------------------------------------------- the pipeline
 def pipe():
     """A planner, leaders and workers on the tools of a public benchmark."""
-    directory = "20261007-engine-kvpipe-v1"
+    directory = "20261007-engine-kvpipe-huge-v1"
     if not have(directory, "engine_kvpipe_summary.csv"):
         return
     data = {r["mode"]: r for r in rows(directory, "engine_kvpipe_summary.csv")}
@@ -831,7 +838,8 @@ def pipe():
     stacked("eval_pipe_time", "{}_s", "Completion Time (s)", 1.0, "{:.1f}")
     stacked("eval_pipe_energy", "vin_{}_j", "Energy (kJ)", 1000.0, "{:.2f}")
     fig, ax = panel()
-    memory = [(float(data[m]["memory_mib"]) + float(data[m]["files_mib"])) / 1024 for _, m, _ in stacks]
+    # The drop is taken from before the planner starts, so the cache files are in it.
+    memory = [float(data[m]["memory_mib"]) / 1024 for _, m, _ in stacks]
     bars = ax.bar(names, memory, 0.55, color=[colour for _, _, colour in stacks], edgecolor="white",
                   linewidth=1.5)
     labels(ax, bars)
