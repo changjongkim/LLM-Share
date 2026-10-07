@@ -508,17 +508,17 @@ ms에서 51~56 ms로 줄어든다. 익스텐트 자식 576개는 모두 복사�
 | Copy | llama.cpp, LMCache 계열 저장소 | 19.8 | 540 | 549 | 2.67 | 48/48 |
 | Demand | vAttention (사용량을 따라가는 디바이스 메모리) | 13.9 | 543 | 597 | 2.72 | 48/48 |
 | Device | Omni-Flow, Liu 외 (디바이스 메모리 공유) | 7.6 | 41 | 770 | 2.86 | 24/48 |
-| CoW | 커널의 copy-on-write 매핑 | 6.7 | 8 | 50 | 2.77 | 48/48 |
+| CoW Map | 커널의 copy-on-write 매핑(복사가 아니라 사설 쓰기 가능 매핑이며, 에이전트가 쓰는 페이지만 그때 복사된다) | 6.7 | 8 | 50 | 2.77 | 48/48 |
 | STATOR | 익스텐트 | 5.9 | 8 | 49 | 2.14 | 48/48 |
 
 메모리, 정지, 연결, 첫 토큰은 모든 프로세스가 12-SM 인스턴스에 있는 경우의
 값이다. 자식을 두 인스턴스에 번갈아 배치하면 Device는 다른 인스턴스의 자식 24개
-모두에서 가져오기가 거부된다. CoW도 정지와 연결이 짧고 MIG 경계를 넘지만, 첫
+모두에서 가져오기가 거부된다. CoW Map도 정지와 연결이 짧고 MIG 경계를 넘지만, 첫
 쓰기에서 폴트를 치르므로 메모리가 더 크고 첫 토큰이 늦다. Device의 연결 시간은
 이 연구의 구현에 따른 값이다(아래 탐침 참조).
 
 <p align="center"><img src="figures/eval_sota_mem.png" width="24%"> <img src="figures/eval_sota_attach.png" width="24%"> <img src="figures/eval_sota_ttft.png" width="24%"> <img src="figures/eval_sota_tps.png" width="24%"></p>
-<p align="center"><b>그림 14.</b> 한 엔진 안의 다섯 방식. 회색: Copy, 파랑: Demand, 보라: Device, 주황: CoW, 청록: STATOR. 빗금은 일부 자식만 완료한 경우이다.</p>
+<p align="center"><b>그림 14.</b> 한 엔진 안의 다섯 방식. 회색: Copy, 파랑: Demand, 보라: Device, 주황: CoW Map, 청록: STATOR. 빗금은 일부 자식만 완료한 경우이다.</p>
 
 **에이전트 트리.** 루트 하나, 리더 둘, 리더마다 리프 넷으로 이루어진 프로세스
 11개이다. 리더는 그룹 문맥 1,473토큰을 덧붙여 다시 게시한다.

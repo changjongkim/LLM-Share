@@ -209,10 +209,10 @@ def eval_cow():
     data = {(r["mode"], int(r["agents"])): r
             for r in rows("20261006-engine-kvcow-v1", "engine_kvcow_summary.csv")}
     ways = [("extent_lazy", "Extents", OURS),
-            ("cow", "Copy-on-write, 2 MiB pages, read pass", COW),
-            ("cow_small", "Copy-on-write, 4 KiB pages, read pass", COW),
-            ("cow_noread", "Copy-on-write, 2 MiB pages, no read pass", COW),
-            ("cow_small_noread", "Copy-on-write, 4 KiB pages, no read pass", COW)]
+            ("cow", "Copy-on-write mapping, 2 MiB pages, read pass", COW),
+            ("cow_small", "Copy-on-write mapping, 4 KiB pages, read pass", COW),
+            ("cow_noread", "Copy-on-write mapping, 2 MiB pages, no read pass", COW),
+            ("cow_small_noread", "Copy-on-write mapping, 4 KiB pages, no read pass", COW)]
     agents = 8
     fig, axes = plt.subplots(1, 2, figsize=(10.6, 2.9), sharey=True)
     y = np.arange(len(ways))[::-1]

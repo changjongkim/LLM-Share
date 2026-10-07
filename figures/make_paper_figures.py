@@ -119,7 +119,7 @@ def weights():
 
 # ---------------------------------------------------------------- handover
 MECHANISMS = (("Copy", COPY, "copy"), ("Demand", DEMAND, "demand"), ("Device", DEVICE, "device_merged"),
-              ("CoW", COW, "cow"), (NAME, OURS, "extent"))
+              ("CoW Map", COW, "cow"), (NAME, OURS, "extent"))
 MECH = "20261007-engine-kvmech-v1"
 
 
@@ -238,8 +238,8 @@ def mode():
 def cow():
     data = {(r["mode"], int(r["agents"])): r
             for r in rows("20261006-engine-kvcow-v1", "engine_kvcow_summary.csv")}
-    order = (("CoW 2M\nNo Read", "cow_noread", COW), ("CoW 4K\n+ Read", "cow_small", COW),
-             ("CoW 2M\n+ Read", "cow", COW), (NAME, "extent_lazy", OURS))
+    order = (("CoW Map\n2M\nNo Read", "cow_noread", COW), ("CoW Map\n4K\nRead", "cow_small", COW),
+             ("CoW Map\n2M\nRead", "cow", COW), (NAME, "extent_lazy", OURS))
     for name, column, ylabel, scale, form in (
             ("eval_cow_mem", "memory_mib", "Memory (GiB)", 1024.0, "{:.1f}"),
             ("eval_cow_time", "suffix_ms", "Task Decoding Time (s)", 1000.0, "{:.2f}")):
@@ -433,6 +433,36 @@ def scale():
           "Memory (GiB)", 1024.0, "{:.1f}")
     lines("eval_scale_tps", directory, "engine_kvscale_summary.csv", "generation_tps_total",
           "Throughput (tokens/s)", 1.0, "{:.1f}")
+
+
+def prefix_length():
+    """Eight agents by the length of the prefix they start from."""
+    cells = [d for d in ("20261007-engine-kvscale-p20-v1", "20261007-engine-kvscale-p80-v1",
+                         "20261006-engine-kvscale-v1", "20261007-engine-kvscale-p600-v1")
+             if have(d, "engine_kvscale_summary.csv")]
+    if len(cells) < 3:
+        return
+    points = {}
+    for directory in cells:
+        for r in rows(directory, "engine_kvscale_summary.csv"):
+            if int(r["agents"]) == 8:
+                points[int(float(r["prefix_tokens"])), r["mode"]] = r
+    tokens = sorted({k[0] for k in points})
+    for name, column, ylabel, scale, form in (
+            ("eval_prefix_mem", "memory_mib", "Memory (GiB)", 1024.0, "{:.1f}"),
+            ("eval_prefix_attach", "attach_ms", "Attach Time (ms)", 1.0, "{:.0f}")):
+        fig, ax = panel()
+        for label, colour, m, marker in (("Copy", COPY, "restore", "s"), (NAME, OURS, "extent_lazy", "o")):
+            values = [float(points[t, m][column]) / scale for t in tokens]
+            ax.plot(range(len(tokens)), values, color=colour, marker=marker, markersize=7, linewidth=2,
+                    label=label, markeredgecolor="white", markeredgewidth=1.2)
+            for x, value in enumerate(values):
+                ax.annotate(form.format(value), (x, value), xytext=(0, 7 if m == "restore" else -14),
+                            textcoords="offset points", ha="center", fontsize=9.5, color=INK)
+        ax.set_xticks(range(len(tokens)), [f"{t / 1000:.0f}k" for t in tokens])
+        ax.legend(loc="upper left", handlelength=1.6)
+        finish(fig, ax, name, "Prefix (Tokens)", ylabel,
+               max(float(r[column]) for r in points.values()) / scale * 1.25)
 
 
 def variants():
@@ -696,8 +726,167 @@ def stack():
     finish(fig, ax, "eval_stack_speed", "", "Speed vs. Unmodified", 1.42)
 
 
+# ------------------------------------------------- loss in the 6-SM instance
+def local():
+    """Where the loss of speed with host memory comes from, by MIG instance."""
+    cells = (("12 SMs", "20261007-engine-kvlocal-12sm-v1"), ("6 SMs", "20261007-engine-kvlocal-6sm-v1"))
+    tints = ("#c9c7c1", COPY)
+    if all(have(d, "engine_kvmech_summary.csv") for _, d in cells):
+        modes = (("Private\n2 MiB", "host_copy_huge"), ("Private\n4 KiB", "host_copy"),
+                 (NAME, "extent"), ("Tail\n2 MiB", "grow_all"), ("Prefix\n4 KiB", "small_pages"))
+        fig, ax = panel()
+        width = 0.38
+        for index, ((label, directory), colour) in enumerate(zip(cells, tints)):
+            data = {r["mode"]: r for r in rows(directory, "engine_kvmech_summary.csv")}
+            values = [float(data[m]["children_tps_vs_copy"]) for _, m in modes]
+            low = [v - float(data[m]["vs_copy_low"]) for v, (_, m) in zip(values, modes)]
+            high = [float(data[m]["vs_copy_high"]) - v for v, (_, m) in zip(values, modes)]
+            ax.bar(np.arange(len(modes)) + (index - 0.5) * width, values, width, color=colour,
+                   edgecolor="white", linewidth=1.5, label=label, yerr=[low, high],
+                   error_kw={"ecolor": INK, "elinewidth": 1.0, "capsize": 2})
+        ax.set_xticks(range(len(modes)), [label for label, _ in modes])
+        ax.tick_params(axis="x", labelsize=8.5)
+        ax.axhline(1.0, color=AXIS, linewidth=1.0)
+        ax.set_ylim(0.8, 1.06)
+        ax.legend(loc="upper right", ncol=2, handlelength=1.1, fontsize=9.5, columnspacing=1.0)
+        ax.set_ylabel("Speed vs. Device Cache")
+        style(ax)
+        fig.tight_layout()
+        save(fig, "eval_local_speed")
+
+    directory = "20261007-tlb-probe-v1"
+    if have(directory, "tlb_probe_summary.csv"):
+        data = rows(directory, "tlb_probe_summary.csv")
+        size = max(int(r["size_mib"]) for r in data)
+        stride = max(int(r["stride_kib"]) for r in data)
+        cell = {(int(r["sms"]), r["kind"]): r for r in data
+                if int(r["size_mib"]) == size and int(r["stride_kib"]) == stride}
+        sms = sorted({k[0] for k in cell}, reverse=True)
+        groups, order = [], []
+        for kernel, name in (("gather", "Read"), ("scatter", "Write")):
+            for count, label in zip(sms, ("12 SMs", "6 SMs")):
+                groups.append(f"{name}\n{label}")
+                order.append((kernel, count))
+        series = [(label, colour, [float(cell[count, kind][f"{kernel}_vs_device"]) for kernel, count in order])
+                  for label, colour, kind in (("Host, 2 MiB Pages", OURS, "host_huge"),
+                                               ("Host, 4 KiB Pages", OURS_LIGHT, "host_small"))]
+        fig, ax = panel()
+        for group in grouped(ax, groups, series, 0.36):
+            labels(ax, group, "{:.2f}", 9)
+        ax.axhline(1.0, color=AXIS, linewidth=1.0)
+        ax.tick_params(axis="x", labelsize=9)
+        ax.legend(loc="upper right", handlelength=1.1, fontsize=9, labelspacing=0.25)
+        finish(fig, ax, "eval_local_probe", "", "Rate vs. Device Memory", 1.45)
+
+
+# ------------------------------------------------------------- the pipeline
+def pipe():
+    """A planner, leaders and workers on the tools of a public benchmark."""
+    directory = "20261007-engine-kvpipe-v1"
+    if not have(directory, "engine_kvpipe_summary.csv"):
+        return
+    data = {r["mode"]: r for r in rows(directory, "engine_kvpipe_summary.csv")}
+    stacks = [(label, m, colour) for label, m, colour in (("Unmodified", "stock", COPY), ("Copy", "copy", "#b7b5af"),
+                                                           (NAME, "chain", OURS)) if m in data]
+    names = [label for label, _, _ in stacks]
+    phases = (("Prefix", "prefix", "#d9d7d1"), ("Leaders", "leaders", "#a9a7a1"), ("Workers", "workers", "#6f6d68"))
+
+    def stacked(name, column, ylabel, scale, form):
+        fig, ax = panel()
+        bottom = np.zeros(len(stacks))
+        for label, key, colour in phases:
+            values = np.array([float(data[m][column.format(key)]) / scale for _, m, _ in stacks])
+            ax.bar(names, values, 0.55, bottom=bottom, color=colour, edgecolor="white", linewidth=1.5,
+                   label=label)
+            bottom += values
+        for x, total in enumerate(bottom):
+            ax.annotate(form.format(total), (x, total), xytext=(0, 3), textcoords="offset points",
+                        ha="center", va="bottom", fontsize=10.5, color=INK)
+        ax.legend(loc="upper center", ncol=3, handlelength=1.0, fontsize=9.5, columnspacing=1.0)
+        finish(fig, ax, name, "", ylabel, bottom.max() * 1.36)
+
+    stacked("eval_pipe_time", "{}_s", "Completion Time (s)", 1.0, "{:.1f}")
+    stacked("eval_pipe_energy", "vin_{}_j", "Energy (kJ)", 1000.0, "{:.2f}")
+    fig, ax = panel()
+    memory = [(float(data[m]["memory_mib"]) + float(data[m]["files_mib"])) / 1024 for _, m, _ in stacks]
+    bars = ax.bar(names, memory, 0.55, color=[colour for _, _, colour in stacks], edgecolor="white",
+                  linewidth=1.5)
+    labels(ax, bars)
+    finish(fig, ax, "eval_pipe_mem", "", "Memory (GiB)", max(memory) * 1.18)
+
+
+# ---------------------------------------------------- deeper and wider trees
+def deep():
+    cells = [(label, d) for label, d in (("Four Levels\n(23 Processes)", "20261007-engine-kvdeep-v1"),
+                                         ("16 Leaves\n(18 Processes)", "20261007-engine-kvdeep-wide-v1"))
+             if have(d, "engine_kvdeep_summary.csv")]
+    if not cells:
+        return
+    data = {label: {r["mode"]: r for r in rows(d, "engine_kvdeep_summary.csv")} for label, d in cells}
+    for name, column, ylabel, scale, form in (
+            ("eval_deep_mem", "tree_memory_mib", "Memory (GiB)", 1024.0, "{:.1f}"),
+            ("eval_deep_ttft", "leaf_first_token_ms", "TTFT of a Leaf (s)", 1000.0, "{:.2f}")):
+        fig, ax = panel()
+        series = [(label, colour, [(float(data[cell][m][column])
+                                    + (float(data[cell][m]["files_attached_mib"]) if column == "tree_memory_mib" else 0.0))
+                                   / scale for cell, _ in cells])
+                  for label, colour, m in (("Copy", COPY, "copy"), (NAME, OURS, "chain"))]
+        for group in grouped(ax, [cell for cell, _ in cells], series, 0.36):
+            labels(ax, group, form)
+        ax.legend(loc="upper right", handlelength=1.1, fontsize=10)
+        ax.tick_params(axis="x", labelsize=9.5)
+        finish(fig, ax, name, "", ylabel, max(max(v) for _, _, v in series) * 1.2)
+
+    # the pages of the segment files while the subtrees of one tree leave
+    timeline = os.path.join(RES, cells[0][1], "timeline.chain.1")
+    if cells[0][1].endswith("kvdeep-v1") and os.path.exists(timeline):
+        points = [[float(v) for v in line.split()] for line in open(timeline) if line.strip()]
+        seconds = [p[0] / 1000 for p in points]
+        fig, ax = panel()
+        ax.plot(seconds, [p[2] / 1024 for p in points], color=OURS, linewidth=2)
+        # the levels of the curve: every process, the first subtree gone, all gone
+        full = max(p[2] for p in points)
+        first = next((i for i, p in enumerate(points) if p[2] < full), None)
+        last = next((i for i, p in enumerate(points) if p[2] == 0), len(points) - 1)
+        if first is not None and first < last:
+            ax.text((seconds[0] + seconds[first]) / 2, full / 1024, "Every Process\nRuns", ha="center",
+                    va="bottom", fontsize=9, color=INK, linespacing=1.0)
+            ax.text((seconds[first] + seconds[last]) / 2, points[first][2] / 1024, "First Subtree\nHas Left",
+                    ha="center", va="bottom", fontsize=9, color=INK, linespacing=1.0)
+        finish(fig, ax, "eval_deep_return", "Time (s)", "Segment Files (GiB)", full / 1024 * 1.4)
+
+
+# ------------------------------------------------ an external way to share weights
+def wshare():
+    directory = "20261007-ext-weightshare-v1"
+    if not have(directory, "ext_weightshare_summary.csv"):
+        return
+    data = {(r["placement"], r["stack"]): r for r in rows(directory, "ext_weightshare_summary.csv")}
+    model_gib = 4.36
+    placements = [(label, key) for label, key in (("Same\nInstance", "same"), ("Across\nInstances", "cross"))
+                  if (key, "stock") in data]
+    stacks = (("Unmodified", COPY, "stock"), ("CUDA IPC Library", DEVICE, "ipc"), (NAME, OURS, "inplace"))
+    fig, ax = panel()
+    series = [(label, colour, [(float(data[key, m]["memory_mib"]) / 1024 + (model_gib if m == "inplace" else 0.0))
+                               for _, key in placements]) for label, colour, m in stacks]
+    groups = grouped(ax, [label for label, _ in placements], series, 0.27)
+    for (label, colour, m), group in zip(stacks, groups):
+        for bar, (_, key) in zip(group, placements):
+            row = data[key, m]
+            done, started = int(row["agents_finished"]), int(row["agents_started"])
+            if done < started:
+                bar.set_hatch("////")
+                bar.set_alpha(0.55)
+                tip(ax, bar, f"{done // int(row['runs'])}/{started // int(row['runs'])}")
+            else:
+                tip(ax, bar, f"{bar.get_height():.1f}")
+            ax.texts[-1].set_fontsize(9.5)
+    ax.legend(loc="upper center", ncol=3, handlelength=1.0, fontsize=8.5, columnspacing=0.8)
+    finish(fig, ax, "eval_wshare_mem", "", "Memory (GiB)", max(max(v) for _, _, v in series) * 1.3)
+
+
 if __name__ == "__main__":
     for figure in (mem, weights, hand, speed, reach, mode, cow, dev, sota, attach, protect, tree, scale,
-                   variants, inproc, server, limit, stack):
+                   variants, inproc, server, limit, stack, local, pipe, deep, wshare, prefix_length):
         figure()
         print("wrote", figure.__name__)

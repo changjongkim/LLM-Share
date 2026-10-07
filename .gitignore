@@ -25,6 +25,7 @@
 /kv_fork_tuned
 /kv_spawn_tuned
 /kv_tree_stock
+/weights_publish
 /cuda_reach_probe
 /cuda_tlb_probe
 /cuda_vmm_attach_probe

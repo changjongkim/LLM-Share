@@ -127,5 +127,9 @@ kv_tree: kv_tree.cpp
 ollama_mig_visible.so: ollama_mig_visible.c
 	$(CC) $(CFLAGS) -shared -fPIC $< -o $@ -ldl
 
+# Publishes a model file as a shared mapping on 2 MiB pages by direct reads.
+weights_publish: weights_publish.c
+	$(CC) $(CFLAGS) $< -o $@ -lpthread
+
 clean:
-	$(RM) cuda_ipc_probe cuda_vmm_probe cuda_share_load_probe kv_fork kv_batch kv_fork_vmm kv_spawn kv_tree kv_fork_sota kv_spawn_sota kv_fork_stock kv_fork_nommap kv_fork_tuned kv_spawn_tuned kv_tree_stock cuda_tlb_probe cuda_reach_probe cuda_vmm_attach_probe cuda_protect_probe ollama_mig_visible.so
+	$(RM) cuda_ipc_probe cuda_vmm_probe cuda_share_load_probe kv_fork kv_batch kv_fork_vmm kv_spawn kv_tree kv_fork_sota kv_spawn_sota kv_fork_stock kv_fork_nommap kv_fork_tuned kv_spawn_tuned kv_tree_stock weights_publish cuda_tlb_probe cuda_reach_probe cuda_vmm_attach_probe cuda_protect_probe ollama_mig_visible.so
