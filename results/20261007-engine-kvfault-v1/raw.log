@@ -1,0 +1,1326 @@
+BEGIN_KVFAULT run=1 prefix_tokens=14282
+CASE config=timeslice fault=none agents=8
+AGENT index=0 mig=fafc828a exit=0 completed=1 text=7bd70180bbe7ca2f role=child prefix_tokens=14282 suffix_tokens=27 model_ms=1086.8 context_ms=29.8 state_ms=6.16 prefix_ms=0.0 suffix_ms=339.9 first_token_ms=1749.3 generation_ms=44710.9 generated=128 generation_tps=2.863
+AGENT index=1 mig=fafc828a exit=0 completed=1 text=490dc1327d716112 role=child prefix_tokens=14282 suffix_tokens=22 model_ms=1140.0 context_ms=28.1 state_ms=6.07 prefix_ms=0.0 suffix_ms=682.4 first_token_ms=2157.0 generation_ms=44589.3 generated=128 generation_tps=2.871
+AGENT index=2 mig=fafc828a exit=0 completed=1 text=d8f556245cf146eb role=child prefix_tokens=14282 suffix_tokens=24 model_ms=1070.5 context_ms=28.9 state_ms=6.23 prefix_ms=0.0 suffix_ms=443.1 first_token_ms=1858.6 generation_ms=44690.9 generated=128 generation_tps=2.864
+AGENT index=3 mig=fafc828a exit=0 completed=1 text=71acfbf3d404f65f role=child prefix_tokens=14282 suffix_tokens=32 model_ms=1126.7 context_ms=30.3 state_ms=6.15 prefix_ms=0.0 suffix_ms=743.7 first_token_ms=2210.8 generation_ms=44571.6 generated=128 generation_tps=2.872
+AGENT index=4 mig=fafc828a exit=0 completed=1 text=43a7e6e2129c1d5c role=child prefix_tokens=14282 suffix_tokens=23 model_ms=1130.5 context_ms=31.6 state_ms=6.13 prefix_ms=0.0 suffix_ms=694.2 first_token_ms=2160.6 generation_ms=44593.3 generated=128 generation_tps=2.870
+AGENT index=5 mig=fafc828a exit=0 completed=1 text=16bf735b822df23b role=child prefix_tokens=14282 suffix_tokens=26 model_ms=1100.0 context_ms=30.7 state_ms=6.30 prefix_ms=0.0 suffix_ms=724.2 first_token_ms=2166.0 generation_ms=44593.6 generated=128 generation_tps=2.870
+AGENT index=6 mig=fafc828a exit=0 completed=1 text=1857c541a9bf5f3c role=child prefix_tokens=14282 suffix_tokens=21 model_ms=1065.5 context_ms=30.6 state_ms=5.78 prefix_ms=0.0 suffix_ms=420.1 first_token_ms=1824.0 generation_ms=44701.0 generated=128 generation_tps=2.863
+AGENT index=7 mig=fafc828a exit=0 completed=1 text=de6c62cdeb25c8c0 role=child prefix_tokens=14282 suffix_tokens=31 model_ms=1121.1 context_ms=36.8 state_ms=6.89 prefix_ms=0.0 suffix_ms=756.1 first_token_ms=2200.5 generation_ms=44551.9 generated=128 generation_tps=2.873
+FAULT alive_at_fault=0 probe_exit=none probe=none
+FILE before=9d6d7bd01279993e after=9d6d7bd01279993e
+END_CASE timed_out=0 mps_servers=0 wall_s=48
+CASE config=timeslice fault=write agents=8
+AGENT index=0 mig=fafc828a exit=0 completed=1 text=7bd70180bbe7ca2f role=child prefix_tokens=14282 suffix_tokens=27 model_ms=1052.3 context_ms=36.8 state_ms=6.40 prefix_ms=0.0 suffix_ms=678.1 first_token_ms=2060.1 generation_ms=44333.1 generated=128 generation_tps=2.887
+AGENT index=1 mig=fafc828a exit=0 completed=1 text=490dc1327d716112 role=child prefix_tokens=14282 suffix_tokens=22 model_ms=1038.4 context_ms=40.7 state_ms=6.22 prefix_ms=0.0 suffix_ms=600.1 first_token_ms=1992.9 generation_ms=44387.1 generated=128 generation_tps=2.884
+AGENT index=2 mig=fafc828a exit=0 completed=1 text=d8f556245cf146eb role=child prefix_tokens=14282 suffix_tokens=24 model_ms=1031.2 context_ms=40.2 state_ms=6.20 prefix_ms=0.0 suffix_ms=584.4 first_token_ms=1959.8 generation_ms=44372.9 generated=128 generation_tps=2.885
+AGENT index=3 mig=fafc828a exit=0 completed=1 text=71acfbf3d404f65f role=child prefix_tokens=14282 suffix_tokens=32 model_ms=736.0 context_ms=27.5 state_ms=6.22 prefix_ms=0.0 suffix_ms=117.4 first_token_ms=1123.9 generation_ms=42719.5 generated=128 generation_tps=2.996
+AGENT index=4 mig=fafc828a exit=0 completed=1 text=43a7e6e2129c1d5c role=child prefix_tokens=14282 suffix_tokens=23 model_ms=1028.8 context_ms=42.7 state_ms=6.32 prefix_ms=0.0 suffix_ms=584.4 first_token_ms=1967.7 generation_ms=44375.5 generated=128 generation_tps=2.884
+AGENT index=5 mig=fafc828a exit=0 completed=1 text=16bf735b822df23b role=child prefix_tokens=14282 suffix_tokens=26 model_ms=1057.2 context_ms=29.6 state_ms=6.10 prefix_ms=0.0 suffix_ms=754.2 first_token_ms=2143.1 generation_ms=44277.7 generated=128 generation_tps=2.891
+AGENT index=6 mig=fafc828a exit=0 completed=1 text=1857c541a9bf5f3c role=child prefix_tokens=14282 suffix_tokens=21 model_ms=1003.9 context_ms=28.6 state_ms=6.33 prefix_ms=0.0 suffix_ms=553.2 first_token_ms=1873.3 generation_ms=44385.0 generated=128 generation_tps=2.884
+AGENT index=7 mig=fafc828a exit=0 completed=1 text=de6c62cdeb25c8c0 role=child prefix_tokens=14282 suffix_tokens=31 model_ms=1042.4 context_ms=35.0 state_ms=6.04 prefix_ms=0.0 suffix_ms=755.2 first_token_ms=2131.9 generation_ms=44278.2 generated=128 generation_tps=2.891
+FAULT alive_at_fault=8 probe_exit=0 probe=route=host,gpu_read=cudaSuccess,words_equal=0,words=16777216,gpu_write=cudaErrorIllegalAddress,file_intact=0
+FILE before=9d6d7bd01279993e after=9d6d7bd01279993e
+END_CASE timed_out=0 mps_servers=0 wall_s=48
+CASE config=timeslice fault=kill agents=8
+STDERR CUDA Graph id 27 reused
+STDERR CUDA Graph id 27 reused
+STDERR CUDA Graph id 27 reused
+AGENT index=0 mig=fafc828a exit=137 completed=0 text=e3b0c44298fc1c14 
+AGENT index=1 mig=fafc828a exit=0 completed=1 text=490dc1327d716112 role=child prefix_tokens=14282 suffix_tokens=22 model_ms=1125.2 context_ms=45.7 state_ms=6.26 prefix_ms=0.0 suffix_ms=610.7 first_token_ms=2094.4 generation_ms=39761.7 generated=128 generation_tps=3.219
+AGENT index=2 mig=fafc828a exit=0 completed=1 text=d8f556245cf146eb role=child prefix_tokens=14282 suffix_tokens=24 model_ms=1117.8 context_ms=49.5 state_ms=6.23 prefix_ms=0.0 suffix_ms=609.6 first_token_ms=2089.8 generation_ms=39761.6 generated=128 generation_tps=3.219
+AGENT index=3 mig=fafc828a exit=0 completed=1 text=71acfbf3d404f65f role=child prefix_tokens=14282 suffix_tokens=32 model_ms=1123.3 context_ms=48.3 state_ms=6.22 prefix_ms=0.0 suffix_ms=682.7 first_token_ms=2165.3 generation_ms=39819.2 generated=128 generation_tps=3.215
+AGENT index=4 mig=fafc828a exit=0 completed=1 text=43a7e6e2129c1d5c role=child prefix_tokens=14282 suffix_tokens=23 model_ms=1134.6 context_ms=39.8 state_ms=6.31 prefix_ms=0.0 suffix_ms=627.7 first_token_ms=2112.0 generation_ms=39837.8 generated=128 generation_tps=3.213
+AGENT index=5 mig=fafc828a exit=0 completed=1 text=16bf735b822df23b role=child prefix_tokens=14282 suffix_tokens=26 model_ms=1120.9 context_ms=39.4 state_ms=6.13 prefix_ms=0.0 suffix_ms=673.4 first_token_ms=2142.3 generation_ms=39819.4 generated=128 generation_tps=3.215
+AGENT index=6 mig=fafc828a exit=0 completed=1 text=1857c541a9bf5f3c role=child prefix_tokens=14282 suffix_tokens=21 model_ms=1139.8 context_ms=38.0 state_ms=6.73 prefix_ms=0.0 suffix_ms=636.9 first_token_ms=2115.1 generation_ms=39842.1 generated=128 generation_tps=3.213
+AGENT index=7 mig=fafc828a exit=0 completed=1 text=de6c62cdeb25c8c0 role=child prefix_tokens=14282 suffix_tokens=31 model_ms=1100.8 context_ms=45.5 state_ms=6.05 prefix_ms=0.0 suffix_ms=644.1 first_token_ms=2098.0 generation_ms=39819.8 generated=128 generation_tps=3.214
+FAULT alive_at_fault=8 probe_exit=none probe=none
+FILE before=9d6d7bd01279993e after=9d6d7bd01279993e
+END_CASE timed_out=0 mps_servers=0 wall_s=43
+CASE config=mps fault=none agents=8
+AGENT index=0 mig=fafc828a exit=0 completed=1 text=7bd70180bbe7ca2f role=child prefix_tokens=14282 suffix_tokens=27 model_ms=795.9 context_ms=28.0 state_ms=6.39 prefix_ms=0.0 suffix_ms=340.1 first_token_ms=1540.6 generation_ms=39405.7 generated=128 generation_tps=3.248
+AGENT index=1 mig=fafc828a exit=0 completed=1 text=490dc1327d716112 role=child prefix_tokens=14282 suffix_tokens=22 model_ms=880.5 context_ms=31.1 state_ms=6.04 prefix_ms=0.0 suffix_ms=575.9 first_token_ms=1926.2 generation_ms=39358.1 generated=128 generation_tps=3.252
+AGENT index=2 mig=fafc828a exit=0 completed=1 text=d8f556245cf146eb role=child prefix_tokens=14282 suffix_tokens=24 model_ms=704.6 context_ms=26.5 state_ms=6.32 prefix_ms=0.0 suffix_ms=103.9 first_token_ms=1167.3 generation_ms=38722.4 generated=128 generation_tps=3.306
+AGENT index=3 mig=fafc828a exit=0 completed=1 text=71acfbf3d404f65f role=child prefix_tokens=14282 suffix_tokens=32 model_ms=906.2 context_ms=31.0 state_ms=6.28 prefix_ms=0.0 suffix_ms=601.5 first_token_ms=1953.4 generation_ms=39343.9 generated=128 generation_tps=3.253
+AGENT index=4 mig=fafc828a exit=0 completed=1 text=43a7e6e2129c1d5c role=child prefix_tokens=14282 suffix_tokens=23 model_ms=866.5 context_ms=28.3 state_ms=6.36 prefix_ms=0.0 suffix_ms=552.4 first_token_ms=1849.1 generation_ms=39387.8 generated=128 generation_tps=3.250
+AGENT index=5 mig=fafc828a exit=0 completed=1 text=16bf735b822df23b role=child prefix_tokens=14282 suffix_tokens=26 model_ms=909.4 context_ms=29.9 state_ms=6.50 prefix_ms=0.0 suffix_ms=584.1 first_token_ms=1935.5 generation_ms=39343.6 generated=128 generation_tps=3.253
+AGENT index=6 mig=fafc828a exit=0 completed=1 text=1857c541a9bf5f3c role=child prefix_tokens=14282 suffix_tokens=21 model_ms=818.2 context_ms=26.3 state_ms=6.22 prefix_ms=0.0 suffix_ms=490.8 first_token_ms=1746.6 generation_ms=39405.3 generated=128 generation_tps=3.248
+AGENT index=7 mig=fafc828a exit=0 completed=1 text=de6c62cdeb25c8c0 role=child prefix_tokens=14282 suffix_tokens=31 model_ms=885.8 context_ms=31.5 state_ms=6.42 prefix_ms=0.0 suffix_ms=575.3 first_token_ms=1899.9 generation_ms=39358.4 generated=128 generation_tps=3.252
+FAULT alive_at_fault=0 probe_exit=none probe=none
+FILE before=9d6d7bd01279993e after=9d6d7bd01279993e
+END_CASE timed_out=0 mps_servers=1 wall_s=42
+CASE config=mps fault=write agents=8
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-kv/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+AGENT index=0 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-kv/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+AGENT index=1 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-kv/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+AGENT index=2 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-kv/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+AGENT index=3 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-kv/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+AGENT index=4 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-kv/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+AGENT index=5 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-kv/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+AGENT index=6 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-kv/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+AGENT index=7 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 
+FAULT alive_at_fault=8 probe_exit=0 probe=route=host,gpu_read=cudaSuccess,words_equal=0,words=16777216,gpu_write=cudaErrorIllegalAddress,file_intact=0
+FILE before=9d6d7bd01279993e after=9d6d7bd01279993e
+END_CASE timed_out=0 mps_servers=1 wall_s=18
+CASE config=mps fault=kill agents=8
+STDERR CUDA Graph id 27 reused
+STDERR CUDA Graph id 27 reused
+STDERR CUDA Graph id 27 reused
+AGENT index=0 mig=fafc828a exit=137 completed=0 text=e3b0c44298fc1c14 
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-kv/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+AGENT index=1 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-kv/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+AGENT index=2 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-kv/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+AGENT index=3 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-kv/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+AGENT index=4 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-kv/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+AGENT index=5 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-kv/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+AGENT index=6 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-kv/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+AGENT index=7 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 
+FAULT alive_at_fault=8 probe_exit=none probe=none
+FILE before=9d6d7bd01279993e after=9d6d7bd01279993e
+END_CASE timed_out=0 mps_servers=1 wall_s=17
+CASE config=mig fault=none agents=8
+AGENT index=0 mig=fafc828a exit=0 completed=1 text=7bd70180bbe7ca2f role=child prefix_tokens=14282 suffix_tokens=27 model_ms=1033.2 context_ms=33.9 state_ms=6.18 prefix_ms=0.0 suffix_ms=363.5 first_token_ms=1739.1 generation_ms=24489.1 generated=128 generation_tps=5.227
+AGENT index=1 mig=31ffbfe4 exit=0 completed=1 text=4a39ecaa0045c102 role=child prefix_tokens=14282 suffix_tokens=22 model_ms=711.1 context_ms=26.9 state_ms=6.23 prefix_ms=0.0 suffix_ms=146.8 first_token_ms=1113.8 generation_ms=36519.6 generated=128 generation_tps=3.505
+AGENT index=2 mig=fafc828a exit=0 completed=1 text=d8f556245cf146eb role=child prefix_tokens=14282 suffix_tokens=24 model_ms=1002.9 context_ms=28.2 state_ms=6.31 prefix_ms=0.0 suffix_ms=197.6 first_token_ms=1532.4 generation_ms=24513.0 generated=128 generation_tps=5.222
+AGENT index=3 mig=31ffbfe4 exit=0 completed=1 text=0a543804112a09a5 role=child prefix_tokens=14282 suffix_tokens=32 model_ms=1062.5 context_ms=35.3 state_ms=6.32 prefix_ms=0.0 suffix_ms=589.7 first_token_ms=1993.6 generation_ms=37045.0 generated=128 generation_tps=3.455
+AGENT index=4 mig=fafc828a exit=0 completed=1 text=43a7e6e2129c1d5c role=child prefix_tokens=14282 suffix_tokens=23 model_ms=1015.6 context_ms=31.9 state_ms=6.17 prefix_ms=0.0 suffix_ms=335.4 first_token_ms=1691.9 generation_ms=24468.7 generated=128 generation_tps=5.231
+AGENT index=5 mig=31ffbfe4 exit=0 completed=1 text=b96900b61349227c role=child prefix_tokens=14282 suffix_tokens=26 model_ms=1038.5 context_ms=36.7 state_ms=7.04 prefix_ms=0.0 suffix_ms=571.6 first_token_ms=1955.1 generation_ms=37086.6 generated=128 generation_tps=3.451
+AGENT index=6 mig=fafc828a exit=0 completed=1 text=1857c541a9bf5f3c role=child prefix_tokens=14282 suffix_tokens=21 model_ms=1050.7 context_ms=30.9 state_ms=6.48 prefix_ms=0.0 suffix_ms=356.0 first_token_ms=1731.9 generation_ms=24477.3 generated=128 generation_tps=5.229
+AGENT index=7 mig=31ffbfe4 exit=0 completed=1 text=de6c62cdeb25c8c0 role=child prefix_tokens=14282 suffix_tokens=31 model_ms=1019.1 context_ms=27.3 state_ms=6.20 prefix_ms=0.0 suffix_ms=521.2 first_token_ms=1860.9 generation_ms=37097.6 generated=128 generation_tps=3.450
+FAULT alive_at_fault=0 probe_exit=none probe=none
+FILE before=9d6d7bd01279993e after=9d6d7bd01279993e
+END_CASE timed_out=0 mps_servers=0 wall_s=40
+CASE config=mig fault=write agents=8
+AGENT index=0 mig=fafc828a exit=0 completed=1 text=7bd70180bbe7ca2f role=child prefix_tokens=14282 suffix_tokens=27 model_ms=986.1 context_ms=25.8 state_ms=5.90 prefix_ms=0.0 suffix_ms=118.0 first_token_ms=1399.8 generation_ms=24416.4 generated=128 generation_tps=5.242
+AGENT index=1 mig=31ffbfe4 exit=0 completed=1 text=4a39ecaa0045c102 role=child prefix_tokens=14282 suffix_tokens=22 model_ms=1022.4 context_ms=28.4 state_ms=6.28 prefix_ms=0.0 suffix_ms=342.6 first_token_ms=1691.2 generation_ms=37533.0 generated=128 generation_tps=3.410
+AGENT index=2 mig=fafc828a exit=0 completed=1 text=d8f556245cf146eb role=child prefix_tokens=14282 suffix_tokens=24 model_ms=1059.1 context_ms=29.3 state_ms=6.40 prefix_ms=0.0 suffix_ms=359.7 first_token_ms=1759.0 generation_ms=24405.9 generated=128 generation_tps=5.245
+AGENT index=3 mig=31ffbfe4 exit=0 completed=1 text=0a543804112a09a5 role=child prefix_tokens=14282 suffix_tokens=32 model_ms=1014.0 context_ms=35.9 state_ms=6.25 prefix_ms=0.0 suffix_ms=547.8 first_token_ms=1911.5 generation_ms=37489.3 generated=128 generation_tps=3.414
+AGENT index=4 mig=fafc828a exit=0 completed=1 text=43a7e6e2129c1d5c role=child prefix_tokens=14282 suffix_tokens=23 model_ms=1021.8 context_ms=39.5 state_ms=6.40 prefix_ms=0.0 suffix_ms=253.5 first_token_ms=1617.5 generation_ms=24467.9 generated=128 generation_tps=5.231
+AGENT index=5 mig=31ffbfe4 exit=0 completed=1 text=b96900b61349227c role=child prefix_tokens=14282 suffix_tokens=26 model_ms=1072.2 context_ms=32.9 state_ms=6.31 prefix_ms=0.0 suffix_ms=581.6 first_token_ms=2001.1 generation_ms=37448.2 generated=128 generation_tps=3.418
+AGENT index=6 mig=fafc828a exit=0 completed=1 text=1857c541a9bf5f3c role=child prefix_tokens=14282 suffix_tokens=21 model_ms=1071.8 context_ms=33.4 state_ms=6.21 prefix_ms=0.0 suffix_ms=365.5 first_token_ms=1782.4 generation_ms=24416.2 generated=128 generation_tps=5.242
+AGENT index=7 mig=31ffbfe4 exit=0 completed=1 text=de6c62cdeb25c8c0 role=child prefix_tokens=14282 suffix_tokens=31 model_ms=1037.0 context_ms=31.8 state_ms=6.36 prefix_ms=0.0 suffix_ms=568.1 first_token_ms=1925.8 generation_ms=37483.3 generated=128 generation_tps=3.415
+FAULT alive_at_fault=8 probe_exit=0 probe=route=host,gpu_read=cudaSuccess,words_equal=0,words=16777216,gpu_write=cudaErrorIllegalAddress,file_intact=0
+FILE before=9d6d7bd01279993e after=9d6d7bd01279993e
+END_CASE timed_out=0 mps_servers=0 wall_s=41
+CASE config=mig fault=kill agents=8
+STDERR CUDA Graph id 30 reused
+STDERR CUDA Graph id 30 reused
+STDERR CUDA Graph id 30 reused
+AGENT index=0 mig=fafc828a exit=137 completed=0 text=e3b0c44298fc1c14 
+AGENT index=1 mig=31ffbfe4 exit=0 completed=1 text=4a39ecaa0045c102 role=child prefix_tokens=14282 suffix_tokens=22 model_ms=1072.7 context_ms=39.1 state_ms=6.21 prefix_ms=0.0 suffix_ms=551.7 first_token_ms=1951.7 generation_ms=37082.3 generated=128 generation_tps=3.452
+AGENT index=2 mig=fafc828a exit=0 completed=1 text=d8f556245cf146eb role=child prefix_tokens=14282 suffix_tokens=24 model_ms=1039.6 context_ms=41.9 state_ms=6.18 prefix_ms=0.0 suffix_ms=350.1 first_token_ms=1735.4 generation_ms=19907.8 generated=128 generation_tps=6.430
+AGENT index=3 mig=31ffbfe4 exit=0 completed=1 text=0a543804112a09a5 role=child prefix_tokens=14282 suffix_tokens=32 model_ms=1054.1 context_ms=41.4 state_ms=6.20 prefix_ms=0.0 suffix_ms=563.0 first_token_ms=1949.8 generation_ms=37086.2 generated=128 generation_tps=3.451
+AGENT index=4 mig=fafc828a exit=0 completed=1 text=43a7e6e2129c1d5c role=child prefix_tokens=14282 suffix_tokens=23 model_ms=1059.9 context_ms=30.9 state_ms=6.07 prefix_ms=0.0 suffix_ms=349.6 first_token_ms=1740.4 generation_ms=19902.2 generated=128 generation_tps=6.431
+AGENT index=5 mig=31ffbfe4 exit=0 completed=1 text=b96900b61349227c role=child prefix_tokens=14282 suffix_tokens=26 model_ms=957.6 context_ms=27.6 state_ms=6.51 prefix_ms=0.0 suffix_ms=232.2 first_token_ms=1517.7 generation_ms=37087.2 generated=128 generation_tps=3.451
+AGENT index=6 mig=fafc828a exit=0 completed=1 text=1857c541a9bf5f3c role=child prefix_tokens=14282 suffix_tokens=21 model_ms=1006.2 context_ms=28.7 state_ms=6.03 prefix_ms=0.0 suffix_ms=303.3 first_token_ms=1641.8 generation_ms=19925.7 generated=128 generation_tps=6.424
+AGENT index=7 mig=31ffbfe4 exit=0 completed=1 text=de6c62cdeb25c8c0 role=child prefix_tokens=14282 suffix_tokens=31 model_ms=1047.0 context_ms=41.3 state_ms=6.21 prefix_ms=0.0 suffix_ms=566.5 first_token_ms=1939.6 generation_ms=37087.3 generated=128 generation_tps=3.451
+FAULT alive_at_fault=8 probe_exit=none probe=none
+FILE before=9d6d7bd01279993e after=9d6d7bd01279993e
+END_CASE timed_out=0 mps_servers=0 wall_s=41
+CASE config=mig_mps fault=none agents=8
+AGENT index=0 mig=fafc828a exit=0 completed=1 text=7bd70180bbe7ca2f role=child prefix_tokens=14282 suffix_tokens=27 model_ms=939.1 context_ms=30.0 state_ms=6.24 prefix_ms=0.0 suffix_ms=249.6 first_token_ms=1675.0 generation_ms=21879.1 generated=128 generation_tps=5.850
+AGENT index=1 mig=31ffbfe4 exit=0 completed=1 text=4a39ecaa0045c102 role=child prefix_tokens=14282 suffix_tokens=22 model_ms=958.8 context_ms=31.3 state_ms=6.48 prefix_ms=0.0 suffix_ms=499.4 first_token_ms=1987.8 generation_ms=33703.4 generated=128 generation_tps=3.798
+AGENT index=2 mig=fafc828a exit=0 completed=1 text=d8f556245cf146eb role=child prefix_tokens=14282 suffix_tokens=24 model_ms=917.5 context_ms=31.1 state_ms=6.36 prefix_ms=0.0 suffix_ms=253.0 first_token_ms=1671.0 generation_ms=21882.5 generated=128 generation_tps=5.849
+AGENT index=3 mig=31ffbfe4 exit=0 completed=1 text=0a543804112a09a5 role=child prefix_tokens=14282 suffix_tokens=32 model_ms=907.8 context_ms=33.3 state_ms=6.66 prefix_ms=0.0 suffix_ms=478.2 first_token_ms=1930.6 generation_ms=33743.4 generated=128 generation_tps=3.793
+AGENT index=4 mig=fafc828a exit=0 completed=1 text=43a7e6e2129c1d5c role=child prefix_tokens=14282 suffix_tokens=23 model_ms=921.8 context_ms=32.4 state_ms=6.35 prefix_ms=0.0 suffix_ms=296.1 first_token_ms=1760.5 generation_ms=21872.7 generated=128 generation_tps=5.852
+AGENT index=5 mig=31ffbfe4 exit=0 completed=1 text=b96900b61349227c role=child prefix_tokens=14282 suffix_tokens=26 model_ms=880.6 context_ms=31.9 state_ms=5.92 prefix_ms=0.0 suffix_ms=456.2 first_token_ms=1874.4 generation_ms=33748.5 generated=128 generation_tps=3.793
+AGENT index=6 mig=fafc828a exit=0 completed=1 text=1857c541a9bf5f3c role=child prefix_tokens=14282 suffix_tokens=21 model_ms=923.3 context_ms=31.1 state_ms=6.46 prefix_ms=0.0 suffix_ms=298.7 first_token_ms=1754.0 generation_ms=21869.6 generated=128 generation_tps=5.853
+AGENT index=7 mig=31ffbfe4 exit=0 completed=1 text=de6c62cdeb25c8c0 role=child prefix_tokens=14282 suffix_tokens=31 model_ms=877.0 context_ms=32.6 state_ms=6.47 prefix_ms=0.0 suffix_ms=444.9 first_token_ms=1855.3 generation_ms=33746.8 generated=128 generation_tps=3.793
+FAULT alive_at_fault=0 probe_exit=none probe=none
+FILE before=9d6d7bd01279993e after=9d6d7bd01279993e
+END_CASE timed_out=0 mps_servers=2 wall_s=38
+CASE config=mig_mps fault=write agents=8
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-kv/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+AGENT index=0 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 
+AGENT index=1 mig=31ffbfe4 exit=0 completed=1 text=4a39ecaa0045c102 role=child prefix_tokens=14282 suffix_tokens=22 model_ms=901.0 context_ms=37.7 state_ms=6.69 prefix_ms=0.0 suffix_ms=525.1 first_token_ms=1952.0 generation_ms=32488.3 generated=128 generation_tps=3.940
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-kv/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+AGENT index=2 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 
+AGENT index=3 mig=31ffbfe4 exit=0 completed=1 text=0a543804112a09a5 role=child prefix_tokens=14282 suffix_tokens=32 model_ms=764.6 context_ms=29.1 state_ms=5.98 prefix_ms=0.0 suffix_ms=156.6 first_token_ms=1405.7 generation_ms=32547.2 generated=128 generation_tps=3.933
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-kv/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+AGENT index=4 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 
+AGENT index=5 mig=31ffbfe4 exit=0 completed=1 text=b96900b61349227c role=child prefix_tokens=14282 suffix_tokens=26 model_ms=841.6 context_ms=28.6 state_ms=6.59 prefix_ms=0.0 suffix_ms=526.5 first_token_ms=1887.2 generation_ms=32510.5 generated=128 generation_tps=3.937
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-kv/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+AGENT index=6 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 
+AGENT index=7 mig=31ffbfe4 exit=0 completed=1 text=de6c62cdeb25c8c0 role=child prefix_tokens=14282 suffix_tokens=31 model_ms=845.2 context_ms=29.2 state_ms=6.43 prefix_ms=0.0 suffix_ms=513.8 first_token_ms=1880.7 generation_ms=32541.4 generated=128 generation_tps=3.933
+FAULT alive_at_fault=8 probe_exit=0 probe=route=host,gpu_read=cudaSuccess,words_equal=0,words=16777216,gpu_write=cudaErrorIllegalAddress,file_intact=0
+FILE before=9d6d7bd01279993e after=9d6d7bd01279993e
+END_CASE timed_out=0 mps_servers=2 wall_s=36
+CASE config=mig_mps fault=kill agents=8
+STDERR CUDA Graph id 30 reused
+STDERR CUDA Graph id 30 reused
+STDERR CUDA Graph id 30 reused
+AGENT index=0 mig=fafc828a exit=137 completed=0 text=e3b0c44298fc1c14 
+AGENT index=1 mig=31ffbfe4 exit=0 completed=1 text=4a39ecaa0045c102 role=child prefix_tokens=14282 suffix_tokens=22 model_ms=894.1 context_ms=38.1 state_ms=6.22 prefix_ms=0.0 suffix_ms=476.5 first_token_ms=1903.5 generation_ms=33464.9 generated=128 generation_tps=3.825
+AGENT index=2 mig=fafc828a exit=0 completed=1 text=d8f556245cf146eb role=child prefix_tokens=14282 suffix_tokens=24 model_ms=946.5 context_ms=31.7 state_ms=6.57 prefix_ms=0.0 suffix_ms=291.0 first_token_ms=1725.8 generation_ms=18050.1 generated=128 generation_tps=7.091
+AGENT index=3 mig=31ffbfe4 exit=0 completed=1 text=0a543804112a09a5 role=child prefix_tokens=14282 suffix_tokens=32 model_ms=876.2 context_ms=33.9 state_ms=6.05 prefix_ms=0.0 suffix_ms=460.9 first_token_ms=1870.5 generation_ms=33503.4 generated=128 generation_tps=3.821
+AGENT index=4 mig=fafc828a exit=0 completed=1 text=43a7e6e2129c1d5c role=child prefix_tokens=14282 suffix_tokens=23 model_ms=876.2 context_ms=37.0 state_ms=5.91 prefix_ms=0.0 suffix_ms=277.2 first_token_ms=1689.3 generation_ms=18053.7 generated=128 generation_tps=7.090
+AGENT index=5 mig=31ffbfe4 exit=0 completed=1 text=b96900b61349227c role=child prefix_tokens=14282 suffix_tokens=26 model_ms=903.6 context_ms=31.3 state_ms=6.61 prefix_ms=0.0 suffix_ms=481.8 first_token_ms=1919.4 generation_ms=33461.8 generated=128 generation_tps=3.825
+AGENT index=6 mig=fafc828a exit=0 completed=1 text=1857c541a9bf5f3c role=child prefix_tokens=14282 suffix_tokens=21 model_ms=864.1 context_ms=33.2 state_ms=6.29 prefix_ms=0.0 suffix_ms=275.3 first_token_ms=1664.7 generation_ms=18073.1 generated=128 generation_tps=7.082
+AGENT index=7 mig=31ffbfe4 exit=0 completed=1 text=de6c62cdeb25c8c0 role=child prefix_tokens=14282 suffix_tokens=31 model_ms=866.9 context_ms=38.9 state_ms=6.38 prefix_ms=0.0 suffix_ms=466.4 first_token_ms=1862.9 generation_ms=33464.7 generated=128 generation_tps=3.825
+FAULT alive_at_fault=8 probe_exit=none probe=none
+FILE before=9d6d7bd01279993e after=9d6d7bd01279993e
+END_CASE timed_out=0 mps_servers=2 wall_s=37
+END_KVFAULT
+BEGIN_KVFAULT run=2 prefix_tokens=14282
+CASE config=mig_mps fault=none agents=8
+AGENT index=0 mig=fafc828a exit=0 completed=1 text=7bd70180bbe7ca2f role=child prefix_tokens=14282 suffix_tokens=27 model_ms=966.4 context_ms=33.8 state_ms=6.35 prefix_ms=0.0 suffix_ms=269.1 first_token_ms=1712.8 generation_ms=21892.8 generated=128 generation_tps=5.847
+AGENT index=1 mig=31ffbfe4 exit=0 completed=1 text=4a39ecaa0045c102 role=child prefix_tokens=14282 suffix_tokens=22 model_ms=906.5 context_ms=48.7 state_ms=6.13 prefix_ms=0.0 suffix_ms=476.3 first_token_ms=1943.2 generation_ms=33760.0 generated=128 generation_tps=3.791
+AGENT index=2 mig=fafc828a exit=0 completed=1 text=d8f556245cf146eb role=child prefix_tokens=14282 suffix_tokens=24 model_ms=952.3 context_ms=44.9 state_ms=6.10 prefix_ms=0.0 suffix_ms=281.8 first_token_ms=1736.0 generation_ms=21914.0 generated=128 generation_tps=5.841
+AGENT index=3 mig=31ffbfe4 exit=0 completed=1 text=0a543804112a09a5 role=child prefix_tokens=14282 suffix_tokens=32 model_ms=915.1 context_ms=51.5 state_ms=6.12 prefix_ms=0.0 suffix_ms=466.6 first_token_ms=1915.4 generation_ms=33758.5 generated=128 generation_tps=3.792
+AGENT index=4 mig=fafc828a exit=0 completed=1 text=43a7e6e2129c1d5c role=child prefix_tokens=14282 suffix_tokens=23 model_ms=900.8 context_ms=45.0 state_ms=6.98 prefix_ms=0.0 suffix_ms=278.4 first_token_ms=1717.3 generation_ms=21903.3 generated=128 generation_tps=5.844
+AGENT index=5 mig=31ffbfe4 exit=0 completed=1 text=b96900b61349227c role=child prefix_tokens=14282 suffix_tokens=26 model_ms=923.6 context_ms=33.0 state_ms=6.63 prefix_ms=0.0 suffix_ms=471.4 first_token_ms=1925.3 generation_ms=33728.6 generated=128 generation_tps=3.795
+AGENT index=6 mig=fafc828a exit=0 completed=1 text=1857c541a9bf5f3c role=child prefix_tokens=14282 suffix_tokens=21 model_ms=897.2 context_ms=52.2 state_ms=7.59 prefix_ms=0.0 suffix_ms=297.4 first_token_ms=1741.6 generation_ms=21884.0 generated=128 generation_tps=5.849
+AGENT index=7 mig=31ffbfe4 exit=0 completed=1 text=de6c62cdeb25c8c0 role=child prefix_tokens=14282 suffix_tokens=31 model_ms=892.3 context_ms=33.7 state_ms=6.34 prefix_ms=0.0 suffix_ms=440.5 first_token_ms=1861.9 generation_ms=33811.9 generated=128 generation_tps=3.786
+FAULT alive_at_fault=0 probe_exit=none probe=none
+FILE before=9d6d7bd01279993e after=9d6d7bd01279993e
+END_CASE timed_out=0 mps_servers=2 wall_s=37
+CASE config=mig_mps fault=write agents=8
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-kv/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+AGENT index=0 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 
+AGENT index=1 mig=31ffbfe4 exit=0 completed=1 text=4a39ecaa0045c102 role=child prefix_tokens=14282 suffix_tokens=22 model_ms=911.0 context_ms=29.6 state_ms=6.18 prefix_ms=0.0 suffix_ms=376.7 first_token_ms=1774.4 generation_ms=32599.4 generated=128 generation_tps=3.926
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-kv/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+AGENT index=2 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 
+AGENT index=3 mig=31ffbfe4 exit=0 completed=1 text=0a543804112a09a5 role=child prefix_tokens=14282 suffix_tokens=32 model_ms=890.8 context_ms=32.2 state_ms=6.61 prefix_ms=0.0 suffix_ms=455.0 first_token_ms=1874.4 generation_ms=32671.2 generated=128 generation_tps=3.918
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-kv/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+AGENT index=4 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 
+AGENT index=5 mig=31ffbfe4 exit=0 completed=1 text=b96900b61349227c role=child prefix_tokens=14282 suffix_tokens=26 model_ms=921.8 context_ms=30.6 state_ms=6.34 prefix_ms=0.0 suffix_ms=486.0 first_token_ms=1932.5 generation_ms=32594.3 generated=128 generation_tps=3.927
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-kv/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+AGENT index=6 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 
+AGENT index=7 mig=31ffbfe4 exit=0 completed=1 text=de6c62cdeb25c8c0 role=child prefix_tokens=14282 suffix_tokens=31 model_ms=925.0 context_ms=36.8 state_ms=6.47 prefix_ms=0.0 suffix_ms=490.0 first_token_ms=1937.8 generation_ms=32596.5 generated=128 generation_tps=3.927
+FAULT alive_at_fault=8 probe_exit=0 probe=route=host,gpu_read=cudaSuccess,words_equal=0,words=16777216,gpu_write=cudaErrorIllegalAddress,file_intact=0
+FILE before=9d6d7bd01279993e after=9d6d7bd01279993e
+END_CASE timed_out=0 mps_servers=2 wall_s=36
+CASE config=mig_mps fault=kill agents=8
+STDERR CUDA Graph id 30 reused
+STDERR CUDA Graph id 30 reused
+STDERR CUDA Graph id 30 reused
+AGENT index=0 mig=fafc828a exit=137 completed=0 text=e3b0c44298fc1c14 
+AGENT index=1 mig=31ffbfe4 exit=0 completed=1 text=4a39ecaa0045c102 role=child prefix_tokens=14282 suffix_tokens=22 model_ms=886.7 context_ms=33.5 state_ms=6.29 prefix_ms=0.0 suffix_ms=470.6 first_token_ms=1900.9 generation_ms=32656.1 generated=128 generation_tps=3.920
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-kv/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+AGENT index=2 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 
+AGENT index=3 mig=31ffbfe4 exit=0 completed=1 text=0a543804112a09a5 role=child prefix_tokens=14282 suffix_tokens=32 model_ms=940.6 context_ms=37.3 state_ms=7.53 prefix_ms=0.0 suffix_ms=466.4 first_token_ms=1907.0 generation_ms=32638.9 generated=128 generation_tps=3.922
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-kv/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+AGENT index=4 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 
+AGENT index=5 mig=31ffbfe4 exit=0 completed=1 text=b96900b61349227c role=child prefix_tokens=14282 suffix_tokens=26 model_ms=878.7 context_ms=34.8 state_ms=6.55 prefix_ms=0.0 suffix_ms=465.2 first_token_ms=1873.8 generation_ms=32631.9 generated=128 generation_tps=3.923
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-kv/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+AGENT index=6 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 
+AGENT index=7 mig=31ffbfe4 exit=0 completed=1 text=de6c62cdeb25c8c0 role=child prefix_tokens=14282 suffix_tokens=31 model_ms=883.0 context_ms=32.1 state_ms=6.56 prefix_ms=0.0 suffix_ms=469.9 first_token_ms=1883.7 generation_ms=32631.0 generated=128 generation_tps=3.923
+FAULT alive_at_fault=8 probe_exit=none probe=none
+FILE before=9d6d7bd01279993e after=9d6d7bd01279993e
+END_CASE timed_out=0 mps_servers=2 wall_s=35
+CASE config=mig fault=none agents=8
+AGENT index=0 mig=fafc828a exit=0 completed=1 text=7bd70180bbe7ca2f role=child prefix_tokens=14282 suffix_tokens=27 model_ms=1005.9 context_ms=25.8 state_ms=6.10 prefix_ms=0.0 suffix_ms=133.6 first_token_ms=1446.2 generation_ms=24385.0 generated=128 generation_tps=5.249
+AGENT index=1 mig=31ffbfe4 exit=0 completed=1 text=4a39ecaa0045c102 role=child prefix_tokens=14282 suffix_tokens=22 model_ms=1067.7 context_ms=29.8 state_ms=6.25 prefix_ms=0.0 suffix_ms=472.6 first_token_ms=1872.3 generation_ms=37460.3 generated=128 generation_tps=3.417
+AGENT index=2 mig=fafc828a exit=0 completed=1 text=d8f556245cf146eb role=child prefix_tokens=14282 suffix_tokens=24 model_ms=1019.3 context_ms=26.6 state_ms=6.16 prefix_ms=0.0 suffix_ms=227.4 first_token_ms=1577.6 generation_ms=24499.1 generated=128 generation_tps=5.225
+AGENT index=3 mig=31ffbfe4 exit=0 completed=1 text=0a543804112a09a5 role=child prefix_tokens=14282 suffix_tokens=32 model_ms=1035.3 context_ms=26.5 state_ms=6.03 prefix_ms=0.0 suffix_ms=350.9 first_token_ms=1715.2 generation_ms=37552.6 generated=128 generation_tps=3.409
+AGENT index=4 mig=fafc828a exit=0 completed=1 text=43a7e6e2129c1d5c role=child prefix_tokens=14282 suffix_tokens=23 model_ms=1077.7 context_ms=36.1 state_ms=6.12 prefix_ms=0.0 suffix_ms=341.9 first_token_ms=1755.4 generation_ms=24384.9 generated=128 generation_tps=5.249
+AGENT index=5 mig=31ffbfe4 exit=0 completed=1 text=b96900b61349227c role=child prefix_tokens=14282 suffix_tokens=26 model_ms=1092.4 context_ms=38.5 state_ms=6.65 prefix_ms=0.0 suffix_ms=587.2 first_token_ms=2020.0 generation_ms=37421.3 generated=128 generation_tps=3.421
+AGENT index=6 mig=fafc828a exit=0 completed=1 text=1857c541a9bf5f3c role=child prefix_tokens=14282 suffix_tokens=21 model_ms=1075.7 context_ms=35.8 state_ms=6.56 prefix_ms=0.0 suffix_ms=350.5 first_token_ms=1759.9 generation_ms=24395.5 generated=128 generation_tps=5.247
+AGENT index=7 mig=31ffbfe4 exit=0 completed=1 text=de6c62cdeb25c8c0 role=child prefix_tokens=14282 suffix_tokens=31 model_ms=1098.0 context_ms=39.3 state_ms=6.34 prefix_ms=0.0 suffix_ms=597.9 first_token_ms=2017.1 generation_ms=37418.8 generated=128 generation_tps=3.421
+FAULT alive_at_fault=0 probe_exit=none probe=none
+FILE before=9d6d7bd01279993e after=9d6d7bd01279993e
+END_CASE timed_out=0 mps_servers=0 wall_s=41
+CASE config=mig fault=write agents=8
+AGENT index=0 mig=fafc828a exit=0 completed=1 text=7bd70180bbe7ca2f role=child prefix_tokens=14282 suffix_tokens=27 model_ms=1085.8 context_ms=33.4 state_ms=6.12 prefix_ms=0.0 suffix_ms=300.8 first_token_ms=1728.3 generation_ms=24531.4 generated=128 generation_tps=5.218
+AGENT index=1 mig=31ffbfe4 exit=0 completed=1 text=4a39ecaa0045c102 role=child prefix_tokens=14282 suffix_tokens=22 model_ms=1122.5 context_ms=38.6 state_ms=6.31 prefix_ms=0.0 suffix_ms=517.2 first_token_ms=1994.9 generation_ms=37395.8 generated=128 generation_tps=3.423
+AGENT index=2 mig=fafc828a exit=0 completed=1 text=d8f556245cf146eb role=child prefix_tokens=14282 suffix_tokens=24 model_ms=1077.4 context_ms=35.0 state_ms=6.21 prefix_ms=0.0 suffix_ms=290.2 first_token_ms=1716.6 generation_ms=24553.3 generated=128 generation_tps=5.213
+AGENT index=3 mig=31ffbfe4 exit=0 completed=1 text=0a543804112a09a5 role=child prefix_tokens=14282 suffix_tokens=32 model_ms=1124.0 context_ms=40.6 state_ms=6.37 prefix_ms=0.0 suffix_ms=571.8 first_token_ms=2053.0 generation_ms=37511.4 generated=128 generation_tps=3.412
+AGENT index=4 mig=fafc828a exit=0 completed=1 text=43a7e6e2129c1d5c role=child prefix_tokens=14282 suffix_tokens=23 model_ms=1119.7 context_ms=36.2 state_ms=6.30 prefix_ms=0.0 suffix_ms=367.3 first_token_ms=1826.2 generation_ms=24493.1 generated=128 generation_tps=5.226
+AGENT index=5 mig=31ffbfe4 exit=0 completed=1 text=b96900b61349227c role=child prefix_tokens=14282 suffix_tokens=26 model_ms=1113.1 context_ms=39.0 state_ms=6.08 prefix_ms=0.0 suffix_ms=562.1 first_token_ms=2027.1 generation_ms=37540.2 generated=128 generation_tps=3.410
+AGENT index=6 mig=fafc828a exit=0 completed=1 text=1857c541a9bf5f3c role=child prefix_tokens=14282 suffix_tokens=21 model_ms=1065.9 context_ms=35.3 state_ms=6.47 prefix_ms=0.0 suffix_ms=317.8 first_token_ms=1720.5 generation_ms=24550.4 generated=128 generation_tps=5.214
+AGENT index=7 mig=31ffbfe4 exit=0 completed=1 text=de6c62cdeb25c8c0 role=child prefix_tokens=14282 suffix_tokens=31 model_ms=1117.0 context_ms=41.1 state_ms=6.36 prefix_ms=0.0 suffix_ms=570.2 first_token_ms=2033.2 generation_ms=37455.2 generated=128 generation_tps=3.417
+FAULT alive_at_fault=8 probe_exit=0 probe=route=host,gpu_read=cudaSuccess,words_equal=0,words=16777216,gpu_write=cudaErrorIllegalAddress,file_intact=0
+FILE before=9d6d7bd01279993e after=9d6d7bd01279993e
+END_CASE timed_out=0 mps_servers=0 wall_s=41
+CASE config=mig fault=kill agents=8
+STDERR CUDA Graph id 30 reused
+STDERR CUDA Graph id 30 reused
+STDERR CUDA Graph id 30 reused
+AGENT index=0 mig=fafc828a exit=137 completed=0 text=e3b0c44298fc1c14 
+AGENT index=1 mig=31ffbfe4 exit=0 completed=1 text=4a39ecaa0045c102 role=child prefix_tokens=14282 suffix_tokens=22 model_ms=1021.7 context_ms=27.3 state_ms=6.22 prefix_ms=0.0 suffix_ms=246.0 first_token_ms=1603.2 generation_ms=37130.1 generated=128 generation_tps=3.447
+AGENT index=2 mig=fafc828a exit=0 completed=1 text=d8f556245cf146eb role=child prefix_tokens=14282 suffix_tokens=24 model_ms=1090.4 context_ms=29.9 state_ms=6.50 prefix_ms=0.0 suffix_ms=337.2 first_token_ms=1771.5 generation_ms=19889.8 generated=128 generation_tps=6.435
+AGENT index=3 mig=31ffbfe4 exit=0 completed=1 text=0a543804112a09a5 role=child prefix_tokens=14282 suffix_tokens=32 model_ms=1098.9 context_ms=32.3 state_ms=6.18 prefix_ms=0.0 suffix_ms=558.1 first_token_ms=1997.3 generation_ms=37075.7 generated=128 generation_tps=3.452
+AGENT index=4 mig=fafc828a exit=0 completed=1 text=43a7e6e2129c1d5c role=child prefix_tokens=14282 suffix_tokens=23 model_ms=1039.4 context_ms=26.1 state_ms=6.14 prefix_ms=0.0 suffix_ms=313.1 first_token_ms=1689.8 generation_ms=19891.5 generated=128 generation_tps=6.435
+AGENT index=5 mig=31ffbfe4 exit=0 completed=1 text=b96900b61349227c role=child prefix_tokens=14282 suffix_tokens=26 model_ms=1105.8 context_ms=29.2 state_ms=6.36 prefix_ms=0.0 suffix_ms=565.7 first_token_ms=2011.6 generation_ms=37067.7 generated=128 generation_tps=3.453
+AGENT index=6 mig=fafc828a exit=0 completed=1 text=1857c541a9bf5f3c role=child prefix_tokens=14282 suffix_tokens=21 model_ms=1075.2 context_ms=31.2 state_ms=6.26 prefix_ms=0.0 suffix_ms=332.7 first_token_ms=1734.6 generation_ms=19877.0 generated=128 generation_tps=6.440
+AGENT index=7 mig=31ffbfe4 exit=0 completed=1 text=de6c62cdeb25c8c0 role=child prefix_tokens=14282 suffix_tokens=31 model_ms=1056.4 context_ms=31.9 state_ms=6.73 prefix_ms=0.0 suffix_ms=544.8 first_token_ms=1937.4 generation_ms=37041.0 generated=128 generation_tps=3.456
+FAULT alive_at_fault=8 probe_exit=none probe=none
+FILE before=9d6d7bd01279993e after=9d6d7bd01279993e
+END_CASE timed_out=0 mps_servers=0 wall_s=41
+CASE config=mps fault=none agents=8
+AGENT index=0 mig=fafc828a exit=0 completed=1 text=7bd70180bbe7ca2f role=child prefix_tokens=14282 suffix_tokens=27 model_ms=760.6 context_ms=30.6 state_ms=6.40 prefix_ms=0.0 suffix_ms=165.9 first_token_ms=1250.1 generation_ms=39277.4 generated=128 generation_tps=3.259
+AGENT index=1 mig=fafc828a exit=0 completed=1 text=490dc1327d716112 role=child prefix_tokens=14282 suffix_tokens=22 model_ms=826.5 context_ms=30.1 state_ms=6.25 prefix_ms=0.0 suffix_ms=169.8 first_token_ms=1245.7 generation_ms=39304.1 generated=128 generation_tps=3.257
+AGENT index=2 mig=fafc828a exit=0 completed=1 text=d8f556245cf146eb role=child prefix_tokens=14282 suffix_tokens=24 model_ms=771.3 context_ms=26.6 state_ms=6.22 prefix_ms=0.0 suffix_ms=439.2 first_token_ms=1664.9 generation_ms=39439.2 generated=128 generation_tps=3.246
+AGENT index=3 mig=fafc828a exit=0 completed=1 text=71acfbf3d404f65f role=child prefix_tokens=14282 suffix_tokens=32 model_ms=883.2 context_ms=36.7 state_ms=6.26 prefix_ms=0.0 suffix_ms=591.6 first_token_ms=1943.8 generation_ms=39320.3 generated=128 generation_tps=3.255
+AGENT index=4 mig=fafc828a exit=0 completed=1 text=43a7e6e2129c1d5c role=child prefix_tokens=14282 suffix_tokens=23 model_ms=868.7 context_ms=32.0 state_ms=6.53 prefix_ms=0.0 suffix_ms=577.6 first_token_ms=1912.6 generation_ms=39353.5 generated=128 generation_tps=3.253
+AGENT index=5 mig=fafc828a exit=0 completed=1 text=16bf735b822df23b role=child prefix_tokens=14282 suffix_tokens=26 model_ms=879.3 context_ms=32.4 state_ms=6.35 prefix_ms=0.0 suffix_ms=586.5 first_token_ms=1908.8 generation_ms=39361.7 generated=128 generation_tps=3.252
+AGENT index=6 mig=fafc828a exit=0 completed=1 text=1857c541a9bf5f3c role=child prefix_tokens=14282 suffix_tokens=21 model_ms=874.6 context_ms=26.9 state_ms=6.29 prefix_ms=0.0 suffix_ms=551.5 first_token_ms=1825.5 generation_ms=39414.5 generated=128 generation_tps=3.248
+AGENT index=7 mig=fafc828a exit=0 completed=1 text=de6c62cdeb25c8c0 role=child prefix_tokens=14282 suffix_tokens=31 model_ms=872.3 context_ms=33.9 state_ms=6.25 prefix_ms=0.0 suffix_ms=599.7 first_token_ms=1931.7 generation_ms=39341.5 generated=128 generation_tps=3.254
+FAULT alive_at_fault=0 probe_exit=none probe=none
+FILE before=9d6d7bd01279993e after=9d6d7bd01279993e
+END_CASE timed_out=0 mps_servers=1 wall_s=42
+CASE config=mps fault=write agents=8
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-kv/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+AGENT index=0 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-kv/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+AGENT index=1 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 
+STDERR   cudaStreamSynchronize(((cudaStream_t)0x2))
+STDERR /home/thor/kcj/llm_share/llama.cpp-kv/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+AGENT index=2 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-kv/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+AGENT index=3 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-kv/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+AGENT index=4 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-kv/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+AGENT index=5 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-kv/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+AGENT index=6 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-kv/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+AGENT index=7 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 
+FAULT alive_at_fault=8 probe_exit=0 probe=route=host,gpu_read=cudaSuccess,words_equal=0,words=16777216,gpu_write=cudaErrorIllegalAddress,file_intact=0
+FILE before=9d6d7bd01279993e after=9d6d7bd01279993e
+END_CASE timed_out=0 mps_servers=1 wall_s=18
+CASE config=mps fault=kill agents=8
+STDERR CUDA Graph id 27 reused
+STDERR CUDA Graph id 27 reused
+STDERR CUDA Graph id 27 reused
+AGENT index=0 mig=fafc828a exit=137 completed=0 text=e3b0c44298fc1c14 
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-kv/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+AGENT index=1 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-kv/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+AGENT index=2 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-kv/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+AGENT index=3 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-kv/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+AGENT index=4 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-kv/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+AGENT index=5 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-kv/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+AGENT index=6 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-kv/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+AGENT index=7 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 
+FAULT alive_at_fault=8 probe_exit=none probe=none
+FILE before=9d6d7bd01279993e after=9d6d7bd01279993e
+END_CASE timed_out=0 mps_servers=1 wall_s=17
+CASE config=timeslice fault=none agents=8
+AGENT index=0 mig=fafc828a exit=0 completed=1 text=7bd70180bbe7ca2f role=child prefix_tokens=14282 suffix_tokens=27 model_ms=834.3 context_ms=26.1 state_ms=5.90 prefix_ms=0.0 suffix_ms=113.4 first_token_ms=1236.1 generation_ms=43418.3 generated=128 generation_tps=2.948
+AGENT index=1 mig=fafc828a exit=0 completed=1 text=490dc1327d716112 role=child prefix_tokens=14282 suffix_tokens=22 model_ms=1059.1 context_ms=31.7 state_ms=6.25 prefix_ms=0.0 suffix_ms=567.7 first_token_ms=1942.7 generation_ms=44385.7 generated=128 generation_tps=2.884
+AGENT index=2 mig=fafc828a exit=0 completed=1 text=d8f556245cf146eb role=child prefix_tokens=14282 suffix_tokens=24 model_ms=994.4 context_ms=26.9 state_ms=6.19 prefix_ms=0.0 suffix_ms=426.0 first_token_ms=1742.5 generation_ms=44509.9 generated=128 generation_tps=2.876
+AGENT index=3 mig=fafc828a exit=0 completed=1 text=71acfbf3d404f65f role=child prefix_tokens=14282 suffix_tokens=32 model_ms=1074.1 context_ms=31.8 state_ms=6.49 prefix_ms=0.0 suffix_ms=739.6 first_token_ms=2147.6 generation_ms=44338.0 generated=128 generation_tps=2.887
+AGENT index=4 mig=fafc828a exit=0 completed=1 text=43a7e6e2129c1d5c role=child prefix_tokens=14282 suffix_tokens=23 model_ms=1028.7 context_ms=38.4 state_ms=10.07 prefix_ms=0.0 suffix_ms=616.4 first_token_ms=1992.8 generation_ms=44384.2 generated=128 generation_tps=2.884
+AGENT index=5 mig=fafc828a exit=0 completed=1 text=16bf735b822df23b role=child prefix_tokens=14282 suffix_tokens=26 model_ms=1066.4 context_ms=28.3 state_ms=6.15 prefix_ms=0.0 suffix_ms=715.8 first_token_ms=2112.3 generation_ms=44371.3 generated=128 generation_tps=2.885
+AGENT index=6 mig=fafc828a exit=0 completed=1 text=1857c541a9bf5f3c role=child prefix_tokens=14282 suffix_tokens=21 model_ms=1069.0 context_ms=30.9 state_ms=6.35 prefix_ms=0.0 suffix_ms=671.0 first_token_ms=2073.8 generation_ms=44377.1 generated=128 generation_tps=2.884
+AGENT index=7 mig=fafc828a exit=0 completed=1 text=de6c62cdeb25c8c0 role=child prefix_tokens=14282 suffix_tokens=31 model_ms=1036.2 context_ms=31.4 state_ms=6.03 prefix_ms=0.0 suffix_ms=702.5 first_token_ms=2053.5 generation_ms=44389.2 generated=128 generation_tps=2.884
+FAULT alive_at_fault=0 probe_exit=none probe=none
+FILE before=9d6d7bd01279993e after=9d6d7bd01279993e
+END_CASE timed_out=0 mps_servers=0 wall_s=48
+CASE config=timeslice fault=write agents=8
+AGENT index=0 mig=fafc828a exit=0 completed=1 text=7bd70180bbe7ca2f role=child prefix_tokens=14282 suffix_tokens=27 model_ms=884.9 context_ms=26.2 state_ms=6.06 prefix_ms=0.0 suffix_ms=114.8 first_token_ms=1294.0 generation_ms=44016.4 generated=128 generation_tps=2.908
+AGENT index=1 mig=fafc828a exit=0 completed=1 text=490dc1327d716112 role=child prefix_tokens=14282 suffix_tokens=22 model_ms=1078.0 context_ms=31.5 state_ms=6.12 prefix_ms=0.0 suffix_ms=596.2 first_token_ms=1993.0 generation_ms=44485.6 generated=128 generation_tps=2.877
+AGENT index=2 mig=fafc828a exit=0 completed=1 text=d8f556245cf146eb role=child prefix_tokens=14282 suffix_tokens=24 model_ms=961.3 context_ms=26.1 state_ms=5.94 prefix_ms=0.0 suffix_ms=253.7 first_token_ms=1546.7 generation_ms=44628.6 generated=128 generation_tps=2.868
+AGENT index=3 mig=fafc828a exit=0 completed=1 text=71acfbf3d404f65f role=child prefix_tokens=14282 suffix_tokens=32 model_ms=1057.2 context_ms=41.0 state_ms=6.19 prefix_ms=0.0 suffix_ms=704.0 first_token_ms=2110.2 generation_ms=44480.9 generated=128 generation_tps=2.878
+AGENT index=4 mig=fafc828a exit=0 completed=1 text=43a7e6e2129c1d5c role=child prefix_tokens=14282 suffix_tokens=23 model_ms=1049.3 context_ms=34.2 state_ms=6.06 prefix_ms=0.0 suffix_ms=621.2 first_token_ms=2015.5 generation_ms=44523.6 generated=128 generation_tps=2.875
+AGENT index=5 mig=fafc828a exit=0 completed=1 text=16bf735b822df23b role=child prefix_tokens=14282 suffix_tokens=26 model_ms=1047.1 context_ms=34.9 state_ms=6.35 prefix_ms=0.0 suffix_ms=671.9 first_token_ms=2058.1 generation_ms=44512.2 generated=128 generation_tps=2.876
+AGENT index=6 mig=fafc828a exit=0 completed=1 text=1857c541a9bf5f3c role=child prefix_tokens=14282 suffix_tokens=21 model_ms=1051.6 context_ms=37.1 state_ms=6.22 prefix_ms=0.0 suffix_ms=620.6 first_token_ms=2005.3 generation_ms=44505.8 generated=128 generation_tps=2.876
+AGENT index=7 mig=fafc828a exit=0 completed=1 text=de6c62cdeb25c8c0 role=child prefix_tokens=14282 suffix_tokens=31 model_ms=1101.4 context_ms=26.8 state_ms=5.88 prefix_ms=0.0 suffix_ms=757.1 first_token_ms=2169.2 generation_ms=44414.4 generated=128 generation_tps=2.882
+FAULT alive_at_fault=8 probe_exit=0 probe=route=host,gpu_read=cudaSuccess,words_equal=0,words=16777216,gpu_write=cudaErrorIllegalAddress,file_intact=0
+FILE before=9d6d7bd01279993e after=9d6d7bd01279993e
+END_CASE timed_out=0 mps_servers=0 wall_s=48
+CASE config=timeslice fault=kill agents=8
+STDERR CUDA Graph id 27 reused
+STDERR CUDA Graph id 27 reused
+STDERR CUDA Graph id 27 reused
+AGENT index=0 mig=fafc828a exit=137 completed=0 text=e3b0c44298fc1c14 
+AGENT index=1 mig=fafc828a exit=0 completed=1 text=490dc1327d716112 role=child prefix_tokens=14282 suffix_tokens=22 model_ms=1109.6 context_ms=34.7 state_ms=6.22 prefix_ms=0.0 suffix_ms=538.6 first_token_ms=1973.9 generation_ms=39799.6 generated=128 generation_tps=3.216
+AGENT index=2 mig=fafc828a exit=0 completed=1 text=d8f556245cf146eb role=child prefix_tokens=14282 suffix_tokens=24 model_ms=1125.2 context_ms=32.5 state_ms=6.35 prefix_ms=0.0 suffix_ms=689.1 first_token_ms=2166.4 generation_ms=39736.8 generated=128 generation_tps=3.221
+AGENT index=3 mig=fafc828a exit=0 completed=1 text=71acfbf3d404f65f role=child prefix_tokens=14282 suffix_tokens=32 model_ms=1113.8 context_ms=33.2 state_ms=6.74 prefix_ms=0.0 suffix_ms=789.6 first_token_ms=2250.3 generation_ms=39662.4 generated=128 generation_tps=3.227
+AGENT index=4 mig=fafc828a exit=0 completed=1 text=43a7e6e2129c1d5c role=child prefix_tokens=14282 suffix_tokens=23 model_ms=1117.0 context_ms=30.2 state_ms=6.19 prefix_ms=0.0 suffix_ms=691.8 first_token_ms=2151.8 generation_ms=39735.6 generated=128 generation_tps=3.221
+AGENT index=5 mig=fafc828a exit=0 completed=1 text=16bf735b822df23b role=child prefix_tokens=14282 suffix_tokens=26 model_ms=1073.0 context_ms=35.3 state_ms=5.99 prefix_ms=0.0 suffix_ms=556.8 first_token_ms=1963.4 generation_ms=39820.3 generated=128 generation_tps=3.214
+AGENT index=6 mig=fafc828a exit=0 completed=1 text=1857c541a9bf5f3c role=child prefix_tokens=14282 suffix_tokens=21 model_ms=1063.3 context_ms=39.9 state_ms=6.21 prefix_ms=0.0 suffix_ms=563.7 first_token_ms=1981.6 generation_ms=39832.5 generated=128 generation_tps=3.213
+AGENT index=7 mig=fafc828a exit=0 completed=1 text=de6c62cdeb25c8c0 role=child prefix_tokens=14282 suffix_tokens=31 model_ms=1060.7 context_ms=32.6 state_ms=6.16 prefix_ms=0.0 suffix_ms=562.1 first_token_ms=1965.6 generation_ms=39829.7 generated=128 generation_tps=3.214
+FAULT alive_at_fault=8 probe_exit=none probe=none
+FILE before=9d6d7bd01279993e after=9d6d7bd01279993e
+END_CASE timed_out=0 mps_servers=0 wall_s=43
+END_KVFAULT
+BEGIN_KVFAULT run=3 prefix_tokens=14282
+CASE config=timeslice fault=none agents=8
+AGENT index=0 mig=fafc828a exit=0 completed=1 text=7bd70180bbe7ca2f role=child prefix_tokens=14282 suffix_tokens=27 model_ms=877.1 context_ms=27.5 state_ms=6.17 prefix_ms=0.0 suffix_ms=113.1 first_token_ms=1276.3 generation_ms=43734.4 generated=128 generation_tps=2.927
+AGENT index=1 mig=fafc828a exit=0 completed=1 text=490dc1327d716112 role=child prefix_tokens=14282 suffix_tokens=22 model_ms=1052.6 context_ms=30.8 state_ms=6.20 prefix_ms=0.0 suffix_ms=543.4 first_token_ms=1918.8 generation_ms=44455.9 generated=128 generation_tps=2.879
+AGENT index=2 mig=fafc828a exit=0 completed=1 text=d8f556245cf146eb role=child prefix_tokens=14282 suffix_tokens=24 model_ms=1060.8 context_ms=34.1 state_ms=6.30 prefix_ms=0.0 suffix_ms=643.8 first_token_ms=2048.2 generation_ms=44405.6 generated=128 generation_tps=2.883
+AGENT index=3 mig=fafc828a exit=0 completed=1 text=71acfbf3d404f65f role=child prefix_tokens=14282 suffix_tokens=32 model_ms=1054.8 context_ms=34.6 state_ms=6.12 prefix_ms=0.0 suffix_ms=759.0 first_token_ms=2158.5 generation_ms=44392.2 generated=128 generation_tps=2.883
+AGENT index=4 mig=fafc828a exit=0 completed=1 text=43a7e6e2129c1d5c role=child prefix_tokens=14282 suffix_tokens=23 model_ms=1002.4 context_ms=28.2 state_ms=6.33 prefix_ms=0.0 suffix_ms=374.8 first_token_ms=1699.3 generation_ms=44509.4 generated=128 generation_tps=2.876
+AGENT index=5 mig=fafc828a exit=0 completed=1 text=16bf735b822df23b role=child prefix_tokens=14282 suffix_tokens=26 model_ms=1030.1 context_ms=36.8 state_ms=6.14 prefix_ms=0.0 suffix_ms=702.9 first_token_ms=2077.8 generation_ms=44417.4 generated=128 generation_tps=2.882
+AGENT index=6 mig=fafc828a exit=0 completed=1 text=1857c541a9bf5f3c role=child prefix_tokens=14282 suffix_tokens=21 model_ms=1082.9 context_ms=26.9 state_ms=6.25 prefix_ms=0.0 suffix_ms=669.6 first_token_ms=2085.5 generation_ms=44423.2 generated=128 generation_tps=2.881
+AGENT index=7 mig=fafc828a exit=0 completed=1 text=de6c62cdeb25c8c0 role=child prefix_tokens=14282 suffix_tokens=31 model_ms=1059.0 context_ms=34.4 state_ms=6.21 prefix_ms=0.0 suffix_ms=757.6 first_token_ms=2146.2 generation_ms=44389.9 generated=128 generation_tps=2.884
+FAULT alive_at_fault=0 probe_exit=none probe=none
+FILE before=9d6d7bd01279993e after=9d6d7bd01279993e
+END_CASE timed_out=0 mps_servers=0 wall_s=48
+CASE config=timeslice fault=write agents=8
+AGENT index=0 mig=fafc828a exit=0 completed=1 text=7bd70180bbe7ca2f role=child prefix_tokens=14282 suffix_tokens=27 model_ms=815.7 context_ms=26.6 state_ms=6.08 prefix_ms=0.0 suffix_ms=113.3 first_token_ms=1201.5 generation_ms=43535.9 generated=128 generation_tps=2.940
+AGENT index=1 mig=fafc828a exit=0 completed=1 text=490dc1327d716112 role=child prefix_tokens=14282 suffix_tokens=22 model_ms=1112.1 context_ms=27.0 state_ms=6.05 prefix_ms=0.0 suffix_ms=656.6 first_token_ms=2102.9 generation_ms=44362.7 generated=128 generation_tps=2.885
+AGENT index=2 mig=fafc828a exit=0 completed=1 text=d8f556245cf146eb role=child prefix_tokens=14282 suffix_tokens=24 model_ms=1031.9 context_ms=25.9 state_ms=6.17 prefix_ms=0.0 suffix_ms=531.4 first_token_ms=1900.9 generation_ms=44477.7 generated=128 generation_tps=2.878
+AGENT index=3 mig=fafc828a exit=0 completed=1 text=71acfbf3d404f65f role=child prefix_tokens=14282 suffix_tokens=32 model_ms=1082.0 context_ms=31.9 state_ms=6.63 prefix_ms=0.0 suffix_ms=762.0 first_token_ms=2189.3 generation_ms=44318.7 generated=128 generation_tps=2.888
+AGENT index=4 mig=fafc828a exit=0 completed=1 text=43a7e6e2129c1d5c role=child prefix_tokens=14282 suffix_tokens=23 model_ms=954.5 context_ms=26.7 state_ms=6.21 prefix_ms=0.0 suffix_ms=215.9 first_token_ms=1467.2 generation_ms=44534.6 generated=128 generation_tps=2.874
+AGENT index=5 mig=fafc828a exit=0 completed=1 text=16bf735b822df23b role=child prefix_tokens=14282 suffix_tokens=26 model_ms=1073.6 context_ms=28.2 state_ms=6.12 prefix_ms=0.0 suffix_ms=721.2 first_token_ms=2128.3 generation_ms=44353.4 generated=128 generation_tps=2.886
+AGENT index=6 mig=fafc828a exit=0 completed=1 text=1857c541a9bf5f3c role=child prefix_tokens=14282 suffix_tokens=21 model_ms=1076.2 context_ms=31.6 state_ms=6.44 prefix_ms=0.0 suffix_ms=635.9 first_token_ms=2040.1 generation_ms=44413.1 generated=128 generation_tps=2.882
+AGENT index=7 mig=fafc828a exit=0 completed=1 text=de6c62cdeb25c8c0 role=child prefix_tokens=14282 suffix_tokens=31 model_ms=1001.1 context_ms=27.7 state_ms=6.33 prefix_ms=0.0 suffix_ms=583.7 first_token_ms=1906.4 generation_ms=44458.8 generated=128 generation_tps=2.879
+FAULT alive_at_fault=8 probe_exit=0 probe=route=host,gpu_read=cudaSuccess,words_equal=0,words=16777216,gpu_write=cudaErrorIllegalAddress,file_intact=0
+FILE before=9d6d7bd01279993e after=9d6d7bd01279993e
+END_CASE timed_out=0 mps_servers=0 wall_s=48
+CASE config=timeslice fault=kill agents=8
+STDERR CUDA Graph id 27 reused
+STDERR CUDA Graph id 27 reused
+STDERR CUDA Graph id 27 reused
+AGENT index=0 mig=fafc828a exit=137 completed=0 text=e3b0c44298fc1c14 
+AGENT index=1 mig=fafc828a exit=0 completed=1 text=490dc1327d716112 role=child prefix_tokens=14282 suffix_tokens=22 model_ms=1137.7 context_ms=56.5 state_ms=6.07 prefix_ms=0.0 suffix_ms=635.6 first_token_ms=2152.0 generation_ms=39813.7 generated=128 generation_tps=3.215
+AGENT index=2 mig=fafc828a exit=0 completed=1 text=d8f556245cf146eb role=child prefix_tokens=14282 suffix_tokens=24 model_ms=1141.4 context_ms=56.8 state_ms=6.18 prefix_ms=0.0 suffix_ms=625.2 first_token_ms=2141.0 generation_ms=39822.4 generated=128 generation_tps=3.214
+AGENT index=3 mig=fafc828a exit=0 completed=1 text=71acfbf3d404f65f role=child prefix_tokens=14282 suffix_tokens=32 model_ms=1128.3 context_ms=40.1 state_ms=6.13 prefix_ms=0.0 suffix_ms=643.1 first_token_ms=2128.5 generation_ms=39799.0 generated=128 generation_tps=3.216
+AGENT index=4 mig=fafc828a exit=0 completed=1 text=43a7e6e2129c1d5c role=child prefix_tokens=14282 suffix_tokens=23 model_ms=1125.6 context_ms=55.5 state_ms=6.53 prefix_ms=0.0 suffix_ms=634.6 first_token_ms=2134.7 generation_ms=39814.3 generated=128 generation_tps=3.215
+AGENT index=5 mig=fafc828a exit=0 completed=1 text=16bf735b822df23b role=child prefix_tokens=14282 suffix_tokens=26 model_ms=1133.3 context_ms=56.2 state_ms=6.29 prefix_ms=0.0 suffix_ms=700.3 first_token_ms=2199.7 generation_ms=39774.9 generated=128 generation_tps=3.218
+AGENT index=6 mig=fafc828a exit=0 completed=1 text=1857c541a9bf5f3c role=child prefix_tokens=14282 suffix_tokens=21 model_ms=1123.9 context_ms=56.6 state_ms=6.46 prefix_ms=0.0 suffix_ms=596.2 first_token_ms=2089.5 generation_ms=39836.6 generated=128 generation_tps=3.213
+AGENT index=7 mig=fafc828a exit=0 completed=1 text=de6c62cdeb25c8c0 role=child prefix_tokens=14282 suffix_tokens=31 model_ms=1146.4 context_ms=54.6 state_ms=5.94 prefix_ms=0.0 suffix_ms=716.1 first_token_ms=2203.6 generation_ms=39767.3 generated=128 generation_tps=3.219
+FAULT alive_at_fault=8 probe_exit=none probe=none
+FILE before=9d6d7bd01279993e after=9d6d7bd01279993e
+END_CASE timed_out=0 mps_servers=0 wall_s=44
+CASE config=mps fault=none agents=8
+AGENT index=0 mig=fafc828a exit=0 completed=1 text=7bd70180bbe7ca2f role=child prefix_tokens=14282 suffix_tokens=27 model_ms=728.8 context_ms=27.0 state_ms=6.13 prefix_ms=0.0 suffix_ms=152.9 first_token_ms=1189.1 generation_ms=39023.4 generated=128 generation_tps=3.280
+AGENT index=1 mig=fafc828a exit=0 completed=1 text=490dc1327d716112 role=child prefix_tokens=14282 suffix_tokens=22 model_ms=714.5 context_ms=27.4 state_ms=6.50 prefix_ms=0.0 suffix_ms=157.7 first_token_ms=1211.4 generation_ms=39184.9 generated=128 generation_tps=3.267
+AGENT index=2 mig=fafc828a exit=0 completed=1 text=d8f556245cf146eb role=child prefix_tokens=14282 suffix_tokens=24 model_ms=884.9 context_ms=32.8 state_ms=6.30 prefix_ms=0.0 suffix_ms=584.8 first_token_ms=1917.4 generation_ms=39329.1 generated=128 generation_tps=3.255
+AGENT index=3 mig=fafc828a exit=0 completed=1 text=71acfbf3d404f65f role=child prefix_tokens=14282 suffix_tokens=32 model_ms=822.4 context_ms=29.1 state_ms=6.29 prefix_ms=0.0 suffix_ms=554.9 first_token_ms=1821.3 generation_ms=39366.9 generated=128 generation_tps=3.251
+AGENT index=4 mig=fafc828a exit=0 completed=1 text=43a7e6e2129c1d5c role=child prefix_tokens=14282 suffix_tokens=23 model_ms=800.5 context_ms=29.9 state_ms=6.29 prefix_ms=0.0 suffix_ms=552.5 first_token_ms=1806.8 generation_ms=39361.6 generated=128 generation_tps=3.252
+AGENT index=5 mig=fafc828a exit=0 completed=1 text=16bf735b822df23b role=child prefix_tokens=14282 suffix_tokens=26 model_ms=881.1 context_ms=31.2 state_ms=6.49 prefix_ms=0.0 suffix_ms=590.4 first_token_ms=1900.3 generation_ms=39322.6 generated=128 generation_tps=3.255
+AGENT index=6 mig=fafc828a exit=0 completed=1 text=1857c541a9bf5f3c role=child prefix_tokens=14282 suffix_tokens=21 model_ms=871.2 context_ms=29.4 state_ms=6.29 prefix_ms=0.0 suffix_ms=582.4 first_token_ms=1892.0 generation_ms=39323.3 generated=128 generation_tps=3.255
+AGENT index=7 mig=fafc828a exit=0 completed=1 text=de6c62cdeb25c8c0 role=child prefix_tokens=14282 suffix_tokens=31 model_ms=856.8 context_ms=28.7 state_ms=6.37 prefix_ms=0.0 suffix_ms=588.0 first_token_ms=1860.0 generation_ms=39338.8 generated=128 generation_tps=3.254
+FAULT alive_at_fault=0 probe_exit=none probe=none
+FILE before=9d6d7bd01279993e after=9d6d7bd01279993e
+END_CASE timed_out=0 mps_servers=1 wall_s=43
+CASE config=mps fault=write agents=8
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-kv/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+AGENT index=0 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-kv/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+AGENT index=1 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-kv/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+AGENT index=2 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-kv/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+AGENT index=3 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-kv/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+AGENT index=4 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-kv/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+AGENT index=5 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-kv/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+AGENT index=6 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-kv/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+AGENT index=7 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 
+FAULT alive_at_fault=8 probe_exit=0 probe=route=host,gpu_read=cudaSuccess,words_equal=0,words=16777216,gpu_write=cudaErrorIllegalAddress,file_intact=0
+FILE before=9d6d7bd01279993e after=9d6d7bd01279993e
+END_CASE timed_out=0 mps_servers=1 wall_s=18
+CASE config=mps fault=kill agents=8
+STDERR CUDA Graph id 27 reused
+STDERR CUDA Graph id 27 reused
+STDERR CUDA Graph id 27 reused
+AGENT index=0 mig=fafc828a exit=137 completed=0 text=e3b0c44298fc1c14 
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-kv/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+AGENT index=1 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-kv/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+AGENT index=2 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-kv/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+AGENT index=3 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-kv/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+AGENT index=4 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-kv/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+AGENT index=5 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-kv/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+AGENT index=6 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-kv/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+AGENT index=7 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 
+FAULT alive_at_fault=8 probe_exit=none probe=none
+FILE before=9d6d7bd01279993e after=9d6d7bd01279993e
+END_CASE timed_out=0 mps_servers=1 wall_s=16
+CASE config=mig fault=none agents=8
+AGENT index=0 mig=fafc828a exit=0 completed=1 text=7bd70180bbe7ca2f role=child prefix_tokens=14282 suffix_tokens=27 model_ms=917.6 context_ms=25.4 state_ms=6.03 prefix_ms=0.0 suffix_ms=114.0 first_token_ms=1330.1 generation_ms=24167.2 generated=128 generation_tps=5.296
+AGENT index=1 mig=31ffbfe4 exit=0 completed=1 text=4a39ecaa0045c102 role=child prefix_tokens=14282 suffix_tokens=22 model_ms=1100.2 context_ms=29.7 state_ms=6.11 prefix_ms=0.0 suffix_ms=577.1 first_token_ms=1996.7 generation_ms=37445.4 generated=128 generation_tps=3.418
+AGENT index=2 mig=fafc828a exit=0 completed=1 text=d8f556245cf146eb role=child prefix_tokens=14282 suffix_tokens=24 model_ms=994.3 context_ms=27.1 state_ms=6.31 prefix_ms=0.0 suffix_ms=256.5 first_token_ms=1582.9 generation_ms=24392.5 generated=128 generation_tps=5.248
+AGENT index=3 mig=31ffbfe4 exit=0 completed=1 text=0a543804112a09a5 role=child prefix_tokens=14282 suffix_tokens=32 model_ms=1022.8 context_ms=41.2 state_ms=6.15 prefix_ms=0.0 suffix_ms=537.6 first_token_ms=1914.7 generation_ms=37538.9 generated=128 generation_tps=3.410
+AGENT index=4 mig=fafc828a exit=0 completed=1 text=43a7e6e2129c1d5c role=child prefix_tokens=14282 suffix_tokens=23 model_ms=1056.6 context_ms=36.4 state_ms=6.31 prefix_ms=0.0 suffix_ms=379.9 first_token_ms=1774.4 generation_ms=24283.5 generated=128 generation_tps=5.271
+AGENT index=5 mig=31ffbfe4 exit=0 completed=1 text=b96900b61349227c role=child prefix_tokens=14282 suffix_tokens=26 model_ms=1028.2 context_ms=41.5 state_ms=6.39 prefix_ms=0.0 suffix_ms=524.5 first_token_ms=1888.1 generation_ms=37506.8 generated=128 generation_tps=3.413
+AGENT index=6 mig=fafc828a exit=0 completed=1 text=1857c541a9bf5f3c role=child prefix_tokens=14282 suffix_tokens=21 model_ms=1051.8 context_ms=35.2 state_ms=6.72 prefix_ms=0.0 suffix_ms=372.0 first_token_ms=1751.9 generation_ms=24245.4 generated=128 generation_tps=5.279
+AGENT index=7 mig=31ffbfe4 exit=0 completed=1 text=de6c62cdeb25c8c0 role=child prefix_tokens=14282 suffix_tokens=31 model_ms=1018.6 context_ms=40.1 state_ms=6.17 prefix_ms=0.0 suffix_ms=512.0 first_token_ms=1865.7 generation_ms=37572.6 generated=128 generation_tps=3.407
+FAULT alive_at_fault=0 probe_exit=none probe=none
+FILE before=9d6d7bd01279993e after=9d6d7bd01279993e
+END_CASE timed_out=0 mps_servers=0 wall_s=41
+CASE config=mig fault=write agents=8
+AGENT index=0 mig=fafc828a exit=0 completed=1 text=7bd70180bbe7ca2f role=child prefix_tokens=14282 suffix_tokens=27 model_ms=1058.5 context_ms=28.9 state_ms=6.30 prefix_ms=0.0 suffix_ms=391.2 first_token_ms=1789.0 generation_ms=24380.0 generated=128 generation_tps=5.250
+AGENT index=1 mig=31ffbfe4 exit=0 completed=1 text=4a39ecaa0045c102 role=child prefix_tokens=14282 suffix_tokens=22 model_ms=753.1 context_ms=26.7 state_ms=6.28 prefix_ms=0.0 suffix_ms=145.5 first_token_ms=1140.8 generation_ms=36771.5 generated=128 generation_tps=3.481
+AGENT index=2 mig=fafc828a exit=0 completed=1 text=d8f556245cf146eb role=child prefix_tokens=14282 suffix_tokens=24 model_ms=1008.8 context_ms=30.7 state_ms=6.20 prefix_ms=0.0 suffix_ms=340.5 first_token_ms=1690.4 generation_ms=24430.7 generated=128 generation_tps=5.239
+AGENT index=3 mig=31ffbfe4 exit=0 completed=1 text=0a543804112a09a5 role=child prefix_tokens=14282 suffix_tokens=32 model_ms=1025.7 context_ms=31.4 state_ms=5.94 prefix_ms=0.0 suffix_ms=564.7 first_token_ms=1928.4 generation_ms=37132.7 generated=128 generation_tps=3.447
+AGENT index=4 mig=fafc828a exit=0 completed=1 text=43a7e6e2129c1d5c role=child prefix_tokens=14282 suffix_tokens=23 model_ms=891.3 context_ms=27.1 state_ms=6.31 prefix_ms=0.0 suffix_ms=107.6 first_token_ms=1319.3 generation_ms=24386.6 generated=128 generation_tps=5.249
+AGENT index=5 mig=31ffbfe4 exit=0 completed=1 text=b96900b61349227c role=child prefix_tokens=14282 suffix_tokens=26 model_ms=1002.3 context_ms=31.1 state_ms=6.23 prefix_ms=0.0 suffix_ms=535.8 first_token_ms=1871.2 generation_ms=37112.5 generated=128 generation_tps=3.449
+AGENT index=6 mig=fafc828a exit=0 completed=1 text=1857c541a9bf5f3c role=child prefix_tokens=14282 suffix_tokens=21 model_ms=979.6 context_ms=26.8 state_ms=6.18 prefix_ms=0.0 suffix_ms=277.3 first_token_ms=1583.1 generation_ms=24469.7 generated=128 generation_tps=5.231
+AGENT index=7 mig=31ffbfe4 exit=0 completed=1 text=de6c62cdeb25c8c0 role=child prefix_tokens=14282 suffix_tokens=31 model_ms=1021.4 context_ms=33.4 state_ms=6.25 prefix_ms=0.0 suffix_ms=582.6 first_token_ms=1940.3 generation_ms=37131.3 generated=128 generation_tps=3.447
+FAULT alive_at_fault=8 probe_exit=0 probe=route=host,gpu_read=cudaSuccess,words_equal=0,words=16777216,gpu_write=cudaErrorIllegalAddress,file_intact=0
+FILE before=9d6d7bd01279993e after=9d6d7bd01279993e
+END_CASE timed_out=0 mps_servers=0 wall_s=40
+CASE config=mig fault=kill agents=8
+STDERR CUDA Graph id 30 reused
+STDERR CUDA Graph id 30 reused
+STDERR CUDA Graph id 30 reused
+AGENT index=0 mig=fafc828a exit=137 completed=0 text=e3b0c44298fc1c14 
+AGENT index=1 mig=31ffbfe4 exit=0 completed=1 text=4a39ecaa0045c102 role=child prefix_tokens=14282 suffix_tokens=22 model_ms=1128.3 context_ms=53.0 state_ms=6.79 prefix_ms=0.0 suffix_ms=528.0 first_token_ms=2020.2 generation_ms=37133.3 generated=128 generation_tps=3.447
+AGENT index=2 mig=fafc828a exit=0 completed=1 text=d8f556245cf146eb role=child prefix_tokens=14282 suffix_tokens=24 model_ms=1117.5 context_ms=53.1 state_ms=6.15 prefix_ms=0.0 suffix_ms=328.5 first_token_ms=1818.9 generation_ms=19868.9 generated=128 generation_tps=6.442
+AGENT index=3 mig=31ffbfe4 exit=0 completed=1 text=0a543804112a09a5 role=child prefix_tokens=14282 suffix_tokens=32 model_ms=1116.8 context_ms=53.7 state_ms=6.22 prefix_ms=0.0 suffix_ms=542.3 first_token_ms=2028.6 generation_ms=37149.4 generated=128 generation_tps=3.446
+AGENT index=4 mig=fafc828a exit=0 completed=1 text=43a7e6e2129c1d5c role=child prefix_tokens=14282 suffix_tokens=23 model_ms=1108.4 context_ms=46.3 state_ms=6.51 prefix_ms=0.0 suffix_ms=311.8 first_token_ms=1785.5 generation_ms=19879.3 generated=128 generation_tps=6.439
+AGENT index=5 mig=31ffbfe4 exit=0 completed=1 text=b96900b61349227c role=child prefix_tokens=14282 suffix_tokens=26 model_ms=1124.5 context_ms=52.9 state_ms=6.05 prefix_ms=0.0 suffix_ms=555.8 first_token_ms=2025.8 generation_ms=37146.8 generated=128 generation_tps=3.446
+AGENT index=6 mig=fafc828a exit=0 completed=1 text=1857c541a9bf5f3c role=child prefix_tokens=14282 suffix_tokens=21 model_ms=1105.4 context_ms=34.6 state_ms=6.29 prefix_ms=0.0 suffix_ms=279.7 first_token_ms=1727.0 generation_ms=19910.5 generated=128 generation_tps=6.429
+AGENT index=7 mig=31ffbfe4 exit=0 completed=1 text=de6c62cdeb25c8c0 role=child prefix_tokens=14282 suffix_tokens=31 model_ms=1113.0 context_ms=47.9 state_ms=6.14 prefix_ms=0.0 suffix_ms=521.8 first_token_ms=1982.6 generation_ms=37025.0 generated=128 generation_tps=3.457
+FAULT alive_at_fault=8 probe_exit=none probe=none
+FILE before=9d6d7bd01279993e after=9d6d7bd01279993e
+END_CASE timed_out=0 mps_servers=0 wall_s=40
+CASE config=mig_mps fault=none agents=8
+AGENT index=0 mig=fafc828a exit=0 completed=1 text=7bd70180bbe7ca2f role=child prefix_tokens=14282 suffix_tokens=27 model_ms=976.0 context_ms=41.0 state_ms=6.49 prefix_ms=0.0 suffix_ms=283.7 first_token_ms=1768.2 generation_ms=21918.4 generated=128 generation_tps=5.840
+AGENT index=1 mig=31ffbfe4 exit=0 completed=1 text=4a39ecaa0045c102 role=child prefix_tokens=14282 suffix_tokens=22 model_ms=931.5 context_ms=45.8 state_ms=6.13 prefix_ms=0.0 suffix_ms=473.5 first_token_ms=1961.5 generation_ms=33740.5 generated=128 generation_tps=3.794
+AGENT index=2 mig=fafc828a exit=0 completed=1 text=d8f556245cf146eb role=child prefix_tokens=14282 suffix_tokens=24 model_ms=953.8 context_ms=47.8 state_ms=5.99 prefix_ms=0.0 suffix_ms=290.6 first_token_ms=1779.4 generation_ms=21897.1 generated=128 generation_tps=5.846
+AGENT index=3 mig=31ffbfe4 exit=0 completed=1 text=0a543804112a09a5 role=child prefix_tokens=14282 suffix_tokens=32 model_ms=927.8 context_ms=46.6 state_ms=6.39 prefix_ms=0.0 suffix_ms=482.3 first_token_ms=1972.5 generation_ms=33739.4 generated=128 generation_tps=3.794
+AGENT index=4 mig=fafc828a exit=0 completed=1 text=43a7e6e2129c1d5c role=child prefix_tokens=14282 suffix_tokens=23 model_ms=906.3 context_ms=48.4 state_ms=6.37 prefix_ms=0.0 suffix_ms=289.4 first_token_ms=1763.2 generation_ms=21912.4 generated=128 generation_tps=5.841
+AGENT index=5 mig=31ffbfe4 exit=0 completed=1 text=b96900b61349227c role=child prefix_tokens=14282 suffix_tokens=26 model_ms=914.7 context_ms=49.7 state_ms=6.79 prefix_ms=0.0 suffix_ms=489.7 first_token_ms=1967.8 generation_ms=33761.5 generated=128 generation_tps=3.791
+AGENT index=6 mig=fafc828a exit=0 completed=1 text=1857c541a9bf5f3c role=child prefix_tokens=14282 suffix_tokens=21 model_ms=922.8 context_ms=45.4 state_ms=6.33 prefix_ms=0.0 suffix_ms=285.3 first_token_ms=1761.7 generation_ms=21917.7 generated=128 generation_tps=5.840
+AGENT index=7 mig=31ffbfe4 exit=0 completed=1 text=de6c62cdeb25c8c0 role=child prefix_tokens=14282 suffix_tokens=31 model_ms=904.8 context_ms=49.0 state_ms=6.25 prefix_ms=0.0 suffix_ms=490.9 first_token_ms=1958.3 generation_ms=33749.3 generated=128 generation_tps=3.793
+FAULT alive_at_fault=0 probe_exit=none probe=none
+FILE before=9d6d7bd01279993e after=9d6d7bd01279993e
+END_CASE timed_out=0 mps_servers=2 wall_s=37
+CASE config=mig_mps fault=write agents=8
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-kv/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+AGENT index=0 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 
+AGENT index=1 mig=31ffbfe4 exit=0 completed=1 text=4a39ecaa0045c102 role=child prefix_tokens=14282 suffix_tokens=22 model_ms=873.9 context_ms=27.4 state_ms=5.97 prefix_ms=0.0 suffix_ms=342.2 first_token_ms=1707.7 generation_ms=32585.6 generated=128 generation_tps=3.928
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-kv/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+AGENT index=2 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 
+AGENT index=3 mig=31ffbfe4 exit=0 completed=1 text=0a543804112a09a5 role=child prefix_tokens=14282 suffix_tokens=32 model_ms=888.3 context_ms=33.0 state_ms=6.33 prefix_ms=0.0 suffix_ms=502.5 first_token_ms=1911.5 generation_ms=32589.4 generated=128 generation_tps=3.928
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-kv/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+AGENT index=4 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 
+AGENT index=5 mig=31ffbfe4 exit=0 completed=1 text=b96900b61349227c role=child prefix_tokens=14282 suffix_tokens=26 model_ms=869.1 context_ms=33.7 state_ms=6.17 prefix_ms=0.0 suffix_ms=502.1 first_token_ms=1907.1 generation_ms=32618.7 generated=128 generation_tps=3.924
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-kv/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+AGENT index=6 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 
+AGENT index=7 mig=31ffbfe4 exit=0 completed=1 text=de6c62cdeb25c8c0 role=child prefix_tokens=14282 suffix_tokens=31 model_ms=871.8 context_ms=34.0 state_ms=6.29 prefix_ms=0.0 suffix_ms=501.6 first_token_ms=1900.2 generation_ms=32599.6 generated=128 generation_tps=3.926
+FAULT alive_at_fault=8 probe_exit=0 probe=route=host,gpu_read=cudaSuccess,words_equal=0,words=16777216,gpu_write=cudaErrorIllegalAddress,file_intact=0
+FILE before=9d6d7bd01279993e after=9d6d7bd01279993e
+END_CASE timed_out=0 mps_servers=2 wall_s=36
+CASE config=mig_mps fault=kill agents=8
+STDERR CUDA Graph id 30 reused
+STDERR CUDA Graph id 30 reused
+STDERR CUDA Graph id 30 reused
+AGENT index=0 mig=fafc828a exit=137 completed=0 text=e3b0c44298fc1c14 
+AGENT index=1 mig=31ffbfe4 exit=0 completed=1 text=4a39ecaa0045c102 role=child prefix_tokens=14282 suffix_tokens=22 model_ms=888.6 context_ms=42.3 state_ms=6.15 prefix_ms=0.0 suffix_ms=499.2 first_token_ms=1940.7 generation_ms=32645.2 generated=128 generation_tps=3.921
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-kv/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+AGENT index=2 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 
+AGENT index=3 mig=31ffbfe4 exit=0 completed=1 text=0a543804112a09a5 role=child prefix_tokens=14282 suffix_tokens=32 model_ms=901.9 context_ms=38.5 state_ms=6.33 prefix_ms=0.0 suffix_ms=479.0 first_token_ms=1906.8 generation_ms=32649.0 generated=128 generation_tps=3.920
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-kv/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+AGENT index=4 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 
+AGENT index=5 mig=31ffbfe4 exit=0 completed=1 text=b96900b61349227c role=child prefix_tokens=14282 suffix_tokens=26 model_ms=904.1 context_ms=31.1 state_ms=6.15 prefix_ms=0.0 suffix_ms=481.0 first_token_ms=1915.2 generation_ms=32619.4 generated=128 generation_tps=3.924
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-kv/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+AGENT index=6 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 
+AGENT index=7 mig=31ffbfe4 exit=0 completed=1 text=de6c62cdeb25c8c0 role=child prefix_tokens=14282 suffix_tokens=31 model_ms=884.4 context_ms=42.7 state_ms=6.59 prefix_ms=0.0 suffix_ms=486.5 first_token_ms=1894.4 generation_ms=32649.3 generated=128 generation_tps=3.920
+FAULT alive_at_fault=8 probe_exit=none probe=none
+FILE before=9d6d7bd01279993e after=9d6d7bd01279993e
+END_CASE timed_out=0 mps_servers=2 wall_s=36
+END_KVFAULT
+BEGIN_KVFAULT run=4 prefix_tokens=14282
+CASE config=mig_mps fault=none agents=8
+AGENT index=0 mig=fafc828a exit=0 completed=1 text=7bd70180bbe7ca2f role=child prefix_tokens=14282 suffix_tokens=27 model_ms=906.0 context_ms=38.3 state_ms=6.26 prefix_ms=0.0 suffix_ms=229.6 first_token_ms=1623.6 generation_ms=21881.5 generated=128 generation_tps=5.850
+AGENT index=1 mig=31ffbfe4 exit=0 completed=1 text=4a39ecaa0045c102 role=child prefix_tokens=14282 suffix_tokens=22 model_ms=869.9 context_ms=29.3 state_ms=6.15 prefix_ms=0.0 suffix_ms=425.5 first_token_ms=1829.6 generation_ms=33776.6 generated=128 generation_tps=3.790
+AGENT index=2 mig=fafc828a exit=0 completed=1 text=d8f556245cf146eb role=child prefix_tokens=14282 suffix_tokens=24 model_ms=871.9 context_ms=36.5 state_ms=6.29 prefix_ms=0.0 suffix_ms=236.2 first_token_ms=1614.2 generation_ms=21851.8 generated=128 generation_tps=5.858
+AGENT index=3 mig=31ffbfe4 exit=0 completed=1 text=0a543804112a09a5 role=child prefix_tokens=14282 suffix_tokens=32 model_ms=898.5 context_ms=39.6 state_ms=6.40 prefix_ms=0.0 suffix_ms=486.4 first_token_ms=1925.8 generation_ms=33703.8 generated=128 generation_tps=3.798
+AGENT index=4 mig=fafc828a exit=0 completed=1 text=43a7e6e2129c1d5c role=child prefix_tokens=14282 suffix_tokens=23 model_ms=913.8 context_ms=35.7 state_ms=6.19 prefix_ms=0.0 suffix_ms=312.5 first_token_ms=1766.0 generation_ms=21823.5 generated=128 generation_tps=5.865
+AGENT index=5 mig=31ffbfe4 exit=0 completed=1 text=b96900b61349227c role=child prefix_tokens=14282 suffix_tokens=26 model_ms=833.6 context_ms=38.5 state_ms=6.08 prefix_ms=0.0 suffix_ms=383.0 first_token_ms=1752.9 generation_ms=33712.6 generated=128 generation_tps=3.797
+AGENT index=6 mig=fafc828a exit=0 completed=1 text=1857c541a9bf5f3c role=child prefix_tokens=14282 suffix_tokens=21 model_ms=897.5 context_ms=33.7 state_ms=6.41 prefix_ms=0.0 suffix_ms=296.8 first_token_ms=1727.0 generation_ms=21830.2 generated=128 generation_tps=5.863
+AGENT index=7 mig=31ffbfe4 exit=0 completed=1 text=de6c62cdeb25c8c0 role=child prefix_tokens=14282 suffix_tokens=31 model_ms=909.2 context_ms=35.7 state_ms=6.06 prefix_ms=0.0 suffix_ms=482.9 first_token_ms=1921.5 generation_ms=33683.6 generated=128 generation_tps=3.800
+FAULT alive_at_fault=0 probe_exit=none probe=none
+FILE before=9d6d7bd01279993e after=9d6d7bd01279993e
+END_CASE timed_out=0 mps_servers=2 wall_s=37
+CASE config=mig_mps fault=write agents=8
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-kv/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+AGENT index=0 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 
+AGENT index=1 mig=31ffbfe4 exit=0 completed=1 text=4a39ecaa0045c102 role=child prefix_tokens=14282 suffix_tokens=22 model_ms=881.1 context_ms=29.1 state_ms=6.43 prefix_ms=0.0 suffix_ms=474.1 first_token_ms=1884.0 generation_ms=32646.3 generated=128 generation_tps=3.921
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-kv/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+AGENT index=2 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 
+AGENT index=3 mig=31ffbfe4 exit=0 completed=1 text=0a543804112a09a5 role=child prefix_tokens=14282 suffix_tokens=32 model_ms=928.4 context_ms=38.5 state_ms=6.33 prefix_ms=0.0 suffix_ms=490.2 first_token_ms=1931.5 generation_ms=32608.1 generated=128 generation_tps=3.925
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-kv/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+AGENT index=4 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 
+AGENT index=5 mig=31ffbfe4 exit=0 completed=1 text=b96900b61349227c role=child prefix_tokens=14282 suffix_tokens=26 model_ms=890.6 context_ms=37.2 state_ms=6.20 prefix_ms=0.0 suffix_ms=482.2 first_token_ms=1900.3 generation_ms=32622.0 generated=128 generation_tps=3.924
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-kv/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+AGENT index=6 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 
+AGENT index=7 mig=31ffbfe4 exit=0 completed=1 text=de6c62cdeb25c8c0 role=child prefix_tokens=14282 suffix_tokens=31 model_ms=837.0 context_ms=32.3 state_ms=6.14 prefix_ms=0.0 suffix_ms=389.7 first_token_ms=1745.0 generation_ms=32558.3 generated=128 generation_tps=3.931
+FAULT alive_at_fault=8 probe_exit=0 probe=route=host,gpu_read=cudaSuccess,words_equal=0,words=16777216,gpu_write=cudaErrorIllegalAddress,file_intact=0
+FILE before=9d6d7bd01279993e after=9d6d7bd01279993e
+END_CASE timed_out=0 mps_servers=2 wall_s=36
+CASE config=mig_mps fault=kill agents=8
+STDERR CUDA Graph id 30 reused
+STDERR CUDA Graph id 30 reused
+STDERR CUDA Graph id 30 reused
+AGENT index=0 mig=fafc828a exit=137 completed=0 text=e3b0c44298fc1c14 
+AGENT index=1 mig=31ffbfe4 exit=0 completed=1 text=4a39ecaa0045c102 role=child prefix_tokens=14282 suffix_tokens=22 model_ms=908.1 context_ms=29.5 state_ms=6.54 prefix_ms=0.0 suffix_ms=489.9 first_token_ms=1906.6 generation_ms=32598.2 generated=128 generation_tps=3.927
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-kv/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+AGENT index=2 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 
+AGENT index=3 mig=31ffbfe4 exit=0 completed=1 text=0a543804112a09a5 role=child prefix_tokens=14282 suffix_tokens=32 model_ms=882.9 context_ms=32.0 state_ms=6.26 prefix_ms=0.0 suffix_ms=484.3 first_token_ms=1896.4 generation_ms=32605.9 generated=128 generation_tps=3.926
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-kv/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+AGENT index=4 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 
+AGENT index=5 mig=31ffbfe4 exit=0 completed=1 text=b96900b61349227c role=child prefix_tokens=14282 suffix_tokens=26 model_ms=820.8 context_ms=28.8 state_ms=6.19 prefix_ms=0.0 suffix_ms=432.8 first_token_ms=1785.9 generation_ms=32636.8 generated=128 generation_tps=3.922
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-kv/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+AGENT index=6 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 
+AGENT index=7 mig=31ffbfe4 exit=0 completed=1 text=de6c62cdeb25c8c0 role=child prefix_tokens=14282 suffix_tokens=31 model_ms=826.8 context_ms=28.3 state_ms=6.18 prefix_ms=0.0 suffix_ms=446.4 first_token_ms=1790.9 generation_ms=32660.2 generated=128 generation_tps=3.919
+FAULT alive_at_fault=8 probe_exit=none probe=none
+FILE before=9d6d7bd01279993e after=9d6d7bd01279993e
+END_CASE timed_out=0 mps_servers=2 wall_s=36
+CASE config=mig fault=none agents=8
+AGENT index=0 mig=fafc828a exit=0 completed=1 text=7bd70180bbe7ca2f role=child prefix_tokens=14282 suffix_tokens=27 model_ms=932.3 context_ms=26.6 state_ms=6.08 prefix_ms=0.0 suffix_ms=130.8 first_token_ms=1399.4 generation_ms=24514.0 generated=128 generation_tps=5.222
+AGENT index=1 mig=31ffbfe4 exit=0 completed=1 text=4a39ecaa0045c102 role=child prefix_tokens=14282 suffix_tokens=22 model_ms=734.1 context_ms=26.5 state_ms=6.25 prefix_ms=0.0 suffix_ms=146.2 first_token_ms=1138.0 generation_ms=36719.1 generated=128 generation_tps=3.486
+AGENT index=2 mig=fafc828a exit=0 completed=1 text=d8f556245cf146eb role=child prefix_tokens=14282 suffix_tokens=24 model_ms=985.6 context_ms=34.8 state_ms=6.14 prefix_ms=0.0 suffix_ms=330.5 first_token_ms=1662.9 generation_ms=24436.6 generated=128 generation_tps=5.238
+AGENT index=3 mig=31ffbfe4 exit=0 completed=1 text=0a543804112a09a5 role=child prefix_tokens=14282 suffix_tokens=32 model_ms=979.0 context_ms=35.7 state_ms=5.96 prefix_ms=0.0 suffix_ms=541.0 first_token_ms=1869.8 generation_ms=37162.9 generated=128 generation_tps=3.444
+AGENT index=4 mig=fafc828a exit=0 completed=1 text=43a7e6e2129c1d5c role=child prefix_tokens=14282 suffix_tokens=23 model_ms=1029.2 context_ms=31.4 state_ms=6.37 prefix_ms=0.0 suffix_ms=345.3 first_token_ms=1713.1 generation_ms=24398.1 generated=128 generation_tps=5.246
+AGENT index=5 mig=31ffbfe4 exit=0 completed=1 text=b96900b61349227c role=child prefix_tokens=14282 suffix_tokens=26 model_ms=1025.6 context_ms=29.8 state_ms=6.56 prefix_ms=0.0 suffix_ms=578.8 first_token_ms=1933.3 generation_ms=37113.6 generated=128 generation_tps=3.449
+AGENT index=6 mig=fafc828a exit=0 completed=1 text=1857c541a9bf5f3c role=child prefix_tokens=14282 suffix_tokens=21 model_ms=972.8 context_ms=36.5 state_ms=6.18 prefix_ms=0.0 suffix_ms=318.6 first_token_ms=1625.4 generation_ms=24449.4 generated=128 generation_tps=5.235
+AGENT index=7 mig=31ffbfe4 exit=0 completed=1 text=de6c62cdeb25c8c0 role=child prefix_tokens=14282 suffix_tokens=31 model_ms=1008.2 context_ms=30.1 state_ms=6.24 prefix_ms=0.0 suffix_ms=562.6 first_token_ms=1882.5 generation_ms=37140.9 generated=128 generation_tps=3.446
+FAULT alive_at_fault=0 probe_exit=none probe=none
+FILE before=9d6d7bd01279993e after=9d6d7bd01279993e
+END_CASE timed_out=0 mps_servers=0 wall_s=40
+CASE config=mig fault=write agents=8
+AGENT index=0 mig=fafc828a exit=0 completed=1 text=7bd70180bbe7ca2f role=child prefix_tokens=14282 suffix_tokens=27 model_ms=998.9 context_ms=26.0 state_ms=6.11 prefix_ms=0.0 suffix_ms=118.0 first_token_ms=1447.6 generation_ms=24381.9 generated=128 generation_tps=5.250
+AGENT index=1 mig=31ffbfe4 exit=0 completed=1 text=4a39ecaa0045c102 role=child prefix_tokens=14282 suffix_tokens=22 model_ms=1072.6 context_ms=27.9 state_ms=6.25 prefix_ms=0.0 suffix_ms=460.8 first_token_ms=1880.0 generation_ms=37533.8 generated=128 generation_tps=3.410
+AGENT index=2 mig=fafc828a exit=0 completed=1 text=d8f556245cf146eb role=child prefix_tokens=14282 suffix_tokens=24 model_ms=1107.8 context_ms=40.3 state_ms=7.24 prefix_ms=0.0 suffix_ms=379.9 first_token_ms=1837.2 generation_ms=24418.2 generated=128 generation_tps=5.242
+AGENT index=3 mig=31ffbfe4 exit=0 completed=1 text=0a543804112a09a5 role=child prefix_tokens=14282 suffix_tokens=32 model_ms=1069.6 context_ms=34.5 state_ms=6.29 prefix_ms=0.0 suffix_ms=489.4 first_token_ms=1913.3 generation_ms=37492.8 generated=128 generation_tps=3.414
+AGENT index=4 mig=fafc828a exit=0 completed=1 text=43a7e6e2129c1d5c role=child prefix_tokens=14282 suffix_tokens=23 model_ms=1066.5 context_ms=36.1 state_ms=6.13 prefix_ms=0.0 suffix_ms=309.6 first_token_ms=1726.9 generation_ms=24522.8 generated=128 generation_tps=5.220
+AGENT index=5 mig=31ffbfe4 exit=0 completed=1 text=b96900b61349227c role=child prefix_tokens=14282 suffix_tokens=26 model_ms=1101.6 context_ms=38.6 state_ms=6.25 prefix_ms=0.0 suffix_ms=595.9 first_token_ms=2036.7 generation_ms=37465.2 generated=128 generation_tps=3.417
+AGENT index=6 mig=fafc828a exit=0 completed=1 text=1857c541a9bf5f3c role=child prefix_tokens=14282 suffix_tokens=21 model_ms=1060.1 context_ms=36.7 state_ms=6.30 prefix_ms=0.0 suffix_ms=297.7 first_token_ms=1707.4 generation_ms=24514.5 generated=128 generation_tps=5.221
+AGENT index=7 mig=31ffbfe4 exit=0 completed=1 text=de6c62cdeb25c8c0 role=child prefix_tokens=14282 suffix_tokens=31 model_ms=1091.0 context_ms=38.2 state_ms=6.20 prefix_ms=0.0 suffix_ms=584.8 first_token_ms=2019.1 generation_ms=37444.1 generated=128 generation_tps=3.418
+FAULT alive_at_fault=8 probe_exit=0 probe=route=host,gpu_read=cudaSuccess,words_equal=0,words=16777216,gpu_write=cudaErrorIllegalAddress,file_intact=0
+FILE before=9d6d7bd01279993e after=9d6d7bd01279993e
+END_CASE timed_out=0 mps_servers=0 wall_s=41
+CASE config=mig fault=kill agents=8
+STDERR CUDA Graph id 30 reused
+STDERR CUDA Graph id 30 reused
+STDERR CUDA Graph id 30 reused
+AGENT index=0 mig=fafc828a exit=137 completed=0 text=e3b0c44298fc1c14 
+AGENT index=1 mig=31ffbfe4 exit=0 completed=1 text=4a39ecaa0045c102 role=child prefix_tokens=14282 suffix_tokens=22 model_ms=1049.5 context_ms=38.3 state_ms=6.15 prefix_ms=0.0 suffix_ms=531.4 first_token_ms=1923.9 generation_ms=37065.1 generated=128 generation_tps=3.453
+AGENT index=2 mig=fafc828a exit=0 completed=1 text=d8f556245cf146eb role=child prefix_tokens=14282 suffix_tokens=24 model_ms=1066.2 context_ms=31.5 state_ms=6.29 prefix_ms=0.0 suffix_ms=345.7 first_token_ms=1752.5 generation_ms=19916.1 generated=128 generation_tps=6.427
+AGENT index=3 mig=31ffbfe4 exit=0 completed=1 text=0a543804112a09a5 role=child prefix_tokens=14282 suffix_tokens=32 model_ms=1061.1 context_ms=29.8 state_ms=6.31 prefix_ms=0.0 suffix_ms=557.8 first_token_ms=1955.0 generation_ms=37126.8 generated=128 generation_tps=3.448
+AGENT index=4 mig=fafc828a exit=0 completed=1 text=43a7e6e2129c1d5c role=child prefix_tokens=14282 suffix_tokens=23 model_ms=1037.0 context_ms=37.0 state_ms=6.33 prefix_ms=0.0 suffix_ms=333.0 first_token_ms=1706.1 generation_ms=19907.6 generated=128 generation_tps=6.430
+AGENT index=5 mig=31ffbfe4 exit=0 completed=1 text=b96900b61349227c role=child prefix_tokens=14282 suffix_tokens=26 model_ms=1037.4 context_ms=26.8 state_ms=5.88 prefix_ms=0.0 suffix_ms=396.6 first_token_ms=1728.0 generation_ms=37213.4 generated=128 generation_tps=3.440
+AGENT index=6 mig=fafc828a exit=0 completed=1 text=1857c541a9bf5f3c role=child prefix_tokens=14282 suffix_tokens=21 model_ms=1032.4 context_ms=40.2 state_ms=6.09 prefix_ms=0.0 suffix_ms=349.6 first_token_ms=1723.4 generation_ms=19930.9 generated=128 generation_tps=6.422
+AGENT index=7 mig=31ffbfe4 exit=0 completed=1 text=de6c62cdeb25c8c0 role=child prefix_tokens=14282 suffix_tokens=31 model_ms=1083.4 context_ms=28.5 state_ms=6.30 prefix_ms=0.0 suffix_ms=574.2 first_token_ms=1983.3 generation_ms=37052.2 generated=128 generation_tps=3.455
+FAULT alive_at_fault=8 probe_exit=none probe=none
+FILE before=9d6d7bd01279993e after=9d6d7bd01279993e
+END_CASE timed_out=0 mps_servers=0 wall_s=40
+CASE config=mps fault=none agents=8
+AGENT index=0 mig=fafc828a exit=0 completed=1 text=7bd70180bbe7ca2f role=child prefix_tokens=14282 suffix_tokens=27 model_ms=836.8 context_ms=30.0 state_ms=5.98 prefix_ms=0.0 suffix_ms=210.3 first_token_ms=1347.9 generation_ms=39498.1 generated=128 generation_tps=3.241
+AGENT index=1 mig=fafc828a exit=0 completed=1 text=490dc1327d716112 role=child prefix_tokens=14282 suffix_tokens=22 model_ms=801.5 context_ms=30.2 state_ms=6.25 prefix_ms=0.0 suffix_ms=200.7 first_token_ms=1334.0 generation_ms=39463.4 generated=128 generation_tps=3.244
+AGENT index=2 mig=fafc828a exit=0 completed=1 text=d8f556245cf146eb role=child prefix_tokens=14282 suffix_tokens=24 model_ms=878.8 context_ms=30.5 state_ms=6.46 prefix_ms=0.0 suffix_ms=592.1 first_token_ms=1919.3 generation_ms=39410.4 generated=128 generation_tps=3.248
+AGENT index=3 mig=fafc828a exit=0 completed=1 text=71acfbf3d404f65f role=child prefix_tokens=14282 suffix_tokens=32 model_ms=855.5 context_ms=29.9 state_ms=6.20 prefix_ms=0.0 suffix_ms=588.6 first_token_ms=1908.1 generation_ms=39442.5 generated=128 generation_tps=3.245
+AGENT index=4 mig=fafc828a exit=0 completed=1 text=43a7e6e2129c1d5c role=child prefix_tokens=14282 suffix_tokens=23 model_ms=777.0 context_ms=27.8 state_ms=6.27 prefix_ms=0.0 suffix_ms=384.8 first_token_ms=1572.6 generation_ms=39512.2 generated=128 generation_tps=3.240
+AGENT index=5 mig=fafc828a exit=0 completed=1 text=16bf735b822df23b role=child prefix_tokens=14282 suffix_tokens=26 model_ms=830.3 context_ms=27.4 state_ms=6.19 prefix_ms=0.0 suffix_ms=591.1 first_token_ms=1871.2 generation_ms=39440.2 generated=128 generation_tps=3.245
+AGENT index=6 mig=fafc828a exit=0 completed=1 text=1857c541a9bf5f3c role=child prefix_tokens=14282 suffix_tokens=21 model_ms=868.3 context_ms=31.0 state_ms=6.44 prefix_ms=0.0 suffix_ms=592.9 first_token_ms=1902.0 generation_ms=39421.0 generated=128 generation_tps=3.247
+AGENT index=7 mig=fafc828a exit=0 completed=1 text=de6c62cdeb25c8c0 role=child prefix_tokens=14282 suffix_tokens=31 model_ms=790.5 context_ms=29.1 state_ms=6.25 prefix_ms=0.0 suffix_ms=553.0 first_token_ms=1803.1 generation_ms=39458.4 generated=128 generation_tps=3.244
+FAULT alive_at_fault=0 probe_exit=none probe=none
+FILE before=9d6d7bd01279993e after=9d6d7bd01279993e
+END_CASE timed_out=0 mps_servers=1 wall_s=43
+CASE config=mps fault=write agents=8
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-kv/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+AGENT index=0 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-kv/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+AGENT index=1 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-kv/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+AGENT index=2 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-kv/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+AGENT index=3 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-kv/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+AGENT index=4 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-kv/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+AGENT index=5 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-kv/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+AGENT index=6 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-kv/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+AGENT index=7 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 
+FAULT alive_at_fault=8 probe_exit=0 probe=route=host,gpu_read=cudaSuccess,words_equal=0,words=16777216,gpu_write=cudaErrorIllegalAddress,file_intact=0
+FILE before=9d6d7bd01279993e after=9d6d7bd01279993e
+END_CASE timed_out=0 mps_servers=1 wall_s=18
+CASE config=mps fault=kill agents=8
+STDERR CUDA Graph id 27 reused
+STDERR CUDA Graph id 27 reused
+STDERR CUDA Graph id 27 reused
+AGENT index=0 mig=fafc828a exit=137 completed=0 text=e3b0c44298fc1c14 
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-kv/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+AGENT index=1 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-kv/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+AGENT index=2 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-kv/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+AGENT index=3 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-kv/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+AGENT index=4 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-kv/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+AGENT index=5 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-kv/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+AGENT index=6 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-kv/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+AGENT index=7 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 
+FAULT alive_at_fault=8 probe_exit=none probe=none
+FILE before=9d6d7bd01279993e after=9d6d7bd01279993e
+END_CASE timed_out=0 mps_servers=1 wall_s=17
+CASE config=timeslice fault=none agents=8
+AGENT index=0 mig=fafc828a exit=0 completed=1 text=7bd70180bbe7ca2f role=child prefix_tokens=14282 suffix_tokens=27 model_ms=829.2 context_ms=26.2 state_ms=5.94 prefix_ms=0.0 suffix_ms=113.3 first_token_ms=1248.5 generation_ms=43185.7 generated=128 generation_tps=2.964
+AGENT index=1 mig=fafc828a exit=0 completed=1 text=490dc1327d716112 role=child prefix_tokens=14282 suffix_tokens=22 model_ms=1069.8 context_ms=36.2 state_ms=6.15 prefix_ms=0.0 suffix_ms=560.1 first_token_ms=1973.2 generation_ms=44386.8 generated=128 generation_tps=2.884
+AGENT index=2 mig=fafc828a exit=0 completed=1 text=d8f556245cf146eb role=child prefix_tokens=14282 suffix_tokens=24 model_ms=1081.8 context_ms=43.6 state_ms=6.34 prefix_ms=0.0 suffix_ms=640.2 first_token_ms=2078.4 generation_ms=44413.4 generated=128 generation_tps=2.882
+AGENT index=3 mig=fafc828a exit=0 completed=1 text=71acfbf3d404f65f role=child prefix_tokens=14282 suffix_tokens=32 model_ms=1077.6 context_ms=41.2 state_ms=5.92 prefix_ms=0.0 suffix_ms=694.2 first_token_ms=2106.3 generation_ms=44393.5 generated=128 generation_tps=2.883
+AGENT index=4 mig=fafc828a exit=0 completed=1 text=43a7e6e2129c1d5c role=child prefix_tokens=14282 suffix_tokens=23 model_ms=1095.5 context_ms=30.8 state_ms=6.16 prefix_ms=0.0 suffix_ms=648.8 first_token_ms=2078.7 generation_ms=44410.2 generated=128 generation_tps=2.882
+AGENT index=5 mig=fafc828a exit=0 completed=1 text=16bf735b822df23b role=child prefix_tokens=14282 suffix_tokens=26 model_ms=1043.3 context_ms=44.6 state_ms=6.55 prefix_ms=0.0 suffix_ms=653.2 first_token_ms=2050.2 generation_ms=44419.9 generated=128 generation_tps=2.882
+AGENT index=6 mig=fafc828a exit=0 completed=1 text=1857c541a9bf5f3c role=child prefix_tokens=14282 suffix_tokens=21 model_ms=1070.5 context_ms=35.2 state_ms=6.26 prefix_ms=0.0 suffix_ms=624.0 first_token_ms=2027.0 generation_ms=44420.3 generated=128 generation_tps=2.882
+AGENT index=7 mig=fafc828a exit=0 completed=1 text=de6c62cdeb25c8c0 role=child prefix_tokens=14282 suffix_tokens=31 model_ms=1073.0 context_ms=43.1 state_ms=6.20 prefix_ms=0.0 suffix_ms=678.7 first_token_ms=2074.8 generation_ms=44394.2 generated=128 generation_tps=2.883
+FAULT alive_at_fault=0 probe_exit=none probe=none
+FILE before=9d6d7bd01279993e after=9d6d7bd01279993e
+END_CASE timed_out=0 mps_servers=0 wall_s=48
+CASE config=timeslice fault=write agents=8
+AGENT index=0 mig=fafc828a exit=0 completed=1 text=7bd70180bbe7ca2f role=child prefix_tokens=14282 suffix_tokens=27 model_ms=1148.5 context_ms=54.5 state_ms=6.21 prefix_ms=0.0 suffix_ms=683.2 first_token_ms=2179.6 generation_ms=44695.4 generated=128 generation_tps=2.864
+AGENT index=1 mig=fafc828a exit=0 completed=1 text=490dc1327d716112 role=child prefix_tokens=14282 suffix_tokens=22 model_ms=1130.2 context_ms=36.1 state_ms=6.52 prefix_ms=0.0 suffix_ms=520.9 first_token_ms=1999.4 generation_ms=44659.9 generated=128 generation_tps=2.866
+AGENT index=2 mig=fafc828a exit=0 completed=1 text=d8f556245cf146eb role=child prefix_tokens=14282 suffix_tokens=24 model_ms=1123.2 context_ms=49.8 state_ms=6.21 prefix_ms=0.0 suffix_ms=627.1 first_token_ms=2112.9 generation_ms=44708.9 generated=128 generation_tps=2.863
+AGENT index=3 mig=fafc828a exit=0 completed=1 text=71acfbf3d404f65f role=child prefix_tokens=14282 suffix_tokens=32 model_ms=1125.6 context_ms=50.9 state_ms=6.11 prefix_ms=0.0 suffix_ms=701.3 first_token_ms=2188.7 generation_ms=44691.2 generated=128 generation_tps=2.864
+AGENT index=4 mig=fafc828a exit=0 completed=1 text=43a7e6e2129c1d5c role=child prefix_tokens=14282 suffix_tokens=23 model_ms=1114.5 context_ms=49.8 state_ms=6.40 prefix_ms=0.0 suffix_ms=632.8 first_token_ms=2103.8 generation_ms=44698.7 generated=128 generation_tps=2.864
+AGENT index=5 mig=fafc828a exit=0 completed=1 text=16bf735b822df23b role=child prefix_tokens=14282 suffix_tokens=26 model_ms=1113.3 context_ms=44.4 state_ms=6.04 prefix_ms=0.0 suffix_ms=648.1 first_token_ms=2109.2 generation_ms=44716.8 generated=128 generation_tps=2.862
+AGENT index=6 mig=fafc828a exit=0 completed=1 text=1857c541a9bf5f3c role=child prefix_tokens=14282 suffix_tokens=21 model_ms=1120.0 context_ms=45.5 state_ms=6.20 prefix_ms=0.0 suffix_ms=617.5 first_token_ms=2082.2 generation_ms=44723.9 generated=128 generation_tps=2.862
+AGENT index=7 mig=fafc828a exit=0 completed=1 text=de6c62cdeb25c8c0 role=child prefix_tokens=14282 suffix_tokens=31 model_ms=1131.6 context_ms=47.2 state_ms=6.18 prefix_ms=0.0 suffix_ms=701.5 first_token_ms=2154.7 generation_ms=44690.5 generated=128 generation_tps=2.864
+FAULT alive_at_fault=8 probe_exit=0 probe=route=host,gpu_read=cudaSuccess,words_equal=0,words=16777216,gpu_write=cudaErrorIllegalAddress,file_intact=0
+FILE before=9d6d7bd01279993e after=9d6d7bd01279993e
+END_CASE timed_out=0 mps_servers=0 wall_s=49
+CASE config=timeslice fault=kill agents=8
+STDERR CUDA Graph id 27 reused
+STDERR CUDA Graph id 27 reused
+STDERR CUDA Graph id 27 reused
+AGENT index=0 mig=fafc828a exit=137 completed=0 text=e3b0c44298fc1c14 
+AGENT index=1 mig=fafc828a exit=0 completed=1 text=490dc1327d716112 role=child prefix_tokens=14282 suffix_tokens=22 model_ms=1075.0 context_ms=31.9 state_ms=6.29 prefix_ms=0.0 suffix_ms=712.1 first_token_ms=2122.2 generation_ms=39748.0 generated=128 generation_tps=3.220
+AGENT index=2 mig=fafc828a exit=0 completed=1 text=d8f556245cf146eb role=child prefix_tokens=14282 suffix_tokens=24 model_ms=1057.6 context_ms=29.9 state_ms=6.21 prefix_ms=0.0 suffix_ms=621.8 first_token_ms=2000.0 generation_ms=39810.8 generated=128 generation_tps=3.215
+AGENT index=3 mig=fafc828a exit=0 completed=1 text=71acfbf3d404f65f role=child prefix_tokens=14282 suffix_tokens=32 model_ms=1061.9 context_ms=30.0 state_ms=6.01 prefix_ms=0.0 suffix_ms=771.7 first_token_ms=2170.6 generation_ms=39703.5 generated=128 generation_tps=3.224
+AGENT index=4 mig=fafc828a exit=0 completed=1 text=43a7e6e2129c1d5c role=child prefix_tokens=14282 suffix_tokens=23 model_ms=990.5 context_ms=32.5 state_ms=6.22 prefix_ms=0.0 suffix_ms=464.1 first_token_ms=1782.6 generation_ms=39872.0 generated=128 generation_tps=3.210
+AGENT index=5 mig=fafc828a exit=0 completed=1 text=16bf735b822df23b role=child prefix_tokens=14282 suffix_tokens=26 model_ms=998.0 context_ms=30.6 state_ms=6.17 prefix_ms=0.0 suffix_ms=597.2 first_token_ms=1928.6 generation_ms=39828.0 generated=128 generation_tps=3.214
+AGENT index=6 mig=fafc828a exit=0 completed=1 text=1857c541a9bf5f3c role=child prefix_tokens=14282 suffix_tokens=21 model_ms=1044.3 context_ms=35.2 state_ms=6.38 prefix_ms=0.0 suffix_ms=696.5 first_token_ms=2069.1 generation_ms=39771.5 generated=128 generation_tps=3.218
+AGENT index=7 mig=fafc828a exit=0 completed=1 text=de6c62cdeb25c8c0 role=child prefix_tokens=14282 suffix_tokens=31 model_ms=992.7 context_ms=29.8 state_ms=6.03 prefix_ms=0.0 suffix_ms=611.0 first_token_ms=1930.1 generation_ms=39823.8 generated=128 generation_tps=3.214
+FAULT alive_at_fault=8 probe_exit=none probe=none
+FILE before=9d6d7bd01279993e after=9d6d7bd01279993e
+END_CASE timed_out=0 mps_servers=0 wall_s=44
+END_KVFAULT
+BEGIN_KVFAULT run=5 prefix_tokens=14282
+CASE config=timeslice fault=none agents=8
+AGENT index=0 mig=fafc828a exit=0 completed=1 text=7bd70180bbe7ca2f role=child prefix_tokens=14282 suffix_tokens=27 model_ms=857.0 context_ms=27.1 state_ms=6.06 prefix_ms=0.0 suffix_ms=115.5 first_token_ms=1249.5 generation_ms=43721.1 generated=128 generation_tps=2.928
+AGENT index=1 mig=fafc828a exit=0 completed=1 text=490dc1327d716112 role=child prefix_tokens=14282 suffix_tokens=22 model_ms=1047.9 context_ms=30.2 state_ms=6.58 prefix_ms=0.0 suffix_ms=577.9 first_token_ms=1935.5 generation_ms=44455.7 generated=128 generation_tps=2.879
+AGENT index=2 mig=fafc828a exit=0 completed=1 text=d8f556245cf146eb role=child prefix_tokens=14282 suffix_tokens=24 model_ms=999.9 context_ms=28.8 state_ms=6.09 prefix_ms=0.0 suffix_ms=429.2 first_token_ms=1754.9 generation_ms=44549.6 generated=128 generation_tps=2.873
+AGENT index=3 mig=fafc828a exit=0 completed=1 text=71acfbf3d404f65f role=child prefix_tokens=14282 suffix_tokens=32 model_ms=982.5 context_ms=29.2 state_ms=6.70 prefix_ms=0.0 suffix_ms=557.6 first_token_ms=1866.6 generation_ms=44474.6 generated=128 generation_tps=2.878
+AGENT index=4 mig=fafc828a exit=0 completed=1 text=43a7e6e2129c1d5c role=child prefix_tokens=14282 suffix_tokens=23 model_ms=1067.6 context_ms=27.5 state_ms=6.21 prefix_ms=0.0 suffix_ms=682.4 first_token_ms=2076.7 generation_ms=44425.2 generated=128 generation_tps=2.881
+AGENT index=5 mig=fafc828a exit=0 completed=1 text=16bf735b822df23b role=child prefix_tokens=14282 suffix_tokens=26 model_ms=1039.8 context_ms=28.7 state_ms=6.38 prefix_ms=0.0 suffix_ms=728.7 first_token_ms=2104.0 generation_ms=44408.2 generated=128 generation_tps=2.882
+AGENT index=6 mig=fafc828a exit=0 completed=1 text=1857c541a9bf5f3c role=child prefix_tokens=14282 suffix_tokens=21 model_ms=1023.3 context_ms=32.9 state_ms=6.41 prefix_ms=0.0 suffix_ms=648.3 first_token_ms=2000.3 generation_ms=44442.1 generated=128 generation_tps=2.880
+AGENT index=7 mig=fafc828a exit=0 completed=1 text=de6c62cdeb25c8c0 role=child prefix_tokens=14282 suffix_tokens=31 model_ms=1044.0 context_ms=33.6 state_ms=6.10 prefix_ms=0.0 suffix_ms=738.4 first_token_ms=2113.7 generation_ms=44386.8 generated=128 generation_tps=2.884
+FAULT alive_at_fault=0 probe_exit=none probe=none
+FILE before=9d6d7bd01279993e after=9d6d7bd01279993e
+END_CASE timed_out=0 mps_servers=0 wall_s=48
+CASE config=timeslice fault=write agents=8
+AGENT index=0 mig=fafc828a exit=0 completed=1 text=7bd70180bbe7ca2f role=child prefix_tokens=14282 suffix_tokens=27 model_ms=1075.2 context_ms=26.1 state_ms=6.17 prefix_ms=0.0 suffix_ms=320.0 first_token_ms=1707.2 generation_ms=44758.3 generated=128 generation_tps=2.860
+AGENT index=1 mig=fafc828a exit=0 completed=1 text=490dc1327d716112 role=child prefix_tokens=14282 suffix_tokens=22 model_ms=1092.7 context_ms=34.3 state_ms=6.33 prefix_ms=0.0 suffix_ms=641.2 first_token_ms=2073.3 generation_ms=44630.4 generated=128 generation_tps=2.868
+AGENT index=2 mig=fafc828a exit=0 completed=1 text=d8f556245cf146eb role=child prefix_tokens=14282 suffix_tokens=24 model_ms=1113.1 context_ms=32.4 state_ms=6.39 prefix_ms=0.0 suffix_ms=661.7 first_token_ms=2116.2 generation_ms=44676.5 generated=128 generation_tps=2.865
+AGENT index=3 mig=fafc828a exit=0 completed=1 text=71acfbf3d404f65f role=child prefix_tokens=14282 suffix_tokens=32 model_ms=1074.8 context_ms=33.9 state_ms=6.10 prefix_ms=0.0 suffix_ms=696.9 first_token_ms=2113.2 generation_ms=44690.1 generated=128 generation_tps=2.864
+AGENT index=4 mig=fafc828a exit=0 completed=1 text=43a7e6e2129c1d5c role=child prefix_tokens=14282 suffix_tokens=23 model_ms=1048.5 context_ms=27.7 state_ms=6.06 prefix_ms=0.0 suffix_ms=433.1 first_token_ms=1814.3 generation_ms=44727.0 generated=128 generation_tps=2.862
+AGENT index=5 mig=fafc828a exit=0 completed=1 text=16bf735b822df23b role=child prefix_tokens=14282 suffix_tokens=26 model_ms=1066.2 context_ms=27.1 state_ms=6.30 prefix_ms=0.0 suffix_ms=657.7 first_token_ms=2053.9 generation_ms=44678.0 generated=128 generation_tps=2.865
+AGENT index=6 mig=fafc828a exit=0 completed=1 text=1857c541a9bf5f3c role=child prefix_tokens=14282 suffix_tokens=21 model_ms=1107.4 context_ms=29.8 state_ms=6.03 prefix_ms=0.0 suffix_ms=671.3 first_token_ms=2111.2 generation_ms=44686.6 generated=128 generation_tps=2.864
+AGENT index=7 mig=fafc828a exit=0 completed=1 text=de6c62cdeb25c8c0 role=child prefix_tokens=14282 suffix_tokens=31 model_ms=1101.5 context_ms=32.7 state_ms=6.39 prefix_ms=0.0 suffix_ms=716.6 first_token_ms=2142.3 generation_ms=44648.3 generated=128 generation_tps=2.867
+FAULT alive_at_fault=8 probe_exit=0 probe=route=host,gpu_read=cudaSuccess,words_equal=0,words=16777216,gpu_write=cudaErrorIllegalAddress,file_intact=0
+FILE before=9d6d7bd01279993e after=9d6d7bd01279993e
+END_CASE timed_out=0 mps_servers=0 wall_s=48
+CASE config=timeslice fault=kill agents=8
+STDERR CUDA Graph id 27 reused
+STDERR CUDA Graph id 27 reused
+STDERR CUDA Graph id 27 reused
+AGENT index=0 mig=fafc828a exit=137 completed=0 text=e3b0c44298fc1c14 
+AGENT index=1 mig=fafc828a exit=0 completed=1 text=490dc1327d716112 role=child prefix_tokens=14282 suffix_tokens=22 model_ms=1099.4 context_ms=33.7 state_ms=6.30 prefix_ms=0.0 suffix_ms=545.3 first_token_ms=1995.8 generation_ms=39833.4 generated=128 generation_tps=3.213
+AGENT index=2 mig=fafc828a exit=0 completed=1 text=d8f556245cf146eb role=child prefix_tokens=14282 suffix_tokens=24 model_ms=1123.0 context_ms=41.0 state_ms=6.31 prefix_ms=0.0 suffix_ms=687.3 first_token_ms=2168.1 generation_ms=39770.4 generated=128 generation_tps=3.218
+AGENT index=3 mig=fafc828a exit=0 completed=1 text=71acfbf3d404f65f role=child prefix_tokens=14282 suffix_tokens=32 model_ms=1092.2 context_ms=35.7 state_ms=6.90 prefix_ms=0.0 suffix_ms=615.6 first_token_ms=2055.8 generation_ms=39826.9 generated=128 generation_tps=3.214
+AGENT index=4 mig=fafc828a exit=0 completed=1 text=43a7e6e2129c1d5c role=child prefix_tokens=14282 suffix_tokens=23 model_ms=1095.5 context_ms=35.0 state_ms=6.11 prefix_ms=0.0 suffix_ms=536.7 first_token_ms=1977.3 generation_ms=39833.6 generated=128 generation_tps=3.213
+AGENT index=5 mig=fafc828a exit=0 completed=1 text=16bf735b822df23b role=child prefix_tokens=14282 suffix_tokens=26 model_ms=1113.4 context_ms=38.4 state_ms=6.42 prefix_ms=0.0 suffix_ms=759.8 first_token_ms=2225.7 generation_ms=39724.7 generated=128 generation_tps=3.222
+AGENT index=6 mig=fafc828a exit=0 completed=1 text=1857c541a9bf5f3c role=child prefix_tokens=14282 suffix_tokens=21 model_ms=1110.6 context_ms=31.9 state_ms=6.14 prefix_ms=0.0 suffix_ms=564.2 first_token_ms=2013.5 generation_ms=39838.7 generated=128 generation_tps=3.213
+AGENT index=7 mig=fafc828a exit=0 completed=1 text=de6c62cdeb25c8c0 role=child prefix_tokens=14282 suffix_tokens=31 model_ms=1117.1 context_ms=34.0 state_ms=6.26 prefix_ms=0.0 suffix_ms=772.4 first_token_ms=2232.5 generation_ms=39714.4 generated=128 generation_tps=3.223
+FAULT alive_at_fault=8 probe_exit=none probe=none
+FILE before=9d6d7bd01279993e after=9d6d7bd01279993e
+END_CASE timed_out=0 mps_servers=0 wall_s=43
+CASE config=mps fault=none agents=8
+AGENT index=0 mig=fafc828a exit=0 completed=1 text=7bd70180bbe7ca2f role=child prefix_tokens=14282 suffix_tokens=27 model_ms=875.6 context_ms=26.3 state_ms=6.23 prefix_ms=0.0 suffix_ms=172.3 first_token_ms=1327.6 generation_ms=39464.5 generated=128 generation_tps=3.243
+AGENT index=1 mig=fafc828a exit=0 completed=1 text=490dc1327d716112 role=child prefix_tokens=14282 suffix_tokens=22 model_ms=847.3 context_ms=26.1 state_ms=6.19 prefix_ms=0.0 suffix_ms=188.4 first_token_ms=1354.3 generation_ms=39497.3 generated=128 generation_tps=3.241
+AGENT index=2 mig=fafc828a exit=0 completed=1 text=d8f556245cf146eb role=child prefix_tokens=14282 suffix_tokens=24 model_ms=881.9 context_ms=28.6 state_ms=6.57 prefix_ms=0.0 suffix_ms=578.7 first_token_ms=1923.9 generation_ms=39436.1 generated=128 generation_tps=3.246
+AGENT index=3 mig=fafc828a exit=0 completed=1 text=71acfbf3d404f65f role=child prefix_tokens=14282 suffix_tokens=32 model_ms=823.6 context_ms=29.1 state_ms=6.22 prefix_ms=0.0 suffix_ms=544.0 first_token_ms=1818.3 generation_ms=39502.2 generated=128 generation_tps=3.240
+AGENT index=4 mig=fafc828a exit=0 completed=1 text=43a7e6e2129c1d5c role=child prefix_tokens=14282 suffix_tokens=23 model_ms=834.5 context_ms=28.7 state_ms=6.36 prefix_ms=0.0 suffix_ms=493.6 first_token_ms=1735.9 generation_ms=39514.1 generated=128 generation_tps=3.239
+AGENT index=5 mig=fafc828a exit=0 completed=1 text=16bf735b822df23b role=child prefix_tokens=14282 suffix_tokens=26 model_ms=834.9 context_ms=30.2 state_ms=6.36 prefix_ms=0.0 suffix_ms=575.5 first_token_ms=1888.5 generation_ms=39428.8 generated=128 generation_tps=3.246
+AGENT index=6 mig=fafc828a exit=0 completed=1 text=1857c541a9bf5f3c role=child prefix_tokens=14282 suffix_tokens=21 model_ms=824.7 context_ms=28.8 state_ms=6.26 prefix_ms=0.0 suffix_ms=566.0 first_token_ms=1838.9 generation_ms=39446.8 generated=128 generation_tps=3.245
+AGENT index=7 mig=fafc828a exit=0 completed=1 text=de6c62cdeb25c8c0 role=child prefix_tokens=14282 suffix_tokens=31 model_ms=838.7 context_ms=28.0 state_ms=6.13 prefix_ms=0.0 suffix_ms=583.6 first_token_ms=1872.2 generation_ms=39451.4 generated=128 generation_tps=3.245
+FAULT alive_at_fault=0 probe_exit=none probe=none
+FILE before=9d6d7bd01279993e after=9d6d7bd01279993e
+END_CASE timed_out=0 mps_servers=1 wall_s=43
+CASE config=mps fault=write agents=8
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-kv/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+AGENT index=0 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-kv/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+AGENT index=1 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 
+STDERR   cudaStreamSynchronize(((cudaStream_t)0x2))
+STDERR /home/thor/kcj/llm_share/llama.cpp-kv/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+AGENT index=2 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-kv/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+AGENT index=3 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-kv/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+AGENT index=4 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-kv/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+AGENT index=5 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-kv/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+AGENT index=6 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-kv/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+AGENT index=7 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 
+FAULT alive_at_fault=8 probe_exit=0 probe=route=host,gpu_read=cudaSuccess,words_equal=0,words=16777216,gpu_write=cudaErrorIllegalAddress,file_intact=0
+FILE before=9d6d7bd01279993e after=9d6d7bd01279993e
+END_CASE timed_out=0 mps_servers=1 wall_s=18
+CASE config=mps fault=kill agents=8
+STDERR CUDA Graph id 27 reused
+STDERR CUDA Graph id 27 reused
+STDERR CUDA Graph id 27 reused
+AGENT index=0 mig=fafc828a exit=137 completed=0 text=e3b0c44298fc1c14 
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-kv/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+AGENT index=1 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-kv/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+AGENT index=2 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-kv/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+AGENT index=3 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-kv/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+AGENT index=4 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-kv/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+AGENT index=5 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-kv/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+AGENT index=6 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-kv/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+AGENT index=7 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 
+FAULT alive_at_fault=8 probe_exit=none probe=none
+FILE before=9d6d7bd01279993e after=9d6d7bd01279993e
+END_CASE timed_out=0 mps_servers=1 wall_s=17
+CASE config=mig fault=none agents=8
+AGENT index=0 mig=fafc828a exit=0 completed=1 text=7bd70180bbe7ca2f role=child prefix_tokens=14282 suffix_tokens=27 model_ms=1116.2 context_ms=36.7 state_ms=6.45 prefix_ms=0.0 suffix_ms=337.5 first_token_ms=1781.8 generation_ms=24414.3 generated=128 generation_tps=5.243
+AGENT index=1 mig=31ffbfe4 exit=0 completed=1 text=4a39ecaa0045c102 role=child prefix_tokens=14282 suffix_tokens=22 model_ms=1103.5 context_ms=54.6 state_ms=6.28 prefix_ms=0.0 suffix_ms=533.7 first_token_ms=1999.9 generation_ms=37552.6 generated=128 generation_tps=3.409
+AGENT index=2 mig=fafc828a exit=0 completed=1 text=d8f556245cf146eb role=child prefix_tokens=14282 suffix_tokens=24 model_ms=1101.4 context_ms=54.2 state_ms=6.33 prefix_ms=0.0 suffix_ms=329.2 first_token_ms=1782.5 generation_ms=24540.5 generated=128 generation_tps=5.216
+AGENT index=3 mig=31ffbfe4 exit=0 completed=1 text=0a543804112a09a5 role=child prefix_tokens=14282 suffix_tokens=32 model_ms=1098.5 context_ms=47.4 state_ms=6.24 prefix_ms=0.0 suffix_ms=523.4 first_token_ms=1971.1 generation_ms=37529.7 generated=128 generation_tps=3.411
+AGENT index=4 mig=fafc828a exit=0 completed=1 text=43a7e6e2129c1d5c role=child prefix_tokens=14282 suffix_tokens=23 model_ms=1089.8 context_ms=50.7 state_ms=6.67 prefix_ms=0.0 suffix_ms=327.1 first_token_ms=1767.7 generation_ms=24544.6 generated=128 generation_tps=5.215
+AGENT index=5 mig=31ffbfe4 exit=0 completed=1 text=b96900b61349227c role=child prefix_tokens=14282 suffix_tokens=26 model_ms=1093.7 context_ms=54.3 state_ms=6.42 prefix_ms=0.0 suffix_ms=549.5 first_token_ms=1987.8 generation_ms=37524.7 generated=128 generation_tps=3.411
+AGENT index=6 mig=fafc828a exit=0 completed=1 text=1857c541a9bf5f3c role=child prefix_tokens=14282 suffix_tokens=21 model_ms=1082.0 context_ms=45.8 state_ms=6.28 prefix_ms=0.0 suffix_ms=317.1 first_token_ms=1742.8 generation_ms=24564.0 generated=128 generation_tps=5.211
+AGENT index=7 mig=31ffbfe4 exit=0 completed=1 text=de6c62cdeb25c8c0 role=child prefix_tokens=14282 suffix_tokens=31 model_ms=1086.2 context_ms=54.0 state_ms=5.99 prefix_ms=0.0 suffix_ms=556.7 first_token_ms=1987.6 generation_ms=37532.8 generated=128 generation_tps=3.410
+FAULT alive_at_fault=0 probe_exit=none probe=none
+FILE before=9d6d7bd01279993e after=9d6d7bd01279993e
+END_CASE timed_out=0 mps_servers=0 wall_s=41
+CASE config=mig fault=write agents=8
+AGENT index=0 mig=fafc828a exit=0 completed=1 text=7bd70180bbe7ca2f role=child prefix_tokens=14282 suffix_tokens=27 model_ms=1149.2 context_ms=57.5 state_ms=6.06 prefix_ms=0.0 suffix_ms=365.3 first_token_ms=1868.0 generation_ms=24550.4 generated=128 generation_tps=5.214
+AGENT index=1 mig=31ffbfe4 exit=0 completed=1 text=4a39ecaa0045c102 role=child prefix_tokens=14282 suffix_tokens=22 model_ms=1132.4 context_ms=58.2 state_ms=6.06 prefix_ms=0.0 suffix_ms=528.0 first_token_ms=2031.4 generation_ms=37548.9 generated=128 generation_tps=3.409
+AGENT index=2 mig=fafc828a exit=0 completed=1 text=d8f556245cf146eb role=child prefix_tokens=14282 suffix_tokens=24 model_ms=1127.2 context_ms=56.7 state_ms=6.14 prefix_ms=0.0 suffix_ms=311.8 first_token_ms=1805.4 generation_ms=24508.1 generated=128 generation_tps=5.223
+AGENT index=3 mig=31ffbfe4 exit=0 completed=1 text=0a543804112a09a5 role=child prefix_tokens=14282 suffix_tokens=32 model_ms=1115.9 context_ms=56.9 state_ms=6.17 prefix_ms=0.0 suffix_ms=539.4 first_token_ms=2031.9 generation_ms=37551.2 generated=128 generation_tps=3.409
+AGENT index=4 mig=fafc828a exit=0 completed=1 text=43a7e6e2129c1d5c role=child prefix_tokens=14282 suffix_tokens=23 model_ms=1113.1 context_ms=57.9 state_ms=6.30 prefix_ms=0.0 suffix_ms=333.7 first_token_ms=1818.0 generation_ms=24568.8 generated=128 generation_tps=5.210
+AGENT index=5 mig=31ffbfe4 exit=0 completed=1 text=b96900b61349227c role=child prefix_tokens=14282 suffix_tokens=26 model_ms=1121.5 context_ms=57.3 state_ms=6.11 prefix_ms=0.0 suffix_ms=545.4 first_token_ms=2027.3 generation_ms=37543.3 generated=128 generation_tps=3.409
+AGENT index=6 mig=fafc828a exit=0 completed=1 text=1857c541a9bf5f3c role=child prefix_tokens=14282 suffix_tokens=21 model_ms=1122.4 context_ms=58.7 state_ms=6.45 prefix_ms=0.0 suffix_ms=321.3 first_token_ms=1799.9 generation_ms=24568.4 generated=128 generation_tps=5.210
+AGENT index=7 mig=31ffbfe4 exit=0 completed=1 text=de6c62cdeb25c8c0 role=child prefix_tokens=14282 suffix_tokens=31 model_ms=1130.1 context_ms=53.9 state_ms=6.06 prefix_ms=0.0 suffix_ms=524.6 first_token_ms=1991.9 generation_ms=37461.1 generated=128 generation_tps=3.417
+FAULT alive_at_fault=8 probe_exit=0 probe=route=host,gpu_read=cudaSuccess,words_equal=0,words=16777216,gpu_write=cudaErrorIllegalAddress,file_intact=0
+FILE before=9d6d7bd01279993e after=9d6d7bd01279993e
+END_CASE timed_out=0 mps_servers=0 wall_s=41
+CASE config=mig fault=kill agents=8
+STDERR CUDA Graph id 30 reused
+STDERR CUDA Graph id 30 reused
+STDERR CUDA Graph id 30 reused
+AGENT index=0 mig=fafc828a exit=137 completed=0 text=e3b0c44298fc1c14 
+AGENT index=1 mig=31ffbfe4 exit=0 completed=1 text=4a39ecaa0045c102 role=child prefix_tokens=14282 suffix_tokens=22 model_ms=1083.3 context_ms=33.5 state_ms=6.38 prefix_ms=0.0 suffix_ms=550.1 first_token_ms=1955.0 generation_ms=37117.0 generated=128 generation_tps=3.449
+AGENT index=2 mig=fafc828a exit=0 completed=1 text=d8f556245cf146eb role=child prefix_tokens=14282 suffix_tokens=24 model_ms=1042.5 context_ms=38.9 state_ms=6.88 prefix_ms=0.0 suffix_ms=346.7 first_token_ms=1732.7 generation_ms=19871.0 generated=128 generation_tps=6.442
+AGENT index=3 mig=31ffbfe4 exit=0 completed=1 text=0a543804112a09a5 role=child prefix_tokens=14282 suffix_tokens=32 model_ms=1035.9 context_ms=40.4 state_ms=6.76 prefix_ms=0.0 suffix_ms=544.1 first_token_ms=1930.8 generation_ms=37182.3 generated=128 generation_tps=3.442
+AGENT index=4 mig=fafc828a exit=0 completed=1 text=43a7e6e2129c1d5c role=child prefix_tokens=14282 suffix_tokens=23 model_ms=1070.1 context_ms=28.5 state_ms=6.20 prefix_ms=0.0 suffix_ms=372.4 first_token_ms=1778.8 generation_ms=19857.7 generated=128 generation_tps=6.446
+AGENT index=5 mig=31ffbfe4 exit=0 completed=1 text=b96900b61349227c role=child prefix_tokens=14282 suffix_tokens=26 model_ms=1025.7 context_ms=35.2 state_ms=6.14 prefix_ms=0.0 suffix_ms=529.1 first_token_ms=1894.9 generation_ms=37099.1 generated=128 generation_tps=3.450
+AGENT index=6 mig=fafc828a exit=0 completed=1 text=1857c541a9bf5f3c role=child prefix_tokens=14282 suffix_tokens=21 model_ms=1006.1 context_ms=28.6 state_ms=6.27 prefix_ms=0.0 suffix_ms=267.9 first_token_ms=1600.9 generation_ms=19907.1 generated=128 generation_tps=6.430
+AGENT index=7 mig=31ffbfe4 exit=0 completed=1 text=de6c62cdeb25c8c0 role=child prefix_tokens=14282 suffix_tokens=31 model_ms=1066.0 context_ms=31.2 state_ms=6.28 prefix_ms=0.0 suffix_ms=559.1 first_token_ms=1942.2 generation_ms=37142.4 generated=128 generation_tps=3.446
+FAULT alive_at_fault=8 probe_exit=none probe=none
+FILE before=9d6d7bd01279993e after=9d6d7bd01279993e
+END_CASE timed_out=0 mps_servers=0 wall_s=41
+CASE config=mig_mps fault=none agents=8
+AGENT index=0 mig=fafc828a exit=0 completed=1 text=7bd70180bbe7ca2f role=child prefix_tokens=14282 suffix_tokens=27 model_ms=697.0 context_ms=26.6 state_ms=6.31 prefix_ms=0.0 suffix_ms=114.2 first_token_ms=1275.2 generation_ms=21223.6 generated=128 generation_tps=6.031
+AGENT index=1 mig=31ffbfe4 exit=0 completed=1 text=4a39ecaa0045c102 role=child prefix_tokens=14282 suffix_tokens=22 model_ms=897.8 context_ms=41.8 state_ms=6.23 prefix_ms=0.0 suffix_ms=492.7 first_token_ms=1933.2 generation_ms=33768.7 generated=128 generation_tps=3.790
+AGENT index=2 mig=fafc828a exit=0 completed=1 text=d8f556245cf146eb role=child prefix_tokens=14282 suffix_tokens=24 model_ms=866.5 context_ms=27.3 state_ms=5.85 prefix_ms=0.0 suffix_ms=303.8 first_token_ms=1667.1 generation_ms=21623.6 generated=128 generation_tps=5.919
+AGENT index=3 mig=31ffbfe4 exit=0 completed=1 text=0a543804112a09a5 role=child prefix_tokens=14282 suffix_tokens=32 model_ms=885.9 context_ms=40.8 state_ms=6.38 prefix_ms=0.0 suffix_ms=491.4 first_token_ms=1926.6 generation_ms=33749.1 generated=128 generation_tps=3.793
+AGENT index=4 mig=fafc828a exit=0 completed=1 text=43a7e6e2129c1d5c role=child prefix_tokens=14282 suffix_tokens=23 model_ms=868.5 context_ms=34.5 state_ms=6.09 prefix_ms=0.0 suffix_ms=317.2 first_token_ms=1721.0 generation_ms=21643.0 generated=128 generation_tps=5.914
+AGENT index=5 mig=31ffbfe4 exit=0 completed=1 text=b96900b61349227c role=child prefix_tokens=14282 suffix_tokens=26 model_ms=870.9 context_ms=42.1 state_ms=6.45 prefix_ms=0.0 suffix_ms=505.4 first_token_ms=1927.7 generation_ms=33755.5 generated=128 generation_tps=3.792
+AGENT index=6 mig=fafc828a exit=0 completed=1 text=1857c541a9bf5f3c role=child prefix_tokens=14282 suffix_tokens=21 model_ms=902.5 context_ms=31.3 state_ms=6.70 prefix_ms=0.0 suffix_ms=324.8 first_token_ms=1765.0 generation_ms=21605.5 generated=128 generation_tps=5.924
+AGENT index=7 mig=31ffbfe4 exit=0 completed=1 text=de6c62cdeb25c8c0 role=child prefix_tokens=14282 suffix_tokens=31 model_ms=879.3 context_ms=39.7 state_ms=6.30 prefix_ms=0.0 suffix_ms=506.4 first_token_ms=1921.1 generation_ms=33721.9 generated=128 generation_tps=3.796
+FAULT alive_at_fault=0 probe_exit=none probe=none
+FILE before=9d6d7bd01279993e after=9d6d7bd01279993e
+END_CASE timed_out=0 mps_servers=2 wall_s=37
+CASE config=mig_mps fault=write agents=8
+STDERR   cudaStreamSynchronize(((cudaStream_t)0x2))
+STDERR /home/thor/kcj/llm_share/llama.cpp-kv/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+AGENT index=0 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 
+AGENT index=1 mig=31ffbfe4 exit=0 completed=1 text=4a39ecaa0045c102 role=child prefix_tokens=14282 suffix_tokens=22 model_ms=805.1 context_ms=27.0 state_ms=6.21 prefix_ms=0.0 suffix_ms=150.1 first_token_ms=1423.9 generation_ms=32434.8 generated=128 generation_tps=3.946
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-kv/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+AGENT index=2 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 
+AGENT index=3 mig=31ffbfe4 exit=0 completed=1 text=0a543804112a09a5 role=child prefix_tokens=14282 suffix_tokens=32 model_ms=920.5 context_ms=34.3 state_ms=6.39 prefix_ms=0.0 suffix_ms=529.5 first_token_ms=1944.2 generation_ms=32507.4 generated=128 generation_tps=3.938
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-kv/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+AGENT index=4 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 
+AGENT index=5 mig=31ffbfe4 exit=0 completed=1 text=b96900b61349227c role=child prefix_tokens=14282 suffix_tokens=26 model_ms=860.9 context_ms=34.4 state_ms=6.11 prefix_ms=0.0 suffix_ms=525.0 first_token_ms=1921.9 generation_ms=32506.3 generated=128 generation_tps=3.938
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-kv/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+AGENT index=6 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 
+AGENT index=7 mig=31ffbfe4 exit=0 completed=1 text=de6c62cdeb25c8c0 role=child prefix_tokens=14282 suffix_tokens=31 model_ms=856.9 context_ms=36.2 state_ms=6.14 prefix_ms=0.0 suffix_ms=536.0 first_token_ms=1924.9 generation_ms=32474.5 generated=128 generation_tps=3.942
+FAULT alive_at_fault=8 probe_exit=0 probe=route=host,gpu_read=cudaSuccess,words_equal=0,words=16777216,gpu_write=cudaErrorIllegalAddress,file_intact=0
+FILE before=9d6d7bd01279993e after=9d6d7bd01279993e
+END_CASE timed_out=0 mps_servers=2 wall_s=35
+CASE config=mig_mps fault=kill agents=8
+STDERR CUDA Graph id 30 reused
+STDERR CUDA Graph id 30 reused
+STDERR CUDA Graph id 30 reused
+AGENT index=0 mig=fafc828a exit=137 completed=0 text=e3b0c44298fc1c14 
+AGENT index=1 mig=31ffbfe4 exit=0 completed=1 text=4a39ecaa0045c102 role=child prefix_tokens=14282 suffix_tokens=22 model_ms=849.6 context_ms=33.8 state_ms=6.18 prefix_ms=0.0 suffix_ms=424.6 first_token_ms=1806.7 generation_ms=33479.4 generated=128 generation_tps=3.823
+AGENT index=2 mig=fafc828a exit=0 completed=1 text=d8f556245cf146eb role=child prefix_tokens=14282 suffix_tokens=24 model_ms=856.7 context_ms=28.9 state_ms=6.45 prefix_ms=0.0 suffix_ms=299.7 first_token_ms=1625.3 generation_ms=18068.7 generated=128 generation_tps=7.084
+AGENT index=3 mig=31ffbfe4 exit=0 completed=1 text=0a543804112a09a5 role=child prefix_tokens=14282 suffix_tokens=32 model_ms=883.2 context_ms=29.5 state_ms=6.83 prefix_ms=0.0 suffix_ms=469.5 first_token_ms=1878.8 generation_ms=33452.3 generated=128 generation_tps=3.826
+AGENT index=4 mig=fafc828a exit=0 completed=1 text=43a7e6e2129c1d5c role=child prefix_tokens=14282 suffix_tokens=23 model_ms=828.7 context_ms=32.4 state_ms=6.25 prefix_ms=0.0 suffix_ms=325.0 first_token_ms=1687.5 generation_ms=18038.4 generated=128 generation_tps=7.096
+AGENT index=5 mig=31ffbfe4 exit=0 completed=1 text=b96900b61349227c role=child prefix_tokens=14282 suffix_tokens=26 model_ms=848.2 context_ms=36.6 state_ms=6.60 prefix_ms=0.0 suffix_ms=476.5 first_token_ms=1863.9 generation_ms=33474.6 generated=128 generation_tps=3.824
+AGENT index=6 mig=fafc828a exit=0 completed=1 text=1857c541a9bf5f3c role=child prefix_tokens=14282 suffix_tokens=21 model_ms=867.1 context_ms=30.7 state_ms=6.29 prefix_ms=0.0 suffix_ms=322.0 first_token_ms=1669.6 generation_ms=18032.3 generated=128 generation_tps=7.098
+AGENT index=7 mig=31ffbfe4 exit=0 completed=1 text=de6c62cdeb25c8c0 role=child prefix_tokens=14282 suffix_tokens=31 model_ms=850.3 context_ms=34.0 state_ms=6.46 prefix_ms=0.0 suffix_ms=470.5 first_token_ms=1847.5 generation_ms=33459.5 generated=128 generation_tps=3.826
+FAULT alive_at_fault=8 probe_exit=none probe=none
+FILE before=9d6d7bd01279993e after=9d6d7bd01279993e
+END_CASE timed_out=0 mps_servers=2 wall_s=37
+END_KVFAULT
+BEGIN_KVFAULT run=6 prefix_tokens=14282
+CASE config=mig_mps fault=none agents=8
+AGENT index=0 mig=fafc828a exit=0 completed=1 text=7bd70180bbe7ca2f role=child prefix_tokens=14282 suffix_tokens=27 model_ms=873.1 context_ms=29.9 state_ms=6.11 prefix_ms=0.0 suffix_ms=247.0 first_token_ms=1615.2 generation_ms=21843.7 generated=128 generation_tps=5.860
+AGENT index=1 mig=31ffbfe4 exit=0 completed=1 text=4a39ecaa0045c102 role=child prefix_tokens=14282 suffix_tokens=22 model_ms=856.5 context_ms=32.4 state_ms=6.27 prefix_ms=0.0 suffix_ms=345.9 first_token_ms=1744.2 generation_ms=33713.0 generated=128 generation_tps=3.797
+AGENT index=2 mig=fafc828a exit=0 completed=1 text=d8f556245cf146eb role=child prefix_tokens=14282 suffix_tokens=24 model_ms=898.1 context_ms=31.2 state_ms=6.02 prefix_ms=0.0 suffix_ms=251.2 first_token_ms=1614.6 generation_ms=21923.7 generated=128 generation_tps=5.838
+AGENT index=3 mig=31ffbfe4 exit=0 completed=1 text=0a543804112a09a5 role=child prefix_tokens=14282 suffix_tokens=32 model_ms=933.8 context_ms=31.0 state_ms=6.08 prefix_ms=0.0 suffix_ms=504.1 first_token_ms=1949.0 generation_ms=33686.6 generated=128 generation_tps=3.800
+AGENT index=4 mig=fafc828a exit=0 completed=1 text=43a7e6e2129c1d5c role=child prefix_tokens=14282 suffix_tokens=23 model_ms=862.9 context_ms=30.6 state_ms=6.37 prefix_ms=0.0 suffix_ms=301.0 first_token_ms=1697.6 generation_ms=21877.4 generated=128 generation_tps=5.851
+AGENT index=5 mig=31ffbfe4 exit=0 completed=1 text=b96900b61349227c role=child prefix_tokens=14282 suffix_tokens=26 model_ms=894.9 context_ms=28.7 state_ms=6.11 prefix_ms=0.0 suffix_ms=496.8 first_token_ms=1919.0 generation_ms=33692.4 generated=128 generation_tps=3.799
+AGENT index=6 mig=fafc828a exit=0 completed=1 text=1857c541a9bf5f3c role=child prefix_tokens=14282 suffix_tokens=21 model_ms=857.5 context_ms=33.2 state_ms=6.24 prefix_ms=0.0 suffix_ms=306.9 first_token_ms=1691.4 generation_ms=21863.7 generated=128 generation_tps=5.854
+AGENT index=7 mig=31ffbfe4 exit=0 completed=1 text=de6c62cdeb25c8c0 role=child prefix_tokens=14282 suffix_tokens=31 model_ms=896.5 context_ms=32.6 state_ms=6.36 prefix_ms=0.0 suffix_ms=497.3 first_token_ms=1924.7 generation_ms=33703.1 generated=128 generation_tps=3.798
+FAULT alive_at_fault=0 probe_exit=none probe=none
+FILE before=9d6d7bd01279993e after=9d6d7bd01279993e
+END_CASE timed_out=0 mps_servers=2 wall_s=37
+CASE config=mig_mps fault=write agents=8
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-kv/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+AGENT index=0 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 
+AGENT index=1 mig=31ffbfe4 exit=0 completed=1 text=4a39ecaa0045c102 role=child prefix_tokens=14282 suffix_tokens=22 model_ms=942.2 context_ms=40.4 state_ms=6.27 prefix_ms=0.0 suffix_ms=458.0 first_token_ms=1942.3 generation_ms=32676.6 generated=128 generation_tps=3.917
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-kv/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+AGENT index=2 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 
+AGENT index=3 mig=31ffbfe4 exit=0 completed=1 text=0a543804112a09a5 role=child prefix_tokens=14282 suffix_tokens=32 model_ms=939.7 context_ms=55.4 state_ms=6.30 prefix_ms=0.0 suffix_ms=482.8 first_token_ms=1979.7 generation_ms=32646.2 generated=128 generation_tps=3.921
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-kv/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+AGENT index=4 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 
+AGENT index=5 mig=31ffbfe4 exit=0 completed=1 text=b96900b61349227c role=child prefix_tokens=14282 suffix_tokens=26 model_ms=910.0 context_ms=48.4 state_ms=6.28 prefix_ms=0.0 suffix_ms=487.3 first_token_ms=1958.8 generation_ms=32644.7 generated=128 generation_tps=3.921
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-kv/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+AGENT index=6 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 
+AGENT index=7 mig=31ffbfe4 exit=0 completed=1 text=de6c62cdeb25c8c0 role=child prefix_tokens=14282 suffix_tokens=31 model_ms=913.4 context_ms=49.0 state_ms=6.31 prefix_ms=0.0 suffix_ms=479.9 first_token_ms=1944.7 generation_ms=32630.6 generated=128 generation_tps=3.923
+FAULT alive_at_fault=8 probe_exit=0 probe=route=host,gpu_read=cudaSuccess,words_equal=0,words=16777216,gpu_write=cudaErrorIllegalAddress,file_intact=0
+FILE before=9d6d7bd01279993e after=9d6d7bd01279993e
+END_CASE timed_out=0 mps_servers=2 wall_s=36
+CASE config=mig_mps fault=kill agents=8
+STDERR CUDA Graph id 30 reused
+STDERR CUDA Graph id 30 reused
+STDERR CUDA Graph id 30 reused
+AGENT index=0 mig=fafc828a exit=137 completed=0 text=e3b0c44298fc1c14 
+AGENT index=1 mig=31ffbfe4 exit=0 completed=1 text=4a39ecaa0045c102 role=child prefix_tokens=14282 suffix_tokens=22 model_ms=879.1 context_ms=40.1 state_ms=6.46 prefix_ms=0.0 suffix_ms=487.4 first_token_ms=1890.1 generation_ms=32608.4 generated=128 generation_tps=3.925
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-kv/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+AGENT index=2 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 
+AGENT index=3 mig=31ffbfe4 exit=0 completed=1 text=0a543804112a09a5 role=child prefix_tokens=14282 suffix_tokens=32 model_ms=833.5 context_ms=26.9 state_ms=6.45 prefix_ms=0.0 suffix_ms=412.3 first_token_ms=1757.6 generation_ms=32643.8 generated=128 generation_tps=3.921
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-kv/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+AGENT index=4 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 
+AGENT index=5 mig=31ffbfe4 exit=0 completed=1 text=b96900b61349227c role=child prefix_tokens=14282 suffix_tokens=26 model_ms=841.6 context_ms=29.4 state_ms=6.13 prefix_ms=0.0 suffix_ms=494.9 first_token_ms=1859.6 generation_ms=32607.3 generated=128 generation_tps=3.926
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-kv/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+AGENT index=6 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 
+AGENT index=7 mig=31ffbfe4 exit=0 completed=1 text=de6c62cdeb25c8c0 role=child prefix_tokens=14282 suffix_tokens=31 model_ms=833.6 context_ms=28.7 state_ms=6.45 prefix_ms=0.0 suffix_ms=491.6 first_token_ms=1856.6 generation_ms=32597.0 generated=128 generation_tps=3.927
+FAULT alive_at_fault=8 probe_exit=none probe=none
+FILE before=9d6d7bd01279993e after=9d6d7bd01279993e
+END_CASE timed_out=0 mps_servers=2 wall_s=35
+CASE config=mig fault=none agents=8
+AGENT index=0 mig=fafc828a exit=0 completed=1 text=7bd70180bbe7ca2f role=child prefix_tokens=14282 suffix_tokens=27 model_ms=1140.1 context_ms=58.5 state_ms=6.15 prefix_ms=0.0 suffix_ms=359.5 first_token_ms=1870.8 generation_ms=24513.2 generated=128 generation_tps=5.222
+AGENT index=1 mig=31ffbfe4 exit=0 completed=1 text=4a39ecaa0045c102 role=child prefix_tokens=14282 suffix_tokens=22 model_ms=1136.3 context_ms=53.8 state_ms=6.25 prefix_ms=0.0 suffix_ms=523.9 first_token_ms=2031.4 generation_ms=37383.9 generated=128 generation_tps=3.424
+AGENT index=2 mig=fafc828a exit=0 completed=1 text=d8f556245cf146eb role=child prefix_tokens=14282 suffix_tokens=24 model_ms=1134.9 context_ms=59.4 state_ms=7.53 prefix_ms=0.0 suffix_ms=337.2 first_token_ms=1843.0 generation_ms=24522.4 generated=128 generation_tps=5.220
+AGENT index=3 mig=31ffbfe4 exit=0 completed=1 text=0a543804112a09a5 role=child prefix_tokens=14282 suffix_tokens=32 model_ms=1122.2 context_ms=57.9 state_ms=6.20 prefix_ms=0.0 suffix_ms=544.6 first_token_ms=2040.1 generation_ms=37476.8 generated=128 generation_tps=3.415
+AGENT index=4 mig=fafc828a exit=0 completed=1 text=43a7e6e2129c1d5c role=child prefix_tokens=14282 suffix_tokens=23 model_ms=1126.8 context_ms=60.5 state_ms=6.12 prefix_ms=0.0 suffix_ms=324.5 first_token_ms=1820.9 generation_ms=24515.3 generated=128 generation_tps=5.221
+AGENT index=5 mig=31ffbfe4 exit=0 completed=1 text=b96900b61349227c role=child prefix_tokens=14282 suffix_tokens=26 model_ms=1127.2 context_ms=55.9 state_ms=6.27 prefix_ms=0.0 suffix_ms=551.4 first_token_ms=2043.0 generation_ms=37537.7 generated=128 generation_tps=3.410
+AGENT index=6 mig=fafc828a exit=0 completed=1 text=1857c541a9bf5f3c role=child prefix_tokens=14282 suffix_tokens=21 model_ms=1119.4 context_ms=58.6 state_ms=6.21 prefix_ms=0.0 suffix_ms=330.5 first_token_ms=1820.3 generation_ms=24483.7 generated=128 generation_tps=5.228
+AGENT index=7 mig=31ffbfe4 exit=0 completed=1 text=de6c62cdeb25c8c0 role=child prefix_tokens=14282 suffix_tokens=31 model_ms=1117.2 context_ms=54.9 state_ms=6.45 prefix_ms=0.0 suffix_ms=530.9 first_token_ms=2014.5 generation_ms=37554.9 generated=128 generation_tps=3.408
+FAULT alive_at_fault=0 probe_exit=none probe=none
+FILE before=9d6d7bd01279993e after=9d6d7bd01279993e
+END_CASE timed_out=0 mps_servers=0 wall_s=41
+CASE config=mig fault=write agents=8
+AGENT index=0 mig=fafc828a exit=0 completed=1 text=7bd70180bbe7ca2f role=child prefix_tokens=14282 suffix_tokens=27 model_ms=883.7 context_ms=25.9 state_ms=5.98 prefix_ms=0.0 suffix_ms=114.4 first_token_ms=1291.4 generation_ms=24071.4 generated=128 generation_tps=5.318
+AGENT index=1 mig=31ffbfe4 exit=0 completed=1 text=4a39ecaa0045c102 role=child prefix_tokens=14282 suffix_tokens=22 model_ms=1091.1 context_ms=29.8 state_ms=6.27 prefix_ms=0.0 suffix_ms=535.3 first_token_ms=1940.3 generation_ms=37443.9 generated=128 generation_tps=3.418
+AGENT index=2 mig=fafc828a exit=0 completed=1 text=d8f556245cf146eb role=child prefix_tokens=14282 suffix_tokens=24 model_ms=1072.4 context_ms=29.3 state_ms=6.43 prefix_ms=0.0 suffix_ms=371.1 first_token_ms=1771.4 generation_ms=24309.6 generated=128 generation_tps=5.265
+AGENT index=3 mig=31ffbfe4 exit=0 completed=1 text=0a543804112a09a5 role=child prefix_tokens=14282 suffix_tokens=32 model_ms=1030.1 context_ms=26.3 state_ms=6.14 prefix_ms=0.0 suffix_ms=326.0 first_token_ms=1681.7 generation_ms=37551.4 generated=128 generation_tps=3.409
+AGENT index=4 mig=fafc828a exit=0 completed=1 text=43a7e6e2129c1d5c role=child prefix_tokens=14282 suffix_tokens=23 model_ms=1092.2 context_ms=31.4 state_ms=6.50 prefix_ms=0.0 suffix_ms=365.9 first_token_ms=1789.5 generation_ms=24296.8 generated=128 generation_tps=5.268
+AGENT index=5 mig=31ffbfe4 exit=0 completed=1 text=b96900b61349227c role=child prefix_tokens=14282 suffix_tokens=26 model_ms=1093.0 context_ms=30.8 state_ms=6.28 prefix_ms=0.0 suffix_ms=573.6 first_token_ms=1992.1 generation_ms=37460.1 generated=128 generation_tps=3.417
+AGENT index=6 mig=fafc828a exit=0 completed=1 text=1857c541a9bf5f3c role=child prefix_tokens=14282 suffix_tokens=21 model_ms=1013.8 context_ms=26.8 state_ms=6.29 prefix_ms=0.0 suffix_ms=252.6 first_token_ms=1572.0 generation_ms=24320.7 generated=128 generation_tps=5.263
+AGENT index=7 mig=31ffbfe4 exit=0 completed=1 text=de6c62cdeb25c8c0 role=child prefix_tokens=14282 suffix_tokens=31 model_ms=1089.2 context_ms=31.9 state_ms=6.19 prefix_ms=0.0 suffix_ms=593.8 first_token_ms=2003.1 generation_ms=37426.7 generated=128 generation_tps=3.420
+FAULT alive_at_fault=8 probe_exit=0 probe=route=host,gpu_read=cudaSuccess,words_equal=0,words=16777216,gpu_write=cudaErrorIllegalAddress,file_intact=0
+FILE before=9d6d7bd01279993e after=9d6d7bd01279993e
+END_CASE timed_out=0 mps_servers=0 wall_s=41
+CASE config=mig fault=kill agents=8
+STDERR CUDA Graph id 30 reused
+STDERR CUDA Graph id 30 reused
+STDERR CUDA Graph id 30 reused
+AGENT index=0 mig=fafc828a exit=137 completed=0 text=e3b0c44298fc1c14 
+AGENT index=1 mig=31ffbfe4 exit=0 completed=1 text=4a39ecaa0045c102 role=child prefix_tokens=14282 suffix_tokens=22 model_ms=1133.1 context_ms=43.2 state_ms=6.31 prefix_ms=0.0 suffix_ms=522.4 first_token_ms=2014.1 generation_ms=37009.9 generated=128 generation_tps=3.459
+AGENT index=2 mig=fafc828a exit=0 completed=1 text=d8f556245cf146eb role=child prefix_tokens=14282 suffix_tokens=24 model_ms=1130.1 context_ms=50.8 state_ms=6.19 prefix_ms=0.0 suffix_ms=332.8 first_token_ms=1831.6 generation_ms=19853.7 generated=128 generation_tps=6.447
+AGENT index=3 mig=31ffbfe4 exit=0 completed=1 text=0a543804112a09a5 role=child prefix_tokens=14282 suffix_tokens=32 model_ms=1128.9 context_ms=46.7 state_ms=6.24 prefix_ms=0.0 suffix_ms=569.8 first_token_ms=2055.5 generation_ms=37152.4 generated=128 generation_tps=3.445
+AGENT index=4 mig=fafc828a exit=0 completed=1 text=43a7e6e2129c1d5c role=child prefix_tokens=14282 suffix_tokens=23 model_ms=1119.8 context_ms=46.6 state_ms=6.07 prefix_ms=0.0 suffix_ms=320.4 first_token_ms=1795.2 generation_ms=19848.4 generated=128 generation_tps=6.449
+AGENT index=5 mig=31ffbfe4 exit=0 completed=1 text=b96900b61349227c role=child prefix_tokens=14282 suffix_tokens=26 model_ms=1121.0 context_ms=46.1 state_ms=6.23 prefix_ms=0.0 suffix_ms=570.9 first_token_ms=2046.2 generation_ms=37097.5 generated=128 generation_tps=3.450
+AGENT index=6 mig=fafc828a exit=0 completed=1 text=1857c541a9bf5f3c role=child prefix_tokens=14282 suffix_tokens=21 model_ms=1113.8 context_ms=45.5 state_ms=6.34 prefix_ms=0.0 suffix_ms=331.8 first_token_ms=1795.9 generation_ms=19906.7 generated=128 generation_tps=6.430
+AGENT index=7 mig=31ffbfe4 exit=0 completed=1 text=de6c62cdeb25c8c0 role=child prefix_tokens=14282 suffix_tokens=31 model_ms=1110.1 context_ms=46.9 state_ms=6.24 prefix_ms=0.0 suffix_ms=559.5 first_token_ms=2025.7 generation_ms=37132.8 generated=128 generation_tps=3.447
+FAULT alive_at_fault=8 probe_exit=none probe=none
+FILE before=9d6d7bd01279993e after=9d6d7bd01279993e
+END_CASE timed_out=0 mps_servers=0 wall_s=41
+CASE config=mps fault=none agents=8
+AGENT index=0 mig=fafc828a exit=0 completed=1 text=7bd70180bbe7ca2f role=child prefix_tokens=14282 suffix_tokens=27 model_ms=784.7 context_ms=28.7 state_ms=6.00 prefix_ms=0.0 suffix_ms=157.1 first_token_ms=1243.7 generation_ms=39220.7 generated=128 generation_tps=3.264
+AGENT index=1 mig=fafc828a exit=0 completed=1 text=490dc1327d716112 role=child prefix_tokens=14282 suffix_tokens=22 model_ms=754.3 context_ms=26.2 state_ms=6.22 prefix_ms=0.0 suffix_ms=161.7 first_token_ms=1252.1 generation_ms=39321.2 generated=128 generation_tps=3.255
+AGENT index=2 mig=fafc828a exit=0 completed=1 text=d8f556245cf146eb role=child prefix_tokens=14282 suffix_tokens=24 model_ms=888.7 context_ms=28.7 state_ms=6.45 prefix_ms=0.0 suffix_ms=581.7 first_token_ms=1917.8 generation_ms=39373.9 generated=128 generation_tps=3.251
+AGENT index=3 mig=fafc828a exit=0 completed=1 text=71acfbf3d404f65f role=child prefix_tokens=14282 suffix_tokens=32 model_ms=853.7 context_ms=29.1 state_ms=6.23 prefix_ms=0.0 suffix_ms=565.1 first_token_ms=1850.8 generation_ms=39399.8 generated=128 generation_tps=3.249
+AGENT index=4 mig=fafc828a exit=0 completed=1 text=43a7e6e2129c1d5c role=child prefix_tokens=14282 suffix_tokens=23 model_ms=844.1 context_ms=31.3 state_ms=6.37 prefix_ms=0.0 suffix_ms=565.8 first_token_ms=1830.1 generation_ms=39421.0 generated=128 generation_tps=3.247
+AGENT index=5 mig=fafc828a exit=0 completed=1 text=16bf735b822df23b role=child prefix_tokens=14282 suffix_tokens=26 model_ms=849.8 context_ms=31.0 state_ms=5.94 prefix_ms=0.0 suffix_ms=577.5 first_token_ms=1867.1 generation_ms=39396.3 generated=128 generation_tps=3.249
+AGENT index=6 mig=fafc828a exit=0 completed=1 text=1857c541a9bf5f3c role=child prefix_tokens=14282 suffix_tokens=21 model_ms=814.9 context_ms=32.8 state_ms=6.29 prefix_ms=0.0 suffix_ms=563.4 first_token_ms=1820.4 generation_ms=39406.2 generated=128 generation_tps=3.248
+AGENT index=7 mig=fafc828a exit=0 completed=1 text=de6c62cdeb25c8c0 role=child prefix_tokens=14282 suffix_tokens=31 model_ms=862.4 context_ms=30.7 state_ms=6.66 prefix_ms=0.0 suffix_ms=585.6 first_token_ms=1869.8 generation_ms=39391.3 generated=128 generation_tps=3.249
+FAULT alive_at_fault=0 probe_exit=none probe=none
+FILE before=9d6d7bd01279993e after=9d6d7bd01279993e
+END_CASE timed_out=0 mps_servers=1 wall_s=42
+CASE config=mps fault=write agents=8
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-kv/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+AGENT index=0 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-kv/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+AGENT index=1 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-kv/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+AGENT index=2 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-kv/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+AGENT index=3 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-kv/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+AGENT index=4 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-kv/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+AGENT index=5 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-kv/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+AGENT index=6 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-kv/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+AGENT index=7 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 
+FAULT alive_at_fault=8 probe_exit=0 probe=route=host,gpu_read=cudaSuccess,words_equal=0,words=16777216,gpu_write=cudaErrorIllegalAddress,file_intact=0
+FILE before=9d6d7bd01279993e after=9d6d7bd01279993e
+END_CASE timed_out=0 mps_servers=1 wall_s=18
+CASE config=mps fault=kill agents=8
+STDERR CUDA Graph id 27 reused
+STDERR CUDA Graph id 27 reused
+STDERR CUDA Graph id 27 reused
+AGENT index=0 mig=fafc828a exit=137 completed=0 text=e3b0c44298fc1c14 
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-kv/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+AGENT index=1 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-kv/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+AGENT index=2 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-kv/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+AGENT index=3 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-kv/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+AGENT index=4 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-kv/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+AGENT index=5 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-kv/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+AGENT index=6 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-kv/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+AGENT index=7 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 
+FAULT alive_at_fault=8 probe_exit=none probe=none
+FILE before=9d6d7bd01279993e after=9d6d7bd01279993e
+END_CASE timed_out=0 mps_servers=1 wall_s=17
+CASE config=timeslice fault=none agents=8
+AGENT index=0 mig=fafc828a exit=0 completed=1 text=7bd70180bbe7ca2f role=child prefix_tokens=14282 suffix_tokens=27 model_ms=931.0 context_ms=26.8 state_ms=6.28 prefix_ms=0.0 suffix_ms=116.0 first_token_ms=1313.4 generation_ms=44091.0 generated=128 generation_tps=2.903
+AGENT index=1 mig=fafc828a exit=0 completed=1 text=490dc1327d716112 role=child prefix_tokens=14282 suffix_tokens=22 model_ms=1072.4 context_ms=34.7 state_ms=6.10 prefix_ms=0.0 suffix_ms=656.3 first_token_ms=2046.4 generation_ms=44413.3 generated=128 generation_tps=2.882
+AGENT index=2 mig=fafc828a exit=0 completed=1 text=d8f556245cf146eb role=child prefix_tokens=14282 suffix_tokens=24 model_ms=1064.6 context_ms=36.1 state_ms=6.68 prefix_ms=0.0 suffix_ms=673.3 first_token_ms=2070.0 generation_ms=44497.5 generated=128 generation_tps=2.877
+AGENT index=3 mig=fafc828a exit=0 completed=1 text=71acfbf3d404f65f role=child prefix_tokens=14282 suffix_tokens=32 model_ms=1022.6 context_ms=41.8 state_ms=6.58 prefix_ms=0.0 suffix_ms=713.7 first_token_ms=2080.6 generation_ms=44497.0 generated=128 generation_tps=2.877
+AGENT index=4 mig=fafc828a exit=0 completed=1 text=43a7e6e2129c1d5c role=child prefix_tokens=14282 suffix_tokens=23 model_ms=972.7 context_ms=26.7 state_ms=6.33 prefix_ms=0.0 suffix_ms=326.9 first_token_ms=1631.0 generation_ms=44589.4 generated=128 generation_tps=2.871
+AGENT index=5 mig=fafc828a exit=0 completed=1 text=16bf735b822df23b role=child prefix_tokens=14282 suffix_tokens=26 model_ms=1051.9 context_ms=37.3 state_ms=6.27 prefix_ms=0.0 suffix_ms=707.9 first_token_ms=2083.2 generation_ms=44485.7 generated=128 generation_tps=2.877
+AGENT index=6 mig=fafc828a exit=0 completed=1 text=1857c541a9bf5f3c role=child prefix_tokens=14282 suffix_tokens=21 model_ms=1063.2 context_ms=27.7 state_ms=6.21 prefix_ms=0.0 suffix_ms=667.7 first_token_ms=2055.9 generation_ms=44490.2 generated=128 generation_tps=2.877
+AGENT index=7 mig=fafc828a exit=0 completed=1 text=de6c62cdeb25c8c0 role=child prefix_tokens=14282 suffix_tokens=31 model_ms=1025.4 context_ms=35.1 state_ms=6.28 prefix_ms=0.0 suffix_ms=710.5 first_token_ms=2056.0 generation_ms=44507.8 generated=128 generation_tps=2.876
+FAULT alive_at_fault=0 probe_exit=none probe=none
+FILE before=9d6d7bd01279993e after=9d6d7bd01279993e
+END_CASE timed_out=0 mps_servers=0 wall_s=48
+CASE config=timeslice fault=write agents=8
+AGENT index=0 mig=fafc828a exit=0 completed=1 text=7bd70180bbe7ca2f role=child prefix_tokens=14282 suffix_tokens=27 model_ms=1135.4 context_ms=49.9 state_ms=6.13 prefix_ms=0.0 suffix_ms=654.4 first_token_ms=2144.9 generation_ms=44736.9 generated=128 generation_tps=2.861
+AGENT index=1 mig=fafc828a exit=0 completed=1 text=490dc1327d716112 role=child prefix_tokens=14282 suffix_tokens=22 model_ms=1125.6 context_ms=52.6 state_ms=6.16 prefix_ms=0.0 suffix_ms=618.2 first_token_ms=2109.5 generation_ms=44716.9 generated=128 generation_tps=2.862
+AGENT index=2 mig=fafc828a exit=0 completed=1 text=d8f556245cf146eb role=child prefix_tokens=14282 suffix_tokens=24 model_ms=1121.3 context_ms=51.5 state_ms=6.30 prefix_ms=0.0 suffix_ms=637.7 first_token_ms=2127.7 generation_ms=44747.0 generated=128 generation_tps=2.861
+AGENT index=3 mig=fafc828a exit=0 completed=1 text=71acfbf3d404f65f role=child prefix_tokens=14282 suffix_tokens=32 model_ms=1120.0 context_ms=43.1 state_ms=6.13 prefix_ms=0.0 suffix_ms=663.0 first_token_ms=2140.8 generation_ms=44745.3 generated=128 generation_tps=2.861
+AGENT index=4 mig=fafc828a exit=0 completed=1 text=43a7e6e2129c1d5c role=child prefix_tokens=14282 suffix_tokens=23 model_ms=1130.9 context_ms=49.3 state_ms=6.32 prefix_ms=0.0 suffix_ms=628.3 first_token_ms=2106.9 generation_ms=44711.0 generated=128 generation_tps=2.863
+AGENT index=5 mig=fafc828a exit=0 completed=1 text=16bf735b822df23b role=child prefix_tokens=14282 suffix_tokens=26 model_ms=1126.7 context_ms=50.5 state_ms=6.13 prefix_ms=0.0 suffix_ms=644.5 first_token_ms=2112.0 generation_ms=44731.6 generated=128 generation_tps=2.862
+AGENT index=6 mig=fafc828a exit=0 completed=1 text=1857c541a9bf5f3c role=child prefix_tokens=14282 suffix_tokens=21 model_ms=1112.1 context_ms=54.0 state_ms=6.11 prefix_ms=0.0 suffix_ms=622.4 first_token_ms=2092.7 generation_ms=44733.3 generated=128 generation_tps=2.861
+AGENT index=7 mig=fafc828a exit=0 completed=1 text=de6c62cdeb25c8c0 role=child prefix_tokens=14282 suffix_tokens=31 model_ms=1111.7 context_ms=51.5 state_ms=5.96 prefix_ms=0.0 suffix_ms=695.5 first_token_ms=2161.1 generation_ms=44712.4 generated=128 generation_tps=2.863
+FAULT alive_at_fault=8 probe_exit=0 probe=route=host,gpu_read=cudaSuccess,words_equal=0,words=16777216,gpu_write=cudaErrorIllegalAddress,file_intact=0
+FILE before=9d6d7bd01279993e after=9d6d7bd01279993e
+END_CASE timed_out=0 mps_servers=0 wall_s=49
+CASE config=timeslice fault=kill agents=8
+STDERR CUDA Graph id 27 reused
+STDERR CUDA Graph id 27 reused
+STDERR CUDA Graph id 27 reused
+AGENT index=0 mig=fafc828a exit=137 completed=0 text=e3b0c44298fc1c14 
+AGENT index=1 mig=fafc828a exit=0 completed=1 text=490dc1327d716112 role=child prefix_tokens=14282 suffix_tokens=22 model_ms=1098.1 context_ms=28.5 state_ms=6.32 prefix_ms=0.0 suffix_ms=658.3 first_token_ms=2076.6 generation_ms=39788.7 generated=128 generation_tps=3.217
+AGENT index=2 mig=fafc828a exit=0 completed=1 text=d8f556245cf146eb role=child prefix_tokens=14282 suffix_tokens=24 model_ms=1060.2 context_ms=29.8 state_ms=6.39 prefix_ms=0.0 suffix_ms=564.0 first_token_ms=1962.0 generation_ms=39800.3 generated=128 generation_tps=3.216
+AGENT index=3 mig=fafc828a exit=0 completed=1 text=71acfbf3d404f65f role=child prefix_tokens=14282 suffix_tokens=32 model_ms=1093.9 context_ms=31.3 state_ms=6.14 prefix_ms=0.0 suffix_ms=759.0 first_token_ms=2191.4 generation_ms=39712.4 generated=128 generation_tps=3.223
+AGENT index=4 mig=fafc828a exit=0 completed=1 text=43a7e6e2129c1d5c role=child prefix_tokens=14282 suffix_tokens=23 model_ms=1091.3 context_ms=29.3 state_ms=6.06 prefix_ms=0.0 suffix_ms=677.4 first_token_ms=2112.4 generation_ms=39755.8 generated=128 generation_tps=3.220
+AGENT index=5 mig=fafc828a exit=0 completed=1 text=16bf735b822df23b role=child prefix_tokens=14282 suffix_tokens=26 model_ms=1085.0 context_ms=28.7 state_ms=6.52 prefix_ms=0.0 suffix_ms=734.1 first_token_ms=2152.1 generation_ms=39745.2 generated=128 generation_tps=3.221
+AGENT index=6 mig=fafc828a exit=0 completed=1 text=1857c541a9bf5f3c role=child prefix_tokens=14282 suffix_tokens=21 model_ms=997.3 context_ms=28.8 state_ms=6.13 prefix_ms=0.0 suffix_ms=454.3 first_token_ms=1787.7 generation_ms=39874.0 generated=128 generation_tps=3.210
+AGENT index=7 mig=fafc828a exit=0 completed=1 text=de6c62cdeb25c8c0 role=child prefix_tokens=14282 suffix_tokens=31 model_ms=1017.7 context_ms=27.9 state_ms=6.37 prefix_ms=0.0 suffix_ms=574.4 first_token_ms=1911.6 generation_ms=39838.2 generated=128 generation_tps=3.213
+FAULT alive_at_fault=8 probe_exit=none probe=none
+FILE before=9d6d7bd01279993e after=9d6d7bd01279993e
+END_CASE timed_out=0 mps_servers=0 wall_s=44
+END_KVFAULT

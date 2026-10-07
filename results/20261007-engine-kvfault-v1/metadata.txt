@@ -1,0 +1,24 @@
+timestamp=2026-10-07T21:40:53+09:00
+mig_a=MIG-fafc828a-2a0d-5988-a009-030a36930090
+mig_b=MIG-31ffbfe4-9a85-5f4e-b406-90ffbfa82ca3
+repetitions=6
+agents=8
+configs=timeslice mps mig mig_mps
+context=16384
+n_gen=128
+grow_rows=256
+fault_after_s=8
+probe_mib=64
+prefix_file=agent_prefix.txt
+prefix_sha256=90a958d0f5dff46bf843ce5793764964e21b861549a4ca36b3fb1a607393135e
+tasks_file=agent_tasks.txt
+model=Qwen2.5-7B-Instruct-Q4_K_M.gguf
+engine_commit=6f767fe960c3b97cf37fac4626c86400561ca1e4
+boot_id=0965baa0-3357-48ca-8cea-c958d95b2d3f
+GPU 0: NVIDIA Thor (UUID: GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600)
+  MIG 2g.0gb      Device  0: (UUID: MIG-fafc828a-2a0d-5988-a009-030a36930090)
+  MIG 1g.0gb      Device  1: (UUID: MIG-31ffbfe4-9a85-5f4e-b406-90ffbfa82ca3)
+1afce555d822cd46bd258114c9c6c155022fea477e4e09c493638f8db46eeead  /home/thor/kcj/llm_share/kv_fork
+2659b3a5823a4bcaacce2be2c9beffa9552aa8112c1a2af4b8526db27cce69b3  /home/thor/kcj/llm_share/cuda_protect_probe
+26b91907342b7dbb2fccbb256f3e45fe0c3bd0b893d4a1a943854019590367f6  /home/thor/kcj/llm_share/llama.cpp-kv/build/bin/libllama.so
+7b5e02b6cf0b1b957bcbfe5e21209848a7d8ad4ccff728a619d6904260c0a3a0  /home/thor/kcj/llm_share/llama.cpp-kv/build/bin/libggml-cuda.so

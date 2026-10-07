@@ -1707,6 +1707,44 @@ the input rail is 5,880 J against 5,906 J, a paired ratio of 0.996. All 48
 workers and 12 leaders write the text of the unmodified engine. The gates
 P1 to P5 hold.
 
+**What a fault of one sharer does to the others (`run_engine_kvfault.sh`,
+`20261007-engine-kvfault-v1`).** A publisher publishes the 14,282-token
+prefix of the agent workload as extents and exits; eight agents map it and generate 128 tokens.
+Eight seconds into the generation either nothing happens (`none`), a
+further process maps the prefix file read-only as an agent does and
+launches a GPU kernel that writes into it (`write`), or agent 0 is killed
+(`kill`). Four ways of sharing the GPU: time slicing in the 12-SM instance,
+one MPS server in that instance, the two MIG instances with time slicing,
+and one MPS server in each instance. "Others" are the seven agents besides
+agent 0, 42 over six repetitions.
+
+| GPU sharing | Fault | Runs | Agents complete | Others complete | Others with the text of the run without a fault | Writes refused | Error of the write | File intact (runs) |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|
+| timeslice | none | 6 | 48/48 | 42/42 | 42/42 | 0/0 | none | 6/6 |
+| timeslice | write | 6 | 48/48 | 42/42 | 42/42 | 6/6 | cudaErrorIllegalAddress | 6/6 |
+| timeslice | kill | 6 | 42/48 | 42/42 | 42/42 | 0/0 | none | 6/6 |
+| mps | none | 6 | 48/48 | 42/42 | 42/42 | 0/0 | none | 6/6 |
+| mps | write | 6 | 0/48 | 0/42 | 0/42 | 6/6 | cudaErrorIllegalAddress | 6/6 |
+| mps | kill | 6 | 0/48 | 0/42 | 0/42 | 0/0 | none | 6/6 |
+| mig | none | 6 | 48/48 | 42/42 | 42/42 | 0/0 | none | 6/6 |
+| mig | write | 6 | 48/48 | 42/42 | 42/42 | 6/6 | cudaErrorIllegalAddress | 6/6 |
+| mig | kill | 6 | 42/48 | 42/42 | 42/42 | 0/0 | none | 6/6 |
+| mig_mps | none | 6 | 48/48 | 42/42 | 42/42 | 0/0 | none | 6/6 |
+| mig_mps | write | 6 | 24/48 | 24/42 | 24/42 | 6/6 | cudaErrorIllegalAddress | 6/6 |
+| mig_mps | kill | 6 | 30/48 | 30/42 | 30/42 | 0/0 | none | 6/6 |
+
+The GPU write is refused in all 24 cases with a fault (`cudaErrorIllegalAddress`
+in the writing process), and the prefix file has the same contents after
+every case. Under time slicing and under MIG all 42 other agents complete
+after the write and after the kill, with the text of the case without a
+fault: sharing a prefix through host mappings does not join the agents
+into one fault domain. Under one MPS server no agent completes after either
+event (0 of 42); the server shares the fate of its clients, as Section 5
+found for processes that share nothing. With one MPS server per instance,
+the agents of the instance without the fault complete after the write (24
+of 42) and 30 of 42 after the kill. The gates F1 to F3 hold; the counts
+under MPS were to be reported and are not gated.
+
 ### 6.15 vLLM servers on extents
 
 The servers of the sections above belong to the engine that this work
