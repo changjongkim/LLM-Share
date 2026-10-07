@@ -1856,6 +1856,38 @@ copies (interval 0.969 to 0.972) and hold 1.90 GiB against 2.44 GiB. The
 tail grows in steps as it is used and does not change the text or the
 speed over the length of the generation.
 
+**An existing way to share weights (`run_ext_weightshare.sh`,
+`20261007-ext-weightshare-v1`).** cuda-llm-weight-share is a preloaded
+library that exports the allocation of the weights of the first process
+through CUDA IPC and maps it in the processes that follow; it runs with the
+unmodified engine. A master computes the prefix of the agent workload,
+saves the engine's state file and remains alive; eight agents restore the
+prefix and generate. The three stacks differ only in the weights:
+`stock`, `ipc` (the library) and `inplace` (this work). Memory is the
+largest drop of MemAvailable from before the master starts; the model file
+is in the page cache in every stack, and its 4.36 GiB are added to
+`inplace`, which keeps it mapped.
+
+| Placement | Stack | Runs | Agents complete | In the other instance | Library: workers / fallbacks | Weights load (ms) | First token (ms) | Throughput (tokens/s) | Memory (MiB) | 95% CI | Texts equal to stock |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| same | stock | 6 | 48/48 | 0/0 | 0 / 0 | 2616 | 3824 | 24.33 | 55206 | 164 | 48/48 |
+| same | ipc | 6 | 48/48 | 0/0 | 48 / 0 | 2020 | 3240 | 22.90 | 21585 | 71 | 48/48 |
+| same | inplace | 6 | 48/48 | 0/0 | 0 / 0 | 1138 | 2383 | 22.85 | 14614 | 38 | 48/48 |
+| cross | stock | 6 | 48/48 | 24/24 | 0 / 0 | 2540 | 3527 | 37.88 | 55162 | 31 | 48/48 |
+| cross | ipc | 6 | 24/48 | 0/24 | 24 / 24 | 2374 | 3210 | 22.31 | 38267 | 46 | 24/24 |
+| cross | inplace | 6 | 48/48 | 24/24 | 0 / 0 | 1119 | 2161 | 34.87 | 14523 | 77 | 48/48 |
+
+In one MIG instance the library works: all 48 agents map the weights of
+the master, and the stack holds 21.1 GiB against 53.9 GiB unmodified;
+with the weights in place it holds 14.3 GiB plus the model file, 18.6 GiB.
+The weights are ready after 2.0 s with the library and 1.1 s in place
+(2.6 s unmodified). With every second agent in the other MIG instance the
+24 agents of that instance do not complete with the library (CUDA IPC does
+not cross the instances, Section 5.3), and the 24 of the master's instance
+hold 37.4 GiB; in place all 48 complete in 18.5 GiB with the file. Every
+agent that completes writes the text of the unmodified stack. W1 and W2
+hold; W3 is the count above and is not gated.
+
 ### 6.15 vLLM servers on extents
 
 The servers of the sections above belong to the engine that this work

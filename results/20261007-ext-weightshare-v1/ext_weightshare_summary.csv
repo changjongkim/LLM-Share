@@ -1,0 +1,7 @@
+placement,stack,runs,agents_started,agents_finished,own_instance_finished,own_instance_started,other_instance_finished,other_instance_started,library_workers,library_masters,library_fallbacks,weights_load_ms,first_token_ms,agents_tps_sum,memory_mib,memory_ci95,timed_out,texts_equal_to_stock,texts_compared
+same,stock,6,48,48,48,48,0,0,0,0,0,2616,3824,24.33,55206,164,0,48,48
+same,ipc,6,48,48,48,48,0,0,48,0,0,2020,3240,22.90,21585,71,0,48,48
+same,inplace,6,48,48,48,48,0,0,0,0,0,1138,2383,22.85,14614,38,0,48,48
+cross,stock,6,48,48,24,24,24,24,0,0,0,2540,3527,37.88,55162,31,0,48,48
+cross,ipc,6,48,24,24,24,0,24,24,0,24,2374,3210,22.31,38267,46,0,24,24
+cross,inplace,6,48,48,24,24,24,24,0,0,0,1119,2161,34.87,14523,77,0,48,48
