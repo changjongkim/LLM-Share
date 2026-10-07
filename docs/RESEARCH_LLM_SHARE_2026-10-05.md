@@ -1787,6 +1787,39 @@ last sharer leaves, although the files have no name any more; the segments
 of the ancestors that the other subtree still maps remain. The gates D1 to
 D5 hold in both campaigns.
 
+**Shorter and longer prefixes (`run_engine_kvscale.sh` with `PARAGRAPHS=20`
+and `600`, `20261007-engine-kvscale-p20-v1` and `-p600-v1`).** Section 6.12
+measures eight agents on the 16,321-token prefix. The same case with a
+prefix of 1,021 tokens (context 4,096) and of 30,601 tokens (context
+32,768):
+
+| Prefix (tokens) | Agents | Mode | Runs (failed agents) | Exact texts | Attach (ms) | First token (ms) | Throughput (tokens/s) | Extents / copy | Memory (MiB) |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| 1021 | 8 | restore | 6 (0) | 48/48 | 92.9 | 1753 | 39.37 | 1.0000 | 7336 |
+| 1021 | 8 | extent_lazy | 6 (0) | 48/48 | 28.3 | 1661 | 39.20 | 0.9958 | 5582 |
+
+| Prefix (tokens) | Agents | Mode | Runs (failed agents) | Exact texts | Attach (ms) | First token (ms) | Throughput (tokens/s) | Extents / copy | Memory (MiB) |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| 30601 | 8 | restore | 6 (0) | 48/48 | 737.5 | 2460 | 31.41 | 1.0000 | 20478 |
+| 30601 | 8 | extent_lazy | 6 (0) | 48/48 | 64.4 | 1780 | 30.29 | 0.9644 | 5856 |
+
+On the short prefix the agents hold 5.45 GiB with extents against 7.16 GiB
+with copies, attach in 28 ms against 93 ms and generate at 0.996 of the
+speed of the copy (interval 0.986 to 1.006). On the long prefix they hold
+5.72 GiB against 20.00 GiB, attach in 64 ms against 738 ms, produce the
+first token after 1.78 s against 2.46 s and generate at 0.964 (0.955 to
+0.974). The cache file adds 56 MiB and 1,674 MiB once. The memory of the
+copies follows the context and not the prefix: an agent that restores a
+state reserves the cache of its whole context in device memory, so the
+copies of the 30,601-token prefix hold what those of the 16,321-token
+prefix hold in the same context (19.9 GiB). With extents the agents hold
+5.5 to 5.7 GiB at every length, because the prefix is mapped and the tail
+follows use. The loss of speed grows with the prefix (0.4%, 1.4% at
+16,321 tokens, 3.6%). Half of the agents run in the 6-SM instance, where
+host memory costs speed, and a longer prefix means more rows read from
+it; the campaign does not separate the two instances. All 96 agents write the text of the
+copy.
+
 ### 6.15 vLLM servers on extents
 
 The servers of the sections above belong to the engine that this work
