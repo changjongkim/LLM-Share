@@ -212,8 +212,10 @@ def mode():
                                    for _, config in configs])
                   for label, colour, m in pair]
         for group in grouped(ax, [label for label, _ in configs], series, 0.38):
-            labels(ax, group, form, 9.5)
-        top = max(max(values) for _, _, values in series) * 1.18
+            labels(ax, group, form, 9)
+        for text in ax.texts:
+            text.set_rotation(90)
+        top = max(max(values) for _, _, values in series) * 1.3
         finish(fig, ax, name, "", ylabel, top)
 
 
@@ -296,7 +298,7 @@ def sota():
             for bar, (_, key) in zip(group, placements):
                 row = data[key, children, m]
                 done, started = int(row["children_finished"]), int(row["children_started"])
-                if done < started:
+                if done < started and column != "publish_ms":
                     # Not every child completed: the bar covers the children that did.
                     bar.set_hatch("////")
                     bar.set_alpha(0.55)
@@ -321,11 +323,41 @@ def attach():
     sizes = [int(r["granule_mib"]) for r in data]
     ax.plot(sizes, [float(r["attach_ms"]) for r in data], color=DEVICE, marker="s", markersize=6,
             linewidth=2, markeredgecolor="white", markeredgewidth=1.0, label="Device: Import and Map")
+    times = [float(r["attach_ms"]) for r in data]
+    for index in (0, len(data) - 1):
+        ax.annotate(f"{times[index]:.1f} ms\n{data[index]['handles']} handle" + ("s" if index == 0 else ""),
+                    (sizes[index], times[index]), xytext=(8 if index == 0 else -6, 4 if index == 0 else 10),
+                    textcoords="offset points", ha="left" if index == 0 else "right", va="bottom",
+                    fontsize=9.5, color=INK)
     ax.set_xscale("log", base=2)
     ax.set_yscale("log")
     ax.set_xticks(sizes, [str(v) for v in sizes], fontsize=9)
-    ax.legend(loc="upper right", handlelength=1.6, fontsize=10)
+    ax.set_yticks([1, 2, 5, 10, 20, 50], ["1", "2", "5", "10", "20", "50"])
+    ax.minorticks_off()
+    ax.set_ylim(1, 60)
     finish(fig, ax, "eval_attach_granule", "Allocation Size (MiB)", "Attach Time (ms, log)", log=True)
+
+
+def protect():
+    """Writes through the GPU that changed state shared with another process."""
+    directory = "20261006-protect-v1"
+    path = os.path.join(RES, directory, "protect_summary.csv")
+    if not os.path.exists(path):
+        return
+    lines_of = [line.strip().split(",") for line in open(path) if line.strip()]
+    host = dict(zip(lines_of[0], lines_of[1]))
+    vmm = dict(zip(lines_of[2], lines_of[3]))
+    changed = [(f"{NAME}\n(Host Mapping)", int(host["attempts"]) - int(host["shared_state_intact"]),
+                int(host["attempts"]), OURS),
+               ("Device\n(CUDA VMM)", int(vmm["attempts"]) - int(vmm["exporter_state_intact"]),
+                int(vmm["attempts"]), DEVICE)]
+    fig, ax = panel()
+    bars = ax.bar([label for label, _, _, _ in changed],
+                  [100.0 * count / total for _, count, total, _ in changed], 0.5,
+                  color=[colour for _, _, _, colour in changed], edgecolor="white", linewidth=1.5)
+    for bar, (_, count, total, _) in zip(bars, changed):
+        tip(ax, bar, f"{count} of {total}")
+    finish(fig, ax, "eval_protect", "", "Writes That Changed\nShared State (%)", 125)
 
 
 # ------------------------------------------------------------ agent tree
@@ -341,14 +373,14 @@ def tree():
     bars = ax.bar([label for label, _, _ in order], values, 0.6, color=[c for _, _, c in order],
                   edgecolor="white", linewidth=1.5)
     labels(ax, bars)
-    finish(fig, ax, "eval_tree_mem", "", "Memory of the Tree (GiB)", max(values) * 1.18)
+    finish(fig, ax, "eval_tree_mem", "", "Memory (GiB)", max(values) * 1.18)
 
     fig, ax = panel()
     values = [float(data[m]["leaf_first_token_ms"]) / 1000 for _, m, _ in order]
     bars = ax.bar([label for label, _, _ in order], values, 0.6, color=[c for _, _, c in order],
                   edgecolor="white", linewidth=1.5)
     labels(ax, bars, "{:.2f}")
-    finish(fig, ax, "eval_tree_time", "", "TTFT of a Leaf (s)", max(values) * 1.18)
+    finish(fig, ax, "eval_tree_time", "", "TTFT (s)", max(values) * 1.18)
 
 
 # ------------------------------------------------------------ sensitivity
@@ -380,9 +412,9 @@ def scale():
 
 def variants():
     """Eight agents: other models and the agent workload, memory by copy and by extents."""
-    cells = (("Qwen2.5\n7B", "20261006-engine-kvshare-v1", "engine_kvshare_summary.csv", "320"),
-             ("Llama-3.1\n8B", "20261006-engine-kvscale-llama8b-v1", "engine_kvscale_summary.csv", None),
-             ("Qwen2.5\n14B", "20261006-engine-kvscale-qwen14b-v1", "engine_kvscale_summary.csv", None),
+    cells = (("Qwen\n7B", "20261006-engine-kvshare-v1", "engine_kvshare_summary.csv", "320"),
+             ("Llama\n8B", "20261006-engine-kvscale-llama8b-v1", "engine_kvscale_summary.csv", None),
+             ("Qwen\n14B", "20261006-engine-kvscale-qwen14b-v1", "engine_kvscale_summary.csv", None),
              ("Agent\nWorkload", "20261006-engine-kvscale-agent-v1", "engine_kvscale_summary.csv", None))
     names, copy, ours = [], [], []
     for label, directory, summary, size in cells:
@@ -400,10 +432,134 @@ def variants():
         labels(ax, group, size=9.5)
     ax.tick_params(axis="x", labelsize=10)
     ax.legend(loc="upper left", handlelength=1.2)
-    finish(fig, ax, "eval_model_mem", "", "Memory of Eight Agents (GiB)", max(copy) * 1.25)
+    finish(fig, ax, "eval_model_mem", "", "Memory (GiB)", max(copy) * 1.25)
+
+
+def inproc():
+    """Eight agents: separate processes, batching servers, and Ollama."""
+    share = {(r["paragraphs"], r["mode"], int(r["agents"])): r
+             for r in rows("20261006-engine-kvshare-v1", "engine_kvshare_summary.csv")}
+    publish = {(r["paragraphs"], r["store"]): r
+               for r in rows("20261006-engine-kvshare-v1", "engine_kvshare_publish.csv")}
+    batch = {r["config"]: r for r in rows("20261006-engine-kvbatch-v1", "engine_kvbatch_summary.csv")}
+    file_gib = float(publish["320", "huge"]["file_used_mib"]) / 1024
+    gib = lambda row, key="memory_mib": float(row[key]) / 1024
+    # (label, memory GiB, tokens/s, marker, colour, label offset in points, alignment)
+    points = [
+        ("8 Processes", gib(share["320", "restore", 8]),
+         float(share["320", "restore", 8]["generation_tps_total"]), "o", COPY, (9, 2), "left"),
+        ("8 Processes", gib(share["320", "extent_lazy", 8]) + file_gib,
+         float(share["320", "extent_lazy", 8]["generation_tps_total"]), "o", OURS, (0, -17), "center"),
+        ("1 Server", gib(batch["one_server"]), float(batch["one_server"]["generation_tps_total"]),
+         "s", COPY, (9, -4), "left"),
+        ("2 Servers", gib(batch["two_servers_copy"]), float(batch["two_servers_copy"]["generation_tps_total"]),
+         "^", COPY, (9, -4), "left"),
+        ("2 Servers", gib(batch["two_servers_extent"]), float(batch["two_servers_extent"]["generation_tps_total"]),
+         "^", OURS, (0, 9), "center"),
+    ]
+    directory = "20261006-ollama-agents-v1"
+    if have(directory, "ollama_agents_summary.csv"):
+        ollama = {(r["config"], r["round"]): r for r in rows(directory, "ollama_agents_summary.csv")}
+        points += [
+            ("1 Server", gib(ollama["one", "warm"]), float(ollama["one", "warm"]["generation_tps_sum"]),
+             "s", DEMAND, (-9, -11), "right"),
+            ("2 Servers", gib(ollama["two", "warm"]), float(ollama["two", "warm"]["generation_tps_sum"]),
+             "^", DEMAND, (0, 9), "center"),
+        ]
+    fig, ax = plt.subplots(figsize=(7.4, 3.0))
+    for label, memory, speed, marker, colour, offset, align in points:
+        ax.scatter([memory], [speed], s=130, marker=marker, color=colour, edgecolor="white",
+                   linewidth=1.5, zorder=3)
+        ax.annotate(label, (memory, speed), xytext=offset, textcoords="offset points", ha=align,
+                    fontsize=10.5)
+    handles = [plt.Line2D([], [], marker="o", linestyle="", color=colour, markersize=9,
+                          markeredgecolor="white", label=label)
+               for label, colour in (("llama.cpp, Copy", COPY), (f"llama.cpp, {NAME}", OURS), ("Ollama", DEMAND))]
+    ax.legend(handles=handles, loc="upper right", handlelength=1.0)
+    ax.set_xlim(0, 27)
+    ax.set_ylim(0, 125)
+    ax.set_xlabel("Memory (GiB)")
+    ax.set_ylabel("Throughput (tokens/s)")
+    style(ax, "both")
+    fig.tight_layout()
+    save(fig, "eval_proc")
+
+
+def server():
+    # The second campaign publishes at a token boundary; the first, which did
+    # not, is kept in the record.
+    directory = "20261007-engine-kvserver2-v1"
+    if not have(directory, "engine_kvserver_summary.csv"):
+        directory = "20261006-engine-kvserver-v1"
+    if not have(directory, "engine_kvserver_summary.csv"):
+        return
+    data = {(r["mode"], int(r["agents"])): r for r in rows(directory, "engine_kvserver_summary.csv")}
+    pair = (("Copy", COPY, "copy"), (NAME, OURS, "extent"))
+    most = max(k[1] for k in data)
+    fig, ax = panel()
+    steps = (("Slot\nSave", "save_request_ms"), ("Slot\nRestore", "restore_request_ms"),
+             ("First\nToken", "first_token_ms"))
+    series = [(label, colour, [float(data[m, most][column]) for _, column in steps])
+              for label, colour, m in pair]
+    for group in grouped(ax, [label for label, _ in steps], series, 0.36):
+        labels(ax, group, "{:.0f}", 9.5)
+    ax.set_ylim(1, 6000)
+    ax.legend(loc="upper left", handlelength=1.2, ncol=2, columnspacing=1.0, fontsize=10.5)
+    finish(fig, ax, "eval_server_time", "", "Time (ms, log)", log=True)
+
+    counts = sorted({k[1] for k in data})
+    fig, ax = panel()
+    series = [(label, colour, [float(data[m, n]["agents_memory_mib"]) / 1024 for n in counts])
+              for label, colour, m in pair]
+    for group in grouped(ax, [str(n) for n in counts], series, 0.36):
+        labels(ax, group)
+    ax.legend(loc="upper left", handlelength=1.2)
+    finish(fig, ax, "eval_server_mem", "Agent Servers", "Memory (GiB)",
+           max(max(values) for _, _, values in series) * 1.22)
+
+
+def limit():
+    directory = "20261006-engine-kvlimit-v1"
+    if not have(directory, "engine_kvlimit_summary.csv"):
+        return
+    data = {(r["phase"], r["mode"]): r for r in rows(directory, "engine_kvlimit_summary.csv")}
+    modes = (("Copy", COPY, "restore"), (NAME, OURS, "extent_lazy"))
+    # what four agents hold, and what the kernel charges to their control groups
+    fig, ax = panel()
+    x = np.arange(len(modes))
+    held = [float(data["account", m]["mem_available_drop_mib"]) / 1024 for _, _, m in modes]
+    charged = [float(data["account", m]["charged_peak_sum_mib"]) / 1024 for _, _, m in modes]
+    first = ax.bar(x - 0.19, held, 0.36, color=[c for _, c, _ in modes], edgecolor="white", linewidth=1.5)
+    second = ax.bar(x + 0.19, charged, 0.36, color=[c for _, c, _ in modes], edgecolor="white",
+                    linewidth=1.5, hatch="////", alpha=0.55)
+    labels(ax, first)
+    labels(ax, second)
+    ax.set_xticks(x, [label for label, _, _ in modes])
+    ax.legend([plt.Rectangle((0, 0), 1, 1, color=COPY),
+               plt.Rectangle((0, 0), 1, 1, facecolor=COPY, hatch="////", alpha=0.55, edgecolor="white")],
+              ["Held", "Charged"], loc="upper right", handlelength=1.4)
+    finish(fig, ax, "eval_limit_charge", "", "Memory (GiB)", max(held) * 1.2)
+
+    # agent 0 receives a long task under a limit
+    fig, ax = panel()
+    cap = float(data["limit", "extent_lazy"]["limit_mib"])
+    peaks = [float(data["limit", m]["agent0_peak_mib"]) for _, _, m in modes]
+    bars = ax.bar([label for label, _, _ in modes], peaks, 0.5, color=[c for _, c, _ in modes],
+                  edgecolor="white", linewidth=1.5)
+    for bar, (_, _, m) in zip(bars, modes):
+        row = data["limit", m]
+        done, runs = int(row["agent0_completed"]), int(row["runs"])
+        outcome = f"completes {done}/{runs}" if done else f"ended {row['agent0_oom_kills']}/{runs}"
+        tip(ax, bar, f"{bar.get_height():.0f}, {outcome}")
+        ax.texts[-1].set_fontsize(9.5)
+    ax.axhline(cap, color=INK, linewidth=1.2, linestyle=(0, (4, 2)))
+    ax.text(0.03, cap * 1.02, f"limit: {cap:.0f} MiB", ha="left", va="bottom", fontsize=10,
+            transform=ax.get_yaxis_transform())
+    finish(fig, ax, "eval_limit_peak", "", "Peak Charge (MiB)", cap * 1.55)
 
 
 if __name__ == "__main__":
-    for figure in (mem, weights, hand, speed, reach, mode, cow, dev, sota, attach, tree, scale, variants):
+    for figure in (mem, weights, hand, speed, reach, mode, cow, dev, sota, attach, protect, tree, scale,
+                   variants, inproc, server, limit):
         figure()
         print("wrote", figure.__name__)

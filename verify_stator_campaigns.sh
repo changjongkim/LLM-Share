@@ -353,6 +353,39 @@ if present 20261006-engine-kvserver-v1; then
   done < <(tail -n +2 "$dir/engine_kvserver_summary.csv")
 fi
 
+# --- the stock server, published at a token boundary -------------------------
+if present 20261007-engine-kvserver2-v1; then
+  dir="$results/20261007-engine-kvserver2-v1"
+  check_hashes "$dir"
+  awk -f "$script_dir/summarize_engine_kvserver.awk" "$dir/raw.log" >"$scratch/kvserver2.csv"
+  same "$scratch/kvserver2.csv" "$dir/engine_kvserver_summary.csv"
+  awk -F, '
+    NR == 1 { next }
+    {
+      rows++; agents = $2; mode = $1; cell = agents
+      # V1 and V3: every request completes and the restored prefix is reused.
+      if ($3 != 6 || $4 != 0 || $17 != agents * $3 || $12 > 256) bad++
+      # V2, the expectation of this campaign: with every published token
+      # kept by the prompts, every response equals that of the copy.
+      if ($18 != $17 || $20 != $17 || $19 != 64) exit 4
+      save[cell, mode] = $7; server_save[cell, mode] = $8
+      restore[cell, mode] = $10; memory[cell, mode] = $15
+      cells[cell] = 1
+    }
+    END {
+      if (bad || rows != 4) exit 1
+      for (cell in cells) {
+        # V4 and V5.
+        if (memory[cell, "extent"] >= memory[cell, "copy"]) exit 2
+        if (restore[cell, "extent"] > restore[cell, "copy"] ||
+            save[cell, "extent"] > save[cell, "copy"] ||
+            server_save[cell, "extent"] > server_save[cell, "copy"]) exit 3
+      }
+    }
+  ' "$dir/engine_kvserver_summary.csv" ||
+    fail "a gate of the second stock-server campaign does not hold (awk exit $?)"
+fi
+
 # --- per-agent host memory limits -------------------------------------------
 if present 20261006-engine-kvlimit-v1; then
   dir="$results/20261006-engine-kvlimit-v1"

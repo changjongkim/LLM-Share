@@ -462,6 +462,22 @@ if os.path.exists(path):
                  f"{r['first_token_ms']} | {r['agents_memory_mib']} / {r['cache_file_mib']} |\n")
     write("kv_server.md", text)
 
+# --- real server route, published at a token boundary --------------------------
+path = os.path.join(engine_root, "20261007-engine-kvserver2-v1", "engine_kvserver_summary.csv")
+if os.path.exists(path):
+    text = ("| Mode | Agents | Runs (failed) | Requests complete | Exact texts | "
+            "Minimum common tokens | Save, request / server (ms) | Restore (ms) | "
+            "First token (ms) | Memory / cache file (MiB) |\n"
+            "|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|\n")
+    for r in rows(path):
+        text += (f"| {r['mode']} | {r['agents']} | {r['runs']} ({r['failed']}) | "
+                 f"{r['agents_finished']}/{int(r['runs']) * int(r['agents'])} | "
+                 f"{r['texts_equal_to_copy']}/{r['token_sequences_compared']} | "
+                 f"{r['min_common_tokens_to_copy']} | {float(r['save_request_ms']):.2f} / "
+                 f"{float(r['server_save_ms']):.2f} | {float(r['restore_request_ms']):.1f} | "
+                 f"{r['first_token_ms']} | {r['agents_memory_mib']} / {r['cache_file_mib']} |\n")
+    write("kv_server2.md", text)
+
 # --- memory-accounting and enforced-limit behavior ---------------------------
 path = os.path.join(engine_root, "20261006-engine-kvlimit-v1", "engine_kvlimit_summary.csv")
 if os.path.exists(path):

@@ -35,7 +35,7 @@ tables = {
     "@KV_BATCH@": "kv_batch.md", "@KV_VMM@": "kv_vmm.md",
     "@KV_MPS@": "kv_mps.md",
     "@KV_SOTA@": "kv_sota.md", "@KV_TREE@": "kv_tree.md",
-    "@KV_SCALE@": "kv_scale.md", "@KV_SERVER@": "kv_server.md",
+    "@KV_SCALE@": "kv_scale.md", "@KV_SERVER@": "kv_server.md", "@KV_SERVER2@": "kv_server2.md",
     "@KV_LIMIT@": "kv_limit.md", "@READ_PATH@": "read_path.md",
     "@VMM_ATTACH@": "vmm_attach.md", "@PROTECT@": "protect.md",
     "@OLLAMA_AGENTS@": "ollama_agents.md",

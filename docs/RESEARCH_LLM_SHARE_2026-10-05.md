@@ -1069,10 +1069,17 @@ two instances.
 
 The device-memory route completes only the 24 children in the publisher's
 instance when placement crosses the MIG boundary.  Copy, demand-backed
-copy, copy-on-write, and extents complete all 48.  Extents use 5.9--6.0 GiB
-instead of 20.3 GiB, reduce the publisher pause from 540--548 ms to 8 ms,
-and attach in 49--50 ms.  They are the only low-pause route in this matrix
-that both preserves exact output and crosses the MIG boundary.
+copy, copy-on-write, and extents complete all 48.  Extents use 5.8 to 5.9
+GiB instead of 19.8 GiB, reduce the pause of the publisher from 540 to 548
+ms to 8 ms, and attach in 49 to 50 ms.  Copy-on-write mappings (with the CPU
+read of the prefix) also pause for 8 to 9 ms, attach in 50 to 51 ms, keep the
+output and cross the MIG boundary; against them, extents hold less (5.9
+against 6.7 GiB in one instance, 5.8 against 6.6 GiB across the two) and
+reach the first token sooner (2.14 against 2.77 s, and 1.92 against 2.28 s).
+(An earlier version of this paragraph gave 20.3 GiB and 5.9 to 6.0 GiB,
+which were MiB divided by 1000, and called extents the only route with a
+short pause, the same output and both instances, which the copy-on-write
+row contradicts.)
 
 **Trees.** `run_engine_kvtree.sh` builds two leaders and four leaves per
 leader.  A chain lets each leader publish the rows it adds; the flat route
@@ -1137,6 +1144,39 @@ least 22 common generated tokens.  The raw sequences are retained; the
 result is a deterministic server-path numerical divergence rather than a
 timeout or failed restore.
 
+The cause was found on 2026-10-07 and a second campaign confirms it.  The
+tokenizer joins the last character of the published prefix (a line break)
+with the line breaks that begin every task: 14,281 of the 14,282 published
+tokens are tokens of an agent's prompt (measured through the server's
+`/tokenize` for all eight tasks; the tokens an agent evaluates, 27, 22, 24,
+32, ..., are its task plus that one token).  The server discards the last
+published cell and evaluates the token again.  A copy writes it back into
+the same cell.  With extents the cell is frozen, so the token goes to the
+first cell of the private tail and the cache has another layout than the
+copy's, which changes the rounding of the attention sums; three of the
+eight tasks cross a near-tie within 64 tokens.
+
+`run_engine_kvserver2.sh` is the same campaign with one change in its
+client (`kv_server_client2.py`): the publisher evaluates and saves the
+prefix together with the two line breaks that begin every task, so that all
+14,282 published tokens are tokens of every prompt.  The prompts of the
+agents are the same text as before.  Its expectation was written into the
+runner before it ran: gate V2 holds for every response.
+
+| Mode | Agents | Runs (failed) | Requests complete | Exact texts | Minimum common tokens | Save, request / server (ms) | Restore (ms) | First token (ms) | Memory / cache file (MiB) |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| copy | 4 | 6 (0) | 24/24 | 24/24 | 64 | 501.28 / 499.75 | 350.9 | 551 | 9665 / 0 |
+| extent | 4 | 6 (0) | 24/24 | 24/24 | 64 | 9.13 / 7.68 | 147.1 | 370 | 2445 / 784 |
+| copy | 8 | 6 (0) | 48/48 | 48/48 | 64 | 504.85 / 503.36 | 517.6 | 894 | 19286 / 0 |
+| extent | 8 | 6 (0) | 48/48 | 48/48 | 64 | 9.60 / 8.26 | 265.1 | 686 | 4931 / 784 |
+
+It holds: 24 of 24 and 48 of 48 responses equal those of the copy for all
+64 tokens, and an agent server evaluates at most 31 tokens.  The other
+numbers repeat the first campaign (slot save 9.6 against 505 ms, restore
+265 against 518 ms, memory of eight agent servers 4.8 against 18.8 GiB).
+The rule for a deployment: publish a prefix at a token boundary that the
+prompts of the agents keep.
+
 **Memory limits.** `run_engine_kvlimit.sh` first accounts for four agents,
 then gives agent 0 a 435-MiB cgroup limit while the other agents continue.
 
@@ -1149,7 +1189,7 @@ then gives agent 0 a 435-MiB cgroup limit while the other agents continue.
 
 The accounting campaign distinguishes process charges from physical
 sharing: the extent processes are charged for mapped pages even while the
-system-wide available-memory drop is 2.9 GiB rather than the copy's 10.1
+system-wide available-memory drop is 2.8 GiB rather than the copy's 9.9
 GiB.  Under the enforced limit, only the selected extent process is killed;
 all other agents finish and preserve their account-phase text.
 
@@ -1188,6 +1228,18 @@ Sequential host reads retain 0.988--1.007 of device-memory bandwidth in all
 cells.  VMM attach falls from 25.030 ms for 448 two-MiB handles to 1.452 ms
 for one 896-MiB handle, showing that its attach cost is primarily per
 allocation rather than per byte.
+
+Two conclusions follow, and both correct earlier readings.  First, the read
+path of a kernel that scans a buffer is the same for host and device memory
+in both instances, so it does not explain the 2 to 6% that a cache in host
+memory costs in the 6-SM instance (Section 6.8); hypothesis H1 of the runner
+is rejected and the cause remains unidentified.  Second, the device-memory
+baseline of the engine attaches a child in 438 to 770 ms (Section 6.9 and
+the mechanisms table above), while importing and mapping the same 448
+handles takes 25 ms in the probe.  Most of the baseline's attach time
+therefore belongs to its implementation in the engine, which was not tuned,
+and not to the interface: that extents attach faster than this baseline is
+a statement about the two implementations.
 
 **Protection.** `run_protect.sh` asks an importer to read and then write
 shared state through the two routes.
