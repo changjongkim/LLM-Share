@@ -670,6 +670,29 @@ Ollama는 슬롯마다 프리픽스를 따로 계산하고 서버 사이에서 �
 테이블을 거치는 메모리의 비용이다(아래 원인 분리 참조). 첫 토큰은 3.32 s에서
 1.65 s로 앞당겨진다. 따라서 권장 구성은 모델 파일을 2 MiB 페이지 위에 두는 것이다.
 
+**모델 파일을 2 MiB 페이지에 올리기 (`weights_publish.c`, `20261007-weights-publish-v1`).**
+위 권장 구성은 모델 파일이 2 MiB 페이지를 쓰는 tmpfs에 있어야 한다. `cp`로 복사하면
+파일이 페이지 캐시를 거치므로 적재가 끝난 뒤에도 같은 크기의 사본이 페이지 캐시에
+남는다. `weights_publish`는 원본을 O_DIRECT로 읽어 대상 파일의 공유 매핑에 직접
+채운다(읽기 스레드 8개, 32 MiB 단위). 반복마다 페이지 캐시를 비우고 저장 장치에서
+읽게 하였다.
+
+| 파일 | 방법 | 시간 (s) | GiB/s | 페이지 캐시에 남는 사본 | 적재 중 MemFree 감소 |
+|---|---|---:|---:|---:|---:|
+| Qwen2.5-7B (4.4 GiB) | `cp` | 2.21 | 1.98 | 4.4 GiB | 8.6 GiB |
+| | `dd iflag=direct` | 1.47 | 2.97 | 0 | 4.0 GiB |
+| | `weights_publish` | 1.15 | 3.78 | 0 | 3.9 GiB |
+| Qwen2.5-14B (8.4 GiB) | `cp` | 4.05 | 2.07 | 8.4 GiB | 15.8 GiB |
+| | `dd iflag=direct` | 2.84 | 2.95 | 0 | 8.0 GiB |
+| | `weights_publish` | 1.80 | 4.64 | 0 | 7.6 GiB |
+| 14B 파일 4개를 이어 붙인 합성 파일 (33.5 GiB) | `cp` | 16.71 | 2.06 | 32.4 GiB | 64.0 GiB |
+| | `dd iflag=direct` | 11.23 | 2.98 | 0 | 33.3 GiB |
+| | `weights_publish` | 6.95 | 4.82 | 0 | 33.3 GiB |
+
+직접 읽기는 `cp`보다 1.9~2.4배 빠르고, 적재 중 차지하는 메모리가 파일 크기의 2배에서
+1배로 줄어든다. 54회 모두 대상 파일이 원본과 같다. 정상 상태의 메모리와 생성 속도는
+어느 방법으로 올려도 같다.
+
 <p align="center"><img src="figures/eval_stack_mem.png" width="24%"> <img src="figures/eval_stack_parts.png" width="24%"> <img src="figures/eval_stack_fit.png" width="24%"> <img src="figures/eval_stack_speed.png" width="24%"></p>
 <p align="center"><b>그림 21.</b> 전체 스택의 메모리(에이전트 수별, 에이전트 8개의 구성), 가용 메모리에 들어가는 에이전트 수, 무수정 대비 생성 속도. 회색: 무수정, 파랑: KV 공유, 노랑: 가중치 공유, 청록: STATOR.</p>
 
@@ -753,6 +776,7 @@ ms 빠르다). 사전 기준 "익스텐트의 연결이 다른 모든 방식보�
 | `kv_spawn.cpp` | 게시한 뒤 자식을 직접 실행하는 부모. 자식이 공유 디바이스 메모리의 핸들을 상속한다 |
 | `kv_tree.cpp` | 에이전트 트리와 파이프라인의 한 프로세스. 텍스트 디코딩, 상태 적재·저장, 대기, 생성 단계를 인자로 받는다 |
 | `kv_fork_nommap.cpp` | 모델 파일을 매핑하지 않고 읽는 `kv_fork`. 프리픽스만 공유하는 스택에 사용 |
+| `weights_publish.c` | 모델 파일을 저장 장치에서 직접 읽어 2 MiB 페이지의 공유 매핑에 채우는 도구 |
 | `cuda_tlb_probe.cu` | 메모리 종류별로 연속 읽기, 흩어진 읽기, 흩어진 쓰기의 속도를 측정 |
 | `make_workload.py`, `make_workload_bfcl.py`, `workloads/` | 에이전트 워크로드와, 공개 함수 호출 벤치마크(BFCL v4, Apache-2.0)의 도구 스키마와 요청으로 만든 워크로드 |
 | `openai_client.py`, `throughput_ratios.py` | OpenAI 호환 서버의 요청 드라이버, 원시 로그에서 반복별 처리량 비와 중앙값을 계산하는 도구 |
@@ -796,6 +820,8 @@ ms 빠르다). 사전 기준 "익스텐트의 연결이 다른 모든 방식보�
 | `run_engine_kvfault.sh` | GPU 공유 방식별 결함 주입과 생존한 에이전트 수 | 4.11 |
 | `run_engine_kvdeep.sh` | 깊거나 넓은 트리, 서브트리 종료 시 메모리 반환 | 4.11 |
 | `run_ext_weightshare.sh` | CUDA IPC로 가중치를 공유하는 공개 라이브러리 기준선 | 4.11 |
+| `run_weights_publish.sh` | 모델 파일을 2 MiB 페이지에 올리는 세 방법의 시간과 메모리 | 4.11 |
+| `run_ext_vllm.sh` | 프로세스 하나 안에서 프리픽스를 공유하는 vLLM 기준선 | 4.11 |
 
 ### 6.2 빌드
 
@@ -849,7 +875,8 @@ git clone <llama.cpp> llama.cpp-stock && git -C llama.cpp-stock checkout 6f767fe
 cmake -S llama.cpp-stock -B llama.cpp-stock/build -DGGML_CUDA=ON \
   -DCMAKE_BUILD_TYPE=Release -DCMAKE_CUDA_ARCHITECTURES=110 -DLLAMA_CURL=OFF
 cmake --build llama.cpp-stock/build -j 12 --target llama
-make kv_fork_tuned kv_spawn_tuned kv_fork_stock kv_tree_stock kv_fork_nommap cuda_tlb_probe
+make kv_fork_tuned kv_spawn_tuned kv_fork_stock kv_tree_stock kv_fork_nommap cuda_tlb_probe \
+  weights_publish
 ```
 
 `kv_extents.patch`는 `inplace_weights.patch`를 포함하고, `kv_vmm.patch`는
@@ -905,6 +932,8 @@ RESULT_TAG=engine-kvpipe-rerun   ./run_engine_kvpipe.sh
 MPS_ROOT=/tmp/kf RESULT_TAG=engine-kvfault-rerun ./run_engine_kvfault.sh
 RESULT_TAG=engine-kvdeep-rerun   ./run_engine_kvdeep.sh
 RESULT_TAG=ext-weightshare-rerun ./run_ext_weightshare.sh
+RESULT_TAG=weights-publish-rerun ./run_weights_publish.sh
+RESULT_TAG=ext-vllm-rerun        ./run_ext_vllm.sh
 ./verify_llm_share_artifact.sh
 ./verify_stator_campaigns.sh results
 ```

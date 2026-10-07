@@ -12,6 +12,14 @@
 # reserves its cache at the start; the reservation is KV_CACHE_GIB.
 # Memory is the drop of MemAvailable from before the server starts.
 #
+# What it took to run vLLM 0.20.0 on this platform (ext/FEASIBILITY.md has
+# the installation): the modules xgrammar, compressed-tensors and triton
+# added to its environment; the device selected by index, since vLLM parses
+# CUDA_VISIBLE_DEVICES as integers and index 0 is the 12-SM instance (the
+# 6-SM instance cannot be selected this way); the CUDA headers named to
+# Triton (TRITON_CUDART_PATH); and compilation with Inductor switched off
+# (-O0).
+#
 # Validity criteria, fixed before the campaign:
 #   X1  the server starts in every repetition and every request completes;
 #   X2  cold and warm first token, throughput and memory are reported, and
@@ -20,7 +28,6 @@
 set -euo pipefail
 
 script_dir=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)
-mig_a=${PRODUCER_MIG:-MIG-fafc828a-2a0d-5988-a009-030a36930090}
 repetitions=${REPETITIONS:-6}
 agents=${AGENTS:-8}
 prefix_file=${PREFIX_FILE:-"$script_dir/workloads/agent_prefix.txt"}
@@ -32,7 +39,9 @@ port=${PORT:-8200}
 start_limit_s=${START_LIMIT_S:-900}
 venv=${VLLM_VENV:-"$script_dir/ext/venv-vllm"}
 model_dir=${VLLM_MODEL:-"$(ls -d "$script_dir"/ext/hf/hub/models--Qwen--Qwen2.5-7B-Instruct-AWQ/snapshots/* | head -n 1)"}
-extra_args=${VLLM_ARGS:-}
+extra_args=${VLLM_ARGS:-"-O0 --enable-prompt-tokens-details"}
+device_index=${VLLM_DEVICE_INDEX:-0}
+cuda_include=${CUDA_INCLUDE:-/usr/local/cuda-13.0/include}
 client="$script_dir/openai_client.py"
 result_root=${RESULT_ROOT:-"$script_dir/results"}
 result_tag=${RESULT_TAG:-"$(date +%Y%m%d-%H%M%S)-ext-vllm"}
@@ -68,14 +77,14 @@ source "$script_dir/ext/env-torch.sh" "$venv"
 
 {
   printf 'timestamp=%s\n' "$(date --iso-8601=seconds)"
-  printf 'mig_a=%s\nrepetitions=%s\nagents=%s\ncontext=%s\nn_gen=%s\nkv_cache_gib=%s\n' \
-    "$mig_a" "$repetitions" "$agents" "$context" "$n_gen" "$kv_cache_gib"
+  printf 'repetitions=%s\nagents=%s\ncontext=%s\nn_gen=%s\nkv_cache_gib=%s\n' \
+    "$repetitions" "$agents" "$context" "$n_gen" "$kv_cache_gib"
   printf 'model_dir=%s\nmodel_bytes=%s\n' "$(basename "$(dirname "$(dirname "$model_dir")")")" \
     "$(du -sbL "$model_dir" | cut -f1)"
   printf 'vllm=%s\ntorch=%s\n' \
     "$("$venv/bin/python" -c 'import importlib.metadata as m; print(m.version("vllm"))')" \
     "$("$venv/bin/python" -c 'import importlib.metadata as m; print(m.version("torch"))')"
-  printf 'extra_args=%s\n' "$extra_args"
+  printf 'extra_args=%s\ndevice_index=%s\n' "$extra_args" "$device_index"
   sed 's/^/boot_id=/' /proc/sys/kernel/random/boot_id
   nvidia-smi -L
 } >"$result_dir/metadata.txt"
@@ -86,7 +95,8 @@ for run in $(seq 1 "$repetitions"); do
   before=$(meminfo_kib MemAvailable)
   started=$(date +%s%N)
   # shellcheck disable=SC2086
-  env CUDA_VISIBLE_DEVICES="$mig_a" HF_HUB_OFFLINE=1 HF_HOME="$script_dir/ext/hf" \
+  env CUDA_VISIBLE_DEVICES="$device_index" HF_HUB_OFFLINE=1 HF_HOME="$script_dir/ext/hf" \
+    TRITON_CUDART_PATH="$cuda_include" TRITON_CUDACRT_PATH="$cuda_include" \
     "$venv/bin/vllm" serve "$model_dir" --port "$port" --served-model-name stator-baseline \
     --max-model-len "$context" --max-num-seqs "$agents" \
     --kv-cache-memory-bytes "$(( kv_cache_gib * 1073741824 ))" $extra_args \

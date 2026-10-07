@@ -1,0 +1,11 @@
+timestamp=2026-10-07T16:25:01+09:00
+repetitions=6
+threads=8
+chunk_mib=32
+synthetic_copies=4
+file=Qwen2.5-7B-Instruct-Q4_K_M.gguf bytes=4683074240
+file=Qwen2.5-14B-Instruct-Q4_K_M.gguf bytes=8988110976
+file=synthetic-4x-Qwen2.5-14B-Instruct-Q4_K_M.gguf bytes=35952443904
+source_filesystem=ext4 /dev/nvme0n1p1
+boot_id=0965baa0-3357-48ca-8cea-c958d95b2d3f
+1f65974811e621734a07e32f4873545e846f8bcb8660ccc2a65db7c5204fe77d  /home/thor/kcj/llm_share/weights_publish

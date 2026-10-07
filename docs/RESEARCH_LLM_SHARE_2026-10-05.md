@@ -1495,6 +1495,37 @@ instances, 42.3 against 43.5 ms with one child). The copy-on-write mapping
 and the extents do the same work at attach; they differ in memory (6.7
 against 5.9 GiB) and in the first token (2.78 against 2.12 s).
 
+**Putting a model file on 2 MiB pages (`run_weights_publish.sh`,
+`20261007-weights-publish-v1`).** Reading the weights in place costs nothing
+when the model file is on 2 MiB pages, which a tmpfs mounted with
+`huge=always` provides. Three ways to put a file from storage there:
+`cp` (buffered), `dd iflag=direct` (direct reads through a buffer of the
+program, one reader), and `weights_publish.c`, which maps the target shared
+and reads the source into the mapping with O_DIRECT, eight readers on
+chunks of 32 MiB. The page cache is dropped before every case. The third
+file is four copies of the 14B model, to show a size that no model of this
+repository has.
+
+| File | Size (GiB) | Method | Runs (failed) | Time (s) | 95% CI | GiB/s | Speed-up vs cp | Page cache left (MiB) | Share of the file | Largest drop of MemFree (MiB) | Identical |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| Qwen2.5-7B-Instruct-Q4_K_M.gguf | 4.4 | cp | 6 (0) | 2.208 | 0.013 | 1.98 | 1.00 | 4468 | 1.001 | 8764 | 6/6 |
+| Qwen2.5-7B-Instruct-Q4_K_M.gguf | 4.4 | dd | 6 (0) | 1.469 | 0.034 | 2.97 | 1.50 | 2 | 0.000 | 4091 | 6/6 |
+| Qwen2.5-7B-Instruct-Q4_K_M.gguf | 4.4 | publish | 6 (0) | 1.154 | 0.009 | 3.78 | 1.91 | 4 | 0.001 | 4008 | 6/6 |
+| Qwen2.5-14B-Instruct-Q4_K_M.gguf | 8.4 | cp | 6 (0) | 4.048 | 0.034 | 2.07 | 1.00 | 8580 | 1.001 | 16137 | 6/6 |
+| Qwen2.5-14B-Instruct-Q4_K_M.gguf | 8.4 | dd | 6 (0) | 2.844 | 0.087 | 2.95 | 1.42 | 10 | 0.001 | 8234 | 6/6 |
+| Qwen2.5-14B-Instruct-Q4_K_M.gguf | 8.4 | publish | 6 (0) | 1.804 | 0.015 | 4.64 | 2.24 | 5 | 0.001 | 7762 | 6/6 |
+| synthetic-4x-Qwen2.5-14B-Instruct-Q4_K_M.gguf | 33.5 | cp | 6 (0) | 16.710 | 3.655 | 2.06 | 1.00 | 33207 | 0.968 | 65561 | 6/6 |
+| synthetic-4x-Qwen2.5-14B-Instruct-Q4_K_M.gguf | 33.5 | dd | 6 (0) | 11.230 | 0.379 | 2.98 | 1.47 | 10 | 0.000 | 34056 | 6/6 |
+| synthetic-4x-Qwen2.5-14B-Instruct-Q4_K_M.gguf | 33.5 | publish | 6 (0) | 6.949 | 0.049 | 4.82 | 2.37 | 10 | 0.000 | 34126 | 6/6 |
+
+`cp` leaves the file in the page cache as well (the whole file for the two
+models, 97% of the synthetic one), and the largest drop of `MemFree` while
+loading is twice the size of the file. With direct reads nothing is left in
+the page cache and the drop is the size of the file. `weights_publish` is
+1.9 to 2.4 times as fast as `cp` and 1.3 to 1.6 times as fast as `dd`. All
+54 targets equal their sources. The steady state does not depend on how the
+file was put there.
+
 ## 7. Novelty boundary
 
 `SOTA_HOSTMM_2026-10-05.md` Section 14 is the audit for this concept, its
