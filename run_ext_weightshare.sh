@@ -4,7 +4,7 @@
 # preloaded library that exports the allocation of the weights of the first
 # process through CUDA IPC and maps it in the processes that follow. It runs
 # with the unmodified engine. A master computes the prefix, saves the
-# engine's state file and stays alive; N agents restore the prefix from the
+# engine's state file and remains alive; N agents restore the prefix from the
 # file and generate. Three stacks, which differ only in the weights:
 #
 #   stock    the unmodified engine: every process copies the weights
