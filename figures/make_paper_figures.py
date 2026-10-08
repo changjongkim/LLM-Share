@@ -112,7 +112,7 @@ def finish(fig, ax, name, xlabel, ylabel, top=None, log=False, xtick=None):
 def mem():
     data = {(r["paragraphs"], r["mode"], int(r["agents"])): r
             for r in rows("20261006-engine-kvshare-v1", "engine_kvshare_summary.csv")}
-    series_of = (("Copy", COPY, "restore"), ("Extents, Whole Tail", OURS_LIGHT, "extent"),
+    series_of = (("Copy", COPY, "restore"), ("Extents, Allocated at Once", OURS_LIGHT, "extent"),
                  (NAME, OURS, "extent_lazy"))
     legend("eval_mem_legend", [(label, colour) for label, colour, _ in series_of], 3)
     counts = [1, 4, 8]

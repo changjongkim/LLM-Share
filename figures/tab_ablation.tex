@@ -5,12 +5,12 @@ Configuration & \makecell[r]{Attach\\(ms)} & \makecell[r]{TTFT\\(s)} & \makecell
 \STATOR & 51 & 1.83 & 5.8 & 0.964 & 48/48 \\
 \hline
 No CPU read of the prefix & 46 & 2.43 & 5.8 & 0.965 & 48/48 \\
-No populate-ahead of the tail & 50 & 1.98 & 5.8 & 0.947 & 48/48 \\
+No populate-ahead & 50 & 1.98 & 5.8 & 0.947 & 48/48 \\
 Writable private mapping & 49 & 2.21 & 6.6 & 0.957 & 48/48 \\
 Writable, no CPU read & 48 & 5.17 & 12.8 & 0.972 & 48/48 \\
-Tail in steps of 1,024 rows & 48 & 1.84 & 5.9 & 0.963 & 48/48 \\
-Tail in steps of 4,096 rows & 50 & 1.84 & 6.7 & 0.963 & 48/48 \\
-Tail allocated at once & 87 & 1.91 & 12.6 & 0.962 & 48/48 \\
+Growth in steps of 1,024 rows & 48 & 1.84 & 5.9 & 0.963 & 48/48 \\
+Growth in steps of 4,096 rows & 50 & 1.84 & 6.7 & 0.963 & 48/48 \\
+Private extent allocated at once & 87 & 1.91 & 12.6 & 0.962 & 48/48 \\
 Cache file on 4~KiB pages & 64 & 1.89 & 5.7 & 0.960 & 48/48 \\
 \textit{Copy} & 530 & 2.45 & 19.8 & 1.000 & 48/48 \\
 \hline

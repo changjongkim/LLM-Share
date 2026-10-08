@@ -35,12 +35,12 @@ def ablation():
         return
     data = {r["mode"]: r for r in rows(directory, "engine_kvmech_summary.csv")}
     order = (("extent", r"\STATOR"), ("no_read", "No CPU read of the prefix"),
-             ("no_populate", "No populate-ahead of the tail"),
+             ("no_populate", "No populate-ahead"),
              ("writable", "Writable private mapping"),
              ("writable_no_read", "Writable, no CPU read"),
-             ("grow_1024", "Tail in steps of 1,024 rows"),
-             ("grow_4096", "Tail in steps of 4,096 rows"),
-             ("grow_all", "Tail allocated at once"),
+             ("grow_1024", "Growth in steps of 1,024 rows"),
+             ("grow_4096", "Growth in steps of 4,096 rows"),
+             ("grow_all", "Private extent allocated at once"),
              ("small_pages", "Cache file on 4~KiB pages"),
              ("copy", r"\textit{Copy}"))
     lines = [r"\begin{tabular}{@{}lrrrrr@{}}", r"\hline",

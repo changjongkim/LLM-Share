@@ -25,7 +25,7 @@
   \node[tag, anchor=base] at (#1+1.72,5.23) {KV Cache};
   \node[blk, fill=modelc, minimum width=0.78cm] (#2m) at (#1+0.47,4.88) {model};
   \node[blk, fill=sharedc, minimum width=0.78cm] (#2p) at (#1+1.33,4.88) {prefix};
-  \node[blk, fill=tailc, minimum width=0.78cm] (#2t) at (#1+2.11,4.88) {tail};
+  \node[blk, fill=tailc, minimum width=0.78cm] (#2t) at (#1+2.11,4.88) {private};
 }
 \process{0.15}{pub}{Publisher}
 \process{2.85}{one}{Agent 1}
@@ -58,7 +58,7 @@
 \draw[arr, densely dashed] (pfile.south) -- (sfile.north);
 % the private tails: one per process, backed up to the rows in use
 \draw[sub, fill=white] (6.2,0.95) rectangle (8.6,2.26);
-\node[tag] at (7.4,2.04) {Private Tails};
+\node[tag] at (7.4,2.04) {Private Extents};
 \foreach \y/\u in {1.72/1.0,1.44/1.45,1.16/0.6} {
   \node[seg, fill=tailc, minimum width=\u cm, minimum height=0.2cm, anchor=west] at (6.35,\y) {};
   \node[free, minimum width=2.1cm-\u cm, minimum height=0.2cm, anchor=west] at (6.35+\u,\y) {};
@@ -80,7 +80,7 @@
 \node[num] at (5.45,0.45) {2};
 \node[tag, anchor=west] at (5.65,0.45) {Attach};
 \node[num] at (7.0,0.45) {3};
-\node[tag, anchor=west] at (7.2,0.45) {Grow Tail};
+\node[tag, anchor=west] at (7.2,0.45) {Grow Extent};
 
 \end{tikzpicture}
 \end{document}
