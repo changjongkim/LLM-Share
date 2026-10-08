@@ -353,15 +353,17 @@ def sota():
                 row = data[key, children, size, m]
                 done, started = int(row["children_finished"]), int(row["children_started"])
                 if done < started:
-                    # Not every child completed: the bar covers the children that did.
-                    bar.set_hatch("////")
-                    bar.set_alpha(0.55)
-                    tip(ax, bar, f"{done // int(row['runs'])}/{started // int(row['runs'])}")
-                else:
-                    tip(ax, bar, form.format(bar.get_height()))
+                    # Not every child completed: a value over the children that did
+                    # would not compare with the other bars, so a cross stands in its place.
+                    bar.set_height(0)
+                    ax.annotate("\u00d7", (bar.get_x() + bar.get_width() / 2, 0), xytext=(0, 2),
+                                textcoords="offset points", ha="center", va="bottom", fontsize=LEGEND,
+                                color=colour, xycoords=("data", "axes fraction"))
+                    continue
+                tip(ax, bar, form.format(bar.get_height()))
                 ax.texts[-1].set_fontsize(DENSE)
                 ax.texts[-1].set_rotation(90 if log or name.endswith(("ttft", "tps")) else 0)
-        top = max(max(values) for _, _, values in series)
+        top = max(bar.get_height() for group in groups for bar in group)
         if log:
             ax.set_ylim(1, top * 12)
         finish(fig, ax, name, "", ylabel, None if log else top * 1.22, log)
