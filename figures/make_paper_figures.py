@@ -19,6 +19,7 @@ its unit on the axis and the value on the bar.
   eval_scale_*     more agents; eval_model_*, eval_work_*: other models, workload
 """
 import os
+import re
 import sys
 
 import matplotlib.pyplot as plt
@@ -678,6 +679,19 @@ STACKS = (("Unmodified", COPY, "none", "s"), ("KV Shared", DEMAND, "kv", "D"),
           ("Weights Shared", DEVICE, "weights", "^"), (NAME, OURS, "both", "o"))
 
 
+def ran(directory):
+    """The count of a capacity campaign in which no agent failed."""
+    if have(directory, "engine_kvstack_summary.csv"):
+        return max(int(r["agents"]) for r in rows(directory, "engine_kvstack_summary.csv")
+                   if int(r["runs"]) > 0 and int(r["failed_agents"]) == 0)
+    # a campaign that has not written its summary yet: the repetitions in its log
+    log = open(os.path.join(RES, directory, "raw.log")).read()
+    assert "END_CASE failed_agents=0" in log and "END_CASE failed_agents=" not in log.replace(
+        "END_CASE failed_agents=0", "")
+    meta = open(os.path.join(RES, directory, "metadata.txt")).read()
+    return int(re.search(r"^both_counts=(\d+)", meta, re.M).group(1))
+
+
 def stack():
     """The memory of the whole serving stack by what the agents share."""
     directory = "20261007-engine-kvstack-v1"
@@ -690,7 +704,8 @@ def stack():
     # the larger counts of the stack that shares both, run as a campaign of their own
     line = dict(data)
     for more in ("20261008-engine-kvstack-capacity-v2",
-                 "20261008-engine-kvstack-capacity-136-v1"):
+                 "20261008-engine-kvstack-capacity-136-v1",
+                 "20261008-engine-kvstack-capacity-140-v1"):
         if have(more, "engine_kvstack_summary.csv"):
             line.update({(r["mode"], int(r["agents"])): r
                          for r in rows(more, "engine_kvstack_summary.csv") if int(r["runs"]) > 0})
@@ -754,6 +769,11 @@ def stack():
     fig, ax = panel()
     series = [(label, colour, [int(model[m]["agents_that_fit_by_line"]) for _, model in models])
               for label, colour, m, _ in STACKS if m in ("none", "both")]
+    # the stack that shares both is run at its count; the copying stack exhausts
+    # the device before its line ends, so its count stays the one of the line
+    series[1] = (series[1][0], series[1][1],
+                 [ran(d) for d in ("20261008-engine-kvstack-capacity-140-v1",
+                                   "20261008-engine-kvstack-capacity-qwen14b-118-v1")][:len(models)])
     for group in grouped(ax, [label for label, _ in models], series, 0.36):
         labels(ax, group, "{:.0f}")
     finish(fig, ax, "eval_stack_fit", "", "Agents That Fit", max(max(v) for _, _, v in series) * 1.18)

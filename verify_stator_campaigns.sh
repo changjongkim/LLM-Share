@@ -529,6 +529,7 @@ verify_stack 20261007-engine-kvstack-huge-v1 kvstack-huge all
 verify_stack 20261007-engine-kvstack-capacity-v1 kvstack-capacity both
 verify_stack 20261008-engine-kvstack-capacity-v2 kvstack-capacity-128-v2 both
 verify_stack 20261008-engine-kvstack-capacity-136-v1 kvstack-capacity-136-v1 both
+verify_stack 20261008-engine-kvstack-capacity-140-v1 kvstack-capacity-140-v1 both
 verify_stack 20261008-engine-kvstack-qwen14b-v1 kvstack-qwen14b both
 verify_stack 20261008-engine-kvstack-qwen14b-none8-v1 kvstack-qwen14b-none8 both
 
