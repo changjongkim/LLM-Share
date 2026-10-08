@@ -1395,7 +1395,7 @@ instances:
 
 | Stack | Agents | Failed | Memory (MiB) | 95% CI | Per agent (MiB) | Weights load (ms) | Attach (ms) | First token (ms) | Throughput (tokens/s) | Speed vs unmodified | median |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| both (STATOR) | 136 | 0 | 95433 | 461 | 702 | 18927 | 691.3 | 31037 | 38.48 | - | - |
+| both (STATOR) | 140 | 0 | 98640 | 486 | 705 | 19249 | 763.2 | 32915 | 35.78 | - | - |
 
 No agent fails among the 1,584 agent processes. The agents use 89,874 MiB
 and 95,433 MiB, within 1% of the line of the campaign above, and generate
@@ -1421,6 +1421,15 @@ below its 0.92 floor; the medians are 0.8980 and 0.9234.
 `20261008-engine-kvstack-capacity-qwen14b-118-v1` runs 118 agents on STATOR
 six times: no agent fails, the agents use 90,210 MiB (95% CI 794 MiB) in
 addition to the two files, and generate 16.54 tokens/s in total.
+
+`20261008-engine-kvstack-capacity-qwen14b-131-v1` then runs 131 agents six
+times: all 786 agents finish, the agents use 99,378 MiB (95% CI 729 MiB) in
+addition to the two files, and generate 16.49 tokens/s in total.  The lowest
+sampled `MemAvailable` is 17,555 MiB (17.1 GiB).  One more agent at the
+measured 758.6 MiB per-agent cost, together with the repetition-to-repetition
+variation, would not preserve the required 16 GiB reserve; count 132 is
+therefore not run.  The measured safe maximum is 131, rather than the fitted
+line's 139.
 
 **The same with the model file on 2 MiB pages
 (`20261007-engine-kvstack-huge-v1`).** The model file is copied to a tmpfs

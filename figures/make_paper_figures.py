@@ -775,7 +775,7 @@ def stack():
     # the device before its line ends, so its count stays the one of the line
     series[1] = (series[1][0], series[1][1],
                  [ran(d) for d in ("20261008-engine-kvstack-capacity-140-v1",
-                                   "20261008-engine-kvstack-capacity-qwen14b-118-v1")][:len(models)])
+                                   "20261008-engine-kvstack-capacity-qwen14b-131-v1")][:len(models)])
     for group in grouped(ax, [label for label, _ in models], series, 0.36):
         labels(ax, group, "{:.0f}")
     finish(fig, ax, "eval_stack_fit", "", "Agents That Fit", max(max(v) for _, _, v in series) * 1.18)

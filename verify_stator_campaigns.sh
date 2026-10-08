@@ -533,6 +533,38 @@ verify_stack 20261008-engine-kvstack-capacity-140-v1 kvstack-capacity-140-v1 bot
 verify_stack 20261008-engine-kvstack-qwen14b-v1 kvstack-qwen14b both
 verify_stack 20261008-engine-kvstack-qwen14b-none8-v1 kvstack-qwen14b-none8 both
 verify_stack 20261008-engine-kvstack-capacity-qwen14b-118-v1 kvstack-capacity-qwen14b-118-v1 both
+verify_stack 20261008-engine-kvstack-capacity-qwen14b-131-v1 kvstack-capacity-qwen14b-131-v1 both
+
+# The largest measured 14B count must consist of six complete repetitions,
+# preserve the 16 GiB host reserve in every sampled case, and produce one
+# text for each of its 131 agents.  This check distinguishes the measured
+# count from the larger count obtained by extending a fitted line.
+capacity_14b="$results/20261008-engine-kvstack-capacity-qwen14b-131-v1"
+if [[ -f "$capacity_14b/source_hashes.txt" ]]; then
+  awk -F, 'NR > 1 {
+      rows++
+      if ($1 != "both" || $2 != 131 || $3 != 6 || $4 != 0 || $5 != 0 || $25 != 6) bad++
+    }
+    END { exit (bad || rows != 1) ? 1 : 0 }
+  ' "$capacity_14b/engine_kvstack_summary.csv" || fail "the 14B 131-agent summary is incomplete"
+  awk -F, 'NR > 1 { rows++; if ($4 != 131) bad++ }
+    END { exit (bad || rows != 6) ? 1 : 0 }
+  ' "$capacity_14b/engine_kvstack_texts.csv" || fail "the 14B 131-agent texts are incomplete"
+  awk '
+    function field(name, i, pair) {
+      for (i = 1; i <= NF; ++i) {
+        split($i, pair, "=")
+        if (pair[1] == name) return pair[2]
+      }
+      return ""
+    }
+    /^MEMORY / {
+      samples++
+      if (field("mem_available_before_mib") - field("mem_available_drop_mib") < 16384) bad++
+    }
+    END { exit (bad || samples != 6) ? 1 : 0 }
+  ' "$capacity_14b/raw.log" || fail "the 14B 131-agent campaign violates its 16 GiB reserve"
+fi
 
 # The 14B run is staged: counts 1 and 4 establish that eight unmodified
 # agents leave the required reserve, then count 8 is run in a second

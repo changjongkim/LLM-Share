@@ -635,7 +635,7 @@ STACK_NAMES = {"none": "unmodified", "kv": "prefix mapped", "weights": "weights 
                "both": "both (STATOR)"}
 for tag, name in (("20261007-engine-kvstack-v1", "kv_stack"),
                   ("20261007-engine-kvstack-huge-v1", "kv_stack_huge"),
-                  ("20261008-engine-kvstack-capacity-136-v1", "kv_stack_capacity")):
+                  ("20261008-engine-kvstack-capacity-140-v1", "kv_stack_capacity")):
     directory = os.path.join(engine_root, tag)
     if not os.path.exists(os.path.join(directory, "engine_kvstack_summary.csv")):
         continue
