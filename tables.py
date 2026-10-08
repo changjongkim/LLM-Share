@@ -635,7 +635,7 @@ STACK_NAMES = {"none": "unmodified", "kv": "prefix mapped", "weights": "weights 
                "both": "both (STATOR)"}
 for tag, name in (("20261007-engine-kvstack-v1", "kv_stack"),
                   ("20261007-engine-kvstack-huge-v1", "kv_stack_huge"),
-                  ("20261007-engine-kvstack-capacity-v1", "kv_stack_capacity")):
+                  ("20261008-engine-kvstack-capacity-136-v1", "kv_stack_capacity")):
     directory = os.path.join(engine_root, tag)
     if not os.path.exists(os.path.join(directory, "engine_kvstack_summary.csv")):
         continue
@@ -807,8 +807,8 @@ VSHARE_COLUMNS = [
     ("Texts equal to vllm: first, both, alone1, alone2",
      lambda r: ", ".join(f"{r[k + '_texts_equal']}/{r[k + '_texts_compared']}" for k in ("first", "both", "alone1", "alone2"))),
 ]
-for tag, name in (("20261007-vllm-share-v1", "vllm_share"), ("20261007-vllm-share-4srv-v1", "vllm_share_4srv"),
-                  ("20261007-vllm-share-4srv-v2", "vllm_share_4srv_warm")):
+for tag, name in (("20261008-vllm-share-v2", "vllm_share"), ("20261007-vllm-share-4srv-v1", "vllm_share_4srv"),
+                  ("20261008-vllm-share-4srv-v3", "vllm_share_4srv_warm")):
     render(name, os.path.join(engine_root, tag, "vllm_share_summary.csv"), VSHARE_COLUMNS)
 
 print("tables written to", out)

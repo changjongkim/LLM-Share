@@ -1,0 +1,106 @@
+BEGIN_VSHARE run=1
+CASE mode=vllm servers=2 kv_cache_gib=2 agents=8
+SERVER slot=1 ready=1 alive=1 startup_ms=23364 drop_mib=10371
+PREFIX port=8210 exit=0 text=7879981d4f226a8f prompt_tokens=14282 prompt_cached=-1 first_token_ms=9173.7 generated=1 generation_tps=0.000 request_ms=9173.8
+SERVER slot=2 ready=1 alive=1 startup_ms=24994 drop_mib=21113
+MEMORY at=ready drop_mib=21113
+ROUND name=first
+AGENT index=0 port=8211 exit=0 text=93002671a836e165 prompt_tokens=14308 prompt_cached=14272 first_token_ms=14165.5 generated=64 generation_tps=19.652 request_ms=17371.4
+AGENT index=1 port=8211 exit=0 text=69c1de8efcee687b prompt_tokens=14303 prompt_cached=14272 first_token_ms=14165.2 generated=45 generation_tps=19.949 request_ms=16370.9
+AGENT index=2 port=8211 exit=0 text=1266b63446ed610e prompt_tokens=14305 prompt_cached=14272 first_token_ms=14165.4 generated=64 generation_tps=19.653 request_ms=17371.0
+AGENT index=3 port=8211 exit=0 text=3c976512624aeaef prompt_tokens=14313 prompt_cached=-1 first_token_ms=14096.3 generated=64 generation_tps=19.507 request_ms=17325.9
+ROUND name=both
+AGENT index=0 port=8210 exit=0 text=d4f9c2d9c3c36cdb prompt_tokens=14299 prompt_cached=14272 first_token_ms=584.7 generated=64 generation_tps=21.609 request_ms=3500.2
+AGENT index=1 port=8211 exit=0 text=f76712b59ca3d88a prompt_tokens=14299 prompt_cached=14272 first_token_ms=745.7 generated=31 generation_tps=14.441 request_ms=2823.2
+AGENT index=2 port=8210 exit=0 text=e5409a0e1ce34a99 prompt_tokens=14299 prompt_cached=14272 first_token_ms=421.9 generated=64 generation_tps=21.107 request_ms=3406.6
+AGENT index=3 port=8211 exit=0 text=17a9377f0d4bbc0f prompt_tokens=14303 prompt_cached=14272 first_token_ms=516.7 generated=64 generation_tps=15.009 request_ms=4714.0
+AGENT index=4 port=8210 exit=0 text=4a8e707bb335a0f8 prompt_tokens=14302 prompt_cached=14272 first_token_ms=584.7 generated=64 generation_tps=21.610 request_ms=3500.0
+AGENT index=5 port=8211 exit=0 text=0a5cfe08a04e0319 prompt_tokens=14312 prompt_cached=14272 first_token_ms=745.6 generated=64 generation_tps=15.693 request_ms=4760.1
+AGENT index=6 port=8210 exit=0 text=54484583ea811494 prompt_tokens=14302 prompt_cached=14272 first_token_ms=584.6 generated=64 generation_tps=21.611 request_ms=3499.8
+AGENT index=7 port=8211 exit=0 text=10c76b27fd71c243 prompt_tokens=14307 prompt_cached=14272 first_token_ms=745.6 generated=64 generation_tps=15.693 request_ms=4760.2
+ROUND name=alone1
+AGENT index=0 port=8210 exit=0 text=5a117a9d08712410 prompt_tokens=14301 prompt_cached=14272 first_token_ms=145.6 generated=64 generation_tps=31.327 request_ms=2156.6
+ROUND name=alone2
+AGENT index=0 port=8211 exit=0 text=1f54b5d43d9e889e prompt_tokens=14303 prompt_cached=14272 first_token_ms=178.0 generated=64 generation_tps=23.294 request_ms=2882.5
+MEMORY at=end drop_mib=21286 peak_drop_mib=21705 files_mib=0
+END_CASE failed=0
+CASE mode=stator servers=2 kv_cache_gib=2 agents=8
+SERVER slot=1 ready=1 alive=1 startup_ms=23947 drop_mib=11113
+PREFIX port=8210 exit=0 text=7879981d4f226a8f prompt_tokens=14282 prompt_cached=-1 first_token_ms=9194.8 generated=1 generation_tps=0.000 request_ms=9195.0
+SERVER slot=2 ready=0 alive=0 startup_ms=17356 drop_mib=10895
+SERVER_LOG slot=2 (APIServer pid=2271149)   File "/home/thor/kcj/llm_share/ext/venv-vllm/lib/python3.12/site-packages/vllm/tracing/otel.py", line 178, in sync_wrapper
+SERVER_LOG slot=2 (APIServer pid=2271149)     return func(*args, **kwargs)
+SERVER_LOG slot=2 (APIServer pid=2271149)            ^^^^^^^^^^^^^^^^^^^^^
+SERVER_LOG slot=2 (APIServer pid=2271149)   File "/home/thor/kcj/llm_share/ext/venv-vllm/lib/python3.12/site-packages/vllm/v1/engine/core_client.py", line 130, in make_async_mp_client
+SERVER_LOG slot=2 (APIServer pid=2271149)     return AsyncMPClient(*client_args)
+SERVER_LOG slot=2 (APIServer pid=2271149)            ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+SERVER_LOG slot=2 (APIServer pid=2271149)   File "/home/thor/kcj/llm_share/ext/venv-vllm/lib/python3.12/site-packages/vllm/tracing/otel.py", line 178, in sync_wrapper
+SERVER_LOG slot=2 (APIServer pid=2271149)     return func(*args, **kwargs)
+SERVER_LOG slot=2 (APIServer pid=2271149)            ^^^^^^^^^^^^^^^^^^^^^
+SERVER_LOG slot=2 (APIServer pid=2271149)   File "/home/thor/kcj/llm_share/ext/venv-vllm/lib/python3.12/site-packages/vllm/v1/engine/core_client.py", line 900, in __init__
+SERVER_LOG slot=2 (APIServer pid=2271149)     super().__init__(
+SERVER_LOG slot=2 (APIServer pid=2271149)   File "/home/thor/kcj/llm_share/ext/venv-vllm/lib/python3.12/site-packages/vllm/v1/engine/core_client.py", line 535, in __init__
+SERVER_LOG slot=2 (APIServer pid=2271149)     with launch_core_engines(
+SERVER_LOG slot=2 (APIServer pid=2271149)   File "/usr/lib/python3.12/contextlib.py", line 144, in __exit__
+SERVER_LOG slot=2 (APIServer pid=2271149)     next(self.gen)
+SERVER_LOG slot=2 (APIServer pid=2271149)   File "/home/thor/kcj/llm_share/ext/venv-vllm/lib/python3.12/site-packages/vllm/v1/engine/utils.py", line 1119, in launch_core_engines
+SERVER_LOG slot=2 (APIServer pid=2271149)     wait_for_engine_startup(
+SERVER_LOG slot=2 (APIServer pid=2271149)   File "/home/thor/kcj/llm_share/ext/venv-vllm/lib/python3.12/site-packages/vllm/v1/engine/utils.py", line 1178, in wait_for_engine_startup
+SERVER_LOG slot=2 (APIServer pid=2271149)     raise RuntimeError(
+SERVER_LOG slot=2 (APIServer pid=2271149) RuntimeError: Engine core initialization failed. See root cause above. Failed core proc(s): {}
+PLUGIN slot=1 kv_cache role=publisher bytes=2146959360 block_bytes=917504 blocks=0 ms=32.8
+PLUGIN slot=1 kv_publish blocks=892 tokens=14272 file=/home/thor/kcj/llm_share/vllm_share_mount/kv
+END_CASE failed=1
+BEGIN_VSHARE run=2
+CASE mode=stator servers=2 kv_cache_gib=2 agents=8
+SERVER slot=1 ready=1 alive=1 startup_ms=24999 drop_mib=10678
+PREFIX port=8210 exit=0 text=7879981d4f226a8f prompt_tokens=14282 prompt_cached=-1 first_token_ms=9191.2 generated=1 generation_tps=0.000 request_ms=9191.3
+SERVER slot=2 ready=0 alive=0 startup_ms=17360 drop_mib=10840
+SERVER_LOG slot=2 (APIServer pid=2273746)   File "/home/thor/kcj/llm_share/ext/venv-vllm/lib/python3.12/site-packages/vllm/tracing/otel.py", line 178, in sync_wrapper
+SERVER_LOG slot=2 (APIServer pid=2273746)     return func(*args, **kwargs)
+SERVER_LOG slot=2 (APIServer pid=2273746)            ^^^^^^^^^^^^^^^^^^^^^
+SERVER_LOG slot=2 (APIServer pid=2273746)   File "/home/thor/kcj/llm_share/ext/venv-vllm/lib/python3.12/site-packages/vllm/v1/engine/core_client.py", line 130, in make_async_mp_client
+SERVER_LOG slot=2 (APIServer pid=2273746)     return AsyncMPClient(*client_args)
+SERVER_LOG slot=2 (APIServer pid=2273746)            ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+SERVER_LOG slot=2 (APIServer pid=2273746)   File "/home/thor/kcj/llm_share/ext/venv-vllm/lib/python3.12/site-packages/vllm/tracing/otel.py", line 178, in sync_wrapper
+SERVER_LOG slot=2 (APIServer pid=2273746)     return func(*args, **kwargs)
+SERVER_LOG slot=2 (APIServer pid=2273746)            ^^^^^^^^^^^^^^^^^^^^^
+SERVER_LOG slot=2 (APIServer pid=2273746)   File "/home/thor/kcj/llm_share/ext/venv-vllm/lib/python3.12/site-packages/vllm/v1/engine/core_client.py", line 900, in __init__
+SERVER_LOG slot=2 (APIServer pid=2273746)     super().__init__(
+SERVER_LOG slot=2 (APIServer pid=2273746)   File "/home/thor/kcj/llm_share/ext/venv-vllm/lib/python3.12/site-packages/vllm/v1/engine/core_client.py", line 535, in __init__
+SERVER_LOG slot=2 (APIServer pid=2273746)     with launch_core_engines(
+SERVER_LOG slot=2 (APIServer pid=2273746)   File "/usr/lib/python3.12/contextlib.py", line 144, in __exit__
+SERVER_LOG slot=2 (APIServer pid=2273746)     next(self.gen)
+SERVER_LOG slot=2 (APIServer pid=2273746)   File "/home/thor/kcj/llm_share/ext/venv-vllm/lib/python3.12/site-packages/vllm/v1/engine/utils.py", line 1119, in launch_core_engines
+SERVER_LOG slot=2 (APIServer pid=2273746)     wait_for_engine_startup(
+SERVER_LOG slot=2 (APIServer pid=2273746)   File "/home/thor/kcj/llm_share/ext/venv-vllm/lib/python3.12/site-packages/vllm/v1/engine/utils.py", line 1178, in wait_for_engine_startup
+SERVER_LOG slot=2 (APIServer pid=2273746)     raise RuntimeError(
+SERVER_LOG slot=2 (APIServer pid=2273746) RuntimeError: Engine core initialization failed. See root cause above. Failed core proc(s): {}
+PLUGIN slot=1 kv_cache role=publisher bytes=2146959360 block_bytes=917504 blocks=0 ms=32.3
+PLUGIN slot=1 kv_publish blocks=892 tokens=14272 file=/home/thor/kcj/llm_share/vllm_share_mount/kv
+END_CASE failed=1
+CASE mode=vllm servers=2 kv_cache_gib=2 agents=8
+SERVER slot=1 ready=1 alive=1 startup_ms=25050 drop_mib=10458
+PREFIX port=8210 exit=0 text=7879981d4f226a8f prompt_tokens=14282 prompt_cached=-1 first_token_ms=9172.5 generated=1 generation_tps=0.000 request_ms=9172.6
+SERVER slot=2 ready=1 alive=1 startup_ms=25029 drop_mib=20950
+MEMORY at=ready drop_mib=20950
+ROUND name=first
+AGENT index=0 port=8211 exit=0 text=93002671a836e165 prompt_tokens=14308 prompt_cached=-1 first_token_ms=14000.6 generated=64 generation_tps=19.532 request_ms=17226.1
+AGENT index=1 port=8211 exit=0 text=69c1de8efcee687b prompt_tokens=14303 prompt_cached=14272 first_token_ms=14073.7 generated=45 generation_tps=20.010 request_ms=16272.5
+AGENT index=2 port=8211 exit=0 text=1266b63446ed610e prompt_tokens=14305 prompt_cached=14272 first_token_ms=14073.9 generated=64 generation_tps=19.702 request_ms=17271.6
+AGENT index=3 port=8211 exit=0 text=d97e766a07b6cf14 prompt_tokens=14313 prompt_cached=14272 first_token_ms=14073.6 generated=64 generation_tps=19.703 request_ms=17271.1
+ROUND name=both
+AGENT index=0 port=8210 exit=0 text=d4f9c2d9c3c36cdb prompt_tokens=14299 prompt_cached=14272 first_token_ms=432.3 generated=64 generation_tps=21.115 request_ms=3416.0
+AGENT index=1 port=8211 exit=0 text=f76712b59ca3d88a prompt_tokens=14299 prompt_cached=14272 first_token_ms=526.7 generated=31 generation_tps=13.406 request_ms=2764.6
+AGENT index=2 port=8210 exit=0 text=e5409a0e1ce34a99 prompt_tokens=14299 prompt_cached=14272 first_token_ms=577.2 generated=64 generation_tps=21.494 request_ms=3508.2
+AGENT index=3 port=8211 exit=0 text=17a9377f0d4bbc0f prompt_tokens=14303 prompt_cached=14272 first_token_ms=755.7 generated=64 generation_tps=15.649 request_ms=4781.7
+AGENT index=4 port=8210 exit=0 text=4a8e707bb335a0f8 prompt_tokens=14302 prompt_cached=14272 first_token_ms=577.1 generated=64 generation_tps=21.491 request_ms=3508.6
+AGENT index=5 port=8211 exit=0 text=0a5cfe08a04e0319 prompt_tokens=14312 prompt_cached=14272 first_token_ms=755.9 generated=64 generation_tps=15.647 request_ms=4782.3
+AGENT index=6 port=8210 exit=0 text=54484583ea811494 prompt_tokens=14302 prompt_cached=14272 first_token_ms=577.0 generated=64 generation_tps=21.491 request_ms=3508.4
+AGENT index=7 port=8211 exit=0 text=10c76b27fd71c243 prompt_tokens=14307 prompt_cached=14272 first_token_ms=755.8 generated=64 generation_tps=15.647 request_ms=4782.2
+ROUND name=alone1
+AGENT index=0 port=8210 exit=0 text=5a117a9d08712410 prompt_tokens=14301 prompt_cached=14272 first_token_ms=145.3 generated=64 generation_tps=31.366 request_ms=2153.8
+ROUND name=alone2
+AGENT index=0 port=8211 exit=0 text=1f54b5d43d9e889e prompt_tokens=14303 prompt_cached=14272 first_token_ms=175.3 generated=64 generation_tps=23.313 request_ms=2877.6
+MEMORY at=end drop_mib=21297 peak_drop_mib=21743 files_mib=0
+END_CASE failed=0

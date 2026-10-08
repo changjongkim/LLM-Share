@@ -527,6 +527,53 @@ verify_stack() {  # campaign label gates-on-all-stacks
 verify_stack 20261007-engine-kvstack-v1 kvstack all
 verify_stack 20261007-engine-kvstack-huge-v1 kvstack-huge all
 verify_stack 20261007-engine-kvstack-capacity-v1 kvstack-capacity both
+verify_stack 20261008-engine-kvstack-capacity-v2 kvstack-capacity-128-v2 both
+verify_stack 20261008-engine-kvstack-capacity-136-v1 kvstack-capacity-136-v1 both
+verify_stack 20261008-engine-kvstack-qwen14b-v1 kvstack-qwen14b both
+verify_stack 20261008-engine-kvstack-qwen14b-none8-v1 kvstack-qwen14b-none8 both
+
+# The 14B run is staged: counts 1 and 4 establish that eight unmodified
+# agents leave the required reserve, then count 8 is run in a second
+# campaign. Rebuild the joined table to evaluate K2--K5 over all three
+# counts. The joined table is derived rather than stored in either campaign.
+if [[ -f "$results/20261008-engine-kvstack-qwen14b-v1/source_hashes.txt" &&
+      -f "$results/20261008-engine-kvstack-qwen14b-none8-v1/source_hashes.txt" ]]; then
+  first="$results/20261008-engine-kvstack-qwen14b-v1"
+  last="$results/20261008-engine-kvstack-qwen14b-none8-v1"
+  model_bytes=$(awk -F= '$1 == "model_bytes" { print $2 }' "$first/metadata.txt")
+  total=$(awk -F= '$1 == "mem_total_kib" { print $2 }' "$first/metadata.txt")
+  awk -f "$script_dir/summarize_engine_kvstack.awk" "$first/raw.log" "$last/raw.log" \
+    >"$scratch/kvstack-qwen14b-joined.csv"
+  awk -v table=fit -v model_bytes="$model_bytes" -v mem_total_kib="$total" \
+    -f "$script_dir/summarize_engine_kvstack.awk" "$first/raw.log" "$last/raw.log" \
+    >"$scratch/kvstack-qwen14b-joined.fit.csv"
+  awk -v table=texts -f "$script_dir/summarize_engine_kvstack.awk" \
+    "$first/raw.log" "$last/raw.log" >"$scratch/kvstack-qwen14b-joined.texts.csv"
+  awk -F, '
+    NR > 1 && $3 > 0 {
+      rows++; if ($5 != 0) bad++
+      memory[$1, $2] = $18
+    }
+    END {
+      if (bad || rows != 6) exit 1
+      split("1 4 8", counts, " ")
+      for (i = 1; i <= 3; ++i)
+        if (!(memory["both", counts[i]] < memory["none", counts[i]])) exit 2
+    }
+  ' "$scratch/kvstack-qwen14b-joined.csv" || fail "K1 or K3 does not hold in joined 14B campaign"
+  awk -F, 'NR > 1 { rows++; if ($2 != 8 || $3 != 8) bad++ }
+    END { exit (bad || rows != 6) ? 1 : 0 }' \
+    "$scratch/kvstack-qwen14b-joined.texts.csv" || fail "K2 does not hold in joined 14B campaign"
+  awk -F, '$1 == "both" { rows++; if ($9 > 0.20 || $9 <= 0) bad++ }
+    END { exit (bad || rows != 1) ? 1 : 0 }' \
+    "$scratch/kvstack-qwen14b-joined.fit.csv" || fail "K4 does not hold in joined 14B campaign"
+  while IFS=, read -r mode agents runs _ _ _ _ _ _ ratio low high median _; do
+    [[ "$mode" == both && "$runs" -gt 0 ]] || continue
+    if awk -v r="$ratio" 'BEGIN { exit (r < 0.92) ? 0 : 1 }'; then
+      exceptions+=("K5 campaign=kvstack-qwen14b-joined agents=$agents speed_vs_none=$ratio ci95=$low..$high median=$median")
+    fi
+  done < <(tail -n +2 "$scratch/kvstack-qwen14b-joined.csv")
+fi
 
 # Evaluates gates on a summary that has a header line. The awk program sees
 # a field of a row by its name, as $c["name"], and prints one line for every
@@ -786,6 +833,19 @@ verify_vshare() {  # campaign label
 verify_vshare 20261007-vllm-share-v1 vshare
 verify_vshare 20261007-vllm-share-4srv-v1 vshare4
 verify_vshare 20261007-vllm-share-4srv-v2 vshare4w
+verify_vshare 20261008-vllm-share-4srv-v3 vshare4w-v3
+verify_vshare 20261008-vllm-share-v2 vshare-direct
+if [[ -f "$results/20261008-vllm-share-v2/vllm_share_summary.csv" ]]; then
+  gates vshare-direct-extra "$results/20261008-vllm-share-v2/vllm_share_summary.csv" '
+    {
+      if ($c["alone1_texts_equal"] != $c["runs"] || $c["alone1_texts_compared"] != $c["runs"] ||
+          $c["alone2_texts_equal"] != $c["runs"] || $c["alone2_texts_compared"] != $c["runs"])
+        print "!V6 " $c["mode"] " alone1=" $c["alone1_texts_equal"] "/" $c["alone1_texts_compared"]
+          " alone2=" $c["alone2_texts_equal"] "/" $c["alone2_texts_compared"]
+      if ($c["mode"] == "stator" && $c["peak_memory_mib"] - $c["memory_mib"] > 1024)
+        print "!V7 peak_minus_steady_mib=" ($c["peak_memory_mib"] - $c["memory_mib"])
+    }'
+fi
 
 echo "stator_campaign_verification=PASS"
 echo "campaigns_verified=${#verified[@]} ${verified[*]:-}"

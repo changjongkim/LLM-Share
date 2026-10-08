@@ -1,0 +1,24 @@
+timestamp=2026-10-08T10:30:51+09:00
+repetitions=6
+modes=vllm lmcache stator
+servers=4
+agents=8
+context=16384
+n_gen=64
+kv_cache_gib=2
+offload_gib=2
+lmcache_staging_gib=1
+lmcache=0.5.5
+first_mig=MIG-fafc828a-2a0d-5988-a009-030a36930090
+second_mig=MIG-31ffbfe4-9a85-5f4e-b406-90ffbfa82ca3
+model_dir=models--Qwen--Qwen2.5-7B-Instruct-AWQ
+model_bytes=5582400357
+vllm=0.20.0+cu130
+torch=2.10.0
+stator-vllm=0.1.0
+extra_args=-O0 --enable-prompt-tokens-details --gpu-memory-utilization 0.4
+shmem_huge=always within_size advise [never] deny force
+boot_id=0965baa0-3357-48ca-8cea-c958d95b2d3f
+GPU 0: NVIDIA Thor (UUID: GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600)
+  MIG 2g.0gb      Device  0: (UUID: MIG-fafc828a-2a0d-5988-a009-030a36930090)
+  MIG 1g.0gb      Device  1: (UUID: MIG-31ffbfe4-9a85-5f4e-b406-90ffbfa82ca3)

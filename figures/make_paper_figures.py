@@ -690,11 +690,12 @@ def stack():
     fit = {r["mode"]: r for r in rows(directory, "engine_kvstack_fit.csv")}
     legend("eval_stack_legend", [(label, colour) for label, colour, _, _ in STACKS], 4)
     # the larger counts of the stack that shares both, run as a campaign of their own
-    more = "20261007-engine-kvstack-capacity-v1"
     line = dict(data)
-    if have(more, "engine_kvstack_summary.csv"):
-        line.update({(r["mode"], int(r["agents"])): r
-                     for r in rows(more, "engine_kvstack_summary.csv") if int(r["runs"]) > 0})
+    for more in ("20261008-engine-kvstack-capacity-v2",
+                 "20261008-engine-kvstack-capacity-136-v1"):
+        if have(more, "engine_kvstack_summary.csv"):
+            line.update({(r["mode"], int(r["agents"])): r
+                         for r in rows(more, "engine_kvstack_summary.csv") if int(r["runs"]) > 0})
 
     # memory against the number of agents; the line of the fit goes on to the
     # memory that was available, where the stack stops fitting
@@ -746,15 +747,18 @@ def stack():
     ax.tick_params(axis="x", labelsize=TICK2)
     finish(fig, ax, "eval_stack_parts", "", "Memory (GiB)", bottom.max() * 1.18)
 
-    # how many agents fit by the line of each stack
+    # how many agents fit by the line of the unmodified stack and of the stack
+    # that shares both, for this model and for one with weights twice as large
+    larger = "20261008-engine-kvstack-qwen14b-v1"
+    models = [("Qwen2.5-7B", fit)]
+    if have(larger, "engine_kvstack_fit.csv"):
+        models.append(("Qwen2.5-14B", {r["mode"]: r for r in rows(larger, "engine_kvstack_fit.csv")}))
     fig, ax = panel()
-    fits = [int(fit[m]["agents_that_fit_by_line"]) for _, _, m, _ in STACKS]
-    bars = ax.bar(names, fits, 0.58, color=[colour for _, colour, _, _ in STACKS], edgecolor="white",
-                  linewidth=1.5)
-    for bar, (_, _, m, _) in zip(bars, STACKS):
-        tip(ax, bar, f"{bar.get_height():.0f}")
-    ax.tick_params(axis="x", labelsize=TICK2)
-    finish(fig, ax, "eval_stack_fit", "", "Agents That Fit", max(fits) * 1.18)
+    series = [(label, colour, [int(model[m]["agents_that_fit_by_line"]) for _, model in models])
+              for label, colour, m, _ in STACKS if m in ("none", "both")]
+    for group in grouped(ax, [label for label, _ in models], series, 0.36):
+        labels(ax, group, "{:.0f}")
+    finish(fig, ax, "eval_stack_fit", "", "Agents That Fit", max(max(v) for _, _, v in series) * 1.18)
 
     # generation speed of eight agents relative to the unmodified stack, with
     # the model file in the page cache (4 KiB pages) and on a tmpfs with 2 MiB
@@ -964,7 +968,7 @@ VLLM_TICK = TICK2
 
 def vshare():
     """Two vLLM servers, one per MIG instance, on one prefix."""
-    directory = "20261007-vllm-share-v1"
+    directory = "20261008-vllm-share-v2"
     if not have(directory, "vllm_share_summary.csv"):
         return
     data = {r["mode"]: r for r in rows(directory, "vllm_share_summary.csv")}

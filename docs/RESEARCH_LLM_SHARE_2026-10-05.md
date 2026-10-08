@@ -1388,17 +1388,31 @@ page cache).
 According to the MIG profile table the two instances have 12 and 6 SMs;
 `cudaDevAttrMultiProcessorCount` reports 12 and 8.
 
-**Larger counts (`20261007-engine-kvstack-capacity-v1`, two repetitions).**
-The stack that shares both with 96 and 128 agents, 64 processes in each MIG
-instance at the larger count:
+**Larger counts (`20261008-engine-kvstack-capacity-v2` and
+`20261008-engine-kvstack-capacity-136-v1`, six repetitions).** The stack
+that shares both with 128 and 136 agents, split evenly between the two MIG
+instances:
 
 | Stack | Agents | Failed | Memory (MiB) | 95% CI | Per agent (MiB) | Weights load (ms) | Attach (ms) | First token (ms) | Throughput (tokens/s) | Speed vs unmodified | median |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| both (STATOR) | 96 | 0 | 67572 | 2967 | 704 | 12228 | 396.4 | 20655 | 35.81 | - | - |
-| both (STATOR) | 128 | 0 | 89852 | 3748 | 702 | 17375 | 654.4 | 28793 | 36.25 | - | - |
+| both (STATOR) | 136 | 0 | 95433 | 461 | 702 | 18927 | 691.3 | 31037 | 38.48 | - | - |
 
-No agent fails. The memory is within 1% of the line of the campaign above
-(67,979 and 90,603 MiB by the line).
+No agent fails among the 1,584 agent processes. The agents use 89,874 MiB
+and 95,433 MiB, within 1% of the line of the campaign above, and generate
+36.31 and 38.48 tokens/s in total. The 136-agent run leaves at least
+22.7 GiB available.
+
+**The whole stack with Qwen2.5-14B
+(`20261008-engine-kvstack-qwen14b-v1` and `-none8-v1`).** Counts 1 and 4
+first establish a line of 12,486 MiB per unmodified agent. Its conservative
+estimate for eight agents plus the 16 GiB reserve fits in the 118.0 GiB
+available, so count 8 is then run separately. Eight agents use 99,717 MiB
+(97.4 GiB) unmodified and 6,309 MiB on STATOR; adding its one 8,572 MiB
+model file and 2,688 MiB cache file gives 17.2 GiB for the whole stack.
+Every corresponding agent writes one text across the two stacks. K1--K4
+hold. K5 does not: the paired throughput ratio is 0.8955 (95% confidence
+interval 0.8294--0.9668) at one agent and 0.8788 (0.7573--1.0198) at eight,
+below its 0.92 floor; the medians are 0.8980 and 0.9234.
 
 **The same with the model file on 2 MiB pages
 (`20261007-engine-kvstack-huge-v1`).** The model file is copied to a tmpfs
@@ -1959,12 +1973,12 @@ of the configurations turning with the repetition:
 
 | Mode | Servers | Cases (failed) | Requests complete | Memory (MiB) | 95% CI | vs vllm (MiB) | Peak (MiB) | Shared files (MiB) | Mapped by a later server: weights, prefix (MiB) | First token, second server (ms) | 95% CI | Smallest cached share | Throughput (tokens/s) | 95% CI | vs vllm | median | 12-SM, 6-SM (tokens/s) | Start-up, first and later server (ms) | Weights publish, attach (ms) | Prefix attach (ms) | LMCache store, retrieve (ms) | Texts equal to vllm: first, both, alone1, alone2 |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| vllm | 2 | 6 (0) | 84/84 | 21205 | 317 | 0 | 21665 | 0 | 0, 0 | 14126 | 38 | 0.0000 | 145.67 | 0.25 | 1.0000 | 1.0000 | 85.68, 60.00 | 24029, 24834 | 0, 0 | 0 | 0, 0 | 24/24, 48/48, 6/6, 6/6 |
-| cpu | 2 | 6 (0) | 84/84 | 25414 | 49 | 4209 | 25449 | 0 | 0, 0 | 14163 | 20 | 0.0000 | 146.05 | 0.67 | 1.0026 | 1.0035 | 85.63, 60.43 | 25125, 26079 | 0, 0 | 0 | 0, 0 | 21/24, 46/48, 6/6, 6/6 |
-| lmcache | 2 | 6 (0) | 84/84 | 26633 | 357 | 5428 | 26683 | 0 | 0, 0 | 1792 | 89 | 0.9837 | 145.12 | 0.82 | 0.9962 | 0.9956 | 85.21, 59.91 | 25533, 26699 | 0, 0 | 0 | 411, 898 | 22/24, 47/48, 6/6, 6/6 |
-| stator_weights | 2 | 6 (0) | 84/84 | 15583 | 36 | -5623 | 21517 | 5320 | 5317, 0 | 14189 | 25 | 0.0000 | 137.87 | 1.09 | 0.9464 | 0.9488 | 86.27, 51.60 | 24029, 25008 | 151, 98 | 0 | 0, 0 | 20/24, 46/48, 6/6, 6/6 |
-| stator_kv | 2 | 6 (0) | 84/84 | 20479 | 58 | -727 | 21730 | 2050 | 0, 780 | 629 | 64 | 0.9971 | 142.37 | 1.03 | 0.9773 | 0.9769 | 85.39, 56.99 | 24131, 24808 | 0, 0 | 23 | 0, 0 | 20/24, 47/48, 6/6, 6/6 |
-| stator | 2 | 6 (0) | 84/84 | 14805 | 328 | -6400 | 21496 | 7370 | 5317, 780 | 646 | 59 | 0.9971 | 138.38 | 1.66 | 0.9499 | 0.9510 | 89.19, 49.19 | 24184, 25266 | 148, 98 | 23 | 0, 0 | 20/24, 47/48, 6/6, 6/6 |
+| vllm | 2 | 6 (0) | 84/84 | 21272 | 33 | 0 | 21706 | 0 | 0, 0 | 14108 | 48 | 0.0000 | 145.69 | 0.85 | 1.0000 | 1.0000 | 85.40, 60.29 | 24223, 26023 | 0, 0 | 0 | 0, 0 | 24/24, 48/48, 6/6, 6/6 |
+| cpu | 2 | 6 (0) | 84/84 | 25281 | 435 | 4009 | 25367 | 0 | 0, 0 | 14188 | 19 | 0.0000 | 145.74 | 1.33 | 1.0003 | 0.9957 | 85.83, 59.91 | 24782, 26100 | 0, 0 | 0 | 0, 0 | 22/24, 48/48, 6/6, 6/6 |
+| lmcache | 2 | 6 (0) | 84/84 | 26617 | 252 | 5345 | 26670 | 0 | 0, 0 | 1809 | 99 | 0.9841 | 145.26 | 0.14 | 0.9970 | 0.9965 | 85.68, 59.58 | 25541, 26726 | 0, 0 | 0 | 407, 924 | 19/24, 48/48, 6/6, 6/6 |
+| stator_weights | 2 | 6 (0) | 84/84 | 15690 | 216 | -5582 | 15705 | 5732 | 5321, 0 | 14220 | 14 | 0.0000 | 137.35 | 0.58 | 0.9427 | 0.9449 | 86.09, 51.26 | 24230, 18013 | 162, 1405 | 0 | 0, 0 | 22/24, 48/48, 6/6, 6/6 |
+| stator_kv | 2 | 6 (0) | 84/84 | 20552 | 106 | -720 | 21802 | 2050 | 0, 780 | 661 | 59 | 0.9971 | 141.59 | 0.96 | 0.9718 | 0.9721 | 84.91, 56.67 | 24036, 25036 | 0, 0 | 23 | 0, 0 | 24/24, 48/48, 6/6, 6/6 |
+| stator | 2 | 6 (0) | 84/84 | 14840 | 116 | -6432 | 14863 | 7782 | 5321, 780 | 645 | 57 | 0.9971 | 138.20 | 0.67 | 0.9485 | 0.9480 | 89.37, 48.82 | 24296, 18124 | 162, 1414 | 23 | 0, 0 | 22/24, 48/48, 6/6, 6/6 |
 
 Memory is the drop of MemAvailable from before server 1 starts to the end
 of the case, shared files included; the peak is the largest drop during
@@ -2051,9 +2065,9 @@ round `both` starts.
 
 | Mode | Servers | Cases (failed) | Requests complete | Memory (MiB) | 95% CI | vs vllm (MiB) | Peak (MiB) | Shared files (MiB) | Mapped by a later server: weights, prefix (MiB) | First token, second server (ms) | 95% CI | Smallest cached share | Throughput (tokens/s) | 95% CI | vs vllm | median | 12-SM, 6-SM (tokens/s) | Start-up, first and later server (ms) | Weights publish, attach (ms) | Prefix attach (ms) | LMCache store, retrieve (ms) | Texts equal to vllm: first, both, alone1, alone2 |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| vllm | 4 | 2 (0) | 48/48 | 42682 | 1315 | 0 | 42736 | 0 | 0, 0 | 14076 | 783 | 0.0000 | 131.53 | 2.45 | 1.0000 | 1.0000 | 76.39, 55.14 | 23922, 24988 | 0, 0 | 0 | 0, 0 | 8/8, 32/32, 2/2, 2/2 |
-| lmcache | 4 | 2 (0) | 48/48 | 51554 | 229 | 8872 | 51578 | 0 | 0, 0 | 1856 | 135 | 0.9837 | 131.02 | 2.76 | 0.9961 | 0.9961 | 75.96, 55.06 | 25822, 26679 | 0, 0 | 0 | 405, 934 | 7/8, 26/32, 2/2, 2/2 |
-| stator | 4 | 2 (0) | 48/48 | 23281 | 25 | -19400 | 29978 | 7370 | 5317, 780 | 656 | 179 | 0.9971 | 121.77 | 1.97 | 0.9258 | 0.9258 | 76.37, 45.40 | 23948, 25584 | 152, 99 | 24 | 0, 0 | 6/8, 28/32, 2/2, 2/2 |
+| vllm | 4 | 6 (0) | 144/144 | 42549 | 50 | 0 | 42567 | 0 | 0, 0 | 14028 | 31 | 0.0000 | 131.56 | 0.22 | 1.0000 | 1.0000 | 76.40, 55.17 | 23972, 24996 | 0, 0 | 0 | 0, 0 | 24/24, 96/96, 6/6, 6/6 |
+| lmcache | 4 | 6 (0) | 144/144 | 51613 | 35 | 9064 | 51628 | 0 | 0, 0 | 1726 | 68 | 0.9841 | 131.22 | 0.29 | 0.9974 | 0.9974 | 76.31, 54.91 | 25322, 26618 | 0, 0 | 0 | 402, 840 | 20/24, 79/96, 6/6, 6/6 |
+| stator | 4 | 6 (0) | 144/144 | 23273 | 27 | -19276 | 29841 | 7370 | 5317, 780 | 595 | 45 | 0.9971 | 122.08 | 0.30 | 0.9279 | 0.9277 | 76.50, 45.57 | 24544, 25000 | 148, 97 | 23 | 0, 0 | 22/24, 85/96, 6/6, 6/6 |
 
 The 16 agents of every configuration now generate at the same time: 131.5
 tokens/s unmodified, 131.0 tokens/s with LMCache and 121.8 tokens/s with

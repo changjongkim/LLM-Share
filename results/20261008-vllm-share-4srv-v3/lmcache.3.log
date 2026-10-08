@@ -1,0 +1,7 @@
+[32;20m[2026-10-08 10:52:22,125] LMCache INFO:[0m torch_dev=StubCPUDevice(device_type=cpu), torch_device_type=cpu [3m(_device_detect.py:312:lmcache.v1.platform._device_detect)[0m
+[32;20m[2026-10-08 10:52:22,305] LMCache INFO:[0m Initializing cpu-only cache server [3m(__init__.py:14:lmcache.v1.server.storage_backend)[0m
+[32;20m[2026-10-08 10:52:22,305] LMCache INFO:[0m Server started at 127.0.0.1:8290 [3m(__main__.py:138:__main__)[0m
+[32;20m[2026-10-08 10:52:49,109] LMCache INFO:[0m Connected by ('127.0.0.1', 57620) [3m(__main__.py:142:__main__)[0m
+[32;20m[2026-10-08 10:53:27,517] LMCache INFO:[0m Connected by ('127.0.0.1', 51256) [3m(__main__.py:142:__main__)[0m
+[32;20m[2026-10-08 10:53:53,259] LMCache INFO:[0m Connected by ('127.0.0.1', 44770) [3m(__main__.py:142:__main__)[0m
+[32;20m[2026-10-08 10:54:19,815] LMCache INFO:[0m Connected by ('127.0.0.1', 46360) [3m(__main__.py:142:__main__)[0m

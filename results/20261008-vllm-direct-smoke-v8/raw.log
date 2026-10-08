@@ -1,0 +1,110 @@
+BEGIN_VSHARE run=1
+CASE mode=vllm servers=2 kv_cache_gib=2 agents=8
+SERVER slot=1 ready=1 alive=1 startup_ms=23419 drop_mib=10369
+PREFIX port=8210 exit=0 text=7879981d4f226a8f prompt_tokens=14282 prompt_cached=-1 first_token_ms=9173.1 generated=1 generation_tps=0.000 request_ms=9173.2
+SERVER slot=2 ready=1 alive=1 startup_ms=24995 drop_mib=20841
+MEMORY at=ready drop_mib=20841
+ROUND name=first
+AGENT index=0 port=8211 exit=0 text=93002671a836e165 prompt_tokens=14308 prompt_cached=14272 first_token_ms=14066.3 generated=64 generation_tps=19.622 request_ms=17277.1
+AGENT index=1 port=8211 exit=0 text=69c1de8efcee687b prompt_tokens=14303 prompt_cached=-1 first_token_ms=13991.4 generated=45 generation_tps=19.768 request_ms=16217.2
+AGENT index=2 port=8211 exit=0 text=1266b63446ed610e prompt_tokens=14305 prompt_cached=14272 first_token_ms=14066.2 generated=64 generation_tps=19.620 request_ms=17277.3
+AGENT index=3 port=8211 exit=0 text=d97e766a07b6cf14 prompt_tokens=14313 prompt_cached=14272 first_token_ms=14066.3 generated=64 generation_tps=19.622 request_ms=17277.0
+ROUND name=both
+AGENT index=0 port=8210 exit=0 text=d4f9c2d9c3c36cdb prompt_tokens=14299 prompt_cached=14272 first_token_ms=492.7 generated=64 generation_tps=21.047 request_ms=3486.1
+AGENT index=1 port=8211 exit=0 text=f76712b59ca3d88a prompt_tokens=14299 prompt_cached=14272 first_token_ms=410.1 generated=31 generation_tps=13.642 request_ms=2609.1
+AGENT index=2 port=8210 exit=0 text=e5409a0e1ce34a99 prompt_tokens=14299 prompt_cached=14272 first_token_ms=509.4 generated=64 generation_tps=20.845 request_ms=3531.6
+AGENT index=3 port=8211 exit=0 text=17a9377f0d4bbc0f prompt_tokens=14303 prompt_cached=14272 first_token_ms=676.8 generated=64 generation_tps=15.479 request_ms=4746.7
+AGENT index=4 port=8210 exit=0 text=4a8e707bb335a0f8 prompt_tokens=14302 prompt_cached=14272 first_token_ms=631.0 generated=64 generation_tps=21.391 request_ms=3576.2
+AGENT index=5 port=8211 exit=0 text=0a5cfe08a04e0319 prompt_tokens=14312 prompt_cached=14272 first_token_ms=676.7 generated=64 generation_tps=15.476 request_ms=4747.4
+AGENT index=6 port=8210 exit=0 text=54484583ea811494 prompt_tokens=14302 prompt_cached=14272 first_token_ms=631.1 generated=64 generation_tps=21.393 request_ms=3576.1
+AGENT index=7 port=8211 exit=0 text=10c76b27fd71c243 prompt_tokens=14307 prompt_cached=14272 first_token_ms=676.9 generated=64 generation_tps=15.478 request_ms=4747.2
+ROUND name=alone1
+AGENT index=0 port=8210 exit=0 text=5a117a9d08712410 prompt_tokens=14301 prompt_cached=14272 first_token_ms=164.0 generated=64 generation_tps=31.465 request_ms=2166.2
+ROUND name=alone2
+AGENT index=0 port=8211 exit=0 text=1f54b5d43d9e889e prompt_tokens=14303 prompt_cached=14272 first_token_ms=174.0 generated=64 generation_tps=23.205 request_ms=2888.9
+MEMORY at=end drop_mib=21215 peak_drop_mib=21634 files_mib=0
+END_CASE failed=0
+CASE mode=stator servers=2 kv_cache_gib=2 agents=8
+SERVER slot=1 ready=1 alive=1 startup_ms=24436 drop_mib=10716
+PREFIX port=8210 exit=0 text=7879981d4f226a8f prompt_tokens=14282 prompt_cached=-1 first_token_ms=9203.4 generated=1 generation_tps=0.000 request_ms=9203.6
+SERVER slot=2 ready=1 alive=1 startup_ms=17942 drop_mib=14727
+MEMORY at=ready drop_mib=14727
+ROUND name=first
+AGENT index=0 port=8211 exit=0 text=93002671a836e165 prompt_tokens=14308 prompt_cached=14272 first_token_ms=673.6 generated=64 generation_tps=13.874 request_ms=5214.5
+AGENT index=1 port=8211 exit=0 text=69c1de8efcee687b prompt_tokens=14303 prompt_cached=14272 first_token_ms=673.5 generated=45 generation_tps=14.601 request_ms=3687.0
+AGENT index=2 port=8211 exit=0 text=1266b63446ed610e prompt_tokens=14305 prompt_cached=14272 first_token_ms=673.3 generated=64 generation_tps=13.873 request_ms=5214.4
+AGENT index=3 port=8211 exit=0 text=d97e766a07b6cf14 prompt_tokens=14313 prompt_cached=14272 first_token_ms=673.4 generated=64 generation_tps=13.874 request_ms=5214.3
+ROUND name=both
+AGENT index=0 port=8210 exit=0 text=d4f9c2d9c3c36cdb prompt_tokens=14299 prompt_cached=14272 first_token_ms=603.6 generated=64 generation_tps=21.996 request_ms=3467.7
+AGENT index=1 port=8211 exit=0 text=f76712b59ca3d88a prompt_tokens=14299 prompt_cached=14272 first_token_ms=751.3 generated=31 generation_tps=12.691 request_ms=3115.1
+AGENT index=2 port=8210 exit=0 text=e5409a0e1ce34a99 prompt_tokens=14299 prompt_cached=14272 first_token_ms=673.2 generated=64 generation_tps=22.200 request_ms=3511.0
+AGENT index=3 port=8211 exit=0 text=17a9377f0d4bbc0f prompt_tokens=14303 prompt_cached=14272 first_token_ms=517.5 generated=64 generation_tps=12.048 request_ms=5746.3
+AGENT index=4 port=8210 exit=0 text=4a8e707bb335a0f8 prompt_tokens=14302 prompt_cached=14272 first_token_ms=673.3 generated=64 generation_tps=22.200 request_ms=3511.2
+AGENT index=5 port=8211 exit=0 text=0a5cfe08a04e0319 prompt_tokens=14312 prompt_cached=14272 first_token_ms=751.5 generated=64 generation_tps=12.451 request_ms=5811.4
+AGENT index=6 port=8210 exit=0 text=54484583ea811494 prompt_tokens=14302 prompt_cached=14272 first_token_ms=673.4 generated=64 generation_tps=22.203 request_ms=3510.8
+AGENT index=7 port=8211 exit=0 text=10c76b27fd71c243 prompt_tokens=14307 prompt_cached=14272 first_token_ms=751.5 generated=64 generation_tps=12.451 request_ms=5811.3
+ROUND name=alone1
+AGENT index=0 port=8210 exit=0 text=5a117a9d08712410 prompt_tokens=14301 prompt_cached=14272 first_token_ms=169.7 generated=64 generation_tps=31.878 request_ms=2146.0
+ROUND name=alone2
+AGENT index=0 port=8211 exit=0 text=1f54b5d43d9e889e prompt_tokens=14303 prompt_cached=14272 first_token_ms=189.7 generated=64 generation_tps=15.665 request_ms=4211.5
+MEMORY at=end drop_mib=14932 peak_drop_mib=14945 files_mib=7782
+PLUGIN slot=1 kv_cache role=publisher bytes=2146959360 block_bytes=917504 blocks=0 ms=32.2
+PLUGIN slot=1 kv_publish blocks=892 tokens=14272 file=/home/thor/kcj/llm_share/vllm_share_mount/kv
+PLUGIN slot=2 kv_cache role=agent bytes=2146959360 block_bytes=917504 blocks=892 ms=23.0
+PLUGIN slot=2 kv_attach blocks=892 tokens=14272
+END_CASE failed=0
+BEGIN_VSHARE run=2
+CASE mode=stator servers=2 kv_cache_gib=2 agents=8
+SERVER slot=1 ready=1 alive=1 startup_ms=23967 drop_mib=10693
+PREFIX port=8210 exit=0 text=7879981d4f226a8f prompt_tokens=14282 prompt_cached=-1 first_token_ms=9193.2 generated=1 generation_tps=0.000 request_ms=9193.3
+SERVER slot=2 ready=1 alive=1 startup_ms=17974 drop_mib=14705
+MEMORY at=ready drop_mib=14705
+ROUND name=first
+AGENT index=0 port=8211 exit=0 text=93002671a836e165 prompt_tokens=14308 prompt_cached=14272 first_token_ms=738.1 generated=64 generation_tps=14.166 request_ms=5185.4
+AGENT index=1 port=8211 exit=0 text=69c1de8efcee687b prompt_tokens=14303 prompt_cached=14272 first_token_ms=737.9 generated=45 generation_tps=15.071 request_ms=3657.3
+AGENT index=2 port=8211 exit=0 text=1266b63446ed610e prompt_tokens=14305 prompt_cached=14272 first_token_ms=737.7 generated=64 generation_tps=14.166 request_ms=5185.0
+AGENT index=3 port=8211 exit=0 text=d97e766a07b6cf14 prompt_tokens=14313 prompt_cached=14272 first_token_ms=737.8 generated=64 generation_tps=14.166 request_ms=5184.9
+ROUND name=both
+AGENT index=0 port=8210 exit=0 text=d4f9c2d9c3c36cdb prompt_tokens=14299 prompt_cached=14272 first_token_ms=668.7 generated=64 generation_tps=22.546 request_ms=3463.0
+AGENT index=1 port=8211 exit=0 text=f76712b59ca3d88a prompt_tokens=14299 prompt_cached=14272 first_token_ms=442.8 generated=31 generation_tps=11.728 request_ms=3000.8
+AGENT index=2 port=8210 exit=0 text=e5409a0e1ce34a99 prompt_tokens=14299 prompt_cached=14272 first_token_ms=602.0 generated=64 generation_tps=22.374 request_ms=3417.7
+AGENT index=3 port=8211 exit=0 text=17a9377f0d4bbc0f prompt_tokens=14303 prompt_cached=14272 first_token_ms=537.0 generated=64 generation_tps=11.954 request_ms=5807.4
+AGENT index=4 port=8210 exit=0 text=4a8e707bb335a0f8 prompt_tokens=14302 prompt_cached=14272 first_token_ms=668.5 generated=64 generation_tps=22.539 request_ms=3463.7
+AGENT index=5 port=8211 exit=0 text=0a5cfe08a04e0319 prompt_tokens=14312 prompt_cached=14272 first_token_ms=757.8 generated=64 generation_tps=12.318 request_ms=5872.2
+AGENT index=6 port=8210 exit=0 text=54484583ea811494 prompt_tokens=14302 prompt_cached=14272 first_token_ms=668.3 generated=64 generation_tps=22.539 request_ms=3463.5
+AGENT index=7 port=8211 exit=0 text=10c76b27fd71c243 prompt_tokens=14307 prompt_cached=14272 first_token_ms=757.7 generated=64 generation_tps=12.318 request_ms=5872.4
+ROUND name=alone1
+AGENT index=0 port=8210 exit=0 text=5a117a9d08712410 prompt_tokens=14301 prompt_cached=14272 first_token_ms=155.2 generated=64 generation_tps=31.919 request_ms=2128.9
+ROUND name=alone2
+AGENT index=0 port=8211 exit=0 text=1f54b5d43d9e889e prompt_tokens=14303 prompt_cached=14272 first_token_ms=184.1 generated=64 generation_tps=15.659 request_ms=4207.3
+MEMORY at=end drop_mib=14942 peak_drop_mib=14948 files_mib=7782
+PLUGIN slot=1 kv_cache role=publisher bytes=2146959360 block_bytes=917504 blocks=0 ms=32.5
+PLUGIN slot=1 kv_publish blocks=892 tokens=14272 file=/home/thor/kcj/llm_share/vllm_share_mount/kv
+PLUGIN slot=2 kv_cache role=agent bytes=2146959360 block_bytes=917504 blocks=892 ms=23.7
+PLUGIN slot=2 kv_attach blocks=892 tokens=14272
+END_CASE failed=0
+CASE mode=vllm servers=2 kv_cache_gib=2 agents=8
+SERVER slot=1 ready=1 alive=1 startup_ms=23943 drop_mib=10378
+PREFIX port=8210 exit=0 text=7879981d4f226a8f prompt_tokens=14282 prompt_cached=-1 first_token_ms=9164.2 generated=1 generation_tps=0.000 request_ms=9164.3
+SERVER slot=2 ready=1 alive=1 startup_ms=24490 drop_mib=21046
+MEMORY at=ready drop_mib=21046
+ROUND name=first
+AGENT index=0 port=8211 exit=0 text=93002671a836e165 prompt_tokens=14308 prompt_cached=14272 first_token_ms=14143.9 generated=64 generation_tps=19.643 request_ms=17351.1
+AGENT index=1 port=8211 exit=0 text=69c1de8efcee687b prompt_tokens=14303 prompt_cached=14272 first_token_ms=14144.1 generated=45 generation_tps=19.934 request_ms=16351.4
+AGENT index=2 port=8211 exit=0 text=1266b63446ed610e prompt_tokens=14305 prompt_cached=14272 first_token_ms=14144.0 generated=64 generation_tps=19.643 request_ms=17351.3
+AGENT index=3 port=8211 exit=0 text=3c976512624aeaef prompt_tokens=14313 prompt_cached=-1 first_token_ms=14077.4 generated=64 generation_tps=19.513 request_ms=17306.0
+ROUND name=both
+AGENT index=0 port=8210 exit=0 text=d4f9c2d9c3c36cdb prompt_tokens=14299 prompt_cached=14272 first_token_ms=470.9 generated=64 generation_tps=21.161 request_ms=3448.0
+AGENT index=1 port=8211 exit=0 text=f76712b59ca3d88a prompt_tokens=14299 prompt_cached=14272 first_token_ms=507.1 generated=31 generation_tps=13.637 request_ms=2707.0
+AGENT index=2 port=8210 exit=0 text=e5409a0e1ce34a99 prompt_tokens=14299 prompt_cached=14272 first_token_ms=607.3 generated=64 generation_tps=21.492 request_ms=3538.6
+AGENT index=3 port=8211 exit=0 text=17a9377f0d4bbc0f prompt_tokens=14303 prompt_cached=14272 first_token_ms=507.2 generated=64 generation_tps=15.029 request_ms=4699.1
+AGENT index=4 port=8210 exit=0 text=4a8e707bb335a0f8 prompt_tokens=14302 prompt_cached=14272 first_token_ms=490.8 generated=64 generation_tps=20.981 request_ms=3493.6
+AGENT index=5 port=8211 exit=0 text=0a5cfe08a04e0319 prompt_tokens=14312 prompt_cached=14272 first_token_ms=756.2 generated=64 generation_tps=15.617 request_ms=4790.3
+AGENT index=6 port=8210 exit=0 text=54484583ea811494 prompt_tokens=14302 prompt_cached=14272 first_token_ms=607.5 generated=64 generation_tps=21.495 request_ms=3538.5
+AGENT index=7 port=8211 exit=0 text=10c76b27fd71c243 prompt_tokens=14307 prompt_cached=14272 first_token_ms=756.3 generated=64 generation_tps=15.616 request_ms=4790.7
+ROUND name=alone1
+AGENT index=0 port=8210 exit=0 text=5a117a9d08712410 prompt_tokens=14301 prompt_cached=14272 first_token_ms=156.5 generated=64 generation_tps=31.457 request_ms=2159.2
+ROUND name=alone2
+AGENT index=0 port=8211 exit=0 text=1f54b5d43d9e889e prompt_tokens=14303 prompt_cached=14272 first_token_ms=178.5 generated=64 generation_tps=23.296 request_ms=2882.9
+MEMORY at=end drop_mib=21390 peak_drop_mib=21674 files_mib=0
+END_CASE failed=0
