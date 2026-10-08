@@ -532,6 +532,7 @@ verify_stack 20261008-engine-kvstack-capacity-136-v1 kvstack-capacity-136-v1 bot
 verify_stack 20261008-engine-kvstack-capacity-140-v1 kvstack-capacity-140-v1 both
 verify_stack 20261008-engine-kvstack-qwen14b-v1 kvstack-qwen14b both
 verify_stack 20261008-engine-kvstack-qwen14b-none8-v1 kvstack-qwen14b-none8 both
+verify_stack 20261008-engine-kvstack-capacity-qwen14b-118-v1 kvstack-capacity-qwen14b-118-v1 both
 
 # The 14B run is staged: counts 1 and 4 establish that eight unmodified
 # agents leave the required reserve, then count 8 is run in a second

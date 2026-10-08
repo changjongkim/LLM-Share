@@ -1418,6 +1418,10 @@ hold. K5 does not: the paired throughput ratio is 0.8955 (95% confidence
 interval 0.8294--0.9668) at one agent and 0.8788 (0.7573--1.0198) at eight,
 below its 0.92 floor; the medians are 0.8980 and 0.9234.
 
+`20261008-engine-kvstack-capacity-qwen14b-118-v1` runs 118 agents on STATOR
+six times: no agent fails, the agents use 90,210 MiB (95% CI 794 MiB) in
+addition to the two files, and generate 16.54 tokens/s in total.
+
 **The same with the model file on 2 MiB pages
 (`20261007-engine-kvstack-huge-v1`).** The model file is copied to a tmpfs
 mounted with `huge=always` and every stack reads it from there; the runner
