@@ -49,6 +49,24 @@ PANEL = (3.6, 2.7)
 plt.rcParams.update({"legend.fontsize": LEGEND})
 
 
+_save = save
+
+
+def save(fig, name):
+    """Every legend of a panel stands above the plot, never inside it."""
+    for ax in fig.axes:
+        inside = ax.get_legend()
+        if inside is None:
+            continue
+        handles = getattr(inside, "legend_handles", None) or inside.legendHandles
+        texts = [text.get_text() for text in inside.get_texts()]
+        inside.remove()
+        ax.legend(handles, texts, loc="lower center", bbox_to_anchor=(0.5, 1.0),
+                  ncol=len(texts) if len(texts) <= 3 else 2, fontsize=LEGEND, handlelength=1.0,
+                  columnspacing=0.8, handletextpad=0.4, borderaxespad=0.2, labelspacing=0.25)
+    _save(fig, name)
+
+
 def have(*path):
     return os.path.exists(os.path.join(RES, *path))
 
