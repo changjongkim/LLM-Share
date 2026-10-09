@@ -1406,6 +1406,13 @@ and 95,433 MiB, within 1% of the line of the campaign above, and generate
 six times: no agent fails, the agents use 98,640 MiB (95% CI 486 MiB),
 within 1% of the line, and generate 35.78 tokens/s in total.
 
+`20261009-engine-kvstack-capacity-copy-v1` runs the stacks that copy at
+counts that leave at least 16 GiB available, six times each: 16 unmodified
+agents use 98,046 MiB, 19 agents with the prefix mapped 99,393 MiB and 61
+agents with the weights in place 97,891 MiB; no agent fails, and at least
+20.3 GiB remain available. A 17th unmodified agent or a 20th agent with the
+prefix mapped would leave less than 16 GiB.
+
 **The whole stack with Qwen2.5-14B
 (`20261008-engine-kvstack-qwen14b-v1` and `-none8-v1`).** Counts 1 and 4
 first establish a line of 12,486 MiB per unmodified agent. Its conservative
