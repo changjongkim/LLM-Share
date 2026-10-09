@@ -1413,6 +1413,13 @@ agents with the weights in place 97,891 MiB; no agent fails, and at least
 20.3 GiB remain available. A 17th unmodified agent or a 20th agent with the
 prefix mapped would leave less than 16 GiB.
 
+`20261009-engine-kvstack-capacity-max-v1` runs, under the same condition and
+six times each, 64 agents with the weights in place (102,664 MiB) and 145
+and 146 agents on STATOR (102,001 and 102,512 MiB in addition to the two
+files). No agent fails, at least 16.8 GiB remain available in every
+repetition, and the 146 agents generate 37.61 tokens/s in total. Larger
+counts were not run.
+
 **The whole stack with Qwen2.5-14B
 (`20261008-engine-kvstack-qwen14b-v1` and `-none8-v1`).** Counts 1 and 4
 first establish a line of 12,486 MiB per unmodified agent. Its conservative

@@ -1,0 +1,34 @@
+timestamp=2026-10-09T23:31:48+09:00
+mig_a=MIG-fafc828a-2a0d-5988-a009-030a36930090
+mig_b=MIG-31ffbfe4-9a85-5f4e-b406-90ffbfa82ca3
+repetitions=6
+none_counts= 
+kv_counts= 
+weights_counts=64
+both_counts=145 146
+context=16384
+n_gen=64
+grow_rows=256
+sample_ms=4000
+prefix_file=agent_prefix.txt
+prefix_sha256=90a958d0f5dff46bf843ce5793764964e21b861549a4ca36b3fb1a607393135e
+tasks_file=agent_tasks.txt
+tasks_sha256=63de90633c5cd9416e901481e0afc0bf173fcef843fbc6c34ff5c84f6eb1ec17
+reserve_gib=16
+estimate_mib=none:6600,kv:5600,weights:1610,both:708
+model=Qwen2.5-7B-Instruct-Q4_K_M.gguf
+model_bytes=4683074240
+mem_total_kib=128766524
+engine_commit=6f767fe960c3b97cf37fac4626c86400561ca1e4
+stock_engine_commit=6f767fe960c3b97cf37fac4626c86400561ca1e4
+boot_id=0965baa0-3357-48ca-8cea-c958d95b2d3f
+GPU 0: NVIDIA Thor (UUID: GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600)
+  MIG 2g.0gb      Device  0: (UUID: MIG-fafc828a-2a0d-5988-a009-030a36930090)
+  MIG 1g.0gb      Device  1: (UUID: MIG-31ffbfe4-9a85-5f4e-b406-90ffbfa82ca3)
+1afce555d822cd46bd258114c9c6c155022fea477e4e09c493638f8db46eeead  /home/thor/kcj/llm_share/kv_fork
+b20546ef8d5d821ac51d751dc0ece2c97cc9d01abda3c472a0ebdffacf54949a  /home/thor/kcj/llm_share/kv_fork_nommap
+26b91907342b7dbb2fccbb256f3e45fe0c3bd0b893d4a1a943854019590367f6  /home/thor/kcj/llm_share/llama.cpp-kv/build/bin/libllama.so
+7b5e02b6cf0b1b957bcbfe5e21209848a7d8ad4ccff728a619d6904260c0a3a0  /home/thor/kcj/llm_share/llama.cpp-kv/build/bin/libggml-cuda.so
+2184b6f2610f3d2d49eb560218b56aaaba51d0f5e275501d644bd90c6f0da3d4  /home/thor/kcj/llm_share/kv_fork_stock
+ffcd7f217739735343f588ee22b1ffc5b1562df118d3e01cfaef481ab1dcfeb2  /home/thor/kcj/llm_share/llama.cpp-stock/build/bin/libllama.so
+424633fa0a929a6be0adedb63621285d4e43c05f507cbdac82fa6109f7ad2769  /home/thor/kcj/llm_share/llama.cpp-stock/build/bin/libggml-cuda.so
