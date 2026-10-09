@@ -712,12 +712,7 @@ def stack():
     room = float(fit["none"]["memory_available_mib"]) / 1024
     for label, colour, m, marker in STACKS:
         counts = sorted(n for mode, n in line if mode == m)
-        slope = float(fit[m]["slope_mib_per_agent"]) / 1024
         shared = float(fit[m]["model_file_shared_mib"]) + float(fit[m]["cache_file_shared_mib"])
-        start = (float(fit[m]["intercept_mib"]) + shared) / 1024
-        fits = int(fit[m]["agents_that_fit_by_line"])
-        ax.plot([counts[-1], fits], [start + slope * counts[-1], start + slope * fits], color=colour,
-                linewidth=1.4, linestyle=(0, (3, 2)))
         ax.plot(counts, [(float(line[m, n]["memory_mib"]) + shared) / 1024 for n in counts],
                 color=colour, marker=marker, markersize=5.5, linewidth=2, markeredgecolor="white",
                 markeredgewidth=0.9, label=label)
