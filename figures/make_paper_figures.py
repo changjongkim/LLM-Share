@@ -160,13 +160,17 @@ def weights():
 # ---------------------------------------------------------------- handover
 MECHANISMS = (("Copy", COPY, "copy"), ("Demand", DEMAND, "demand"), ("Device", DEVICE, "device_merged"),
               ("CoW Map", COW, "cow"), (NAME, OURS, "extent"))
-MECH = "20261007-engine-kvmech-v1"
+# The second campaign runs the engine that puts the entries of a divided 2 MiB
+# block back at a publish; the first, which also has the cells with one and
+# four children, is kept for the panels by the number of agents.
+MECH = "20261010-engine-kvmech-v2"
+MECH_COUNTS = "20261007-engine-kvmech-v1"
 
 
-def mechanisms():
+def mechanisms(directory=None):
     """The campaign that runs every mechanism in one engine, by cell and mode."""
     return {(r["placement"], int(r["children"]), int(r["paragraphs"]), r["mode"]): r
-            for r in rows(MECH, "engine_kvmech_summary.csv")}
+            for r in rows(directory or MECH, "engine_kvmech_summary.csv")}
 
 
 def hand():
@@ -195,6 +199,9 @@ def hand():
     bars("eval_hand_pause", [f"{int(float(data['same', 8, size, 'copy']['prefix_tokens'])):,}" for size in sizes],
          [("same", 8, size) for size in sizes], "publish_ms", "Pause (ms, log)", 1.0, "{:.0f}", True,
          "Prefix (Tokens)")
+    if have(MECH_COUNTS, "engine_kvmech_summary.csv"):
+        data = mechanisms(MECH_COUNTS)
+        counts = sorted({k[1] for k in data if k[0] == "same" and k[2] == max(sizes)})
     cells = [("same", n, max(sizes)) for n in counts]
     bars("eval_hand_attach", [str(n) for n in counts], cells, "child_attach_ms", "Attach Time (ms, log)",
          1.0, "{:.0f}", True, f"Agents ({long_tokens:,}-Token Prefix)")
@@ -249,7 +256,7 @@ def reach():
 
 # ------------------------------------------------------ GPU sharing modes
 def mode():
-    directory = "20261006-engine-kvmps-v1"
+    directory = "20261010-engine-kvmps-v2"
     if not have(directory, "engine_kvmps_summary.csv"):
         return
     data = {(r["config"], int(r["children"]), r["prefix_tokens"], r["mode"]): r
@@ -432,7 +439,7 @@ def protect():
 
 # ------------------------------------------------------------ agent tree
 def tree():
-    directory = "20261006-engine-kvtree-v1"
+    directory = "20261010-engine-kvtree-v2"
     if not have(directory, "engine_kvtree_summary.csv"):
         return
     data = {r["mode"]: r for r in rows(directory, "engine_kvtree_summary.csv")}
@@ -548,7 +555,7 @@ def inproc():
              for r in rows("20261006-engine-kvshare-v1", "engine_kvshare_summary.csv")}
     publish = {(r["paragraphs"], r["store"]): r
                for r in rows("20261006-engine-kvshare-v1", "engine_kvshare_publish.csv")}
-    batch = {r["config"]: r for r in rows("20261006-engine-kvbatch-v1", "engine_kvbatch_summary.csv")}
+    batch = {r["config"]: r for r in rows("20261010-engine-kvbatch-v2", "engine_kvbatch_summary.csv")}
     file_gib = float(publish["320", "huge"]["file_used_mib"]) / 1024
     gib = lambda row, key="memory_mib": float(row[key]) / 1024
     # (label, memory GiB, tokens/s, marker, colour, label offset in points, alignment)
@@ -608,7 +615,7 @@ def inproc():
 def server():
     # The second campaign publishes at a token boundary; the first, which did
     # not, is kept in the record.
-    directory = "20261007-engine-kvserver2-v1"
+    directory = "20261010-engine-kvserver2-v2"
     if not have(directory, "engine_kvserver_summary.csv"):
         directory = "20261006-engine-kvserver-v1"
     if not have(directory, "engine_kvserver_summary.csv"):
@@ -867,7 +874,7 @@ def local():
 # ------------------------------------------------------------- the pipeline
 def pipe():
     """A planner, leaders and workers on the tools of a public benchmark."""
-    directory = "20261007-engine-kvpipe-huge-v1"
+    directory = "20261010-engine-kvpipe-huge-v2"
     if not have(directory, "engine_kvpipe_summary.csv"):
         return
     data = {r["mode"]: r for r in rows(directory, "engine_kvpipe_summary.csv")}

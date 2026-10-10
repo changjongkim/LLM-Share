@@ -1,0 +1,3 @@
+mode,runs,children,failed_processes,prefix_tokens,publish_ms,state_mib,parent_texts_equal,parent_generation_tps,children_started,child_texts_equal_to_copy,own_instance_equal_to_alone,own_instance_compared,other_instance_equal_to_alone,other_instance_compared,child_attach_ms,child_first_token_ms,child_generation_tps,children_memory_mib,prefix_pss_mib,prefix_rss_mib
+copy,6,4,0,4081,215.33,223.24,6,8.38,24,24,12,12,0,12,149.2,1354,8.36,4539,0,0
+extent,6,4,0,4081,4.86,0.06,6,7.99,24,24,12,12,0,12,31.7,1249,8.10,2908,223,892

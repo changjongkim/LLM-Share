@@ -84,14 +84,16 @@ GPU가 접근하는 메모리를 프로세스 사이에서, 그리고 MIG 인스
 |---|---:|---:|
 | 프로세스 8개의 메모리 (가중치만) | 40.8 GiB | 10.0 GiB |
 | 16,321토큰 프리픽스 위 에이전트 8개의 메모리 (양쪽 모두 가중치 in-place) | 19.9 GiB | 5.7 GiB + 캐시 파일 0.9 GiB 1회 |
-| 16,321토큰 프리픽스를 다른 프로세스에 넘기는 시간과 상태 파일 크기 | 561 ms, 893 MiB | 9 ms, 0.25 MiB |
+| 16,321토큰 프리픽스를 다른 프로세스에 넘기는 시간과 상태 파일 크기 | 558 ms, 893 MiB | 11 ms, 0.25 MiB |
 | 프리픽스에 연결(attach)하는 시간, 에이전트 1개 | 225 ms | 43 ms |
-| 실행 중인 프로세스가 자식 4개에 상태를 넘길 때의 정지 시간 | 218 ms | 3 ms |
+| 실행 중인 프로세스가 자식 4개에 상태를 넘길 때의 정지 시간 | 215 ms | 4.9 ms |
+| 에이전트 8개가 프리픽스에서 이어 생성하는 동안 GPU를 대신해 폴트된 페이지 | 0 | 0 (커널의 copy-on-write 매핑은 741만) |
+| 게시한 뒤 실행을 계속하는 프로세스가 받는 GPU 폴트 | 0페이지 | 0페이지 |
 | 에이전트의 생성 텍스트 | 기준 | 모두 동일 |
 | 생성 속도 | 1.00 | 12-SM 인스턴스 1.00, 8-SM 인스턴스 0.94~0.98 |
 | Qwen2.5-14B 전체 스택에서 에이전트 8개의 메모리 | 97.4 GiB | 17.2 GiB (공유 파일 포함) |
-| 에이전트 트리(프로세스 11개)의 메모리 | 27.3 GiB | 9.2 GiB |
-| 수정하지 않은 `llama-server`의 슬롯 저장 시간 | 505 ms | 9.6 ms |
+| 에이전트 트리(프로세스 11개)의 메모리 | 27.3 GiB | 9.3 GiB |
+| 수정하지 않은 `llama-server`의 슬롯 저장 시간 | 501 ms | 11.6 ms |
 | 전체 스택(가중치와 KV 캐시 모두 복사하는 무수정 엔진 대비)의 에이전트 8개 메모리 | 47.8 GiB | 10.8 GiB (공유 파일 포함) |
 | 전체 스택에서 에이전트 1개당 추가 메모리 | 5.99 GiB | 0.69 GiB |
 | 사용 중인 파일을 포함하고도 16 GiB 이상을 남기고 실행한 에이전트 수 (6회 반복, 실패 0) | 16 (95.7 GiB) | 140 (파일 포함 101.5 GiB) |
@@ -100,6 +102,9 @@ GPU가 접근하는 메모리를 프로세스 사이에서, 그리고 MIG 인스
 | vLLM 0.20.0 서버 두 개(MIG 인스턴스마다 하나)의 메모리, 플러그인 적용 | 20.8 GiB (LMCache 사용 시 26.0 GiB) | 14.5 GiB (공유 파일 포함) |
 | 프리픽스를 계산한 적이 없는 두 번째 vLLM 서버의 첫 토큰 | 14.1 s (LMCache 사용 시 1.81 s) | 0.65 s |
 | 두 vLLM 서버의 생성 속도 합 | 1.00 | 0.949 (12-SM 서버 1.05, 8-SM 서버 0.81) |
+
+넘기는 시간, 정지 시간, 트리, 슬롯 저장, 폴트 수는 게시한 블록의 2 MiB 매핑을 복구하는 엔진(4.13절)에서
+측정한 값이다. 4.2~4.11절의 본문은 처음 엔진의 캠페인을 그대로 기술한다.
 
 ### 1.5 기여와 적용 범위
 
@@ -1133,6 +1138,104 @@ LMCache에서 이 두 서버가 `both` 단계 안에서 프리픽스를 계산�
 <p align="center"><img src="figures/eval_vllm_mem.png" width="32%"> <img src="figures/eval_vllm_ttft.png" width="32%"> <img src="figures/eval_vllm_tps.png" width="32%"></p>
 <p align="center"><b>그림 26.</b> MIG 인스턴스마다 하나씩 둔 vLLM 서버 두 개: 두 서버의 메모리, 프리픽스를 계산한 적이 없는 두 번째 서버의 첫 토큰(로그 축), 인스턴스별 생성 속도.</p>
 
+### 4.13 게시한 뒤에도 실행을 계속하는 게시자 (2026-10-10, 기록 6.16절)
+
+**GPU를 대신해 폴트된 페이지 수 (`run_engine_kvfaultcount.sh`).** 설계 규칙은 GPU가
+보는 페이지가 폴트로 소유자를 바꾸지 않는다는 것이다. 앞의 캠페인은 이를 메모리와
+시간으로 확인하였고, 이 캠페인은 폴트된 페이지를 직접 센다. 드라이버는 GPU 폴트를 커널
+스레드(`UVM GPU<n> BH`)에서 처리하고, 이 스레드가 커널의 폴트 처리기를 호출한 횟수는
+그 스레드의 페이지 폴트 수(`/proc/<pid>/stat`)로 남는다. 이 장치의 커널에는 kprobes가
+없어 이 계수기를 사용하였다. GPU가 디바이스 메모리에서 계산하는 동안에는 계수기가
+변하지 않는다. 아래는 에이전트 8개(절반은 8-SM 인스턴스), 16,321토큰 프리픽스, 6회
+반복의 값이다(`20261010-engine-kvfaultcount-v2`).
+
+| 에이전트가 프리픽스를 얻는 방식 | GPU를 대신해 폴트된 페이지 | 첫 토큰 (s) | Copy와 같은 텍스트 |
+|---|---:|---:|---:|
+| Copy | 0 | 2.33 | 기준 |
+| STATOR | 0 | 1.77 | 48/48 |
+| STATOR에서 CPU 읽기를 뺀 경우 | 2,515,323 | 2.27 | 48/48 |
+| STATOR에서 사설 익스텐트를 미리 채우지 않은 경우 | 37,295 | 1.89 | 48/48 |
+| CoW Map에 CPU 읽기를 추가한 경우 (2 MiB 페이지) | 563,993 | 2.07 | 48/48 |
+| CoW Map (커널이 제공하는 그대로) | 7,410,737 | 5.00 | 48/48 |
+
+**게시자에서 확인한 문제 (`20261010-engine-kvfaultcount-v1`).** 같은 러너는 프리픽스를
+게시한 뒤 자신의 다음 작업을 디코딩하는 프로세스도 측정한다. 앞 절까지의 엔진에서는 이
+프로세스가 게시 뒤 첫 작업에서 113,357페이지의 폴트를 한 번 받았고, 그 작업이
+135.7 ms 걸렸다(복사로 넘긴 뒤에는 57.3 ms). 캐시 파일이 2 MiB 페이지 위에 있고
+프리픽스가 2 MiB 경계에서 끝나지 않으므로, 게시가 보호를 바꾸는 범위는 텐서마다
+2 MiB 블록의 중간에서 끝난다. 커널은 일부만 보호가 바뀐 블록의 2 MiB 매핑을 없애고,
+GPU는 그 블록에 다음에 접근할 때 폴트한다. 에이전트는 게시 뒤에 연결하고 페이지
+단위로 매핑하므로 이 영향을 받지 않는다(위 표에서 0).
+
+**엔진 수정 (`kv_extents2.patch`, `kv_chain2.patch`, `kv_tuned2.patch`, 각 24줄 추가).**
+게시가 보호를 바꾼 뒤에, 텐서마다 프리픽스가 끝나는 2 MiB 블록에서 동결된 행을 CPU로
+읽고, 그 뒤의 행 가운데 이미 메모리가 있던 범위에 `MADV_POPULATE_WRITE`를 호출한다.
+수정한 엔진(`llama.cpp-kv2`, `llama.cpp-chain2`, `llama.cpp-tuned2`)에서 게시자가 받는
+폴트는 0페이지이고, 게시는 10.7 ms(수정 전 9.2 ms, 복사 553 ms), 다음 작업은
+57.8 ms(복사 뒤 57.2 ms)이다. 처음 패치와 그 엔진은 그대로 두었다.
+
+**수정한 엔진으로 다시 측정한 캠페인.** 게시자가 실행을 계속하는 캠페인을 고정된
+러너와 새 엔진의 바이너리로 다시 실행하였다(각 6회 반복, 실패 없음). 논문이 보고하는
+셀만 반복하였고, 처음 캠페인은 `results/`에 그대로 있다. 1.4절의 표와 논문은 아래의
+새 값을 사용한다.
+
+| 항목 (STATOR, 괄호 안은 같은 캠페인의 Copy) | 처음 엔진 | 수정한 엔진 |
+|---|---:|---:|
+| 16,321토큰 프리픽스를 넘길 때 부모의 정지, 자식 8개 | 8.6 ms (553 ms) | 11.1 ms (558 ms) |
+| 4,081토큰 프리픽스를 넘길 때 부모의 정지, 자식 8개 | 3.1 ms (210 ms) | 4.9 ms (224 ms) |
+| 자식의 연결 시간, 16,321토큰 | 54.0 ms (645 ms) | 51.5 ms (599 ms) |
+| 자식의 첫 토큰 | 2.12 s (2.75 s) | 2.10 s (2.69 s) |
+| 자식 8개의 메모리 | 5.89 GiB (19.83 GiB) | 5.89 GiB (19.83 GiB) |
+| 자식의 처리량, Copy 대비 (같은 인스턴스 / 두 인스턴스) | 0.990 / 0.967 | 0.996 / 0.972 |
+| 실행 중인 부모의 포크, 자식 4개, 4,081토큰: 정지 | 3.1 ms (218 ms) | 4.9 ms (215 ms) |
+| GPU 공유 방식 네 가지에서 부모의 정지 | 8.7~9.2 ms (528~557 ms) | 10.9~11.3 ms (546~556 ms) |
+| 트리에서 리더의 게시 / 잎의 첫 토큰 / 트리 메모리 | 6.2 ms / 2.25 s / 9.2 GiB | 9.6 ms / 2.13 s / 9.3 GiB |
+| 수정하지 않은 서버의 슬롯 저장 / 복원 | 9.6 ms / 265 ms | 11.6 ms / 269 ms |
+| 파이프라인(4.11절)에서 플래너의 게시 / 리더의 게시 | 6.7 ms / 4.6 ms | 11.3 ms / 6.4 ms |
+| 파이프라인의 메모리 / 작업자의 첫 토큰 / 완료 시간(무수정 대비) | 8.4 GiB / 1.93 s / 0.970 | 8.4 GiB / 1.91 s / 0.972 |
+| 인스턴스마다 배칭 서버 하나(4.6절): 게시 / 처리량 / 메모리 | 8.9 ms / 102.9 tokens/s / 2.4 GiB | 11.3 ms / 102.3 tokens/s / 2.4 GiB |
+
+정지 시간은 2~3 ms 늘었다(16,321토큰에서 Copy 대비 64배에서 50배). 연결 시간, 첫 토큰,
+메모리, 처리량은 반복 사이의 차이 범위 안에 있다. 코드를 바꾸지 않은 Device(텐서당 할당
+1개)의 연결 시간은 처음 캠페인의 195 ms와 달리 123 ms로 측정되었고, 그 원인은 조사하지
+않았다. 논문은 새 값을 사용하며, 이 값으로 STATOR의 연결은 조정한 Device보다 2.4배
+빠르다(처음 값으로는 3.6배). 메커니즘 비교, GPU 공유 방식, 트리, 서버, 파이프라인,
+프로세스 내부 공유의 그림은 새 캠페인으로 다시 그렸으므로, 4.6절과 4.10~4.11절 본문의
+처음 엔진 수치와 게시 시간이 2~3 ms 다르다.
+
+검증 스크립트가 이 캠페인들에서 예외로 보고하는 항목은 세 가지이다. 첫째, GPU 공유
+캠페인의 MIG 구성에서 자식들의 캐시 파일 PSS 합이 1,020 MiB로 한도(파일 896 MiB의
+1.1배)를 넘는다. 러너는 자식 8개의 PSS를 차례로 읽어 합의 최댓값을 남기는데, 읽는
+사이에 자식이 종료하면 남은 자식의 몫이 커진다. 반복별 값은 892~1,189 MiB이고,
+892 MiB가 자식들이 매핑한 크기이다. 자식들의 메모리는 5.7 GiB로 다른 구성과 같다.
+둘째, 메커니즘 캠페인의 세 셀에서 CoW Map의 연결이 STATOR보다 0.5~3.1 ms
+빠르다(49.9 대 51.5 ms, 28.8 대 29.3 ms, 48.4 대 51.5 ms). 셋째, 처음 폴트 수 캠페인에서
+게시자가 받은 113,357페이지는 위에서 기술한 문제이다.
+
+**vLLM 서버의 폴트 수 (`run_vllm_faultcount.sh`, `20261010-vllm-faultcount-v1`, 3회
+반복).** 4.12절의 플러그인은 프리픽스 블록 범위 하나의 보호를 바꾸어 게시하고, 그 범위의
+양 끝은 캐시 파일의 2 MiB 블록 중간에 있다(블록 하나는 917,504바이트). 같은 계수기를
+서버 두 개의 단계마다 읽었다.
+
+| 단계 | 무수정 vLLM (페이지) | 플러그인 (페이지) |
+|---|---:|---:|
+| 서버 1 시작 | 5,260,193 | 5,154,283 |
+| 프리픽스 계산 (플러그인은 끝나면 게시) | 0 | 0 |
+| 서버 1의 다음 요청 | 0 | 2,837 |
+| 서버 1의 그다음 요청 | 0 | 0 |
+| 서버 2 시작 (플러그인은 연결) | 5,306,897 | 5,313,519 |
+| 서버 2의 첫 요청 / 둘째 요청 | 0 / 0 | 0 / 0 |
+
+게시한 서버는 게시 뒤 첫 요청에서 2,837페이지(2,836~2,840)의 폴트를 한 번 받고 그다음
+요청에서는 받지 않는다. 그 요청은 2,177 ms 걸렸고 무수정 서버에서는 2,172 ms이다.
+연결하는 서버는 요청에서 폴트를 받지 않는다. 서버가 시작하는 동안의 폴트(서버당
+506만~542만 페이지)는 플러그인 유무와 무관하며, 어느 동작에서 생기는지는 나누어 보지
+않았다. 측정 전에 정한 기준 가운데 "무수정 서버에서는 어느 단계에서도 계수기가 변하지
+않는다"는 두 시작 단계에서 성립하지 않았다. 모든 단계에서 에이전트의 텍스트는 무수정
+서버와 같다(단계마다 3/3). 플러그인은 수정하지 않았고 4.12절의 캠페인은 다시 실행하지
+않았다. 그 캠페인이 보고하는 값은 메모리, 연결하는 서버의 첫 토큰, 수 초 동안의 생성
+속도이다.
+
 ## 5. 한계
 
 - 주 평가는 장치 한 대, 엔진 하나, 7B 모델 하나에서 수행하였고, 8B와 14B
@@ -1230,6 +1333,7 @@ LMCache에서 이 두 서버가 `both` 단계 안에서 프리픽스를 계산�
 | `run_ext_weightshare.sh` | CUDA IPC로 가중치를 공유하는 공개 라이브러리 기준선 | 4.11 |
 | `run_weights_publish.sh` | 모델 파일을 2 MiB 페이지에 올리는 세 방법의 시간과 메모리 | 4.11 |
 | `run_ext_vllm.sh` | 프로세스 하나 안에서 프리픽스를 공유하는 vLLM 기준선 | 4.11 |
+| `run_engine_kvfaultcount.sh`, `run_vllm_faultcount.sh` | GPU를 대신해 폴트된 페이지 수: 에이전트가 프리픽스를 얻는 방식별, 게시 뒤 실행을 계속하는 게시자, vLLM 서버의 단계별 | 4.13 |
 | `run_vllm_share.sh`, `run_vllm_share2.sh`, `run_vllm_share_direct.sh` | MIG 인스턴스마다 vLLM 서버 하나 이상: 무수정, CPU 오프로드, LMCache, 플러그인(가중치만, 프리픽스만, 둘 다), 직접 가중치 연결 | 4.12 |
 
 ### 6.2 빌드
@@ -1299,6 +1403,22 @@ python3 -m zipfile -e ext/lmcache-dl/lmcache-0.5.5-*.whl ext/lmcache-site/
 ext/venv-vllm/bin/pip install --no-deps --target ext/lmcache-site sortedcontainers aiofile caio
 ```
 
+게시한 블록의 2 MiB 매핑을 복구하는 엔진(4.13절)은 같은 커밋의 클론에 두 번째 패치를
+적용하여 만든다. `kv_extents2.patch`, `kv_chain2.patch`, `kv_tuned2.patch`는 각각
+`kv_extents.patch`, `kv_chain.patch`, `kv_tuned.patch`에 게시 뒤의 복구 24줄을 더한 것이다.
+
+```bash
+for pair in kv2:kv_extents2 chain2:kv_chain2 tuned2:kv_tuned2; do
+  git clone <llama.cpp> llama.cpp-${pair%%:*} && git -C llama.cpp-${pair%%:*} checkout 6f767fe96
+  git -C llama.cpp-${pair%%:*} apply ../${pair##*:}.patch
+  cmake -S llama.cpp-${pair%%:*} -B llama.cpp-${pair%%:*}/build -DGGML_CUDA=ON \
+    -DCMAKE_BUILD_TYPE=Release -DCMAKE_CUDA_ARCHITECTURES=110 -DLLAMA_CURL=OFF
+  cmake --build llama.cpp-${pair%%:*}/build -j 12 --target llama
+done
+cmake --build llama.cpp-chain2/build -j 12 --target llama-server
+make kv_fork2 kv_batch2 kv_tree2 kv_fork_tuned2 kv_spawn_tuned2
+```
+
 `kv_extents.patch`는 `inplace_weights.patch`를 포함하고, `kv_vmm.patch`는
 `kv_extents.patch`를 포함하며, `kv_tuned.patch`는 `kv_sota.patch`를 포함한다. 각 클론에는 해당 패치만 적용되어 있다. 클론,
 모델, 어댑터, 빌드된 프로그램은 저장소에 포함되지 않는다.
@@ -1361,6 +1481,24 @@ RESULT_TAG=vllm-share-rerun      ./run_vllm_share_direct.sh
 SERVERS=4 REPETITIONS=6 MODES="vllm lmcache stator" RESULT_TAG=vllm-share-4srv-rerun ./run_vllm_share2.sh
 ./verify_llm_share_artifact.sh
 ./verify_stator_campaigns.sh results
+```
+
+4.13절의 캠페인은 고정된 러너에 수정한 엔진과 그 드라이버를 지정하여 실행한다.
+
+```bash
+T2="TUNED_ENGINE=$PWD/llama.cpp-tuned2 PARENT_DRIVER=$PWD/kv_spawn_tuned2 CHILD_DRIVER=$PWD/kv_fork_tuned2"
+K2="KV_ENGINE=$PWD/llama.cpp-kv2 DRIVER=$PWD/kv_fork2"
+C2="CHAIN_ENGINE=$PWD/llama.cpp-chain2 DRIVER=$PWD/kv_tree2"
+RESULT_TAG=engine-kvfaultcount-rerun ./run_engine_kvfaultcount.sh          # 처음 엔진
+TUNED_ENGINE=$PWD/llama.cpp-tuned2 DRIVER=$PWD/kv_fork_tuned2 RESULT_TAG=engine-kvfaultcount2-rerun ./run_engine_kvfaultcount.sh
+env $K2 RESULT_TAG=engine-kvfork2-rerun ./run_engine_kvfork.sh
+env $T2 MODE_SET=baselines CELLS="same:8:320 cross:8:320 same:8:80" RESULT_TAG=engine-kvmech2-rerun ./run_engine_kvmech.sh
+env $K2 CHILD_COUNTS=8 PARAGRAPHS=320 RESULT_TAG=engine-kvmps2-rerun ./run_engine_kvmps.sh
+env $C2 RESULT_TAG=engine-kvtree2-rerun ./run_engine_kvtree.sh
+CHAIN_ENGINE=$PWD/llama.cpp-chain2 RESULT_TAG=engine-kvserver2b-rerun ./run_engine_kvserver2.sh
+env $C2 MODEL=<2 MiB 페이지 tmpfs 위의 모델 파일> RESULT_TAG=engine-kvpipe2-rerun ./run_engine_kvpipe.sh
+KV_ENGINE=$PWD/llama.cpp-kv2 DRIVER=$PWD/kv_batch2 RESULT_TAG=engine-kvbatch2-rerun ./run_engine_kvbatch.sh
+RESULT_TAG=vllm-faultcount-rerun ./run_vllm_faultcount.sh
 ```
 
 `verify_llm_share_artifact.sh`는 GPU가 필요하지 않으며 새로 받은 저장소에서

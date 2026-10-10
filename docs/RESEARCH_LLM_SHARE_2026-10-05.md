@@ -2149,6 +2149,266 @@ the first run: 41.68, 50.35 and 22.74 GiB; 14.08, 1.86 and 0.66 s; the
 largest drop with the plugin is 29.28 GiB. All gates hold in this
 campaign, V5 included.
 
+### 6.16 A publisher that keeps running, on 2 MiB pages (2026-10-10)
+
+**What the campaigns above did not count.** The rule of 6.1 is that no
+GPU-visible page changes its owner through a fault. The campaigns above
+infer this from memory and time. `run_engine_kvfaultcount.sh` counts it.
+The driver services a GPU fault in its bottom-half kernel thread
+("UVM GPU<n> BH"), which calls the fault handler of the kernel for the
+pages of the faulting block, and the kernel counts these calls as page
+faults of that thread (`/proc/<pid>/stat`, minor and major). The kernel of
+this device is built without kprobes, and the counter of the thread is the
+measure that it offers. The counter stands still while the GPU computes on
+device memory. A publisher computes a 16,321-token prefix and exits, eight
+agents continue it, every second one in the other MIG instance, and the
+counter is read before the agents start and after the last one has left.
+In the rows `publisher`, one process computes the prefix, hands it to a
+child, and decodes a task of its own; the counter is read around the
+publish and around the task.
+
+**The first campaign (`20261010-engine-kvfaultcount-v1`, six repetitions),
+on the engine of the campaigns above.**
+
+| Processes | Mode | Runs (failed) | Pages faulted in for the GPU | lowest | highest | First token (ms) | Throughput (tokens/s) | Texts equal to copy | Pages before the publish | Publish (ms) | Next task (ms) |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| agents | copy | 6 (0) | 0 | 0 | 0 | 2350 | 34.48 | 48/48 | - | - | - |
+| agents | extent | 6 (0) | 0 | 0 | 0 | 1761 | 34.02 | 48/48 | - | - | - |
+| agents | no_read | 6 (0) | 2522352 | 2368218 | 2651914 | 2298 | 33.94 | 48/48 | - | - | - |
+| agents | no_populate | 6 (0) | 37123 | 36570 | 37682 | 1925 | 33.28 | 48/48 | - | - | - |
+| agents | cow | 6 (0) | 564685 | 563744 | 565210 | 2078 | 33.65 | 48/48 | - | - | - |
+| agents | cow_noread | 6 (0) | 7420080 | 7398896 | 7443028 | 4886 | 33.59 | 48/48 | - | - | - |
+| publisher | fork_copy | 6 (0) | 0 | 0 | 0 | - | - | - | 0 | 549.08 | 57.3 |
+| publisher | fork_extent | 6 (0) | 113357 | 113348 | 113364 | - | - | - | 0 | 9.19 | 135.7 |
+| publisher | fork_refill | 6 (0) | 0 | 0 | 0 | - | - | - | 0 | 13.91 | 57.8 |
+
+No page is faulted in for agents on a copy or on extents. Without the CPU
+read of the attached pages the kernel faults in 2.5 million pages, and
+without the populate-ahead 37 thousand. A private writable mapping of the
+cache file faults in 7.4 million pages as the kernel provides it and 0.56
+million with the CPU read on 2 MiB pages. Every agent writes the text of
+its copy counterpart in all six modes.
+
+The publisher is the case that the rule did not hold for. After it has
+published on extents, the kernel faults in 113,357 pages for the GPU
+(113,348 to 113,364 over the repetitions), and its next task takes
+135.7 ms, against 57.3 ms after a copy. The count is taken once, at the
+first task after the publish. The cache file lies on 2 MiB pages, and the
+prefix of a tensor does not end at a 2 MiB boundary, so the protection
+change of a publish ends inside a 2 MiB block of every tensor. The kernel
+drops the huge mapping of a block of a file when the protection of a part
+of it changes, and the GPU faults on the block at its next access. The row
+`fork_refill` applies a remedy from outside the engine
+(`kv_refill_shim.c`, loaded before the process): after the protection
+change it reads the frozen rows of that block from the CPU and asks the
+kernel for writable memory behind the rows after them. With it the count
+is zero and the task takes 57.8 ms. The campaigns above that have a
+publisher which keeps running were measured with this effect in them; the
+agents of every campaign were not affected, since an agent attaches after
+the publish and maps whole pages.
+
+**The repair in the engine (`kv_extents2.patch`, `kv_chain2.patch`,
+`kv_tuned2.patch`; 24 added lines each).** `llama_kv_host_freeze` now ends
+with the two steps of the shim: for each tensor it reads from the CPU the
+frozen rows of the 2 MiB block in which the prefix ends, with the threads
+that the attach path uses, and it calls `madvise(MADV_POPULATE_WRITE)` on
+the rows after them up to the rows that already had memory. The engines
+are `llama.cpp-kv2`, `llama.cpp-chain2` and `llama.cpp-tuned2`, built by
+the targets `kv_fork2`, `kv_batch2`, `kv_tree2`, `kv_fork_tuned2` and
+`kv_spawn_tuned2`; the first patches and their engines are unchanged.
+
+**The second campaign (`20261010-engine-kvfaultcount-v2`), on the engine
+with the repair.**
+
+| Processes | Mode | Runs (failed) | Pages faulted in for the GPU | lowest | highest | First token (ms) | Throughput (tokens/s) | Texts equal to copy | Pages before the publish | Publish (ms) | Next task (ms) |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| agents | copy | 6 (0) | 0 | 0 | 0 | 2325 | 34.54 | 48/48 | - | - | - |
+| agents | extent | 6 (0) | 0 | 0 | 0 | 1773 | 33.96 | 48/48 | - | - | - |
+| agents | no_read | 6 (0) | 2515323 | 2305906 | 2672576 | 2274 | 33.97 | 48/48 | - | - | - |
+| agents | no_populate | 6 (0) | 37295 | 36666 | 38046 | 1890 | 33.33 | 48/48 | - | - | - |
+| agents | cow | 6 (0) | 563993 | 562196 | 565524 | 2067 | 33.71 | 48/48 | - | - | - |
+| agents | cow_noread | 6 (0) | 7410737 | 7396178 | 7433726 | 4998 | 33.49 | 48/48 | - | - | - |
+| publisher | fork_copy | 6 (0) | 0 | 0 | 0 | - | - | - | 0 | 553.43 | 57.2 |
+| publisher | fork_extent | 6 (0) | 0 | 0 | 0 | - | - | - | 0 | 10.74 | 57.8 |
+| publisher | fork_refill | 6 (0) | 0 | 0 | 0 | - | - | - | 0 | 15.25 | 57.9 |
+
+The publisher takes no fault after the publish, the publish takes 10.74 ms
+(9.19 ms before the repair, 553 ms with a copy), and its next task takes
+57.8 ms, as after a copy (57.2 ms). The counts of the agents repeat those
+of the first campaign.
+
+**The campaigns repeated on the engine with the repair.** Each campaign is
+started with the pinned runner and the binaries of the new targets
+(`KV_ENGINE`, `CHAIN_ENGINE`, `TUNED_ENGINE` and the drivers), six
+repetitions each, and its `source_hashes.txt` names the patch of the
+engine that it ran after the pinned sources. The first campaigns stay in
+`results/`. Only the cells that the paper reports were repeated.
+
+`20261010-engine-kvmech-v2` (the cells with eight children; `Copy`,
+`Demand` and the three stages of `Device` run again in the same
+repetitions, so that the ratios are paired):
+
+| Placement | Children | Prefix (tokens) | Mode | Children complete | Texts equal to copy | Parent pause (ms) | Attach (ms) | 95% CI | First token (ms) | Memory (MiB) | 95% CI | Throughput (tokens/s) | Speed vs copy | median |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| same | 8 | 16321 | copy | 48/48 | 48/48 | 557.70 | 598.5 | 69.5 | 2686 | 20301 | 23 | 21.56 | 1.0000 | 1.0000 |
+| same | 8 | 16321 | demand | 48/48 | 48/48 | 560.02 | 661.8 | 133.2 | 2714 | 14197 | 15 | 21.71 | 1.0068 | 1.0053 |
+| same | 8 | 16321 | device | 48/48 | 48/48 | 41.47 | 818.1 | 22.4 | 2866 | 7813 | 15 | 22.04 | 1.0221 | 1.0227 |
+| same | 8 | 16321 | device_tuned | 48/48 | 48/48 | 38.93 | 452.1 | 56.9 | 2487 | 7809 | 12 | 21.74 | 1.0080 | 1.0087 |
+| same | 8 | 16321 | device_merged | 48/48 | 48/48 | 113.39 | 122.8 | 25.9 | 2152 | 7750 | 24 | 21.35 | 0.9902 | 0.9911 |
+| same | 8 | 16321 | cow | 48/48 | 48/48 | 11.20 | 49.9 | 4.7 | 2696 | 6886 | 15 | 21.28 | 0.9870 | 0.9884 |
+| same | 8 | 16321 | extent | 48/48 | 48/48 | 11.10 | 51.5 | 3.8 | 2099 | 6028 | 16 | 21.47 | 0.9956 | 0.9964 |
+| cross | 8 | 16321 | copy | 48/48 | 48/48 | 556.33 | 525.2 | 51.1 | 2378 | 20244 | 25 | 32.67 | 1.0000 | 1.0000 |
+| cross | 8 | 16321 | demand | 48/48 | 48/48 | 552.32 | 574.3 | 65.0 | 2421 | 13737 | 61 | 32.93 | 1.0079 | 1.0103 |
+| cross | 8 | 16321 | device | 24/48 | 24/24 | 39.67 | 670.3 | 30.5 | 2493 | 3983 | 17 | 21.29 | 0.6519 | 0.6536 |
+| cross | 8 | 16321 | device_tuned | 24/48 | 24/24 | 37.04 | 419.1 | 125.2 | 2250 | 3985 | 9 | 20.90 | 0.6397 | 0.6410 |
+| cross | 8 | 16321 | device_merged | 24/48 | 24/24 | 114.78 | 292.8 | 99.3 | 2126 | 3945 | 18 | 20.66 | 0.6325 | 0.6348 |
+| cross | 8 | 16321 | cow | 48/48 | 48/48 | 11.23 | 48.4 | 0.8 | 2235 | 6796 | 10 | 31.56 | 0.9662 | 0.9682 |
+| cross | 8 | 16321 | extent | 48/48 | 48/48 | 11.16 | 51.5 | 4.5 | 1865 | 5927 | 8 | 31.76 | 0.9723 | 0.9747 |
+| same | 8 | 4081 | copy | 48/48 | 48/48 | 223.60 | 274.6 | 15.3 | 2214 | 9171 | 9 | 22.73 | 1.0000 | 1.0000 |
+| same | 8 | 4081 | demand | 48/48 | 48/48 | 228.20 | 234.2 | 12.8 | 2238 | 8444 | 17 | 22.61 | 0.9945 | 0.9942 |
+| same | 8 | 4081 | device | 48/48 | 48/48 | 9.29 | 460.1 | 21.5 | 2419 | 7552 | 17 | 22.81 | 1.0034 | 1.0033 |
+| same | 8 | 4081 | device_tuned | 48/48 | 48/48 | 7.37 | 131.5 | 25.0 | 2111 | 7542 | 27 | 22.54 | 0.9916 | 0.9918 |
+| same | 8 | 4081 | device_merged | 48/48 | 48/48 | 25.15 | 128.4 | 48.9 | 2108 | 7563 | 17 | 22.52 | 0.9905 | 0.9901 |
+| same | 8 | 4081 | cow | 48/48 | 48/48 | 4.89 | 28.8 | 1.8 | 2866 | 6687 | 22 | 22.51 | 0.9903 | 0.9902 |
+| same | 8 | 4081 | extent | 48/48 | 48/48 | 4.92 | 29.3 | 1.8 | 1993 | 5802 | 11 | 22.49 | 0.9893 | 0.9896 |
+
+`20261010-engine-kvfork-v2` (a parent that keeps generating, four
+children, 4,081 tokens):
+
+| Hand-over | Runs (failed processes) | Pause of the parent (ms) | State file (MiB) | Parent texts equal | Child texts equal to copy | Attach (ms) | First token (ms) | Children memory (MiB) | Prefix PSS (MiB) |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| copy | 6 (0) | 215.33 | 223.24 | 6/6 | 24/24 | 149.2 | 1354 | 4539 | 0 |
+| extent | 6 (0) | 4.86 | 0.06 | 6/6 | 24/24 | 31.7 | 1249 | 2908 | 223 |
+
+`20261010-engine-kvmps-v2` (eight children, 16,321 tokens):
+
+| Sharing | Mode | Runs (failed processes) | Pause of the parent (ms) | State file (MiB) | Attach (ms) | First token (ms) | Children (tokens/s) | Children memory (MiB) | Prefix PSS (MiB) | Texts equal to copy |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| one MIG instance, time-sliced | copy | 6 (0) | 551.30 | 892.80 | 535.9 | 2533 | 21.45 | 20287 | 0 | 48/48 |
+| one MIG instance, time-sliced | extent | 6 (0) | 11.28 | 0.25 | 53.8 | 2053 | 21.45 | 5895 | 913 | 48/48 |
+| one MIG instance, one MPS server | copy | 6 (0) | 545.74 | 892.80 | 531.1 | 2379 | 24.13 | 20197 | 0 | 48/48 |
+| one MIG instance, one MPS server | extent | 6 (0) | 10.93 | 0.25 | 53.3 | 1871 | 24.02 | 5832 | 916 | 48/48 |
+| one MIG instance each (alternating) | copy | 6 (0) | 555.78 | 892.80 | 487.7 | 2275 | 32.40 | 20228 | 0 | 48/48 |
+| one MIG instance each (alternating) | extent | 6 (0) | 11.08 | 0.25 | 56.4 | 1809 | 31.58 | 5843 | 1020 | 48/48 |
+| two MIG instances, an MPS server in each | copy | 6 (0) | 556.01 | 892.80 | 493.0 | 2121 | 36.37 | 20192 | 0 | 48/48 |
+| two MIG instances, an MPS server in each | extent | 6 (0) | 11.24 | 0.25 | 51.0 | 1656 | 35.13 | 5796 | 939 | 48/48 |
+
+`20261010-engine-kvtree-v2`:
+
+| Mode | Runs (failed processes) | Root publish (ms) | Leader publish (ms) | Leaf attach (ms) | Leaf first token (ms) | Leaves (tokens/s) | Tree memory (MiB) | Segment files (MiB) | Leaf texts equal to copy |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| copy | 6 (0) | 550.75 | 588.08 | 655.0 | 2750 | 26.87 | 27945 | 0 | 48/48 |
+| flat | 6 (0) | 10.73 | 0.00 | 49.4 | 18972 | 27.76 | 9838 | 896 | 42/48 |
+| chain | 6 (0) | 10.59 | 9.61 | 53.7 | 2132 | 25.90 | 9478 | 1344 | 48/48 |
+| chain_small | 6 (0) | 10.68 | 13.00 | 56.3 | 2128 | 25.83 | 9206 | 1071 | 48/48 |
+
+`20261010-engine-kvserver2-v2`:
+
+| Mode | Agents | Runs (failed) | Save, request / server (ms) | Restore (ms) | First token (ms) | Agents (tokens/s) | Memory / cache file (MiB) | Texts equal to copy |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|
+| copy | 4 | 6 (0) | 509.25 / 507.48 | 386.3 | 581 | 35.24 | 9662 / 0 | 24/24 |
+| extent | 4 | 6 (0) | 11.99 / 10.75 | 149.1 | 371 | 34.83 | 2462 / 784 | 24/24 |
+| copy | 8 | 6 (0) | 500.68 / 499.07 | 543.0 | 931 | 34.99 | 19287 / 0 | 48/48 |
+| extent | 8 | 6 (0) | 11.62 / 10.29 | 268.9 | 684 | 34.49 | 4884 / 784 | 48/48 |
+
+`20261010-engine-kvpipe-huge-v2` (the pipeline of 6.14 with the model file
+on 2 MiB pages):
+
+| Stack | Groups x workers x turns | Runs (failed) | Prefix (tokens) | Completion (s) | 95% CI | vs stock | Memory (MiB) | Files (MiB) | Worker attach (ms) | Worker first token (ms) | Energy, input rail (J) | prefix / leaders / workers (J) | vs stock | GPU rail (J) | Worker texts equal to stock |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| stock | 2x4x3 | 6 (0) | 11788 | 80.2 | 0.1 | 1.000 | 67403 | 0 | 375.6 | 6266 | 5943 | 845 / 398 / 4700 | 1.000 | 2557 | 48/48 |
+| copy | 2x4x3 | 6 (0) | 11788 | 77.9 | 0.1 | 0.971 | 17633 | 0 | 386.5 | 2314 | 5860 | 834 / 370 / 4656 | 0.986 | 2593 | 48/48 |
+| chain | 2x4x3 | 6 (0) | 11788 | 77.9 | 0.0 | 0.972 | 8618 | 896 | 37.7 | 1911 | 5901 | 856 / 358 / 4686 | 0.993 | 2614 | 48/48 |
+
+`20261010-engine-kvbatch-v2` (the batching servers of 6.10):
+
+| Configuration | Runs (failed servers) | All agents ready (ms) | Throughput (tokens/s) | 12-SM | 8-SM | Second server attach (ms) | Publish (ms) | State file (MiB) | Memory (MiB) | Texts equal to copy |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| one_server | 6 (0) | 20775 | 75.71 | 75.71 | 0.00 | 0.0 | 0.00 | 0.00 | 2584 | 36/48 |
+| two_servers_compute | 6 (0) | 30693 | 105.74 | 61.27 | 44.47 | 82.8 | 0.00 | 0.00 | 5062 | 36/48 |
+| two_servers_copy | 6 (0) | 22168 | 104.48 | 61.03 | 43.45 | 245.0 | 560.32 | 892.80 | 5086 | 48/48 |
+| two_servers_extent | 6 (0) | 21484 | 102.28 | 60.51 | 41.76 | 43.8 | 11.34 | 0.25 | 2448 | 48/48 |
+
+**What changed.** The pause of a publisher grows by 2 to 3 ms: from 8.61
+to 11.10 ms for 16,321 tokens with eight children (553 and 558 ms with a
+copy, a ratio of 64 and of 50) and from 3.08 to 4.92 ms for 4,081 tokens.
+Attach time, first token, memory and throughput stay within the spread of
+the repetitions: 51.5 against 54.0 ms, 2.10 against 2.12 s, 6,028 against
+6,036 MiB, and 0.996 against 0.990 of the copy in one instance (0.972
+against 0.967 across the two). `Device` with one allocation per tensor,
+whose code did not change, attaches in 122.8 ms in this campaign and in
+194.6 ms in the first; the cause was not examined. The paper reports the
+second value, with which extents attach 2.4 times faster than the tuned
+baseline (3.6 times with the first).
+
+**Gates.** The gates of the runners hold in the repeated campaigns, with
+the exceptions that `verify_stator_campaigns.sh` lists:
+
+- G3 of the GPU sharing campaign in the MIG configuration. The summed
+  share of the children in the cache file is 1,020 MiB, above the limit of
+  1.1 times the 896 MiB file. The runner reads the shares of the eight
+  children one after another about every 0.2 s and keeps the highest sum.
+  The six repetitions give 892 to 1,189 MiB, and 892 MiB is what the
+  children map. The shares of a page sum to at most one page, so a sum
+  above 892 MiB does not come from one consistent reading; it arises when
+  a child leaves between two reads. The memory of the children is
+  5,843 MiB, as in the other configurations.
+- B4 of the mechanism campaign. `cow` attaches 0.5 to 3.1 ms sooner than
+  `extent` in the three cells (49.9 and 51.5 ms, 28.8 and 29.3 ms, 48.4 and
+  51.5 ms).
+- T2 of the tree campaign (one level of extents, 42 of 48 texts) repeats
+  the first campaign.
+- C7 of the first fault count is the publisher described above.
+
+**The texts that the paper counts.** The paper states the number of texts
+of agents on extents that equal the text of their counterpart on a copy,
+in the campaigns that it reports: 1,464 = 156 (`engine-kvshare-v1`,
+`extent_lazy`) + 192 (`engine-kvmps-v2`) + 144 (`engine-kvmech-v2`) +
+24 (`engine-kvfork-v2`, children) + 48 (`engine-kvfaultcount-v2`) +
+240 (`engine-kvtree-v2` chain, `engine-kvdeep-v1`, `engine-kvdeep-wide-v1`) +
+588 (the seven `engine-kvscale-*-v1` campaigns of the sensitivity
+experiments) + 72 (`engine-kvserver2-v2`). The children of the other
+mechanisms are not in this number.
+
+**vLLM servers (`run_vllm_faultcount.sh`, `20261010-vllm-faultcount-v1`,
+three repetitions).** The plugin of 6.15 publishes by changing the
+protection of one range of blocks. A block of the cache has 917,504 bytes,
+so both ends of the range lie inside 2 MiB blocks of the cache file. The
+runner reads the counter around every step of two servers: server 1 starts
+in the 12-SM instance, answers the prefix alone (the plugin publishes when
+that request has finished), and answers two agents one after the other;
+server 2 starts in the 8-SM instance (the plugin attaches) and answers two
+agents one after the other.
+
+| Servers | Step | Runs (failed) | Pages faulted in for the GPU | lowest | highest | First token (ms) | Request (ms) | Prompt tokens from the cache | Texts equal to vllm |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| vllm | start1 | 3 (0) | 5260193 | 5055326 | 5422622 | - | - | - | - |
+| vllm | prefix | 3 (0) | 0 | 0 | 0 | 9179.3 | 9179.4 | -1 | 3/3 |
+| vllm | publisher_first | 3 (0) | 0 | 0 | 0 | 215.8 | 2172.1 | 14272 | 3/3 |
+| vllm | publisher_second | 3 (0) | 0 | 0 | 0 | 156.5 | 2141.6 | 14272 | 3/3 |
+| vllm | start2 | 3 (0) | 5306897 | 5266988 | 5329472 | - | - | - | - |
+| vllm | attacher_first | 3 (0) | 0 | 0 | 0 | 13761.5 | 16437.4 | -1 | 3/3 |
+| vllm | attacher_second | 3 (0) | 0 | 0 | 0 | 172.3 | 2888.1 | 14272 | 3/3 |
+| stator | start1 | 3 (0) | 5154283 | 5126336 | 5191116 | - | - | - | - |
+| stator | prefix | 3 (0) | 0 | 0 | 0 | 9198.9 | 9199.0 | -1 | 3/3 |
+| stator | publisher_first | 3 (0) | 2837 | 2836 | 2840 | 220.4 | 2177.3 | 14272 | 3/3 |
+| stator | publisher_second | 3 (0) | 0 | 0 | 0 | 158.3 | 2146.8 | 14272 | 3/3 |
+| stator | start2 | 3 (0) | 5313519 | 5272354 | 5387634 | - | - | - | - |
+| stator | attacher_first | 3 (0) | 0 | 0 | 0 | 302.9 | 4274.4 | 14272 | 3/3 |
+| stator | attacher_second | 3 (0) | 0 | 0 | 0 | 191.4 | 4223.0 | 14272 | 3/3 |
+
+The publisher of the plugin faults on 2,837 pages (2,836 to 2,840) in its
+first request after the publish and on none in the next one. That request
+takes 2,177 ms, against 2,172 ms on unmodified servers. The server that
+attaches takes no fault in its requests, and every agent writes the text
+of its counterpart on unmodified servers. A server faults in 5.1 to 5.4
+million pages while it starts, with and without the plugin; which part of
+the start causes them was not separated. C2 of the runner, which expected
+the counter to stand still in every step of unmodified servers, does not
+hold in the two start steps. The plugin is unchanged, and the campaigns of
+6.15 were not repeated: they report memory, the first token of the server
+that attaches, and generation rates over seconds.
+
 ## 7. Novelty boundary
 
 `SOTA_HOSTMM_2026-10-05.md` Section 14 is the audit for this concept, its

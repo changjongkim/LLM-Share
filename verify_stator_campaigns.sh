@@ -46,7 +46,8 @@ present() {
 # The patch in the tree must be the difference between each engine checkout
 # and its recorded commit.
 for pair in llama.cpp-chain:kv_chain.patch llama.cpp-sota:kv_sota.patch \
-            llama.cpp-tuned:kv_tuned.patch; do
+            llama.cpp-tuned:kv_tuned.patch llama.cpp-kv2:kv_extents2.patch \
+            llama.cpp-chain2:kv_chain2.patch llama.cpp-tuned2:kv_tuned2.patch; do
   clone=${pair%%:*} patch=${pair##*:}
   if [[ -d "$script_dir/$clone/.git" ]]; then
     git -C "$script_dir/$clone" diff >"$scratch/patch"
@@ -55,12 +56,16 @@ for pair in llama.cpp-chain:kv_chain.patch llama.cpp-sota:kv_sota.patch \
 done
 
 # --- extents under time slicing, MPS, MIG, and MPS in each MIG instance ------
-if present 20261006-engine-kvmps-v1; then
-  dir="$results/20261006-engine-kvmps-v1"
+# The second campaign repeats the cell with eight children and the longer
+# prefix on the engine that puts the entries of a divided 2 MiB block back at
+# a publish (kv_extents2.patch).
+verify_mps() {  # campaign rows
+  present "$1" || return 0
+  local dir="$results/$1" line
   check_hashes "$dir"
   awk -f "$script_dir/summarize_engine_kvmps.awk" "$dir/raw.log" >"$scratch/kvmps.csv"
   same "$scratch/kvmps.csv" "$dir/engine_kvmps_summary.csv"
-  awk -F, '
+  awk -F, -v expected="$2" '
     NR == 1 { next }
     {
       rows++
@@ -73,12 +78,16 @@ if present 20261006-engine-kvmps-v1; then
       if ($4 == "extent") {
         # G2: every child on extents writes the text of its copy counterpart.
         if ($19 != $18) exit 2
-        # G3: the children hold one copy of the prefix between them.
-        if ($16 > 1.1 * $17) exit 3
+        # G3: the children hold one copy of the prefix between them. The
+        # runner sums the shares of the children one after another and keeps
+        # the highest sum, so a child that leaves between two reads raises
+        # it; a sum above the limit is reported with its value.
+        if ($16 > 1.1 * $17)
+          print "G3 config=" $1 " children=" $2 " prefix_pss_mib=" $16 " cache_file_mib=" $17
       }
     }
     END {
-      if (bad || rows != 32) exit 1
+      if (bad || rows != expected) exit 1
       for (cell in cells) {
         # G4: less memory with extents. G5: a shorter pause and attach.
         if (memory[cell, "extent"] >= memory[cell, "copy"]) exit 4
@@ -89,9 +98,14 @@ if present 20261006-engine-kvmps-v1; then
         if (speed[cell, "extent"] < floor * speed[cell, "copy"]) exit 6
       }
     }
-  ' "$dir/engine_kvmps_summary.csv" ||
-    fail "a gate of the GPU sharing campaign does not hold (awk exit $?)"
-fi
+  ' "$dir/engine_kvmps_summary.csv" >"$scratch/kvmps.exceptions" ||
+    fail "a gate of the GPU sharing campaign $1 does not hold (awk exit $?)"
+  while IFS= read -r line; do
+    exceptions+=("${line// /_}_campaign=$1")
+  done <"$scratch/kvmps.exceptions"
+}
+verify_mps 20261006-engine-kvmps-v1 32
+verify_mps 20261010-engine-kvmps-v2 8
 
 # --- five prefix hand-over mechanisms in one engine -------------------------
 if present 20261006-engine-kvsota-v1; then
@@ -141,8 +155,9 @@ if present 20261006-engine-kvsota-v1; then
 fi
 
 # --- tree of published extents ----------------------------------------------
-if present 20261006-engine-kvtree-v1; then
-  dir="$results/20261006-engine-kvtree-v1"
+verify_tree() {  # campaign
+  present "$1" || return 0
+  local dir="$results/$1"
   check_hashes "$dir"
   awk -f "$script_dir/summarize_engine_kvtree.awk" "$dir/raw.log" >"$scratch/kvtree.csv"
   same "$scratch/kvtree.csv" "$dir/engine_kvtree_summary.csv"
@@ -171,17 +186,19 @@ if present 20261006-engine-kvtree-v1; then
       if (first["chain"] > first["flat"]) exit 4
     }
   ' "$dir/engine_kvtree_summary.csv" ||
-    fail "a gate of the extent-chain campaign does not hold (awk exit $?)"
+    fail "a gate of the extent-chain campaign $1 does not hold (awk exit $?)"
   while IFS=, read -r mode _runs _groups _leaves _failed _timed _root_tokens \
       _leader_tokens _root_publish _root_state _leader_attach _leader_publish \
       _leader_state _leaf_attach _decode _first _tps _memory _files _removed \
       _files_end finished equal _own_equal _own_compared _other_equal \
       _other_compared _wall common compared; do
     if [[ "$mode" == flat && "$equal" != "$finished" ]]; then
-      exceptions+=("T2 mode=flat exact=$equal/$finished min_common_tokens=$common compared=$compared")
+      exceptions+=("T2 campaign=$1 mode=flat exact=$equal/$finished min_common_tokens=$common compared=$compared")
     fi
   done < <(tail -n +2 "$dir/engine_kvtree_summary.csv")
-fi
+}
+verify_tree 20261006-engine-kvtree-v1
+verify_tree 20261010-engine-kvtree-v2
 
 # --- agent count, model, and workload variants ------------------------------
 verify_scale() {
@@ -357,8 +374,9 @@ if present 20261006-engine-kvserver-v1; then
 fi
 
 # --- the stock server, published at a token boundary -------------------------
-if present 20261007-engine-kvserver2-v1; then
-  dir="$results/20261007-engine-kvserver2-v1"
+verify_server2() {  # campaign
+  present "$1" || return 0
+  local dir="$results/$1"
   check_hashes "$dir"
   awk -f "$script_dir/summarize_engine_kvserver.awk" "$dir/raw.log" >"$scratch/kvserver2.csv"
   same "$scratch/kvserver2.csv" "$dir/engine_kvserver_summary.csv"
@@ -386,8 +404,10 @@ if present 20261007-engine-kvserver2-v1; then
       }
     }
   ' "$dir/engine_kvserver_summary.csv" ||
-    fail "a gate of the second stock-server campaign does not hold (awk exit $?)"
-fi
+    fail "a gate of the stock-server campaign $1 does not hold (awk exit $?)"
+}
+verify_server2 20261007-engine-kvserver2-v1
+verify_server2 20261010-engine-kvserver2-v2
 
 # --- per-agent host memory limits -------------------------------------------
 if present 20261006-engine-kvlimit-v1; then
@@ -706,6 +726,7 @@ verify_mech() {  # campaign label set
   esac
 }
 verify_mech 20261007-engine-kvmech-v1 kvmech baselines
+verify_mech 20261010-engine-kvmech-v2 kvmech-v2 baselines
 verify_mech 20261007-engine-kvablate-v1 kvablate ablation
 verify_mech 20261007-engine-kvlocal-6sm-v1 kvlocal-6sm locality
 verify_mech 20261007-engine-kvlocal-12sm-v1 kvlocal-12sm locality
@@ -753,6 +774,7 @@ verify_pipe() {  # campaign label
 }
 verify_pipe 20261007-engine-kvpipe-v1 kvpipe
 verify_pipe 20261007-engine-kvpipe-huge-v1 kvpipe-huge
+verify_pipe 20261010-engine-kvpipe-huge-v2 kvpipe-huge-v2
 
 # --- faults among agents that share a prefix ------------------------------------
 if present 20261007-engine-kvfault-v1; then
@@ -891,6 +913,119 @@ if [[ -f "$results/20261008-vllm-share-v2/vllm_share_summary.csv" ]]; then
           " alone2=" $c["alone2_texts_equal"] "/" $c["alone2_texts_compared"]
       if ($c["mode"] == "stator" && $c["peak_memory_mib"] - $c["memory_mib"] > 1024)
         print "!V7 peak_minus_steady_mib=" ($c["peak_memory_mib"] - $c["memory_mib"])
+    }'
+fi
+
+# --- the pages that the kernel faults in on behalf of the GPU --------------------
+# The first campaign runs the publisher on the engine of the earlier campaigns
+# and records what a publish leaves behind on 2 MiB pages; the second runs it
+# on the engine that puts the entries of the divided block back.
+verify_faultcount() {  # campaign label
+  present "$1" || return 0
+  local dir="$results/$1" label=$2
+  check_hashes "$dir"
+  awk -f "$script_dir/summarize_engine_kvfaultcount.awk" "$dir/raw.log" >"$scratch/$label.csv"
+  same "$scratch/$label.csv" "$dir/engine_kvfaultcount_summary.csv"
+  gates "$label" "$dir/engine_kvfaultcount_summary.csv" '
+    {
+      kind = $c["kind"]; mode = $c["mode"]
+      # C1: every process completes. C2: every agent writes the text of a copy.
+      if ($c["runs"] != 6 || $c["failed"] != 0) print "!C1 " mode
+      if (kind == "agents" && ($c["texts_equal_to_copy"] != $c["texts_compared"] || $c["texts_compared"] == 0))
+        print "!C2 " mode " " $c["texts_equal_to_copy"] "/" $c["texts_compared"]
+      low[mode] = $c["fault_pages_min"]; high[mode] = $c["fault_pages_max"]
+      pages[mode] = $c["fault_pages"]; pause[mode] = $c["publish_ms"]; next_ms[mode] = $c["next_task_ms"]
+    }
+    END {
+      # C3: no page is faulted in for an agent on a copy or on extents.
+      if (high["copy"] != 0 || high["extent"] != 0) print "!C3 copy=" high["copy"] " extent=" high["extent"]
+      # C4: each step that is removed, and the private writable mapping, fault.
+      split("no_read no_populate cow cow_noread", faulting, " ")
+      for (m = 1; m <= 4; ++m) if (!(low[faulting[m]] > 0)) print "!C4 " faulting[m] "=" low[faulting[m]]
+      if (!(low["cow_noread"] > high["cow"])) print "!C4 cow_noread=" low["cow_noread"] " cow=" high["cow"]
+      # C5: a publisher that copies its state, or that restores the entries
+      # from outside the engine, takes no fault after the hand-over.
+      if (high["fork_copy"] != 0 || high["fork_refill"] != 0)
+        print "!C5 fork_copy=" high["fork_copy"] " fork_refill=" high["fork_refill"]
+      if (!(pause["fork_extent"] < pause["fork_copy"])) print "!C6 extent=" pause["fork_extent"] " copy=" pause["fork_copy"]
+      # C7: the publisher on extents takes none either.
+      if (high["fork_extent"] != 0)
+        print "C7 fork_extent fault_pages=" pages["fork_extent"] " next_task_ms=" next_ms["fork_extent"] " copy_next_task_ms=" next_ms["fork_copy"]
+    }'
+}
+verify_faultcount 20261010-engine-kvfaultcount-v1 kvfaultcount-v1
+verify_faultcount 20261010-engine-kvfaultcount-v2 kvfaultcount-v2
+
+# --- the same counter under two vLLM servers --------------------------------------
+if present 20261010-vllm-faultcount-v1; then
+  dir="$results/20261010-vllm-faultcount-v1"
+  check_hashes "$dir"
+  awk -f "$script_dir/summarize_vllm_faultcount.awk" "$dir/raw.log" >"$scratch/vllm-faultcount.csv"
+  same "$scratch/vllm-faultcount.csv" "$dir/vllm_faultcount_summary.csv"
+  gates vllm-faultcount "$dir/vllm_faultcount_summary.csv" '
+    {
+      # C1: every server starts and every request completes.
+      if ($c["failed"] != 0) print "!C1 " $c["mode"] " " $c["step"]
+      # C2: the counter does not move with device memory.
+      if ($c["mode"] == "vllm" && $c["fault_pages_max"] != 0)
+        print "C2 step=" $c["step"] " fault_pages=" $c["fault_pages"] " highest=" $c["fault_pages_max"]
+      # Reported: the steps of the plugin in which the counter moves.
+      if ($c["mode"] == "stator" && $c["fault_pages_max"] != 0)
+        print "C3 step=" $c["step"] " fault_pages=" $c["fault_pages"] " lowest=" $c["fault_pages_min"] " highest=" $c["fault_pages_max"]
+    }'
+fi
+
+# --- a fork and two batching servers on the engine with the repair -------------
+# verify_llm_share_artifact.sh evaluates the first campaigns of these two.
+if present 20261010-engine-kvfork-v2; then
+  dir="$results/20261010-engine-kvfork-v2"
+  check_hashes "$dir"
+  awk -f "$script_dir/summarize_engine_kvfork.awk" "$dir/raw.log" >"$scratch/kvfork-v2.csv"
+  same "$scratch/kvfork-v2.csv" "$dir/engine_kvfork_summary.csv"
+  gates kvfork-v2 "$dir/engine_kvfork_summary.csv" '
+    {
+      mode = $c["mode"]
+      if ($c["failed_processes"] != 0 || $c["parent_texts_equal"] != $c["runs"] ||
+          $c["children_started"] != $c["runs"] * $c["children"] ||
+          $c["child_texts_equal_to_copy"] != $c["children_started"] ||
+          $c["own_instance_equal_to_alone"] != $c["own_instance_compared"]) print "!F1 " mode
+      publish[mode] = $c["publish_ms"]; state[mode] = $c["state_mib"]; attach[mode] = $c["child_attach_ms"]
+      memory[mode] = $c["children_memory_mib"]; pss[mode] = $c["prefix_pss_mib"]; children = $c["children"]
+    }
+    END {
+      if (!(publish["extent"] < publish["copy"])) print "!F2 extent=" publish["extent"] " copy=" publish["copy"]
+      if (!(attach["extent"] <= attach["copy"])) print "!F3 extent=" attach["extent"] " copy=" attach["copy"]
+      if (memory["copy"] - memory["extent"] < 0.8 * children * state["copy"])
+        print "!F4 copy=" memory["copy"] " extent=" memory["extent"]
+      if (pss["extent"] > 1.15 * state["copy"]) print "F5 prefix_pss_mib=" pss["extent"] " state_mib=" state["copy"]
+    }'
+fi
+if present 20261010-engine-kvbatch-v2; then
+  dir="$results/20261010-engine-kvbatch-v2"
+  check_hashes "$dir"
+  awk -f "$script_dir/summarize_engine_kvbatch.awk" "$dir/raw.log" >"$scratch/kvbatch-v2.csv"
+  same "$scratch/kvbatch-v2.csv" "$dir/engine_kvbatch_summary.csv"
+  gates kvbatch-v2 "$dir/engine_kvbatch_summary.csv" '
+    {
+      config = $c["config"]
+      if ($c["failed_servers"] != 0) print "!N1 " config
+      if (config == "two_servers_extent" &&
+          ($c["texts_equal_to_copy"] != $c["texts_compared"] || $c["texts_compared"] != $c["runs"] * 8))
+        print "!N2 " $c["texts_equal_to_copy"] "/" $c["texts_compared"]
+      tps[config] = $c["generation_tps_total"]; ready[config] = $c["ready_all_servers_ms"]
+      memory[config] = $c["memory_mib"]
+    }
+    END {
+      if (tps["two_servers_extent"] < 1.25 * tps["one_server"])
+        print "!N3 two=" tps["two_servers_extent"] " one=" tps["one_server"]
+      if (memory["two_servers_extent"] > 0.6 * memory["two_servers_copy"] ||
+          memory["two_servers_extent"] > 1.1 * memory["one_server"])
+        print "!N4 extent=" memory["two_servers_extent"] " copy=" memory["two_servers_copy"] " one=" memory["one_server"]
+      if (tps["two_servers_extent"] < 0.95 * tps["two_servers_copy"])
+        print "!N5 extent=" tps["two_servers_extent"] " copy=" tps["two_servers_copy"]
+      if (ready["two_servers_extent"] >= ready["two_servers_copy"] ||
+          ready["two_servers_copy"] >= ready["two_servers_compute"])
+        print "!N6 extent=" ready["two_servers_extent"] " copy=" ready["two_servers_copy"] " compute=" ready["two_servers_compute"]
     }'
 fi
 

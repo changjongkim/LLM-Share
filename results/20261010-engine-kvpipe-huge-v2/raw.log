@@ -1,0 +1,318 @@
+BEGIN_KVPIPE run=1 context=16384
+CASE mode=stock groups=2 workers=4 turns=3
+PLANNER exit=0 text=2986789f8c4a0a5d tokens=11788 publish_ms=463.99 state_bytes=676160389 generation_tps=7.694
+LEADER group=0 mig=fafc828a exit=0 text=172e721640cc24d4 tokens=11887 context_ms=35.6 load_ms=162.14 publish_ms=434.17 state_bytes=681839029 generation_tps=11.737
+LEADER group=1 mig=31ffbfe4 exit=0 text=ccaa7b1578fc9b8c tokens=11887 context_ms=37.1 load_ms=116.35 publish_ms=398.94 state_bytes=681839029 generation_tps=10.353
+WORKER index=0 group=0 mig=fafc828a exit=0 text=34c5ba01e77f923b tokens=12166 context_ms=53.1 load_ms=255.57 decode_ms=1014.5 first_token_ms=6242.7 generated=192 generation_tps=5.325 total_ms=42926.7
+WORKER index=1 group=0 mig=31ffbfe4 exit=0 text=72fc7f37969fe021 tokens=12161 context_ms=53.2 load_ms=328.20 decode_ms=1652.0 first_token_ms=5473.8 generated=192 generation_tps=3.710 total_ms=58235.7
+WORKER index=2 group=0 mig=fafc828a exit=0 text=d81abdc974c1a615 tokens=12167 context_ms=81.8 load_ms=364.38 decode_ms=1181.4 first_token_ms=7259.6 generated=192 generation_tps=5.369 total_ms=43678.9
+WORKER index=3 group=0 mig=31ffbfe4 exit=0 text=7be0e5aff5023925 tokens=12167 context_ms=65.1 load_ms=201.54 decode_ms=1555.8 first_token_ms=5227.9 generated=192 generation_tps=3.701 total_ms=58112.1
+WORKER index=4 group=1 mig=31ffbfe4 exit=0 text=617b5b8088789bce tokens=12161 context_ms=56.1 load_ms=208.39 decode_ms=1465.2 first_token_ms=5064.6 generated=192 generation_tps=3.689 total_ms=58091.7
+WORKER index=5 group=1 mig=fafc828a exit=0 text=736817ea889e0085 tokens=12172 context_ms=53.6 load_ms=450.88 decode_ms=1305.2 first_token_ms=7704.5 generated=192 generation_tps=5.421 total_ms=43744.3
+WORKER index=6 group=1 mig=31ffbfe4 exit=0 text=fede20b0ce61df9a tokens=12167 context_ms=60.3 load_ms=438.08 decode_ms=1737.7 first_token_ms=5859.5 generated=192 generation_tps=3.732 total_ms=58289.9
+WORKER index=7 group=1 mig=fafc828a exit=0 text=06acc271f26cb952 tokens=12175 context_ms=81.8 load_ms=364.29 decode_ms=1205.0 first_token_ms=7246.9 generated=192 generation_tps=5.372 total_ms=43649.0
+MEMORY pipeline_drop_mib=67401 files_mib=0
+ENERGY phase=prefix seconds=15.21 vin_joules=838.4 gpu_joules=424.6
+ENERGY phase=leaders seconds=5.95 vin_joules=395.4 gpu_joules=156.5
+ENERGY phase=workers seconds=58.95 vin_joules=4675.2 gpu_joules=1954.9
+END_CASE failed=0 timed_out=0 wall_ms=80112 power_samples=401
+CASE mode=copy groups=2 workers=4 turns=3
+PLANNER exit=0 text=2986789f8c4a0a5d tokens=11788 publish_ms=468.17 state_bytes=676160389 generation_tps=4.448
+LEADER group=0 mig=fafc828a exit=0 text=172e721640cc24d4 tokens=11887 context_ms=35.8 load_ms=128.81 publish_ms=434.30 state_bytes=681839029 generation_tps=7.492
+LEADER group=1 mig=31ffbfe4 exit=0 text=ccaa7b1578fc9b8c tokens=11887 context_ms=37.3 load_ms=181.76 publish_ms=415.31 state_bytes=681839029 generation_tps=6.234
+WORKER index=0 group=0 mig=fafc828a exit=0 text=34c5ba01e77f923b tokens=12166 context_ms=54.5 load_ms=254.22 decode_ms=1027.9 first_token_ms=1863.3 generated=192 generation_tps=5.023 total_ms=40704.5
+WORKER index=1 group=0 mig=31ffbfe4 exit=0 text=72fc7f37969fe021 tokens=12161 context_ms=53.1 load_ms=352.17 decode_ms=1637.0 first_token_ms=2320.7 generated=192 generation_tps=3.548 total_ms=57445.2
+WORKER index=2 group=0 mig=fafc828a exit=0 text=d81abdc974c1a615 tokens=12167 context_ms=70.7 load_ms=349.04 decode_ms=1275.1 first_token_ms=2486.5 generated=192 generation_tps=5.059 total_ms=41109.8
+WORKER index=3 group=0 mig=31ffbfe4 exit=0 text=7be0e5aff5023925 tokens=12167 context_ms=69.4 load_ms=206.59 decode_ms=1668.9 first_token_ms=2379.6 generated=192 generation_tps=3.549 total_ms=57467.9
+WORKER index=4 group=1 mig=31ffbfe4 exit=0 text=617b5b8088789bce tokens=12161 context_ms=78.9 load_ms=362.38 decode_ms=1691.3 first_token_ms=2493.1 generated=192 generation_tps=3.555 total_ms=57493.1
+WORKER index=5 group=1 mig=fafc828a exit=0 text=736817ea889e0085 tokens=12172 context_ms=57.1 load_ms=363.82 decode_ms=1281.7 first_token_ms=2412.4 generated=192 generation_tps=5.056 total_ms=41048.7
+WORKER index=6 group=1 mig=31ffbfe4 exit=0 text=fede20b0ce61df9a tokens=12167 context_ms=67.5 load_ms=220.76 decode_ms=1616.5 first_token_ms=2224.6 generated=192 generation_tps=3.545 total_ms=57372.2
+WORKER index=7 group=1 mig=fafc828a exit=0 text=06acc271f26cb952 tokens=12175 context_ms=82.4 load_ms=358.64 decode_ms=1312.2 first_token_ms=2436.9 generated=192 generation_tps=5.059 total_ms=41069.6
+MEMORY pipeline_drop_mib=17641 files_mib=0
+ENERGY phase=prefix seconds=14.55 vin_joules=844.0 gpu_joules=424.5
+ENERGY phase=leaders seconds=5.39 vin_joules=364.6 gpu_joules=152.3
+ENERGY phase=workers seconds=57.95 vin_joules=4630.8 gpu_joules=2001.6
+END_CASE failed=0 timed_out=0 wall_ms=77890 power_samples=390
+CASE mode=chain groups=2 workers=4 turns=3
+PLANNER exit=0 text=2986789f8c4a0a5d tokens=11788 publish_ms=11.51 state_bytes=189317 generation_tps=4.276
+LEADER group=0 mig=fafc828a exit=0 text=172e721640cc24d4 tokens=11887 context_ms=31.5 load_ms=5.11 publish_ms=6.46 state_bytes=190901 generation_tps=7.269
+LEADER group=1 mig=31ffbfe4 exit=0 text=ccaa7b1578fc9b8c tokens=11887 context_ms=31.2 load_ms=5.12 publish_ms=6.20 state_bytes=190901 generation_tps=5.988
+WORKER index=0 group=0 mig=fafc828a exit=0 text=34c5ba01e77f923b tokens=12166 context_ms=36.8 load_ms=4.86 decode_ms=933.5 first_token_ms=1389.8 generated=192 generation_tps=4.981 total_ms=40543.9
+WORKER index=1 group=0 mig=31ffbfe4 exit=0 text=72fc7f37969fe021 tokens=12161 context_ms=29.5 load_ms=5.20 decode_ms=1636.6 first_token_ms=2028.3 generated=192 generation_tps=3.465 total_ms=58425.6
+WORKER index=2 group=0 mig=fafc828a exit=0 text=d81abdc974c1a615 tokens=12167 context_ms=28.2 load_ms=5.12 decode_ms=1256.8 first_token_ms=2009.1 generated=192 generation_tps=5.014 total_ms=40965.0
+WORKER index=3 group=0 mig=31ffbfe4 exit=0 text=7be0e5aff5023925 tokens=12167 context_ms=31.5 load_ms=5.03 decode_ms=1628.7 first_token_ms=2013.6 generated=192 generation_tps=3.464 total_ms=58420.4
+WORKER index=4 group=1 mig=31ffbfe4 exit=0 text=617b5b8088789bce tokens=12161 context_ms=29.6 load_ms=5.19 decode_ms=1682.6 first_token_ms=2131.3 generated=192 generation_tps=3.469 total_ms=58459.8
+WORKER index=5 group=1 mig=fafc828a exit=0 text=736817ea889e0085 tokens=12172 context_ms=28.9 load_ms=5.35 decode_ms=1284.0 first_token_ms=2087.7 generated=192 generation_tps=5.022 total_ms=40963.9
+WORKER index=6 group=1 mig=31ffbfe4 exit=0 text=fede20b0ce61df9a tokens=12167 context_ms=27.7 load_ms=5.35 decode_ms=1596.2 first_token_ms=1933.6 generated=192 generation_tps=3.463 total_ms=58345.7
+WORKER index=7 group=1 mig=fafc828a exit=0 text=06acc271f26cb952 tokens=12175 context_ms=28.0 load_ms=5.16 decode_ms=1265.3 first_token_ms=1940.4 generated=192 generation_tps=5.014 total_ms=40910.8
+MEMORY pipeline_drop_mib=8624 files_mib=896
+ENERGY phase=prefix seconds=14.11 vin_joules=839.5 gpu_joules=422.3
+ENERGY phase=leaders seconds=4.87 vin_joules=364.5 gpu_joules=154.1
+ENERGY phase=workers seconds=58.94 vin_joules=4675.4 gpu_joules=2028.7
+END_CASE failed=0 timed_out=0 wall_ms=77926 power_samples=390
+END_KVPIPE
+BEGIN_KVPIPE run=2 context=16384
+CASE mode=chain groups=2 workers=4 turns=3
+PLANNER exit=0 text=2986789f8c4a0a5d tokens=11788 publish_ms=11.77 state_bytes=189317 generation_tps=4.255
+LEADER group=0 mig=fafc828a exit=0 text=172e721640cc24d4 tokens=11887 context_ms=26.6 load_ms=4.98 publish_ms=6.41 state_bytes=190901 generation_tps=7.244
+LEADER group=1 mig=31ffbfe4 exit=0 text=ccaa7b1578fc9b8c tokens=11887 context_ms=26.4 load_ms=5.56 publish_ms=6.31 state_bytes=190901 generation_tps=5.917
+WORKER index=0 group=0 mig=fafc828a exit=0 text=34c5ba01e77f923b tokens=12166 context_ms=43.1 load_ms=5.45 decode_ms=936.8 first_token_ms=1317.5 generated=192 generation_tps=4.982 total_ms=40463.5
+WORKER index=1 group=0 mig=31ffbfe4 exit=0 text=72fc7f37969fe021 tokens=12161 context_ms=28.2 load_ms=5.00 decode_ms=1325.2 first_token_ms=1628.1 generated=192 generation_tps=3.452 total_ms=58158.0
+WORKER index=2 group=0 mig=fafc828a exit=0 text=d81abdc974c1a615 tokens=12167 context_ms=28.0 load_ms=5.09 decode_ms=1181.6 first_token_ms=1910.8 generated=192 generation_tps=5.009 total_ms=40878.6
+WORKER index=3 group=0 mig=31ffbfe4 exit=0 text=7be0e5aff5023925 tokens=12167 context_ms=30.5 load_ms=5.12 decode_ms=1614.6 first_token_ms=2021.1 generated=192 generation_tps=3.465 total_ms=58394.3
+WORKER index=4 group=1 mig=31ffbfe4 exit=0 text=617b5b8088789bce tokens=12161 context_ms=30.8 load_ms=5.04 decode_ms=1644.1 first_token_ms=2091.7 generated=192 generation_tps=3.466 total_ms=58440.3
+WORKER index=5 group=1 mig=fafc828a exit=0 text=736817ea889e0085 tokens=12172 context_ms=29.4 load_ms=5.13 decode_ms=1258.2 first_token_ms=1972.0 generated=192 generation_tps=5.018 total_ms=40899.4
+WORKER index=6 group=1 mig=31ffbfe4 exit=0 text=fede20b0ce61df9a tokens=12167 context_ms=29.2 load_ms=5.23 decode_ms=1628.8 first_token_ms=1997.6 generated=192 generation_tps=3.461 total_ms=58424.7
+WORKER index=7 group=1 mig=fafc828a exit=0 text=06acc271f26cb952 tokens=12175 context_ms=28.4 load_ms=5.40 decode_ms=1324.3 first_token_ms=2118.6 generated=192 generation_tps=5.032 total_ms=40915.4
+MEMORY pipeline_drop_mib=8622 files_mib=896
+ENERGY phase=prefix seconds=14.11 vin_joules=852.9 gpu_joules=423.1
+ENERGY phase=leaders seconds=4.88 vin_joules=363.3 gpu_joules=154.1
+ENERGY phase=workers seconds=58.96 vin_joules=4688.0 gpu_joules=2031.9
+END_CASE failed=0 timed_out=0 wall_ms=77954 power_samples=391
+CASE mode=copy groups=2 workers=4 turns=3
+PLANNER exit=0 text=2986789f8c4a0a5d tokens=11788 publish_ms=466.01 state_bytes=676160389 generation_tps=4.436
+LEADER group=0 mig=fafc828a exit=0 text=172e721640cc24d4 tokens=11887 context_ms=37.5 load_ms=126.20 publish_ms=434.94 state_bytes=681839029 generation_tps=7.541
+LEADER group=1 mig=31ffbfe4 exit=0 text=ccaa7b1578fc9b8c tokens=11887 context_ms=40.8 load_ms=181.96 publish_ms=452.05 state_bytes=681839029 generation_tps=6.315
+WORKER index=0 group=0 mig=fafc828a exit=0 text=34c5ba01e77f923b tokens=12166 context_ms=49.5 load_ms=288.29 decode_ms=1023.8 first_token_ms=1927.0 generated=192 generation_tps=5.018 total_ms=40825.1
+WORKER index=1 group=0 mig=31ffbfe4 exit=0 text=72fc7f37969fe021 tokens=12161 context_ms=61.0 load_ms=352.83 decode_ms=1564.8 first_token_ms=2311.2 generated=192 generation_tps=3.550 total_ms=57383.0
+WORKER index=2 group=0 mig=fafc828a exit=0 text=d81abdc974c1a615 tokens=12167 context_ms=63.3 load_ms=346.87 decode_ms=1253.7 first_token_ms=2447.3 generated=192 generation_tps=5.056 total_ms=41083.8
+WORKER index=3 group=0 mig=31ffbfe4 exit=0 text=7be0e5aff5023925 tokens=12167 context_ms=75.7 load_ms=255.00 decode_ms=1606.3 first_token_ms=2317.9 generated=192 generation_tps=3.551 total_ms=57401.4
+WORKER index=4 group=1 mig=31ffbfe4 exit=0 text=617b5b8088789bce tokens=12161 context_ms=80.5 load_ms=365.36 decode_ms=1684.8 first_token_ms=2520.2 generated=192 generation_tps=3.557 total_ms=57494.2
+WORKER index=5 group=1 mig=fafc828a exit=0 text=736817ea889e0085 tokens=12172 context_ms=55.3 load_ms=329.02 decode_ms=1194.2 first_token_ms=2279.2 generated=192 generation_tps=5.036 total_ms=41025.7
+WORKER index=6 group=1 mig=31ffbfe4 exit=0 text=fede20b0ce61df9a tokens=12167 context_ms=71.1 load_ms=343.45 decode_ms=1708.9 first_token_ms=2524.3 generated=192 generation_tps=3.558 total_ms=57482.2
+WORKER index=7 group=1 mig=fafc828a exit=0 text=06acc271f26cb952 tokens=12175 context_ms=78.7 load_ms=348.50 decode_ms=1314.0 first_token_ms=2494.1 generated=192 generation_tps=5.062 total_ms=41079.1
+MEMORY pipeline_drop_mib=17640 files_mib=0
+ENERGY phase=prefix seconds=14.53 vin_joules=827.7 gpu_joules=425.1
+ENERGY phase=leaders seconds=5.39 vin_joules=363.8 gpu_joules=152.5
+ENERGY phase=workers seconds=57.98 vin_joules=4653.6 gpu_joules=2011.2
+END_CASE failed=0 timed_out=0 wall_ms=77910 power_samples=390
+CASE mode=stock groups=2 workers=4 turns=3
+PLANNER exit=0 text=2986789f8c4a0a5d tokens=11788 publish_ms=396.81 state_bytes=676160389 generation_tps=7.655
+LEADER group=0 mig=fafc828a exit=0 text=172e721640cc24d4 tokens=11887 context_ms=36.2 load_ms=117.23 publish_ms=423.44 state_bytes=681839029 generation_tps=11.718
+LEADER group=1 mig=31ffbfe4 exit=0 text=ccaa7b1578fc9b8c tokens=11887 context_ms=37.8 load_ms=165.99 publish_ms=415.19 state_bytes=681839029 generation_tps=10.426
+WORKER index=0 group=0 mig=fafc828a exit=0 text=34c5ba01e77f923b tokens=12166 context_ms=55.0 load_ms=250.35 decode_ms=955.4 first_token_ms=6271.7 generated=192 generation_tps=5.328 total_ms=42943.1
+WORKER index=1 group=0 mig=31ffbfe4 exit=0 text=72fc7f37969fe021 tokens=12161 context_ms=61.6 load_ms=373.14 decode_ms=1772.7 first_token_ms=5606.3 generated=192 generation_tps=3.713 total_ms=58344.0
+WORKER index=2 group=0 mig=fafc828a exit=0 text=d81abdc974c1a615 tokens=12167 context_ms=52.0 load_ms=356.93 decode_ms=1135.3 first_token_ms=7117.7 generated=192 generation_tps=5.356 total_ms=43596.8
+WORKER index=3 group=0 mig=31ffbfe4 exit=0 text=7be0e5aff5023925 tokens=12167 context_ms=53.6 load_ms=226.02 decode_ms=1577.0 first_token_ms=5247.4 generated=192 generation_tps=3.696 total_ms=58180.9
+WORKER index=4 group=1 mig=31ffbfe4 exit=0 text=617b5b8088789bce tokens=12161 context_ms=62.1 load_ms=370.09 decode_ms=1739.9 first_token_ms=5591.8 generated=192 generation_tps=3.715 total_ms=58310.3
+WORKER index=5 group=1 mig=fafc828a exit=0 text=736817ea889e0085 tokens=12172 context_ms=56.2 load_ms=376.88 decode_ms=1287.4 first_token_ms=7469.1 generated=192 generation_tps=5.387 total_ms=43744.4
+WORKER index=6 group=1 mig=31ffbfe4 exit=0 text=fede20b0ce61df9a tokens=12167 context_ms=56.6 load_ms=197.74 decode_ms=1614.2 first_token_ms=5259.3 generated=192 generation_tps=3.700 total_ms=58189.8
+WORKER index=7 group=1 mig=fafc828a exit=0 text=06acc271f26cb952 tokens=12175 context_ms=55.3 load_ms=386.02 decode_ms=1292.1 first_token_ms=7481.4 generated=192 generation_tps=5.388 total_ms=43748.0
+MEMORY pipeline_drop_mib=67453 files_mib=0
+ENERGY phase=prefix seconds=15.22 vin_joules=840.9 gpu_joules=426.3
+ENERGY phase=leaders seconds=6.07 vin_joules=403.9 gpu_joules=157.7
+ENERGY phase=workers seconds=59.11 vin_joules=4689.7 gpu_joules=1972.2
+END_CASE failed=0 timed_out=0 wall_ms=80405 power_samples=403
+END_KVPIPE
+BEGIN_KVPIPE run=3 context=16384
+CASE mode=stock groups=2 workers=4 turns=3
+PLANNER exit=0 text=2986789f8c4a0a5d tokens=11788 publish_ms=423.54 state_bytes=676160389 generation_tps=7.853
+LEADER group=0 mig=fafc828a exit=0 text=172e721640cc24d4 tokens=11887 context_ms=36.3 load_ms=162.53 publish_ms=433.52 state_bytes=681839029 generation_tps=11.943
+LEADER group=1 mig=31ffbfe4 exit=0 text=ccaa7b1578fc9b8c tokens=11887 context_ms=37.3 load_ms=114.91 publish_ms=403.64 state_bytes=681839029 generation_tps=10.311
+WORKER index=0 group=0 mig=fafc828a exit=0 text=34c5ba01e77f923b tokens=12166 context_ms=56.8 load_ms=277.76 decode_ms=1142.8 first_token_ms=6912.8 generated=192 generation_tps=5.333 total_ms=43570.7
+WORKER index=1 group=0 mig=31ffbfe4 exit=0 text=72fc7f37969fe021 tokens=12161 context_ms=52.4 load_ms=191.34 decode_ms=1406.1 first_token_ms=5019.3 generated=192 generation_tps=3.690 total_ms=58026.5
+WORKER index=2 group=0 mig=fafc828a exit=0 text=d81abdc974c1a615 tokens=12167 context_ms=64.1 load_ms=287.49 decode_ms=1102.9 first_token_ms=6844.2 generated=192 generation_tps=5.325 total_ms=43556.4
+WORKER index=3 group=0 mig=31ffbfe4 exit=0 text=7be0e5aff5023925 tokens=12167 context_ms=50.4 load_ms=332.09 decode_ms=1579.8 first_token_ms=5309.3 generated=192 generation_tps=3.698 total_ms=58227.2
+WORKER index=4 group=1 mig=31ffbfe4 exit=0 text=617b5b8088789bce tokens=12161 context_ms=58.0 load_ms=308.88 decode_ms=1684.9 first_token_ms=5557.2 generated=192 generation_tps=3.711 total_ms=58301.8
+WORKER index=5 group=1 mig=fafc828a exit=0 text=736817ea889e0085 tokens=12172 context_ms=48.6 load_ms=325.49 decode_ms=1299.1 first_token_ms=7246.0 generated=192 generation_tps=5.360 total_ms=43703.8
+WORKER index=6 group=1 mig=31ffbfe4 exit=0 text=fede20b0ce61df9a tokens=12167 context_ms=52.9 load_ms=357.13 decode_ms=1742.1 first_token_ms=5673.4 generated=192 generation_tps=3.720 total_ms=58303.5
+WORKER index=7 group=1 mig=fafc828a exit=0 text=06acc271f26cb952 tokens=12175 context_ms=56.3 load_ms=361.90 decode_ms=1306.6 first_token_ms=7302.7 generated=192 generation_tps=5.374 total_ms=43706.6
+MEMORY pipeline_drop_mib=67395 files_mib=0
+ENERGY phase=prefix seconds=15.18 vin_joules=862.7 gpu_joules=427.9
+ENERGY phase=leaders seconds=5.95 vin_joules=401.7 gpu_joules=155.4
+ENERGY phase=workers seconds=59.02 vin_joules=4702.0 gpu_joules=1973.7
+END_CASE failed=0 timed_out=0 wall_ms=80151 power_samples=401
+CASE mode=copy groups=2 workers=4 turns=3
+PLANNER exit=0 text=2986789f8c4a0a5d tokens=11788 publish_ms=475.61 state_bytes=676160389 generation_tps=4.375
+LEADER group=0 mig=fafc828a exit=0 text=172e721640cc24d4 tokens=11887 context_ms=35.9 load_ms=175.59 publish_ms=487.18 state_bytes=681839029 generation_tps=7.444
+LEADER group=1 mig=31ffbfe4 exit=0 text=ccaa7b1578fc9b8c tokens=11887 context_ms=37.3 load_ms=126.13 publish_ms=426.00 state_bytes=681839029 generation_tps=6.256
+WORKER index=0 group=0 mig=fafc828a exit=0 text=34c5ba01e77f923b tokens=12166 context_ms=72.6 load_ms=253.29 decode_ms=1015.5 first_token_ms=1646.7 generated=192 generation_tps=5.009 total_ms=40579.2
+WORKER index=1 group=0 mig=31ffbfe4 exit=0 text=72fc7f37969fe021 tokens=12161 context_ms=48.9 load_ms=312.01 decode_ms=1437.5 first_token_ms=2092.0 generated=192 generation_tps=3.539 total_ms=57330.0
+WORKER index=2 group=0 mig=fafc828a exit=0 text=d81abdc974c1a615 tokens=12167 context_ms=91.8 load_ms=348.30 decode_ms=1252.6 first_token_ms=2397.4 generated=192 generation_tps=5.052 total_ms=41074.9
+WORKER index=3 group=0 mig=31ffbfe4 exit=0 text=7be0e5aff5023925 tokens=12167 context_ms=87.0 load_ms=254.47 decode_ms=1662.5 first_token_ms=2368.0 generated=192 generation_tps=3.550 total_ms=57463.1
+WORKER index=4 group=1 mig=31ffbfe4 exit=0 text=617b5b8088789bce tokens=12161 context_ms=71.4 load_ms=347.33 decode_ms=1680.2 first_token_ms=2541.2 generated=192 generation_tps=3.553 total_ms=57539.4
+WORKER index=5 group=1 mig=fafc828a exit=0 text=736817ea889e0085 tokens=12172 context_ms=79.7 load_ms=361.70 decode_ms=1279.2 first_token_ms=2429.1 generated=192 generation_tps=5.052 total_ms=41097.0
+WORKER index=6 group=1 mig=31ffbfe4 exit=0 text=fede20b0ce61df9a tokens=12167 context_ms=79.1 load_ms=328.40 decode_ms=1681.0 first_token_ms=2512.8 generated=192 generation_tps=3.554 total_ms=57506.3
+WORKER index=7 group=1 mig=fafc828a exit=0 text=06acc271f26cb952 tokens=12175 context_ms=85.5 load_ms=361.65 decode_ms=1293.3 first_token_ms=2440.3 generated=192 generation_tps=5.054 total_ms=41091.4
+MEMORY pipeline_drop_mib=17639 files_mib=0
+ENERGY phase=prefix seconds=14.55 vin_joules=828.0 gpu_joules=426.7
+ENERGY phase=leaders seconds=5.28 vin_joules=370.0 gpu_joules=153.5
+ENERGY phase=workers seconds=57.98 vin_joules=4670.7 gpu_joules=2012.9
+END_CASE failed=0 timed_out=0 wall_ms=77811 power_samples=390
+CASE mode=chain groups=2 workers=4 turns=3
+PLANNER exit=0 text=2986789f8c4a0a5d tokens=11788 publish_ms=11.59 state_bytes=189317 generation_tps=4.270
+LEADER group=0 mig=fafc828a exit=0 text=172e721640cc24d4 tokens=11887 context_ms=26.8 load_ms=5.18 publish_ms=6.50 state_bytes=190901 generation_tps=7.257
+LEADER group=1 mig=31ffbfe4 exit=0 text=ccaa7b1578fc9b8c tokens=11887 context_ms=26.4 load_ms=5.00 publish_ms=6.40 state_bytes=190901 generation_tps=5.950
+WORKER index=0 group=0 mig=fafc828a exit=0 text=34c5ba01e77f923b tokens=12166 context_ms=51.9 load_ms=7.61 decode_ms=979.8 first_token_ms=1371.6 generated=192 generation_tps=4.984 total_ms=40520.6
+WORKER index=1 group=0 mig=31ffbfe4 exit=0 text=72fc7f37969fe021 tokens=12161 context_ms=28.0 load_ms=5.05 decode_ms=1467.6 first_token_ms=1781.8 generated=192 generation_tps=3.454 total_ms=58343.6
+WORKER index=2 group=0 mig=fafc828a exit=0 text=d81abdc974c1a615 tokens=12167 context_ms=39.5 load_ms=5.14 decode_ms=1154.8 first_token_ms=1873.4 generated=192 generation_tps=5.005 total_ms=40876.9
+WORKER index=3 group=0 mig=31ffbfe4 exit=0 text=7be0e5aff5023925 tokens=12167 context_ms=38.6 load_ms=5.21 decode_ms=1667.4 first_token_ms=2112.1 generated=192 generation_tps=3.470 total_ms=58428.3
+WORKER index=4 group=1 mig=31ffbfe4 exit=0 text=617b5b8088789bce tokens=12161 context_ms=33.0 load_ms=5.21 decode_ms=1629.4 first_token_ms=1995.6 generated=192 generation_tps=3.468 total_ms=58336.3
+WORKER index=5 group=1 mig=fafc828a exit=0 text=736817ea889e0085 tokens=12172 context_ms=39.4 load_ms=5.07 decode_ms=1319.3 first_token_ms=2071.7 generated=192 generation_tps=5.024 total_ms=40943.9
+WORKER index=6 group=1 mig=31ffbfe4 exit=0 text=fede20b0ce61df9a tokens=12167 context_ms=38.4 load_ms=5.17 decode_ms=1679.1 first_token_ms=2095.0 generated=192 generation_tps=3.469 total_ms=58415.3
+WORKER index=7 group=1 mig=fafc828a exit=0 text=06acc271f26cb952 tokens=12175 context_ms=32.5 load_ms=5.29 decode_ms=1321.0 first_token_ms=2042.3 generated=192 generation_tps=5.025 total_ms=40912.3
+MEMORY pipeline_drop_mib=8585 files_mib=896
+ENERGY phase=prefix seconds=14.12 vin_joules=860.6 gpu_joules=423.4
+ENERGY phase=leaders seconds=4.88 vin_joules=357.7 gpu_joules=154.7
+ENERGY phase=workers seconds=58.95 vin_joules=4688.0 gpu_joules=2036.1
+END_CASE failed=0 timed_out=0 wall_ms=77949 power_samples=391
+END_KVPIPE
+BEGIN_KVPIPE run=4 context=16384
+CASE mode=chain groups=2 workers=4 turns=3
+PLANNER exit=0 text=2986789f8c4a0a5d tokens=11788 publish_ms=10.05 state_bytes=189317 generation_tps=4.268
+LEADER group=0 mig=fafc828a exit=0 text=172e721640cc24d4 tokens=11887 context_ms=29.4 load_ms=5.10 publish_ms=6.52 state_bytes=190901 generation_tps=7.257
+LEADER group=1 mig=31ffbfe4 exit=0 text=ccaa7b1578fc9b8c tokens=11887 context_ms=27.5 load_ms=4.90 publish_ms=6.36 state_bytes=190901 generation_tps=5.959
+WORKER index=0 group=0 mig=fafc828a exit=0 text=34c5ba01e77f923b tokens=12166 context_ms=30.7 load_ms=5.57 decode_ms=961.7 first_token_ms=1328.9 generated=192 generation_tps=4.992 total_ms=40430.3
+WORKER index=1 group=0 mig=31ffbfe4 exit=0 text=72fc7f37969fe021 tokens=12161 context_ms=27.3 load_ms=4.98 decode_ms=1473.0 first_token_ms=1778.8 generated=192 generation_tps=3.451 total_ms=58379.0
+WORKER index=2 group=0 mig=fafc828a exit=0 text=d81abdc974c1a615 tokens=12167 context_ms=32.0 load_ms=5.10 decode_ms=1227.2 first_token_ms=2023.6 generated=192 generation_tps=5.024 total_ms=40889.9
+WORKER index=3 group=0 mig=31ffbfe4 exit=0 text=7be0e5aff5023925 tokens=12167 context_ms=27.9 load_ms=5.32 decode_ms=1629.5 first_token_ms=1968.6 generated=192 generation_tps=3.464 total_ms=58372.7
+WORKER index=4 group=1 mig=31ffbfe4 exit=0 text=617b5b8088789bce tokens=12161 context_ms=28.2 load_ms=5.38 decode_ms=1673.1 first_token_ms=2066.6 generated=192 generation_tps=3.469 total_ms=58392.6
+WORKER index=5 group=1 mig=fafc828a exit=0 text=736817ea889e0085 tokens=12172 context_ms=27.4 load_ms=5.19 decode_ms=1271.1 first_token_ms=1969.2 generated=192 generation_tps=5.016 total_ms=40904.7
+WORKER index=6 group=1 mig=31ffbfe4 exit=0 text=fede20b0ce61df9a tokens=12167 context_ms=30.7 load_ms=5.33 decode_ms=1674.1 first_token_ms=2087.3 generated=192 generation_tps=3.469 total_ms=58408.7
+WORKER index=7 group=1 mig=fafc828a exit=0 text=06acc271f26cb952 tokens=12175 context_ms=31.4 load_ms=5.23 decode_ms=1302.6 first_token_ms=2037.4 generated=192 generation_tps=5.027 total_ms=40910.1
+MEMORY pipeline_drop_mib=8619 files_mib=896
+ENERGY phase=prefix seconds=14.12 vin_joules=829.3 gpu_joules=425.0
+ENERGY phase=leaders seconds=4.89 vin_joules=356.4 gpu_joules=154.8
+ENERGY phase=workers seconds=58.94 vin_joules=4699.0 gpu_joules=2038.0
+END_CASE failed=0 timed_out=0 wall_ms=77951 power_samples=391
+CASE mode=copy groups=2 workers=4 turns=3
+PLANNER exit=0 text=2986789f8c4a0a5d tokens=11788 publish_ms=472.21 state_bytes=676160389 generation_tps=4.383
+LEADER group=0 mig=fafc828a exit=0 text=172e721640cc24d4 tokens=11887 context_ms=36.1 load_ms=128.91 publish_ms=487.80 state_bytes=681839029 generation_tps=7.414
+LEADER group=1 mig=31ffbfe4 exit=0 text=ccaa7b1578fc9b8c tokens=11887 context_ms=37.5 load_ms=189.70 publish_ms=439.35 state_bytes=681839029 generation_tps=6.159
+WORKER index=0 group=0 mig=fafc828a exit=0 text=34c5ba01e77f923b tokens=12166 context_ms=50.3 load_ms=232.14 decode_ms=1006.3 first_token_ms=1738.8 generated=192 generation_tps=5.017 total_ms=40601.2
+WORKER index=1 group=0 mig=31ffbfe4 exit=0 text=72fc7f37969fe021 tokens=12161 context_ms=50.1 load_ms=333.61 decode_ms=1613.5 first_token_ms=2202.8 generated=192 generation_tps=3.540 total_ms=57422.0
+WORKER index=2 group=0 mig=fafc828a exit=0 text=d81abdc974c1a615 tokens=12167 context_ms=75.4 load_ms=364.60 decode_ms=1217.2 first_token_ms=2399.7 generated=192 generation_tps=5.055 total_ms=40993.7
+WORKER index=3 group=0 mig=31ffbfe4 exit=0 text=7be0e5aff5023925 tokens=12167 context_ms=83.6 load_ms=213.55 decode_ms=1618.9 first_token_ms=2261.8 generated=192 generation_tps=3.540 total_ms=57481.4
+WORKER index=4 group=1 mig=31ffbfe4 exit=0 text=617b5b8088789bce tokens=12161 context_ms=69.2 load_ms=392.96 decode_ms=1649.7 first_token_ms=2528.3 generated=192 generation_tps=3.552 total_ms=57524.6
+WORKER index=5 group=1 mig=fafc828a exit=0 text=736817ea889e0085 tokens=12172 context_ms=81.0 load_ms=349.14 decode_ms=1266.0 first_token_ms=2413.6 generated=192 generation_tps=5.047 total_ms=41096.5
+WORKER index=6 group=1 mig=31ffbfe4 exit=0 text=fede20b0ce61df9a tokens=12167 context_ms=50.2 load_ms=232.40 decode_ms=1617.7 first_token_ms=2150.1 generated=192 generation_tps=3.542 total_ms=57358.2
+WORKER index=7 group=1 mig=fafc828a exit=0 text=06acc271f26cb952 tokens=12175 context_ms=73.4 load_ms=371.16 decode_ms=1244.0 first_token_ms=2390.3 generated=192 generation_tps=5.045 total_ms=41073.0
+MEMORY pipeline_drop_mib=17583 files_mib=0
+ENERGY phase=prefix seconds=14.54 vin_joules=827.7 gpu_joules=428.0
+ENERGY phase=leaders seconds=5.41 vin_joules=380.3 gpu_joules=155.5
+ENERGY phase=workers seconds=57.96 vin_joules=4659.9 gpu_joules=2015.9
+END_CASE failed=0 timed_out=0 wall_ms=77908 power_samples=390
+CASE mode=stock groups=2 workers=4 turns=3
+PLANNER exit=0 text=2986789f8c4a0a5d tokens=11788 publish_ms=407.74 state_bytes=676160389 generation_tps=8.052
+LEADER group=0 mig=fafc828a exit=0 text=172e721640cc24d4 tokens=11887 context_ms=37.5 load_ms=165.17 publish_ms=488.02 state_bytes=681839029 generation_tps=12.177
+LEADER group=1 mig=31ffbfe4 exit=0 text=ccaa7b1578fc9b8c tokens=11887 context_ms=38.5 load_ms=113.44 publish_ms=399.41 state_bytes=681839029 generation_tps=10.597
+WORKER index=0 group=0 mig=fafc828a exit=0 text=34c5ba01e77f923b tokens=12166 context_ms=50.0 load_ms=265.34 decode_ms=1056.2 first_token_ms=6808.4 generated=192 generation_tps=5.338 total_ms=43436.5
+WORKER index=1 group=0 mig=31ffbfe4 exit=0 text=72fc7f37969fe021 tokens=12161 context_ms=56.8 load_ms=206.27 decode_ms=1482.5 first_token_ms=5157.2 generated=192 generation_tps=3.698 total_ms=58100.3
+WORKER index=2 group=0 mig=fafc828a exit=0 text=d81abdc974c1a615 tokens=12167 context_ms=55.9 load_ms=318.65 decode_ms=1181.5 first_token_ms=7199.0 generated=192 generation_tps=5.354 total_ms=43691.2
+WORKER index=3 group=0 mig=31ffbfe4 exit=0 text=7be0e5aff5023925 tokens=12167 context_ms=60.6 load_ms=389.27 decode_ms=1693.2 first_token_ms=5749.5 generated=192 generation_tps=3.720 total_ms=58340.6
+WORKER index=4 group=1 mig=31ffbfe4 exit=0 text=617b5b8088789bce tokens=12161 context_ms=55.6 load_ms=389.53 decode_ms=1698.9 first_token_ms=5762.3 generated=192 generation_tps=3.721 total_ms=58348.1
+WORKER index=5 group=1 mig=fafc828a exit=0 text=736817ea889e0085 tokens=12172 context_ms=53.6 load_ms=352.61 decode_ms=1336.1 first_token_ms=7442.6 generated=192 generation_tps=5.387 total_ms=43748.6
+WORKER index=6 group=1 mig=31ffbfe4 exit=0 text=fede20b0ce61df9a tokens=12167 context_ms=51.4 load_ms=212.85 decode_ms=1493.2 first_token_ms=5144.7 generated=192 generation_tps=3.691 total_ms=58135.8
+WORKER index=7 group=1 mig=fafc828a exit=0 text=06acc271f26cb952 tokens=12175 context_ms=60.5 load_ms=319.59 decode_ms=1317.8 first_token_ms=7257.5 generated=192 generation_tps=5.368 total_ms=43702.7
+MEMORY pipeline_drop_mib=67385 files_mib=0
+ENERGY phase=prefix seconds=15.16 vin_joules=840.7 gpu_joules=428.6
+ENERGY phase=leaders seconds=5.98 vin_joules=399.5 gpu_joules=155.0
+ENERGY phase=workers seconds=59.05 vin_joules=4702.1 gpu_joules=1980.5
+END_CASE failed=0 timed_out=0 wall_ms=80183 power_samples=401
+END_KVPIPE
+BEGIN_KVPIPE run=5 context=16384
+CASE mode=stock groups=2 workers=4 turns=3
+PLANNER exit=0 text=2986789f8c4a0a5d tokens=11788 publish_ms=425.51 state_bytes=676160389 generation_tps=7.757
+LEADER group=0 mig=fafc828a exit=0 text=172e721640cc24d4 tokens=11887 context_ms=36.0 load_ms=177.37 publish_ms=489.80 state_bytes=681839029 generation_tps=11.706
+LEADER group=1 mig=31ffbfe4 exit=0 text=ccaa7b1578fc9b8c tokens=11887 context_ms=38.7 load_ms=119.03 publish_ms=404.03 state_bytes=681839029 generation_tps=9.707
+WORKER index=0 group=0 mig=fafc828a exit=0 text=34c5ba01e77f923b tokens=12166 context_ms=51.0 load_ms=249.33 decode_ms=1004.5 first_token_ms=6238.9 generated=192 generation_tps=5.335 total_ms=42854.8
+WORKER index=1 group=0 mig=31ffbfe4 exit=0 text=72fc7f37969fe021 tokens=12161 context_ms=48.7 load_ms=189.62 decode_ms=1317.4 first_token_ms=4451.3 generated=192 generation_tps=3.703 total_ms=57288.1
+WORKER index=2 group=0 mig=fafc828a exit=0 text=d81abdc974c1a615 tokens=12167 context_ms=57.1 load_ms=373.32 decode_ms=1185.6 first_token_ms=7247.0 generated=192 generation_tps=5.374 total_ms=43614.9
+WORKER index=3 group=0 mig=31ffbfe4 exit=0 text=7be0e5aff5023925 tokens=12167 context_ms=56.2 load_ms=419.66 decode_ms=1755.3 first_token_ms=6089.7 generated=192 generation_tps=3.745 total_ms=58362.3
+WORKER index=4 group=1 mig=31ffbfe4 exit=0 text=617b5b8088789bce tokens=12161 context_ms=71.4 load_ms=276.87 decode_ms=1586.9 first_token_ms=5487.8 generated=192 generation_tps=3.716 total_ms=58175.1
+WORKER index=5 group=1 mig=fafc828a exit=0 text=736817ea889e0085 tokens=12172 context_ms=57.0 load_ms=361.16 decode_ms=1260.2 first_token_ms=7350.3 generated=192 generation_tps=5.382 total_ms=43672.5
+WORKER index=6 group=1 mig=31ffbfe4 exit=0 text=fede20b0ce61df9a tokens=12167 context_ms=52.3 load_ms=338.79 decode_ms=1688.3 first_token_ms=5662.2 generated=192 generation_tps=3.723 total_ms=58240.4
+WORKER index=7 group=1 mig=fafc828a exit=0 text=06acc271f26cb952 tokens=12175 context_ms=60.6 load_ms=386.95 decode_ms=1316.7 first_token_ms=7595.4 generated=192 generation_tps=5.413 total_ms=43718.4
+MEMORY pipeline_drop_mib=67386 files_mib=0
+ENERGY phase=prefix seconds=15.16 vin_joules=843.0 gpu_joules=429.4
+ENERGY phase=leaders seconds=5.94 vin_joules=388.4 gpu_joules=155.6
+ENERGY phase=workers seconds=58.94 vin_joules=4708.6 gpu_joules=1977.9
+END_CASE failed=0 timed_out=0 wall_ms=80042 power_samples=401
+CASE mode=copy groups=2 workers=4 turns=3
+PLANNER exit=0 text=2986789f8c4a0a5d tokens=11788 publish_ms=415.94 state_bytes=676160389 generation_tps=4.459
+LEADER group=0 mig=fafc828a exit=0 text=172e721640cc24d4 tokens=11887 context_ms=38.2 load_ms=176.83 publish_ms=513.54 state_bytes=681839029 generation_tps=7.560
+LEADER group=1 mig=31ffbfe4 exit=0 text=ccaa7b1578fc9b8c tokens=11887 context_ms=41.3 load_ms=127.52 publish_ms=395.45 state_bytes=681839029 generation_tps=6.170
+WORKER index=0 group=0 mig=fafc828a exit=0 text=34c5ba01e77f923b tokens=12166 context_ms=60.6 load_ms=358.05 decode_ms=1032.1 first_token_ms=2104.4 generated=192 generation_tps=5.022 total_ms=40952.7
+WORKER index=1 group=0 mig=31ffbfe4 exit=0 text=72fc7f37969fe021 tokens=12161 context_ms=50.3 load_ms=226.04 decode_ms=1452.2 first_token_ms=2007.8 generated=192 generation_tps=3.535 total_ms=57313.4
+WORKER index=2 group=0 mig=fafc828a exit=0 text=d81abdc974c1a615 tokens=12167 context_ms=88.2 load_ms=284.54 decode_ms=1239.1 first_token_ms=2364.8 generated=192 generation_tps=5.045 total_ms=41089.2
+WORKER index=3 group=0 mig=31ffbfe4 exit=0 text=7be0e5aff5023925 tokens=12167 context_ms=87.0 load_ms=275.35 decode_ms=1613.2 first_token_ms=2332.4 generated=192 generation_tps=3.547 total_ms=57456.9
+WORKER index=4 group=1 mig=31ffbfe4 exit=0 text=617b5b8088789bce tokens=12161 context_ms=97.0 load_ms=267.09 decode_ms=1642.4 first_token_ms=2395.2 generated=192 generation_tps=3.549 total_ms=57482.2
+WORKER index=5 group=1 mig=fafc828a exit=0 text=736817ea889e0085 tokens=12172 context_ms=72.5 load_ms=348.78 decode_ms=1270.3 first_token_ms=2445.1 generated=192 generation_tps=5.050 total_ms=41105.5
+WORKER index=6 group=1 mig=31ffbfe4 exit=0 text=fede20b0ce61df9a tokens=12167 context_ms=103.0 load_ms=370.50 decode_ms=1700.1 first_token_ms=2554.3 generated=192 generation_tps=3.556 total_ms=57511.9
+WORKER index=7 group=1 mig=fafc828a exit=0 text=06acc271f26cb952 tokens=12175 context_ms=76.5 load_ms=345.51 decode_ms=1264.3 first_token_ms=2420.6 generated=192 generation_tps=5.048 total_ms=41099.4
+MEMORY pipeline_drop_mib=17662 files_mib=0
+ENERGY phase=prefix seconds=14.49 vin_joules=835.3 gpu_joules=426.7
+ENERGY phase=leaders seconds=5.29 vin_joules=375.0 gpu_joules=153.5
+ENERGY phase=workers seconds=57.99 vin_joules=4662.3 gpu_joules=2016.7
+END_CASE failed=0 timed_out=0 wall_ms=77768 power_samples=390
+CASE mode=chain groups=2 workers=4 turns=3
+PLANNER exit=0 text=2986789f8c4a0a5d tokens=11788 publish_ms=11.52 state_bytes=189317 generation_tps=4.263
+LEADER group=0 mig=fafc828a exit=0 text=172e721640cc24d4 tokens=11887 context_ms=31.2 load_ms=5.29 publish_ms=6.63 state_bytes=190901 generation_tps=7.257
+LEADER group=1 mig=31ffbfe4 exit=0 text=ccaa7b1578fc9b8c tokens=11887 context_ms=30.8 load_ms=5.01 publish_ms=6.48 state_bytes=190901 generation_tps=5.950
+WORKER index=0 group=0 mig=fafc828a exit=0 text=34c5ba01e77f923b tokens=12166 context_ms=68.1 load_ms=6.61 decode_ms=960.4 first_token_ms=1342.3 generated=192 generation_tps=4.983 total_ms=40478.6
+WORKER index=1 group=0 mig=31ffbfe4 exit=0 text=72fc7f37969fe021 tokens=12161 context_ms=28.1 load_ms=5.23 decode_ms=1495.6 first_token_ms=1814.3 generated=192 generation_tps=3.456 total_ms=58343.0
+WORKER index=2 group=0 mig=fafc828a exit=0 text=d81abdc974c1a615 tokens=12167 context_ms=30.6 load_ms=5.29 decode_ms=1200.9 first_token_ms=1913.9 generated=192 generation_tps=5.013 total_ms=40881.7
+WORKER index=3 group=0 mig=31ffbfe4 exit=0 text=7be0e5aff5023925 tokens=12167 context_ms=27.9 load_ms=5.31 decode_ms=1641.0 first_token_ms=1997.7 generated=192 generation_tps=3.466 total_ms=58371.5
+WORKER index=4 group=1 mig=31ffbfe4 exit=0 text=617b5b8088789bce tokens=12161 context_ms=28.3 load_ms=5.42 decode_ms=1684.3 first_token_ms=2067.9 generated=192 generation_tps=3.468 total_ms=58410.4
+WORKER index=5 group=1 mig=fafc828a exit=0 text=736817ea889e0085 tokens=12172 context_ms=27.8 load_ms=5.04 decode_ms=1250.8 first_token_ms=1979.8 generated=192 generation_tps=5.019 total_ms=40893.5
+WORKER index=6 group=1 mig=31ffbfe4 exit=0 text=fede20b0ce61df9a tokens=12167 context_ms=33.8 load_ms=5.07 decode_ms=1683.8 first_token_ms=2066.7 generated=192 generation_tps=3.467 total_ms=58431.9
+WORKER index=7 group=1 mig=fafc828a exit=0 text=06acc271f26cb952 tokens=12175 context_ms=29.4 load_ms=5.06 decode_ms=1305.1 first_token_ms=2067.5 generated=192 generation_tps=5.030 total_ms=40903.8
+MEMORY pipeline_drop_mib=8635 files_mib=896
+ENERGY phase=prefix seconds=14.11 vin_joules=876.0 gpu_joules=425.5
+ENERGY phase=leaders seconds=4.88 vin_joules=349.6 gpu_joules=154.7
+ENERGY phase=workers seconds=58.86 vin_joules=4691.9 gpu_joules=2039.6
+END_CASE failed=0 timed_out=0 wall_ms=77858 power_samples=390
+END_KVPIPE
+BEGIN_KVPIPE run=6 context=16384
+CASE mode=chain groups=2 workers=4 turns=3
+PLANNER exit=0 text=2986789f8c4a0a5d tokens=11788 publish_ms=11.56 state_bytes=189317 generation_tps=4.264
+LEADER group=0 mig=fafc828a exit=0 text=172e721640cc24d4 tokens=11887 context_ms=26.2 load_ms=5.02 publish_ms=6.38 state_bytes=190901 generation_tps=7.244
+LEADER group=1 mig=31ffbfe4 exit=0 text=ccaa7b1578fc9b8c tokens=11887 context_ms=27.8 load_ms=5.25 publish_ms=6.12 state_bytes=190901 generation_tps=6.001
+WORKER index=0 group=0 mig=fafc828a exit=0 text=34c5ba01e77f923b tokens=12166 context_ms=46.0 load_ms=5.31 decode_ms=924.7 first_token_ms=1380.9 generated=192 generation_tps=4.976 total_ms=40571.7
+WORKER index=1 group=0 mig=31ffbfe4 exit=0 text=72fc7f37969fe021 tokens=12161 context_ms=27.5 load_ms=5.34 decode_ms=1520.1 first_token_ms=1873.8 generated=192 generation_tps=3.463 total_ms=58300.3
+WORKER index=2 group=0 mig=fafc828a exit=0 text=d81abdc974c1a615 tokens=12167 context_ms=27.9 load_ms=4.92 decode_ms=1084.9 first_token_ms=1733.1 generated=192 generation_tps=4.994 total_ms=40804.3
+WORKER index=3 group=0 mig=31ffbfe4 exit=0 text=7be0e5aff5023925 tokens=12167 context_ms=34.7 load_ms=6.17 decode_ms=1671.9 first_token_ms=2069.9 generated=192 generation_tps=3.468 total_ms=58422.0
+WORKER index=4 group=1 mig=31ffbfe4 exit=0 text=617b5b8088789bce tokens=12161 context_ms=29.0 load_ms=5.16 decode_ms=1676.4 first_token_ms=2075.2 generated=192 generation_tps=3.472 total_ms=58363.4
+WORKER index=5 group=1 mig=fafc828a exit=0 text=736817ea889e0085 tokens=12172 context_ms=29.6 load_ms=5.32 decode_ms=1271.3 first_token_ms=2061.2 generated=192 generation_tps=5.023 total_ms=40910.5
+WORKER index=6 group=1 mig=31ffbfe4 exit=0 text=fede20b0ce61df9a tokens=12167 context_ms=31.5 load_ms=5.27 decode_ms=1652.7 first_token_ms=2025.2 generated=192 generation_tps=3.465 total_ms=58412.2
+WORKER index=7 group=1 mig=fafc828a exit=0 text=06acc271f26cb952 tokens=12175 context_ms=30.5 load_ms=5.35 decode_ms=1292.4 first_token_ms=2049.1 generated=192 generation_tps=5.021 total_ms=40918.7
+MEMORY pipeline_drop_mib=8626 files_mib=896
+ENERGY phase=prefix seconds=14.11 vin_joules=877.6 gpu_joules=424.5
+ENERGY phase=leaders seconds=4.94 vin_joules=357.3 gpu_joules=154.5
+ENERGY phase=workers seconds=58.92 vin_joules=4676.6 gpu_joules=2040.1
+END_CASE failed=0 timed_out=0 wall_ms=77977 power_samples=391
+CASE mode=copy groups=2 workers=4 turns=3
+PLANNER exit=0 text=2986789f8c4a0a5d tokens=11788 publish_ms=473.22 state_bytes=676160389 generation_tps=4.388
+LEADER group=0 mig=fafc828a exit=0 text=172e721640cc24d4 tokens=11887 context_ms=36.0 load_ms=129.35 publish_ms=484.89 state_bytes=681839029 generation_tps=7.517
+LEADER group=1 mig=31ffbfe4 exit=0 text=ccaa7b1578fc9b8c tokens=11887 context_ms=37.5 load_ms=183.33 publish_ms=415.42 state_bytes=681839029 generation_tps=6.166
+WORKER index=0 group=0 mig=fafc828a exit=0 text=34c5ba01e77f923b tokens=12166 context_ms=104.8 load_ms=284.08 decode_ms=1015.3 first_token_ms=1700.6 generated=192 generation_tps=5.018 total_ms=40566.0
+WORKER index=1 group=0 mig=31ffbfe4 exit=0 text=72fc7f37969fe021 tokens=12161 context_ms=50.7 load_ms=328.23 decode_ms=1598.5 first_token_ms=2211.9 generated=192 generation_tps=3.537 total_ms=57480.7
+WORKER index=2 group=0 mig=fafc828a exit=0 text=d81abdc974c1a615 tokens=12167 context_ms=68.9 load_ms=336.48 decode_ms=1286.4 first_token_ms=2490.4 generated=192 generation_tps=5.063 total_ms=41087.1
+WORKER index=3 group=0 mig=31ffbfe4 exit=0 text=7be0e5aff5023925 tokens=12167 context_ms=54.7 load_ms=215.87 decode_ms=1652.0 first_token_ms=2277.4 generated=192 generation_tps=3.541 total_ms=57500.9
+WORKER index=4 group=1 mig=31ffbfe4 exit=0 text=617b5b8088789bce tokens=12161 context_ms=49.3 load_ms=223.02 decode_ms=1608.5 first_token_ms=2206.8 generated=192 generation_tps=3.537 total_ms=57488.0
+WORKER index=5 group=1 mig=fafc828a exit=0 text=736817ea889e0085 tokens=12172 context_ms=60.6 load_ms=342.66 decode_ms=1288.4 first_token_ms=2515.4 generated=192 generation_tps=5.061 total_ms=41102.2
+WORKER index=6 group=1 mig=31ffbfe4 exit=0 text=fede20b0ce61df9a tokens=12167 context_ms=67.2 load_ms=424.86 decode_ms=1692.0 first_token_ms=2609.3 generated=192 generation_tps=3.560 total_ms=57530.9
+WORKER index=7 group=1 mig=fafc828a exit=0 text=06acc271f26cb952 tokens=12175 context_ms=72.5 load_ms=387.87 decode_ms=1312.9 first_token_ms=2487.1 generated=192 generation_tps=5.061 total_ms=41087.8
+MEMORY pipeline_drop_mib=17631 files_mib=0
+ENERGY phase=prefix seconds=14.55 vin_joules=841.7 gpu_joules=425.8
+ENERGY phase=leaders seconds=5.37 vin_joules=366.7 gpu_joules=153.0
+ENERGY phase=workers seconds=57.99 vin_joules=4660.1 gpu_joules=2020.0
+END_CASE failed=0 timed_out=0 wall_ms=77912 power_samples=390
+CASE mode=stock groups=2 workers=4 turns=3
+PLANNER exit=0 text=2986789f8c4a0a5d tokens=11788 publish_ms=419.25 state_bytes=676160389 generation_tps=7.696
+LEADER group=0 mig=fafc828a exit=0 text=172e721640cc24d4 tokens=11887 context_ms=36.3 load_ms=117.58 publish_ms=455.64 state_bytes=681839029 generation_tps=11.859
+LEADER group=1 mig=31ffbfe4 exit=0 text=ccaa7b1578fc9b8c tokens=11887 context_ms=37.4 load_ms=168.26 publish_ms=455.92 state_bytes=681839029 generation_tps=10.432
+WORKER index=0 group=0 mig=fafc828a exit=0 text=34c5ba01e77f923b tokens=12166 context_ms=50.9 load_ms=250.74 decode_ms=997.9 first_token_ms=6346.2 generated=192 generation_tps=5.320 total_ms=43064.8
+WORKER index=1 group=0 mig=31ffbfe4 exit=0 text=72fc7f37969fe021 tokens=12161 context_ms=92.3 load_ms=370.02 decode_ms=1745.3 first_token_ms=5592.3 generated=192 generation_tps=3.708 total_ms=58377.9
+WORKER index=2 group=0 mig=fafc828a exit=0 text=d81abdc974c1a615 tokens=12167 context_ms=57.0 load_ms=374.24 decode_ms=1117.5 first_token_ms=7169.4 generated=192 generation_tps=5.353 total_ms=43642.6
+WORKER index=3 group=0 mig=31ffbfe4 exit=0 text=7be0e5aff5023925 tokens=12167 context_ms=89.8 load_ms=205.19 decode_ms=1563.8 first_token_ms=5258.1 generated=192 generation_tps=3.698 total_ms=58157.6
+WORKER index=4 group=1 mig=31ffbfe4 exit=0 text=617b5b8088789bce tokens=12161 context_ms=104.2 load_ms=208.22 decode_ms=1644.0 first_token_ms=5308.8 generated=192 generation_tps=3.697 total_ms=58254.8
+WORKER index=5 group=1 mig=fafc828a exit=0 text=736817ea889e0085 tokens=12172 context_ms=62.2 load_ms=373.20 decode_ms=1292.5 first_token_ms=7473.2 generated=192 generation_tps=5.384 total_ms=43770.8
+WORKER index=6 group=1 mig=31ffbfe4 exit=0 text=fede20b0ce61df9a tokens=12167 context_ms=58.2 load_ms=358.08 decode_ms=1725.9 first_token_ms=5552.3 generated=192 generation_tps=3.712 total_ms=58313.0
+WORKER index=7 group=1 mig=fafc828a exit=0 text=06acc271f26cb952 tokens=12175 context_ms=65.8 load_ms=371.27 decode_ms=1293.6 first_token_ms=7458.5 generated=192 generation_tps=5.382 total_ms=43766.0
+MEMORY pipeline_drop_mib=67400 files_mib=0
+ENERGY phase=prefix seconds=15.16 vin_joules=842.4 gpu_joules=428.4
+ENERGY phase=leaders seconds=6.07 vin_joules=396.4 gpu_joules=157.9
+ENERGY phase=workers seconds=59.08 vin_joules=4724.1 gpu_joules=1981.6
+END_CASE failed=0 timed_out=0 wall_ms=80314 power_samples=402
+END_KVPIPE

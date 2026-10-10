@@ -1,0 +1,108 @@
+BEGIN_VFAULT run=1
+CASE mode=vllm kv_cache_gib=2
+STEP mode=vllm name=start1 pages=5055326 wall_ms=27731 exit=0
+PREFIX port=8210 exit=0 text=7879981d4f226a8f prompt_tokens=14282 prompt_cached=-1 first_token_ms=9189.1 generated=1 generation_tps=0.000 request_ms=9189.2
+STEP mode=vllm name=prefix pages=0 wall_ms=9267 exit=0
+AGENT index=0 port=8210 exit=0 text=5a117a9d08712410 prompt_tokens=14301 prompt_cached=14272 first_token_ms=227.0 generated=64 generation_tps=32.316 request_ms=2176.5
+STEP mode=vllm name=publisher_first pages=0 wall_ms=2254 exit=0
+AGENT index=0 port=8210 exit=0 text=1f54b5d43d9e889e prompt_tokens=14303 prompt_cached=14272 first_token_ms=168.4 generated=64 generation_tps=31.823 request_ms=2148.0
+STEP mode=vllm name=publisher_second pages=0 wall_ms=2231 exit=0
+STEP mode=vllm name=start2 pages=5266988 wall_ms=25533 exit=0
+AGENT index=0 port=8211 exit=0 text=18628592994ba2ba prompt_tokens=14309 prompt_cached=-1 first_token_ms=13765.1 generated=64 generation_tps=23.535 request_ms=16442.0
+STEP mode=vllm name=attacher_first pages=0 wall_ms=16523 exit=0
+AGENT index=0 port=8211 exit=0 text=40414e7ca0335309 prompt_tokens=14304 prompt_cached=14272 first_token_ms=183.8 generated=64 generation_tps=23.192 request_ms=2900.2
+STEP mode=vllm name=attacher_second pages=0 wall_ms=2985 exit=0
+END_CASE failed=0
+CASE mode=stator kv_cache_gib=2
+STEP mode=stator name=start1 pages=5145398 wall_ms=25023 exit=0
+PREFIX port=8210 exit=0 text=7879981d4f226a8f prompt_tokens=14282 prompt_cached=-1 first_token_ms=9200.1 generated=1 generation_tps=0.000 request_ms=9200.2
+STEP mode=stator name=prefix pages=0 wall_ms=9279 exit=0
+AGENT index=0 port=8210 exit=0 text=5a117a9d08712410 prompt_tokens=14301 prompt_cached=14272 first_token_ms=221.0 generated=64 generation_tps=32.171 request_ms=2179.3
+STEP mode=stator name=publisher_first pages=2840 wall_ms=2266 exit=0
+AGENT index=0 port=8210 exit=0 text=1f54b5d43d9e889e prompt_tokens=14303 prompt_cached=14272 first_token_ms=153.2 generated=64 generation_tps=31.664 request_ms=2142.8
+STEP mode=stator name=publisher_second pages=0 wall_ms=2225 exit=0
+STEP mode=stator name=start2 pages=5387634 wall_ms=26694 exit=0
+AGENT index=0 port=8211 exit=0 text=18628592994ba2ba prompt_tokens=14309 prompt_cached=14272 first_token_ms=297.3 generated=64 generation_tps=15.862 request_ms=4269.1
+STEP mode=stator name=attacher_first pages=0 wall_ms=4348 exit=0
+AGENT index=0 port=8211 exit=0 text=40414e7ca0335309 prompt_tokens=14304 prompt_cached=14272 first_token_ms=189.6 generated=64 generation_tps=15.633 request_ms=4219.6
+STEP mode=stator name=attacher_second pages=0 wall_ms=4302 exit=0
+PLUGIN slot=1 weights_publish tensors=283 bytes=5575344128 ms=133.7 file=/home/thor/kcj/llm_share/vllm_share_mount/weights
+PLUGIN slot=1 weights_attach tensors=283 bytes=5575258112 ms=82.6 device_before_mib=5343 device_after_mib=17 device_reserved_mib=52 file=/home/thor/kcj/llm_share/vllm_share_mount/weights
+PLUGIN slot=1 kv_cache role=publisher bytes=2146959360 block_bytes=917504 blocks=0 ms=32.2
+PLUGIN slot=1 kv_publish blocks=892 tokens=14272 file=/home/thor/kcj/llm_share/vllm_share_mount/kv
+PLUGIN slot=2 weights_attach tensors=283 bytes=5575258112 ms=98.2 device_before_mib=5343 device_after_mib=17 device_reserved_mib=52 file=/home/thor/kcj/llm_share/vllm_share_mount/weights
+PLUGIN slot=2 kv_cache role=agent bytes=2146959360 block_bytes=917504 blocks=892 ms=23.1
+PLUGIN slot=2 kv_attach blocks=892 tokens=14272
+END_CASE failed=0
+BEGIN_VFAULT run=2
+CASE mode=stator kv_cache_gib=2
+STEP mode=stator name=start1 pages=5191116 wall_ms=23985 exit=0
+PREFIX port=8210 exit=0 text=7879981d4f226a8f prompt_tokens=14282 prompt_cached=-1 first_token_ms=9200.3 generated=1 generation_tps=0.000 request_ms=9200.4
+STEP mode=stator name=prefix pages=0 wall_ms=9279 exit=0
+AGENT index=0 port=8210 exit=0 text=5a117a9d08712410 prompt_tokens=14301 prompt_cached=14272 first_token_ms=232.7 generated=64 generation_tps=32.207 request_ms=2188.8
+STEP mode=stator name=publisher_first pages=2836 wall_ms=2273 exit=0
+AGENT index=0 port=8210 exit=0 text=1f54b5d43d9e889e prompt_tokens=14303 prompt_cached=14272 first_token_ms=161.2 generated=64 generation_tps=31.737 request_ms=2146.3
+STEP mode=stator name=publisher_second pages=0 wall_ms=2231 exit=0
+STEP mode=stator name=start2 pages=5280568 wall_ms=25027 exit=0
+AGENT index=0 port=8211 exit=0 text=18628592994ba2ba prompt_tokens=14309 prompt_cached=14272 first_token_ms=303.9 generated=64 generation_tps=15.858 request_ms=4276.7
+STEP mode=stator name=attacher_first pages=0 wall_ms=4362 exit=0
+AGENT index=0 port=8211 exit=0 text=40414e7ca0335309 prompt_tokens=14304 prompt_cached=14272 first_token_ms=184.2 generated=64 generation_tps=15.616 request_ms=4218.6
+STEP mode=stator name=attacher_second pages=0 wall_ms=4303 exit=0
+PLUGIN slot=1 weights_publish tensors=283 bytes=5575344128 ms=151.3 file=/home/thor/kcj/llm_share/vllm_share_mount/weights
+PLUGIN slot=1 weights_attach tensors=283 bytes=5575258112 ms=81.2 device_before_mib=5343 device_after_mib=17 device_reserved_mib=52 file=/home/thor/kcj/llm_share/vllm_share_mount/weights
+PLUGIN slot=1 kv_cache role=publisher bytes=2146959360 block_bytes=917504 blocks=0 ms=32.4
+PLUGIN slot=1 kv_publish blocks=892 tokens=14272 file=/home/thor/kcj/llm_share/vllm_share_mount/kv
+PLUGIN slot=2 weights_attach tensors=283 bytes=5575258112 ms=98.0 device_before_mib=5343 device_after_mib=17 device_reserved_mib=52 file=/home/thor/kcj/llm_share/vllm_share_mount/weights
+PLUGIN slot=2 kv_cache role=agent bytes=2146959360 block_bytes=917504 blocks=892 ms=23.4
+PLUGIN slot=2 kv_attach blocks=892 tokens=14272
+END_CASE failed=0
+CASE mode=vllm kv_cache_gib=2
+STEP mode=vllm name=start1 pages=5422622 wall_ms=23961 exit=0
+PREFIX port=8210 exit=0 text=7879981d4f226a8f prompt_tokens=14282 prompt_cached=-1 first_token_ms=9167.2 generated=1 generation_tps=0.000 request_ms=9167.3
+STEP mode=vllm name=prefix pages=0 wall_ms=9243 exit=0
+AGENT index=0 port=8210 exit=0 text=5a117a9d08712410 prompt_tokens=14301 prompt_cached=14272 first_token_ms=203.4 generated=64 generation_tps=32.150 request_ms=2163.0
+STEP mode=vllm name=publisher_first pages=0 wall_ms=2240 exit=0
+AGENT index=0 port=8210 exit=0 text=1f54b5d43d9e889e prompt_tokens=14303 prompt_cached=14272 first_token_ms=140.6 generated=64 generation_tps=31.698 request_ms=2128.0
+STEP mode=vllm name=publisher_second pages=0 wall_ms=2205 exit=0
+STEP mode=vllm name=start2 pages=5329472 wall_ms=25017 exit=0
+AGENT index=0 port=8211 exit=0 text=18628592994ba2ba prompt_tokens=14309 prompt_cached=-1 first_token_ms=13762.3 generated=64 generation_tps=23.563 request_ms=16436.0
+STEP mode=vllm name=attacher_first pages=0 wall_ms=16516 exit=0
+AGENT index=0 port=8211 exit=0 text=40414e7ca0335309 prompt_tokens=14304 prompt_cached=14272 first_token_ms=169.7 generated=64 generation_tps=23.211 request_ms=2884.0
+STEP mode=vllm name=attacher_second pages=0 wall_ms=2962 exit=0
+END_CASE failed=0
+BEGIN_VFAULT run=3
+CASE mode=vllm kv_cache_gib=2
+STEP mode=vllm name=start1 pages=5302632 wall_ms=23426 exit=0
+PREFIX port=8210 exit=0 text=7879981d4f226a8f prompt_tokens=14282 prompt_cached=-1 first_token_ms=9181.5 generated=1 generation_tps=0.000 request_ms=9181.7
+STEP mode=vllm name=prefix pages=0 wall_ms=9266 exit=0
+AGENT index=0 port=8210 exit=0 text=5a117a9d08712410 prompt_tokens=14301 prompt_cached=14272 first_token_ms=216.9 generated=64 generation_tps=32.145 request_ms=2176.7
+STEP mode=vllm name=publisher_first pages=0 wall_ms=2258 exit=0
+AGENT index=0 port=8210 exit=0 text=1f54b5d43d9e889e prompt_tokens=14303 prompt_cached=14272 first_token_ms=160.6 generated=64 generation_tps=31.687 request_ms=2148.8
+STEP mode=vllm name=publisher_second pages=0 wall_ms=2223 exit=0
+STEP mode=vllm name=start2 pages=5324232 wall_ms=25056 exit=0
+AGENT index=0 port=8211 exit=0 text=18628592994ba2ba prompt_tokens=14309 prompt_cached=-1 first_token_ms=13757.2 generated=64 generation_tps=23.534 request_ms=16434.2
+STEP mode=vllm name=attacher_first pages=0 wall_ms=16515 exit=0
+AGENT index=0 port=8211 exit=0 text=40414e7ca0335309 prompt_tokens=14304 prompt_cached=14272 first_token_ms=163.4 generated=64 generation_tps=23.190 request_ms=2880.1
+STEP mode=vllm name=attacher_second pages=0 wall_ms=2967 exit=0
+END_CASE failed=0
+CASE mode=stator kv_cache_gib=2
+STEP mode=stator name=start1 pages=5126336 wall_ms=24480 exit=0
+PREFIX port=8210 exit=0 text=7879981d4f226a8f prompt_tokens=14282 prompt_cached=-1 first_token_ms=9196.2 generated=1 generation_tps=0.000 request_ms=9196.3
+STEP mode=stator name=prefix pages=0 wall_ms=9277 exit=0
+AGENT index=0 port=8210 exit=0 text=5a117a9d08712410 prompt_tokens=14301 prompt_cached=14272 first_token_ms=207.6 generated=64 generation_tps=32.203 request_ms=2163.9
+STEP mode=stator name=publisher_first pages=2836 wall_ms=2245 exit=0
+AGENT index=0 port=8210 exit=0 text=1f54b5d43d9e889e prompt_tokens=14303 prompt_cached=14272 first_token_ms=160.5 generated=64 generation_tps=31.645 request_ms=2151.3
+STEP mode=stator name=publisher_second pages=0 wall_ms=2233 exit=0
+STEP mode=stator name=start2 pages=5272354 wall_ms=25036 exit=0
+AGENT index=0 port=8211 exit=0 text=18628592994ba2ba prompt_tokens=14309 prompt_cached=14272 first_token_ms=307.5 generated=64 generation_tps=15.869 request_ms=4277.4
+STEP mode=stator name=attacher_first pages=0 wall_ms=4347 exit=0
+AGENT index=0 port=8211 exit=0 text=40414e7ca0335309 prompt_tokens=14304 prompt_cached=14272 first_token_ms=200.5 generated=64 generation_tps=15.631 request_ms=4230.9
+STEP mode=stator name=attacher_second pages=0 wall_ms=4316 exit=0
+PLUGIN slot=1 weights_publish tensors=283 bytes=5575344128 ms=151.3 file=/home/thor/kcj/llm_share/vllm_share_mount/weights
+PLUGIN slot=1 weights_attach tensors=283 bytes=5575258112 ms=81.5 device_before_mib=5343 device_after_mib=17 device_reserved_mib=52 file=/home/thor/kcj/llm_share/vllm_share_mount/weights
+PLUGIN slot=1 kv_cache role=publisher bytes=2146959360 block_bytes=917504 blocks=0 ms=32.4
+PLUGIN slot=1 kv_publish blocks=892 tokens=14272 file=/home/thor/kcj/llm_share/vllm_share_mount/kv
+PLUGIN slot=2 weights_attach tensors=283 bytes=5575258112 ms=97.1 device_before_mib=5343 device_after_mib=17 device_reserved_mib=52 file=/home/thor/kcj/llm_share/vllm_share_mount/weights
+PLUGIN slot=2 kv_cache role=agent bytes=2146959360 block_bytes=917504 blocks=892 ms=23.2
+PLUGIN slot=2 kv_attach blocks=892 tokens=14272
+END_CASE failed=0

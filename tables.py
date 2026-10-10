@@ -724,8 +724,73 @@ PIPE_COLUMNS = [
     ("vs stock", num("vin_vs_stock", 3)), ("GPU rail (J)", num("gpu_total_j")),
     ("Worker texts equal to stock", part("worker_texts_equal_to_stock", "worker_texts_compared")),
 ]
-for tag, name in (("20261007-engine-kvpipe-v1", "kv_pipe"), ("20261007-engine-kvpipe-huge-v1", "kv_pipe_huge")):
+for tag, name in (("20261007-engine-kvpipe-v1", "kv_pipe"), ("20261007-engine-kvpipe-huge-v1", "kv_pipe_huge"),
+                  ("20261010-engine-kvpipe-huge-v2", "kv_pipe_huge_v2")):
     render(name, os.path.join(engine_root, tag, "engine_kvpipe_summary.csv"), PIPE_COLUMNS)
+
+# --- the pages faulted in for the GPU, and the campaigns on the engine that ------
+# --- puts the entries of a divided 2 MiB block back at a publish -----------------
+text_of = lambda key: (lambda r: r[key] if r[key] != "" else "-")
+FAULT_COUNT_COLUMNS = [
+    ("Processes", text_of("kind")), ("Mode", text_of("mode")), ("Runs (failed)", lambda r: f"{r['runs']} ({r['failed']})"),
+    ("Pages faulted in for the GPU", text_of("fault_pages")), ("lowest", text_of("fault_pages_min")),
+    ("highest", text_of("fault_pages_max")), ("First token (ms)", text_of("first_token_ms")),
+    ("Throughput (tokens/s)", text_of("generation_tps_total")),
+    ("Texts equal to copy", lambda r: f"{r['texts_equal_to_copy']}/{r['texts_compared']}" if r["texts_compared"] else "-"),
+    ("Pages before the publish", text_of("fault_pages_before_publish")), ("Publish (ms)", text_of("publish_ms")),
+    ("Next task (ms)", text_of("next_task_ms")),
+]
+for tag, name in (("20261010-engine-kvfaultcount-v1", "kv_faultcount_v1"),
+                  ("20261010-engine-kvfaultcount-v2", "kv_faultcount_v2")):
+    render(name, os.path.join(engine_root, tag, "engine_kvfaultcount_summary.csv"), FAULT_COUNT_COLUMNS)
+render("vllm_faultcount", os.path.join(engine_root, "20261010-vllm-faultcount-v1", "vllm_faultcount_summary.csv"), [
+    ("Servers", text_of("mode")), ("Step", text_of("step")), ("Runs (failed)", lambda r: f"{r['runs']} ({r['failed']})"),
+    ("Pages faulted in for the GPU", text_of("fault_pages")), ("lowest", text_of("fault_pages_min")),
+    ("highest", text_of("fault_pages_max")), ("First token (ms)", text_of("first_token_ms")),
+    ("Request (ms)", text_of("request_ms")), ("Prompt tokens from the cache", text_of("prompt_cached")),
+    ("Texts equal to vllm", lambda r: f"{r['texts_equal_to_vllm']}/{r['texts_compared']}" if r["texts_compared"] else "-"),
+])
+render("kv_mech_v2", os.path.join(engine_root, "20261010-engine-kvmech-v2", "engine_kvmech_summary.csv"), MECH_COLUMNS)
+render("kv_fork_v2", os.path.join(engine_root, "20261010-engine-kvfork-v2", "engine_kvfork_summary.csv"), [
+    ("Hand-over", text_of("mode")), ("Runs (failed processes)", lambda r: f"{r['runs']} ({r['failed_processes']})"),
+    ("Pause of the parent (ms)", num("publish_ms", 2)), ("State file (MiB)", num("state_mib", 2)),
+    ("Parent texts equal", part("parent_texts_equal", "runs")),
+    ("Child texts equal to copy", part("child_texts_equal_to_copy", "children_started")),
+    ("Attach (ms)", num("child_attach_ms", 1)), ("First token (ms)", num("child_first_token_ms")),
+    ("Children memory (MiB)", num("children_memory_mib")), ("Prefix PSS (MiB)", num("prefix_pss_mib")),
+])
+render("kv_mps_v2", os.path.join(engine_root, "20261010-engine-kvmps-v2", "engine_kvmps_summary.csv"), [
+    ("Sharing", lambda r: CONFIG_NAMES[r["config"]]), ("Mode", text_of("mode")),
+    ("Runs (failed processes)", lambda r: f"{r['runs']} ({r['failed_processes']})"),
+    ("Pause of the parent (ms)", num("publish_ms", 2)), ("State file (MiB)", num("state_mib", 2)),
+    ("Attach (ms)", num("child_attach_ms", 1)), ("First token (ms)", num("child_first_token_ms")),
+    ("Children (tokens/s)", num("children_tps_sum", 2)), ("Children memory (MiB)", num("children_memory_mib")),
+    ("Prefix PSS (MiB)", num("prefix_pss_mib")), ("Texts equal to copy", part("texts_equal_to_copy", "children_finished")),
+])
+render("kv_tree_v2", os.path.join(engine_root, "20261010-engine-kvtree-v2", "engine_kvtree_summary.csv"), [
+    ("Mode", text_of("mode")), ("Runs (failed processes)", lambda r: f"{r['runs']} ({r['failed_processes']})"),
+    ("Root publish (ms)", num("root_publish_ms", 2)), ("Leader publish (ms)", num("leader_publish_ms", 2)),
+    ("Leaf attach (ms)", num("leaf_attach_ms", 1)), ("Leaf first token (ms)", num("leaf_first_token_ms")),
+    ("Leaves (tokens/s)", num("leaf_tps_sum", 2)), ("Tree memory (MiB)", num("tree_memory_mib")),
+    ("Segment files (MiB)", num("segment_files_mib")),
+    ("Leaf texts equal to copy", part("leaf_texts_equal_to_copy", "leaves_finished")),
+])
+render("kv_server2_v2", os.path.join(engine_root, "20261010-engine-kvserver2-v2", "engine_kvserver_summary.csv"), [
+    ("Mode", text_of("mode")), ("Agents", text_of("agents")), ("Runs (failed)", lambda r: f"{r['runs']} ({r['failed']})"),
+    ("Save, request / server (ms)", lambda r: f"{float(r['save_request_ms']):.2f} / {float(r['server_save_ms']):.2f}"),
+    ("Restore (ms)", num("restore_request_ms", 1)), ("First token (ms)", num("first_token_ms")),
+    ("Agents (tokens/s)", num("generation_tps_sum", 2)),
+    ("Memory / cache file (MiB)", lambda r: f"{r['agents_memory_mib']} / {r['cache_file_mib']}"),
+    ("Texts equal to copy", part("texts_equal_to_copy", "agents_finished")),
+])
+render("kv_batch_v2", os.path.join(engine_root, "20261010-engine-kvbatch-v2", "engine_kvbatch_summary.csv"), [
+    ("Configuration", text_of("config")), ("Runs (failed servers)", lambda r: f"{r['runs']} ({r['failed_servers']})"),
+    ("All agents ready (ms)", num("ready_all_servers_ms")), ("Throughput (tokens/s)", num("generation_tps_total", 2)),
+    ("12-SM", num("generation_tps_12sm", 2)), ("8-SM", num("generation_tps_6sm", 2)),
+    ("Second server attach (ms)", num("second_server_attach_ms", 1)), ("Publish (ms)", num("publish_ms", 2)),
+    ("State file (MiB)", num("state_mib", 2)), ("Memory (MiB)", num("memory_mib")),
+    ("Texts equal to copy", part("texts_equal_to_copy", "texts_compared")),
+])
 
 render("kv_fault", os.path.join(engine_root, "20261007-engine-kvfault-v1", "engine_kvfault_summary.csv"), [
     ("GPU sharing", lambda r: r["config"]), ("Fault", lambda r: r["fault"]), ("Runs", lambda r: r["runs"]),

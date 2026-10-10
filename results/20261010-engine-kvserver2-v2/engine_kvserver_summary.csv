@@ -1,0 +1,5 @@
+mode,agents,runs,failed,prefix_tokens,prefix_ms,save_request_ms,server_save_ms,slot_file_mib,restore_request_ms,prompt_tokens_evaluated,most_prompt_tokens_evaluated,first_token_ms,generation_tps_sum,agents_memory_mib,cache_file_mib,agents_finished,texts_equal_to_copy,min_common_tokens_to_copy,token_sequences_compared
+copy,4,6,0,14282,16987,509.25,507.48,781.27,386.3,25.2,31,581,35.24,9662,0,24,24,64,24
+extent,4,6,0,14282,17038,11.99,10.75,0.22,149.1,25.2,31,371,34.83,2462,784,24,24,64,24
+copy,8,6,0,14282,16987,500.68,499.07,781.27,543.0,24.8,31,931,34.99,19287,0,48,48,64,48
+extent,8,6,0,14282,17039,11.62,10.29,0.22,268.9,24.8,31,684,34.49,4884,784,48,48,64,48
