@@ -1,4 +1,4 @@
-| Processes | Mode | Runs (failed) | Pages faulted in for the GPU | lowest | highest | First token (ms) | Throughput (tokens/s) | Texts equal to copy | Pages before the publish | Publish (ms) | Next task (ms) |
+| Processes | Mode | Runs (failed) | Page faults served for the GPU | lowest | highest | First token (ms) | Throughput (tokens/s) | Texts equal to copy | Page faults before the publish | Publish (ms) | Next task (ms) |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
 | agents | copy | 6 (0) | 0 | 0 | 0 | 2325 | 34.54 | 48/48 | - | - | - |
 | agents | extent | 6 (0) | 0 | 0 | 0 | 1773 | 33.96 | 48/48 | - | - | - |

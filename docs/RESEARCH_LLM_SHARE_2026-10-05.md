@@ -2160,7 +2160,10 @@ pages of the faulting block, and the kernel counts these calls as page
 faults of that thread (`/proc/<pid>/stat`, minor and major). The kernel of
 this device is built without kprobes, and the counter of the thread is the
 measure that it offers. The counter stands still while the GPU computes on
-device memory. A publisher computes a 16,321-token prefix and exits, eight
+device memory. It counts calls of the fault handler, one page each, and not
+distinct pages: a page can be counted more than once (7.4 million faults
+below for agents that hold 12.7 GiB in the campaign of 6.7, which are
+3.3 million pages). A publisher computes a 16,321-token prefix and exits, eight
 agents continue it, every second one in the other MIG instance, and the
 counter is read before the agents start and after the last one has left.
 In the rows `publisher`, one process computes the prefix, hands it to a
@@ -2170,7 +2173,7 @@ publish and around the task.
 **The first campaign (`20261010-engine-kvfaultcount-v1`, six repetitions),
 on the engine of the campaigns above.**
 
-| Processes | Mode | Runs (failed) | Pages faulted in for the GPU | lowest | highest | First token (ms) | Throughput (tokens/s) | Texts equal to copy | Pages before the publish | Publish (ms) | Next task (ms) |
+| Processes | Mode | Runs (failed) | Page faults served for the GPU | lowest | highest | First token (ms) | Throughput (tokens/s) | Texts equal to copy | Page faults before the publish | Publish (ms) | Next task (ms) |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
 | agents | copy | 6 (0) | 0 | 0 | 0 | 2350 | 34.48 | 48/48 | - | - | - |
 | agents | extent | 6 (0) | 0 | 0 | 0 | 1761 | 34.02 | 48/48 | - | - | - |
@@ -2182,15 +2185,15 @@ on the engine of the campaigns above.**
 | publisher | fork_extent | 6 (0) | 113357 | 113348 | 113364 | - | - | - | 0 | 9.19 | 135.7 |
 | publisher | fork_refill | 6 (0) | 0 | 0 | 0 | - | - | - | 0 | 13.91 | 57.8 |
 
-No page is faulted in for agents on a copy or on extents. Without the CPU
-read of the attached pages the kernel faults in 2.5 million pages, and
-without the populate-ahead 37 thousand. A private writable mapping of the
-cache file faults in 7.4 million pages as the kernel provides it and 0.56
-million with the CPU read on 2 MiB pages. Every agent writes the text of
+No page fault is served for agents on a copy or on extents. Without the
+CPU read of the attached pages the kernel serves 2.5 million page faults,
+and without the populate-ahead 37 thousand. A private writable mapping of
+the cache file takes 7.4 million page faults as the kernel provides it and
+0.56 million with the CPU read on 2 MiB pages. Every agent writes the text of
 its copy counterpart in all six modes.
 
 The publisher is the case that the rule did not hold for. After it has
-published on extents, the kernel faults in 113,357 pages for the GPU
+published on extents, the kernel serves 113,357 page faults for the GPU
 (113,348 to 113,364 over the repetitions), and its next task takes
 135.7 ms, against 57.3 ms after a copy. The count is taken once, at the
 first task after the publish. The cache file lies on 2 MiB pages, and the
@@ -2220,7 +2223,7 @@ the targets `kv_fork2`, `kv_batch2`, `kv_tree2`, `kv_fork_tuned2` and
 **The second campaign (`20261010-engine-kvfaultcount-v2`), on the engine
 with the repair.**
 
-| Processes | Mode | Runs (failed) | Pages faulted in for the GPU | lowest | highest | First token (ms) | Throughput (tokens/s) | Texts equal to copy | Pages before the publish | Publish (ms) | Next task (ms) |
+| Processes | Mode | Runs (failed) | Page faults served for the GPU | lowest | highest | First token (ms) | Throughput (tokens/s) | Texts equal to copy | Page faults before the publish | Publish (ms) | Next task (ms) |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
 | agents | copy | 6 (0) | 0 | 0 | 0 | 2325 | 34.54 | 48/48 | - | - | - |
 | agents | extent | 6 (0) | 0 | 0 | 0 | 1773 | 33.96 | 48/48 | - | - | - |
@@ -2380,7 +2383,7 @@ that request has finished), and answers two agents one after the other;
 server 2 starts in the 8-SM instance (the plugin attaches) and answers two
 agents one after the other.
 
-| Servers | Step | Runs (failed) | Pages faulted in for the GPU | lowest | highest | First token (ms) | Request (ms) | Prompt tokens from the cache | Texts equal to vllm |
+| Servers | Step | Runs (failed) | Page faults served for the GPU | lowest | highest | First token (ms) | Request (ms) | Prompt tokens from the cache | Texts equal to vllm |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
 | vllm | start1 | 3 (0) | 5260193 | 5055326 | 5422622 | - | - | - | - |
 | vllm | prefix | 3 (0) | 0 | 0 | 0 | 9179.3 | 9179.4 | -1 | 3/3 |
@@ -2397,12 +2400,12 @@ agents one after the other.
 | stator | attacher_first | 3 (0) | 0 | 0 | 0 | 302.9 | 4274.4 | 14272 | 3/3 |
 | stator | attacher_second | 3 (0) | 0 | 0 | 0 | 191.4 | 4223.0 | 14272 | 3/3 |
 
-The publisher of the plugin faults on 2,837 pages (2,836 to 2,840) in its
+The publisher of the plugin takes 2,837 page faults (2,836 to 2,840) in its
 first request after the publish and on none in the next one. That request
 takes 2,177 ms, against 2,172 ms on unmodified servers. The server that
 attaches takes no fault in its requests, and every agent writes the text
-of its counterpart on unmodified servers. A server faults in 5.1 to 5.4
-million pages while it starts, with and without the plugin; which part of
+of its counterpart on unmodified servers. A server takes 5.1 to 5.4
+million page faults while it starts, with and without the plugin; which part of
 the start causes them was not separated. C2 of the runner, which expected
 the counter to stand still in every step of unmodified servers, does not
 hold in the two start steps. The plugin is unchanged, and the campaigns of

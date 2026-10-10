@@ -1,4 +1,4 @@
-| Servers | Step | Runs (failed) | Pages faulted in for the GPU | lowest | highest | First token (ms) | Request (ms) | Prompt tokens from the cache | Texts equal to vllm |
+| Servers | Step | Runs (failed) | Page faults served for the GPU | lowest | highest | First token (ms) | Request (ms) | Prompt tokens from the cache | Texts equal to vllm |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
 | vllm | start1 | 3 (0) | 5260193 | 5055326 | 5422622 | - | - | - | - |
 | vllm | prefix | 3 (0) | 0 | 0 | 0 | 9179.3 | 9179.4 | -1 | 3/3 |

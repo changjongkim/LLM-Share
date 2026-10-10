@@ -733,11 +733,11 @@ for tag, name in (("20261007-engine-kvpipe-v1", "kv_pipe"), ("20261007-engine-kv
 text_of = lambda key: (lambda r: r[key] if r[key] != "" else "-")
 FAULT_COUNT_COLUMNS = [
     ("Processes", text_of("kind")), ("Mode", text_of("mode")), ("Runs (failed)", lambda r: f"{r['runs']} ({r['failed']})"),
-    ("Pages faulted in for the GPU", text_of("fault_pages")), ("lowest", text_of("fault_pages_min")),
+    ("Page faults served for the GPU", text_of("fault_pages")), ("lowest", text_of("fault_pages_min")),
     ("highest", text_of("fault_pages_max")), ("First token (ms)", text_of("first_token_ms")),
     ("Throughput (tokens/s)", text_of("generation_tps_total")),
     ("Texts equal to copy", lambda r: f"{r['texts_equal_to_copy']}/{r['texts_compared']}" if r["texts_compared"] else "-"),
-    ("Pages before the publish", text_of("fault_pages_before_publish")), ("Publish (ms)", text_of("publish_ms")),
+    ("Page faults before the publish", text_of("fault_pages_before_publish")), ("Publish (ms)", text_of("publish_ms")),
     ("Next task (ms)", text_of("next_task_ms")),
 ]
 for tag, name in (("20261010-engine-kvfaultcount-v1", "kv_faultcount_v1"),
@@ -745,7 +745,7 @@ for tag, name in (("20261010-engine-kvfaultcount-v1", "kv_faultcount_v1"),
     render(name, os.path.join(engine_root, tag, "engine_kvfaultcount_summary.csv"), FAULT_COUNT_COLUMNS)
 render("vllm_faultcount", os.path.join(engine_root, "20261010-vllm-faultcount-v1", "vllm_faultcount_summary.csv"), [
     ("Servers", text_of("mode")), ("Step", text_of("step")), ("Runs (failed)", lambda r: f"{r['runs']} ({r['failed']})"),
-    ("Pages faulted in for the GPU", text_of("fault_pages")), ("lowest", text_of("fault_pages_min")),
+    ("Page faults served for the GPU", text_of("fault_pages")), ("lowest", text_of("fault_pages_min")),
     ("highest", text_of("fault_pages_max")), ("First token (ms)", text_of("first_token_ms")),
     ("Request (ms)", text_of("request_ms")), ("Prompt tokens from the cache", text_of("prompt_cached")),
     ("Texts equal to vllm", lambda r: f"{r['texts_equal_to_vllm']}/{r['texts_compared']}" if r["texts_compared"] else "-"),
