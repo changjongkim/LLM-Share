@@ -1,0 +1,1466 @@
+diff --git a/ggml/src/ggml-cuda/ggml-cuda.cu b/ggml/src/ggml-cuda/ggml-cuda.cu
+index b50d05d5f..489da8301 100644
+--- a/ggml/src/ggml-cuda/ggml-cuda.cu
++++ b/ggml/src/ggml-cuda/ggml-cuda.cu
+@@ -72,6 +72,7 @@
+ #include "ggml-cuda/lightning-indexer.cuh"
+ #include "ggml.h"
+ 
++#include <chrono>
+ #include <algorithm>
+ #include <array>
+ #include <atomic>
+@@ -90,6 +91,7 @@
+ #include <cstdio>
+ #include <cstdlib>
+ #include <string>
++#include <thread>
+ #include <vector>
+ 
+ static_assert(sizeof(half) == sizeof(ggml_fp16_t), "wrong fp16 size");
+@@ -721,15 +723,22 @@ ggml_backend_cuda_context::~ggml_backend_cuda_context() {
+ struct ggml_backend_cuda_buffer_context {
+     int device;
+     void * dev_ptr = nullptr;
++    // host memory that the GPU reads in place (GGML_CUDA_HOST_PTR): the
++    // mapping belongs to the caller and is read-only for this backend
++    bool borrowed = false;
++    // device memory mapped by the caller (ggml_backend_cuda_vmm_*): not freed here
++    bool external = false;
+     std::string name;
+ 
+-    ggml_backend_cuda_buffer_context(int device, void * dev_ptr) :
+-        device(device), dev_ptr(dev_ptr),
++    ggml_backend_cuda_buffer_context(int device, void * dev_ptr, bool borrowed = false) :
++        device(device), dev_ptr(dev_ptr), borrowed(borrowed),
+         name(GGML_CUDA_NAME + std::to_string(device)) {
+     }
+ 
+     ~ggml_backend_cuda_buffer_context() {
+-        CUDA_CHECK(cudaFree(dev_ptr));
++        if (!borrowed && !external) {
++            CUDA_CHECK(cudaFree(dev_ptr));
++        }
+     }
+ };
+ 
+@@ -760,6 +769,18 @@ static enum ggml_status ggml_backend_cuda_buffer_init_tensor(ggml_backend_buffer
+         const size_t original_size = ggml_nbytes(tensor);
+         const size_t padded_size = ggml_backend_buft_get_alloc_size(buffer->buft, tensor);
+ 
++        if (ctx->borrowed) {
++            // a borrowed mapping is read-only and has no room for padding: a
++            // tensor whose rows are not a multiple of MATRIX_ROW_PADDING
++            // cannot be served in place
++            if (padded_size > original_size) {
++                GGML_LOG_ERROR("%s: tensor %s needs %zu bytes of row padding and cannot be read in place\n",
++                               __func__, tensor->name, padded_size - original_size);
++                return GGML_STATUS_FAILED;
++            }
++            return GGML_STATUS_SUCCESS;
++        }
++
+         if (padded_size > original_size) {
+             ggml_cuda_set_device(ctx->device);
+             CUDA_CHECK(cudaMemset((char *)tensor->data + original_size, 0, padded_size - original_size));
+@@ -771,6 +792,14 @@ static enum ggml_status ggml_backend_cuda_buffer_init_tensor(ggml_backend_buffer
+ static void ggml_backend_cuda_buffer_memset_tensor(ggml_backend_buffer_t buffer, ggml_tensor * tensor, uint8_t value, size_t offset, size_t size) {
+     ggml_backend_cuda_buffer_context * ctx = (ggml_backend_cuda_buffer_context *) buffer->context;
+ 
++    if (ctx->borrowed) {
++        // host memory: wait for kernels that use it, then write from the CPU
++        ggml_cuda_set_device(ctx->device);
++        CUDA_CHECK(cudaDeviceSynchronize());
++        memset((char *) tensor->data + offset, value, size);
++        return;
++    }
++
+     ggml_cuda_set_device(ctx->device);
+     CUDA_CHECK(cudaMemsetAsync((char *) tensor->data + offset, value, size, cudaStreamPerThread));
+     CUDA_CHECK(cudaStreamSynchronize(cudaStreamPerThread));
+@@ -779,6 +808,14 @@ static void ggml_backend_cuda_buffer_memset_tensor(ggml_backend_buffer_t buffer,
+ static void ggml_backend_cuda_buffer_set_tensor(ggml_backend_buffer_t buffer, ggml_tensor * tensor, const void * data, size_t offset, size_t size) {
+     ggml_backend_cuda_buffer_context * ctx = (ggml_backend_cuda_buffer_context *) buffer->context;
+ 
++    if (ctx->borrowed) {
++        // host memory
++        ggml_cuda_set_device(ctx->device);
++        CUDA_CHECK(cudaDeviceSynchronize());
++        memcpy((char *) tensor->data + offset, data, size);
++        return;
++    }
++
+     ggml_cuda_set_device(ctx->device);
+     CUDA_CHECK(cudaMemcpyAsync((char *) tensor->data + offset, data, size, cudaMemcpyHostToDevice, cudaStreamPerThread));
+     CUDA_CHECK(cudaStreamSynchronize(cudaStreamPerThread));
+@@ -787,6 +824,13 @@ static void ggml_backend_cuda_buffer_set_tensor(ggml_backend_buffer_t buffer, gg
+ static void ggml_backend_cuda_buffer_get_tensor(ggml_backend_buffer_t buffer, const ggml_tensor * tensor, void * data, size_t offset, size_t size) {
+     ggml_backend_cuda_buffer_context * ctx = (ggml_backend_cuda_buffer_context *) buffer->context;
+ 
++    if (ctx->borrowed) {
++        ggml_cuda_set_device(ctx->device);
++        CUDA_CHECK(cudaDeviceSynchronize());
++        memcpy(data, (const char *) tensor->data + offset, size);
++        return;
++    }
++
+     ggml_cuda_set_device(ctx->device);
+     CUDA_CHECK(cudaMemcpyAsync(data, (const char *) tensor->data + offset, size, cudaMemcpyDeviceToHost, cudaStreamPerThread));
+     CUDA_CHECK(cudaStreamSynchronize(cudaStreamPerThread));
+@@ -840,6 +884,13 @@ static bool ggml_backend_cuda_buffer_cpy_tensor(ggml_backend_buffer_t buffer, co
+ static void ggml_backend_cuda_buffer_clear(ggml_backend_buffer_t buffer, uint8_t value) {
+     ggml_backend_cuda_buffer_context * ctx = (ggml_backend_cuda_buffer_context *)buffer->context;
+ 
++    if (ctx->borrowed) {
++        ggml_cuda_set_device(ctx->device);
++        CUDA_CHECK(cudaDeviceSynchronize());
++        memset(ctx->dev_ptr, value, buffer->size);
++        return;
++    }
++
+     ggml_cuda_set_device(ctx->device);
+     CUDA_CHECK(cudaMemsetAsync(ctx->dev_ptr, value, buffer->size, cudaStreamPerThread));
+     CUDA_CHECK(cudaStreamSynchronize(cudaStreamPerThread));
+@@ -5118,15 +5169,50 @@ static void ggml_backend_cuda_device_get_props(ggml_backend_dev_t dev, ggml_back
+     bool events = true;
+ #endif
+ 
++    // GGML_CUDA_HOST_PTR: on a GPU that reads pageable host memory through the
++    // host page tables, a mapped model file serves as the weight buffer
++    const bool host_ptr = getenv("GGML_CUDA_HOST_PTR") != nullptr;
++
+     props->caps = {
+         /* .async                 = */ true,
+         /* .host_buffer           = */ host_buffer,
+-        /* .buffer_from_host_ptr  = */ false,
++        /* .buffer_from_host_ptr  = */ host_ptr,
+         /* .events                = */ events,
+-        /* .mmap_support          = */ props->type != GGML_BACKEND_DEVICE_TYPE_IGPU,
++        /* .mmap_support          = */ host_ptr || props->type != GGML_BACKEND_DEVICE_TYPE_IGPU,
+     };
+ }
+ 
++static ggml_backend_buffer_t ggml_backend_cuda_device_buffer_from_host_ptr(ggml_backend_dev_t dev, void * ptr, size_t size, size_t max_tensor_size) {
++    ggml_backend_cuda_device_context * ctx = (ggml_backend_cuda_device_context *)dev->context;
++
++    // A CPU access marks a page-table entry accessed, which the GPU cannot do
++    // itself here; without it the first kernel faults on every page.
++    const char * preread = getenv("GGML_CUDA_HOST_PTR_PREREAD");
++    if (preread == nullptr || preread[0] != '0') {
++        const unsigned n_threads = std::max(1u, std::min(12u, std::thread::hardware_concurrency()));
++        const size_t page = 4096;
++        const size_t n_pages = (size + page - 1) / page;
++        const volatile char * view = (const volatile char *) ptr;
++        std::vector<std::thread> workers;
++        for (unsigned t = 0; t < n_threads; t++) {
++            workers.emplace_back([=]() {
++                for (size_t i = n_pages * t / n_threads; i < n_pages * (t + 1) / n_threads; i++) {
++                    const size_t offset = i * page;
++                    (void) view[offset < size ? offset : size - 1];
++                }
++            });
++        }
++        for (auto & worker : workers) {
++            worker.join();
++        }
++    }
++
++    ggml_backend_cuda_buffer_context * buf_ctx = new ggml_backend_cuda_buffer_context(ctx->device, ptr, true);
++    return ggml_backend_buffer_init(ggml_backend_cuda_buffer_type(ctx->device), ggml_backend_cuda_buffer_interface, buf_ctx, size);
++
++    GGML_UNUSED(max_tensor_size);
++}
++
+ static ggml_backend_t ggml_backend_cuda_device_init_backend(ggml_backend_dev_t dev, const char * params) {
+     GGML_UNUSED(params);
+     ggml_backend_cuda_device_context * ctx = (ggml_backend_cuda_device_context *)dev->context;
+@@ -5673,7 +5759,7 @@ static const ggml_backend_device_i ggml_backend_cuda_device_interface = {
+     /* .init_backend            = */ ggml_backend_cuda_device_init_backend,
+     /* .get_buffer_type         = */ ggml_backend_cuda_device_get_buffer_type,
+     /* .get_host_buffer_type    = */ ggml_backend_cuda_device_get_host_buffer_type,
+-    /* .buffer_from_host_ptr    = */ NULL,
++    /* .buffer_from_host_ptr    = */ ggml_backend_cuda_device_buffer_from_host_ptr,
+     /* .supports_op             = */ ggml_backend_cuda_device_supports_op,
+     /* .supports_buft           = */ ggml_backend_cuda_device_supports_buft,
+     /* .offload_op              = */ ggml_backend_cuda_device_offload_op,
+@@ -5869,4 +5955,294 @@ ggml_backend_t ggml_backend_cuda_init(int device) {
+     return cuda_backend;
+ }
+ 
++#if defined(GGML_USE_VMM) && !defined(GGML_USE_HIP)
++// Device memory composed from physical allocations of this process and of another one.
++// A range is reserved once; allocations are mapped into it, new ones or ones another process exported.
++extern "C" {
++GGML_BACKEND_API void * ggml_backend_cuda_vmm_reserve(int device, size_t size);
++GGML_BACKEND_API bool ggml_backend_cuda_vmm_map_new(int device, void * addr, size_t size, int * fd);
++GGML_BACKEND_API bool ggml_backend_cuda_vmm_map_fd(int device, void * addr, size_t size, int fd);
++GGML_BACKEND_API bool ggml_backend_cuda_vmm_copy_fd(int device, void * dst, size_t size, int fd, size_t bytes);
++GGML_BACKEND_API bool ggml_backend_cuda_vmm_protect(int device, void * addr, size_t size);
++GGML_BACKEND_API void ggml_backend_cuda_vmm_zero(int device, void * addr, size_t size);
++GGML_BACKEND_API ggml_backend_buffer_t ggml_backend_cuda_vmm_buffer(int device, void * base, size_t size);
++// The same steps for many allocations at once: one access setting for a range, and one wait for the device.
++GGML_BACKEND_API bool ggml_backend_cuda_vmm_map_fds(int device, void * addr, size_t size, const int * fds, size_t count);
++GGML_BACKEND_API bool ggml_backend_cuda_vmm_map_private(int device, void * addr, size_t size);
++GGML_BACKEND_API bool ggml_backend_cuda_vmm_copy_fds(int device, void * const * dsts, size_t size, const int * fds, const size_t * bytes, size_t count);
++GGML_BACKEND_API bool ggml_backend_cuda_vmm_protect_ranges(int device, void * const * addrs, const size_t * sizes, size_t count);
++GGML_BACKEND_API void ggml_backend_cuda_vmm_wait(int device);
++GGML_BACKEND_API void ggml_backend_cuda_vmm_zero_ranges(int device, void * const * addrs, const size_t * sizes, size_t count);
++GGML_BACKEND_API bool ggml_backend_cuda_vmm_merge(int device, void * const * addrs, const size_t * counts, size_t ranges, size_t size, int * fds);
++}
++
++static bool ggml_cuda_vmm_ok(CUresult err, const char * what) {
++    if (err != CUDA_SUCCESS) {
++        GGML_LOG_ERROR("%s: %s failed: %s\n", __func__, what, cu_get_error_str(err));
++        return false;
++    }
++    return true;
++}
++
++static bool ggml_cuda_vmm_access(int device, CUdeviceptr addr, size_t size, CUmemAccess_flags flags) {
++    CUmemAccessDesc access = {};
++    access.location.type = CU_MEM_LOCATION_TYPE_DEVICE;
++    access.location.id = ggml_cuda_get_physical_device(device);
++    access.flags = flags;
++    return ggml_cuda_vmm_ok(cuMemSetAccess(addr, size, &access, 1), "cuMemSetAccess");
++}
++
++void * ggml_backend_cuda_vmm_reserve(int device, size_t size) {
++    ggml_cuda_set_device(device);
++    CUdeviceptr addr = 0;
++    if (!ggml_cuda_vmm_ok(cuMemAddressReserve(&addr, size, 0, 0, 0), "cuMemAddressReserve")) {
++        return nullptr;
++    }
++    return (void *) addr;
++}
++
++// Maps a new allocation, zeroed. With fd != nullptr the allocation can be shared, and *fd is its handle.
++bool ggml_backend_cuda_vmm_map_new(int device, void * addr, size_t size, int * fd) {
++    ggml_cuda_set_device(device);
++    CUmemAllocationProp prop = {};
++    prop.type = CU_MEM_ALLOCATION_TYPE_PINNED;
++    prop.location.type = CU_MEM_LOCATION_TYPE_DEVICE;
++    prop.location.id = ggml_cuda_get_physical_device(device);
++    if (fd != nullptr) {
++        prop.requestedHandleTypes = CU_MEM_HANDLE_TYPE_POSIX_FILE_DESCRIPTOR;
++    }
++    CUmemGenericAllocationHandle handle;
++    if (!ggml_cuda_vmm_ok(cuMemCreate(&handle, size, &prop, 0), "cuMemCreate")) {
++        return false;
++    }
++    bool ok = ggml_cuda_vmm_ok(cuMemMap((CUdeviceptr) addr, size, 0, handle, 0), "cuMemMap") &&
++              ggml_cuda_vmm_access(device, (CUdeviceptr) addr, size, CU_MEM_ACCESS_FLAGS_PROT_READWRITE);
++    if (ok && fd != nullptr) {
++        ok = ggml_cuda_vmm_ok(cuMemExportToShareableHandle(fd, handle, CU_MEM_HANDLE_TYPE_POSIX_FILE_DESCRIPTOR, 0), "cuMemExportToShareableHandle");
++    }
++    CU_CHECK(cuMemRelease(handle));
++    if (ok) {
++        CUDA_CHECK(cudaMemset(addr, 0, size));
++    }
++    return ok;
++}
++
++// Maps an allocation that another process exported, read-only.
++bool ggml_backend_cuda_vmm_map_fd(int device, void * addr, size_t size, int fd) {
++    ggml_cuda_set_device(device);
++    CUmemGenericAllocationHandle handle;
++    if (!ggml_cuda_vmm_ok(cuMemImportFromShareableHandle(&handle, (void *) (uintptr_t) fd, CU_MEM_HANDLE_TYPE_POSIX_FILE_DESCRIPTOR), "cuMemImportFromShareableHandle")) {
++        return false;
++    }
++    const bool ok = ggml_cuda_vmm_ok(cuMemMap((CUdeviceptr) addr, size, 0, handle, 0), "cuMemMap") &&
++                    ggml_cuda_vmm_access(device, (CUdeviceptr) addr, size, CU_MEM_ACCESS_FLAGS_PROT_READ);
++    CU_CHECK(cuMemRelease(handle));
++    return ok;
++}
++
++// Copies the first bytes of an exported allocation of `size` bytes to dst.
++bool ggml_backend_cuda_vmm_copy_fd(int device, void * dst, size_t size, int fd, size_t bytes) {
++    ggml_cuda_set_device(device);
++    CUdeviceptr tmp = 0;
++    if (!ggml_cuda_vmm_ok(cuMemAddressReserve(&tmp, size, 0, 0, 0), "cuMemAddressReserve")) {
++        return false;
++    }
++    bool ok = ggml_backend_cuda_vmm_map_fd(device, (void *) tmp, size, fd);
++    if (ok) {
++        // a copy between device ranges returns before it is done; the source is unmapped only after it
++        ok = ggml_cuda_vmm_ok(cuMemcpy((CUdeviceptr) dst, tmp, bytes), "cuMemcpy") &&
++             ggml_cuda_vmm_ok(cuCtxSynchronize(), "cuCtxSynchronize");
++        CU_CHECK(cuMemUnmap(tmp, size));
++    }
++    CU_CHECK(cuMemAddressFree(tmp, size));
++    return ok;
++}
++
++bool ggml_backend_cuda_vmm_protect(int device, void * addr, size_t size) {
++    ggml_cuda_set_device(device);
++    CUDA_CHECK(cudaDeviceSynchronize());
++    return ggml_cuda_vmm_access(device, (CUdeviceptr) addr, size, CU_MEM_ACCESS_FLAGS_PROT_READ);
++}
++
++void ggml_backend_cuda_vmm_zero(int device, void * addr, size_t size) {
++    ggml_cuda_set_device(device);
++    CUDA_CHECK(cudaDeviceSynchronize());
++    CUDA_CHECK(cudaMemset(addr, 0, size));
++}
++
++// Where the time of mapping exported allocations goes, in ms: importing the handles, mapping them, setting the access.
++static double ggml_cuda_vmm_map_ms[3] = { 0.0, 0.0, 0.0 };
++
++static double ggml_cuda_vmm_ms_since(std::chrono::steady_clock::time_point from) {
++    return std::chrono::duration<double, std::milli>(std::chrono::steady_clock::now() - from).count();
++}
++
++// Maps `count` allocations of `size` bytes that another process exported, one after the other from addr, read-only.
++bool ggml_backend_cuda_vmm_map_fds(int device, void * addr, size_t size, const int * fds, size_t count) {
++    ggml_cuda_set_device(device);
++    for (size_t i = 0; i < count; ++i) {
++        CUmemGenericAllocationHandle handle;
++        auto mark = std::chrono::steady_clock::now();
++        if (!ggml_cuda_vmm_ok(cuMemImportFromShareableHandle(&handle, (void *) (uintptr_t) fds[i], CU_MEM_HANDLE_TYPE_POSIX_FILE_DESCRIPTOR), "cuMemImportFromShareableHandle")) {
++            return false;
++        }
++        ggml_cuda_vmm_map_ms[0] += ggml_cuda_vmm_ms_since(mark);
++        mark = std::chrono::steady_clock::now();
++        const bool ok = ggml_cuda_vmm_ok(cuMemMap((CUdeviceptr) addr + i * size, size, 0, handle, 0), "cuMemMap");
++        CU_CHECK(cuMemRelease(handle));
++        ggml_cuda_vmm_map_ms[1] += ggml_cuda_vmm_ms_since(mark);
++        if (!ok) {
++            return false;
++        }
++    }
++    const auto mark = std::chrono::steady_clock::now();
++    const bool ok = count == 0 || ggml_cuda_vmm_access(device, (CUdeviceptr) addr, count * size, CU_MEM_ACCESS_FLAGS_PROT_READ);
++    ggml_cuda_vmm_map_ms[2] += ggml_cuda_vmm_ms_since(mark);
++    return ok;
++}
++
++// Maps one new allocation of `size` bytes that only this process uses, zeroed. The zeroing is not waited for.
++bool ggml_backend_cuda_vmm_map_private(int device, void * addr, size_t size) {
++    ggml_cuda_set_device(device);
++    CUmemAllocationProp prop = {};
++    prop.type = CU_MEM_ALLOCATION_TYPE_PINNED;
++    prop.location.type = CU_MEM_LOCATION_TYPE_DEVICE;
++    prop.location.id = ggml_cuda_get_physical_device(device);
++    CUmemGenericAllocationHandle handle;
++    if (!ggml_cuda_vmm_ok(cuMemCreate(&handle, size, &prop, 0), "cuMemCreate")) {
++        return false;
++    }
++    const bool ok = ggml_cuda_vmm_ok(cuMemMap((CUdeviceptr) addr, size, 0, handle, 0), "cuMemMap") &&
++                    ggml_cuda_vmm_access(device, (CUdeviceptr) addr, size, CU_MEM_ACCESS_FLAGS_PROT_READWRITE);
++    CU_CHECK(cuMemRelease(handle));
++    if (ok) {
++        CUDA_CHECK(cudaMemsetAsync(addr, 0, size, cudaStreamPerThread));
++    }
++    return ok;
++}
++
++// Copies the first bytes[i] of exported allocation i, of `size` bytes, to dsts[i], and waits once for all copies.
++bool ggml_backend_cuda_vmm_copy_fds(int device, void * const * dsts, size_t size, const int * fds, const size_t * bytes, size_t count) {
++    if (count == 0) {
++        return true;
++    }
++    ggml_cuda_set_device(device);
++    CUdeviceptr tmp = 0;
++    if (!ggml_cuda_vmm_ok(cuMemAddressReserve(&tmp, count * size, 0, 0, 0), "cuMemAddressReserve")) {
++        return false;
++    }
++    size_t mapped = 0;
++    bool ok = true;
++    for (; ok && mapped < count; ++mapped) {
++        CUmemGenericAllocationHandle handle;
++        ok = ggml_cuda_vmm_ok(cuMemImportFromShareableHandle(&handle, (void *) (uintptr_t) fds[mapped], CU_MEM_HANDLE_TYPE_POSIX_FILE_DESCRIPTOR), "cuMemImportFromShareableHandle");
++        if (!ok) {
++            break;
++        }
++        ok = ggml_cuda_vmm_ok(cuMemMap(tmp + mapped * size, size, 0, handle, 0), "cuMemMap");
++        CU_CHECK(cuMemRelease(handle));
++        if (!ok) {
++            break;
++        }
++    }
++    ok = ok && ggml_cuda_vmm_access(device, tmp, count * size, CU_MEM_ACCESS_FLAGS_PROT_READ);
++    if (ok) {
++        // the copies run in the stream of the zeroing of their destinations, after it
++        for (size_t i = 0; ok && i < count; ++i) {
++            ok = cudaMemcpyAsync(dsts[i], (const void *) (tmp + i * size), bytes[i], cudaMemcpyDeviceToDevice, cudaStreamPerThread) == cudaSuccess;
++        }
++        // the sources are unmapped only after the copies are done
++        ok = (cudaStreamSynchronize(cudaStreamPerThread) == cudaSuccess) && ok;
++    }
++    for (size_t i = 0; i < mapped; ++i) {
++        CU_CHECK(cuMemUnmap(tmp + i * size, size));
++    }
++    CU_CHECK(cuMemAddressFree(tmp, count * size));
++    GGML_LOG_WARN("%s: exported allocations so far: import %.1f ms, map %.1f ms, access %.1f ms\n", __func__,
++            ggml_cuda_vmm_map_ms[0], ggml_cuda_vmm_map_ms[1], ggml_cuda_vmm_map_ms[2]);
++    return ok;
++}
++
++// Waits for the zeroing of the allocations that this thread mapped.
++void ggml_backend_cuda_vmm_wait(int device) {
++    ggml_cuda_set_device(device);
++    CUDA_CHECK(cudaStreamSynchronize(cudaStreamPerThread));
++}
++
++// Replaces, in every range, the counts[i] allocations of `size` bytes that are mapped from addrs[i] by one allocation
++// with the same contents, mapped read-only; fds[i] is its handle, or -1 for an empty range. An allocation cannot be
++// extended or joined with another one, so the contents are copied, with one wait for the device for all ranges.
++bool ggml_backend_cuda_vmm_merge(int device, void * const * addrs, const size_t * counts, size_t ranges, size_t size, int * fds) {
++    ggml_cuda_set_device(device);
++    CUDA_CHECK(cudaDeviceSynchronize());
++    CUmemAllocationProp prop = {};
++    prop.type = CU_MEM_ALLOCATION_TYPE_PINNED;
++    prop.location.type = CU_MEM_LOCATION_TYPE_DEVICE;
++    prop.location.id = ggml_cuda_get_physical_device(device);
++    prop.requestedHandleTypes = CU_MEM_HANDLE_TYPE_POSIX_FILE_DESCRIPTOR;
++    std::vector<CUmemGenericAllocationHandle> handles(ranges);
++    std::vector<CUdeviceptr> tmps(ranges, 0);
++    bool ok = true;
++    for (size_t i = 0; ok && i < ranges; ++i) {
++        fds[i] = -1;
++        const size_t bytes = counts[i] * size;
++        if (bytes == 0) {
++            continue;
++        }
++        ok = ggml_cuda_vmm_ok(cuMemCreate(&handles[i], bytes, &prop, 0), "cuMemCreate") &&
++             ggml_cuda_vmm_ok(cuMemAddressReserve(&tmps[i], bytes, 0, 0, 0), "cuMemAddressReserve") &&
++             ggml_cuda_vmm_ok(cuMemMap(tmps[i], bytes, 0, handles[i], 0), "cuMemMap") &&
++             ggml_cuda_vmm_access(device, tmps[i], bytes, CU_MEM_ACCESS_FLAGS_PROT_READWRITE) &&
++             cudaMemcpyAsync((void *) tmps[i], addrs[i], bytes, cudaMemcpyDeviceToDevice, cudaStreamPerThread) == cudaSuccess;
++    }
++    ok = (cudaStreamSynchronize(cudaStreamPerThread) == cudaSuccess) && ok;
++    for (size_t i = 0; ok && i < ranges; ++i) {
++        const size_t bytes = counts[i] * size;
++        if (bytes == 0) {
++            continue;
++        }
++        for (size_t g = 0; g < counts[i]; ++g) {
++            CU_CHECK(cuMemUnmap((CUdeviceptr) addrs[i] + g * size, size));
++        }
++        CU_CHECK(cuMemUnmap(tmps[i], bytes));
++        CU_CHECK(cuMemAddressFree(tmps[i], bytes));
++        ok = ggml_cuda_vmm_ok(cuMemMap((CUdeviceptr) addrs[i], bytes, 0, handles[i], 0), "cuMemMap") &&
++             ggml_cuda_vmm_access(device, (CUdeviceptr) addrs[i], bytes, CU_MEM_ACCESS_FLAGS_PROT_READ) &&
++             ggml_cuda_vmm_ok(cuMemExportToShareableHandle(&fds[i], handles[i], CU_MEM_HANDLE_TYPE_POSIX_FILE_DESCRIPTOR, 0), "cuMemExportToShareableHandle");
++        CU_CHECK(cuMemRelease(handles[i]));
++    }
++    return ok;
++}
++
++// Zeroes ranges with one wait for the device before and one after.
++void ggml_backend_cuda_vmm_zero_ranges(int device, void * const * addrs, const size_t * sizes, size_t count) {
++    ggml_cuda_set_device(device);
++    CUDA_CHECK(cudaDeviceSynchronize());
++    for (size_t i = 0; i < count; ++i) {
++        if (sizes[i] > 0) {
++            CUDA_CHECK(cudaMemsetAsync(addrs[i], 0, sizes[i], cudaStreamPerThread));
++        }
++    }
++    CUDA_CHECK(cudaStreamSynchronize(cudaStreamPerThread));
++}
++
++// Makes ranges read-only after one wait for the device.
++bool ggml_backend_cuda_vmm_protect_ranges(int device, void * const * addrs, const size_t * sizes, size_t count) {
++    ggml_cuda_set_device(device);
++    CUDA_CHECK(cudaDeviceSynchronize());
++    for (size_t i = 0; i < count; ++i) {
++        if (sizes[i] > 0 && !ggml_cuda_vmm_access(device, (CUdeviceptr) addrs[i], sizes[i], CU_MEM_ACCESS_FLAGS_PROT_READ)) {
++            return false;
++        }
++    }
++    return true;
++}
++
++ggml_backend_buffer_t ggml_backend_cuda_vmm_buffer(int device, void * base, size_t size) {
++    ggml_backend_cuda_buffer_context * ctx = new ggml_backend_cuda_buffer_context(device, base);
++    ctx->external = true;
++    return ggml_backend_buffer_init(ggml_backend_cuda_buffer_type(device), ggml_backend_cuda_buffer_interface, ctx, size);
++}
++#endif // defined(GGML_USE_VMM) && !defined(GGML_USE_HIP)
++
+ GGML_BACKEND_DL_IMPL(ggml_backend_cuda_reg)
+diff --git a/src/llama-kv-cache.cpp b/src/llama-kv-cache.cpp
+index 1c93f908b..e355a86bf 100644
+--- a/src/llama-kv-cache.cpp
++++ b/src/llama-kv-cache.cpp
+@@ -6,14 +6,802 @@
+ #include "llama-context.h"
+ 
+ #include <algorithm>
++#include <chrono>
+ #include <cassert>
+ #include <cmath>
+ #include <cstring>
+ #include <limits>
+ #include <map>
+ #include <stdexcept>
++#include <thread>
+ #include <unordered_map>
+ 
++#include <dlfcn.h>
++
++#include <cerrno>
++#include <cstdlib>
++#include <string>
++#include <utility>
++#include <vector>
++#include <fcntl.h>
++#include <sys/mman.h>
++#include <unistd.h>
++
++#ifndef MADV_POPULATE_WRITE
++#define MADV_POPULATE_WRITE 23
++#endif
++
++// The key-value cache in pageable host memory that the GPU uses in place, on
++// a device that accepts host pointers as buffers (GGML_CUDA_HOST_PTR).
++//
++//   LLAMA_KV_HOST=anon     private anonymous memory.
++//   LLAMA_KV_HOST=<path>   a file holds the cache. Without LLAMA_KV_PREFIX
++//                          the process maps it shared and fills it. With
++//                          LLAMA_KV_PREFIX=<cells> the process maps the first
++//                          <cells> rows of every tensor read-only from the
++//                          file and everything else private: a prefix that
++//                          another process computed is shared without a copy
++//                          and without copy-on-write, and the process writes
++//                          its own rows after it.
++//
++// A kv cache in host memory that the device reads in place.
++struct llama_kv_host {
++    struct span {
++        size_t offset; // of the tensor in the mapping, a multiple of 2 MiB
++        size_t row;    // bytes of one row
++        size_t rows;
++        size_t size;   // bytes up to the next tensor
++    };
++    std::vector<span> tensors;
++    std::string path;       // file with the rows of the publisher
++    char * base = nullptr;
++    size_t rows_mapped = 0; // leading rows taken from the file, never written
++    size_t rows_ready = 0;  // rows with memory behind them
++    size_t grow = 0;        // rows added at a time, 0: all memory at once
++    bool publisher = false; // this process fills the file
++    bool agent = false;     // this process maps rows of the file
++    bool cow = false;       // agent that maps the whole file, writable and private
++    // device memory composed with the virtual memory interface of the backend (LLAMA_KV_VMM)
++    bool vmm = false;
++    bool demand = false;    // LLAMA_KV_VMM=2: private, follows the rows in use, neither published nor imported
++    bool batch = false;     // LLAMA_KV_VMM_BATCH=1: one access setting per range and one wait per step
++    bool merge = false;     // LLAMA_KV_VMM_BATCH=2: also one allocation per tensor for the published rows
++    int device = 0;
++    std::vector<size_t> granules;       // per tensor: leading granules with memory
++    std::vector<std::vector<int>> fds;  // publisher, per tensor: the handle of every granule
++};
++
++static const size_t llama_kv_vmm_granule = 2u << 20;
++
++// the device-memory functions of the CUDA backend, when it has them
++struct llama_kv_vmm_api {
++    void * (*reserve)(int, size_t);
++    bool (*map_new)(int, void *, size_t, int *);
++    bool (*map_fd)(int, void *, size_t, int);
++    bool (*copy_fd)(int, void *, size_t, int, size_t);
++    bool (*protect)(int, void *, size_t);
++    void (*zero)(int, void *, size_t);
++    ggml_backend_buffer_t (*buffer)(int, void *, size_t);
++    ggml_backend_buffer_type_t (*buffer_type)(int);
++    int (*device_count)(void);
++    bool (*map_fds)(int, void *, size_t, const int *, size_t);
++    bool (*map_private)(int, void *, size_t);
++    bool (*copy_fds)(int, void * const *, size_t, const int *, const size_t *, size_t);
++    bool (*protect_ranges)(int, void * const *, const size_t *, size_t);
++    void (*wait)(int);
++    bool (*merge)(int, void * const *, const size_t *, size_t, size_t, int *);
++    void (*zero_ranges)(int, void * const *, const size_t *, size_t);
++};
++
++static const llama_kv_vmm_api * llama_kv_vmm() {
++    static llama_kv_vmm_api api;
++    static bool resolved = false;
++    static bool complete = false;
++    if (!resolved) {
++        resolved = true;
++        api.reserve      = (void * (*)(int, size_t)) dlsym(RTLD_DEFAULT, "ggml_backend_cuda_vmm_reserve");
++        api.map_new      = (bool (*)(int, void *, size_t, int *)) dlsym(RTLD_DEFAULT, "ggml_backend_cuda_vmm_map_new");
++        api.map_fd       = (bool (*)(int, void *, size_t, int)) dlsym(RTLD_DEFAULT, "ggml_backend_cuda_vmm_map_fd");
++        api.copy_fd      = (bool (*)(int, void *, size_t, int, size_t)) dlsym(RTLD_DEFAULT, "ggml_backend_cuda_vmm_copy_fd");
++        api.protect      = (bool (*)(int, void *, size_t)) dlsym(RTLD_DEFAULT, "ggml_backend_cuda_vmm_protect");
++        api.zero         = (void (*)(int, void *, size_t)) dlsym(RTLD_DEFAULT, "ggml_backend_cuda_vmm_zero");
++        api.buffer       = (ggml_backend_buffer_t (*)(int, void *, size_t)) dlsym(RTLD_DEFAULT, "ggml_backend_cuda_vmm_buffer");
++        api.buffer_type  = (ggml_backend_buffer_type_t (*)(int)) dlsym(RTLD_DEFAULT, "ggml_backend_cuda_buffer_type");
++        api.device_count = (int (*)(void)) dlsym(RTLD_DEFAULT, "ggml_backend_cuda_get_device_count");
++        api.map_fds        = (bool (*)(int, void *, size_t, const int *, size_t)) dlsym(RTLD_DEFAULT, "ggml_backend_cuda_vmm_map_fds");
++        api.map_private    = (bool (*)(int, void *, size_t)) dlsym(RTLD_DEFAULT, "ggml_backend_cuda_vmm_map_private");
++        api.copy_fds       = (bool (*)(int, void * const *, size_t, const int *, const size_t *, size_t)) dlsym(RTLD_DEFAULT, "ggml_backend_cuda_vmm_copy_fds");
++        api.protect_ranges = (bool (*)(int, void * const *, const size_t *, size_t)) dlsym(RTLD_DEFAULT, "ggml_backend_cuda_vmm_protect_ranges");
++        api.wait           = (void (*)(int)) dlsym(RTLD_DEFAULT, "ggml_backend_cuda_vmm_wait");
++        api.zero_ranges    = (void (*)(int, void * const *, const size_t *, size_t)) dlsym(RTLD_DEFAULT, "ggml_backend_cuda_vmm_zero_ranges");
++        api.merge          = (bool (*)(int, void * const *, const size_t *, size_t, size_t, int *)) dlsym(RTLD_DEFAULT, "ggml_backend_cuda_vmm_merge");
++        complete = api.reserve && api.map_new && api.map_fd && api.copy_fd && api.protect && api.zero && api.buffer && api.buffer_type && api.device_count &&
++                   api.map_fds && api.map_private && api.copy_fds && api.protect_ranges && api.wait && api.merge && api.zero_ranges;
++    }
++    return complete ? &api : nullptr;
++}
++
++// Maps granules of device memory until the rows below `rows` have memory.
++static void llama_kv_vmm_grow(llama_kv_host & host, size_t rows) {
++    const llama_kv_vmm_api * api = llama_kv_vmm();
++    const size_t granule = llama_kv_vmm_granule;
++    if (host.batch && !host.publisher) {
++        // memory that is not published: one allocation per tensor for all the granules that are added
++        bool mapped = false;
++        for (size_t i = 0; i < host.tensors.size(); ++i) {
++            const auto & t = host.tensors[i];
++            const size_t need = std::min((std::min(rows, t.rows) * t.row + granule - 1) / granule, t.size / granule);
++            if (need <= host.granules[i]) {
++                continue;
++            }
++            if (!api->map_private(host.device, host.base + t.offset + host.granules[i] * granule, (need - host.granules[i]) * granule)) {
++                throw std::runtime_error("kv cache: cannot map device memory");
++            }
++            host.granules[i] = need;
++            mapped = true;
++        }
++        if (mapped) {
++            api->wait(host.device);
++        }
++        return;
++    }
++    for (size_t i = 0; i < host.tensors.size(); ++i) {
++        const auto & t = host.tensors[i];
++        const size_t need = std::min((std::min(rows, t.rows) * t.row + granule - 1) / granule, t.size / granule);
++        for (size_t g = host.granules[i]; g < need; ++g) {
++            int fd = -1;
++            if (!api->map_new(host.device, host.base + t.offset + g * granule, granule, host.publisher ? &fd : nullptr)) {
++                throw std::runtime_error("kv cache: cannot map device memory");
++            }
++            if (host.publisher) {
++                host.fds[i].push_back(fd);
++            }
++        }
++        host.granules[i] = std::max(host.granules[i], need);
++    }
++}
++
++static std::unordered_map<ggml_backend_buffer_t, llama_kv_host> & llama_kv_hosts() {
++    static std::unordered_map<ggml_backend_buffer_t, llama_kv_host> hosts;
++    return hosts;
++}
++
++static llama_kv_host * llama_kv_host_of(ggml_backend_buffer_t buf) {
++    const auto it = llama_kv_hosts().find(buf);
++    return it == llama_kv_hosts().end() ? nullptr : &it->second;
++}
++
++static const size_t llama_kv_host_page = 4096;
++
++// Two steps can be left out to measure what they are worth:
++// LLAMA_KV_TOUCH=0     no CPU read of the rows that are mapped; the device faults on their entries.
++// LLAMA_KV_POPULATE=0  an agent puts no memory behind its rows before the device writes them; the device faults it in.
++static bool llama_kv_step_off(const char * name) {
++    const char * value = getenv(name);
++    return value != nullptr && value[0] == '0';
++}
++
++// Puts memory behind the rows below `rows`, before the device writes them.
++static void llama_kv_host_grow(ggml_backend_buffer_t buf, size_t rows) {
++    llama_kv_host * host = llama_kv_host_of(buf);
++    if (host == nullptr || host->grow == 0 || rows <= host->rows_ready) {
++        return;
++    }
++    const size_t page = llama_kv_host_page;
++    const size_t target = (rows + host->grow - 1) / host->grow * host->grow;
++    if (host->vmm) {
++        llama_kv_vmm_grow(*host, target);
++        host->rows_ready = target;
++        return;
++    }
++    for (const auto & t : host->tensors) {
++        const size_t begin = host->rows_ready * t.row / page * page;
++        const size_t end = std::min((std::min(target, t.rows) * t.row + page - 1) / page * page, t.size);
++        if (end > begin && !(host->agent && llama_kv_step_off("LLAMA_KV_POPULATE")) &&
++            madvise(host->base + t.offset + begin, end - begin, MADV_POPULATE_WRITE) != 0) {
++            throw std::runtime_error("kv cache: cannot grow the host mapping");
++        }
++    }
++    host->rows_ready = target;
++}
++
++// Defined below; a publisher reads the rows of a divided huge page again after it has frozen them.
++static void llama_kv_host_touch(const std::vector<std::pair<const char *, size_t>> & ranges);
++
++// The rows below `rows` of a publisher stay as they are from here on. Returns false when the cache is not a publisher.
++static bool llama_kv_host_freeze(ggml_backend_buffer_t buf, size_t rows) {
++    llama_kv_host * host = llama_kv_host_of(buf);
++    if (host == nullptr || !host->publisher) {
++        return false;
++    }
++    if (rows <= host->rows_mapped) {
++        return true;
++    }
++    if (host->vmm) {
++        // the granules that the rows fill become read-only here; their handles, and the handle of the
++        // granule the rows end in, go to LLAMA_KV_VMM_EXPORT for the processes this one starts
++        const size_t granule = llama_kv_vmm_granule;
++        std::string exported = std::to_string(rows);
++        if (host->merge) {
++            // the allocations that the rows fill become one allocation per tensor, which an agent imports with
++            // one handle; a cache that does this publishes once
++            std::vector<void *> addrs;
++            std::vector<size_t> counts;
++            for (const auto & t : host->tensors) {
++                addrs.push_back(host->base + t.offset);
++                counts.push_back(std::min(rows, t.rows) * t.row / granule);
++            }
++            std::vector<int> merged(addrs.size(), -1);
++            if (!llama_kv_vmm()->merge(host->device, addrs.data(), counts.data(), addrs.size(), granule, merged.data())) {
++                throw std::runtime_error("kv cache: cannot freeze the published rows");
++            }
++            for (size_t i = 0; i < host->tensors.size(); ++i) {
++                const auto & t = host->tensors[i];
++                const size_t filled = std::min(rows, t.rows) * t.row;
++                for (size_t g = 0; g < counts[i]; ++g) {
++                    close(host->fds[i][g]);
++                }
++                if (counts[i] > 0) {
++                    (void) fcntl(merged[i], F_SETFD, 0);
++                    exported += " " + std::to_string(merged[i]);
++                }
++                if (filled % granule != 0) {
++                    (void) fcntl(host->fds[i][counts[i]], F_SETFD, 0);
++                    exported += " " + std::to_string(host->fds[i][counts[i]]);
++                }
++            }
++            setenv("LLAMA_KV_VMM_EXPORT", exported.c_str(), 1);
++            host->rows_mapped = rows;
++            return true;
++        }
++        if (host->batch) {
++            std::vector<void *> addrs;
++            std::vector<size_t> sizes;
++            for (const auto & t : host->tensors) {
++                addrs.push_back(host->base + t.offset);
++                sizes.push_back(std::min(rows, t.rows) * t.row / granule * granule);
++            }
++            if (!llama_kv_vmm()->protect_ranges(host->device, addrs.data(), sizes.data(), addrs.size())) {
++                throw std::runtime_error("kv cache: cannot freeze the published rows");
++            }
++        }
++        for (size_t i = 0; i < host->tensors.size(); ++i) {
++            const auto & t = host->tensors[i];
++            const size_t filled = std::min(rows, t.rows) * t.row;
++            const size_t whole = filled / granule;
++            if (!host->batch && whole > 0 && !llama_kv_vmm()->protect(host->device, host->base + t.offset, whole * granule)) {
++                throw std::runtime_error("kv cache: cannot freeze the published rows");
++            }
++            for (size_t g = 0; g < whole + (filled % granule != 0 ? 1 : 0); ++g) {
++                (void) fcntl(host->fds[i][g], F_SETFD, 0);
++                exported += " " + std::to_string(host->fds[i][g]);
++            }
++        }
++        setenv("LLAMA_KV_VMM_EXPORT", exported.c_str(), 1);
++        host->rows_mapped = rows;
++        return true;
++    }
++    for (const auto & t : host->tensors) {
++        const size_t whole = std::min(rows, t.rows) * t.row / llama_kv_host_page * llama_kv_host_page;
++        if (whole > 0 && mprotect(host->base + t.offset, whole, PROT_READ) != 0) {
++            throw std::runtime_error("kv cache: cannot freeze the published rows");
++        }
++    }
++    // A protection change that ends inside a 2 MiB page of the file makes the kernel drop the huge mapping of
++    // that page, and the device would fault on its entries at its next access. A CPU read of the rows of that
++    // page that are frozen now, and memory behind the rows after them as before, put the entries back.
++    const size_t huge_page = (size_t) 2 * 1024 * 1024;
++    std::vector<std::pair<const char *, size_t>> again;
++    for (const auto & t : host->tensors) {
++        const size_t first = 0;
++        const size_t whole = std::min(rows, t.rows) * t.row / llama_kv_host_page * llama_kv_host_page;
++        const size_t block = whole / huge_page * huge_page;
++        if (whole <= first || whole == block) {
++            continue;
++        }
++        const size_t begin = std::max(block, first);
++        again.emplace_back(host->base + t.offset + begin, whole - begin);
++        const size_t ready = std::min((std::min(host->rows_ready, t.rows) * t.row + llama_kv_host_page - 1) / llama_kv_host_page * llama_kv_host_page, t.size);
++        const size_t end = std::min(ready, block + huge_page);
++        if (end > whole && madvise(host->base + t.offset + whole, end - whole, MADV_POPULATE_WRITE) != 0) {
++            throw std::runtime_error("kv cache: cannot put memory behind the rows after the published ones");
++        }
++    }
++    llama_kv_host_touch(again);
++    host->rows_mapped = rows;
++    return true;
++}
++
++// Zeroes the rows that this process owns. The rows of the file belong to every process that maps them.
++static void llama_kv_host_clear(llama_kv_host & host) {
++    if (host.cow) {
++        return;
++    }
++    if (host.vmm && host.batch) {
++        std::vector<void *> addrs;
++        std::vector<size_t> sizes;
++        for (size_t i = 0; i < host.tensors.size(); ++i) {
++            const auto & t = host.tensors[i];
++            const size_t first = std::min(host.rows_mapped, t.rows) * t.row;
++            const size_t last = host.granules[i] * llama_kv_vmm_granule;
++            if (last > first) {
++                addrs.push_back(host.base + t.offset + first);
++                sizes.push_back(last - first);
++            }
++        }
++        llama_kv_vmm()->zero_ranges(host.device, addrs.data(), sizes.data(), addrs.size());
++        return;
++    }
++    if (host.vmm) {
++        for (size_t i = 0; i < host.tensors.size(); ++i) {
++            const auto & t = host.tensors[i];
++            const size_t first = std::min(host.rows_mapped, t.rows) * t.row;
++            const size_t last = host.granules[i] * llama_kv_vmm_granule;
++            if (last > first) {
++                llama_kv_vmm()->zero(host.device, host.base + t.offset + first, last - first);
++            }
++        }
++        return;
++    }
++    for (const auto & t : host.tensors) {
++        const size_t first = std::min(host.rows_mapped, t.rows) * t.row;
++        const size_t last = std::min((std::min(host.rows_ready, t.rows) * t.row + llama_kv_host_page - 1) / llama_kv_host_page * llama_kv_host_page, t.size);
++        if (last > first) {
++            memset(host.base + t.offset + first, 0, last - first);
++        }
++    }
++}
++
++// The device cannot set the accessed flag of a page-table entry and faults on every entry without it; a CPU read sets it.
++static void llama_kv_host_touch(const std::vector<std::pair<const char *, size_t>> & ranges) {
++    size_t n_pages = 0;
++    for (const auto & [_, size] : ranges) {
++        n_pages += size / llama_kv_host_page;
++    }
++    const unsigned n_threads = std::max(1u, std::min(12u, std::thread::hardware_concurrency()));
++    std::vector<std::thread> workers;
++    for (unsigned t = 0; t < n_threads; t++) {
++        workers.emplace_back([&ranges, n_pages, n_threads, t]() {
++            const size_t first = n_pages * t / n_threads;
++            const size_t last = n_pages * (t + 1) / n_threads;
++            size_t skipped = 0;
++            for (const auto & [ptr, size] : ranges) {
++                const size_t pages = size / llama_kv_host_page;
++                const volatile char * view = (const volatile char *) ptr;
++                for (size_t i = std::max(first, skipped); i < std::min(last, skipped + pages); i++) {
++                    (void) view[(i - skipped) * llama_kv_host_page];
++                }
++                skipped += pages;
++            }
++        });
++    }
++    for (auto & worker : workers) {
++        worker.join();
++    }
++}
++
++// LLAMA_KV_VMM=1: the cache is device memory in 2 MiB allocations that other processes can map.
++// LLAMA_KV_VMM_BATCH=1 with the above: the access of the allocations of a tensor is set in one call, the
++//                          allocations that a prefix ends in are copied with one wait for the device, and
++//                          memory that is not published is one allocation per tensor and step.
++// LLAMA_KV_VMM_BATCH=2:    the same, and a publisher copies the rows it publishes into one allocation per
++//                          tensor, so that an agent imports one handle per tensor.
++// LLAMA_KV_VMM_IMPORT="ROWS FD FD ...": agent, the leading ROWS rows are allocations of a publisher, mapped read-only.
++// Returns nullptr when the backend cannot do it.
++static ggml_backend_buffer_t llama_kv_alloc_vmm(ggml_context * ctx, ggml_backend_buffer_type_t buft, bool rows_are_cells) {
++    const llama_kv_vmm_api * api = llama_kv_vmm();
++    if (api == nullptr) {
++        return nullptr;
++    }
++    int device = -1;
++    for (int i = 0; i < api->device_count(); ++i) {
++        if (api->buffer_type(i) == buft) {
++            device = i;
++        }
++    }
++    if (device < 0) {
++        return nullptr;
++    }
++
++    const size_t granule = llama_kv_vmm_granule;
++    llama_kv_host host;
++    host.vmm = true;
++    host.device = device;
++    std::vector<ggml_tensor *> placed;
++    size_t total = 0;
++    size_t max_rows = 0;
++    bool one_stream = true;
++    for (ggml_tensor * t = ggml_get_first_tensor(ctx); t != nullptr; t = ggml_get_next_tensor(ctx, t)) {
++        if (t->view_src != nullptr) {
++            continue;
++        }
++        const size_t size = (ggml_backend_buft_get_alloc_size(buft, t) + granule - 1) / granule * granule;
++        placed.push_back(t);
++        host.tensors.push_back({ total, ggml_row_size(t->type, t->ne[0]), (size_t) t->ne[1], size });
++        total += size;
++        max_rows = std::max(max_rows, (size_t) t->ne[1]);
++        one_stream = one_stream && t->ne[2] == 1;
++    }
++    if (total == 0) {
++        return nullptr;
++    }
++    host.granules.assign(host.tensors.size(), 0);
++    host.fds.resize(host.tensors.size());
++
++    const char * import_env = getenv("LLAMA_KV_VMM_IMPORT");
++    const char * grow_env = getenv("LLAMA_KV_GROW");
++    host.agent = import_env != nullptr && import_env[0] != '\0';
++    host.publisher = !host.agent;
++    // a cache that is backed on demand and shares nothing: its state file carries the rows, as upstream's does
++    const char * vmm_env = getenv("LLAMA_KV_VMM");
++    host.demand = vmm_env != nullptr && vmm_env[0] == '2';
++    if (host.demand) {
++        host.agent = false;
++        host.publisher = false;
++    }
++    const char * batch_env = getenv("LLAMA_KV_VMM_BATCH");
++    host.batch = batch_env != nullptr && (batch_env[0] == '1' || batch_env[0] == '2');
++    host.merge = batch_env != nullptr && batch_env[0] == '2';
++    // the attention reads cells in steps of 256, and all of them need memory
++    host.grow = grow_env != nullptr ? (strtoull(grow_env, nullptr, 10) + 255) / 256 * 256 : 0;
++    if (host.agent && !(rows_are_cells && one_stream)) {
++        throw std::runtime_error("kv cache: a prefix of this cache cannot be mapped");
++    }
++
++    host.base = (char *) api->reserve(device, total);
++    if (host.base == nullptr) {
++        throw std::runtime_error("kv cache: cannot reserve device address space");
++    }
++
++    size_t shared_bytes = 0;
++    if (host.agent) {
++        std::vector<long> numbers;
++        char * end = nullptr;
++        for (const char * at = import_env; *at != '\0'; at = end) {
++            const long value = strtol(at, &end, 10);
++            if (end == at) {
++                break;
++            }
++            numbers.push_back(value);
++        }
++        if (numbers.empty()) {
++            throw std::runtime_error("kv cache: LLAMA_KV_VMM_IMPORT names no rows");
++        }
++        host.rows_mapped = std::min((size_t) numbers[0], max_rows);
++        size_t next = 1;
++        if (host.batch) {
++            // the allocations of a tensor are mapped with one access setting, and the allocations that the
++            // prefix ends in are copied together, with one wait for the device
++            std::vector<void *> ends;
++            std::vector<int> end_fds;
++            std::vector<size_t> end_bytes;
++            std::vector<int> fds;
++            const auto ms_since = [](std::chrono::steady_clock::time_point from) {
++                return std::chrono::duration<double, std::milli>(std::chrono::steady_clock::now() - from).count();
++            };
++            double map_ms = 0.0;
++            double end_ms = 0.0;
++            for (size_t i = 0; i < host.tensors.size(); ++i) {
++                const auto & t = host.tensors[i];
++                const size_t filled = std::min(host.rows_mapped, t.rows) * t.row;
++                const size_t whole = filled / granule;
++                // a publisher that merged names one allocation for the whole granules of a tensor
++                const size_t handles = host.merge ? (whole > 0 ? 1 : 0) : whole;
++                if (next + handles + (filled % granule != 0 ? 1 : 0) > numbers.size()) {
++                    throw std::runtime_error("kv cache: LLAMA_KV_VMM_IMPORT names too few allocations");
++                }
++                fds.assign(numbers.begin() + next, numbers.begin() + next + handles);
++                next += handles;
++                auto mark = std::chrono::steady_clock::now();
++                if (!api->map_fds(device, host.base + t.offset, host.merge ? whole * granule : granule, fds.data(), handles)) {
++                    throw std::runtime_error("kv cache: cannot map a published allocation");
++                }
++                map_ms += ms_since(mark);
++                host.granules[i] = whole;
++                shared_bytes += whole * granule;
++                if (filled % granule != 0) {
++                    char * last = host.base + t.offset + whole * granule;
++                    mark = std::chrono::steady_clock::now();
++                    if (!api->map_private(device, last, granule)) {
++                        throw std::runtime_error("kv cache: cannot copy the end of the prefix");
++                    }
++                    end_ms += ms_since(mark);
++                    ends.push_back(last);
++                    end_fds.push_back((int) numbers[next++]);
++                    end_bytes.push_back(filled % granule);
++                    host.granules[i] = whole + 1;
++                }
++            }
++            const auto mark = std::chrono::steady_clock::now();
++            if (!api->copy_fds(device, ends.data(), granule, end_fds.data(), end_bytes.data(), ends.size())) {
++                throw std::runtime_error("kv cache: cannot copy the end of the prefix");
++            }
++            api->wait(device);
++            LLAMA_LOG_WARN("%s: kv cache attach: %.0f MiB of published allocations mapped in %.1f ms, %zu ends allocated in %.1f ms and copied in %.1f ms\n", __func__,
++                    shared_bytes / 1048576.0, map_ms, ends.size(), end_ms, ms_since(mark));
++        }
++        for (size_t i = 0; !host.batch && i < host.tensors.size(); ++i) {
++            const auto & t = host.tensors[i];
++            const size_t filled = std::min(host.rows_mapped, t.rows) * t.row;
++            const size_t whole = filled / granule;
++            if (next + whole + (filled % granule != 0 ? 1 : 0) > numbers.size()) {
++                throw std::runtime_error("kv cache: LLAMA_KV_VMM_IMPORT names too few allocations");
++            }
++            for (size_t g = 0; g < whole; ++g) {
++                if (!api->map_fd(device, host.base + t.offset + g * granule, granule, (int) numbers[next++])) {
++                    throw std::runtime_error("kv cache: cannot map a published allocation");
++                }
++            }
++            host.granules[i] = whole;
++            shared_bytes += whole * granule;
++            if (filled % granule != 0) {
++                // the allocation that the prefix ends in is copied as far as the prefix goes
++                char * last = host.base + t.offset + whole * granule;
++                if (!api->map_new(device, last, granule, nullptr) ||
++                    !api->copy_fd(device, last, granule, (int) numbers[next++], filled % granule)) {
++                    throw std::runtime_error("kv cache: cannot copy the end of the prefix");
++                }
++                host.granules[i] = whole + 1;
++            }
++        }
++    }
++    if (host.grow == 0) {
++        llama_kv_vmm_grow(host, max_rows);
++        host.rows_ready = max_rows;
++    } else {
++        host.rows_ready = host.rows_mapped;
++    }
++
++    ggml_backend_buffer_t buf = api->buffer(device, host.base, total);
++    if (buf == nullptr) {
++        throw std::runtime_error("kv cache: the device refused the composed range");
++    }
++    for (size_t i = 0; i < placed.size(); ++i) {
++        if (ggml_backend_tensor_alloc(buf, placed[i], host.base + host.tensors[i].offset) != GGML_STATUS_SUCCESS) {
++            throw std::runtime_error("kv cache: cannot place a tensor");
++        }
++    }
++    for (ggml_tensor * t = ggml_get_first_tensor(ctx); t != nullptr; t = ggml_get_next_tensor(ctx, t)) {
++        if (t->view_src != nullptr && ggml_backend_view_init(t) != GGML_STATUS_SUCCESS) {
++            throw std::runtime_error("kv cache: cannot initialize a view");
++        }
++    }
++    LLAMA_LOG_WARN("%s: kv cache in composed device memory: mode = %s, %.2f MiB, %.2f MiB shared read-only, grow = %zu rows\n", __func__,
++            host.agent ? "prefix" : "publisher", total / 1048576.0, shared_bytes / 1048576.0, host.grow);
++    llama_kv_hosts()[buf] = std::move(host);
++    return buf;
++}
++
++// LLAMA_KV_HOST=anon: private memory.
++// LLAMA_KV_HOST=PATH: publisher, the cache is the file PATH.INDEX.
++// LLAMA_KV_HOST=PATH LLAMA_KV_PREFIX=ROWS: agent, the first ROWS rows are a read-only mapping of the file, the rest is private.
++// LLAMA_KV_COW=1 with the above: agent, the whole file as a writable private mapping (copy-on-write); 2: the same without the CPU read of the prefix.
++// LLAMA_KV_GROW=ROWS: memory follows the rows in use, ROWS at a time.
++// Returns nullptr when the mode is off or the device cannot do it.
++static ggml_backend_buffer_t llama_kv_alloc_host(ggml_context * ctx, ggml_backend_buffer_type_t buft, int index, bool rows_are_cells) {
++    const char * vmm = getenv("LLAMA_KV_VMM");
++    if (vmm != nullptr && (vmm[0] == '1' || vmm[0] == '2')) {
++        return llama_kv_alloc_vmm(ctx, buft, rows_are_cells);
++    }
++    const char * mode = getenv("LLAMA_KV_HOST");
++    if (mode == nullptr || mode[0] == '\0') {
++        return nullptr;
++    }
++    ggml_backend_dev_t dev = ggml_backend_buft_get_device(buft);
++    if (dev == nullptr) {
++        return nullptr;
++    }
++    ggml_backend_dev_props props;
++    ggml_backend_dev_get_props(dev, &props);
++    if (!props.caps.buffer_from_host_ptr || buft != ggml_backend_dev_buffer_type(dev)) {
++        return nullptr;
++    }
++
++    const size_t huge = 2u << 20;
++    const size_t page = llama_kv_host_page;
++    const auto round_up = [](size_t value, size_t unit) { return (value + unit - 1) / unit * unit; };
++
++    llama_kv_host host;
++    std::vector<ggml_tensor *> placed;
++    size_t total = 0;
++    size_t max_tensor = 0;
++    size_t max_rows = 0;
++    bool one_stream = true;
++    for (ggml_tensor * t = ggml_get_first_tensor(ctx); t != nullptr; t = ggml_get_next_tensor(ctx, t)) {
++        if (t->view_src != nullptr) {
++            continue;
++        }
++        const size_t size = ggml_backend_buft_get_alloc_size(buft, t);
++        placed.push_back(t);
++        host.tensors.push_back({ total, ggml_row_size(t->type, t->ne[0]), (size_t) t->ne[1], round_up(size, huge) });
++        total += round_up(size, huge);
++        max_tensor = std::max(max_tensor, size);
++        max_rows = std::max(max_rows, (size_t) t->ne[1]);
++        one_stream = one_stream && t->ne[2] == 1;
++    }
++    if (total == 0) {
++        return nullptr;
++    }
++
++    const bool anonymous = strcmp(mode, "anon") == 0;
++    const char * prefix_env = getenv("LLAMA_KV_PREFIX");
++    const char * cow_env = getenv("LLAMA_KV_COW");
++    const char * grow_env = getenv("LLAMA_KV_GROW");
++    host.rows_mapped = !anonymous && prefix_env != nullptr ? std::min<size_t>(strtoull(prefix_env, nullptr, 10), max_rows) : 0;
++    host.agent = host.rows_mapped > 0;
++    host.publisher = !anonymous && !host.agent;
++    host.cow = host.agent && cow_env != nullptr && (cow_env[0] == '1' || cow_env[0] == '2');
++    const bool touch = !(host.cow && cow_env[0] == '2');
++    host.path = anonymous ? "" : std::string(mode) + "." + std::to_string(index);
++    host.grow = !host.cow && grow_env != nullptr ? strtoull(grow_env, nullptr, 10) : 0;
++
++    // rows must be cells: with a transposed value tensor or several streams a prefix is not a leading range
++    if (host.agent && !(rows_are_cells && one_stream)) {
++        throw std::runtime_error("kv cache: a prefix of this cache cannot be mapped");
++    }
++
++    void * reserved = mmap(nullptr, total + huge, PROT_NONE, MAP_PRIVATE | MAP_ANONYMOUS | MAP_NORESERVE, -1, 0);
++    if (reserved == MAP_FAILED) {
++        throw std::runtime_error("kv cache: cannot reserve address space");
++    }
++    char * base = (char *) (((uintptr_t) reserved + huge - 1) & ~(uintptr_t) (huge - 1));
++    host.base = base;
++
++    if (host.cow) {
++        const int fd = open(host.path.c_str(), O_RDONLY);
++        if (fd < 0 || mmap(base, total, PROT_READ | PROT_WRITE, MAP_PRIVATE | MAP_FIXED | MAP_NORESERVE, fd, 0) == MAP_FAILED) {
++            throw std::runtime_error("kv cache: cannot map " + host.path);
++        }
++        close(fd);
++    } else if (host.publisher) {
++        const int fd = open(host.path.c_str(), O_RDWR | O_CREAT | O_TRUNC, 0600);
++        if (fd < 0 || ftruncate(fd, (off_t) total) != 0) {
++            throw std::runtime_error("kv cache: cannot create " + host.path);
++        }
++        if (mmap(base, total, PROT_READ | PROT_WRITE, MAP_SHARED | MAP_FIXED, fd, 0) == MAP_FAILED) {
++            throw std::runtime_error("kv cache: cannot map " + host.path);
++        }
++        close(fd);
++    } else {
++        if (mmap(base, total, PROT_READ | PROT_WRITE, MAP_PRIVATE | MAP_ANONYMOUS | MAP_FIXED | MAP_NORESERVE, -1, 0) == MAP_FAILED) {
++            throw std::runtime_error("kv cache: cannot map private memory");
++        }
++        // a cache that grows takes small pages, so that its memory is the rows in use
++        (void) madvise(base, total, host.grow > 0 ? MADV_NOHUGEPAGE : MADV_HUGEPAGE);
++    }
++    if (!host.cow && !host.agent && host.grow == 0) {
++        // writable entries, so that the device never faults when it writes the cache
++        if (madvise(base, total, MADV_POPULATE_WRITE) != 0) {
++            throw std::runtime_error("kv cache: cannot populate the mapping");
++        }
++    }
++
++    size_t shared_bytes = 0;
++    std::vector<std::pair<const char *, size_t>> mapped;
++    if (host.agent && !host.cow) {
++        const int fd = open(host.path.c_str(), O_RDONLY);
++        if (fd < 0) {
++            throw std::runtime_error("kv cache: cannot open " + host.path);
++        }
++        for (const auto & t : host.tensors) {
++            const size_t filled = std::min(host.rows_mapped, t.rows) * t.row;
++            const size_t whole = filled / page * page;
++            if (whole > 0) {
++                if (mmap(base + t.offset, whole, PROT_READ, MAP_PRIVATE | MAP_FIXED | MAP_NORESERVE, fd, (off_t) t.offset) == MAP_FAILED) {
++                    throw std::runtime_error("kv cache: cannot map the prefix");
++                }
++                mapped.emplace_back(base + t.offset, whole);
++                shared_bytes += whole;
++            }
++            if (filled > whole) {
++                // the last, partly filled page of the prefix is copied
++                if (pread(fd, base + t.offset + whole, filled - whole, (off_t) (t.offset + whole)) != (ssize_t) (filled - whole)) {
++                    throw std::runtime_error("kv cache: cannot read the prefix");
++                }
++            }
++            if (host.grow == 0 && madvise(base + t.offset + whole, t.size - whole, MADV_POPULATE_WRITE) != 0) {
++                throw std::runtime_error("kv cache: cannot populate the mapping");
++            }
++        }
++        close(fd);
++    }
++    if (host.cow && touch) {
++        for (const auto & t : host.tensors) {
++            mapped.emplace_back(base + t.offset, std::min(host.rows_mapped, t.rows) * t.row);
++        }
++    }
++    if (!llama_kv_step_off("LLAMA_KV_TOUCH")) {
++        llama_kv_host_touch(mapped);
++    }
++    host.rows_ready = host.grow > 0 ? host.rows_mapped : max_rows;
++
++    // the entries that need a CPU read have it; a read of the rest would put memory behind rows that are not in use
++    const char * preread_env = getenv("GGML_CUDA_HOST_PTR_PREREAD");
++    const std::string preread = preread_env != nullptr ? preread_env : "";
++    setenv("GGML_CUDA_HOST_PTR_PREREAD", "0", 1);
++    ggml_backend_buffer_t buf = ggml_backend_dev_buffer_from_host_ptr(dev, base, total, max_tensor);
++    if (preread_env != nullptr) {
++        setenv("GGML_CUDA_HOST_PTR_PREREAD", preread.c_str(), 1);
++    } else {
++        unsetenv("GGML_CUDA_HOST_PTR_PREREAD");
++    }
++    if (buf == nullptr) {
++        throw std::runtime_error("kv cache: the device refused the host mapping");
++    }
++    for (size_t i = 0; i < placed.size(); ++i) {
++        if (ggml_backend_tensor_alloc(buf, placed[i], base + host.tensors[i].offset) != GGML_STATUS_SUCCESS) {
++            throw std::runtime_error("kv cache: cannot place a tensor");
++        }
++    }
++    for (ggml_tensor * t = ggml_get_first_tensor(ctx); t != nullptr; t = ggml_get_next_tensor(ctx, t)) {
++        if (t->view_src != nullptr && ggml_backend_view_init(t) != GGML_STATUS_SUCCESS) {
++            throw std::runtime_error("kv cache: cannot initialize a view");
++        }
++    }
++    LLAMA_LOG_WARN("%s: kv cache in host memory: mode = %s, %.2f MiB, %.2f MiB shared read-only from %s, grow = %zu rows\n", __func__,
++            anonymous ? "anon" : (host.cow ? "cow" : (host.agent ? "prefix" : "file")), total / 1048576.0, shared_bytes / 1048576.0,
++            host.path.empty() ? "-" : host.path.c_str(), host.grow);
++    llama_kv_hosts()[buf] = std::move(host);
++    return buf;
++}
++
++// The rows of a published cache are in its file, a state file carries none of them.
++static void llama_kv_write_rows(llama_io_write_i & io, ggml_tensor * t, size_t offset, size_t size) {
++    const llama_kv_host * host = llama_kv_host_of(t->buffer);
++    if (host != nullptr && host->agent) {
++        throw std::runtime_error("kv cache: an agent of a published cache cannot save its state");
++    }
++    if (host == nullptr || !host->publisher) {
++        io.write_tensor(t, offset, size);
++    }
++}
++
++static void llama_kv_read_rows(llama_io_read_i & io, ggml_tensor * t, size_t offset, size_t size) {
++    const llama_kv_host * host = llama_kv_host_of(t->buffer);
++    if (host == nullptr || (host->path.empty() && !host->vmm)) {
++        io.read_tensor(t, offset, size);
++        return;
++    }
++    if (host->demand) {
++        // a private cache copies the rows of the state, once it has memory for them
++        llama_kv_host * mine = llama_kv_host_of(t->buffer);
++        const size_t row = ggml_row_size(t->type, t->ne[0]);
++        const size_t rows = (offset + size + row - 1) / row;
++        if (rows > mine->rows_ready) {
++            const size_t target = mine->grow > 0 ? (rows + mine->grow - 1) / mine->grow * mine->grow : rows;
++            llama_kv_vmm_grow(*mine, target);
++            mine->rows_ready = target;
++        }
++        io.read_tensor(t, offset, size);
++        return;
++    }
++    if (host->publisher) {
++        throw std::runtime_error("kv cache: a publisher starts from an empty cache");
++    }
++    if (host->vmm) {
++        // the published rows are mapped or copied; a state names no others
++        if (offset + size > host->rows_mapped * ggml_row_size(t->type, t->ne[0])) {
++            throw std::runtime_error("kv cache: the state names rows that were not published");
++        }
++        return;
++    }
++    // the mapped rows are in place; rows after them come from the file
++    const size_t mapped = host->rows_mapped * ggml_row_size(t->type, t->ne[0]);
++    if (offset + size <= mapped || host->cow) {
++        return;
++    }
++    const size_t from = std::max(offset, mapped);
++    char * dst = (char *) t->data + from;
++    const int fd = open(host->path.c_str(), O_RDONLY);
++    const bool ok = fd >= 0 && pread(fd, dst, offset + size - from, (off_t) (dst - host->base)) == (ssize_t) (offset + size - from);
++    if (fd >= 0) {
++        close(fd);
++    }
++    if (!ok) {
++        throw std::runtime_error("kv cache: cannot read rows of " + host->path);
++    }
++}
++
+ static bool ggml_is_power_of_2(int n) {
+     return (n & (n - 1)) == 0;
+ }
+@@ -276,13 +1064,18 @@ llama_kv_cache::llama_kv_cache(
+     // allocate tensors and initialize the buffers to avoid NaNs in the padding
+     for (auto & [buft, ctx] : ctx_map) {
+         ggml_backend_buffer_t buf;
++        bool host_kv = false;
+         if (hparams.no_alloc) {
+             buf = ggml_backend_buft_alloc_buffer(buft, /*size =*/ 0); // dummy buffer
+             for (ggml_tensor * t = ggml_get_first_tensor(ctx.get()); t != nullptr; t = ggml_get_next_tensor(ctx.get(), t)) {
+                 t->buffer = buf; // set dummy buffer for KV cache so that the backend scheduler won't try to allocate it
+             }
+         } else {
+-            buf = ggml_backend_alloc_ctx_tensors_from_buft(ctx.get(), buft); // real buffer
++            buf = llama_kv_alloc_host(ctx.get(), buft, (int) ctxs_bufs.size(), !v_trans);
++            host_kv = buf != nullptr;
++            if (!buf) {
++                buf = ggml_backend_alloc_ctx_tensors_from_buft(ctx.get(), buft); // real buffer
++            }
+         }
+         if (!buf) {
+             throw std::runtime_error("failed to allocate buffer for kv cache");
+@@ -290,7 +1083,12 @@ llama_kv_cache::llama_kv_cache(
+ 
+         LLAMA_LOG_INFO("%s: %10s KV buffer size = %8.2f MiB\n", __func__, ggml_backend_buffer_name(buf), ggml_backend_buffer_get_size(buf)/1024.0/1024.0);
+ 
+-        ggml_backend_buffer_clear(buf, 0);
++        // a fresh host mapping is zero, and a mapped prefix must not be written
++        if (!host_kv) {
++            ggml_backend_buffer_clear(buf, 0);
++        } else if (const llama_kv_host * host = llama_kv_host_of(buf); host->agent && !host->cow) {
++            n_cells_frozen = std::max(n_cells_frozen, (uint32_t) host->rows_mapped);
++        }
+         ctxs_bufs.emplace_back(std::move(ctx), buf);
+     }
+ 
+@@ -374,7 +1172,12 @@ void llama_kv_cache::clear(bool data) {
+ 
+     if (data) {
+         for (auto & [_, buf] : ctxs_bufs) {
+-            ggml_backend_buffer_clear(buf.get(), 0);
++            llama_kv_host * host = llama_kv_host_of(buf.get());
++            if (host == nullptr) {
++                ggml_backend_buffer_clear(buf.get(), 0);
++            } else {
++                llama_kv_host_clear(*host);
++            }
+         }
+     }
+ }
+@@ -1039,9 +1842,12 @@ llama_kv_cache::slot_info llama_kv_cache::find_slot(const llama_ubatch & ubatch,
+                 //    - (disabled) mask causally, if the sequence is the same as the one we are inserting
+                 //    - mask SWA, using current max pos for that sequence in the cache
+                 //                always insert in the cell with minimum pos
+-                bool can_use = cells.is_empty(idx);
++                // a cell of a mapped prefix is never written again
++                const bool frozen = idx < n_cells_frozen;
++
++                bool can_use = !frozen && cells.is_empty(idx);
+ 
+-                if (!can_use && cells.seq_count(idx) == 1) {
++                if (!can_use && !frozen && cells.seq_count(idx) == 1) {
+                     const llama_pos pos_cell = cells.pos_get(idx);
+ 
+                     // (disabled) causal mask
+@@ -1183,6 +1989,17 @@ void llama_kv_cache::apply_ubatch(const slot_info & sinfo, const llama_ubatch &
+ 
+         head = sinfo.idxs[s].back() + 1;
+     }
++
++    // a host cache that grows needs memory behind these cells before the device writes them
++    uint32_t idx_max = 0;
++    for (uint32_t s = 0; s < sinfo.n_stream(); ++s) {
++        for (const auto idx : sinfo.idxs[s]) {
++            idx_max = std::max(idx_max, idx);
++        }
++    }
++    for (auto & [_, buf] : ctxs_bufs) {
++        llama_kv_host_grow(buf.get(), (size_t) idx_max + 1);
++    }
+ }
+ 
+ bool llama_kv_cache::get_can_shift() const {
+@@ -2120,6 +2937,17 @@ void llama_kv_cache::state_write(llama_io_write_i & io, llama_seq_id seq_id, lla
+         state_write_meta(io, cr, seq_id);
+         state_write_data(io, cr);
+     }
++
++    // a state file of a published cache points at rows of its file, which other processes map from now on
++    uint32_t rows = 0;
++    for (uint32_t s = 0; s < n_stream; ++s) {
++        rows = std::max(rows, v_cells[s].used_max_p1());
++    }
++    for (const auto & [_, buf] : ctxs_bufs) {
++        if (llama_kv_host_freeze(buf.get(), rows)) {
++            n_cells_frozen = std::max(n_cells_frozen, rows);
++        }
++    }
+ }
+ 
+ void llama_kv_cache::state_read(llama_io_read_i & io, llama_seq_id seq_id, llama_state_seq_flags flags) {
+@@ -2261,7 +3089,7 @@ void llama_kv_cache::state_write_data(llama_io_write_i & io, const cell_ranges_t
+         for (const auto & range : cr.data) {
+             const size_t range_size = range.second - range.first;
+             const size_t buf_size = range_size * k_size_row;
+-            io.write_tensor(k, range.first * k_size_row, buf_size);
++            llama_kv_write_rows(io, k, range.first * k_size_row, buf_size);
+         }
+     }
+ 
+@@ -2288,7 +3116,7 @@ void llama_kv_cache::state_write_data(llama_io_write_i & io, const cell_ranges_t
+             for (const auto & range : cr.data) {
+                 const size_t range_size = range.second - range.first;
+                 const size_t buf_size = range_size * v_size_row;
+-                io.write_tensor(v, range.first * v_size_row, buf_size);
++                llama_kv_write_rows(io, v, range.first * v_size_row, buf_size);
+             }
+         }
+     } else {
+@@ -2323,7 +3151,7 @@ void llama_kv_cache::state_write_data(llama_io_write_i & io, const cell_ranges_t
+                     const size_t range_size = range.second - range.first;
+                     const size_t src_offset = (range.first + j * kv_size) * v_size_el;
+                     const size_t buf_size = range_size * v_size_el;
+-                    io.write_tensor(v, src_offset, buf_size);
++                    llama_kv_write_rows(io, v, src_offset, buf_size);
+                 }
+             }
+         }
+@@ -2341,6 +3169,11 @@ bool llama_kv_cache::state_read_meta(llama_io_read_i & io, uint32_t strm, uint32
+             return false;
+         }
+ 
++        if (n_cells_frozen > 0) {
++            LLAMA_LOG_ERROR("%s: a cache with a mapped prefix restores the whole context only\n", __func__);
++            return false;
++        }
++
+         seq_rm(dest_seq_id, -1, -1);
+ 
+         llama_batch_allocr balloc(hparams.n_pos_per_embd());
+@@ -2577,7 +3410,7 @@ bool llama_kv_cache::state_read_data(llama_io_read_i & io, uint32_t strm, uint32
+         }
+ 
+         for (const auto & r : runs) {
+-            io.read_tensor(k, (size_t) r.from * k_size_row, (size_t) (r.to - r.from) * k_size_row);
++            llama_kv_read_rows(io, k, (size_t) r.from * k_size_row, (size_t) (r.to - r.from) * k_size_row);
+         }
+     }
+ 
+@@ -2611,7 +3444,7 @@ bool llama_kv_cache::state_read_data(llama_io_read_i & io, uint32_t strm, uint32
+             }
+ 
+             for (const auto & r : runs) {
+-                io.read_tensor(v, (size_t) r.from * v_size_row, (size_t) (r.to - r.from) * v_size_row);
++                llama_kv_read_rows(io, v, (size_t) r.from * v_size_row, (size_t) (r.to - r.from) * v_size_row);
+             }
+         }
+     } else {
+@@ -2655,7 +3488,7 @@ bool llama_kv_cache::state_read_data(llama_io_read_i & io, uint32_t strm, uint32
+             for (uint32_t j = 0; j < n_embd_v_gqa; ++j) {
+                 for (const auto & r : runs) {
+                     const size_t dst_offset = ((size_t) r.from + j * cells.size()) * v_size_el;
+-                    io.read_tensor(v, dst_offset, (size_t) (r.to - r.from) * v_size_el);
++                    llama_kv_read_rows(io, v, dst_offset, (size_t) (r.to - r.from) * v_size_el);
+                 }
+             }
+         }
+diff --git a/src/llama-kv-cache.h b/src/llama-kv-cache.h
+index 5051f4343..c7fb1af29 100644
+--- a/src/llama-kv-cache.h
++++ b/src/llama-kv-cache.h
+@@ -264,6 +264,9 @@ private:
+ 
+     bool v_trans = true;  // the value tensor is transposed
+ 
++    // leading cells that other processes map, or that are mapped from another process: never written again
++    mutable uint32_t n_cells_frozen = 0;
++
+     const uint32_t n_seq_max = 1;
+     const uint32_t n_stream  = 1;
+ 

@@ -6,6 +6,9 @@
 /llama.cpp-sota/
 /llama.cpp-stock/
 /llama.cpp-tuned/
+/llama.cpp-kv2/
+/llama.cpp-chain2/
+/llama.cpp-tuned2/
 # the model and the generated adapters
 /models/
 /adapters/
@@ -25,6 +28,11 @@
 /kv_fork_tuned
 /kv_spawn_tuned
 /kv_tree_stock
+/kv_fork2
+/kv_batch2
+/kv_tree2
+/kv_fork_tuned2
+/kv_spawn_tuned2
 /weights_publish
 /cuda_reach_probe
 /cuda_tlb_probe

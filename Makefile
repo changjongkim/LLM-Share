@@ -133,3 +133,41 @@ weights_publish: weights_publish.c
 
 clean:
 	$(RM) cuda_ipc_probe cuda_vmm_probe cuda_share_load_probe kv_fork kv_batch kv_fork_vmm kv_spawn kv_tree kv_fork_sota kv_spawn_sota kv_fork_stock kv_fork_nommap kv_fork_tuned kv_spawn_tuned kv_tree_stock weights_publish cuda_tlb_probe cuda_reach_probe cuda_vmm_attach_probe cuda_protect_probe ollama_mig_visible.so
+
+# The same programs against the engines of kv_extents2.patch, kv_chain2.patch
+# and kv_tuned2.patch, in which a publisher puts the entries of a divided
+# 2 MiB page back from the CPU after it has frozen its rows.
+KV2_ENGINE ?= llama.cpp-kv2
+CHAIN2_ENGINE ?= llama.cpp-chain2
+TUNED2_ENGINE ?= llama.cpp-tuned2
+
+kv_fork2: kv_fork.cpp
+	$(CXX) $(CXXFLAGS) -isystem $(KV2_ENGINE)/include \
+	  -isystem $(KV2_ENGINE)/ggml/include $< -o $@ \
+	  -L$(KV2_ENGINE)/build/bin -lllama -lggml -lggml-base \
+	  -Wl,-rpath,'$$ORIGIN/$(KV2_ENGINE)/build/bin'
+
+kv_batch2: kv_batch.cpp
+	$(CXX) $(CXXFLAGS) -isystem $(KV2_ENGINE)/include \
+	  -isystem $(KV2_ENGINE)/ggml/include $< -o $@ \
+	  -L$(KV2_ENGINE)/build/bin -lllama -lggml -lggml-base \
+	  -Wl,-rpath,'$$ORIGIN/$(KV2_ENGINE)/build/bin'
+
+kv_tree2: kv_tree.cpp
+	$(CXX) $(CXXFLAGS) -isystem $(CHAIN2_ENGINE)/include \
+	  -isystem $(CHAIN2_ENGINE)/ggml/include $< -o $@ \
+	  -L$(CHAIN2_ENGINE)/build/bin -lllama -lggml -lggml-base \
+	  -Wl,-rpath,'$$ORIGIN/$(CHAIN2_ENGINE)/build/bin'
+
+kv_fork_tuned2: kv_fork.cpp
+	$(CXX) $(CXXFLAGS) -isystem $(TUNED2_ENGINE)/include \
+	  -isystem $(TUNED2_ENGINE)/ggml/include $< -o $@ \
+	  -L$(TUNED2_ENGINE)/build/bin -lllama -lggml -lggml-base \
+	  -Wl,-rpath,'$$ORIGIN/$(TUNED2_ENGINE)/build/bin'
+
+kv_spawn_tuned2: kv_spawn.cpp
+	$(CXX) $(CXXFLAGS) -isystem $(TUNED2_ENGINE)/include \
+	  -isystem $(TUNED2_ENGINE)/ggml/include $< -o $@ \
+	  -L$(TUNED2_ENGINE)/build/bin -lllama -lggml -lggml-base \
+	  -Wl,-rpath,'$$ORIGIN/$(TUNED2_ENGINE)/build/bin'
+
