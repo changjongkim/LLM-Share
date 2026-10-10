@@ -534,6 +534,7 @@ verify_stack 20261009-engine-kvstack-capacity-copy-v1 kvstack-capacity-copy-v1 b
 verify_stack 20261009-engine-kvstack-capacity-max-v1 kvstack-capacity-max-v1 both
 verify_stack 20261008-engine-kvstack-qwen14b-v1 kvstack-qwen14b both
 verify_stack 20261008-engine-kvstack-qwen14b-none8-v1 kvstack-qwen14b-none8 both
+verify_stack 20261010-engine-kvstack-qwen14b-huge-v1 kvstack-qwen14b-huge both
 verify_stack 20261008-engine-kvstack-capacity-qwen14b-118-v1 kvstack-capacity-qwen14b-118-v1 both
 verify_stack 20261008-engine-kvstack-capacity-qwen14b-131-v1 kvstack-capacity-qwen14b-131-v1 both
 
