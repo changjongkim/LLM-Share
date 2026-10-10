@@ -1,0 +1,3 @@
+instance,runs,reported_sms,blocks_in_parallel_min,blocks_in_parallel_max,giga_iterations_per_s,rate_vs_first
+fafc828a,6,12,12,12,574.12,1.0000
+31ffbfe4,6,8,8,8,383.06,0.6672

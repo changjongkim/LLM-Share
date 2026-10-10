@@ -205,7 +205,7 @@ def hand():
 # ------------------------------------------------------------------- speed
 def speed():
     cells = (("12 SMs", "20261006-engine-kvspeed-v1"), ("12 SMs", "20261006-engine-kvspeed-long-v1"),
-             ("6 SMs", "20261006-engine-kvspeed-6sm-v1"), ("6 SMs", "20261006-engine-kvspeed-6sm-long-v1"))
+             ("8 SMs", "20261006-engine-kvspeed-6sm-v1"), ("8 SMs", "20261006-engine-kvspeed-6sm-long-v1"))
     names, values, low, high = [], [], [], []
     for instance, directory in cells:
         row = next(r for r in rows(directory, "engine_kvspeed_summary.csv")
@@ -240,7 +240,7 @@ def reach():
     series = [(label, colour, [float(data[instance, kind, size]["full_gib_per_s"])
                                for instance in ("12sm", "6sm")])
               for label, colour, kind in kinds]
-    for group in grouped(ax, ["12 SMs", "6 SMs"], series, 0.27):
+    for group in grouped(ax, ["12 SMs", "8 SMs"], series, 0.27):
         labels(ax, group, "{:.0f}")
     ax.legend(loc="upper right", handlelength=1.2, fontsize=LEGEND)
     top = max(max(values) for _, _, values in series) * 1.45
@@ -804,10 +804,10 @@ def stack():
     finish(fig, ax, "eval_stack_speed", "", "Speed vs. Unmodified", 1.42)
 
 
-# ------------------------------------------------- loss in the 6-SM instance
+# ------------------------------------------------- loss in the 8-SM instance
 def local():
     """Where the loss of speed with host memory comes from, by MIG instance."""
-    cells = (("12-SM\nInstance", "20261007-engine-kvlocal-12sm-v1"), ("6-SM\nInstance", "20261007-engine-kvlocal-6sm-v1"))
+    cells = (("12-SM\nInstance", "20261007-engine-kvlocal-12sm-v1"), ("8-SM\nInstance", "20261007-engine-kvlocal-6sm-v1"))
     if all(have(d, "engine_kvmech_summary.csv") for _, d in cells):
         # A private cache in host memory is a copy (grey, lighter on 4 KiB
         # pages). The two variants of the extent page sizes (grow_all,
@@ -849,7 +849,7 @@ def local():
         sms = sorted({k[0] for k in cell}, reverse=True)
         groups, order = [], []
         for kernel, name in (("gather", "Read"), ("scatter", "Write")):
-            for count, label in zip(sms, ("12 SM", "6 SM")):
+            for count, label in zip(sms, ("12 SM", "8 SM")):
                 groups.append(f"{name}\n{label}")
                 order.append((kernel, count))
         series = [(label, colour, [float(cell[count, kind][f"{kernel}_vs_device"]) for kernel, count in order])
@@ -1002,7 +1002,7 @@ def vshare():
     fig, ax = panel()
     bottom = np.zeros(len(modes))
     for label, column, colour in (("12-SM Instance", "tps_first_instance", COPY),
-                                  ("6-SM Instance", "tps_second_instance", COPY_PALE)):
+                                  ("8-SM Instance", "tps_second_instance", COPY_PALE)):
         values = np.array([float(data[m][column]) for _, _, m in modes])
         ax.bar(names, values, 0.58, bottom=bottom, color=colour, edgecolor="white", linewidth=1.5, label=label)
         for x, (value, base) in enumerate(zip(values, bottom)):

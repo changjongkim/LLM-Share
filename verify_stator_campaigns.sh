@@ -719,6 +719,16 @@ if present 20261007-tlb-probe-v1; then
   gates tlb "$dir/tlb_probe_summary.csv" '{ if ($c["failed_probes"] != 0 || $c["runs"] != 6) print "!probe " $c["sms"] " " $c["kind"] }'
 fi
 
+# --- the SMs that each MIG instance runs ----------------------------------------
+if present 20261010-sm-probe-v1; then
+  dir="$results/20261010-sm-probe-v1"
+  check_hashes "$dir"
+  awk -f "$script_dir/summarize_sm_probe.awk" "$dir/raw.log" >"$scratch/sm.csv"
+  same "$scratch/sm.csv" "$dir/sm_probe_summary.csv"
+  # The count that the runtime reports is the count that runs in parallel.
+  gates sm "$dir/sm_probe_summary.csv" '{ if ($c["runs"] != 6 || $c["reported_sms"] != $c["blocks_in_parallel_min"] || $c["reported_sms"] != $c["blocks_in_parallel_max"]) print "!sm " $c["instance"] }'
+fi
+
 # --- a pipeline of agents on a public workload --------------------------------
 verify_pipe() {  # campaign label
   present "$1" || return 0

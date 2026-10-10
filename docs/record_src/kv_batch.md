@@ -1,4 +1,4 @@
-| Configuration | Runs (failed servers) | Generation, all agents (tokens/s) | 12-SM server | 6-SM server | First server ready (s) | All agents ready (s) | Hand-over (ms) | State file (MiB) | Memory of all servers (MiB) | Texts equal to the copy configuration |
+| Configuration | Runs (failed servers) | Generation, all agents (tokens/s) | 12-SM server | 8-SM server | First server ready (s) | All agents ready (s) | Hand-over (ms) | State file (MiB) | Memory of all servers (MiB) | Texts equal to the copy configuration |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
 | one server in the 12-SM instance, 8 sequences | 6 (0) | 75.6 | 75.6 | - | 20.7 | 20.7 | - | - | 2578 | 36/48 |
 | a server in each instance, 4 sequences each; each computes the prefix | 6 (0) | 106.2 | 61.7 | 44.5 | 20.9 | 30.6 | - | - | 5081 | 36/48 |

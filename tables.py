@@ -110,7 +110,7 @@ path = os.path.join(engine_root, "20261005-engine-groups-v1", "engine_groups_sum
 if os.path.exists(path):
     names = {"copy": "device copy", "inplace": "in place"}
     text = ("| Weights | Sequences per server | Runs (failed) | Generation, both servers (tokens/s) | "
-            "12-SM instance | 6-SM instance | Memory outside the model file (MiB) | "
+            "12-SM instance | 8-SM instance | Memory outside the model file (MiB) | "
             "Model file mapped (MiB) | Total (MiB) |\n|---|---:|---:|---:|---:|---:|---:|---:|---:|\n")
     for r in rows(path):
         text += (f"| {names[r['mode']]} | {r['sequences_per_server']} | "
@@ -215,7 +215,7 @@ if os.path.exists(path):
 path = os.path.join(engine_root, "20261006-engine-kvdet-v1", "engine_kvdet_summary.csv")
 if os.path.exists(path):
     text = ("| Prefix (tokens) | Runs (failed) | Distinct caches, 12-SM instance | "
-            "Distinct caches, 6-SM instance | Runs with the same bits in both instances | "
+            "Distinct caches, 8-SM instance | Runs with the same bits in both instances | "
             "16-bit values that differ (mean) | Largest difference | First tensor that differs |\n"
             "|---:|---:|---:|---:|---:|---:|---:|---:|\n")
     for r in rows(path):
@@ -270,7 +270,7 @@ if os.path.exists(path):
 
 # --- where the generation speed goes -----------------------------------------------
 speed_runs = [("20261006-engine-kvspeed-v1", "12-SM"), ("20261006-engine-kvspeed-long-v1", "12-SM"),
-              ("20261006-engine-kvspeed-6sm-v1", "6-SM"), ("20261006-engine-kvspeed-6sm-long-v1", "6-SM")]
+              ("20261006-engine-kvspeed-6sm-v1", "8-SM"), ("20261006-engine-kvspeed-6sm-long-v1", "8-SM")]
 names = {"device": "device memory, prefix computed (upstream)",
          "anon": "private host memory, 2 MiB pages, prefix computed",
          "anon_lazy": "private host memory that follows use, 4 KiB pages, prefix computed",
@@ -309,7 +309,7 @@ if os.path.exists(path):
              "two_servers_copy": "a server in each instance; the second copies the state file",
              "two_servers_extent": "a server in each instance; the second maps the published prefix"}
     text = ("| Configuration | Runs (failed servers) | Generation, all agents (tokens/s) | "
-            "12-SM server | 6-SM server | First server ready (s) | All agents ready (s) | "
+            "12-SM server | 8-SM server | First server ready (s) | All agents ready (s) | "
             "Hand-over (ms) | State file (MiB) | Memory of all servers (MiB) | "
             "Texts equal to the copy configuration |\n"
             "|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|\n")
@@ -327,7 +327,7 @@ if os.path.exists(path):
 # --- the device-memory counterpart, in the engine ------------------------------------
 path = os.path.join(engine_root, "20261006-engine-kvvmm-v1", "engine_kvvmm_summary.csv")
 if os.path.exists(path):
-    instances = {"fafc828a": "12-SM", "31ffbfe4": "6-SM"}
+    instances = {"fafc828a": "12-SM", "31ffbfe4": "8-SM"}
     names = {"copy": "copy (state file with the rows)",
              "extent": "host memory: mapped file, private tail",
              "vmm": "device memory: shared allocations, private tail",
@@ -799,7 +799,7 @@ VSHARE_COLUMNS = [
     ("Smallest cached share", num("first_cached_lowest", 4)),
     ("Throughput (tokens/s)", num("both_tps_sum", 2)), ("95% CI", num("both_tps_ci95", 2)),
     ("vs vllm", num("both_tps_vs_vllm", 4)), ("median", num("both_tps_vs_vllm_median", 4)),
-    ("12-SM, 6-SM (tokens/s)", lambda r: f"{r['tps_first_instance']}, {r['tps_second_instance']}"),
+    ("12-SM, 8-SM (tokens/s)", lambda r: f"{r['tps_first_instance']}, {r['tps_second_instance']}"),
     ("Start-up, first and later server (ms)", lambda r: f"{r['startup1_ms']}, {r['startup2_ms']}"),
     ("Weights publish, attach (ms)", lambda r: f"{r['weights_publish_ms']}, {r['weights_attach_ms']}"),
     ("Prefix attach (ms)", num("kv_attach_ms")),

@@ -1521,7 +1521,7 @@ Section 6. Everything below is in `llm_share/results/20261006-*` and passes
    compared with host extents and the copy for a parent and four children in
    one instance. Same texts. The device-memory cache generates at the speed
    of the copy; children on host extents are at 0.98 of it in the 12-SM
-   instance and 0.92 to 0.96 in the 6-SM instance. Host extents attach in 27
+   instance and 0.92 to 0.96 in the 8-SM instance. Host extents attach in 27
    to 48 ms against 325 to 438 ms, hold 2.9 to 3.0 GiB against 3.7 to
    3.9 GiB for four children, and run with a child in the other MIG
    instance (12 of 12) where the device-memory import is refused (0 of 12).
@@ -1560,9 +1560,9 @@ Section 6. Everything below is in `llm_share/results/20261006-*` and passes
    cause is measured as far as the instance: a cache in host memory, shared
    or private, generates as fast as a cache in device memory in the 12-SM
    instance and 2% (4,081-token prefix) to 6% (16,321-token prefix) slower
-   in the 6-SM instance. What inside the GPU makes the small instance
+   in the 8-SM instance. What inside the GPU makes the small instance
    slower was not found.
-9. **A finding outside the audit's scope.** The 12-SM and the 6-SM MIG
+9. **A finding outside the audit's scope.** The 12-SM and the 8-SM MIG
    instance of this device are each deterministic and are not bit-identical
    to each other for the same model, prompt and engine. We found no
    statement of this in the sources opened in Sections 14 and 16, and did

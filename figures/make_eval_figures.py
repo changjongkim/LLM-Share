@@ -236,7 +236,7 @@ def eval_cow():
 # ------------------------------------------------------------------ speed
 def eval_speed():
     runs = [("20261006-engine-kvspeed-v1", "12-SM"), ("20261006-engine-kvspeed-long-v1", "12-SM"),
-            ("20261006-engine-kvspeed-6sm-v1", "6-SM"), ("20261006-engine-kvspeed-6sm-long-v1", "6-SM")]
+            ("20261006-engine-kvspeed-6sm-v1", "8-SM"), ("20261006-engine-kvspeed-6sm-long-v1", "8-SM")]
     labels, points = [], {"anon": [], "extent_lazy": []}
     for tag, instance in runs:
         data = {(r["processes"], r["mode"]): r for r in rows(tag, "engine_kvspeed_summary.csv")}
@@ -320,7 +320,7 @@ def eval_inproc():
 def eval_vmm():
     data = {(r["paragraphs"], r["parent_mig"], r["mode"]): r
             for r in rows("20261006-engine-kvvmm-v1", "engine_kvvmm_summary.csv")}
-    instances = [("fafc828a", "12-SM"), ("31ffbfe4", "6-SM")]
+    instances = [("fafc828a", "12-SM"), ("31ffbfe4", "8-SM")]
     modes = [("copy", "Copy (upstream)", COPY), ("vmm", "Device-memory cache", DEVICE),
              ("extent", "Host extents", OURS)]
     size = "320"

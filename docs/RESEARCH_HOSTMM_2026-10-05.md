@@ -3,7 +3,7 @@
 **Evidence cutoff:** 2026-10-05
 **Platform:** NVIDIA Jetson AGX Thor, JetPack 7.2, kernel 6.8.12-1021-tegra,
 open GPU kernel modules 595.78 (`uvm_ats_mode=1`, `uvm_disable_hmm=Y`),
-`CONFIG_ARM_SMMU_V3_SVA=y`, MIG `2g.0gb` (12 SMs) + `1g.0gb` (6 SMs)
+`CONFIG_ARM_SMMU_V3_SVA=y`, MIG `2g.0gb` (12 SMs) + `1g.0gb` (8 SMs)
 **Code and artifacts:** `thor_hostmm/`
 **Prior-art audit:** `SOTA_HOSTMM_2026-10-05.md`
 **Status:** measured and implemented; novelty verdicts in Section 9 are scoped

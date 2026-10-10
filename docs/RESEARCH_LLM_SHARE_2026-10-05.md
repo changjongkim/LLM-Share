@@ -3,7 +3,7 @@
 **Evidence cutoff:** 2026-10-06
 **Platform:** NVIDIA Jetson AGX Thor, kernel 6.8.12-1021-tegra, open GPU
 kernel modules 595.78 (`uvm_ats_mode=1`), MIG `2g.0gb` (12 SMs) + `1g.0gb`
-(6 SMs), CUDA 13.0
+(8 SMs), CUDA 13.0
 **Engine:** llama.cpp at commit `6f767fe96` with `llm_share/inplace_weights.patch`
 (Sections 3 to 5), with `llm_share/kv_extents.patch` (Section 6), and with
 `llm_share/kv_vmm.patch` for the comparison of Section 6.9
@@ -63,7 +63,7 @@ into the engine for the key-value cache, and measures it:
 > the prefix between them. A running process hands its state to four
 > children with a pause of 3 ms instead of 218 ms and continues unchanged.
 > In the 12-SM instance agents on extents generate as fast as agents that
-> copy; in the 6-SM instance a cache in host memory, shared or not, costs
+> copy; in the 8-SM instance a cache in host memory, shared or not, costs
 > 2% of the generation speed with a 4,081-token prefix and 6% with a
 > 16,321-token prefix.
 
@@ -164,7 +164,7 @@ size of the mapping.
 - **The text is identical** in 6 of 6 runs for both in-place modes.
 - **Generation is 6.0% slower**, 95% CI of the paired ratio [0.914, 0.967].
   It is 3.7% on the 12-SM instance (28.7 to 27.6 tokens/s) and 8.2% on the
-  6-SM instance (19.6 to 18.0). Prompt processing is unchanged (0.5%).
+  8-SM instance (19.6 to 18.0). Prompt processing is unchanged (0.5%).
 - **4.4 GiB leave the process.** Memory outside the model file falls from
   5,423 to 878 MiB, and the 4,460 MiB of weights are page cache that other
   processes can map.
@@ -285,7 +285,7 @@ repetitions alternating between the MIG instances
 - **Batching inside one process is about three times faster in total.**
   On the 12-SM instance one process generates 89.7 tokens/s for eight
   sequences, against 29.4 tokens/s for eight processes under MPS in the same
-  instance; on the 6-SM instance 60.6 tokens/s. In place the batch reaches
+  instance; on the 8-SM instance 60.6 tokens/s. In place the batch reaches
   the same rate (89.6 and 60.4).
 - Separate processes are therefore not a way to get throughput on this GPU.
   They are what a deployment has when its agents are separate programs:
@@ -301,7 +301,7 @@ instances, and let all of them read one copy of the weights.
 `run_engine_groups.sh` runs one batching process in each MIG instance at the
 same time (`results/20261005-engine-groups-v1/`, six repetitions):
 
-| Weights | Sequences per server | Runs (failed) | Generation, both servers (tokens/s) | 12-SM instance | 6-SM instance | Memory outside the model file (MiB) | Model file mapped (MiB) | Total (MiB) |
+| Weights | Sequences per server | Runs (failed) | Generation, both servers (tokens/s) | 12-SM instance | 8-SM instance | Memory outside the model file (MiB) | Model file mapped (MiB) | Total (MiB) |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|
 | device copy | 4 | 6 (0) | 126.0 +/- 0.1 | 75.0 | 51.1 | 11366 | 0 | 11366 |
 | in place | 4 | 6 (0) | 123.5 +/- 0.2 | 73.2 | 50.2 | 2324 | 4460 | 6784 |
@@ -309,7 +309,7 @@ same time (`results/20261005-engine-groups-v1/`, six repetitions):
 | in place | 8 | 6 (0) | 149.0 +/- 0.2 | 88.9 | 60.1 | 2324 | 4460 | 6784 |
 
 - **Two servers generate 149 tokens/s for sixteen sequences**, 89 in the
-  12-SM instance and 60 in the 6-SM instance, with the weights in place or
+  12-SM instance and 60 in the 8-SM instance, with the weights in place or
   copied (0.997 times). With four sequences each they generate 123 tokens/s
   in place (0.980 times).
 - **In place the two servers hold 6.6 GiB instead of 11.1 GiB**: one mapped
@@ -717,7 +717,7 @@ second agent.
 computes the cache of one prefix into a file in each MIG instance and
 compares the files.
 
-| Prefix (tokens) | Runs (failed) | Distinct caches, 12-SM instance | Distinct caches, 6-SM instance | Runs with the same bits in both instances | 16-bit values that differ (mean) | Largest difference | First tensor that differs |
+| Prefix (tokens) | Runs (failed) | Distinct caches, 12-SM instance | Distinct caches, 8-SM instance | Runs with the same bits in both instances | 16-bit values that differ (mean) | Largest difference | First tensor that differs |
 |---:|---:|---:|---:|---:|---:|---:|---:|
 | 256 | 6 (0) | 1 | 1 | 0/6 | 6922004 | 5.88867 | 0 |
 | 1021 | 6 (0) | 1 | 1 | 0/6 | 24179266 | 13.2109 | 0 |
@@ -726,7 +726,7 @@ compares the files.
 Each instance computes the same bits every time. The two instances never
 compute the same bits: nine of ten 16-bit values differ from the first
 tensor on. The engine is deterministic within an instance and not across
-the 12-SM and the 6-SM instance. Therefore, an agent that attaches to a
+the 12-SM and the 8-SM instance. Therefore, an agent that attaches to a
 prefix from the other instance continues from a cache that its own instance
 would not have computed, and after 64 tokens its text is sometimes different
 from a recomputation there. This holds for the engine's own state file as well,
@@ -813,18 +813,18 @@ failed run):
 | 12-SM | 16321 | 128 | 1 | device memory, prefix copied from the state file | 6 (0) | 23.94 | 1.002x [0.998, 1.006] |
 | 12-SM | 16321 | 128 | 1 | mapped prefix, private tail on 2 MiB pages | 6 (0) | 23.94 | 1.002x [0.998, 1.006] |
 | 12-SM | 16321 | 128 | 1 | mapped prefix, private tail that follows use | 6 (0) | 23.93 | 1.002x [0.997, 1.006] |
-| 6-SM | 4081 | 256 | 1 | device memory, prefix computed (upstream) | 6 (0) | 16.26 | - |
-| 6-SM | 4081 | 256 | 1 | private host memory, 2 MiB pages, prefix computed | 6 (0) | 15.90 | 0.978x [0.972, 0.984] |
-| 6-SM | 4081 | 256 | 1 | private host memory that follows use, 4 KiB pages, prefix computed | 6 (0) | 15.78 | 0.970x [0.968, 0.972] |
-| 6-SM | 4081 | 256 | 1 | device memory, prefix copied from the state file | 6 (0) | 16.28 | 1.001x [1.000, 1.002] |
-| 6-SM | 4081 | 256 | 1 | mapped prefix, private tail on 2 MiB pages | 6 (0) | 15.90 | 0.978x [0.975, 0.981] |
-| 6-SM | 4081 | 256 | 1 | mapped prefix, private tail that follows use | 6 (0) | 15.88 | 0.976x [0.974, 0.979] |
-| 6-SM | 16321 | 128 | 1 | device memory, prefix computed (upstream) | 6 (0) | 15.85 | - |
-| 6-SM | 16321 | 128 | 1 | private host memory, 2 MiB pages, prefix computed | 6 (0) | 14.95 | 0.943x [0.939, 0.948] |
-| 6-SM | 16321 | 128 | 1 | private host memory that follows use, 4 KiB pages, prefix computed | 6 (0) | 14.91 | 0.941x [0.938, 0.943] |
-| 6-SM | 16321 | 128 | 1 | device memory, prefix copied from the state file | 6 (0) | 15.89 | 1.002x [1.000, 1.005] |
-| 6-SM | 16321 | 128 | 1 | mapped prefix, private tail on 2 MiB pages | 6 (0) | 14.93 | 0.942x [0.940, 0.944] |
-| 6-SM | 16321 | 128 | 1 | mapped prefix, private tail that follows use | 6 (0) | 14.93 | 0.942x [0.940, 0.945] |
+| 8-SM | 4081 | 256 | 1 | device memory, prefix computed (upstream) | 6 (0) | 16.26 | - |
+| 8-SM | 4081 | 256 | 1 | private host memory, 2 MiB pages, prefix computed | 6 (0) | 15.90 | 0.978x [0.972, 0.984] |
+| 8-SM | 4081 | 256 | 1 | private host memory that follows use, 4 KiB pages, prefix computed | 6 (0) | 15.78 | 0.970x [0.968, 0.972] |
+| 8-SM | 4081 | 256 | 1 | device memory, prefix copied from the state file | 6 (0) | 16.28 | 1.001x [1.000, 1.002] |
+| 8-SM | 4081 | 256 | 1 | mapped prefix, private tail on 2 MiB pages | 6 (0) | 15.90 | 0.978x [0.975, 0.981] |
+| 8-SM | 4081 | 256 | 1 | mapped prefix, private tail that follows use | 6 (0) | 15.88 | 0.976x [0.974, 0.979] |
+| 8-SM | 16321 | 128 | 1 | device memory, prefix computed (upstream) | 6 (0) | 15.85 | - |
+| 8-SM | 16321 | 128 | 1 | private host memory, 2 MiB pages, prefix computed | 6 (0) | 14.95 | 0.943x [0.939, 0.948] |
+| 8-SM | 16321 | 128 | 1 | private host memory that follows use, 4 KiB pages, prefix computed | 6 (0) | 14.91 | 0.941x [0.938, 0.943] |
+| 8-SM | 16321 | 128 | 1 | device memory, prefix copied from the state file | 6 (0) | 15.89 | 1.002x [1.000, 1.005] |
+| 8-SM | 16321 | 128 | 1 | mapped prefix, private tail on 2 MiB pages | 6 (0) | 14.93 | 0.942x [0.940, 0.944] |
+| 8-SM | 16321 | 128 | 1 | mapped prefix, private tail that follows use | 6 (0) | 14.93 | 0.942x [0.940, 0.945] |
 
 In the 12-SM instance the place of the cache does not matter. A cache in
 private host memory generates 1.000 and 1.004 times as fast as a cache in
@@ -832,7 +832,7 @@ device memory, a cache on extents 0.996 and 1.002 times, and two
 time-sliced processes are at 1.002 to 1.005. The one lasting cost there is a
 short cache that lies on 4 KiB pages as a whole (0.989).
 
-In the 6-SM instance a cache in host memory is slower: 0.978 times the
+In the 8-SM instance a cache in host memory is slower: 0.978 times the
 device-memory cache with the 4,081-token prefix and 0.942 to 0.943 times
 with the 16,321-token prefix. A private cache with nothing shared loses the
 same as a cache on extents, and at the long prefix the page size makes no
@@ -843,7 +843,7 @@ is at 1.001 to 1.002 in both instances.
 
 This is the loss of Section 6.4. Split by instance, its single agent keeps
 0.98 to 1.00 of the copy's speed in the 12-SM instance and 0.975 and 0.93 in
-the 6-SM instance, and a check with the time of every generated token
+the 8-SM instance, and a check with the time of every generated token
 (manual, 16,321-token prefix, 12-SM instance, three runs per mode) shows the
 copy and the extents at the same 41.7 ms per token from the first token on.
 With several agents the rates of Section 6.4 also contain an effect that is
@@ -854,7 +854,7 @@ We did not find the cause inside the GPU. The substrate measurement that a
 kernel reads host memory at the speed of device memory
 (`RESEARCH_HOSTMM_2026-10-05.md`, Section 7) is a sequential read of 1 GiB
 by a synthetic kernel; it does not carry over to the attention kernels of
-the engine in the 6-SM instance. For a deployment the consequence is a rule of
+the engine in the 8-SM instance. For a deployment the consequence is a rule of
 placement: agents with a long shared prefix belong in the larger instance,
 or pay 2 to 6% of their generation speed for the memory they save.
 
@@ -902,21 +902,21 @@ cache, all in the one engine build:
 | 12-SM | 4081 | device memory: shared allocations, private tail | 3 | 7.6 | 0.06 | 12/12 | 12/12 | 325 | 1684 | 5.41 | 7.53 | 3807 |
 | 12-SM | 4081 | host memory, one child in the other instance | 3 | 2.8 | 0.06 | 3/3 | 3/3 | 25 | 701 | 15.58 | 23.88 | 809 |
 | 12-SM | 4081 | device memory, one child in the other instance | 3 | 7.3 | 0.06 | 0/3 | - | - | - | - | 24.70 | 386 |
-| 6-SM | 4081 | copy (state file with the rows) | 3 | 213.6 | 223.24 | 12/12 | 12/12 | 208 | 1678 | 3.28 | 3.98 | 4553 |
-| 6-SM | 4081 | host memory: mapped file, private tail | 3 | 3.0 | 0.06 | 12/12 | 12/12 | 27 | 1479 | 3.16 | 3.68 | 2876 |
-| 6-SM | 4081 | device memory: shared allocations, private tail | 3 | 7.2 | 0.06 | 12/12 | 12/12 | 332 | 1762 | 3.31 | 4.03 | 3727 |
-| 6-SM | 4081 | host memory, one child in the other instance | 3 | 2.8 | 0.06 | 3/3 | 3/3 | 24 | 693 | 23.69 | 15.49 | 837 |
-| 6-SM | 4081 | device memory, one child in the other instance | 3 | 7.4 | 0.06 | 0/3 | - | - | - | - | 16.16 | 416 |
+| 8-SM | 4081 | copy (state file with the rows) | 3 | 213.6 | 223.24 | 12/12 | 12/12 | 208 | 1678 | 3.28 | 3.98 | 4553 |
+| 8-SM | 4081 | host memory: mapped file, private tail | 3 | 3.0 | 0.06 | 12/12 | 12/12 | 27 | 1479 | 3.16 | 3.68 | 2876 |
+| 8-SM | 4081 | device memory: shared allocations, private tail | 3 | 7.2 | 0.06 | 12/12 | 12/12 | 332 | 1762 | 3.31 | 4.03 | 3727 |
+| 8-SM | 4081 | host memory, one child in the other instance | 3 | 2.8 | 0.06 | 3/3 | 3/3 | 24 | 693 | 23.69 | 15.49 | 837 |
+| 8-SM | 4081 | device memory, one child in the other instance | 3 | 7.4 | 0.06 | 0/3 | - | - | - | - | 16.16 | 416 |
 | 12-SM | 16321 | copy (state file with the rows) | 3 | 551.1 | 892.80 | 12/12 | 12/12 | 500 | 1882 | 5.11 | 7.50 | 10148 |
 | 12-SM | 16321 | host memory: mapped file, private tail | 3 | 8.2 | 0.25 | 12/12 | 12/12 | 48 | 1432 | 5.00 | 6.54 | 3078 |
 | 12-SM | 16321 | device memory: shared allocations, private tail | 3 | 41.0 | 0.25 | 12/12 | 12/12 | 438 | 1835 | 5.14 | 7.48 | 3968 |
 | 12-SM | 16321 | host memory, one child in the other instance | 3 | 7.9 | 0.25 | 3/3 | 0/3 | 44 | 728 | 14.48 | 22.08 | 835 |
 | 12-SM | 16321 | device memory, one child in the other instance | 3 | 42.6 | 0.25 | 0/3 | - | - | - | - | 23.37 | 271 |
-| 6-SM | 16321 | copy (state file with the rows) | 3 | 570.6 | 892.80 | 12/12 | 12/12 | 524 | 2000 | 3.24 | 4.01 | 10092 |
-| 6-SM | 16321 | host memory: mapped file, private tail | 3 | 9.0 | 0.25 | 12/12 | 12/12 | 49 | 1553 | 2.98 | 3.44 | 3040 |
-| 6-SM | 16321 | device memory: shared allocations, private tail | 3 | 39.1 | 0.25 | 12/12 | 12/12 | 434 | 1915 | 3.25 | 4.02 | 3904 |
-| 6-SM | 16321 | host memory, one child in the other instance | 3 | 8.0 | 0.25 | 3/3 | 3/3 | 43 | 721 | 21.71 | 14.32 | 829 |
-| 6-SM | 16321 | device memory, one child in the other instance | 3 | 39.5 | 0.25 | 0/3 | - | - | - | - | 15.66 | 305 |
+| 8-SM | 16321 | copy (state file with the rows) | 3 | 570.6 | 892.80 | 12/12 | 12/12 | 524 | 2000 | 3.24 | 4.01 | 10092 |
+| 8-SM | 16321 | host memory: mapped file, private tail | 3 | 9.0 | 0.25 | 12/12 | 12/12 | 49 | 1553 | 2.98 | 3.44 | 3040 |
+| 8-SM | 16321 | device memory: shared allocations, private tail | 3 | 39.1 | 0.25 | 12/12 | 12/12 | 434 | 1915 | 3.25 | 4.02 | 3904 |
+| 8-SM | 16321 | host memory, one child in the other instance | 3 | 8.0 | 0.25 | 3/3 | 3/3 | 43 | 721 | 21.71 | 14.32 | 829 |
+| 8-SM | 16321 | device memory, one child in the other instance | 3 | 39.5 | 0.25 | 0/3 | - | - | - | - | 15.66 | 305 |
 
 The texts are the same in all three: the parent's in 3 of 3 repetitions per
 cell and the children's in 12 of 12.
@@ -924,7 +924,7 @@ cell and the children's in 12 of 12.
 **Speed.** The device-memory cache generates at the speed of the copy, which
 is device memory too: its children are at 1.00 to 1.01 times the copy in
 both instances. The children on host extents are at 0.98 in the 12-SM
-instance and at 0.96 (4,081 tokens) and 0.92 (16,321 tokens) in the 6-SM
+instance and at 0.96 (4,081 tokens) and 0.92 (16,321 tokens) in the 8-SM
 instance. Part of that is the cost of host memory in the small instance
 (Section 6.8) and part is the overlap of Section 6.5: children on host
 extents reach generation 0.2 to 0.5 s before the others and compete for
@@ -967,7 +967,7 @@ repetitions, no failed server) has it serve eight agents on the
 16,321-token prefix, 64 tokens each, as one server or as one server in each
 MIG instance:
 
-| Configuration | Runs (failed servers) | Generation, all agents (tokens/s) | 12-SM server | 6-SM server | First server ready (s) | All agents ready (s) | Hand-over (ms) | State file (MiB) | Memory of all servers (MiB) | Texts equal to the copy configuration |
+| Configuration | Runs (failed servers) | Generation, all agents (tokens/s) | 12-SM server | 8-SM server | First server ready (s) | All agents ready (s) | Hand-over (ms) | State file (MiB) | Memory of all servers (MiB) | Texts equal to the copy configuration |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
 | one server in the 12-SM instance, 8 sequences | 6 (0) | 75.6 | 75.6 | - | 20.7 | 20.7 | - | - | 2578 | 36/48 |
 | a server in each instance, 4 sequences each; each computes the prefix | 6 (0) | 106.2 | 61.7 | 44.5 | 20.9 | 30.6 | - | - | 5081 | 36/48 |
@@ -982,7 +982,7 @@ the process is the better design, and extents do not change that.
 Two servers, one in each MIG instance, generate 103 to 106 tokens/s, 1.36 to
 1.41 times the single server, because they use both instances. Between two
 servers the engine's own sharing ends. Each computes the prefix, and the
-server in the 6-SM instance has its agents ready after 30.6 s; or the second
+server in the 8-SM instance has its agents ready after 30.6 s; or the second
 copies the state of the first, and the two hold 5.0 GiB.
 
 With extents between the two servers the second maps the prefix that the
@@ -990,7 +990,7 @@ first computed. Both together hold 2.4 GiB, half of the two servers that
 copy and no more than the single server, whose cache is allocated whole. All
 eight agents are ready after 21.4 s, 0.7 s after the first server. The
 servers generate 102.9 tokens/s, 2% less than the two that copy; the
-difference is the server in the 6-SM instance (41.9 against 43.7 tokens/s),
+difference is the server in the 8-SM instance (41.9 against 43.7 tokens/s),
 which is the cost of host memory there (Section 6.8). Every agent writes the
 text of its counterpart in the copy configuration (48 of 48).
 
@@ -1030,7 +1030,7 @@ With eight children on the 16,321-token prefix, the copy holds 19.7-19.8
 GiB in every configuration, and extents hold 5.7-5.9 GiB in addition to the
 0.9 GiB cache file that exists once. The throughput ratios are 0.993 under
 time slicing, 0.996 under MPS, 0.972 under MIG, and 0.965 under MPS inside
-the two MIG instances. The lower two ratios contain the 6-SM instance, for
+the two MIG instances. The lower two ratios contain the 8-SM instance, for
 which Section 6.8 measures the cost of a host-memory cache. The pause of the
 parent falls from 528-557 ms to 8.7-9.2 ms, and the attach time falls from
 454-576 ms to 51-56 ms. Every one of the 288 children on extents writes the
@@ -1232,7 +1232,7 @@ allocation rather than per byte.
 Two conclusions follow, and both correct earlier readings.  First, the read
 path of a kernel that scans a buffer is the same for host and device memory
 in both instances, so it does not explain the 2 to 6% that a cache in host
-memory costs in the 6-SM instance (Section 6.8); hypothesis H1 of the runner
+memory costs in the 8-SM instance (Section 6.8); hypothesis H1 of the runner
 is rejected and the cause remains unidentified.  Second, the device-memory
 baseline of the engine attaches a child in 438 to 770 ms (Section 6.9 and
 the mechanisms table above), while importing and mapping the same 448
@@ -1282,7 +1282,7 @@ the headers are pinned by hash. Outcomes:
 |---|---|---|
 | Every agent of every mode writes the text of the agent that recomputes the prefix | **failed as stated** | holds for 42 of 42 agents per mode and prefix length in the publisher's instance; for 12 of 36 and 24 of 36 in the other instance, for the copy as for the extents. Cause: the instances compute different bits (Section 6.6). Against the copy: 78 of 78 in every mode |
 | The agents of an extent mode hold one copy of the prefix between them | passed | proportional share of the mapped prefix 223 to 239 MiB for a 223 MiB prefix and 892 to 1,025 MiB for an 893 MiB prefix, for 1 to 8 agents; at least 0.8 prefix saved per agent in all 18 cells |
-| Extents with a tail that follows use keep 97% of the generation speed of the copy | **failed in two of six cells** | 0.955 and 0.970; the other four 0.974 to 0.992. Cause: a cache in host memory costs nothing in the 12-SM instance and 2 to 6% in the 6-SM instance, shared or not (Section 6.8) |
+| Extents with a tail that follows use keep 97% of the generation speed of the copy | **failed in two of six cells** | 0.955 and 0.970; the other four 0.974 to 0.992. Cause: a cache in host memory costs nothing in the 12-SM instance and 2 to 6% in the 8-SM instance, shared or not (Section 6.8) |
 | Attaching does not take longer than copying | passed | 25 to 65 ms against 81 to 484 ms |
 | Publishing does not take longer than saving the state | passed | 3.0 and 9.1 ms against 231 and 561 ms |
 | A parent that forks, and each of its children, write the text of a process that computes the same tokens alone | parent passed; children **failed in the other instance** | parent 6 of 6 in both modes; children 12 of 12 in the parent's instance and 0 of 12 in the other one, in both modes; against the child that copies, 24 of 24 |
@@ -1318,7 +1318,7 @@ prefix from the state file; `prefix mapped` and `weights in place` apply
 one of the two mechanisms (the first reads the model file without mapping
 it, `kv_fork_nommap.cpp`, so that the weights are copied although the
 device accepts host memory); `both` is STATOR. The agent workload (14,282
-tokens), a context of 16,384 tokens, every second agent in the 6-SM
+tokens), a context of 16,384 tokens, every second agent in the 8-SM
 instance. The page cache is dropped and the model file read again before
 every repetition. Stacks that copy are not run at counts that would leave
 less than 20 GiB available.
@@ -1373,7 +1373,7 @@ repetition every agent index writes one text in all stacks and counts
 Gate K5 (summed generation speed of `both` at least 0.92 of `unmodified`
 at every common count) is not met at one agent: 0.913 (median 0.914). The
 single agent runs in the 12-SM instance in the odd repetitions and in the
-6-SM instance in the even ones: `prefix mapped` 1.00 / 0.947, `weights in
+8-SM instance in the even ones: `prefix mapped` 1.00 / 0.947, `weights in
 place` 0.958 / 0.923, `both` 0.955 / 0.873. The weights are read from the 4
 KiB pages of the ext4 page cache in this campaign.
 
@@ -1385,8 +1385,16 @@ stall of the first repetition of the 32-agent copy cell in Section 6.12
 (demand above the pool and the free pages has to wait for the reclaim of
 page cache).
 
-According to the MIG profile table the two instances have 12 and 6 SMs;
-`cudaDevAttrMultiProcessorCount` reports 12 and 8.
+The two instances run 12 and 8 SMs. `nvidia-smi mig -lgip` lists the
+one-slice profile with 6 SMs, `cudaDevAttrMultiProcessorCount` reports 12
+and 8, and `run_sm_probe.sh` (`results/20261010-sm-probe-v1/`, six
+repetitions) decides by execution: the time of a kernel of N blocks of
+1,024 threads, each of which occupies an SM, doubles at N = 13 in the
+larger instance and at N = 9 in the smaller one in every repetition, and a
+kernel that only computes runs at 0.667 of the rate of the larger instance
+(8/12). The record calls them the 12-SM and the 8-SM instance; the names
+of campaigns and the comments of runners written before 2026-10-10 say
+`6sm` and `6-SM` for the same instance.
 
 **Larger counts (`20261008-engine-kvstack-capacity-v2` and
 `20261008-engine-kvstack-capacity-136-v1`, six repetitions).** The stack
@@ -1450,7 +1458,7 @@ below its 0.92 floor; the medians are 0.8980 and 0.9234.
 Two things stand behind these two cells. The model file is in the page
 cache on 4 KiB pages, and the cell of eight agents joins two campaigns: in
 the first repetition of `-none8-v1` the unmodified agents produce their
-first token after 838 to 860 s and the four agents of the 6-SM instance
+first token after 838 to 860 s and the four agents of the 8-SM instance
 generate two at a time, so their summed rate is 24.72 tokens/s against
 17.20 to 17.84 in the other five repetitions.
 `20261010-engine-kvstack-qwen14b-huge-v1` repeats the stack with the model
@@ -1460,7 +1468,7 @@ repetitions, no agent fails, one text per agent index). `both` generates at
 0.9512 (0.8744 to 1.0347) of `unmodified` with one agent, 1.0141 (1.0127 to
 1.0155) with four and 0.9956 (0.9740 to 1.0177) with seven. By instance the
 ratio of the per-agent rates is 1.02 to 1.06 in the 12-SM instance and 0.88
-to 0.95 in the 6-SM instance. Eight unmodified agents are not run in this
+to 0.95 in the 8-SM instance. Eight unmodified agents are not run in this
 form, because the tmpfs copy of the model (8.4 GiB) leaves less than the
 16 GiB reserve; eight agents on `both` generate 17.34 tokens/s, and seven
 unmodified agents 17.37.
@@ -1496,7 +1504,7 @@ is unchanged (`MODEL=`, counts 1 and 8, and 32 for `both`).
 At 8 agents `weights in place` generates at 1.006 (0.980 to 1.033) and
 `both` at 0.994 (0.969 to 1.020) of `unmodified`; K5 holds in both cells.
 The single agent: `weights in place` 1.02 in the 12-SM instance and 0.974
-in the 6-SM instance, `both` 1.02 and 0.90. The loss of the campaign above
+in the 8-SM instance, `both` 1.02 and 0.90. The loss of the campaign above
 that comes from the weights is therefore one of 4 KiB pages. The count of
 agents that fit is not taken from this campaign: the tmpfs copy of the
 model is not available memory, and the summary subtracts the model file
@@ -1610,7 +1618,7 @@ of the same model, one server in the 12-SM instance, eight concurrent
 requests on the agent workload, twice. It does not start on this platform
 as installed. Needed: the modules xgrammar, compressed-tensors and triton;
 the device by index (vLLM parses `CUDA_VISIBLE_DEVICES` as integers; index
-0 is the 12-SM instance, and the 6-SM instance cannot be selected; Section
+0 is the 12-SM instance, and the 8-SM instance cannot be selected; Section
 6.15 lifts this with a launcher);
 `TRITON_CUDART_PATH` for the CUDA headers, because a kernel of its block
 table is a Triton kernel; `-O0`, which switches the Inductor compilation
@@ -1630,7 +1638,7 @@ differ.
 
 **The steps of the mechanism, one at a time (`MODE_SET=ablation`,
 `20261007-engine-kvablate-v1`).** A parent and eight children, every second
-child in the 6-SM instance, the 16,321-token prefix. `no_read` leaves out the
+child in the 8-SM instance, the 16,321-token prefix. `no_read` leaves out the
 CPU read of the mapped rows (`LLAMA_KV_TOUCH=0`), `no_populate` leaves out
 the memory that a child puts behind its own rows before the device writes
 them (`LLAMA_KV_POPULATE=0`), `writable` and `writable_no_read` are the
@@ -1662,7 +1670,7 @@ against 0.964.
 
 **Where the loss of speed with host memory comes from (`MODE_SET=locality`,
 `20261007-engine-kvlocal-12sm-v1` and `-6sm-v1`).** Section 6.8 found that a
-cache in host memory costs generation speed in the 6-SM instance and not in
+cache in host memory costs generation speed in the 8-SM instance and not in
 the 12-SM instance, and did not find the cause. This campaign separates
 four candidates with a parent and four children in one instance, a
 16,321-token prefix and 128 generated tokens: host memory against device
@@ -1684,7 +1692,7 @@ the children against `copy` in the same repetition.
 | same | 4 | 16321 | grow_all | 24/24 | 24/24 | 8.68 | 76.0 | 4.4 | 1430 | 6517 | 24 | 18.96 | 0.9991 | 1.0006 |
 | same | 4 | 16321 | small_pages | 24/24 | 24/24 | 12.22 | 55.8 | 2.8 | 1426 | 2952 | 25 | 18.98 | 0.9999 | 1.0018 |
 
-6-SM instance:
+8-SM instance:
 
 | Placement | Children | Prefix (tokens) | Mode | Children complete | Texts equal to copy | Parent pause (ms) | Attach (ms) | 95% CI | First token (ms) | Memory (MiB) | 95% CI | Throughput (tokens/s) | Speed vs copy | median |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
@@ -1697,14 +1705,14 @@ the children against `copy` in the same repetition.
 
 In the 12-SM instance no form of host memory costs speed: the private
 caches are at 1.014 and 1.019 of the device cache, the three forms of
-extents at 0.997 to 1.000 with intervals that contain 1. In the 6-SM
+extents at 0.997 to 1.000 with intervals that contain 1. In the 8-SM
 instance every form costs: a private cache in host memory generates at
 0.940 (2 MiB pages) and 0.943 (4 KiB pages) of the device cache, and the
 three forms of extents at 0.932 (0.9316 to 0.9325). So the loss is a property of
 host memory in that instance (6.0%); sharing adds 0.9 points; the page
 size of the private memory, of an agent's own rows and of the shared rows
 changes it by 0.3 points or less. The intervals are narrow (half-widths of
-0.001 to 0.002 in the 6-SM instance). All 288 children write the text of
+0.001 to 0.002 in the 8-SM instance). All 288 children write the text of
 the child that received a copy, and both gates hold in both campaigns.
 
 **Scattered reads and writes by the kind of memory (`run_tlb_probe.sh`,
@@ -1716,8 +1724,7 @@ the same strides (scatter) over 1 GiB, in device memory and in pageable
 host memory with 2 MiB and with 4 KiB pages (private anonymous memory that
 the CPU has written), in each instance. All threads work on the buffer at
 the same time, each on its share (scan) or on all of it. The rates are
-relative to device memory in the same instance and repetition; the CUDA
-runtime reports the 6-SM instance as 8 SMs.
+relative to device memory in the same instance and repetition.
 
 | SMs (runtime) | Buffer (MiB) | Stride (KiB) | Memory | Runs | Scattered reads (Mwords/s) | vs device | low | high | Scattered writes (Mwords/s) | vs device | low | high |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
@@ -1735,10 +1742,10 @@ runtime reports the 6-SM instance as 8 SMs.
 | 8 | 1024 | 64 | host_small | 6 | 43.7 | 0.024 | 0.024 | 0.024 | 38.2 | 0.026 | 0.026 | 0.026 |
 
 With 2 MiB pages, host memory is scanned as fast as device memory or faster
-(1.21 to 1.27 in the 12-SM instance, 0.97 to 0.99 in the 6-SM instance) and
+(1.21 to 1.27 in the 12-SM instance, 0.97 to 0.99 in the 8-SM instance) and
 written at scattered addresses at 0.93 of device memory in both instances.
 Scattered reads separate the instances: 0.95 to 0.97 of device memory in
-the 12-SM instance and 0.82 to 0.86 in the 6-SM instance. H1 holds for
+the 12-SM instance and 0.82 to 0.86 in the 8-SM instance. H1 holds for
 reads and not for writes. With 4 KiB pages every rate is 0.01 to 0.03 of
 device memory in both instances, so H2 holds as well: a buffer of 262,144
 pages that all threads use at once is far slower than the same buffer in
@@ -1752,7 +1759,7 @@ a time and not the whole cache at once. The probe therefore gives one
 difference between the two instances that has the direction of the loss,
 scattered reads of host memory, and it explains neither the size of the
 loss in the engine nor why the page size does not matter there. What the
-6-SM instance does differently when it reads host memory at addresses that
+8-SM instance does differently when it reads host memory at addresses that
 jump was not examined below the CUDA interface.
 
 **A pipeline of agents on the tools of a public benchmark
@@ -1779,7 +1786,7 @@ planner publishes in 6.7 ms against 422 ms, a leader in 4.6 ms against
 448 ms, and a worker attaches in 36 ms against 376 ms; the first token of
 a worker comes after 1.93 s against 6.31 s. The workers generate at 0.936
 of their summed speed on the unmodified engine (half of them run in the
-6-SM instance), and the pipeline still completes in 0.970 of its time
+8-SM instance), and the pipeline still completes in 0.970 of its time
 (77.9 s against 80.3 s), because the hand-overs are shorter. The energy of
 the input rail is 5,880 J against 5,906 J, a paired ratio of 0.996. All 48
 workers and 12 leaders write the text of the unmodified engine. The gates
@@ -1893,7 +1900,7 @@ copies of the 30,601-token prefix hold what those of the 16,321-token
 prefix hold in the same context (19.9 GiB). With extents the agents hold
 5.5 to 5.7 GiB at every length, because the prefix is mapped and the tail
 follows use. The loss of speed grows with the prefix (0.4%, 1.4% at
-16,321 tokens, 3.6%). Half of the agents run in the 6-SM instance, where
+16,321 tokens, 3.6%). Half of the agents run in the 8-SM instance, where
 host memory costs speed, and a longer prefix means more rows read from
 it; the campaign does not separate the two instances. All 96 agents write the text of the
 copy.
@@ -2016,7 +2023,7 @@ Instruct from its 4-bit AWQ weights, a cache of 2 GiB per server, `-O0`,
 `--gpu-memory-utilization 0.4` (vLLM otherwise refuses to start a second
 server on unified memory). Server 1 starts in the 12-SM instance and
 answers the 14,282-token prefix of the agent workload alone; server 2
-starts in the 6-SM instance. Round `first`: four agents on server 2, which
+starts in the 8-SM instance. Round `first`: four agents on server 2, which
 has not computed the prefix. Round `both`: four other agents on each
 server at the same time. Rounds `alone1`, `alone2`: one agent on a server
 with nothing else running. Six configurations, six repetitions, the order
@@ -2035,7 +2042,7 @@ of the configurations turning with the repetition:
 - `stator_weights`, `stator_kv`, `stator`: the plugin with the weights
   only, the prefix only, and both.
 
-| Mode | Servers | Cases (failed) | Requests complete | Memory (MiB) | 95% CI | vs vllm (MiB) | Peak (MiB) | Shared files (MiB) | Mapped by a later server: weights, prefix (MiB) | First token, second server (ms) | 95% CI | Smallest cached share | Throughput (tokens/s) | 95% CI | vs vllm | median | 12-SM, 6-SM (tokens/s) | Start-up, first and later server (ms) | Weights publish, attach (ms) | Prefix attach (ms) | LMCache store, retrieve (ms) | Texts equal to vllm: first, both, alone1, alone2 |
+| Mode | Servers | Cases (failed) | Requests complete | Memory (MiB) | 95% CI | vs vllm (MiB) | Peak (MiB) | Shared files (MiB) | Mapped by a later server: weights, prefix (MiB) | First token, second server (ms) | 95% CI | Smallest cached share | Throughput (tokens/s) | 95% CI | vs vllm | median | 12-SM, 8-SM (tokens/s) | Start-up, first and later server (ms) | Weights publish, attach (ms) | Prefix attach (ms) | LMCache store, retrieve (ms) | Texts equal to vllm: first, both, alone1, alone2 |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
 | vllm | 2 | 6 (0) | 84/84 | 21272 | 33 | 0 | 21706 | 0 | 0, 0 | 14108 | 48 | 0.0000 | 145.69 | 0.85 | 1.0000 | 1.0000 | 85.40, 60.29 | 24223, 26023 | 0, 0 | 0 | 0, 0 | 24/24, 48/48, 6/6, 6/6 |
 | cpu | 2 | 6 (0) | 84/84 | 25281 | 435 | 4009 | 25367 | 0 | 0, 0 | 14188 | 19 | 0.0000 | 145.74 | 1.33 | 1.0003 | 0.9957 | 85.83, 59.91 | 24782, 26100 | 0, 0 | 0 | 0, 0 | 22/24, 48/48, 6/6, 6/6 |
@@ -2066,9 +2073,9 @@ server maps the 892 blocks in 23 ms when it starts and answers after
 
 *Throughput.* The summed generation speed of the eight agents of round
 `both` is 138.4 tokens/s with the plugin against 145.7 tokens/s, a paired
-ratio of 0.950 (median 0.951). The loss is in the 6-SM instance: its
+ratio of 0.950 (median 0.951). The loss is in the 8-SM instance: its
 server generates at 0.820 of its speed in `vllm`, the server of the 12-SM
-instance at 1.041. With the weights alone the 6-SM server is at 0.860,
+instance at 1.041. With the weights alone the 8-SM server is at 0.860,
 with the prefix alone at 0.950. This is the cost of host memory in that
 instance that Section 6.8 measures for the engine, larger here because the weights
 are read from host memory as well.
@@ -2089,9 +2096,9 @@ and V6 (`alone1` equal in every mode).
 
 **Four servers (`SERVERS=4`, `20261007-vllm-share-4srv-v1`, two
 repetitions).** Servers 3 and 4 start after server 2, in the 12-SM and the
-6-SM instance, and attach like server 2.
+8-SM instance, and attach like server 2.
 
-| Mode | Servers | Cases (failed) | Requests complete | Memory (MiB) | 95% CI | vs vllm (MiB) | Peak (MiB) | Shared files (MiB) | Mapped by a later server: weights, prefix (MiB) | First token, second server (ms) | 95% CI | Smallest cached share | Throughput (tokens/s) | 95% CI | vs vllm | median | 12-SM, 6-SM (tokens/s) | Start-up, first and later server (ms) | Weights publish, attach (ms) | Prefix attach (ms) | LMCache store, retrieve (ms) | Texts equal to vllm: first, both, alone1, alone2 |
+| Mode | Servers | Cases (failed) | Requests complete | Memory (MiB) | 95% CI | vs vllm (MiB) | Peak (MiB) | Shared files (MiB) | Mapped by a later server: weights, prefix (MiB) | First token, second server (ms) | 95% CI | Smallest cached share | Throughput (tokens/s) | 95% CI | vs vllm | median | 12-SM, 8-SM (tokens/s) | Start-up, first and later server (ms) | Weights publish, attach (ms) | Prefix attach (ms) | LMCache store, retrieve (ms) | Texts equal to vllm: first, both, alone1, alone2 |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
 | vllm | 4 | 2 (0) | 44/44 | 42620 | 267 | 0 | 42647 | 0 | 0, 0 | 14067 | 395 | 0.0000 | 237.19 | 4.20 | 1.0000 | 1.0000 | 131.74, 105.44 | 23985, 25016 | 0, 0 | 0 | 0, 0 | 8/8, 32/32, 2/2, 2/2 |
 | lmcache | 4 | 2 (0) | 44/44 | 51551 | 165 | 8931 | 51574 | 0 | 0, 0 | 1739 | 40 | 0.9841 | 288.64 | 0.24 | 1.2169 | 1.2169 | 165.88, 122.76 | 25515, 26321 | 0, 0 | 0 | 415, 841 | 7/8, 31/32, 2/2, 2/2 |
@@ -2117,7 +2124,7 @@ different times (237.2 and 288.6 tokens/s) and is not a throughput. Only
 with the plugin do all 16 agents generate at the same time, at
 123.1 tokens/s. The like-for-like part of the round is the rate of an
 agent on servers 1 and 2 while the other server of its instance is busy:
-9.3 tokens/s (12-SM) and 6.7 tokens/s (6-SM) in `vllm`, 9.6 and 5.6
+9.3 tokens/s (12-SM) and 6.7 tokens/s (8-SM) in `vllm`, 9.6 and 5.6
 tokens/s with the plugin. The next campaign repeats the case with every
 server holding the prefix before the round.
 
@@ -2127,7 +2134,7 @@ server holding the prefix before the round.
 each answer one agent alone, so that every server holds the prefix when
 round `both` starts.
 
-| Mode | Servers | Cases (failed) | Requests complete | Memory (MiB) | 95% CI | vs vllm (MiB) | Peak (MiB) | Shared files (MiB) | Mapped by a later server: weights, prefix (MiB) | First token, second server (ms) | 95% CI | Smallest cached share | Throughput (tokens/s) | 95% CI | vs vllm | median | 12-SM, 6-SM (tokens/s) | Start-up, first and later server (ms) | Weights publish, attach (ms) | Prefix attach (ms) | LMCache store, retrieve (ms) | Texts equal to vllm: first, both, alone1, alone2 |
+| Mode | Servers | Cases (failed) | Requests complete | Memory (MiB) | 95% CI | vs vllm (MiB) | Peak (MiB) | Shared files (MiB) | Mapped by a later server: weights, prefix (MiB) | First token, second server (ms) | 95% CI | Smallest cached share | Throughput (tokens/s) | 95% CI | vs vllm | median | 12-SM, 8-SM (tokens/s) | Start-up, first and later server (ms) | Weights publish, attach (ms) | Prefix attach (ms) | LMCache store, retrieve (ms) | Texts equal to vllm: first, both, alone1, alone2 |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
 | vllm | 4 | 6 (0) | 144/144 | 42549 | 50 | 0 | 42567 | 0 | 0, 0 | 14028 | 31 | 0.0000 | 131.56 | 0.22 | 1.0000 | 1.0000 | 76.40, 55.17 | 23972, 24996 | 0, 0 | 0 | 0, 0 | 24/24, 96/96, 6/6, 6/6 |
 | lmcache | 4 | 6 (0) | 144/144 | 51613 | 35 | 9064 | 51628 | 0 | 0, 0 | 1726 | 68 | 0.9841 | 131.22 | 0.29 | 0.9974 | 0.9974 | 76.31, 54.91 | 25322, 26618 | 0, 0 | 0 | 402, 840 | 20/24, 79/96, 6/6, 6/6 |
@@ -2136,7 +2143,7 @@ round `both` starts.
 The 16 agents of every configuration now generate at the same time: 131.5
 tokens/s unmodified, 131.0 tokens/s with LMCache and 121.8 tokens/s with
 the plugin, a paired ratio of 0.926. The two servers of the 12-SM instance
-are at 1.000 of their speed in `vllm` and the two of the 6-SM instance at
+are at 1.000 of their speed in `vllm` and the two of the 8-SM instance at
 0.823, as with two servers (1.041 and 0.820). Memory and first token repeat
 the first run: 41.68, 50.35 and 22.74 GiB; 14.08, 1.86 and 0.66 s; the
 largest drop with the plugin is 29.28 GiB. All gates hold in this
@@ -2212,7 +2219,7 @@ key-value cache, without the qualification "through the host page tables";
 the immutable-prefix layout, demand-backed caches or metadata-only state
 files as ideas; that extents make an agent start much faster (the first
 token moves by 4 to 23%); that extents cost no generation speed on this
-device (nothing in the 12-SM instance, 2 to 6% in the 6-SM instance); that a prefix moved between the MIG instances reproduces a
+device (nothing in the 12-SM instance, 2 to 6% in the 8-SM instance); that a prefix moved between the MIG instances reproduces a
 recomputation there (the instances differ in their bits).
 
 ## 8. Limits
@@ -2274,7 +2281,7 @@ recomputation there (the instances differ in their bits).
   2 MiB allocation and one handle per step of every tensor, not tuned, and
   not the code of any of the systems it stands for. A version with larger
   allocations would attach faster and share less.
-- **The cost of a host-memory cache in the 6-SM instance is measured, not
+- **The cost of a host-memory cache in the 8-SM instance is measured, not
   explained** (Section 6.8).
 - **The mapping of a host-memory cache is not released** when its context is
   freed. The experiments create one context per process.

@@ -379,7 +379,7 @@ awk -F, '
 ' "$kvspeed_dir/engine_kvspeed_summary.csv" ||
   fail "the generation speed of a host-memory cache is not as recorded"
 
-# The same with the long prefix, and in the 6-SM instance: there a cache in
+# The same with the long prefix, and in the 8-SM instance: there a cache in
 # host memory is slower than one in device memory, shared or not, by about
 # 2% with the short prefix and about 6% with the long one.
 speed_check() {  # directory lowest highest
