@@ -1,98 +1,92 @@
-% Design: publish and attach as operations on mappings, by the entries of the
-% two page tables and the pages they refer to. The pages of the prefix are
-% private to the publisher while it computes them, immutable once it has
-% published them (one protection change per tensor, after the device has
-% completed its writes), and shared once an agent maps them read-only and
-% reads them from the CPU, which sets the accessed flags. What a process
-% writes afterwards lies in pages of its own.
+% Design: publish and attach as operations on mappings. On the left, what a
+% publisher hands over: a state file with the tokens and the cells of the
+% prefix (16 bytes per token) and without its rows. On the right, the rows,
+% which stay in place: the publisher changes the protection of its entries
+% (after the device has completed its writes), and an agent maps the same
+% pages read-only and reads them from the CPU, which sets the accessed flags.
+% What a process writes afterwards lies in pages of its own.
 \documentclass[border=2pt]{standalone}
 \input{llmshare_style}
 \begin{document}
 \begin{tikzpicture}[x=1cm, y=1cm,
   tiny/.style={-{Latex[length=1.0mm]}, line width=0.5pt},
-  map/.style={line width=0.4pt, black!60},
   pte/.style={blk, minimum width=0.3cm, minimum height=0.3cm},
+  field/.style={seg, minimum height=0.34cm, font=\scriptsize},
   flag/.style={circle, fill=black!80, inner sep=0pt, minimum size=0.09cm}]
 
 % lanes
-\draw[layer] (0,3.98) rectangle (8.9,4.98);
-\draw[sub, fill=white] (0,2.28) rectangle (8.9,3.66);
-\draw[layer] (0,0.62) rectangle (8.9,2.08);
-\node[ttl, anchor=west] at (0.1,4.66) {Publisher};
-\node[tag, anchor=west] at (0.12,4.32) {Page Table};
-\node[ttl, anchor=west] at (0.1,3.3) {Memory};
-\node[tag, anchor=west] at (0.12,2.96) {Pages};
-\node[ttl, anchor=west] at (0.1,1.76) {Agent};
-\node[tag, anchor=west] at (0.12,1.42) {Page Table};
+\draw[layer] (0,4.02) rectangle (8.9,5.28);
+\draw[sub, fill=white] (0,2.3) rectangle (8.9,3.72);
+\draw[layer] (0,0.62) rectangle (8.9,2.0);
+\node[ttl, anchor=west] at (0.1,4.86) {Publisher};
+\node[tag, anchor=west] at (0.12,4.52) {Page Table};
+\node[ttl, anchor=west] at (0.1,3.2) {Memory};
+\node[ttl, anchor=west] at (0.1,1.62) {Agent};
+\node[tag, anchor=west] at (0.12,1.28) {Page Table};
 
-% phases and the state of the pages in each
-\foreach \x in {3.32,5.85} {
-  \draw[black!45, line width=0.3pt, densely dashed] (\x,0.72) -- (\x,5.52);
-}
-\node[tag] at (2.32,5.4) {Compute};
-\node[note] at (2.32,5.15) {private};
-\node[num] at (4.2,5.4) {1};
-\node[tag, anchor=west] at (4.42,5.4) {Publish};
-\node[note] at (4.87,5.15) {immutable};
-\node[num] at (6.3,5.4) {2};
-\node[tag, anchor=west] at (6.52,5.4) {Attach};
-\node[note] at (6.82,5.15) {shared};
-\node[num] at (7.62,5.4) {3};
-\node[tag, anchor=west] at (7.84,5.4) {Append};
-\node[note] at (8.14,5.15) {private};
+% what is handed over, and what stays in place
+\draw[black!45, line width=0.3pt, densely dashed] (4.82,0.72) -- (4.82,5.62);
+\node[tag] at (3.15,5.5) {Metadata: Handed Over};
+\node[tag] at (6.75,5.5) {Rows: In Place};
 
 % a band joins the entries of a page table with the pages they refer to
 \newcommand{\band}[5]{\fill[#1, opacity=0.3, rounded corners=1.5pt] (#2,#3) rectangle (#4,#5);}
-\band{tailc}{1.56}{3.06}{3.08}{4.59}
-\band{sharedc}{4.11}{3.06}{5.63}{4.59}
-\band{sharedc}{6.06}{1.16}{7.58}{4.59}
-\band{tailc}{7.76}{3.06}{8.52}{4.59}
-\band{tailc}{7.76}{1.16}{8.52}{2.87}
+\band{sharedc}{5.11}{1.1}{6.63}{4.54}
+\band{tailc}{6.91}{3.03}{7.67}{4.54}
+\band{tailc}{6.91}{1.1}{7.67}{2.79}
 
-% compute: the entries and the pages of the prefix are writable by the publisher
+% ---------------- the rows ----------------
+% the entries of the publisher: writable while it computes, read-only after
 \foreach \k in {0,...,3} {
-  \node[pte, fill=tailc] at (1.75+\k*0.38,4.4) {};
-  \node[pte, fill=tailc] at (1.75+\k*0.38,3.25) {};
-}
-% publish: one protection change per tensor, then the metadata
-\draw[tiny] (3.14,4.4) -- (4.06,4.4);
-\node[note] at (3.6,4.76) {sync, mprotect};
-\node[note] at (3.6,4.13) {per tensor};
-\foreach \k in {0,...,3} {
-  \node[pte, fill=sharedc] at (4.3+\k*0.38,4.4) {};
-  \node[pte, fill=sharedc] at (4.3+\k*0.38,3.25) {};
-}
-\node[comp, minimum width=1.25cm, minimum height=0.36cm, inner ysep=0pt] (state) at (5.0,2.72) {State File};
-\node[note, anchor=east] at (4.32,2.72) {16 B/token};
-
-% attach and append: both page tables refer to the same pages of the prefix
-\foreach \k in {0,...,3} {
-  \node[pte, fill=sharedc] at (6.25+\k*0.38,4.4) {};
-  \node[pte, fill=sharedc] at (6.25+\k*0.38,3.25) {};
-  \node[pte, fill=sharedc] (d\k) at (6.25+\k*0.38,1.66) {};
+  \node[pte, fill=tailc] at (5.3+\k*0.38,4.98) {};
+  \node[pte, fill=sharedc] at (5.3+\k*0.38,4.35) {};
+  \node[pte, fill=sharedc] at (5.3+\k*0.38,3.2) {};
+  \node[pte, fill=sharedc] (d\k) at (5.3+\k*0.38,1.5) {};
   \node[flag] at (d\k) {};
 }
+\draw[tiny] (5.87,4.8) -- (5.87,4.54);
 \foreach \k in {0,1} {
-  % the rows that the publisher writes after the fork
-  \node[pte, fill=tailc] at (7.95+\k*0.38,4.4) {};
-  \node[pte, fill=tailc] at (7.95+\k*0.38,3.25) {};
+  % the rows that the publisher writes after the fork, and their pages
+  \node[pte, fill=tailc] at (7.1+\k*0.38,4.35) {};
+  \node[pte, fill=tailc] at (7.1+\k*0.38,3.2) {};
   % the private extent of the agent
-  \node[pte, fill=tailc] at (7.95+\k*0.38,1.66) {};
-  \node[pte, fill=tailc] at (7.95+\k*0.38,2.68) {};
+  \node[pte, fill=tailc] at (7.1+\k*0.38,2.62) {};
+  \node[pte, fill=tailc] at (7.1+\k*0.38,1.5) {};
 }
-\node[note] at (8.14,4.76) {fork};
+\node[note] at (7.29,4.72) {fork};
+\node[tag, align=center] at (8.25,3.2) {Prefix\\[-2pt]Cache File};
+\node[tag, align=center] at (8.25,2.62) {Private\\[-2pt]Extent};
 
-% the agent: it starts as a process of its own and attaches by the metadata
-\node[comp, minimum width=1.05cm, minimum height=0.36cm, inner ysep=0pt] (spawn) at (2.32,1.66) {Spawn};
-\node[comp, fill=actc, minimum width=1.05cm, minimum height=0.36cm, inner ysep=0pt] (attach) at (5.0,1.66) {Attach};
+% ---------------- the metadata ----------------
+\node[num] at (2.2,4.65) {1};
+\node[comp, fill=actc, minimum width=1.1cm, minimum height=0.36cm, inner ysep=0pt] (publish) at (3.05,4.65) {Publish};
+\draw[tiny] (publish.east) -- (5.02,4.65);
+\node[note] at (4.3,4.9) {sync, mprotect};
+\node[note] at (4.3,4.4) {per tensor};
+
+% the state file: the tokens and the cells of the prefix, and no rows
+\draw[sub, fill=panel] (1.55,2.42) rectangle (4.55,3.6);
+\node[field, minimum width=0.95cm, fill=white, anchor=west] at (1.7,3.22) {Tokens};
+\node[field, minimum width=0.8cm, fill=white, anchor=west] at (2.65,3.22) {Cells};
+\node[field, minimum width=0.95cm, densely dashed, anchor=west, text=black!55] (rows) at (3.45,3.22) {Rows};
+\node[tag, anchor=west] at (1.68,2.68) {State File};
+\node[note, anchor=east] at (4.42,2.68) {16 B/token};
+\draw[tiny] (publish.south) -- (3.05,3.6);
+\draw[tiny, roline] (rows.east) -- (5.11,3.22);
+
+\node[num] at (1.82,1.5) {2};
+\node[comp, minimum width=0.95cm, minimum height=0.36cm, inner ysep=0pt] (spawn) at (2.55,1.5) {Spawn};
+\node[comp, fill=actc, minimum width=0.95cm, minimum height=0.36cm, inner ysep=0pt] (attach) at (3.85,1.5) {Attach};
 \draw[tiny] (spawn) -- (attach);
-\draw[tiny, densely dashed] (state.south) -- (attach.north);
-\draw[tiny, roline] (attach.east) -- (6.0,1.66);
-\node[note, text=roline] at (5.74,1.95) {mmap};
-\node[note, text=roline] at (5.56,1.37) {CPU read};
+\draw[tiny, densely dashed] (3.85,2.42) -- (attach.north);
+\draw[tiny, roline] (attach.east) -- (5.02,1.5);
+\node[note, text=roline] at (4.68,1.76) {mmap};
+\node[note, text=roline] at (4.6,1.22) {CPU read};
 
-% the GPU reads and writes through the entries of the agent without a fault
-\node[comp, fill=gpuc, minimum width=2.6cm, minimum height=0.34cm, inner ysep=0pt] at (7.29,0.99) {GPU: No Fault};
+% the agent appends in pages of its own; the GPU takes no fault on either kind
+\node[num] at (7.9,1.5) {3};
+\node[tag, anchor=west] at (8.06,1.5) {Append};
+\node[comp, fill=gpuc, minimum width=2.7cm, minimum height=0.34cm, inner ysep=0pt] at (6.39,0.93) {GPU: No Fault};
 
 % legend
 \node[tag] at (4.45,0.3) {\lgdfill{tailc}\,Private (RW)\qquad\lgdfill{sharedc}\,Immutable (RO)\qquad\tikz[baseline=-0.55ex]{\node[circle, fill=black!80, inner sep=0pt, minimum size=0.09cm] {};}\,\,Accessed by CPU Read\qquad\tikz[baseline=-0.55ex]{\fill[black!22, rounded corners=1pt] (0,-0.1) rectangle (0.22,0.1);}\,Mapping};
