@@ -1,30 +1,42 @@
 % Background: every page whose entry changes costs the process one SMMU
-% invalidation; an operation on a range pays it once.
+% invalidation; an operation on a range pays it once. The bars are the time
+% of an operation in a process that uses the GPU relative to one that does
+% not (thor_hostmm, 20261005-mm-tax-v1, one thread).
 \documentclass[border=2pt]{standalone}
 \input{llmshare_style}
 \begin{document}
 \begin{tikzpicture}[x=1cm, y=1cm]
 \draw[layer] (0,0) rectangle (5.8,3.15);
 \node[ttl] at (2.9,2.93) {Page Table Updates};
-\draw[black!45, line width=0.3pt, densely dashed] (2.9,0.12) -- (2.9,2.65);
+\draw[black!45, line width=0.3pt, densely dashed] (2.9,0.1) -- (2.9,2.72);
 % per page
-\node[tag] at (1.48,2.5) {Per Page};
+\node[tag] at (1.48,2.6) {Per Page};
 \foreach \k in {0,...,4} {
-  \node[blk, fill=faultc] (p\k) at (0.48+\k*0.5,2.1) {};
-  \draw[arr, rwline] (p\k.south) -- (0.48+\k*0.5,1.32);
+  \node[blk, fill=faultc, minimum height=0.3cm] (p\k) at (0.48+\k*0.5,2.28) {};
+  \draw[arr, rwline] (p\k.south) -- (0.48+\k*0.5,1.84);
 }
-\node[comp, fill=ptc, minimum width=2.5cm, minimum height=0.5cm] at (1.48,1.05) {SMMU};
-\node[tag] at (1.48,0.52) {5 Invalidations};
-\node[tag, text=rwline] at (1.48,0.22) {9 $\mu$s each};
+\node[comp, fill=ptc, minimum width=2.5cm, minimum height=0.4cm] at (1.48,1.63) {SMMU};
+\node[tag, text=rwline] at (1.48,1.29) {5 $\times$ 9 $\mu$s};
 % per range
-\node[tag] at (4.32,2.5) {Per Range};
+\node[tag] at (4.32,2.6) {Per Range};
 \foreach \k in {0,...,4} {
-  \node[blk, fill=tailc] (r\k) at (3.32+\k*0.5,2.1) {};
+  \node[blk, fill=tailc, minimum height=0.3cm] (r\k) at (3.32+\k*0.5,2.28) {};
 }
-\draw[decorate, decoration={brace, amplitude=3pt, mirror}] (3.1,1.86) -- (5.54,1.86);
-\draw[arr] (4.32,1.74) -- (4.32,1.32);
-\node[comp, fill=ptc, minimum width=2.5cm, minimum height=0.5cm] at (4.32,1.05) {SMMU};
-\node[tag] at (4.32,0.52) {1 Invalidation};
-\node[tag, text=roline] at (4.32,0.22) {paid once};
+\draw[decorate, decoration={brace, amplitude=2.5pt, mirror}] (3.1,2.09) -- (5.54,2.09);
+\draw[arr, roline] (4.32,2.0) -- (4.32,1.84);
+\node[comp, fill=ptc, minimum width=2.5cm, minimum height=0.4cm] at (4.32,1.63) {SMMU};
+\node[tag, text=roline] at (4.32,1.29) {1 $\times$ 9 $\mu$s};
+% the time of four operations per page and three per range, relative to a
+% process without the GPU; 0.085 cm for each factor of one
+\foreach \name/\ratio/\y in {CoW Break/6.1/1.0, Write Fault/9.0/0.74, mprotect/4.3/0.48, madvise/6.2/0.22} {
+  \node[tag, anchor=east] at (1.3,\y) {\name};
+  \fill[faultc, draw=black!65, line width=0.3pt] (1.36,\y-0.07) rectangle ++(\ratio*0.085,0.14);
+  \node[tag, anchor=west] at (1.4+\ratio*0.085,\y) {\ratio$\times$};
+}
+\foreach \name/\ratio/\y in {mprotect/0.7/0.87, madvise/0.7/0.61, munmap/0.8/0.35} {
+  \node[tag, anchor=east] at (4.15,\y) {\name};
+  \fill[tailc, draw=black!65, line width=0.3pt] (4.21,\y-0.07) rectangle ++(\ratio*0.085,0.14);
+  \node[tag, anchor=west] at (4.25+\ratio*0.085,\y) {\ratio$\times$};
+}
 \end{tikzpicture}
 \end{document}
