@@ -1420,6 +1420,21 @@ files). No agent fails, at least 16.8 GiB remain available in every
 repetition, and the 146 agents generate 37.61 tokens/s in total. Larger
 counts were not run.
 
+**The criterion for the capacity.** `MemAvailable` counts the page cache of
+the model file as available. The unmodified stack does not need these pages
+after it has copied the weights to device memory, but the stacks that read
+the weights in place keep reading them through the GPU. The capacity of a
+stack is therefore the count at which at least 16 GiB remain when the files
+that the agents map count as used. The smallest remainder of six
+repetitions is 21.66 GiB for 16 unmodified agents, 20.29 GiB for 19 agents
+with the prefix mapped, 17.41 GiB for 61 agents with the weights in place
+and 16.02 GiB for 140 agents on STATOR; with Qwen2.5-14B it is 17.95 GiB
+for 8 unmodified agents and 17.69 GiB for 118 agents on STATOR. The runs
+with 64 agents with the weights in place, with 145 and 146 agents on STATOR
+and with 131 agents on STATOR with Qwen2.5-14B complete without a failure
+and keep `MemAvailable` above 16 GiB, but leave 12.69, 12.44, 12.66 and
+8.77 GiB by this criterion and are not used as the capacity.
+
 **The whole stack with Qwen2.5-14B
 (`20261008-engine-kvstack-qwen14b-v1` and `-none8-v1`).** Counts 1 and 4
 first establish a line of 12,486 MiB per unmodified agent. Its conservative

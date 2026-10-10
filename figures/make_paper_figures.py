@@ -701,8 +701,7 @@ def stack():
     for more in ("20261008-engine-kvstack-capacity-v2",
                  "20261008-engine-kvstack-capacity-136-v1",
                  "20261008-engine-kvstack-capacity-140-v1",
-                 "20261009-engine-kvstack-capacity-copy-v1",
-                 "20261009-engine-kvstack-capacity-max-v1"):
+                 "20261009-engine-kvstack-capacity-copy-v1"):
         if have(more, "engine_kvstack_summary.csv"):
             line.update({(r["mode"], int(r["agents"])): r
                          for r in rows(more, "engine_kvstack_summary.csv") if int(r["runs"]) > 0})
@@ -761,9 +760,11 @@ def stack():
     fig, ax = panel()
     series = [(label, colour, [int(model[m]["agents_that_fit_by_line"]) for _, model in models])
               for label, colour, m, _ in STACKS if m in ("none", "both")]
-    # every stack at the count that it runs while 16 GiB remain available
+    # every stack at the count that it runs while 16 GiB remain unused; the model
+    # file that the agents map counts as used, which the larger counts of the
+    # campaigns -max-v1 and -qwen14b-131-v1 do not satisfy
     measured = {"none": ("20261009-engine-kvstack-capacity-copy-v1", "20261008-engine-kvstack-qwen14b-none8-v1"),
-                "both": ("20261009-engine-kvstack-capacity-max-v1", "20261008-engine-kvstack-capacity-qwen14b-131-v1")}
+                "both": ("20261008-engine-kvstack-capacity-140-v1", "20261008-engine-kvstack-capacity-qwen14b-118-v1")}
     series = [(label, colour, [ran(d, m) for d in measured[m]][:len(models)])
               for label, colour, m, _ in STACKS if m in measured]
     for group in grouped(ax, [label for label, _ in models], series, 0.36):
