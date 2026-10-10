@@ -284,7 +284,7 @@ def cow():
              ("+Read\n2 MiB", "cow", COW), (NAME, "extent_lazy", OURS))
     for name, column, ylabel, scale, form in (
             ("eval_cow_mem", "memory_mib", "Memory (GiB)", 1024.0, "{:.1f}"),
-            ("eval_cow_time", "suffix_ms", "Task Decoding (s)", 1000.0, "{:.2f}")):
+            ("eval_cow_time", "first_token_ms", "TTFT (s)", 1000.0, "{:.2f}")):
         fig, ax = panel()
         values = [float(data[m, 8][column]) / scale for _, m, _ in order]
         bars = ax.bar([label for label, _, _ in order], values, 0.62,
