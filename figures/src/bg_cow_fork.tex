@@ -1,5 +1,5 @@
 % Background: fork write-protects the memory of the parent, and the next GPU
-% write to it faults on every page; posix_spawn leaves the memory writable
+% write to it faults on every page; a child spawned as a new program leaves the memory writable
 % (thor_hostmm, 20261005-mm-tax-v1: 2,680 against 6.6 ms for 1 GiB).
 \documentclass[border=2pt]{standalone}
 \input{llmshare_style}
@@ -10,7 +10,7 @@
 \draw[black!45, line width=0.3pt, densely dashed] (2.9,0.5) -- (2.9,2.76);
 \begin{scope}[yshift=-0.04cm]
 % after fork: parent and child map the same write-protected pages
-\node[tag] at (1.48,2.67) {\texttt{fork}};
+\node[tag] at (1.48,2.67) {Fork};
 \node[comp, minimum width=0.95cm, minimum height=0.32cm, inner ysep=0pt] (pa) at (0.85,2.33) {Parent};
 \node[comp, minimum width=0.85cm, minimum height=0.32cm, inner ysep=0pt] (ca) at (2.15,2.33) {Child};
 \draw[tiny] (pa.east) -- (ca.west);
@@ -22,8 +22,8 @@
 \draw[tiny, black!70] (ca.south) -- (ca.south |- 0,1.94);
 \node[comp, fill=gpuc, minimum width=2.5cm, minimum height=0.36cm, inner ysep=0pt] at (1.48,1.16) {GPU Write};
 \node[tag, text=rwline] at (1.48,0.72) {Fault per Page: 2.7 s/GiB};
-% after posix_spawn: the memory of the parent stays writable
-\node[tag] at (4.32,2.67) {\texttt{posix\_spawn}};
+% a child spawned as a new program: the memory of the parent stays writable
+\node[tag] at (4.32,2.67) {Spawn};
 \node[comp, minimum width=0.95cm, minimum height=0.32cm, inner ysep=0pt] (pb) at (3.69,2.33) {Parent};
 \node[comp, minimum width=0.85cm, minimum height=0.32cm, inner ysep=0pt] (cb) at (4.99,2.33) {Child};
 \draw[tiny] (pb.east) -- (cb.west);
