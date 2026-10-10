@@ -82,14 +82,14 @@
 \draw[tiny] (publish.south) -- (2.8,3.6);
 \draw[tiny, roline] (rows.east) -- (5.01,3.28);
 
-\node[num] at (1.6,1.5) {2};
-\node[comp, minimum width=0.95cm, minimum height=0.36cm, inner ysep=0pt] (spawn) at (2.25,1.5) {Spawn};
-\node[comp, fill=actc, minimum width=0.95cm, minimum height=0.36cm, inner ysep=0pt] (attach) at (3.3,1.5) {Attach};
+\node[num] at (1.5,1.5) {2};
+\node[comp, minimum width=0.85cm, minimum height=0.36cm, inner ysep=0pt] (spawn) at (2.25,1.5) {Spawn};
+\node[comp, fill=actc, minimum width=0.85cm, minimum height=0.36cm, inner ysep=0pt] (attach) at (3.5,1.5) {Attach};
 \draw[tiny] (spawn) -- (attach);
-\draw[tiny, densely dashed] (3.3,2.42) -- (attach.north);
+\draw[tiny, densely dashed] (3.5,2.42) -- (attach.north);
 \draw[tiny, roline] (attach.east) -- (4.92,1.5);
-\node[note, text=roline] at (4.32,1.73) {map};
-\node[note, text=roline] at (4.32,1.27) {CPU read};
+\node[note, text=roline] at (4.42,1.73) {map};
+\node[note, text=roline] at (4.42,1.27) {CPU read};
 
 % the agent appends in pages of its own; the GPU takes no fault on either kind
 \node[num] at (7.93,1.5) {3};
