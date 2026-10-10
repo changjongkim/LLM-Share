@@ -84,12 +84,12 @@
 
 \node[num] at (1.66,1.5) {2};
 \node[comp, minimum width=0.85cm, minimum height=0.36cm, inner ysep=0pt] (spawn) at (2.38,1.5) {Spawn};
-\node[comp, fill=actc, minimum width=0.85cm, minimum height=0.36cm, inner ysep=0pt] (attach) at (3.5,1.5) {Attach};
+\node[comp, fill=actc, minimum width=0.85cm, minimum height=0.36cm, inner ysep=0pt] (attach) at (3.62,1.5) {Attach};
 \draw[tiny] (spawn) -- (attach);
-\draw[tiny, densely dashed] (3.5,2.42) -- (attach.north);
+\draw[tiny, densely dashed] (3.62,2.42) -- (attach.north);
 \draw[tiny, roline] (attach.east) -- (4.72,1.5);
-\node[note, text=roline] at (4.32,1.73) {map};
-\node[note, text=roline] at (4.32,1.27) {read};
+\node[note, text=roline] at (4.38,1.73) {map};
+\node[note, text=roline] at (4.38,1.27) {read};
 
 % the agent appends in pages of its own; the GPU takes no fault on either kind
 \node[num] at (7.78,1.5) {3};
