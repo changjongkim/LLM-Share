@@ -48,7 +48,6 @@
   \node[flag] at (d\k) {};
 }
 \draw[tiny] (5.77,4.8) -- (5.77,4.54);
-\node[note, anchor=west] at (5.84,4.67) {RW $\rightarrow$ RO};
 \foreach \k in {0,1} {
   % the rows that the publisher writes after the fork, and their pages
   \node[pte, fill=tailc] at (7.15+\k*0.38,4.35) {};
@@ -57,7 +56,7 @@
   \node[pte, fill=tailc] at (7.15+\k*0.38,2.55) {};
   \node[pte, fill=tailc] at (7.15+\k*0.38,1.5) {};
 }
-\node[note] at (7.34,4.72) {fork};
+\node[note] at (7.5,4.72) {keeps writing};
 % the cache file holds the prefix and the rows that the publisher writes after it;
 % the rows of the agent lie in its private extent
 \draw[black!75, line width=0.5pt, rounded corners=1.5pt] (5.03,2.99) rectangle (7.7,3.41);
@@ -66,11 +65,11 @@
 \node[tag, align=center] at (8.3,2.55) {Private\\[-2pt]Extent};
 
 % ---------------- the metadata ----------------
-\node[num] at (2.1,4.65) {1};
-\node[comp, fill=actc, minimum width=1.1cm, minimum height=0.36cm, inner ysep=0pt] (publish) at (2.95,4.65) {Publish};
+\node[num] at (1.95,4.65) {1};
+\node[comp, fill=actc, minimum width=1.1cm, minimum height=0.36cm, inner ysep=0pt] (publish) at (2.8,4.65) {Publish};
 \draw[tiny] (publish.east) -- (4.92,4.65);
-\node[note] at (4.08,4.9) {sync, mprotect};
-\node[note] at (4.12,4.4) {per tensor};
+\node[note] at (4.14,4.9) {wait for GPU};
+\node[note] at (4.14,4.4) {make read-only};
 
 % the state file: the tokens and the cells of the prefix, and no rows
 \draw[sub, fill=panel] (1.5,2.42) rectangle (4.45,3.6);
@@ -82,17 +81,17 @@
 \node[note] at (rows |- 0,2.97) {0 B};
 \node[tag, anchor=west] at (1.62,2.63) {State File};
 \node[note, anchor=east] at (4.32,2.63) {per token};
-\draw[tiny] (publish.south) -- (2.95,3.6);
+\draw[tiny] (publish.south) -- (2.8,3.6);
 \draw[tiny, roline] (rows.east) -- (5.01,3.28);
 
-\node[num] at (1.75,1.5) {2};
-\node[comp, minimum width=0.95cm, minimum height=0.36cm, inner ysep=0pt] (spawn) at (2.45,1.5) {Spawn};
-\node[comp, fill=actc, minimum width=0.95cm, minimum height=0.36cm, inner ysep=0pt] (attach) at (3.7,1.5) {Attach};
+\node[num] at (1.6,1.5) {2};
+\node[comp, minimum width=0.95cm, minimum height=0.36cm, inner ysep=0pt] (spawn) at (2.25,1.5) {Spawn};
+\node[comp, fill=actc, minimum width=0.95cm, minimum height=0.36cm, inner ysep=0pt] (attach) at (3.3,1.5) {Attach};
 \draw[tiny] (spawn) -- (attach);
-\draw[tiny, densely dashed] (3.7,2.42) -- (attach.north);
+\draw[tiny, densely dashed] (3.3,2.42) -- (attach.north);
 \draw[tiny, roline] (attach.east) -- (4.92,1.5);
-\node[note, text=roline] at (4.55,1.76) {mmap};
-\node[note, text=roline] at (4.5,1.22) {CPU read};
+\node[note, text=roline] at (4.36,1.76) {map read-only};
+\node[note, text=roline] at (4.3,1.22) {CPU reads once};
 
 % the agent appends in pages of its own; the GPU takes no fault on either kind
 \node[num] at (7.93,1.5) {3};
@@ -100,6 +99,6 @@
 \node[comp, fill=gpuc, minimum width=2.75cm, minimum height=0.34cm, inner ysep=0pt] at (6.365,0.93) {GPU: No Fault};
 
 % legend
-\node[tag] at (4.45,0.3) {\lgdfill{tailc}\,Private (RW)\qquad\lgdfill{sharedc}\,Immutable (RO)\qquad\tikz[baseline=-0.55ex]{\node[circle, fill=black!80, inner sep=0pt, minimum size=0.09cm] {};}\,\,Accessed by CPU Read\qquad\tikz[baseline=-0.55ex]{\fill[black!22, rounded corners=1pt] (0,-0.1) rectangle (0.22,0.1);}\,Same Pages};
+\node[tag] at (4.45,0.3) {\lgdfill{tailc}\,Private, Writable\quad\ \lgdfill{sharedc}\,Immutable, Read-Only\quad\ \tikz[baseline=-0.55ex]{\node[circle, fill=black!80, inner sep=0pt, minimum size=0.09cm] {};}\,\,Read by CPU\quad\ \tikz[baseline=-0.55ex]{\fill[black!22, rounded corners=1pt] (0,-0.1) rectangle (0.22,0.1);}\,Same Pages};
 \end{tikzpicture}
 \end{document}

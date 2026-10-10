@@ -55,9 +55,9 @@
 \draw[tiny, rwline] (4.1,0.86) -- (4.1,1.24);
 \node[tag, text=rwline, anchor=east] at (4.03,0.92) {GPU Write};
 \draw[tiny] (4.85,0.86) -- (4.85,1.24);
-\node[tag, anchor=west] at (4.92,0.92) {madvise per Tensor};
+\node[tag, anchor=west] at (4.92,0.92) {CPU Populates};
 
 % legend
-\node[tag] at (4.45,0.3) {\lgdfill{sharedc}\,Shared (RO)\qquad\lgdfill{copyc}\,Copied Page\qquad\lgdfill{tailc}\,In Use\qquad\lgdfill{aheadc}\,Populated\qquad\lgdhatch\,Unbacked};
+\node[tag] at (4.45,0.3) {\lgdfill{sharedc}\,Shared, Read-Only\quad\ \lgdfill{copyc}\,Copied Page\quad\ \lgdfill{tailc}\,In Use\quad\ \lgdfill{aheadc}\,Populated\quad\ \lgdhatch\,Unbacked};
 \end{tikzpicture}
 \end{document}
