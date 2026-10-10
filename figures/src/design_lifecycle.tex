@@ -29,8 +29,8 @@
 \draw[black!45, line width=0.3pt, densely dashed] (4.72,0.72) -- (4.72,5.9);
 \node[tag] at (3.0,5.76) {Metadata: Handed Over};
 \node[tag] at (6.55,5.76) {Rows: In Place};
-\node[note] at (5.77,5.48) {prefix};
-\node[note] at (7.34,5.48) {private extent};
+\node[note] at (5.77,5.48) {prefix rows};
+\node[note] at (7.34,5.48) {own rows};
 
 % a band joins the rows of a KV cache with the pages behind them
 \newcommand{\band}[6]{\filldraw[fill=#1, fill opacity=0.3, draw=#6, draw opacity=0.55, line width=0.3pt, rounded corners=1.5pt] (#2,#3) rectangle (#4,#5);}
@@ -48,7 +48,7 @@
   \node[flag] at (d\k) {};
 }
 \draw[tiny] (5.77,4.8) -- (5.77,4.54);
-\node[note, anchor=west] at (5.84,4.67) {freeze};
+\node[note, anchor=west] at (5.84,4.67) {RW $\rightarrow$ RO};
 \foreach \k in {0,1} {
   % the rows that the publisher writes after the fork, and their pages
   \node[pte, fill=tailc] at (7.15+\k*0.38,4.35) {};
@@ -58,9 +58,12 @@
   \node[pte, fill=tailc] at (7.15+\k*0.38,1.5) {};
 }
 \node[note] at (7.34,4.72) {fork};
-\node[tag] at (5.77,3.54) {Prefix Cache File};
-\node[tag] at (7.34,3.54) {Same File};
-\node[tag] at (7.34,2.88) {Anonymous};
+% the cache file holds the prefix and the rows that the publisher writes after it;
+% the rows of the agent lie in its private extent
+\draw[black!75, line width=0.5pt, rounded corners=1.5pt] (5.03,2.99) rectangle (7.7,3.41);
+\draw[black!75, line width=0.5pt, rounded corners=1.5pt] (6.98,2.34) rectangle (7.7,2.76);
+\node[tag, align=center] at (8.3,3.2) {Prefix\\[-2pt]Cache File};
+\node[tag, align=center] at (8.3,2.55) {Private\\[-2pt]Extent};
 
 % ---------------- the metadata ----------------
 \node[num] at (2.1,4.65) {1};
@@ -97,6 +100,6 @@
 \node[comp, fill=gpuc, minimum width=2.75cm, minimum height=0.34cm, inner ysep=0pt] at (6.365,0.93) {GPU: No Fault};
 
 % legend
-\node[tag] at (4.45,0.3) {\lgdfill{tailc}\,Private (RW)\qquad\lgdfill{sharedc}\,Immutable (RO)\qquad\tikz[baseline=-0.55ex]{\node[circle, fill=black!80, inner sep=0pt, minimum size=0.09cm] {};}\,\,Accessed by CPU Read\qquad\tikz[baseline=-0.55ex]{\fill[black!22, rounded corners=1pt] (0,-0.1) rectangle (0.22,0.1);}\,Mapping};
+\node[tag] at (4.45,0.3) {\lgdfill{tailc}\,Private (RW)\qquad\lgdfill{sharedc}\,Immutable (RO)\qquad\tikz[baseline=-0.55ex]{\node[circle, fill=black!80, inner sep=0pt, minimum size=0.09cm] {};}\,\,Accessed by CPU Read\qquad\tikz[baseline=-0.55ex]{\fill[black!22, rounded corners=1pt] (0,-0.1) rectangle (0.22,0.1);}\,Same Pages};
 \end{tikzpicture}
 \end{document}
