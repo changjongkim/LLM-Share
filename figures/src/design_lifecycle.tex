@@ -19,55 +19,55 @@
 \draw[layer] (0,4.02) rectangle (8.9,5.58);
 \draw[sub, fill=white] (0,2.24) rectangle (8.9,3.72);
 \draw[layer] (0,0.62) rectangle (8.9,2.0);
-\node[ttl, anchor=west] at (0.1,5.0) {Publisher};
-\node[tag, anchor=west] at (0.12,4.66) {KV Cache};
-\node[ttl, anchor=west] at (0.1,3.2) {Memory};
-\node[ttl, anchor=west] at (0.1,1.62) {Agent};
-\node[tag, anchor=west] at (0.12,1.28) {KV Cache};
+\node[ttl, anchor=west, inner sep=1pt] at (0.14,5.0) {Publisher};
+\node[tag, anchor=west] at (0.14,4.66) {(KV Cache)};
+\node[ttl, anchor=west, inner sep=1pt] at (0.14,3.0) {Memory};
+\node[ttl, anchor=west, inner sep=1pt] at (0.14,1.62) {Agent};
+\node[tag, anchor=west] at (0.14,1.28) {(KV Cache)};
 
 % what is handed over, and what stays in place: the prefix and the private extent
-\draw[black!45, line width=0.3pt, densely dashed] (4.72,0.72) -- (4.72,5.96);
+\draw[black!45, line width=0.3pt, densely dashed] (4.58,0.72) -- (4.58,5.96);
 \node[tag] at (3.0,5.82) {Metadata: Handed Over};
-\node[tag] at (6.55,5.82) {Rows: In Place};
-\node[tag] at (5.77,5.38) {Prefix Rows};
-\node[tag] at (7.34,5.38) {Own Rows};
+\node[tag] at (6.2,5.82) {Rows: In Place};
+\node[tag] at (5.57,5.38) {Prefix Rows};
+\node[tag] at (7.14,5.38) {Own Rows};
 
 % a band joins the rows of a KV cache with the pages behind them
 \newcommand{\band}[6]{\filldraw[fill=#1, fill opacity=0.3, draw=#6, draw opacity=0.55, line width=0.3pt, rounded corners=1.5pt] (#2,#3) rectangle (#4,#5);}
-\band{sharedc}{5.01}{1.1}{6.53}{4.54}{roline}
-\band{tailc}{6.96}{3.03}{7.72}{4.54}{tailc!60!black}
-\band{tailc}{6.96}{1.1}{7.72}{2.73}{tailc!60!black}
+\band{sharedc}{4.81}{1.1}{6.33}{4.54}{roline}
+\band{tailc}{6.76}{3.03}{7.52}{4.54}{tailc!60!black}
+\band{tailc}{6.76}{1.1}{7.52}{2.73}{tailc!60!black}
 
 % ---------------- the rows ----------------
 % the prefix of the publisher: writable while it computes, read-only after
 \foreach \k in {0,...,3} {
-  \node[pte, fill=tailc] at (5.2+\k*0.38,5.0) {};
-  \node[pte, fill=sharedc] at (5.2+\k*0.38,4.35) {};
-  \node[pte, fill=sharedc] at (5.2+\k*0.38,3.2) {};
-  \node[pte, fill=sharedc] (d\k) at (5.2+\k*0.38,1.5) {};
+  \node[pte, fill=tailc] at (5.0+\k*0.38,5.0) {};
+  \node[pte, fill=sharedc] at (5.0+\k*0.38,4.35) {};
+  \node[pte, fill=sharedc] at (5.0+\k*0.38,3.2) {};
+  \node[pte, fill=sharedc] (d\k) at (5.0+\k*0.38,1.5) {};
   \node[flag] at (d\k) {};
 }
-\draw[tiny] (5.77,4.82) -- (5.77,4.56);
+\draw[tiny] (5.57,4.82) -- (5.57,4.56);
 \foreach \k in {0,1} {
   % the rows that the publisher writes after the fork, and their pages
-  \node[pte, fill=tailc] at (7.15+\k*0.38,4.35) {};
-  \node[pte, fill=tailc] at (7.15+\k*0.38,3.2) {};
+  \node[pte, fill=tailc] at (6.95+\k*0.38,4.35) {};
+  \node[pte, fill=tailc] at (6.95+\k*0.38,3.2) {};
   % the private extent of the agent
-  \node[pte, fill=tailc] at (7.15+\k*0.38,2.55) {};
-  \node[pte, fill=tailc] at (7.15+\k*0.38,1.5) {};
+  \node[pte, fill=tailc] at (6.95+\k*0.38,2.55) {};
+  \node[pte, fill=tailc] at (6.95+\k*0.38,1.5) {};
 }
 % the cache file holds the prefix and the rows that the publisher writes after it;
 % the rows of the agent lie in its private extent
-\draw[black!75, line width=0.5pt, rounded corners=1.5pt] (5.03,2.99) rectangle (7.7,3.41);
-\draw[black!75, line width=0.5pt, rounded corners=1.5pt] (6.98,2.34) rectangle (7.7,2.76);
-\node[tag, align=center] at (8.3,3.2) {Prefix\\[-2pt]Cache File};
-\node[tag, align=center] at (8.3,2.55) {Private\\[-2pt]Extent};
+\draw[black!75, line width=0.5pt, rounded corners=1.5pt] (4.83,2.99) rectangle (7.5,3.41);
+\draw[black!75, line width=0.5pt, rounded corners=1.5pt] (6.78,2.34) rectangle (7.5,2.76);
+\node[tag, align=center] at (8.15,3.2) {Prefix\\[-2pt]Cache File};
+\node[tag, align=center] at (8.15,2.55) {Private\\[-2pt]Extent};
 
 % ---------------- the metadata ----------------
 \node[num] at (1.95,4.69) {1};
 \node[comp, fill=actc, minimum width=1.1cm, minimum height=0.36cm, inner ysep=0pt] (publish) at (2.8,4.69) {Publish};
-\draw[tiny] (publish.east) -- (4.92,4.69);
-\node[note] at (4.14,4.92) {read-only};
+\draw[tiny] (publish.east) -- (4.72,4.69);
+\node[note] at (4.03,4.92) {read-only};
 
 % the state file: the tokens and the cells of the prefix, and no rows
 \draw[sub, fill=panel] (1.5,2.42) rectangle (4.45,3.6);
@@ -80,21 +80,21 @@
 \node[tag, anchor=west] at (1.62,2.63) {State File};
 \node[note, anchor=east] at (4.32,2.63) {per token};
 \draw[tiny] (publish.south) -- (2.8,3.6);
-\draw[tiny, roline] (rows.east) -- (5.01,3.28);
+\draw[tiny, roline] (rows.east) -- (4.81,3.28);
 
-\node[num] at (1.5,1.5) {2};
-\node[comp, minimum width=0.85cm, minimum height=0.36cm, inner ysep=0pt] (spawn) at (2.25,1.5) {Spawn};
+\node[num] at (1.66,1.5) {2};
+\node[comp, minimum width=0.85cm, minimum height=0.36cm, inner ysep=0pt] (spawn) at (2.38,1.5) {Spawn};
 \node[comp, fill=actc, minimum width=0.85cm, minimum height=0.36cm, inner ysep=0pt] (attach) at (3.5,1.5) {Attach};
 \draw[tiny] (spawn) -- (attach);
 \draw[tiny, densely dashed] (3.5,2.42) -- (attach.north);
-\draw[tiny, roline] (attach.east) -- (4.92,1.5);
-\node[note, text=roline] at (4.42,1.73) {map};
-\node[note, text=roline] at (4.42,1.27) {CPU read};
+\draw[tiny, roline] (attach.east) -- (4.72,1.5);
+\node[note, text=roline] at (4.32,1.73) {map};
+\node[note, text=roline] at (4.32,1.27) {read};
 
 % the agent appends in pages of its own; the GPU takes no fault on either kind
-\node[num] at (7.93,1.5) {3};
-\node[tag, anchor=west] at (8.09,1.5) {Append};
-\node[comp, fill=gpuc, minimum width=2.75cm, minimum height=0.34cm, inner ysep=0pt] at (6.365,0.93) {GPU: No Fault};
+\node[num] at (7.78,1.5) {3};
+\node[tag, anchor=west] at (7.97,1.5) {Append};
+\node[comp, fill=gpuc, minimum width=2.75cm, minimum height=0.34cm, inner ysep=0pt] at (6.165,0.93) {GPU: No Fault};
 
 % legend
 \node[tag] at (4.45,0.3) {\lgdfill{tailc}\,Private, Writable\quad\ \lgdfill{sharedc}\,Immutable, Read-Only\quad\ \tikz[baseline=-0.55ex]{\node[circle, fill=black!80, inner sep=0pt, minimum size=0.09cm] {};}\,\,Read by CPU\quad\ \tikz[baseline=-0.55ex]{\fill[black!22, rounded corners=1pt] (0,-0.1) rectangle (0.22,0.1);}\,Same Pages};
