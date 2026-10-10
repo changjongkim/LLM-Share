@@ -4,37 +4,39 @@
 \documentclass[border=2pt]{standalone}
 \input{llmshare_style}
 \begin{document}
-\begin{tikzpicture}[x=1cm, y=1cm]
+\begin{tikzpicture}[x=1cm, y=1cm, tiny/.style={-{Latex[length=1.0mm]}, line width=0.5pt}]
 \draw[layer] (0,0) rectangle (5.8,3.15);
-\node[ttl] at (2.9,2.93) {GPU Write to Parent Memory};
-\draw[black!45, line width=0.3pt, densely dashed] (2.9,0.42) -- (2.9,2.72);
+\node[ttl] at (2.9,2.95) {GPU Write to Parent Memory};
+\draw[black!45, line width=0.3pt, densely dashed] (2.9,0.5) -- (2.9,2.76);
+\begin{scope}[yshift=-0.04cm]
 % after fork: parent and child map the same write-protected pages
-\node[tag] at (1.48,2.6) {\texttt{fork}};
-\node[comp, minimum width=0.95cm, minimum height=0.38cm] (pa) at (0.85,2.2) {Parent};
-\node[comp, minimum width=0.85cm, minimum height=0.38cm] (ca) at (2.15,2.2) {Child};
-\draw[thin] (pa.east) -- (ca.west);
+\node[tag] at (1.48,2.67) {\texttt{fork}};
+\node[comp, minimum width=0.95cm, minimum height=0.32cm, inner ysep=0pt] (pa) at (0.85,2.33) {Parent};
+\node[comp, minimum width=0.85cm, minimum height=0.32cm, inner ysep=0pt] (ca) at (2.15,2.33) {Child};
+\draw[tiny] (pa.east) -- (ca.west);
 \foreach \k in {0,...,4} {
-  \node[blk, fill=aheadc, postaction={pattern=north east lines, pattern color=black!45}, minimum height=0.3cm] (q\k) at (0.48+\k*0.5,1.58) {};
-  \draw[arr, rwline] (0.48+\k*0.5,1.08) -- (q\k.south);
+  \node[blk, fill=aheadc, postaction={pattern=north east lines, pattern color=black!45}, minimum height=0.28cm] (q\k) at (0.48+\k*0.5,1.78) {};
+  \draw[tiny, rwline] (0.48+\k*0.5,1.36) -- (0.48+\k*0.5,1.62);
 }
-\draw[thin, black!70] (pa.south) -- (pa.south |- q1.north);
-\draw[thin, black!70] (ca.south) -- (ca.south |- q3.north);
-\node[comp, fill=gpuc, minimum width=2.5cm, minimum height=0.4cm] at (1.48,0.87) {GPU Write};
-\node[tag, text=rwline] at (1.48,0.52) {Fault per Page: 2.7 s/GiB};
+\draw[tiny, black!70] (pa.south) -- (pa.south |- 0,1.94);
+\draw[tiny, black!70] (ca.south) -- (ca.south |- 0,1.94);
+\node[comp, fill=gpuc, minimum width=2.5cm, minimum height=0.36cm, inner ysep=0pt] at (1.48,1.16) {GPU Write};
+\node[tag, text=rwline] at (1.48,0.72) {Fault per Page: 2.7 s/GiB};
 % after posix_spawn: the memory of the parent stays writable
-\node[tag] at (4.32,2.6) {\texttt{posix\_spawn}};
-\node[comp, minimum width=0.95cm, minimum height=0.38cm] (pb) at (3.69,2.2) {Parent};
-\node[comp, minimum width=0.85cm, minimum height=0.38cm] (cb) at (4.99,2.2) {Child};
-\draw[thin] (pb.east) -- (cb.west);
+\node[tag] at (4.32,2.67) {\texttt{posix\_spawn}};
+\node[comp, minimum width=0.95cm, minimum height=0.32cm, inner ysep=0pt] (pb) at (3.69,2.33) {Parent};
+\node[comp, minimum width=0.85cm, minimum height=0.32cm, inner ysep=0pt] (cb) at (4.99,2.33) {Child};
+\draw[tiny] (pb.east) -- (cb.west);
+\draw[black!70, line width=0.5pt, rounded corners=1.5pt] (3.03,1.59) rectangle (5.61,1.97);
 \foreach \k in {0,...,4} {
-  \node[blk, fill=tailc, minimum height=0.3cm] (s\k) at (3.32+\k*0.5,1.58) {};
+  \node[blk, fill=tailc, minimum height=0.28cm] (s\k) at (3.32+\k*0.5,1.78) {};
 }
-\draw[thin, black!70] (pb.south) -- (pb.south |- s1.north);
-\draw[decorate, decoration={brace, amplitude=2.5pt, mirror}] (3.1,1.39) -- (5.54,1.39);
-\draw[arr, roline] (4.32,1.08) -- (4.32,1.3);
-\node[comp, fill=gpuc, minimum width=2.5cm, minimum height=0.4cm] at (4.32,0.87) {GPU Write};
-\node[tag, text=roline] at (4.32,0.52) {No Fault: 6.6 ms/GiB};
+\draw[tiny, black!70] (pb.south) -- (pb.south |- 0,1.99);
+\draw[tiny, roline] (4.32,1.36) -- (4.32,1.57);
+\node[comp, fill=gpuc, minimum width=2.5cm, minimum height=0.36cm, inner ysep=0pt] at (4.32,1.16) {GPU Write};
+\node[tag, text=roline] at (4.32,0.72) {No Fault: 6.6 ms/GiB};
 % legend
-\node[tag] at (2.9,0.2) {\lgdfill{tailc}\,Writable\qquad\tikz[baseline=-0.55ex]{\draw[black!65, line width=0.35pt, fill=aheadc, postaction={pattern=north east lines, pattern color=black!45}] (0,-0.1) rectangle (0.22,0.1);}\,Write-Protected};
+\node[tag] at (2.9,0.26) {\lgdfill{tailc}\,Writable\qquad\tikz[baseline=-0.55ex]{\draw[black!65, line width=0.35pt, fill=aheadc, postaction={pattern=north east lines, pattern color=black!45}] (0,-0.1) rectangle (0.22,0.1);}\,Write-Protected};
+\end{scope}
 \end{tikzpicture}
 \end{document}

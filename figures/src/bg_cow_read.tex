@@ -7,32 +7,32 @@
 \begin{document}
 \begin{tikzpicture}[x=1cm, y=1cm]
 \draw[layer] (0,0) rectangle (5.8,3.15);
-\node[ttl] at (2.9,2.93) {GPU Read in a 2 MiB Block};
+\node[ttl] at (2.9,2.95) {GPU Read in a 2 MiB Block};
 % the outcome in a writable private mapping: the whole block is copied
-\node[tag, anchor=east, align=right] at (1.45,2.3) {Writable\\[-2pt]Mapping};
+\node[tag, anchor=east, align=right] at (1.45,2.35) {Writable\\[-2pt]Mapping};
 \foreach \k in {0,...,7} {
-  \node[blk, fill=faultc] (c\k) at (1.78+\k*0.5,2.3) {};
+  \node[blk, fill=faultc] (c\k) at (1.78+\k*0.5,2.35) {};
 }
 % the pages of the file, one without the accessed flag
-\node[comp, fill=gpuc, minimum width=0.95cm, minimum height=0.44cm] (gpu) at (0.72,1.5) {GPU};
+\node[comp, fill=gpuc, minimum width=0.95cm, minimum height=0.44cm] (gpu) at (0.72,1.55) {GPU};
 \foreach \k in {0,...,7} {
-  \node[blk, fill=sharedc] (b\k) at (1.78+\k*0.5,1.5) {};
+  \node[blk, fill=sharedc] (b\k) at (1.78+\k*0.5,1.55) {};
 }
 \node[blk, fill=white, draw=rwline, line width=0.9pt] (flag) at (b3) {};
 \draw[arr, roline] (gpu.east) -- (b0.west);
-\node[note, text=roline, anchor=south] at (0.72,1.74) {read};
+\node[note, text=roline, anchor=south] at (0.72,1.79) {read};
 % the outcome in a read-only mapping: the pages stay shared
-\node[tag, anchor=east, align=right] at (1.45,0.7) {Read-Only\\[-2pt]Mapping};
+\node[tag, anchor=east, align=right] at (1.45,0.75) {Read-Only\\[-2pt]Mapping};
 \foreach \k in {0,...,7} {
-  \node[blk, fill=sharedc] (d\k) at (1.78+\k*0.5,0.7) {};
+  \node[blk, fill=sharedc] (d\k) at (1.78+\k*0.5,0.75) {};
 }
 % the two faults
 \draw[arr, rwline] (b3.north) -- (c3.south);
-\node[note, text=rwline, anchor=west] at (3.36,1.9) {write fault};
-\node[tag, text=rwline, anchor=east] at (3.2,1.9) {512 Copies};
+\node[note, text=rwline, anchor=west] at (3.38,1.95) {write fault};
+\node[tag, text=rwline, anchor=east] at (3.16,1.95) {512 Copies};
 \draw[arr, roline] (b3.south) -- (d3.north);
-\node[note, text=roline, anchor=west] at (3.36,1.1) {read fault};
-\node[tag, text=roline, anchor=east] at (3.2,1.1) {In Place};
+\node[note, text=roline, anchor=west] at (3.38,1.15) {read fault};
+\node[tag, text=roline, anchor=east] at (3.16,1.15) {In Place};
 % legend
 \node[tag] at (2.9,0.22) {\lgdfill{sharedc}\,Shared\quad\lgdfill{faultc}\,Private Copy\quad\tikz[baseline=-0.55ex]{\draw[rwline, line width=0.9pt, fill=white] (0,-0.1) rectangle (0.22,0.1);}\,Flag Clear};
 \end{tikzpicture}

@@ -7,41 +7,41 @@
 \begin{document}
 \begin{tikzpicture}[x=1cm, y=1cm, tiny/.style={-{Latex[length=1.0mm]}, line width=0.5pt}]
 \draw[layer] (0,0) rectangle (5.8,3.15);
-\node[ttl] at (2.9,2.93) {Page Table Updates};
-\begin{scope}[yshift=-0.05cm]
+\node[ttl] at (2.9,2.95) {Page Table Updates};
 \draw[black!45, line width=0.3pt, densely dashed] (3.3,0.14) -- (3.3,2.76);
+\begin{scope}[yshift=-0.04cm]
 % the layers that an update passes
-\node[tag, anchor=east] at (0.92,2.32) {Kernel};
-\node[tag, anchor=east, align=right] at (0.92,1.82) {Page\\[-2pt]Table};
-\node[tag, anchor=east] at (0.92,1.24) {SMMU};
-\node[tag, anchor=east] at (0.92,0.72) {Time};
+\node[tag, anchor=east] at (0.92,2.36) {Kernel};
+\node[tag, anchor=east, align=right] at (0.92,1.77) {Page\\[-2pt]Table};
+\node[tag, anchor=east] at (0.92,1.15) {SMMU};
+\node[tag, anchor=east] at (0.92,0.66) {Time};
 % per page: five events, five entries, five invalidations, five waits
-\node[tag] at (2.08,2.66) {Per Page};
-\node[comp, minimum width=2.1cm, minimum height=0.34cm] at (2.08,2.32) {5 Faults};
-\node[comp, fill=ptc, minimum width=2.1cm, minimum height=0.38cm] at (2.08,1.24) {};
-\draw[tiny, black!70] (1.0,0.63) -- (3.22,0.63);
+\node[tag] at (2.08,2.67) {Per Page};
+\node[comp, minimum width=2.1cm, minimum height=0.3cm, inner ysep=0pt] at (2.08,2.36) {5 Faults};
+\node[comp, fill=ptc, minimum width=2.1cm, minimum height=0.36cm] at (2.08,1.15) {};
+\draw[tiny, black!70] (1.0,0.57) -- (3.22,0.57);
 \foreach \k in {0,...,4} {
-  \node[blk, fill=faultc, minimum width=0.34cm, minimum height=0.3cm] (p\k) at (1.22+\k*0.43,1.82) {};
-  \draw[tiny, rwline] (1.22+\k*0.43,2.15) -- (p\k.north);
-  \node[draw=black!70, fill=rwline, line width=0.3pt, minimum size=0.18cm, inner sep=0pt] (c\k) at (1.22+\k*0.43,1.24) {};
-  \draw[tiny, rwline] (p\k.south) -- (c\k.north);
-  \draw[black!65, line width=0.3pt, fill=faultc] (1.02+\k*0.4,0.65) rectangle ++(0.4,0.16);
+  \node[blk, fill=faultc, minimum width=0.34cm, minimum height=0.28cm] (p\k) at (1.22+\k*0.43,1.77) {};
+  \draw[tiny, rwline] (1.22+\k*0.43,2.21) -- (1.22+\k*0.43,1.93);
+  \draw[tiny, rwline] (1.22+\k*0.43,1.61) -- (1.22+\k*0.43,1.35);
+  \node[draw=black!70, fill=rwline, line width=0.3pt, minimum size=0.16cm, inner sep=0pt] at (1.22+\k*0.43,1.15) {};
+  \draw[black!65, line width=0.3pt, fill=faultc] (1.02+\k*0.4,0.59) rectangle ++(0.4,0.16);
 }
-\node[tag, text=rwline] at (2.08,0.36) {5 $\times$ 9 $\mu$s};
+\node[tag, text=rwline] at (2.08,0.28) {5 $\times$ 9 $\mu$s};
 % per range: one call, the same five entries, one invalidation, one wait
-\node[tag] at (4.52,2.66) {Per Range};
-\node[comp, minimum width=2.1cm, minimum height=0.34cm] at (4.52,2.32) {1 Call};
-\draw[black!70, line width=0.5pt, rounded corners=1.5pt] (3.43,1.62) rectangle (5.61,2.02);
+\node[tag] at (4.52,2.67) {Per Range};
+\node[comp, minimum width=2.1cm, minimum height=0.3cm, inner ysep=0pt] at (4.52,2.36) {1 Call};
+\draw[black!70, line width=0.5pt, rounded corners=1.5pt] (3.43,1.58) rectangle (5.61,1.96);
 \foreach \k in {0,...,4} {
-  \node[blk, fill=tailc, minimum width=0.34cm, minimum height=0.3cm] (r\k) at (3.66+\k*0.43,1.82) {};
+  \node[blk, fill=tailc, minimum width=0.34cm, minimum height=0.28cm] (r\k) at (3.66+\k*0.43,1.77) {};
 }
-\draw[tiny, roline] (4.52,2.15) -- (4.52,2.02);
-\node[comp, fill=ptc, minimum width=2.1cm, minimum height=0.38cm] at (4.52,1.24) {};
-\node[draw=black!70, fill=roline, line width=0.3pt, minimum size=0.18cm, inner sep=0pt] (cr) at (4.52,1.24) {};
-\draw[tiny, roline] (4.52,1.62) -- (cr.north);
-\draw[tiny, black!70] (3.44,0.63) -- (5.66,0.63);
-\draw[black!65, line width=0.3pt, fill=sharedc] (3.46,0.65) rectangle ++(0.4,0.16);
-\node[tag, text=roline] at (4.52,0.36) {1 $\times$ 9 $\mu$s};
+\draw[tiny, roline] (4.52,2.21) -- (4.52,1.98);
+\node[comp, fill=ptc, minimum width=2.1cm, minimum height=0.36cm] at (4.52,1.15) {};
+\node[draw=black!70, fill=roline, line width=0.3pt, minimum size=0.16cm, inner sep=0pt] at (4.52,1.15) {};
+\draw[tiny, roline] (4.52,1.58) -- (4.52,1.35);
+\draw[tiny, black!70] (3.44,0.57) -- (5.66,0.57);
+\draw[black!65, line width=0.3pt, fill=sharedc] (3.46,0.59) rectangle ++(0.4,0.16);
+\node[tag, text=roline] at (4.52,0.28) {1 $\times$ 9 $\mu$s};
 \end{scope}
 \end{tikzpicture}
 \end{document}
