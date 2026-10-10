@@ -51,7 +51,9 @@
 
 % ---------------- unified memory ----------------
 \draw[layer] (0,0) rectangle (8.9,3.05);
-\node[ttl, anchor=west] at (0.12,1.12) {Unified Memory};
+\node[ttl, anchor=west] at (0.12,0.98) {Unified Memory};
+\draw[black!60, line width=0.5pt, densely dashed, rounded corners=2pt] (0.2,1.54) rectangle (5.85,2.37);
+\node[tag] at (1.5,1.36) {Immutable Extents};
 \node[comp, fill=modelc, minimum width=2.3cm, minimum height=0.62cm] (mfile) at (1.5,1.95) {Model File};
 \node[comp, fill=sharedc, minimum width=2.5cm, minimum height=0.62cm] (pfile) at (4.45,1.95) {Prefix Cache File};
 \node[comp, minimum width=2.5cm, minimum height=0.42cm] (sfile) at (4.45,1.12) {State File (Metadata)};
@@ -72,9 +74,9 @@
 
 % ---------------- legend ----------------
 \draw[arr, roline] (0.2,0.62) -- (0.75,0.62);
-\node[tag, anchor=west] at (0.8,0.62) {Read-Only, Shared};
+\node[tag, anchor=west] at (0.8,0.62) {Immutable, Shared};
 \draw[arr, rwline] (0.2,0.27) -- (0.75,0.27);
-\node[tag, anchor=west] at (0.8,0.27) {Writable, Private};
+\node[tag, anchor=west] at (0.8,0.27) {Private, Writable};
 \node[num] at (3.8,0.45) {1};
 \node[tag, anchor=west] at (4.0,0.45) {Publish};
 \node[num] at (5.45,0.45) {2};

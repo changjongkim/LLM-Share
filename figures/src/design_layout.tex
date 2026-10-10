@@ -1,53 +1,61 @@
 % Design: one key or value tensor of the cache as extents. The rows of the
 % prefix are pages of the publisher's file, mapped read-only by every agent;
-% what an agent writes lies in a private tail that the CPU populates ahead
-% of the GPU.
+% the page in which the prefix ends is copied, since it also receives rows of
+% the agent. Below, the private extent enlarged: the CPU populates a window of
+% rows ahead of the row that the GPU writes, with one call per tensor.
 \documentclass[border=2pt]{standalone}
 \input{llmshare_style}
 \begin{document}
-\begin{tikzpicture}[x=1cm, y=1cm]
-\draw[layer] (0,0) rectangle (8.9,3.75);
+\begin{tikzpicture}[x=1cm, y=1cm, tiny/.style={-{Latex[length=1.0mm]}, line width=0.5pt}]
+\draw[layer] (0,0) rectangle (8.9,4.45);
 
 % row axis
-\foreach \x/\t in {1.7/Row 0, 5.3/Row $P$, 8.7/Context} {
-  \draw[black!50, line width=0.3pt, densely dashed] (\x,0.62) -- (\x,3.3);
+\foreach \x in {1.7,5.48,8.7} {
+  \draw[black!50, line width=0.3pt, densely dashed] (\x,2.3) -- (\x,3.98);
 }
-\node[tag, anchor=west] at (1.7,3.5) {Row 0};
-\node[tag] at (5.3,3.5) {Row $P$};
-\node[tag, anchor=east] at (8.7,3.5) {Context Size};
+\node[tag, anchor=west] at (1.7,4.2) {Row 0};
+\node[tag] at (5.48,4.2) {Row $P$};
+\node[tag, anchor=east] at (8.7,4.2) {Context Size};
 
-% one tensor of an agent: prefix, copied page, rows in use, populated, unbacked
-\newcommand{\tensor}[3]{% y, width of the rows in use, name
-  \node[seg, fill=sharedc, minimum width=3.6cm, minimum height=0.44cm, anchor=west] (#3p) at (1.7,#1) {};
-  \node[seg, fill=copyc, minimum width=0.2cm, minimum height=0.44cm, anchor=west] (#3l) at (5.3,#1) {};
-  \node[seg, fill=tailc, minimum width=#2 cm, minimum height=0.44cm, anchor=west] (#3u) at (5.5,#1) {};
-  \node[seg, fill=aheadc, minimum width=0.45cm, minimum height=0.44cm, anchor=west] (#3a) at (5.5+#2,#1) {};
-  \node[free, minimum width=2.75cm-#2 cm, minimum height=0.44cm, anchor=west] (#3f) at (5.95+#2,#1) {};
+% the cache file of the publisher: the prefix, then its own rows
+\node[font=\small, anchor=east, align=right] at (1.55,3.55) {Prefix\\[-2pt]Cache File};
+\node[seg, fill=sharedc, minimum width=3.78cm, minimum height=0.42cm, anchor=west] at (1.7,3.55) {};
+\node[seg, fill=tailc, minimum width=0.82cm, minimum height=0.42cm, anchor=west] at (5.48,3.55) {};
+\node[free, minimum width=2.4cm, minimum height=0.42cm, anchor=west] at (6.3,3.55) {};
+
+% the tensor of an agent: whole pages of the prefix, the copied page, its rows
+\node[font=\small, anchor=east, align=right] at (1.55,2.62) {Agent\\[-2pt]Tensor};
+\node[seg, fill=sharedc, minimum width=3.6cm, minimum height=0.42cm, anchor=west] at (1.7,2.62) {};
+\node[seg, fill=copyc, minimum width=0.36cm, minimum height=0.42cm, anchor=west] at (5.3,2.62) {};
+\node[seg, fill=tailc, minimum width=1.2cm, minimum height=0.42cm, anchor=west] at (5.66,2.62) {};
+\node[seg, fill=aheadc, minimum width=0.45cm, minimum height=0.42cm, anchor=west] at (6.86,2.62) {};
+\node[free, minimum width=1.39cm, minimum height=0.42cm, anchor=west] at (7.31,2.62) {};
+
+% the same pages, and the page that is copied
+\foreach \x in {2.6,4.2} {
+  \draw[arr, roline, line width=1.1pt] (\x,3.34) -- (\x,2.83);
 }
-\node[font=\small, anchor=east] at (1.55,2.85) {Agent 1};
-\tensor{2.85}{1.2}{one}
-\node[font=\small, anchor=east] at (1.55,1.0) {Agent 2};
-\tensor{1.0}{0.5}{two}
+\node[note, text=roline] at (3.4,3.09) {same pages};
+\draw[tiny, rwline] (5.39,3.34) -- (5.39,2.83);
+\node[note, text=rwline, anchor=west] at (5.72,3.09) {copy, 4 KiB};
 
-% the cache file of the publisher
-\node[font=\small, anchor=east, align=right] at (1.55,1.925) {Prefix\\[-2pt]Cache File};
-\node[seg, fill=sharedc, minimum width=3.8cm, minimum height=0.44cm, anchor=west] (filep) at (1.7,1.925) {};
-\node[seg, fill=tailc, minimum width=0.8cm, minimum height=0.44cm, anchor=west] at (5.5,1.925) {};
-\node[free, minimum width=2.4cm, minimum height=0.44cm, anchor=west] at (6.3,1.925) {};
-
-% the same pages in every agent
-\foreach \x in {2.6,4.4} {
-  \draw[arr, roline, line width=1.1pt] (\x,2.145) -- (\x,2.63);
-  \draw[arr, roline, line width=1.1pt] (\x,1.705) -- (\x,1.22);
-}
-\node[note, text=roline] at (3.5,2.39) {same pages};
-\node[note, text=roline] at (3.5,1.46) {same pages};
-
-% the GPU writes behind the CPU
-\draw[arr, rwline] (6.7,2.32) -- (6.7,2.63);
-\node[tag, text=rwline, anchor=east] at (6.64,2.4) {GPU Write};
-\draw[arr] (7.15,2.32) -- (7.15,2.63);
-\node[tag, anchor=west] at (7.21,2.4) {CPU Populate};
+% the private extent, enlarged
+\draw[black!45, line width=0.3pt, densely dashed] (5.66,2.41) -- (1.7,1.7);
+\draw[black!45, line width=0.3pt, densely dashed] (8.7,2.41) -- (8.7,1.7);
+\node[font=\small, anchor=east, align=right] at (1.55,1.48) {Private\\[-2pt]Extent};
+\node[seg, fill=tailc, minimum width=2.5cm, minimum height=0.44cm, anchor=west] at (1.7,1.48) {};
+\node[seg, fill=aheadc, minimum width=1.3cm, minimum height=0.44cm, anchor=west] at (4.2,1.48) {};
+\node[seg, densely dashed, pattern=north east lines, pattern color=black!40, minimum width=1.3cm, minimum height=0.44cm, anchor=west] at (5.5,1.48) {};
+\node[free, minimum width=1.9cm, minimum height=0.44cm, anchor=west] at (6.8,1.48) {};
+\draw[decorate, decoration={brace, amplitude=2.5pt}] (4.22,1.76) -- (5.48,1.76);
+\node[tag] at (4.85,2.0) {256 Rows};
+\draw[tiny] (5.56,1.86) -- (5.98,1.86);
+\node[note, anchor=west] at (6.02,1.86) {next window};
+% the GPU writes behind the window that the CPU populates
+\draw[tiny, rwline] (4.1,0.86) -- (4.1,1.24);
+\node[tag, text=rwline, anchor=east] at (4.03,0.92) {GPU Write};
+\draw[tiny] (4.85,0.86) -- (4.85,1.24);
+\node[tag, anchor=west] at (4.92,0.92) {madvise per Tensor};
 
 % legend
 \node[tag] at (4.45,0.3) {\lgdfill{sharedc}\,Shared (RO)\qquad\lgdfill{copyc}\,Copied Page\qquad\lgdfill{tailc}\,In Use\qquad\lgdfill{aheadc}\,Populated\qquad\lgdhatch\,Unbacked};

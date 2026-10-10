@@ -5,24 +5,27 @@
 \documentclass[border=2pt]{standalone}
 \input{llmshare_style}
 \begin{document}
-\begin{tikzpicture}[x=1cm, y=1cm]
+\begin{tikzpicture}[x=1cm, y=1cm, tiny/.style={-{Latex[length=1.0mm]}, line width=0.5pt}]
 \draw[layer] (0,0) rectangle (8.9,4.0);
 
 % ---------------- the agent tree ----------------
 \draw[sub, fill=white] (0.1,0.62) rectangle (2.0,3.88);
 \node[ttl] at (1.05,3.65) {Agent Tree};
-\node[blk, fill=sharedc, minimum width=0.8cm] (root) at (1.05,3.15) {Root};
-\node[blk, fill=segc, minimum width=0.85cm] (lead) at (0.6,2.25) {Leader};
-\node[blk, fill=white, minimum width=0.85cm, text=black!45, draw=black!35] (lead2) at (1.52,2.25) {Leader};
-\node[blk, fill=tailc, minimum width=0.6cm] (leaf) at (0.45,1.3) {Leaf};
-\node[blk, fill=white, minimum width=0.6cm, text=black!45, draw=black!35] (leaf2) at (1.12,1.3) {Leaf};
+\node[blk, fill=sharedc, minimum width=0.8cm] (root) at (1.05,3.2) {Root};
+\node[blk, fill=segc, minimum width=0.85cm] (lead) at (0.62,2.5) {Leader};
+\node[blk, fill=white, minimum width=0.85cm, text=black!45, draw=black!35] (lead2) at (1.52,2.5) {Leader};
+\node[blk, fill=tailc, minimum width=0.6cm] (leaf) at (0.5,1.72) {Leaf};
+\node[blk, fill=white, minimum width=0.6cm, text=black!45, draw=black!35] (leaf2) at (1.2,1.72) {Leaf};
+% the chain that a leaf receives: every segment with the row at which it ends
+\node[comp, minimum width=1.3cm, minimum height=0.36cm, inner ysep=0pt, inner xsep=2pt] (chain) at (1.24,0.98) {\lgdfill{sharedc}\,$P$\enspace\lgdfill{segc}\,$Q$};
+\draw[tiny] (0.85,1.16) -- (0.58,1.54);
 \draw[arr, line width=1.0pt] (root.south) -- (lead.north);
 \draw[arr, black!35] (root.south) -- (lead2.north);
 \draw[arr, line width=1.0pt] (lead.south) -- (leaf.north);
 \draw[arr, black!35] (lead.south) -- (leaf2.north);
-\node[num] at (0.52,2.78) {1};
-\node[num] at (0.3,1.78) {2};
-\node[num] at (0.45,0.9) {3};
+\node[num] at (0.42,2.92) {1};
+\node[num] at (0.24,2.11) {2};
+\node[num] at (0.32,0.98) {3};
 
 % ---------------- one tensor of the leaf as a chain ----------------
 \foreach \x in {3.55,6.0,7.2,8.75} {
@@ -65,6 +68,11 @@
 \node[note, text=roline] at (4.75,2.6) {map};
 \draw[arr, black!70, line width=1.1pt] (6.6,1.32) -- (6.6,1.88);
 \node[note, anchor=west] at (6.66,1.6) {map};
+
+% the processes that map each file; its pages remain until the last one leaves
+\node[tag, fill=white, draw=black!55, line width=0.3pt, inner sep=1.5pt] at (7.75,3.1) {5 Maps};
+\node[tag, fill=white, draw=black!55, line width=0.3pt, inner sep=1.5pt] at (8.18,1.1) {3 Maps};
+\node[note, anchor=east] at (8.75,0.7) {freed at 0 maps};
 
 % legend
 \node[tag] at (4.45,0.3) {\lgdfill{sharedc}\,Root Rows\quad\lgdfill{segc}\,Leader Rows\quad\lgdfill{copyc}\,Copied Page\quad\lgdfill{tailc}\,Private Extent\quad\lgdhatch\,Unbacked};
