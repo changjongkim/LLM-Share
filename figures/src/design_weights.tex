@@ -30,56 +30,58 @@
 
 % a band joins the weight buffers with the pages behind them
 \newcommand{\band}[6]{\filldraw[fill=#1, fill opacity=0.3, draw=#6, draw opacity=0.55, line width=0.3pt, rounded corners=1.5pt] (#2,#3) rectangle (#4,#5);}
-\band{sharedc}{4.85}{1.98}{7.15}{4.2}{roline}
+\band{sharedc}{4.78}{1.98}{7.25}{4.27}{roline}
 
 % ---------------- the existing engine ----------------
-\node[comp, fill=gpuc, minimum width=2.3cm, minimum height=0.34cm, inner ysep=0pt] at (3.07,4.56) {GPU};
+\node[comp, fill=gpuc, minimum width=2.3cm, minimum height=0.34cm, inner ysep=0pt] at (3.07,4.58) {GPU};
+\node[tag] at (2.37,4.1) {Process 1};
+\node[tag] at (3.07,3.62) {$\cdots$};
+\node[tag] at (3.77,4.1) {Process $N$};
 \foreach \k in {0,1,2} {
-  \node[pte, fill=copyc] at (2.17+\k*0.32,3.98) {};
-  \node[pte, fill=copyc] at (3.33+\k*0.32,3.98) {};
+  \node[pte, fill=copyc] at (2.05+\k*0.32,3.62) {};
+  \node[pte, fill=copyc] at (3.45+\k*0.32,3.62) {};
 }
-\node[tag] at (2.49,3.5) {Process 1};
-\node[tag] at (3.65,3.5) {Process $N$};
 % the page cache, in 4 KiB pages
 \foreach \k in {0,...,7} {
-  \node[small, fill=white] at (2.37+\k*0.2,2.25) {};
+  \node[small, fill=black!14] at (2.37+\k*0.2,2.25) {};
 }
 \node[tag, anchor=east, align=right] at (2.2,2.25) {Page\\[-2pt]Cache};
 \node[note, anchor=west] at (2.98,1.9) {4 KiB pages};
-\draw[tiny, rwline] (2.75,2.44) -- (2.49,3.8);
-\draw[tiny, rwline] (3.39,2.44) -- (3.65,3.8);
-\node[note, text=rwline] at (3.07,2.68) {copy};
+\draw[tiny, rwline] (2.75,2.44) -- (2.37,3.44);
+\draw[tiny, rwline] (3.39,2.44) -- (3.77,3.44);
+\node[note, text=rwline] at (3.07,2.7) {copy};
 \node[comp, minimum width=1.5cm, minimum height=0.36cm, inner ysep=0pt] (file0) at (3.07,1.0) {Model File};
 \draw[tiny] (2.7,1.18) -- (2.7,2.08);
 \node[note, anchor=east] at (2.62,1.5) {read};
 
 % ---------------- the weights in place ----------------
-\node[comp, fill=gpuc, minimum width=2.3cm, minimum height=0.34cm, inner ysep=0pt] at (6.0,4.56) {GPU: No Fault};
+\node[comp, fill=gpuc, minimum width=2.3cm, minimum height=0.34cm, inner ysep=0pt] at (6.0,4.58) {GPU: No Fault};
+\node[tag] at (5.3,4.1) {Process 1};
+\node[tag] at (6.0,3.62) {$\cdots$};
+\node[tag] at (6.7,4.1) {Process $N$};
 \foreach \k in {0,1,2} {
-  \node[pte, fill=sharedc] (a\k) at (5.1+\k*0.32,3.98) {};
-  \node[pte, fill=sharedc] (b\k) at (6.26+\k*0.32,3.98) {};
+  \node[pte, fill=sharedc] (a\k) at (4.98+\k*0.32,3.62) {};
+  \node[pte, fill=sharedc] (b\k) at (6.38+\k*0.32,3.62) {};
   \node[flag] at (a\k) {};
   \node[flag] at (b\k) {};
 }
-\node[tag] at (5.42,3.5) {Process 1};
-\node[tag] at (6.58,3.5) {Process $N$};
 % the model file in memory, in 2 MiB pages
 \foreach \k in {0,1,2} {
   \node[huge, fill=sharedc] at (5.33+\k*0.67,2.25) {};
 }
 \draw[black!75, line width=0.5pt, rounded corners=1.5pt] (4.95,2.04) rectangle (7.05,2.46);
-\node[tag, anchor=west] at (7.3,2.38) {Model File};
-\node[note, anchor=west] at (7.3,2.1) {2 MiB pages};
+\node[tag, anchor=west] at (7.42,2.38) {Model File};
+\node[note, anchor=west] at (7.42,2.1) {2 MiB pages};
 \node[comp, minimum width=1.5cm, minimum height=0.36cm, inner ysep=0pt] (file1) at (6.0,1.0) {Model File};
 \draw[tiny, roline] (file1.north) -- (6.0,2.02);
 
 % the three steps
 \node[num] at (6.3,1.5) {1};
 \node[tag, anchor=west] at (6.5,1.5) {Direct Read};
-\node[num] at (7.4,3.0) {2};
-\node[tag, anchor=west] at (7.6,3.0) {Map};
-\node[num] at (7.4,3.98) {3};
-\node[tag, anchor=west] at (7.6,3.98) {CPU Read};
+\node[num] at (7.5,3.0) {2};
+\node[tag, anchor=west] at (7.7,3.0) {Map};
+\node[num] at (7.5,3.62) {3};
+\node[tag, anchor=west] at (7.7,3.62) {CPU Read};
 
 % legend
 \node[tag] at (4.45,0.3) {\lgdfill{copyc}\,Device Copy\quad\ \lgdfill{sharedc}\,Immutable, Read-Only\quad\ \tikz[baseline=-0.55ex]{\node[circle, fill=black!80, inner sep=0pt, minimum size=0.09cm] {};}\,\,Read by CPU\quad\ \tikz[baseline=-0.55ex]{\fill[black!22, rounded corners=1pt] (0,-0.1) rectangle (0.22,0.1);}\,Same Pages};
