@@ -1,0 +1,87 @@
+% Design: the weight buffer of N processes, from the GPU down to storage. On
+% the left, the existing engine: the model file is read through the page
+% cache and every process copies its tensors into device memory. On the
+% right, the weights in place: the file is read once from storage into
+% 2 MiB pages, every process maps these pages read-only as its weight buffer,
+% and a CPU read of every page sets the accessed flags before the GPU reads.
+\documentclass[border=2pt]{standalone}
+\input{llmshare_style}
+\begin{document}
+\begin{tikzpicture}[x=1cm, y=1cm,
+  tiny/.style={-{Latex[length=1.0mm]}, line width=0.5pt},
+  pte/.style={blk, minimum width=0.26cm, minimum height=0.3cm},
+  small/.style={blk, minimum width=0.17cm, minimum height=0.3cm, inner xsep=0pt},
+  huge/.style={blk, minimum width=0.6cm, minimum height=0.34cm},
+  flag/.style={circle, fill=black!80, inner sep=0pt, minimum size=0.09cm}]
+
+% lanes, from the GPU and the processes down to storage
+\draw[layer] (0,3.12) rectangle (8.9,4.86);
+\draw[sub, fill=white] (0,1.62) rectangle (8.9,2.88);
+\draw[layer] (0,0.62) rectangle (8.9,1.38);
+\node[ttl, anchor=west, inner sep=1pt] at (0.14,4.16) {Processes};
+\node[tag, anchor=west] at (0.14,3.82) {(Weights)};
+\node[ttl, anchor=west, inner sep=1pt] at (0.14,2.25) {Memory};
+\node[ttl, anchor=west, inner sep=1pt] at (0.14,1.0) {Storage};
+
+% the two designs
+\fitdash{4.6}{0.72}{4.6}{5.24}
+\node[tag] at (3.07,5.08) {Existing Engine: $N$ Copies};
+\node[tag] at (6.0,5.08) {In Place: One Copy};
+
+% a band joins the weight buffers with the pages behind them
+\newcommand{\band}[6]{\filldraw[fill=#1, fill opacity=0.3, draw=#6, draw opacity=0.55, line width=0.3pt, rounded corners=1.5pt] (#2,#3) rectangle (#4,#5);}
+\band{sharedc}{4.85}{1.98}{7.15}{4.2}{roline}
+
+% ---------------- the existing engine ----------------
+\node[comp, fill=gpuc, minimum width=2.3cm, minimum height=0.34cm, inner ysep=0pt] at (3.07,4.56) {GPU};
+\foreach \k in {0,1,2} {
+  \node[pte, fill=copyc] at (2.17+\k*0.32,3.98) {};
+  \node[pte, fill=copyc] at (3.33+\k*0.32,3.98) {};
+}
+\node[tag] at (2.49,3.5) {Process 1};
+\node[tag] at (3.65,3.5) {Process $N$};
+% the page cache, in 4 KiB pages
+\foreach \k in {0,...,7} {
+  \node[small, fill=white] at (2.37+\k*0.2,2.25) {};
+}
+\node[tag, anchor=east, align=right] at (2.2,2.25) {Page\\[-2pt]Cache};
+\node[note, anchor=west] at (2.98,1.9) {4 KiB pages};
+\draw[tiny, rwline] (2.75,2.44) -- (2.49,3.8);
+\draw[tiny, rwline] (3.39,2.44) -- (3.65,3.8);
+\node[note, text=rwline] at (3.07,2.68) {copy};
+\node[comp, minimum width=1.5cm, minimum height=0.36cm, inner ysep=0pt] (file0) at (3.07,1.0) {Model File};
+\draw[tiny] (2.7,1.18) -- (2.7,2.08);
+\node[note, anchor=east] at (2.62,1.5) {read};
+
+% ---------------- the weights in place ----------------
+\node[comp, fill=gpuc, minimum width=2.3cm, minimum height=0.34cm, inner ysep=0pt] at (6.0,4.56) {GPU: No Fault};
+\foreach \k in {0,1,2} {
+  \node[pte, fill=sharedc] (a\k) at (5.1+\k*0.32,3.98) {};
+  \node[pte, fill=sharedc] (b\k) at (6.26+\k*0.32,3.98) {};
+  \node[flag] at (a\k) {};
+  \node[flag] at (b\k) {};
+}
+\node[tag] at (5.42,3.5) {Process 1};
+\node[tag] at (6.58,3.5) {Process $N$};
+% the model file in memory, in 2 MiB pages
+\foreach \k in {0,1,2} {
+  \node[huge, fill=sharedc] at (5.33+\k*0.67,2.25) {};
+}
+\draw[black!75, line width=0.5pt, rounded corners=1.5pt] (4.95,2.04) rectangle (7.05,2.46);
+\node[tag, anchor=west] at (7.3,2.38) {Model File};
+\node[note, anchor=west] at (7.3,2.1) {2 MiB pages};
+\node[comp, minimum width=1.5cm, minimum height=0.36cm, inner ysep=0pt] (file1) at (6.0,1.0) {Model File};
+\draw[tiny, roline] (file1.north) -- (6.0,2.02);
+
+% the three steps
+\node[num] at (6.3,1.5) {1};
+\node[tag, anchor=west] at (6.5,1.5) {Direct Read};
+\node[num] at (7.4,3.0) {2};
+\node[tag, anchor=west] at (7.6,3.0) {Map};
+\node[num] at (7.4,3.98) {3};
+\node[tag, anchor=west] at (7.6,3.98) {CPU Read};
+
+% legend
+\node[tag] at (4.45,0.3) {\lgdfill{copyc}\,Device Copy\quad\ \lgdfill{sharedc}\,Immutable, Read-Only\quad\ \tikz[baseline=-0.55ex]{\node[circle, fill=black!80, inner sep=0pt, minimum size=0.09cm] {};}\,\,Read by CPU\quad\ \tikz[baseline=-0.55ex]{\fill[black!22, rounded corners=1pt] (0,-0.1) rectangle (0.22,0.1);}\,Same Pages};
+\end{tikzpicture}
+\end{document}
