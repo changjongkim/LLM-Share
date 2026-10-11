@@ -684,7 +684,7 @@ def limit():
 
 
 # ------------------------------------------------------------ whole stack
-STACKS = (("Existing Engine", COPY, "none", "s"), ("KV Shared", DEMAND, "kv", "D"),
+STACKS = (("Existing llama.cpp Engine", COPY, "none", "s"), ("KV Shared", DEMAND, "kv", "D"),
           ("Weights Shared", DEVICE, "weights", "^"), (NAME, OURS, "both", "o"))
 
 
@@ -745,7 +745,7 @@ def stack():
              ("Agent State", COPY_PALE, (both, both, both, both)),
              ("Shared Files", OURS, (0.0, cache_file, model_file, model_file + cache_file)))
     fig, ax = panel()
-    names = ["Existing\nEngine", "KV\nShared", "Weights\nShared", NAME]
+    names = ["Existing\nllama.cpp\nEngine", "KV\nShared", "Weights\nShared", NAME]
     bottom = np.zeros(4)
     for label, colour, values in parts:
         ax.bar(names, values, 0.58, bottom=bottom, color=colour, edgecolor="white", linewidth=1.5,
@@ -808,7 +808,7 @@ def stack():
     handles = [plt.Rectangle((0, 0), 1, 1, color=COPY_PALE), plt.Rectangle((0, 0), 1, 1, color=COPY)]
     ax.legend(handles, ["4 KiB Pages", "2 MiB Pages"], loc="upper center", ncol=2,
               handlelength=1.1, fontsize=LEGEND, columnspacing=1.2)
-    finish(fig, ax, "eval_stack_speed", "", "Speed vs. Existing Engine", 1.42)
+    finish(fig, ax, "eval_stack_speed", "", "Speed vs. Existing\nllama.cpp Engine", 1.42)
 
 
 # ------------------------------------------------- loss in the 8-SM instance
@@ -878,7 +878,7 @@ def pipe():
     if not have(directory, "engine_kvpipe_summary.csv"):
         return
     data = {r["mode"]: r for r in rows(directory, "engine_kvpipe_summary.csv")}
-    stacks = [(label, m, colour) for label, m, colour in (("Existing Engine", "stock", COPY), ("Copy", "copy", COPY_LIGHT),
+    stacks = [(label, m, colour) for label, m, colour in (("Existing\nllama.cpp\nEngine", "stock", COPY), ("Copy", "copy", COPY_LIGHT),
                                                            (NAME, "chain", OURS)) if m in data]
     names = [label for label, _, _ in stacks]
     phases = (("Prefix", "prefix", COPY_PALE), ("Leaders", "leaders", COPY_LIGHT), ("Workers", "workers", COPY))
@@ -958,7 +958,7 @@ def wshare():
     model_gib = 4.36
     placements = [(label, key) for label, key in (("Same\nInstance", "same"), ("Across\nInstances", "cross"))
                   if (key, "stock") in data]
-    stacks = (("Existing Engine", COPY, "stock"), ("CUDA IPC Library", DEVICE, "ipc"), (NAME, OURS, "inplace"))
+    stacks = (("Existing llama.cpp Engine", COPY, "stock"), ("CUDA IPC Library", DEVICE, "ipc"), (NAME, OURS, "inplace"))
     fig, ax = panel()
     series = [(label, colour, [(float(data[key, m]["memory_mib"]) / 1024 + (model_gib if m == "inplace" else 0.0))
                                for _, key in placements]) for label, colour, m in stacks]
