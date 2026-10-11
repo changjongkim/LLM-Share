@@ -9,10 +9,10 @@
 \begin{tikzpicture}[x=1cm, y=1cm, tiny/.style={-{Latex[length=1.0mm]}, line width=0.5pt}]
 \draw[layer] (0,0) rectangle (8.9,4.45);
 
-% row axis
-\foreach \x in {1.7,5.48,8.7} {
-  \draw[black!50, line width=0.3pt, densely dashed] (\x,2.3) -- (\x,3.98);
-}
+% row axis: a guide from each label to the file, and guides that join the
+% two bars at row 0 and at the context size
+\foreach \x in {1.7,5.48,8.7} { \fitdash{\x}{3.98}{\x}{3.76} }
+\foreach \x in {1.7,8.7} { \fitdash{\x}{3.34}{\x}{2.83} }
 \node[tag, anchor=west] at (1.7,4.2) {Row 0};
 \node[tag] at (5.48,4.2) {Row $P$};
 \node[tag, anchor=east] at (8.7,4.2) {Context Size};
@@ -36,16 +36,19 @@
   \draw[arr, roline, line width=1.1pt] (\x,3.34) -- (\x,2.83);
 }
 \node[note, text=roline] at (3.4,3.09) {same pages};
-\draw[tiny, rwline] (5.39,3.34) -- (5.39,2.83);
+\draw[tiny, rwline] (5.48,3.34) -- (5.48,2.83);
 \node[note, text=rwline, anchor=west] at (5.72,3.09) {copy, 4 KiB};
 
 % the private extent, enlarged
-\draw[black!45, line width=0.3pt, densely dashed] (5.66,2.41) -- (1.7,1.7);
-\draw[black!45, line width=0.3pt, densely dashed] (8.7,2.41) -- (8.7,1.7);
+\fitdash{5.66}{2.41}{1.7}{1.70}
+\fitdash{8.7}{2.41}{8.7}{1.70}
 \node[font=\small, anchor=east, align=right] at (1.55,1.48) {Private\\[-2pt]Extent};
 \node[seg, fill=tailc, minimum width=2.5cm, minimum height=0.44cm, anchor=west] at (1.7,1.48) {};
 \node[seg, fill=aheadc, minimum width=1.3cm, minimum height=0.44cm, anchor=west] at (4.2,1.48) {};
-\node[seg, densely dashed, pattern=north east lines, pattern color=black!40, minimum width=1.3cm, minimum height=0.44cm, anchor=west] at (5.5,1.48) {};
+% the next window: unbacked rows, outlined with dashes above and below
+\node[free, draw=none, minimum width=1.3cm, minimum height=0.44cm, anchor=west] at (5.5,1.48) {};
+\fitdash[black!65, line width=0.35pt]{5.5}{1.70}{6.8}{1.70}
+\fitdash[black!65, line width=0.35pt]{5.5}{1.26}{6.8}{1.26}
 \node[free, minimum width=1.9cm, minimum height=0.44cm, anchor=west] at (6.8,1.48) {};
 \draw[decorate, decoration={brace, amplitude=2.5pt}] (4.22,1.76) -- (5.48,1.76);
 \node[tag] at (4.85,2.0) {256 Rows};

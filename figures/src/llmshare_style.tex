@@ -51,3 +51,12 @@
 %   \node[tag] at (x,y) {\lgdfill{sharedc}\,Shared \quad \lgdhatch\,Unbacked};
 \newcommand{\lgdfill}[1]{\tikz[baseline=-0.55ex]{\draw[black!65, line width=0.35pt, fill=#1] (0,-0.1) rectangle (0.22,0.1);}}
 \newcommand{\lgdhatch}{\tikz[baseline=-0.55ex]{\draw[black!65, line width=0.35pt, pattern=north east lines, pattern color=black!45] (0,-0.1) rectangle (0.22,0.1);}}
+% A dashed guide from (x1,y1) to (x2,y2), given in cm. The gap between the
+% dashes is fitted to the length, so that the line starts and ends with a
+% dash and touches both of its end points:  \fitdash{x1}{y1}{x2}{y2}
+\tikzset{guide/.style={black!55, line width=0.4pt, line cap=butt}}
+\newcommand{\fitdash}[5][]{%
+  \pgfmathsetmacro{\fdlen}{veclen(#4-(#2),#5-(#3))*28.45274}%
+  \pgfmathsetmacro{\fdn}{max(1,round((\fdlen-1.8)/3.2))}%
+  \pgfmathsetmacro{\fdoff}{(\fdlen-(\fdn+1)*1.8)/\fdn}%
+  \draw[guide, dash pattern=on 1.8pt off \fdoff pt, #1] (#2,#3) -- (#4,#5);}
