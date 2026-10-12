@@ -1,66 +1,73 @@
 % Design: one key or value tensor of the cache as extents. The rows of the
 % prefix are pages of the publisher's file, mapped read-only by every agent;
 % the page in which the prefix ends is copied, since it also receives rows of
-% the agent. Below, the private extent enlarged: the CPU populates a window of
-% rows ahead of the row that the GPU writes, with one call per tensor.
+% the agent. Below, the private extent enlarged: the private part of the
+% tensor is outlined and opens into the bar below it. The CPU populates a
+% window of rows ahead of the row that the GPU writes, with one call per tensor.
 \documentclass[border=2pt]{standalone}
 \input{llmshare_style}
 \begin{document}
-\begin{tikzpicture}[x=1cm, y=1cm, tiny/.style={-{Latex[length=1.0mm]}, line width=0.5pt}]
-\draw[layer] (0,0) rectangle (8.9,4.45);
+\begin{tikzpicture}[x=1cm, y=1cm, tiny/.style={-{Latex[length=1.0mm]}, line width=0.5pt},
+  zoomed/.style={draw=black!85, line width=0.8pt}]
+\draw[layer] (0,0) rectangle (8.9,3.98);
 
-% row axis: a guide from each label to the file, and guides that join the
-% two bars at row 0 and at the context size
-\foreach \x in {1.7,5.48,8.7} { \fitdash{\x}{3.98}{\x}{3.76} }
-\foreach \x in {1.7,8.7} { \fitdash{\x}{3.34}{\x}{2.83} }
-\node[tag, anchor=west] at (1.7,4.2) {Row 0};
-\node[tag] at (5.48,4.2) {Row $P$};
-\node[tag, anchor=east] at (8.7,4.2) {Context Size};
+% row axis: a guide from each label to the file
+\foreach \x in {1.7,5.48,8.7} { \fitdash{\x}{3.63}{\x}{3.45} }
+\node[tag, anchor=west] at (1.7,3.78) {Row 0};
+\node[tag] at (5.48,3.78) {Row $P$};
+\node[tag, anchor=east] at (8.7,3.78) {Context Size};
 
 % the cache file of the publisher: the prefix, then its own rows
-\node[font=\small, anchor=east, align=right] at (1.55,3.55) {Prefix\\[-2pt]Cache File};
-\node[seg, fill=sharedc, minimum width=3.78cm, minimum height=0.42cm, anchor=west] at (1.7,3.55) {};
-\node[seg, fill=tailc, minimum width=0.82cm, minimum height=0.42cm, anchor=west] at (5.48,3.55) {};
-\node[free, minimum width=2.4cm, minimum height=0.42cm, anchor=west] at (6.3,3.55) {};
+\node[font=\small, anchor=east, align=right] at (1.55,3.24) {Prefix\\[-2pt]Cache File};
+\node[seg, fill=sharedc, minimum width=3.78cm, minimum height=0.42cm, anchor=west] at (1.7,3.24) {};
+\node[seg, fill=tailc, minimum width=0.82cm, minimum height=0.42cm, anchor=west] at (5.48,3.24) {};
+\node[free, minimum width=2.4cm, minimum height=0.42cm, anchor=west] at (6.3,3.24) {};
+
+% the private extent, enlarged: the private part of the tensor opens into the
+% bar below (drawn first, behind the bars and the labels)
+\fill[white] (5.66,2.19) -- (8.7,2.19) -- (8.7,1.54) -- (1.7,1.54) -- cycle;
+\fitdash{5.66}{2.19}{1.7}{1.54}
+\fitdash{8.7}{2.19}{8.7}{1.54}
+\node[note] at (2.75,1.97) {enlarged};
 
 % the tensor of an agent: whole pages of the prefix, the copied page, its rows
-\node[font=\small, anchor=east, align=right] at (1.55,2.62) {Agent\\[-2pt]Tensor};
-\node[seg, fill=sharedc, minimum width=3.6cm, minimum height=0.42cm, anchor=west] at (1.7,2.62) {};
-\node[seg, fill=copyc, minimum width=0.36cm, minimum height=0.42cm, anchor=west] at (5.3,2.62) {};
-\node[seg, fill=tailc, minimum width=1.2cm, minimum height=0.42cm, anchor=west] at (5.66,2.62) {};
-\node[seg, fill=aheadc, minimum width=0.45cm, minimum height=0.42cm, anchor=west] at (6.86,2.62) {};
-\node[free, minimum width=1.39cm, minimum height=0.42cm, anchor=west] at (7.31,2.62) {};
+\node[font=\small, anchor=east, align=right] at (1.55,2.40) {Agent\\[-2pt]Tensor};
+\node[seg, fill=sharedc, minimum width=3.6cm, minimum height=0.42cm, anchor=west] at (1.7,2.40) {};
+\node[seg, fill=copyc, minimum width=0.36cm, minimum height=0.42cm, anchor=west] at (5.3,2.40) {};
+\node[seg, fill=tailc, minimum width=1.2cm, minimum height=0.42cm, anchor=west] at (5.66,2.40) {};
+\node[seg, fill=aheadc, minimum width=0.45cm, minimum height=0.42cm, anchor=west] at (6.86,2.40) {};
+\node[free, minimum width=1.39cm, minimum height=0.42cm, anchor=west] at (7.31,2.40) {};
+\draw[zoomed] (5.66,2.19) rectangle (8.7,2.61);
 
 % the same pages, and the page that is copied
 \foreach \x in {2.6,4.2} {
-  \draw[arr, roline, line width=1.1pt] (\x,3.34) -- (\x,2.83);
+  \draw[arr, roline, line width=1.1pt] (\x,3.03) -- (\x,2.61);
 }
-\node[note, text=roline] at (3.4,3.09) {same pages};
-\draw[tiny, rwline] (5.48,3.34) -- (5.48,2.83);
-\node[note, text=rwline, anchor=west] at (5.72,3.09) {copy, 4 KiB};
+\node[note, text=roline] at (3.4,2.82) {same pages};
+\draw[tiny, rwline] (5.48,3.03) -- (5.48,2.61);
+\node[note, text=rwline, anchor=west] at (5.72,2.82) {copy, 4 KiB};
 
-% the private extent, enlarged
-\fitdash{5.66}{2.41}{1.7}{1.70}
-\fitdash{8.7}{2.41}{8.7}{1.70}
-\node[font=\small, anchor=east, align=right] at (1.55,1.48) {Private\\[-2pt]Extent};
-\node[seg, fill=tailc, minimum width=2.5cm, minimum height=0.44cm, anchor=west] at (1.7,1.48) {};
-\node[seg, fill=aheadc, minimum width=1.3cm, minimum height=0.44cm, anchor=west] at (4.2,1.48) {};
+% the enlarged private extent
+\node[font=\small, anchor=east, align=right] at (1.55,1.32) {Private\\[-2pt]Extent};
+\node[seg, fill=tailc, minimum width=2.5cm, minimum height=0.44cm, anchor=west] at (1.7,1.32) {};
+\node[seg, fill=aheadc, minimum width=1.3cm, minimum height=0.44cm, anchor=west] at (4.2,1.32) {};
 % the next window: unbacked rows, outlined with dashes above and below
-\node[free, draw=none, minimum width=1.3cm, minimum height=0.44cm, anchor=west] at (5.5,1.48) {};
-\fitdash[black!65, line width=0.35pt]{5.5}{1.70}{6.8}{1.70}
-\fitdash[black!65, line width=0.35pt]{5.5}{1.26}{6.8}{1.26}
-\node[free, minimum width=1.9cm, minimum height=0.44cm, anchor=west] at (6.8,1.48) {};
-\draw[decorate, decoration={brace, amplitude=2.5pt}] (4.22,1.76) -- (5.48,1.76);
-\node[tag] at (4.85,2.0) {256 Rows};
-\draw[tiny] (5.56,1.86) -- (5.98,1.86);
-\node[note, anchor=west] at (6.02,1.86) {next window};
+\node[free, draw=none, minimum width=1.3cm, minimum height=0.44cm, anchor=west] at (5.5,1.32) {};
+\fitdash[black!65, line width=0.35pt]{5.5}{1.54}{6.8}{1.54}
+\fitdash[black!65, line width=0.35pt]{5.5}{1.10}{6.8}{1.10}
+\node[free, minimum width=1.9cm, minimum height=0.44cm, anchor=west] at (6.8,1.32) {};
+\draw[zoomed] (1.7,1.10) rectangle (8.7,1.54);
+\draw[decorate, decoration={brace, amplitude=2.5pt}] (4.22,1.60) -- (5.48,1.60);
+\node[tag] at (4.9,1.83) {256 Rows};
+\draw[tiny] (5.62,1.72) -- (6.04,1.72);
+\node[note, anchor=west] at (6.08,1.72) {next window};
 % the GPU writes behind the window that the CPU populates
-\draw[tiny, rwline] (4.1,0.86) -- (4.1,1.24);
-\node[tag, text=rwline, anchor=east] at (4.03,0.92) {GPU Write};
-\draw[tiny] (4.85,0.86) -- (4.85,1.24);
-\node[tag, anchor=west] at (4.92,0.92) {CPU Populates};
+\draw[tiny, rwline] (4.1,0.70) -- (4.1,1.08);
+\node[tag, text=rwline, anchor=east] at (4.03,0.76) {GPU Write};
+\draw[tiny] (4.85,0.70) -- (4.85,1.08);
+\node[tag, anchor=west] at (4.92,0.76) {CPU Populates};
 
 % legend
-\node[tag] at (4.45,0.3) {\lgdfill{sharedc}\,Shared, Read-Only\quad\ \lgdfill{copyc}\,Copied Page\quad\ \lgdfill{tailc}\,In Use\quad\ \lgdfill{aheadc}\,Populated\quad\ \lgdhatch\,Unbacked};
+\node[tag] at (4.45,0.28) {\lgdfill{sharedc}\,Shared, Read-Only\quad\ \lgdfill{copyc}\,Copied Page\quad\ \lgdfill{tailc}\,In Use\quad\ \lgdfill{aheadc}\,Populated\quad\ \lgdhatch\,Unbacked};
 \end{tikzpicture}
 \end{document}
