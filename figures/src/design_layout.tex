@@ -9,7 +9,8 @@
 \begin{document}
 \begin{tikzpicture}[x=1cm, y=1cm, tiny/.style={-{Latex[length=1.0mm]}, line width=0.5pt},
   zoomed/.style={draw=black!85, line width=0.8pt}]
-\draw[layer] (0,0) rectangle (8.9,3.98);
+% no panel behind the bars; the bounding box keeps the width of a column
+\useasboundingbox (0,0.1) rectangle (8.9,3.93);
 
 % row axis: a guide from each label to the file
 \foreach \x in {1.7,5.48,8.7} { \fitdash{\x}{3.63}{\x}{3.45} }
@@ -25,7 +26,7 @@
 
 % the private extent, enlarged: the private part of the tensor opens into the
 % bar below (drawn first, behind the bars and the labels)
-\fill[white] (5.66,2.19) -- (8.7,2.19) -- (8.7,1.54) -- (1.7,1.54) -- cycle;
+\fill[panel] (5.66,2.19) -- (8.7,2.19) -- (8.7,1.54) -- (1.7,1.54) -- cycle;
 \fitdash{5.66}{2.19}{1.7}{1.54}
 \fitdash{8.7}{2.19}{8.7}{1.54}
 

@@ -6,7 +6,8 @@
 \input{llmshare_style}
 \begin{document}
 \begin{tikzpicture}[x=1cm, y=1cm, tiny/.style={-{Latex[length=1.0mm]}, line width=0.5pt}]
-\draw[layer] (0,0) rectangle (8.9,4.0);
+% no panel behind the figure; the bounding box keeps the width of a column
+\useasboundingbox (0,0.1) rectangle (8.9,3.95);
 
 % ---------------- the agent tree ----------------
 \draw[sub, fill=white] (0.1,0.62) rectangle (2.0,3.88);
