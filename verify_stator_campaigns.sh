@@ -1079,6 +1079,31 @@ if present 20261012-engine-kvpipefault-v1; then
     }'
 fi
 
+# --- a latency-critical agent and background agents by placement -----------------
+if present 20261012-engine-kvlatency-v1; then
+  dir="$results/20261012-engine-kvlatency-v1"
+  check_hashes "$dir"
+  awk -f "$script_dir/summarize_engine_kvlatency.awk" "$dir/raw.log" >"$scratch/kvlatency.csv"
+  same "$scratch/kvlatency.csv" "$dir/engine_kvlatency_summary.csv"
+  largest=$(awk -F= '$1 == "background_counts" { n = split($2, c, " "); print c[n] }' "$dir/metadata.txt")
+  gates kvlatency "$dir/engine_kvlatency_summary.csv" '
+    {
+      cell = $c["critical_instance"] " " $c["placement"] " " $c["background"]
+      # L1: the critical agent completes, and every background agent is still generating.
+      if ($c["failed"] != 0 || $c["invalid_runs"] != 0 || $c["guard_runs"] != 0 || $c["timed_out_runs"] != 0 || $c["died_early_runs"] != 0)
+        print "!L1 " cell
+      # L2: one text of the critical agent per instance.
+      if ($c["texts_equal_to_alone"] != $c["texts_compared"] || $c["texts_compared"] != $c["runs"])
+        print "!L2 " cell " " $c["texts_equal_to_alone"] "/" $c["texts_compared"]
+      # L3: time slicing in its own instance costs at least 2.0 times the generation time.
+      if ($c["placement"] == "shared" && $c["background"] == '"$largest"' && $c["time_vs_alone"] < 2.0)
+        print "!L3 " cell " " $c["time_vs_alone"]
+      # L4: background agents in the other instance leave 0.90 of the rate.
+      if ($c["placement"] == "split" && $c["background"] == '"$largest"' && $c["rate_vs_alone"] < 0.90)
+        print "!L4 " cell " " $c["rate_vs_alone"]
+    }'
+fi
+
 echo "stator_campaign_verification=PASS"
 echo "campaigns_verified=${#verified[@]} ${verified[*]:-}"
 echo "campaigns_absent=${#absent[@]} ${absent[*]:-}"

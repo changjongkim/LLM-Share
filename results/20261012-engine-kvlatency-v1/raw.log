@@ -1,0 +1,432 @@
+BEGIN_KVLATENCY run=1 context=16384 prefix_tokens=14282 file_used_mib=784
+CASE critical_mig=fafc828a placement=alone background=0
+CRITICAL exit=0 completed=1 text=06ead62102b21987 attach_ms=6.04 released_ms=3890.0 decoded_ms=3968.9 input_ms=78.90 generation_ms=2688.94 generated=64
+BACKGROUND started=0 generating_at_end=0 mig=fafc828a
+MEMORY resident_drop_mib=723 lowest_drop_mib=755 mem_available_before_mib=119615
+END_CASE guard=0 timed_out=0 died_early=0 critical_s=3.23 wall_s=7.2
+CASE critical_mig=fafc828a placement=shared background=1
+CRITICAL exit=0 completed=1 text=06ead62102b21987 attach_ms=6.38 released_ms=4166.8 decoded_ms=4323.7 input_ms=156.80 generation_ms=5564.09 generated=64
+BACKGROUND started=1 generating_at_end=1 mig=fafc828a
+MEMORY resident_drop_mib=1415 lowest_drop_mib=1464 mem_available_before_mib=119560
+END_CASE guard=0 timed_out=0 died_early=0 critical_s=6.08 wall_s=10.6
+CASE critical_mig=fafc828a placement=split background=1
+CRITICAL exit=0 completed=1 text=06ead62102b21987 attach_ms=5.98 released_ms=4151.1 decoded_ms=4234.4 input_ms=83.21 generation_ms=2982.85 generated=64
+BACKGROUND started=1 generating_at_end=1 mig=31ffbfe4
+MEMORY resident_drop_mib=1381 lowest_drop_mib=1431 mem_available_before_mib=119571
+END_CASE guard=0 timed_out=0 died_early=0 critical_s=3.42 wall_s=8.0
+CASE critical_mig=fafc828a placement=shared background=3
+CRITICAL exit=0 completed=1 text=06ead62102b21987 attach_ms=6.20 released_ms=4779.9 decoded_ms=5089.6 input_ms=309.71 generation_ms=11203.37 generated=64
+BACKGROUND started=3 generating_at_end=3 mig=fafc828a
+MEMORY resident_drop_mib=2803 lowest_drop_mib=2922 mem_available_before_mib=119582
+END_CASE guard=0 timed_out=0 died_early=0 critical_s=11.92 wall_s=17.1
+CASE critical_mig=fafc828a placement=split background=3
+CRITICAL exit=0 completed=1 text=06ead62102b21987 attach_ms=6.24 released_ms=4956.9 decoded_ms=5039.8 input_ms=82.91 generation_ms=2941.63 generated=64
+BACKGROUND started=3 generating_at_end=3 mig=31ffbfe4
+MEMORY resident_drop_mib=2785 lowest_drop_mib=2847 mem_available_before_mib=119595
+END_CASE guard=0 timed_out=0 died_early=0 critical_s=3.40 wall_s=8.8
+CASE critical_mig=fafc828a placement=shared background=7
+CRITICAL exit=0 completed=1 text=06ead62102b21987 attach_ms=6.32 released_ms=5872.7 decoded_ms=6474.3 input_ms=601.51 generation_ms=22495.50 generated=64
+BACKGROUND started=7 generating_at_end=7 mig=fafc828a
+MEMORY resident_drop_mib=5604 lowest_drop_mib=5852 mem_available_before_mib=119621
+END_CASE guard=0 timed_out=0 died_early=0 critical_s=23.47 wall_s=30.0
+CASE critical_mig=fafc828a placement=split background=7
+CRITICAL exit=0 completed=1 text=06ead62102b21987 attach_ms=6.53 released_ms=6293.4 decoded_ms=6376.6 input_ms=83.13 generation_ms=2955.28 generated=64
+BACKGROUND started=7 generating_at_end=7 mig=31ffbfe4
+MEMORY resident_drop_mib=5537 lowest_drop_mib=5772 mem_available_before_mib=119684
+END_CASE guard=0 timed_out=0 died_early=0 critical_s=3.41 wall_s=10.2
+CASE critical_mig=31ffbfe4 placement=alone background=0
+CRITICAL exit=0 completed=1 text=06ead62102b21987 attach_ms=6.44 released_ms=3954.3 decoded_ms=4070.2 input_ms=115.86 generation_ms=4246.21 generated=64
+BACKGROUND started=0 generating_at_end=0 mig=31ffbfe4
+MEMORY resident_drop_mib=689 lowest_drop_mib=759 mem_available_before_mib=119658
+END_CASE guard=0 timed_out=0 died_early=0 critical_s=4.81 wall_s=8.8
+CASE critical_mig=31ffbfe4 placement=shared background=1
+CRITICAL exit=0 completed=1 text=06ead62102b21987 attach_ms=6.40 released_ms=4252.5 decoded_ms=4488.1 input_ms=235.61 generation_ms=8905.54 generated=64
+BACKGROUND started=1 generating_at_end=1 mig=31ffbfe4
+MEMORY resident_drop_mib=1385 lowest_drop_mib=1448 mem_available_before_mib=119610
+END_CASE guard=0 timed_out=0 died_early=0 critical_s=9.51 wall_s=14.1
+CASE critical_mig=31ffbfe4 placement=split background=1
+CRITICAL exit=0 completed=1 text=06ead62102b21987 attach_ms=6.24 released_ms=4117.0 decoded_ms=4239.0 input_ms=121.93 generation_ms=4557.50 generated=64
+BACKGROUND started=1 generating_at_end=1 mig=fafc828a
+MEMORY resident_drop_mib=1384 lowest_drop_mib=1449 mem_available_before_mib=119602
+END_CASE guard=0 timed_out=0 died_early=0 critical_s=5.05 wall_s=9.5
+CASE critical_mig=31ffbfe4 placement=shared background=3
+CRITICAL exit=0 completed=1 text=06ead62102b21987 attach_ms=7.23 released_ms=5027.1 decoded_ms=5499.2 input_ms=472.01 generation_ms=17749.38 generated=64
+BACKGROUND started=3 generating_at_end=3 mig=31ffbfe4
+MEMORY resident_drop_mib=2719 lowest_drop_mib=2842 mem_available_before_mib=119567
+END_CASE guard=0 timed_out=0 died_early=0 critical_s=18.58 wall_s=24.0
+CASE critical_mig=31ffbfe4 placement=split background=3
+CRITICAL exit=0 completed=1 text=06ead62102b21987 attach_ms=6.55 released_ms=4680.9 decoded_ms=4803.5 input_ms=122.49 generation_ms=4548.48 generated=64
+BACKGROUND started=3 generating_at_end=3 mig=fafc828a
+MEMORY resident_drop_mib=2824 lowest_drop_mib=2946 mem_available_before_mib=119643
+END_CASE guard=0 timed_out=0 died_early=0 critical_s=5.07 wall_s=10.2
+CASE critical_mig=31ffbfe4 placement=shared background=7
+CRITICAL exit=0 completed=1 text=06ead62102b21987 attach_ms=6.52 released_ms=6384.7 decoded_ms=7391.0 input_ms=1006.26 generation_ms=35895.01 generated=64
+BACKGROUND started=7 generating_at_end=7 mig=31ffbfe4
+MEMORY resident_drop_mib=5445 lowest_drop_mib=5726 mem_available_before_mib=119600
+END_CASE guard=0 timed_out=0 died_early=0 critical_s=37.28 wall_s=44.2
+CASE critical_mig=31ffbfe4 placement=split background=7
+CRITICAL exit=0 completed=1 text=06ead62102b21987 attach_ms=6.57 released_ms=5792.8 decoded_ms=5915.7 input_ms=122.88 generation_ms=4571.80 generated=64
+BACKGROUND started=7 generating_at_end=7 mig=fafc828a
+MEMORY resident_drop_mib=5648 lowest_drop_mib=5846 mem_available_before_mib=119656
+END_CASE guard=0 timed_out=0 died_early=0 critical_s=5.06 wall_s=11.4
+END_KVLATENCY
+BEGIN_KVLATENCY run=2 context=16384 prefix_tokens=14282 file_used_mib=784
+CASE critical_mig=31ffbfe4 placement=split background=7
+CRITICAL exit=0 completed=1 text=06ead62102b21987 attach_ms=6.27 released_ms=5819.2 decoded_ms=5942.6 input_ms=123.35 generation_ms=4580.86 generated=64
+BACKGROUND started=7 generating_at_end=7 mig=fafc828a
+MEMORY resident_drop_mib=5547 lowest_drop_mib=5790 mem_available_before_mib=119609
+END_CASE guard=0 timed_out=0 died_early=0 critical_s=5.08 wall_s=11.4
+CASE critical_mig=31ffbfe4 placement=shared background=7
+CRITICAL exit=0 completed=1 text=06ead62102b21987 attach_ms=6.22 released_ms=6470.4 decoded_ms=7485.0 input_ms=1014.53 generation_ms=35857.52 generated=64
+BACKGROUND started=7 generating_at_end=7 mig=31ffbfe4
+MEMORY resident_drop_mib=5356 lowest_drop_mib=5629 mem_available_before_mib=119496
+END_CASE guard=0 timed_out=0 died_early=0 critical_s=37.25 wall_s=44.3
+CASE critical_mig=31ffbfe4 placement=split background=3
+CRITICAL exit=0 completed=1 text=06ead62102b21987 attach_ms=6.16 released_ms=4624.5 decoded_ms=4747.1 input_ms=122.52 generation_ms=4554.94 generated=64
+BACKGROUND started=3 generating_at_end=3 mig=fafc828a
+MEMORY resident_drop_mib=2830 lowest_drop_mib=2942 mem_available_before_mib=119677
+END_CASE guard=0 timed_out=0 died_early=0 critical_s=5.08 wall_s=10.1
+CASE critical_mig=31ffbfe4 placement=shared background=3
+CRITICAL exit=0 completed=1 text=06ead62102b21987 attach_ms=6.33 released_ms=5017.5 decoded_ms=5500.9 input_ms=483.31 generation_ms=17927.55 generated=64
+BACKGROUND started=3 generating_at_end=3 mig=31ffbfe4
+MEMORY resident_drop_mib=2695 lowest_drop_mib=2869 mem_available_before_mib=119603
+END_CASE guard=0 timed_out=0 died_early=0 critical_s=18.78 wall_s=24.2
+CASE critical_mig=31ffbfe4 placement=split background=1
+CRITICAL exit=0 completed=1 text=06ead62102b21987 attach_ms=6.20 released_ms=4105.8 decoded_ms=4227.9 input_ms=122.06 generation_ms=4547.88 generated=64
+BACKGROUND started=1 generating_at_end=1 mig=fafc828a
+MEMORY resident_drop_mib=1398 lowest_drop_mib=1478 mem_available_before_mib=119632
+END_CASE guard=0 timed_out=0 died_early=0 critical_s=5.06 wall_s=9.5
+CASE critical_mig=31ffbfe4 placement=shared background=1
+CRITICAL exit=0 completed=1 text=06ead62102b21987 attach_ms=6.25 released_ms=4248.2 decoded_ms=4486.1 input_ms=237.87 generation_ms=8906.61 generated=64
+BACKGROUND started=1 generating_at_end=1 mig=31ffbfe4
+MEMORY resident_drop_mib=1367 lowest_drop_mib=1447 mem_available_before_mib=119607
+END_CASE guard=0 timed_out=0 died_early=0 critical_s=9.51 wall_s=14.1
+CASE critical_mig=31ffbfe4 placement=alone background=0
+CRITICAL exit=0 completed=1 text=06ead62102b21987 attach_ms=6.08 released_ms=3943.5 decoded_ms=4058.8 input_ms=115.35 generation_ms=4234.23 generated=64
+BACKGROUND started=0 generating_at_end=0 mig=31ffbfe4
+MEMORY resident_drop_mib=667 lowest_drop_mib=684 mem_available_before_mib=119568
+END_CASE guard=0 timed_out=0 died_early=0 critical_s=4.80 wall_s=8.8
+CASE critical_mig=fafc828a placement=split background=7
+CRITICAL exit=0 completed=1 text=06ead62102b21987 attach_ms=6.35 released_ms=6343.9 decoded_ms=6427.4 input_ms=83.47 generation_ms=2949.70 generated=64
+BACKGROUND started=7 generating_at_end=7 mig=31ffbfe4
+MEMORY resident_drop_mib=5468 lowest_drop_mib=5687 mem_available_before_mib=119597
+END_CASE guard=0 timed_out=0 died_early=0 critical_s=3.39 wall_s=10.3
+CASE critical_mig=fafc828a placement=shared background=7
+CRITICAL exit=0 completed=1 text=06ead62102b21987 attach_ms=6.36 released_ms=5910.6 decoded_ms=6528.9 input_ms=618.28 generation_ms=22500.79 generated=64
+BACKGROUND started=7 generating_at_end=7 mig=fafc828a
+MEMORY resident_drop_mib=5564 lowest_drop_mib=5850 mem_available_before_mib=119611
+END_CASE guard=0 timed_out=0 died_early=0 critical_s=23.51 wall_s=30.0
+CASE critical_mig=fafc828a placement=split background=3
+CRITICAL exit=0 completed=1 text=06ead62102b21987 attach_ms=6.23 released_ms=4892.1 decoded_ms=4975.1 input_ms=82.93 generation_ms=2941.72 generated=64
+BACKGROUND started=3 generating_at_end=3 mig=31ffbfe4
+MEMORY resident_drop_mib=2777 lowest_drop_mib=2903 mem_available_before_mib=119646
+END_CASE guard=0 timed_out=0 died_early=0 critical_s=3.41 wall_s=8.7
+CASE critical_mig=fafc828a placement=shared background=3
+CRITICAL exit=0 completed=1 text=06ead62102b21987 attach_ms=6.15 released_ms=4764.9 decoded_ms=5068.3 input_ms=303.35 generation_ms=11205.71 generated=64
+BACKGROUND started=3 generating_at_end=3 mig=fafc828a
+MEMORY resident_drop_mib=2820 lowest_drop_mib=2965 mem_available_before_mib=119622
+END_CASE guard=0 timed_out=0 died_early=0 critical_s=11.92 wall_s=17.1
+CASE critical_mig=fafc828a placement=split background=1
+CRITICAL exit=0 completed=1 text=06ead62102b21987 attach_ms=6.03 released_ms=4182.8 decoded_ms=4265.8 input_ms=83.02 generation_ms=2988.64 generated=64
+BACKGROUND started=1 generating_at_end=1 mig=31ffbfe4
+MEMORY resident_drop_mib=1399 lowest_drop_mib=1438 mem_available_before_mib=119613
+END_CASE guard=0 timed_out=0 died_early=0 critical_s=3.47 wall_s=8.0
+CASE critical_mig=fafc828a placement=shared background=1
+CRITICAL exit=0 completed=1 text=06ead62102b21987 attach_ms=6.59 released_ms=4144.6 decoded_ms=4304.2 input_ms=159.52 generation_ms=5576.95 generated=64
+BACKGROUND started=1 generating_at_end=1 mig=fafc828a
+MEMORY resident_drop_mib=1422 lowest_drop_mib=1517 mem_available_before_mib=119631
+END_CASE guard=0 timed_out=0 died_early=0 critical_s=6.11 wall_s=10.6
+CASE critical_mig=fafc828a placement=alone background=0
+CRITICAL exit=0 completed=1 text=06ead62102b21987 attach_ms=6.53 released_ms=3931.1 decoded_ms=4010.2 input_ms=79.03 generation_ms=2696.22 generated=64
+BACKGROUND started=0 generating_at_end=0 mig=fafc828a
+MEMORY resident_drop_mib=711 lowest_drop_mib=734 mem_available_before_mib=119587
+END_CASE guard=0 timed_out=0 died_early=0 critical_s=3.23 wall_s=7.2
+END_KVLATENCY
+BEGIN_KVLATENCY run=3 context=16384 prefix_tokens=14282 file_used_mib=784
+CASE critical_mig=fafc828a placement=alone background=0
+CRITICAL exit=0 completed=1 text=06ead62102b21987 attach_ms=6.35 released_ms=3903.4 decoded_ms=3982.5 input_ms=78.98 generation_ms=2699.10 generated=64
+BACKGROUND started=0 generating_at_end=0 mig=fafc828a
+MEMORY resident_drop_mib=715 lowest_drop_mib=773 mem_available_before_mib=119632
+END_CASE guard=0 timed_out=0 died_early=0 critical_s=3.25 wall_s=7.2
+CASE critical_mig=fafc828a placement=shared background=1
+CRITICAL exit=0 completed=1 text=06ead62102b21987 attach_ms=6.94 released_ms=4222.7 decoded_ms=4380.8 input_ms=158.08 generation_ms=5570.59 generated=64
+BACKGROUND started=1 generating_at_end=1 mig=fafc828a
+MEMORY resident_drop_mib=1408 lowest_drop_mib=1462 mem_available_before_mib=119595
+END_CASE guard=0 timed_out=0 died_early=0 critical_s=6.08 wall_s=10.7
+CASE critical_mig=fafc828a placement=split background=1
+CRITICAL exit=0 completed=1 text=06ead62102b21987 attach_ms=6.30 released_ms=4122.8 decoded_ms=4205.6 input_ms=82.76 generation_ms=2980.11 generated=64
+BACKGROUND started=1 generating_at_end=1 mig=31ffbfe4
+MEMORY resident_drop_mib=1386 lowest_drop_mib=1444 mem_available_before_mib=119604
+END_CASE guard=0 timed_out=0 died_early=0 critical_s=3.45 wall_s=7.9
+CASE critical_mig=fafc828a placement=shared background=3
+CRITICAL exit=0 completed=1 text=06ead62102b21987 attach_ms=6.40 released_ms=4738.5 decoded_ms=5057.5 input_ms=318.88 generation_ms=11207.08 generated=64
+BACKGROUND started=3 generating_at_end=3 mig=fafc828a
+MEMORY resident_drop_mib=2797 lowest_drop_mib=2940 mem_available_before_mib=119613
+END_CASE guard=0 timed_out=0 died_early=0 critical_s=11.93 wall_s=17.1
+CASE critical_mig=fafc828a placement=split background=3
+CRITICAL exit=0 completed=1 text=06ead62102b21987 attach_ms=6.32 released_ms=4901.3 decoded_ms=4983.7 input_ms=82.40 generation_ms=2953.33 generated=64
+BACKGROUND started=3 generating_at_end=3 mig=31ffbfe4
+MEMORY resident_drop_mib=2779 lowest_drop_mib=2884 mem_available_before_mib=119618
+END_CASE guard=0 timed_out=0 died_early=0 critical_s=3.43 wall_s=8.7
+CASE critical_mig=fafc828a placement=shared background=7
+CRITICAL exit=0 completed=1 text=06ead62102b21987 attach_ms=6.32 released_ms=5882.0 decoded_ms=6503.5 input_ms=621.54 generation_ms=22514.45 generated=64
+BACKGROUND started=7 generating_at_end=7 mig=fafc828a
+MEMORY resident_drop_mib=5614 lowest_drop_mib=5873 mem_available_before_mib=119636
+END_CASE guard=0 timed_out=0 died_early=0 critical_s=23.46 wall_s=29.9
+CASE critical_mig=fafc828a placement=split background=7
+CRITICAL exit=0 completed=1 text=06ead62102b21987 attach_ms=6.29 released_ms=6186.6 decoded_ms=6269.8 input_ms=83.17 generation_ms=2953.36 generated=64
+BACKGROUND started=7 generating_at_end=7 mig=31ffbfe4
+MEMORY resident_drop_mib=5510 lowest_drop_mib=5755 mem_available_before_mib=119663
+END_CASE guard=0 timed_out=0 died_early=0 critical_s=3.40 wall_s=10.1
+CASE critical_mig=31ffbfe4 placement=alone background=0
+CRITICAL exit=0 completed=1 text=06ead62102b21987 attach_ms=6.20 released_ms=3930.4 decoded_ms=4046.2 input_ms=115.78 generation_ms=4238.09 generated=64
+BACKGROUND started=0 generating_at_end=0 mig=31ffbfe4
+MEMORY resident_drop_mib=700 lowest_drop_mib=768 mem_available_before_mib=119663
+END_CASE guard=0 timed_out=0 died_early=0 critical_s=4.77 wall_s=8.8
+CASE critical_mig=31ffbfe4 placement=shared background=1
+CRITICAL exit=0 completed=1 text=06ead62102b21987 attach_ms=6.35 released_ms=4242.0 decoded_ms=4474.4 input_ms=232.30 generation_ms=8908.62 generated=64
+BACKGROUND started=1 generating_at_end=1 mig=31ffbfe4
+MEMORY resident_drop_mib=1355 lowest_drop_mib=1407 mem_available_before_mib=119584
+END_CASE guard=0 timed_out=0 died_early=0 critical_s=9.49 wall_s=14.1
+CASE critical_mig=31ffbfe4 placement=split background=1
+CRITICAL exit=0 completed=1 text=06ead62102b21987 attach_ms=6.30 released_ms=4112.9 decoded_ms=4234.2 input_ms=121.32 generation_ms=4563.43 generated=64
+BACKGROUND started=1 generating_at_end=1 mig=fafc828a
+MEMORY resident_drop_mib=1389 lowest_drop_mib=1469 mem_available_before_mib=119616
+END_CASE guard=0 timed_out=0 died_early=0 critical_s=5.03 wall_s=9.5
+CASE critical_mig=31ffbfe4 placement=shared background=3
+CRITICAL exit=0 completed=1 text=06ead62102b21987 attach_ms=5.96 released_ms=4915.2 decoded_ms=5391.2 input_ms=475.99 generation_ms=17848.29 generated=64
+BACKGROUND started=3 generating_at_end=3 mig=31ffbfe4
+MEMORY resident_drop_mib=2737 lowest_drop_mib=2891 mem_available_before_mib=119617
+END_CASE guard=0 timed_out=0 died_early=0 critical_s=18.71 wall_s=24.0
+CASE critical_mig=31ffbfe4 placement=split background=3
+CRITICAL exit=0 completed=1 text=06ead62102b21987 attach_ms=7.28 released_ms=4574.9 decoded_ms=4697.4 input_ms=122.38 generation_ms=4545.69 generated=64
+BACKGROUND started=3 generating_at_end=3 mig=fafc828a
+MEMORY resident_drop_mib=2774 lowest_drop_mib=2915 mem_available_before_mib=119623
+END_CASE guard=0 timed_out=0 died_early=0 critical_s=5.05 wall_s=10.1
+CASE critical_mig=31ffbfe4 placement=shared background=7
+CRITICAL exit=0 completed=1 text=06ead62102b21987 attach_ms=6.26 released_ms=6405.7 decoded_ms=7422.9 input_ms=1017.21 generation_ms=35868.59 generated=64
+BACKGROUND started=7 generating_at_end=7 mig=31ffbfe4
+MEMORY resident_drop_mib=5449 lowest_drop_mib=5723 mem_available_before_mib=119631
+END_CASE guard=0 timed_out=0 died_early=0 critical_s=37.25 wall_s=44.2
+CASE critical_mig=31ffbfe4 placement=split background=7
+CRITICAL exit=0 completed=1 text=06ead62102b21987 attach_ms=6.21 released_ms=5756.0 decoded_ms=5879.3 input_ms=123.27 generation_ms=4572.12 generated=64
+BACKGROUND started=7 generating_at_end=7 mig=fafc828a
+MEMORY resident_drop_mib=5632 lowest_drop_mib=5861 mem_available_before_mib=119667
+END_CASE guard=0 timed_out=0 died_early=0 critical_s=5.07 wall_s=11.4
+END_KVLATENCY
+BEGIN_KVLATENCY run=4 context=16384 prefix_tokens=14282 file_used_mib=784
+CASE critical_mig=31ffbfe4 placement=split background=7
+CRITICAL exit=0 completed=1 text=06ead62102b21987 attach_ms=6.29 released_ms=5813.1 decoded_ms=5935.1 input_ms=121.97 generation_ms=4559.70 generated=64
+BACKGROUND started=7 generating_at_end=7 mig=fafc828a
+MEMORY resident_drop_mib=5623 lowest_drop_mib=5832 mem_available_before_mib=119662
+END_CASE guard=0 timed_out=0 died_early=0 critical_s=5.09 wall_s=11.4
+CASE critical_mig=31ffbfe4 placement=shared background=7
+CRITICAL exit=0 completed=1 text=06ead62102b21987 attach_ms=6.16 released_ms=6263.2 decoded_ms=7270.7 input_ms=1007.47 generation_ms=35866.22 generated=64
+BACKGROUND started=7 generating_at_end=7 mig=31ffbfe4
+MEMORY resident_drop_mib=5496 lowest_drop_mib=5774 mem_available_before_mib=119671
+END_CASE guard=0 timed_out=0 died_early=0 critical_s=37.26 wall_s=44.1
+CASE critical_mig=31ffbfe4 placement=split background=3
+CRITICAL exit=0 completed=1 text=06ead62102b21987 attach_ms=6.20 released_ms=4583.9 decoded_ms=4706.4 input_ms=122.43 generation_ms=4558.36 generated=64
+BACKGROUND started=3 generating_at_end=3 mig=fafc828a
+MEMORY resident_drop_mib=2785 lowest_drop_mib=2938 mem_available_before_mib=119648
+END_CASE guard=0 timed_out=0 died_early=0 critical_s=5.06 wall_s=10.1
+CASE critical_mig=31ffbfe4 placement=shared background=3
+CRITICAL exit=0 completed=1 text=06ead62102b21987 attach_ms=6.15 released_ms=5046.2 decoded_ms=5537.3 input_ms=491.04 generation_ms=17908.39 generated=64
+BACKGROUND started=3 generating_at_end=3 mig=31ffbfe4
+MEMORY resident_drop_mib=2735 lowest_drop_mib=2875 mem_available_before_mib=119610
+END_CASE guard=0 timed_out=0 died_early=0 critical_s=18.77 wall_s=24.3
+CASE critical_mig=31ffbfe4 placement=split background=1
+CRITICAL exit=0 completed=1 text=06ead62102b21987 attach_ms=6.07 released_ms=4136.6 decoded_ms=4258.7 input_ms=122.03 generation_ms=4558.14 generated=64
+BACKGROUND started=1 generating_at_end=1 mig=fafc828a
+MEMORY resident_drop_mib=1377 lowest_drop_mib=1433 mem_available_before_mib=119590
+END_CASE guard=0 timed_out=0 died_early=0 critical_s=5.06 wall_s=9.6
+CASE critical_mig=31ffbfe4 placement=shared background=1
+CRITICAL exit=0 completed=1 text=06ead62102b21987 attach_ms=6.19 released_ms=4302.7 decoded_ms=4528.9 input_ms=226.19 generation_ms=8893.23 generated=64
+BACKGROUND started=1 generating_at_end=1 mig=31ffbfe4
+MEMORY resident_drop_mib=1364 lowest_drop_mib=1467 mem_available_before_mib=119613
+END_CASE guard=0 timed_out=0 died_early=0 critical_s=9.51 wall_s=14.2
+CASE critical_mig=31ffbfe4 placement=alone background=0
+CRITICAL exit=0 completed=1 text=06ead62102b21987 attach_ms=6.41 released_ms=3964.2 decoded_ms=4080.2 input_ms=115.92 generation_ms=4245.39 generated=64
+BACKGROUND started=0 generating_at_end=0 mig=31ffbfe4
+MEMORY resident_drop_mib=670 lowest_drop_mib=725 mem_available_before_mib=119590
+END_CASE guard=0 timed_out=0 died_early=0 critical_s=4.83 wall_s=8.9
+CASE critical_mig=fafc828a placement=split background=7
+CRITICAL exit=0 completed=1 text=06ead62102b21987 attach_ms=6.22 released_ms=6313.1 decoded_ms=6396.3 input_ms=83.21 generation_ms=2963.32 generated=64
+BACKGROUND started=7 generating_at_end=7 mig=31ffbfe4
+MEMORY resident_drop_mib=5395 lowest_drop_mib=5636 mem_available_before_mib=119527
+END_CASE guard=0 timed_out=0 died_early=0 critical_s=3.44 wall_s=10.3
+CASE critical_mig=fafc828a placement=shared background=7
+CRITICAL exit=0 completed=1 text=06ead62102b21987 attach_ms=6.13 released_ms=5885.5 decoded_ms=6493.5 input_ms=607.98 generation_ms=22496.60 generated=64
+BACKGROUND started=7 generating_at_end=7 mig=fafc828a
+MEMORY resident_drop_mib=5623 lowest_drop_mib=5887 mem_available_before_mib=119662
+END_CASE guard=0 timed_out=0 died_early=0 critical_s=23.48 wall_s=29.9
+CASE critical_mig=fafc828a placement=split background=3
+CRITICAL exit=0 completed=1 text=06ead62102b21987 attach_ms=6.01 released_ms=4919.9 decoded_ms=5003.1 input_ms=83.20 generation_ms=2938.91 generated=64
+BACKGROUND started=3 generating_at_end=3 mig=31ffbfe4
+MEMORY resident_drop_mib=2792 lowest_drop_mib=2916 mem_available_before_mib=119666
+END_CASE guard=0 timed_out=0 died_early=0 critical_s=3.44 wall_s=8.7
+CASE critical_mig=fafc828a placement=shared background=3
+CRITICAL exit=0 completed=1 text=06ead62102b21987 attach_ms=6.66 released_ms=4697.4 decoded_ms=5010.1 input_ms=312.68 generation_ms=11219.22 generated=64
+BACKGROUND started=3 generating_at_end=3 mig=fafc828a
+MEMORY resident_drop_mib=2825 lowest_drop_mib=2993 mem_available_before_mib=119630
+END_CASE guard=0 timed_out=0 died_early=0 critical_s=11.92 wall_s=17.0
+CASE critical_mig=fafc828a placement=split background=1
+CRITICAL exit=0 completed=1 text=06ead62102b21987 attach_ms=6.08 released_ms=4146.3 decoded_ms=4229.4 input_ms=82.98 generation_ms=2977.84 generated=64
+BACKGROUND started=1 generating_at_end=1 mig=31ffbfe4
+MEMORY resident_drop_mib=1401 lowest_drop_mib=1441 mem_available_before_mib=119567
+END_CASE guard=0 timed_out=0 died_early=0 critical_s=3.45 wall_s=8.0
+CASE critical_mig=fafc828a placement=shared background=1
+CRITICAL exit=0 completed=1 text=06ead62102b21987 attach_ms=6.11 released_ms=4165.5 decoded_ms=4316.5 input_ms=150.98 generation_ms=5570.41 generated=64
+BACKGROUND started=1 generating_at_end=1 mig=fafc828a
+MEMORY resident_drop_mib=1411 lowest_drop_mib=1497 mem_available_before_mib=119608
+END_CASE guard=0 timed_out=0 died_early=0 critical_s=6.12 wall_s=10.7
+CASE critical_mig=fafc828a placement=alone background=0
+CRITICAL exit=0 completed=1 text=06ead62102b21987 attach_ms=6.60 released_ms=3905.7 decoded_ms=3984.9 input_ms=79.18 generation_ms=2697.79 generated=64
+BACKGROUND started=0 generating_at_end=0 mig=fafc828a
+MEMORY resident_drop_mib=701 lowest_drop_mib=729 mem_available_before_mib=119584
+END_CASE guard=0 timed_out=0 died_early=0 critical_s=3.22 wall_s=7.2
+END_KVLATENCY
+BEGIN_KVLATENCY run=5 context=16384 prefix_tokens=14282 file_used_mib=784
+CASE critical_mig=fafc828a placement=alone background=0
+CRITICAL exit=0 completed=1 text=06ead62102b21987 attach_ms=6.35 released_ms=3935.3 decoded_ms=4013.7 input_ms=78.35 generation_ms=2690.85 generated=64
+BACKGROUND started=0 generating_at_end=0 mig=fafc828a
+MEMORY resident_drop_mib=731 lowest_drop_mib=777 mem_available_before_mib=119646
+END_CASE guard=0 timed_out=0 died_early=0 critical_s=3.23 wall_s=7.2
+CASE critical_mig=fafc828a placement=shared background=1
+CRITICAL exit=0 completed=1 text=06ead62102b21987 attach_ms=6.20 released_ms=4136.3 decoded_ms=4295.4 input_ms=159.10 generation_ms=5575.18 generated=64
+BACKGROUND started=1 generating_at_end=1 mig=fafc828a
+MEMORY resident_drop_mib=1402 lowest_drop_mib=1451 mem_available_before_mib=119559
+END_CASE guard=0 timed_out=0 died_early=0 critical_s=6.13 wall_s=10.6
+CASE critical_mig=fafc828a placement=split background=1
+CRITICAL exit=0 completed=1 text=06ead62102b21987 attach_ms=6.02 released_ms=4158.2 decoded_ms=4241.2 input_ms=82.97 generation_ms=2992.12 generated=64
+BACKGROUND started=1 generating_at_end=1 mig=31ffbfe4
+MEMORY resident_drop_mib=1338 lowest_drop_mib=1406 mem_available_before_mib=119537
+END_CASE guard=0 timed_out=0 died_early=0 critical_s=3.47 wall_s=8.0
+CASE critical_mig=fafc828a placement=shared background=3
+CRITICAL exit=0 completed=1 text=06ead62102b21987 attach_ms=6.39 released_ms=4777.2 decoded_ms=5079.3 input_ms=302.10 generation_ms=11205.93 generated=64
+BACKGROUND started=3 generating_at_end=3 mig=fafc828a
+MEMORY resident_drop_mib=2791 lowest_drop_mib=2926 mem_available_before_mib=119601
+END_CASE guard=0 timed_out=0 died_early=0 critical_s=11.91 wall_s=17.1
+CASE critical_mig=fafc828a placement=split background=3
+CRITICAL exit=0 completed=1 text=06ead62102b21987 attach_ms=6.15 released_ms=4906.2 decoded_ms=4989.8 input_ms=83.54 generation_ms=2966.73 generated=64
+BACKGROUND started=3 generating_at_end=3 mig=31ffbfe4
+MEMORY resident_drop_mib=2759 lowest_drop_mib=2906 mem_available_before_mib=119613
+END_CASE guard=0 timed_out=0 died_early=0 critical_s=3.43 wall_s=8.8
+CASE critical_mig=fafc828a placement=shared background=7
+CRITICAL exit=0 completed=1 text=06ead62102b21987 attach_ms=6.43 released_ms=5867.3 decoded_ms=6477.8 input_ms=610.38 generation_ms=22519.91 generated=64
+BACKGROUND started=7 generating_at_end=7 mig=fafc828a
+MEMORY resident_drop_mib=5599 lowest_drop_mib=5848 mem_available_before_mib=119604
+END_CASE guard=0 timed_out=0 died_early=0 critical_s=23.51 wall_s=29.9
+CASE critical_mig=fafc828a placement=split background=7
+CRITICAL exit=0 completed=1 text=06ead62102b21987 attach_ms=6.21 released_ms=6352.1 decoded_ms=6436.1 input_ms=83.92 generation_ms=2954.03 generated=64
+BACKGROUND started=7 generating_at_end=7 mig=31ffbfe4
+MEMORY resident_drop_mib=5517 lowest_drop_mib=5774 mem_available_before_mib=119658
+END_CASE guard=0 timed_out=0 died_early=0 critical_s=3.44 wall_s=10.4
+CASE critical_mig=31ffbfe4 placement=alone background=0
+CRITICAL exit=0 completed=1 text=06ead62102b21987 attach_ms=6.15 released_ms=3903.4 decoded_ms=4019.6 input_ms=116.12 generation_ms=4249.29 generated=64
+BACKGROUND started=0 generating_at_end=0 mig=31ffbfe4
+MEMORY resident_drop_mib=696 lowest_drop_mib=731 mem_available_before_mib=119590
+END_CASE guard=0 timed_out=0 died_early=0 critical_s=4.84 wall_s=8.8
+CASE critical_mig=31ffbfe4 placement=shared background=1
+CRITICAL exit=0 completed=1 text=06ead62102b21987 attach_ms=6.30 released_ms=4275.6 decoded_ms=4506.8 input_ms=231.15 generation_ms=8911.42 generated=64
+BACKGROUND started=1 generating_at_end=1 mig=31ffbfe4
+MEMORY resident_drop_mib=1407 lowest_drop_mib=1446 mem_available_before_mib=119554
+END_CASE guard=0 timed_out=0 died_early=0 critical_s=9.52 wall_s=14.2
+CASE critical_mig=31ffbfe4 placement=split background=1
+CRITICAL exit=0 completed=1 text=06ead62102b21987 attach_ms=6.16 released_ms=4132.8 decoded_ms=4255.6 input_ms=122.76 generation_ms=4565.80 generated=64
+BACKGROUND started=1 generating_at_end=1 mig=fafc828a
+MEMORY resident_drop_mib=1360 lowest_drop_mib=1408 mem_available_before_mib=119540
+END_CASE guard=0 timed_out=0 died_early=0 critical_s=5.09 wall_s=9.6
+CASE critical_mig=31ffbfe4 placement=shared background=3
+CRITICAL exit=0 completed=1 text=06ead62102b21987 attach_ms=6.32 released_ms=5042.8 decoded_ms=5519.8 input_ms=477.01 generation_ms=17845.71 generated=64
+BACKGROUND started=3 generating_at_end=3 mig=31ffbfe4
+MEMORY resident_drop_mib=2737 lowest_drop_mib=2880 mem_available_before_mib=119577
+END_CASE guard=0 timed_out=0 died_early=0 critical_s=18.71 wall_s=24.2
+CASE critical_mig=31ffbfe4 placement=split background=3
+CRITICAL exit=0 completed=1 text=06ead62102b21987 attach_ms=6.22 released_ms=4656.5 decoded_ms=4778.9 input_ms=122.35 generation_ms=4567.56 generated=64
+BACKGROUND started=3 generating_at_end=3 mig=fafc828a
+MEMORY resident_drop_mib=2802 lowest_drop_mib=2904 mem_available_before_mib=119603
+END_CASE guard=0 timed_out=0 died_early=0 critical_s=5.06 wall_s=10.2
+CASE critical_mig=31ffbfe4 placement=shared background=7
+CRITICAL exit=0 completed=1 text=06ead62102b21987 attach_ms=6.25 released_ms=6473.8 decoded_ms=7475.0 input_ms=1001.18 generation_ms=35868.68 generated=64
+BACKGROUND started=7 generating_at_end=7 mig=31ffbfe4
+MEMORY resident_drop_mib=5477 lowest_drop_mib=5753 mem_available_before_mib=119615
+END_CASE guard=0 timed_out=0 died_early=0 critical_s=37.26 wall_s=44.3
+CASE critical_mig=31ffbfe4 placement=split background=7
+CRITICAL exit=0 completed=1 text=06ead62102b21987 attach_ms=6.22 released_ms=5802.7 decoded_ms=5925.6 input_ms=122.87 generation_ms=4567.19 generated=64
+BACKGROUND started=7 generating_at_end=7 mig=fafc828a
+MEMORY resident_drop_mib=5633 lowest_drop_mib=5856 mem_available_before_mib=119653
+END_CASE guard=0 timed_out=0 died_early=0 critical_s=5.07 wall_s=11.4
+END_KVLATENCY
+BEGIN_KVLATENCY run=6 context=16384 prefix_tokens=14282 file_used_mib=784
+CASE critical_mig=31ffbfe4 placement=split background=7
+CRITICAL exit=0 completed=1 text=06ead62102b21987 attach_ms=6.21 released_ms=5655.3 decoded_ms=5777.6 input_ms=122.21 generation_ms=4571.45 generated=64
+BACKGROUND started=7 generating_at_end=7 mig=fafc828a
+MEMORY resident_drop_mib=5606 lowest_drop_mib=5861 mem_available_before_mib=119633
+END_CASE guard=0 timed_out=0 died_early=0 critical_s=5.06 wall_s=11.3
+CASE critical_mig=31ffbfe4 placement=shared background=7
+CRITICAL exit=0 completed=1 text=06ead62102b21987 attach_ms=6.14 released_ms=6464.3 decoded_ms=7465.9 input_ms=1001.62 generation_ms=35899.72 generated=64
+BACKGROUND started=7 generating_at_end=7 mig=31ffbfe4
+MEMORY resident_drop_mib=5485 lowest_drop_mib=5763 mem_available_before_mib=119632
+END_CASE guard=0 timed_out=0 died_early=0 critical_s=37.29 wall_s=44.3
+CASE critical_mig=31ffbfe4 placement=split background=3
+CRITICAL exit=0 completed=1 text=06ead62102b21987 attach_ms=6.20 released_ms=4718.6 decoded_ms=4841.0 input_ms=122.36 generation_ms=4562.64 generated=64
+BACKGROUND started=3 generating_at_end=3 mig=fafc828a
+MEMORY resident_drop_mib=2797 lowest_drop_mib=2945 mem_available_before_mib=119634
+END_CASE guard=0 timed_out=0 died_early=0 critical_s=5.07 wall_s=10.2
+CASE critical_mig=31ffbfe4 placement=shared background=3
+CRITICAL exit=0 completed=1 text=06ead62102b21987 attach_ms=6.28 released_ms=5047.8 decoded_ms=5512.0 input_ms=464.15 generation_ms=17861.15 generated=64
+BACKGROUND started=3 generating_at_end=3 mig=31ffbfe4
+MEMORY resident_drop_mib=2731 lowest_drop_mib=2866 mem_available_before_mib=119596
+END_CASE guard=0 timed_out=0 died_early=0 critical_s=18.72 wall_s=24.2
+CASE critical_mig=31ffbfe4 placement=split background=1
+CRITICAL exit=0 completed=1 text=06ead62102b21987 attach_ms=6.37 released_ms=4114.8 decoded_ms=4237.1 input_ms=122.24 generation_ms=4568.52 generated=64
+BACKGROUND started=1 generating_at_end=1 mig=fafc828a
+MEMORY resident_drop_mib=1401 lowest_drop_mib=1487 mem_available_before_mib=119625
+END_CASE guard=0 timed_out=0 died_early=0 critical_s=5.10 wall_s=9.6
+CASE critical_mig=31ffbfe4 placement=shared background=1
+CRITICAL exit=0 completed=1 text=06ead62102b21987 attach_ms=6.25 released_ms=4290.8 decoded_ms=4515.8 input_ms=224.98 generation_ms=8912.59 generated=64
+BACKGROUND started=1 generating_at_end=1 mig=31ffbfe4
+MEMORY resident_drop_mib=1368 lowest_drop_mib=1446 mem_available_before_mib=119597
+END_CASE guard=0 timed_out=0 died_early=0 critical_s=9.52 wall_s=14.2
+CASE critical_mig=31ffbfe4 placement=alone background=0
+CRITICAL exit=0 completed=1 text=06ead62102b21987 attach_ms=6.14 released_ms=3929.6 decoded_ms=4045.8 input_ms=116.20 generation_ms=4246.47 generated=64
+BACKGROUND started=0 generating_at_end=0 mig=31ffbfe4
+MEMORY resident_drop_mib=688 lowest_drop_mib=729 mem_available_before_mib=119592
+END_CASE guard=0 timed_out=0 died_early=0 critical_s=4.82 wall_s=8.8
+CASE critical_mig=fafc828a placement=split background=7
+CRITICAL exit=0 completed=1 text=06ead62102b21987 attach_ms=6.26 released_ms=6138.2 decoded_ms=6221.2 input_ms=83.03 generation_ms=2943.48 generated=64
+BACKGROUND started=7 generating_at_end=7 mig=31ffbfe4
+MEMORY resident_drop_mib=5440 lowest_drop_mib=5674 mem_available_before_mib=119575
+END_CASE guard=0 timed_out=0 died_early=0 critical_s=3.43 wall_s=10.1
+CASE critical_mig=fafc828a placement=shared background=7
+CRITICAL exit=0 completed=1 text=06ead62102b21987 attach_ms=6.21 released_ms=5880.8 decoded_ms=6497.8 input_ms=617.04 generation_ms=22517.25 generated=64
+BACKGROUND started=7 generating_at_end=7 mig=fafc828a
+MEMORY resident_drop_mib=5627 lowest_drop_mib=5894 mem_available_before_mib=119637
+END_CASE guard=0 timed_out=0 died_early=0 critical_s=23.49 wall_s=30.0
+CASE critical_mig=fafc828a placement=split background=3
+CRITICAL exit=0 completed=1 text=06ead62102b21987 attach_ms=6.01 released_ms=4723.7 decoded_ms=4806.9 input_ms=83.17 generation_ms=2958.90 generated=64
+BACKGROUND started=3 generating_at_end=3 mig=31ffbfe4
+MEMORY resident_drop_mib=2774 lowest_drop_mib=2898 mem_available_before_mib=119646
+END_CASE guard=0 timed_out=0 died_early=0 critical_s=3.40 wall_s=8.6
+CASE critical_mig=fafc828a placement=shared background=3
+CRITICAL exit=0 completed=1 text=06ead62102b21987 attach_ms=6.08 released_ms=4641.8 decoded_ms=4951.4 input_ms=309.60 generation_ms=11214.98 generated=64
+BACKGROUND started=3 generating_at_end=3 mig=fafc828a
+MEMORY resident_drop_mib=2834 lowest_drop_mib=2961 mem_available_before_mib=119604
+END_CASE guard=0 timed_out=0 died_early=0 critical_s=11.93 wall_s=17.0
+CASE critical_mig=fafc828a placement=split background=1
+CRITICAL exit=0 completed=1 text=06ead62102b21987 attach_ms=6.26 released_ms=4186.7 decoded_ms=4270.0 input_ms=83.27 generation_ms=2983.89 generated=64
+BACKGROUND started=1 generating_at_end=1 mig=31ffbfe4
+MEMORY resident_drop_mib=1386 lowest_drop_mib=1412 mem_available_before_mib=119549
+END_CASE guard=0 timed_out=0 died_early=0 critical_s=3.47 wall_s=8.0
+CASE critical_mig=fafc828a placement=shared background=1
+CRITICAL exit=0 completed=1 text=06ead62102b21987 attach_ms=6.19 released_ms=4145.4 decoded_ms=4305.2 input_ms=159.77 generation_ms=5570.85 generated=64
+BACKGROUND started=1 generating_at_end=1 mig=fafc828a
+MEMORY resident_drop_mib=1398 lowest_drop_mib=1485 mem_available_before_mib=119608
+END_CASE guard=0 timed_out=0 died_early=0 critical_s=6.11 wall_s=10.7
+CASE critical_mig=fafc828a placement=alone background=0
+CRITICAL exit=0 completed=1 text=06ead62102b21987 attach_ms=6.21 released_ms=3913.8 decoded_ms=3992.8 input_ms=78.97 generation_ms=2690.05 generated=64
+BACKGROUND started=0 generating_at_end=0 mig=fafc828a
+MEMORY resident_drop_mib=710 lowest_drop_mib=734 mem_available_before_mib=119599
+END_CASE guard=0 timed_out=0 died_early=0 critical_s=3.22 wall_s=7.2
+END_KVLATENCY

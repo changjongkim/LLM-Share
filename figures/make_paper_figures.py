@@ -323,6 +323,31 @@ def resident():
         finish(fig, ax, name, "Resident Agents", ylabel, max(values) * 1.18)
 
 
+# --------------------------------------------- response time by placement
+def latency():
+    """One agent that must answer, with background agents in its MIG instance
+    (time-sliced) or in the other one."""
+    directory = "20261012-engine-kvlatency-v1"
+    if not have(directory, "engine_kvlatency_summary.csv"):
+        return
+    data = {(r["critical_instance"], r["placement"], r["background"]): r
+            for r in rows(directory, "engine_kvlatency_summary.csv")}
+    counts = sorted({int(key[2]) for key in data if key[1] != "alone"})
+    kinds = (("Same Instance", OURS_LIGHT, "shared"), ("Other Instance", OURS, "split"))
+    legend("eval_latency_legend", [(label, colour) for label, colour, _ in kinds], 2)
+    for name, instance in (("eval_latency_12sm", "12sm"), ("eval_latency_8sm", "8sm")):
+        alone = float(data[instance, "alone", "0"]["generation_tps"])
+        fig, ax = panel()
+        series = [(label, colour, [alone] + [float(data[instance, placement, str(n)]["generation_tps"])
+                                             for n in counts])
+                  for label, colour, placement in kinds]
+        for group in grouped(ax, ["0"] + [str(n) for n in counts], series, 0.38):
+            labels(ax, group, "{:.1f}")
+        for text in ax.texts:
+            text.set_rotation(90)
+        finish(fig, ax, name, "Background Agents", "Speed (tokens/s)", alone * 1.36)
+
+
 # --------------------------------------------------------- device memory
 def dev():
     data = {(r["paragraphs"], r["parent_mig"], r["mode"]): r
@@ -1046,7 +1071,7 @@ def vshare():
 
 
 if __name__ == "__main__":
-    for figure in (pair_legend, mem, weights, hand, speed, reach, mode, cow, resident, dev, sota, attach, protect, tree, scale,
+    for figure in (pair_legend, mem, weights, hand, speed, reach, mode, cow, resident, latency, dev, sota, attach, protect, tree, scale,
                    variants, inproc, server, limit, stack, local, pipe, deep, wshare, prefix_length, vshare):
         figure()
         print("wrote", figure.__name__)
