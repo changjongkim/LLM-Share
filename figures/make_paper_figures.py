@@ -305,6 +305,24 @@ def cow():
         finish(fig, ax, name, "", ylabel, max(values) * 1.18)
 
 
+# ------------------------------------------- resident and released agents
+def resident():
+    """Agents that wait hold memory; the eight that generate keep their rate."""
+    directory = "20261012-engine-kvresident-v1"
+    if not have(directory, "engine_kvresident_summary.csv"):
+        return
+    data = rows(directory, "engine_kvresident_summary.csv")
+    counts = [r["residents"] for r in data]
+    for name, column, ylabel, scale, form in (
+            ("eval_resident_mem", "memory_mib", "Memory (GiB)", 1024.0, "{:.1f}"),
+            ("eval_resident_tps", "active_tps_sum", "Throughput (tokens/s)", 1.0, "{:.1f}")):
+        fig, ax = panel()
+        values = [float(r[column]) / scale for r in data]
+        bars = ax.bar(counts, values, 0.62, color=OURS, edgecolor="white", linewidth=1.5)
+        labels(ax, bars, form)
+        finish(fig, ax, name, "Resident Agents", ylabel, max(values) * 1.18)
+
+
 # --------------------------------------------------------- device memory
 def dev():
     data = {(r["paragraphs"], r["parent_mig"], r["mode"]): r
@@ -1028,7 +1046,7 @@ def vshare():
 
 
 if __name__ == "__main__":
-    for figure in (pair_legend, mem, weights, hand, speed, reach, mode, cow, dev, sota, attach, protect, tree, scale,
+    for figure in (pair_legend, mem, weights, hand, speed, reach, mode, cow, resident, dev, sota, attach, protect, tree, scale,
                    variants, inproc, server, limit, stack, local, pipe, deep, wshare, prefix_length, vshare):
         figure()
         print("wrote", figure.__name__)

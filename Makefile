@@ -159,6 +159,14 @@ kv_tree2: kv_tree.cpp
 	  -L$(CHAIN2_ENGINE)/build/bin -lllama -lggml -lggml-base \
 	  -Wl,-rpath,'$$ORIGIN/$(CHAIN2_ENGINE)/build/bin'
 
+# A resident agent: the steps of kv_tree with a line after each of them, so
+# that a runner can release an agent that waits and time each of its steps.
+kv_agent2: kv_agent.cpp
+	$(CXX) $(CXXFLAGS) -isystem $(KV2_ENGINE)/include \
+	  -isystem $(KV2_ENGINE)/ggml/include $< -o $@ \
+	  -L$(KV2_ENGINE)/build/bin -lllama -lggml -lggml-base \
+	  -Wl,-rpath,'$$ORIGIN/$(KV2_ENGINE)/build/bin'
+
 kv_fork_tuned2: kv_fork.cpp
 	$(CXX) $(CXXFLAGS) -isystem $(TUNED2_ENGINE)/include \
 	  -isystem $(TUNED2_ENGINE)/ggml/include $< -o $@ \

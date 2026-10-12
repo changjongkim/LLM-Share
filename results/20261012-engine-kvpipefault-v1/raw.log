@@ -1,0 +1,1044 @@
+BEGIN_KVPIPEFAULT run=1 context=16384
+CASE config=mig fault=none groups=2 workers=4 turns=3
+PLANNER mig=fafc828a exit=0 completed=1 text=2986789f8c4a0a5d tokens=11788 publish_ms=11.69
+LEADER group=0 mig=fafc828a exit=0 completed=1 text=172e721640cc24d4 tokens=11887 publish_ms=6.24
+LEADER group=1 mig=31ffbfe4 exit=0 completed=1 text=ccaa7b1578fc9b8c tokens=11887 publish_ms=6.21
+WORKER index=0 group=0 mig=fafc828a exit=0 completed=1 text=34c5ba01e77f923b generated=192 generation_tps=4.663 first_token_ms=1730.4 total_ms=43540.0
+WORKER index=1 group=0 mig=31ffbfe4 exit=0 completed=1 text=72fc7f37969fe021 generated=192 generation_tps=3.283 first_token_ms=2280.7 total_ms=61827.7
+WORKER index=2 group=0 mig=fafc828a exit=0 completed=1 text=d81abdc974c1a615 generated=192 generation_tps=4.691 first_token_ms=2234.6 total_ms=43867.4
+WORKER index=3 group=0 mig=31ffbfe4 exit=0 completed=1 text=7be0e5aff5023925 generated=192 generation_tps=3.279 first_token_ms=2057.6 total_ms=61671.7
+WORKER index=4 group=1 mig=31ffbfe4 exit=0 completed=1 text=617b5b8088789bce generated=192 generation_tps=3.283 first_token_ms=2293.5 total_ms=61819.5
+WORKER index=5 group=1 mig=fafc828a exit=0 completed=1 text=736817ea889e0085 generated=192 generation_tps=4.689 first_token_ms=2245.9 total_ms=43883.9
+WORKER index=6 group=1 mig=31ffbfe4 exit=0 completed=1 text=fede20b0ce61df9a generated=192 generation_tps=3.284 first_token_ms=2310.0 total_ms=61821.4
+WORKER index=7 group=1 mig=fafc828a exit=0 completed=1 text=06acc271f26cb952 generated=192 generation_tps=4.690 first_token_ms=2255.1 total_ms=43881.1
+FAULT victim=none victim_alive=0 alive_at_fault=0 probe_exit=none probe=none
+END_CASE timed_out=0 mps_servers=0 wall_ms=82298 workers_ms=62394
+CASE config=mig fault=write groups=2 workers=4 turns=3
+PLANNER mig=fafc828a exit=0 completed=1 text=2986789f8c4a0a5d tokens=11788 publish_ms=11.74
+LEADER group=0 mig=fafc828a exit=0 completed=1 text=172e721640cc24d4 tokens=11887 publish_ms=6.87
+LEADER group=1 mig=31ffbfe4 exit=0 completed=1 text=ccaa7b1578fc9b8c tokens=11887 publish_ms=6.14
+WORKER index=0 group=0 mig=fafc828a exit=0 completed=1 text=34c5ba01e77f923b generated=192 generation_tps=4.670 first_token_ms=2029.4 total_ms=43828.0
+WORKER index=1 group=0 mig=31ffbfe4 exit=0 completed=1 text=72fc7f37969fe021 generated=192 generation_tps=3.262 first_token_ms=1558.0 total_ms=61397.9
+WORKER index=2 group=0 mig=fafc828a exit=0 completed=1 text=d81abdc974c1a615 generated=192 generation_tps=4.686 first_token_ms=2247.6 total_ms=43936.8
+WORKER index=3 group=0 mig=31ffbfe4 exit=0 completed=1 text=7be0e5aff5023925 generated=192 generation_tps=3.278 first_token_ms=2185.7 total_ms=61797.5
+WORKER index=4 group=1 mig=31ffbfe4 exit=0 completed=1 text=617b5b8088789bce generated=192 generation_tps=3.280 first_token_ms=2272.7 total_ms=61839.7
+WORKER index=5 group=1 mig=fafc828a exit=0 completed=1 text=736817ea889e0085 generated=192 generation_tps=4.691 first_token_ms=2286.1 total_ms=43912.3
+WORKER index=6 group=1 mig=31ffbfe4 exit=0 completed=1 text=fede20b0ce61df9a generated=192 generation_tps=3.282 first_token_ms=2309.5 total_ms=61840.7
+WORKER index=7 group=1 mig=fafc828a exit=0 completed=1 text=06acc271f26cb952 generated=192 generation_tps=4.682 first_token_ms=2135.2 total_ms=43852.4
+FAULT victim=probe victim_alive=1 alive_at_fault=11 probe_exit=0 probe=route=host,gpu_read=cudaSuccess,words_equal=0,words=16777216,gpu_write=cudaErrorIllegalAddress,file_intact=0
+END_CASE timed_out=0 mps_servers=0 wall_ms=82342 workers_ms=62420
+CASE config=mig fault=kill_worker groups=2 workers=4 turns=3
+PLANNER mig=fafc828a exit=0 completed=1 text=2986789f8c4a0a5d tokens=11788 publish_ms=11.62
+LEADER group=0 mig=fafc828a exit=0 completed=1 text=172e721640cc24d4 tokens=11887 publish_ms=6.81
+LEADER group=1 mig=31ffbfe4 exit=0 completed=1 text=ccaa7b1578fc9b8c tokens=11887 publish_ms=6.69
+STDERR CUDA Graph id 27 reused
+STDERR CUDA Graph id 27 reused
+STDERR CUDA Graph id 27 reused
+WORKER index=0 group=0 mig=fafc828a exit=137 completed=0 text=e3b0c44298fc1c14 generated= generation_tps= first_token_ms= total_ms=
+WORKER index=1 group=0 mig=31ffbfe4 exit=0 completed=1 text=72fc7f37969fe021 generated=192 generation_tps=3.301 first_token_ms=1816.2 total_ms=60926.7
+WORKER index=2 group=0 mig=fafc828a exit=0 completed=1 text=d81abdc974c1a615 generated=192 generation_tps=5.809 first_token_ms=2215.6 total_ms=35800.3
+WORKER index=3 group=0 mig=31ffbfe4 exit=0 completed=1 text=7be0e5aff5023925 generated=192 generation_tps=3.316 first_token_ms=2250.5 total_ms=61148.3
+WORKER index=4 group=1 mig=31ffbfe4 exit=0 completed=1 text=617b5b8088789bce generated=192 generation_tps=3.316 first_token_ms=2310.9 total_ms=61199.4
+WORKER index=5 group=1 mig=fafc828a exit=0 completed=1 text=736817ea889e0085 generated=192 generation_tps=5.800 first_token_ms=2202.0 total_ms=35839.8
+WORKER index=6 group=1 mig=31ffbfe4 exit=0 completed=1 text=fede20b0ce61df9a generated=192 generation_tps=3.316 first_token_ms=2297.4 total_ms=61185.0
+WORKER index=7 group=1 mig=fafc828a exit=0 completed=1 text=06acc271f26cb952 generated=192 generation_tps=5.802 first_token_ms=2214.0 total_ms=35838.9
+FAULT victim=worker0 victim_alive=1 alive_at_fault=11 probe_exit=none probe=none
+END_CASE timed_out=0 mps_servers=0 wall_ms=81723 workers_ms=61819
+CASE config=mig fault=kill_leader groups=2 workers=4 turns=3
+PLANNER mig=fafc828a exit=0 completed=1 text=2986789f8c4a0a5d tokens=11788 publish_ms=11.67
+STDERR CUDA Graph id 33 reused
+STDERR CUDA Graph id 33 reused
+STDERR CUDA Graph id 33 reused
+LEADER group=0 mig=fafc828a exit=137 completed=0 text=e3b0c44298fc1c14 tokens=11887 publish_ms=6.41
+LEADER group=1 mig=31ffbfe4 exit=0 completed=1 text=ccaa7b1578fc9b8c tokens=11887 publish_ms=6.14
+WORKER index=0 group=0 mig=fafc828a exit=0 completed=1 text=34c5ba01e77f923b generated=192 generation_tps=4.799 first_token_ms=2033.8 total_ms=42716.8
+WORKER index=1 group=0 mig=31ffbfe4 exit=0 completed=1 text=72fc7f37969fe021 generated=192 generation_tps=3.282 first_token_ms=2052.0 total_ms=61567.2
+WORKER index=2 group=0 mig=fafc828a exit=0 completed=1 text=d81abdc974c1a615 generated=192 generation_tps=4.810 first_token_ms=2258.6 total_ms=42884.2
+WORKER index=3 group=0 mig=31ffbfe4 exit=0 completed=1 text=7be0e5aff5023925 generated=192 generation_tps=3.287 first_token_ms=2319.1 total_ms=61751.8
+WORKER index=4 group=1 mig=31ffbfe4 exit=0 completed=1 text=617b5b8088789bce generated=192 generation_tps=3.287 first_token_ms=2313.3 total_ms=61741.4
+WORKER index=5 group=1 mig=fafc828a exit=0 completed=1 text=736817ea889e0085 generated=192 generation_tps=4.809 first_token_ms=2295.3 total_ms=42902.6
+WORKER index=6 group=1 mig=31ffbfe4 exit=0 completed=1 text=fede20b0ce61df9a generated=192 generation_tps=3.287 first_token_ms=2289.9 total_ms=61723.1
+WORKER index=7 group=1 mig=fafc828a exit=0 completed=1 text=06acc271f26cb952 generated=192 generation_tps=4.796 first_token_ms=2036.0 total_ms=42770.1
+FAULT victim=leader0 victim_alive=1 alive_at_fault=11 probe_exit=none probe=none
+END_CASE timed_out=0 mps_servers=0 wall_ms=82229 workers_ms=62361
+CASE config=mig_mps fault=none groups=2 workers=4 turns=3
+PLANNER mig=fafc828a exit=0 completed=1 text=2986789f8c4a0a5d tokens=11788 publish_ms=11.55
+LEADER group=0 mig=fafc828a exit=0 completed=1 text=172e721640cc24d4 tokens=11887 publish_ms=6.58
+LEADER group=1 mig=31ffbfe4 exit=0 completed=1 text=ccaa7b1578fc9b8c tokens=11887 publish_ms=6.32
+WORKER index=0 group=0 mig=fafc828a exit=0 completed=1 text=34c5ba01e77f923b generated=192 generation_tps=5.225 first_token_ms=1460.3 total_ms=38938.6
+WORKER index=1 group=0 mig=31ffbfe4 exit=0 completed=1 text=72fc7f37969fe021 generated=192 generation_tps=3.647 first_token_ms=2091.4 total_ms=55647.2
+WORKER index=2 group=0 mig=fafc828a exit=0 completed=1 text=d81abdc974c1a615 generated=192 generation_tps=5.217 first_token_ms=1664.1 total_ms=39114.8
+WORKER index=3 group=0 mig=31ffbfe4 exit=0 completed=1 text=7be0e5aff5023925 generated=192 generation_tps=3.647 first_token_ms=2039.5 total_ms=55609.1
+WORKER index=4 group=1 mig=31ffbfe4 exit=0 completed=1 text=617b5b8088789bce generated=192 generation_tps=3.650 first_token_ms=2046.1 total_ms=55574.7
+WORKER index=5 group=1 mig=fafc828a exit=0 completed=1 text=736817ea889e0085 generated=192 generation_tps=5.257 first_token_ms=1954.4 total_ms=39141.3
+WORKER index=6 group=1 mig=31ffbfe4 exit=0 completed=1 text=fede20b0ce61df9a generated=192 generation_tps=3.649 first_token_ms=2032.7 total_ms=55576.4
+WORKER index=7 group=1 mig=fafc828a exit=0 completed=1 text=06acc271f26cb952 generated=192 generation_tps=5.234 first_token_ms=1777.3 total_ms=39099.6
+FAULT victim=none victim_alive=0 alive_at_fault=0 probe_exit=none probe=none
+END_CASE timed_out=0 mps_servers=2 wall_ms=76267 workers_ms=56189
+CASE config=mig_mps fault=write groups=2 workers=4 turns=3
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-chain/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+PLANNER mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 tokens=11788 publish_ms=8.44
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-chain/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+LEADER group=0 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 tokens=11887 publish_ms=5.23
+LEADER group=1 mig=31ffbfe4 exit=0 completed=1 text=ccaa7b1578fc9b8c tokens=11887 publish_ms=4.91
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-chain/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+WORKER index=0 group=0 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 generated= generation_tps= first_token_ms= total_ms=
+WORKER index=1 group=0 mig=31ffbfe4 exit=0 completed=1 text=72fc7f37969fe021 generated=192 generation_tps=3.789 first_token_ms=2046.3 total_ms=53591.3
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-chain/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+WORKER index=2 group=0 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 generated= generation_tps= first_token_ms= total_ms=
+WORKER index=3 group=0 mig=31ffbfe4 exit=0 completed=1 text=7be0e5aff5023925 generated=192 generation_tps=3.795 first_token_ms=2077.9 total_ms=53542.9
+WORKER index=4 group=1 mig=31ffbfe4 exit=0 completed=1 text=617b5b8088789bce generated=192 generation_tps=3.793 first_token_ms=2072.2 total_ms=53564.1
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-chain/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+WORKER index=5 group=1 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 generated= generation_tps= first_token_ms= total_ms=
+WORKER index=6 group=1 mig=31ffbfe4 exit=0 completed=1 text=fede20b0ce61df9a generated=192 generation_tps=3.794 first_token_ms=1851.7 total_ms=53354.8
+STDERR   cudaStreamSynchronize(((cudaStream_t)0x2))
+STDERR /home/thor/kcj/llm_share/llama.cpp-chain/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+WORKER index=7 group=1 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 generated= generation_tps= first_token_ms= total_ms=
+FAULT victim=probe victim_alive=1 alive_at_fault=11 probe_exit=0 probe=route=host,gpu_read=cudaSuccess,words_equal=0,words=16777216,gpu_write=cudaErrorIllegalAddress,file_intact=0
+END_CASE timed_out=0 mps_servers=2 wall_ms=74276 workers_ms=54179
+CASE config=mig_mps fault=kill_worker groups=2 workers=4 turns=3
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-chain/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+PLANNER mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 tokens=11788 publish_ms=11.73
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-chain/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+LEADER group=0 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 tokens=11887 publish_ms=6.73
+LEADER group=1 mig=31ffbfe4 exit=0 completed=1 text=ccaa7b1578fc9b8c tokens=11887 publish_ms=6.82
+STDERR CUDA Graph id 27 reused
+STDERR CUDA Graph id 27 reused
+STDERR CUDA Graph id 27 reused
+WORKER index=0 group=0 mig=fafc828a exit=137 completed=0 text=e3b0c44298fc1c14 generated= generation_tps= first_token_ms= total_ms=
+WORKER index=1 group=0 mig=31ffbfe4 exit=0 completed=1 text=72fc7f37969fe021 generated=192 generation_tps=3.794 first_token_ms=2066.3 total_ms=53534.4
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-chain/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+WORKER index=2 group=0 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 generated= generation_tps= first_token_ms= total_ms=
+WORKER index=3 group=0 mig=31ffbfe4 exit=0 completed=1 text=7be0e5aff5023925 generated=192 generation_tps=3.796 first_token_ms=2041.0 total_ms=53506.0
+WORKER index=4 group=1 mig=31ffbfe4 exit=0 completed=1 text=617b5b8088789bce generated=192 generation_tps=3.796 first_token_ms=2081.1 total_ms=53523.5
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-chain/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+WORKER index=5 group=1 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 generated= generation_tps= first_token_ms= total_ms=
+WORKER index=6 group=1 mig=31ffbfe4 exit=0 completed=1 text=fede20b0ce61df9a generated=192 generation_tps=3.796 first_token_ms=2071.2 total_ms=53515.0
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-chain/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+WORKER index=7 group=1 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 generated= generation_tps= first_token_ms= total_ms=
+FAULT victim=worker0 victim_alive=1 alive_at_fault=11 probe_exit=none probe=none
+END_CASE timed_out=0 mps_servers=2 wall_ms=74218 workers_ms=54158
+CASE config=mig_mps fault=kill_leader groups=2 workers=4 turns=3
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-chain/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+PLANNER mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 tokens=11788 publish_ms=11.56
+STDERR CUDA Graph id 33 reused
+STDERR CUDA Graph id 33 reused
+STDERR CUDA Graph id 33 reused
+LEADER group=0 mig=fafc828a exit=137 completed=0 text=e3b0c44298fc1c14 tokens=11887 publish_ms=6.59
+LEADER group=1 mig=31ffbfe4 exit=0 completed=1 text=ccaa7b1578fc9b8c tokens=11887 publish_ms=5.98
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-chain/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+WORKER index=0 group=0 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 generated= generation_tps= first_token_ms= total_ms=
+WORKER index=1 group=0 mig=31ffbfe4 exit=0 completed=1 text=72fc7f37969fe021 generated=192 generation_tps=3.795 first_token_ms=2092.7 total_ms=53545.7
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-chain/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+WORKER index=2 group=0 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 generated= generation_tps= first_token_ms= total_ms=
+WORKER index=3 group=0 mig=31ffbfe4 exit=0 completed=1 text=7be0e5aff5023925 generated=192 generation_tps=3.795 first_token_ms=2077.6 total_ms=53539.5
+WORKER index=4 group=1 mig=31ffbfe4 exit=0 completed=1 text=617b5b8088789bce generated=192 generation_tps=3.794 first_token_ms=2022.9 total_ms=53493.5
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-chain/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+WORKER index=5 group=1 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 generated= generation_tps= first_token_ms= total_ms=
+WORKER index=6 group=1 mig=31ffbfe4 exit=0 completed=1 text=fede20b0ce61df9a generated=192 generation_tps=3.794 first_token_ms=2025.8 total_ms=53497.0
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-chain/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+WORKER index=7 group=1 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 generated= generation_tps= first_token_ms= total_ms=
+FAULT victim=leader0 victim_alive=1 alive_at_fault=11 probe_exit=none probe=none
+END_CASE timed_out=0 mps_servers=2 wall_ms=74210 workers_ms=54099
+END_KVPIPEFAULT
+BEGIN_KVPIPEFAULT run=2 context=16384
+CASE config=mig_mps fault=none groups=2 workers=4 turns=3
+PLANNER mig=fafc828a exit=0 completed=1 text=2986789f8c4a0a5d tokens=11788 publish_ms=11.34
+LEADER group=0 mig=fafc828a exit=0 completed=1 text=172e721640cc24d4 tokens=11887 publish_ms=6.60
+LEADER group=1 mig=31ffbfe4 exit=0 completed=1 text=ccaa7b1578fc9b8c tokens=11887 publish_ms=6.37
+WORKER index=0 group=0 mig=fafc828a exit=0 completed=1 text=34c5ba01e77f923b generated=192 generation_tps=5.208 first_token_ms=1348.6 total_ms=38924.7
+WORKER index=1 group=0 mig=31ffbfe4 exit=0 completed=1 text=72fc7f37969fe021 generated=192 generation_tps=3.643 first_token_ms=1994.1 total_ms=55603.4
+WORKER index=2 group=0 mig=fafc828a exit=0 completed=1 text=d81abdc974c1a615 generated=192 generation_tps=5.216 first_token_ms=1441.6 total_ms=38978.0
+WORKER index=3 group=0 mig=31ffbfe4 exit=0 completed=1 text=7be0e5aff5023925 generated=192 generation_tps=3.646 first_token_ms=2044.7 total_ms=55608.9
+WORKER index=4 group=1 mig=31ffbfe4 exit=0 completed=1 text=617b5b8088789bce generated=192 generation_tps=3.648 first_token_ms=2036.6 total_ms=55572.8
+WORKER index=5 group=1 mig=fafc828a exit=0 completed=1 text=736817ea889e0085 generated=192 generation_tps=5.262 first_token_ms=1960.9 total_ms=39129.7
+WORKER index=6 group=1 mig=31ffbfe4 exit=0 completed=1 text=fede20b0ce61df9a generated=192 generation_tps=3.643 first_token_ms=1958.9 total_ms=55572.1
+WORKER index=7 group=1 mig=fafc828a exit=0 completed=1 text=06acc271f26cb952 generated=192 generation_tps=5.261 first_token_ms=1953.5 total_ms=39124.1
+FAULT victim=none victim_alive=0 alive_at_fault=0 probe_exit=none probe=none
+END_CASE timed_out=0 mps_servers=2 wall_ms=76342 workers_ms=56247
+CASE config=mig_mps fault=write groups=2 workers=4 turns=3
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-chain/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+PLANNER mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 tokens=11788 publish_ms=9.72
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-chain/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+LEADER group=0 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 tokens=11887 publish_ms=6.48
+LEADER group=1 mig=31ffbfe4 exit=0 completed=1 text=ccaa7b1578fc9b8c tokens=11887 publish_ms=6.40
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-chain/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+WORKER index=0 group=0 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 generated= generation_tps= first_token_ms= total_ms=
+WORKER index=1 group=0 mig=31ffbfe4 exit=0 completed=1 text=72fc7f37969fe021 generated=192 generation_tps=3.789 first_token_ms=2040.5 total_ms=53574.3
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-chain/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+WORKER index=2 group=0 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 generated= generation_tps= first_token_ms= total_ms=
+WORKER index=3 group=0 mig=31ffbfe4 exit=0 completed=1 text=7be0e5aff5023925 generated=192 generation_tps=3.794 first_token_ms=2070.4 total_ms=53546.0
+WORKER index=4 group=1 mig=31ffbfe4 exit=0 completed=1 text=617b5b8088789bce generated=192 generation_tps=3.789 first_token_ms=2018.9 total_ms=53554.4
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-chain/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+WORKER index=5 group=1 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 generated= generation_tps= first_token_ms= total_ms=
+WORKER index=6 group=1 mig=31ffbfe4 exit=0 completed=1 text=fede20b0ce61df9a generated=192 generation_tps=3.796 first_token_ms=2055.4 total_ms=53506.5
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-chain/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+WORKER index=7 group=1 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 generated= generation_tps= first_token_ms= total_ms=
+FAULT victim=probe victim_alive=1 alive_at_fault=11 probe_exit=0 probe=route=host,gpu_read=cudaSuccess,words_equal=0,words=16777216,gpu_write=cudaErrorIllegalAddress,file_intact=0
+END_CASE timed_out=0 mps_servers=2 wall_ms=74266 workers_ms=54160
+CASE config=mig_mps fault=kill_worker groups=2 workers=4 turns=3
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-chain/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+PLANNER mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 tokens=11788 publish_ms=11.49
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-chain/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+LEADER group=0 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 tokens=11887 publish_ms=6.32
+LEADER group=1 mig=31ffbfe4 exit=0 completed=1 text=ccaa7b1578fc9b8c tokens=11887 publish_ms=6.60
+STDERR CUDA Graph id 27 reused
+STDERR CUDA Graph id 27 reused
+STDERR CUDA Graph id 27 reused
+WORKER index=0 group=0 mig=fafc828a exit=137 completed=0 text=e3b0c44298fc1c14 generated= generation_tps= first_token_ms= total_ms=
+WORKER index=1 group=0 mig=31ffbfe4 exit=0 completed=1 text=72fc7f37969fe021 generated=192 generation_tps=3.796 first_token_ms=2098.7 total_ms=53556.6
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-chain/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+WORKER index=2 group=0 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 generated= generation_tps= first_token_ms= total_ms=
+WORKER index=3 group=0 mig=31ffbfe4 exit=0 completed=1 text=7be0e5aff5023925 generated=192 generation_tps=3.791 first_token_ms=1965.9 total_ms=53491.6
+WORKER index=4 group=1 mig=31ffbfe4 exit=0 completed=1 text=617b5b8088789bce generated=192 generation_tps=3.796 first_token_ms=2081.7 total_ms=53548.9
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-chain/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+WORKER index=5 group=1 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 generated= generation_tps= first_token_ms= total_ms=
+WORKER index=6 group=1 mig=31ffbfe4 exit=0 completed=1 text=fede20b0ce61df9a generated=192 generation_tps=3.791 first_token_ms=1948.5 total_ms=53474.8
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-chain/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+WORKER index=7 group=1 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 generated= generation_tps= first_token_ms= total_ms=
+FAULT victim=worker0 victim_alive=1 alive_at_fault=11 probe_exit=none probe=none
+END_CASE timed_out=0 mps_servers=2 wall_ms=74251 workers_ms=54169
+CASE config=mig_mps fault=kill_leader groups=2 workers=4 turns=3
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-chain/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+PLANNER mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 tokens=11788 publish_ms=11.54
+STDERR CUDA Graph id 33 reused
+STDERR CUDA Graph id 33 reused
+STDERR CUDA Graph id 33 reused
+LEADER group=0 mig=fafc828a exit=137 completed=0 text=e3b0c44298fc1c14 tokens=11887 publish_ms=6.35
+LEADER group=1 mig=31ffbfe4 exit=0 completed=1 text=ccaa7b1578fc9b8c tokens=11887 publish_ms=6.53
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-chain/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+WORKER index=0 group=0 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 generated= generation_tps= first_token_ms= total_ms=
+WORKER index=1 group=0 mig=31ffbfe4 exit=0 completed=1 text=72fc7f37969fe021 generated=192 generation_tps=3.796 first_token_ms=2080.4 total_ms=53527.3
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-chain/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+WORKER index=2 group=0 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 generated= generation_tps= first_token_ms= total_ms=
+WORKER index=3 group=0 mig=31ffbfe4 exit=0 completed=1 text=7be0e5aff5023925 generated=192 generation_tps=3.800 first_token_ms=2054.0 total_ms=53458.8
+WORKER index=4 group=1 mig=31ffbfe4 exit=0 completed=1 text=617b5b8088789bce generated=192 generation_tps=3.795 first_token_ms=2063.9 total_ms=53525.9
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-chain/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+WORKER index=5 group=1 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 generated= generation_tps= first_token_ms= total_ms=
+WORKER index=6 group=1 mig=31ffbfe4 exit=0 completed=1 text=fede20b0ce61df9a generated=192 generation_tps=3.795 first_token_ms=1997.8 total_ms=53463.4
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-chain/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+WORKER index=7 group=1 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 generated= generation_tps= first_token_ms= total_ms=
+FAULT victim=leader0 victim_alive=1 alive_at_fault=11 probe_exit=none probe=none
+END_CASE timed_out=0 mps_servers=2 wall_ms=74319 workers_ms=54150
+CASE config=mig fault=none groups=2 workers=4 turns=3
+PLANNER mig=fafc828a exit=0 completed=1 text=2986789f8c4a0a5d tokens=11788 publish_ms=11.55
+LEADER group=0 mig=fafc828a exit=0 completed=1 text=172e721640cc24d4 tokens=11887 publish_ms=6.59
+LEADER group=1 mig=31ffbfe4 exit=0 completed=1 text=ccaa7b1578fc9b8c tokens=11887 publish_ms=4.76
+WORKER index=0 group=0 mig=fafc828a exit=0 completed=1 text=34c5ba01e77f923b generated=192 generation_tps=4.661 first_token_ms=1414.7 total_ms=43253.6
+WORKER index=1 group=0 mig=31ffbfe4 exit=0 completed=1 text=72fc7f37969fe021 generated=192 generation_tps=3.268 first_token_ms=1728.8 total_ms=61509.9
+WORKER index=2 group=0 mig=fafc828a exit=0 completed=1 text=d81abdc974c1a615 generated=192 generation_tps=4.693 first_token_ms=2240.6 total_ms=43854.9
+WORKER index=3 group=0 mig=31ffbfe4 exit=0 completed=1 text=7be0e5aff5023925 generated=192 generation_tps=3.279 first_token_ms=2292.3 total_ms=61862.9
+WORKER index=4 group=1 mig=31ffbfe4 exit=0 completed=1 text=617b5b8088789bce generated=192 generation_tps=3.281 first_token_ms=2304.2 total_ms=61845.0
+WORKER index=5 group=1 mig=fafc828a exit=0 completed=1 text=736817ea889e0085 generated=192 generation_tps=4.687 first_token_ms=2216.9 total_ms=43865.5
+WORKER index=6 group=1 mig=31ffbfe4 exit=0 completed=1 text=fede20b0ce61df9a generated=192 generation_tps=3.278 first_token_ms=2214.5 total_ms=61800.9
+WORKER index=7 group=1 mig=fafc828a exit=0 completed=1 text=06acc271f26cb952 generated=192 generation_tps=4.682 first_token_ms=2163.6 total_ms=43859.9
+FAULT victim=none victim_alive=0 alive_at_fault=0 probe_exit=none probe=none
+END_CASE timed_out=0 mps_servers=0 wall_ms=82426 workers_ms=62492
+CASE config=mig fault=write groups=2 workers=4 turns=3
+PLANNER mig=fafc828a exit=0 completed=1 text=2986789f8c4a0a5d tokens=11788 publish_ms=11.75
+LEADER group=0 mig=fafc828a exit=0 completed=1 text=172e721640cc24d4 tokens=11887 publish_ms=7.07
+LEADER group=1 mig=31ffbfe4 exit=0 completed=1 text=ccaa7b1578fc9b8c tokens=11887 publish_ms=6.30
+WORKER index=0 group=0 mig=fafc828a exit=0 completed=1 text=34c5ba01e77f923b generated=192 generation_tps=4.661 first_token_ms=1602.9 total_ms=43446.6
+WORKER index=1 group=0 mig=31ffbfe4 exit=0 completed=1 text=72fc7f37969fe021 generated=192 generation_tps=3.280 first_token_ms=2185.5 total_ms=61785.7
+WORKER index=2 group=0 mig=fafc828a exit=0 completed=1 text=d81abdc974c1a615 generated=192 generation_tps=4.683 first_token_ms=2142.9 total_ms=43785.7
+WORKER index=3 group=0 mig=31ffbfe4 exit=0 completed=1 text=7be0e5aff5023925 generated=192 generation_tps=3.270 first_token_ms=1906.0 total_ms=61632.2
+WORKER index=4 group=1 mig=31ffbfe4 exit=0 completed=1 text=617b5b8088789bce generated=192 generation_tps=3.281 first_token_ms=2301.3 total_ms=61846.6
+WORKER index=5 group=1 mig=fafc828a exit=0 completed=1 text=736817ea889e0085 generated=192 generation_tps=4.684 first_token_ms=2239.8 total_ms=43907.4
+WORKER index=6 group=1 mig=31ffbfe4 exit=0 completed=1 text=fede20b0ce61df9a generated=192 generation_tps=3.281 first_token_ms=2306.8 total_ms=61837.2
+WORKER index=7 group=1 mig=fafc828a exit=0 completed=1 text=06acc271f26cb952 generated=192 generation_tps=4.689 first_token_ms=2259.3 total_ms=43878.5
+FAULT victim=probe victim_alive=1 alive_at_fault=11 probe_exit=0 probe=route=host,gpu_read=cudaSuccess,words_equal=0,words=16777216,gpu_write=cudaErrorIllegalAddress,file_intact=0
+END_CASE timed_out=0 mps_servers=0 wall_ms=82354 workers_ms=62469
+CASE config=mig fault=kill_worker groups=2 workers=4 turns=3
+PLANNER mig=fafc828a exit=0 completed=1 text=2986789f8c4a0a5d tokens=11788 publish_ms=11.74
+LEADER group=0 mig=fafc828a exit=0 completed=1 text=172e721640cc24d4 tokens=11887 publish_ms=6.32
+LEADER group=1 mig=31ffbfe4 exit=0 completed=1 text=ccaa7b1578fc9b8c tokens=11887 publish_ms=4.51
+STDERR CUDA Graph id 27 reused
+STDERR CUDA Graph id 27 reused
+STDERR CUDA Graph id 27 reused
+WORKER index=0 group=0 mig=fafc828a exit=137 completed=0 text=e3b0c44298fc1c14 generated= generation_tps= first_token_ms= total_ms=
+WORKER index=1 group=0 mig=31ffbfe4 exit=0 completed=1 text=72fc7f37969fe021 generated=192 generation_tps=3.314 first_token_ms=2089.1 total_ms=61030.0
+WORKER index=2 group=0 mig=fafc828a exit=0 completed=1 text=d81abdc974c1a615 generated=192 generation_tps=5.782 first_token_ms=2148.9 total_ms=35872.3
+WORKER index=3 group=0 mig=31ffbfe4 exit=0 completed=1 text=7be0e5aff5023925 generated=192 generation_tps=3.320 first_token_ms=2341.6 total_ms=61197.6
+WORKER index=4 group=1 mig=31ffbfe4 exit=0 completed=1 text=617b5b8088789bce generated=192 generation_tps=3.317 first_token_ms=2251.2 total_ms=61146.3
+WORKER index=5 group=1 mig=fafc828a exit=0 completed=1 text=736817ea889e0085 generated=192 generation_tps=5.802 first_token_ms=2319.0 total_ms=35933.4
+WORKER index=6 group=1 mig=31ffbfe4 exit=0 completed=1 text=fede20b0ce61df9a generated=192 generation_tps=3.318 first_token_ms=2280.1 total_ms=61167.1
+WORKER index=7 group=1 mig=fafc828a exit=0 completed=1 text=06acc271f26cb952 generated=192 generation_tps=5.782 first_token_ms=2140.2 total_ms=35879.1
+FAULT victim=worker0 victim_alive=1 alive_at_fault=11 probe_exit=none probe=none
+END_CASE timed_out=0 mps_servers=0 wall_ms=81749 workers_ms=61838
+CASE config=mig fault=kill_leader groups=2 workers=4 turns=3
+PLANNER mig=fafc828a exit=0 completed=1 text=2986789f8c4a0a5d tokens=11788 publish_ms=11.70
+STDERR CUDA Graph id 33 reused
+STDERR CUDA Graph id 33 reused
+STDERR CUDA Graph id 33 reused
+LEADER group=0 mig=fafc828a exit=137 completed=0 text=e3b0c44298fc1c14 tokens=11887 publish_ms=5.04
+LEADER group=1 mig=31ffbfe4 exit=0 completed=1 text=ccaa7b1578fc9b8c tokens=11887 publish_ms=6.17
+WORKER index=0 group=0 mig=fafc828a exit=0 completed=1 text=34c5ba01e77f923b generated=192 generation_tps=4.768 first_token_ms=1542.0 total_ms=42459.6
+WORKER index=1 group=0 mig=31ffbfe4 exit=0 completed=1 text=72fc7f37969fe021 generated=192 generation_tps=3.284 first_token_ms=2125.0 total_ms=61596.0
+WORKER index=2 group=0 mig=fafc828a exit=0 completed=1 text=d81abdc974c1a615 generated=192 generation_tps=4.805 first_token_ms=2231.8 total_ms=42888.3
+WORKER index=3 group=0 mig=31ffbfe4 exit=0 completed=1 text=7be0e5aff5023925 generated=192 generation_tps=3.284 first_token_ms=2246.7 total_ms=61730.3
+WORKER index=4 group=1 mig=31ffbfe4 exit=0 completed=1 text=617b5b8088789bce generated=192 generation_tps=3.287 first_token_ms=2281.6 total_ms=61711.4
+WORKER index=5 group=1 mig=fafc828a exit=0 completed=1 text=736817ea889e0085 generated=192 generation_tps=4.812 first_token_ms=2271.4 total_ms=42866.4
+WORKER index=6 group=1 mig=31ffbfe4 exit=0 completed=1 text=fede20b0ce61df9a generated=192 generation_tps=3.288 first_token_ms=2301.9 total_ms=61720.1
+WORKER index=7 group=1 mig=fafc828a exit=0 completed=1 text=06acc271f26cb952 generated=192 generation_tps=4.808 first_token_ms=2114.6 total_ms=42726.7
+FAULT victim=leader0 victim_alive=1 alive_at_fault=11 probe_exit=none probe=none
+END_CASE timed_out=0 mps_servers=0 wall_ms=82196 workers_ms=62299
+END_KVPIPEFAULT
+BEGIN_KVPIPEFAULT run=3 context=16384
+CASE config=mig fault=none groups=2 workers=4 turns=3
+PLANNER mig=fafc828a exit=0 completed=1 text=2986789f8c4a0a5d tokens=11788 publish_ms=11.52
+LEADER group=0 mig=fafc828a exit=0 completed=1 text=172e721640cc24d4 tokens=11887 publish_ms=6.84
+LEADER group=1 mig=31ffbfe4 exit=0 completed=1 text=ccaa7b1578fc9b8c tokens=11887 publish_ms=6.33
+WORKER index=0 group=0 mig=fafc828a exit=0 completed=1 text=34c5ba01e77f923b generated=192 generation_tps=4.681 first_token_ms=2000.4 total_ms=43682.2
+WORKER index=1 group=0 mig=31ffbfe4 exit=0 completed=1 text=72fc7f37969fe021 generated=192 generation_tps=3.276 first_token_ms=2029.8 total_ms=61648.1
+WORKER index=2 group=0 mig=fafc828a exit=0 completed=1 text=d81abdc974c1a615 generated=192 generation_tps=4.685 first_token_ms=2243.9 total_ms=43913.2
+WORKER index=3 group=0 mig=31ffbfe4 exit=0 completed=1 text=7be0e5aff5023925 generated=192 generation_tps=3.283 first_token_ms=2318.4 total_ms=61844.7
+WORKER index=4 group=1 mig=31ffbfe4 exit=0 completed=1 text=617b5b8088789bce generated=192 generation_tps=3.285 first_token_ms=2229.7 total_ms=61737.1
+WORKER index=5 group=1 mig=fafc828a exit=0 completed=1 text=736817ea889e0085 generated=192 generation_tps=4.693 first_token_ms=2279.9 total_ms=43881.8
+WORKER index=6 group=1 mig=31ffbfe4 exit=0 completed=1 text=fede20b0ce61df9a generated=192 generation_tps=3.285 first_token_ms=2309.6 total_ms=61798.8
+WORKER index=7 group=1 mig=fafc828a exit=0 completed=1 text=06acc271f26cb952 generated=192 generation_tps=4.697 first_token_ms=2227.2 total_ms=43783.2
+FAULT victim=none victim_alive=0 alive_at_fault=0 probe_exit=none probe=none
+END_CASE timed_out=0 mps_servers=0 wall_ms=82392 workers_ms=62472
+CASE config=mig fault=write groups=2 workers=4 turns=3
+PLANNER mig=fafc828a exit=0 completed=1 text=2986789f8c4a0a5d tokens=11788 publish_ms=11.43
+LEADER group=0 mig=fafc828a exit=0 completed=1 text=172e721640cc24d4 tokens=11887 publish_ms=6.40
+LEADER group=1 mig=31ffbfe4 exit=0 completed=1 text=ccaa7b1578fc9b8c tokens=11887 publish_ms=6.43
+WORKER index=0 group=0 mig=fafc828a exit=0 completed=1 text=34c5ba01e77f923b generated=192 generation_tps=4.656 first_token_ms=1564.3 total_ms=43467.1
+WORKER index=1 group=0 mig=31ffbfe4 exit=0 completed=1 text=72fc7f37969fe021 generated=192 generation_tps=3.281 first_token_ms=2205.0 total_ms=61772.2
+WORKER index=2 group=0 mig=fafc828a exit=0 completed=1 text=d81abdc974c1a615 generated=192 generation_tps=4.685 first_token_ms=2264.2 total_ms=43930.6
+WORKER index=3 group=0 mig=31ffbfe4 exit=0 completed=1 text=7be0e5aff5023925 generated=192 generation_tps=3.277 first_token_ms=2074.7 total_ms=61700.8
+WORKER index=4 group=1 mig=31ffbfe4 exit=0 completed=1 text=617b5b8088789bce generated=192 generation_tps=3.283 first_token_ms=2301.5 total_ms=61838.0
+WORKER index=5 group=1 mig=fafc828a exit=0 completed=1 text=736817ea889e0085 generated=192 generation_tps=4.689 first_token_ms=2225.0 total_ms=43863.8
+WORKER index=6 group=1 mig=31ffbfe4 exit=0 completed=1 text=fede20b0ce61df9a generated=192 generation_tps=3.285 first_token_ms=2306.8 total_ms=61805.3
+WORKER index=7 group=1 mig=fafc828a exit=0 completed=1 text=06acc271f26cb952 generated=192 generation_tps=4.689 first_token_ms=2250.7 total_ms=43900.3
+FAULT victim=probe victim_alive=1 alive_at_fault=11 probe_exit=0 probe=route=host,gpu_read=cudaSuccess,words_equal=0,words=16777216,gpu_write=cudaErrorIllegalAddress,file_intact=0
+END_CASE timed_out=0 mps_servers=0 wall_ms=82499 workers_ms=62481
+CASE config=mig fault=kill_worker groups=2 workers=4 turns=3
+PLANNER mig=fafc828a exit=0 completed=1 text=2986789f8c4a0a5d tokens=11788 publish_ms=11.68
+LEADER group=0 mig=fafc828a exit=0 completed=1 text=172e721640cc24d4 tokens=11887 publish_ms=6.50
+LEADER group=1 mig=31ffbfe4 exit=0 completed=1 text=ccaa7b1578fc9b8c tokens=11887 publish_ms=6.31
+STDERR CUDA Graph id 27 reused
+STDERR CUDA Graph id 27 reused
+STDERR CUDA Graph id 27 reused
+WORKER index=0 group=0 mig=fafc828a exit=137 completed=0 text=e3b0c44298fc1c14 generated= generation_tps= first_token_ms= total_ms=
+WORKER index=1 group=0 mig=31ffbfe4 exit=0 completed=1 text=72fc7f37969fe021 generated=192 generation_tps=3.316 first_token_ms=2138.8 total_ms=61041.4
+WORKER index=2 group=0 mig=fafc828a exit=0 completed=1 text=d81abdc974c1a615 generated=192 generation_tps=5.804 first_token_ms=2265.2 total_ms=35873.3
+WORKER index=3 group=0 mig=31ffbfe4 exit=0 completed=1 text=7be0e5aff5023925 generated=192 generation_tps=3.319 first_token_ms=2334.2 total_ms=61194.4
+WORKER index=4 group=1 mig=31ffbfe4 exit=0 completed=1 text=617b5b8088789bce generated=192 generation_tps=3.319 first_token_ms=2331.9 total_ms=61205.9
+WORKER index=5 group=1 mig=fafc828a exit=0 completed=1 text=736817ea889e0085 generated=192 generation_tps=5.783 first_token_ms=2073.0 total_ms=35780.1
+WORKER index=6 group=1 mig=31ffbfe4 exit=0 completed=1 text=fede20b0ce61df9a generated=192 generation_tps=3.318 first_token_ms=2311.4 total_ms=61195.7
+WORKER index=7 group=1 mig=fafc828a exit=0 completed=1 text=06acc271f26cb952 generated=192 generation_tps=5.802 first_token_ms=2283.0 total_ms=35872.5
+FAULT victim=worker0 victim_alive=1 alive_at_fault=11 probe_exit=none probe=none
+END_CASE timed_out=0 mps_servers=0 wall_ms=81717 workers_ms=61810
+CASE config=mig fault=kill_leader groups=2 workers=4 turns=3
+PLANNER mig=fafc828a exit=0 completed=1 text=2986789f8c4a0a5d tokens=11788 publish_ms=11.62
+STDERR CUDA Graph id 33 reused
+STDERR CUDA Graph id 33 reused
+STDERR CUDA Graph id 33 reused
+LEADER group=0 mig=fafc828a exit=137 completed=0 text=e3b0c44298fc1c14 tokens=11887 publish_ms=6.34
+LEADER group=1 mig=31ffbfe4 exit=0 completed=1 text=ccaa7b1578fc9b8c tokens=11887 publish_ms=6.51
+WORKER index=0 group=0 mig=fafc828a exit=0 completed=1 text=34c5ba01e77f923b generated=192 generation_tps=4.771 first_token_ms=1667.6 total_ms=42588.8
+WORKER index=1 group=0 mig=31ffbfe4 exit=0 completed=1 text=72fc7f37969fe021 generated=192 generation_tps=3.282 first_token_ms=2192.1 total_ms=61719.7
+WORKER index=2 group=0 mig=fafc828a exit=0 completed=1 text=d81abdc974c1a615 generated=192 generation_tps=4.794 first_token_ms=2078.6 total_ms=42833.5
+WORKER index=3 group=0 mig=31ffbfe4 exit=0 completed=1 text=7be0e5aff5023925 generated=192 generation_tps=3.282 first_token_ms=2186.5 total_ms=61703.8
+WORKER index=4 group=1 mig=31ffbfe4 exit=0 completed=1 text=617b5b8088789bce generated=192 generation_tps=3.286 first_token_ms=2297.4 total_ms=61748.0
+WORKER index=5 group=1 mig=fafc828a exit=0 completed=1 text=736817ea889e0085 generated=192 generation_tps=4.807 first_token_ms=2246.0 total_ms=42901.5
+WORKER index=6 group=1 mig=31ffbfe4 exit=0 completed=1 text=fede20b0ce61df9a generated=192 generation_tps=3.287 first_token_ms=2309.4 total_ms=61744.8
+WORKER index=7 group=1 mig=fafc828a exit=0 completed=1 text=06acc271f26cb952 generated=192 generation_tps=4.808 first_token_ms=2234.9 total_ms=42856.6
+FAULT victim=leader0 victim_alive=1 alive_at_fault=11 probe_exit=none probe=none
+END_CASE timed_out=0 mps_servers=0 wall_ms=82307 workers_ms=62354
+CASE config=mig_mps fault=none groups=2 workers=4 turns=3
+PLANNER mig=fafc828a exit=0 completed=1 text=2986789f8c4a0a5d tokens=11788 publish_ms=11.81
+LEADER group=0 mig=fafc828a exit=0 completed=1 text=172e721640cc24d4 tokens=11887 publish_ms=5.28
+LEADER group=1 mig=31ffbfe4 exit=0 completed=1 text=ccaa7b1578fc9b8c tokens=11887 publish_ms=6.43
+WORKER index=0 group=0 mig=fafc828a exit=0 completed=1 text=34c5ba01e77f923b generated=192 generation_tps=5.215 first_token_ms=1361.9 total_ms=38911.8
+WORKER index=1 group=0 mig=31ffbfe4 exit=0 completed=1 text=72fc7f37969fe021 generated=192 generation_tps=3.646 first_token_ms=2071.6 total_ms=55640.7
+WORKER index=2 group=0 mig=fafc828a exit=0 completed=1 text=d81abdc974c1a615 generated=192 generation_tps=5.210 first_token_ms=1448.1 total_ms=39006.1
+WORKER index=3 group=0 mig=31ffbfe4 exit=0 completed=1 text=7be0e5aff5023925 generated=192 generation_tps=3.648 first_token_ms=2068.7 total_ms=55614.7
+WORKER index=4 group=1 mig=31ffbfe4 exit=0 completed=1 text=617b5b8088789bce generated=192 generation_tps=3.649 first_token_ms=2058.5 total_ms=55583.7
+WORKER index=5 group=1 mig=fafc828a exit=0 completed=1 text=736817ea889e0085 generated=192 generation_tps=5.263 first_token_ms=1970.1 total_ms=39142.3
+WORKER index=6 group=1 mig=31ffbfe4 exit=0 completed=1 text=fede20b0ce61df9a generated=192 generation_tps=3.648 first_token_ms=2049.4 total_ms=55577.4
+WORKER index=7 group=1 mig=fafc828a exit=0 completed=1 text=06acc271f26cb952 generated=192 generation_tps=5.266 first_token_ms=1960.9 total_ms=39102.1
+FAULT victim=none victim_alive=0 alive_at_fault=0 probe_exit=none probe=none
+END_CASE timed_out=0 mps_servers=2 wall_ms=76404 workers_ms=56243
+CASE config=mig_mps fault=write groups=2 workers=4 turns=3
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-chain/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+PLANNER mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 tokens=11788 publish_ms=11.65
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-chain/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+LEADER group=0 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 tokens=11887 publish_ms=4.72
+LEADER group=1 mig=31ffbfe4 exit=0 completed=1 text=ccaa7b1578fc9b8c tokens=11887 publish_ms=6.50
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-chain/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+WORKER index=0 group=0 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 generated= generation_tps= first_token_ms= total_ms=
+WORKER index=1 group=0 mig=31ffbfe4 exit=0 completed=1 text=72fc7f37969fe021 generated=192 generation_tps=3.794 first_token_ms=2098.6 total_ms=53565.3
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-chain/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+WORKER index=2 group=0 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 generated= generation_tps= first_token_ms= total_ms=
+WORKER index=3 group=0 mig=31ffbfe4 exit=0 completed=1 text=7be0e5aff5023925 generated=192 generation_tps=3.791 first_token_ms=2073.9 total_ms=53575.6
+WORKER index=4 group=1 mig=31ffbfe4 exit=0 completed=1 text=617b5b8088789bce generated=192 generation_tps=3.793 first_token_ms=2051.8 total_ms=53556.4
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-chain/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+WORKER index=5 group=1 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 generated= generation_tps= first_token_ms= total_ms=
+WORKER index=6 group=1 mig=31ffbfe4 exit=0 completed=1 text=fede20b0ce61df9a generated=192 generation_tps=3.793 first_token_ms=2038.2 total_ms=53533.5
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-chain/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+WORKER index=7 group=1 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 generated= generation_tps= first_token_ms= total_ms=
+FAULT victim=probe victim_alive=1 alive_at_fault=11 probe_exit=0 probe=route=host,gpu_read=cudaSuccess,words_equal=0,words=16777216,gpu_write=cudaErrorIllegalAddress,file_intact=0
+END_CASE timed_out=0 mps_servers=2 wall_ms=74260 workers_ms=54147
+CASE config=mig_mps fault=kill_worker groups=2 workers=4 turns=3
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-chain/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+PLANNER mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 tokens=11788 publish_ms=11.31
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-chain/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+LEADER group=0 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 tokens=11887 publish_ms=6.51
+LEADER group=1 mig=31ffbfe4 exit=0 completed=1 text=ccaa7b1578fc9b8c tokens=11887 publish_ms=6.70
+STDERR CUDA Graph id 27 reused
+STDERR CUDA Graph id 27 reused
+STDERR CUDA Graph id 27 reused
+WORKER index=0 group=0 mig=fafc828a exit=137 completed=0 text=e3b0c44298fc1c14 generated= generation_tps= first_token_ms= total_ms=
+WORKER index=1 group=0 mig=31ffbfe4 exit=0 completed=1 text=72fc7f37969fe021 generated=192 generation_tps=3.800 first_token_ms=2091.7 total_ms=53490.4
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-chain/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+WORKER index=2 group=0 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 generated= generation_tps= first_token_ms= total_ms=
+WORKER index=3 group=0 mig=31ffbfe4 exit=0 completed=1 text=7be0e5aff5023925 generated=192 generation_tps=3.795 first_token_ms=2049.2 total_ms=53519.6
+WORKER index=4 group=1 mig=31ffbfe4 exit=0 completed=1 text=617b5b8088789bce generated=192 generation_tps=3.800 first_token_ms=2080.5 total_ms=53486.4
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-chain/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+WORKER index=5 group=1 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 generated= generation_tps= first_token_ms= total_ms=
+WORKER index=6 group=1 mig=31ffbfe4 exit=0 completed=1 text=fede20b0ce61df9a generated=192 generation_tps=3.796 first_token_ms=2054.8 total_ms=53507.2
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-chain/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+WORKER index=7 group=1 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 generated= generation_tps= first_token_ms= total_ms=
+FAULT victim=worker0 victim_alive=1 alive_at_fault=11 probe_exit=none probe=none
+END_CASE timed_out=0 mps_servers=2 wall_ms=74191 workers_ms=54093
+CASE config=mig_mps fault=kill_leader groups=2 workers=4 turns=3
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-chain/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+PLANNER mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 tokens=11788 publish_ms=11.48
+STDERR CUDA Graph id 33 reused
+STDERR CUDA Graph id 33 reused
+STDERR CUDA Graph id 33 reused
+LEADER group=0 mig=fafc828a exit=137 completed=0 text=e3b0c44298fc1c14 tokens=11887 publish_ms=6.66
+LEADER group=1 mig=31ffbfe4 exit=0 completed=1 text=ccaa7b1578fc9b8c tokens=11887 publish_ms=6.39
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-chain/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+WORKER index=0 group=0 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 generated= generation_tps= first_token_ms= total_ms=
+WORKER index=1 group=0 mig=31ffbfe4 exit=0 completed=1 text=72fc7f37969fe021 generated=192 generation_tps=3.792 first_token_ms=1881.5 total_ms=53433.9
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-chain/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+WORKER index=2 group=0 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 generated= generation_tps= first_token_ms= total_ms=
+WORKER index=3 group=0 mig=31ffbfe4 exit=0 completed=1 text=7be0e5aff5023925 generated=192 generation_tps=3.798 first_token_ms=2060.9 total_ms=53491.1
+WORKER index=4 group=1 mig=31ffbfe4 exit=0 completed=1 text=617b5b8088789bce generated=192 generation_tps=3.798 first_token_ms=2112.9 total_ms=53566.0
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-chain/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+WORKER index=5 group=1 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 generated= generation_tps= first_token_ms= total_ms=
+WORKER index=6 group=1 mig=31ffbfe4 exit=0 completed=1 text=fede20b0ce61df9a generated=192 generation_tps=3.798 first_token_ms=2081.5 total_ms=53523.5
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-chain/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+WORKER index=7 group=1 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 generated= generation_tps= first_token_ms= total_ms=
+FAULT victim=leader0 victim_alive=1 alive_at_fault=11 probe_exit=none probe=none
+END_CASE timed_out=0 mps_servers=2 wall_ms=74182 workers_ms=54083
+END_KVPIPEFAULT
+BEGIN_KVPIPEFAULT run=4 context=16384
+CASE config=mig_mps fault=none groups=2 workers=4 turns=3
+PLANNER mig=fafc828a exit=0 completed=1 text=2986789f8c4a0a5d tokens=11788 publish_ms=11.71
+LEADER group=0 mig=fafc828a exit=0 completed=1 text=172e721640cc24d4 tokens=11887 publish_ms=6.59
+LEADER group=1 mig=31ffbfe4 exit=0 completed=1 text=ccaa7b1578fc9b8c tokens=11887 publish_ms=6.21
+WORKER index=0 group=0 mig=fafc828a exit=0 completed=1 text=34c5ba01e77f923b generated=192 generation_tps=5.211 first_token_ms=1372.7 total_ms=38943.7
+WORKER index=1 group=0 mig=31ffbfe4 exit=0 completed=1 text=72fc7f37969fe021 generated=192 generation_tps=3.644 first_token_ms=2024.7 total_ms=55640.3
+WORKER index=2 group=0 mig=fafc828a exit=0 completed=1 text=d81abdc974c1a615 generated=192 generation_tps=5.219 first_token_ms=1517.0 total_ms=38998.5
+WORKER index=3 group=0 mig=31ffbfe4 exit=0 completed=1 text=7be0e5aff5023925 generated=192 generation_tps=3.648 first_token_ms=2086.1 total_ms=55634.6
+WORKER index=4 group=1 mig=31ffbfe4 exit=0 completed=1 text=617b5b8088789bce generated=192 generation_tps=3.647 first_token_ms=2037.0 total_ms=55591.9
+WORKER index=5 group=1 mig=fafc828a exit=0 completed=1 text=736817ea889e0085 generated=192 generation_tps=5.251 first_token_ms=1908.2 total_ms=39150.9
+WORKER index=6 group=1 mig=31ffbfe4 exit=0 completed=1 text=fede20b0ce61df9a generated=192 generation_tps=3.650 first_token_ms=2065.8 total_ms=55584.9
+WORKER index=7 group=1 mig=fafc828a exit=0 completed=1 text=06acc271f26cb952 generated=192 generation_tps=5.250 first_token_ms=1877.7 total_ms=39123.3
+FAULT victim=none victim_alive=0 alive_at_fault=0 probe_exit=none probe=none
+END_CASE timed_out=0 mps_servers=2 wall_ms=76276 workers_ms=56180
+CASE config=mig_mps fault=write groups=2 workers=4 turns=3
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-chain/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+PLANNER mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 tokens=11788 publish_ms=12.04
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-chain/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+LEADER group=0 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 tokens=11887 publish_ms=6.49
+LEADER group=1 mig=31ffbfe4 exit=0 completed=1 text=ccaa7b1578fc9b8c tokens=11887 publish_ms=6.64
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-chain/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+WORKER index=0 group=0 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 generated= generation_tps= first_token_ms= total_ms=
+WORKER index=1 group=0 mig=31ffbfe4 exit=0 completed=1 text=72fc7f37969fe021 generated=192 generation_tps=3.795 first_token_ms=2115.2 total_ms=53577.4
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-chain/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+WORKER index=2 group=0 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 generated= generation_tps= first_token_ms= total_ms=
+WORKER index=3 group=0 mig=31ffbfe4 exit=0 completed=1 text=7be0e5aff5023925 generated=192 generation_tps=3.795 first_token_ms=2097.5 total_ms=53569.5
+WORKER index=4 group=1 mig=31ffbfe4 exit=0 completed=1 text=617b5b8088789bce generated=192 generation_tps=3.793 first_token_ms=2046.2 total_ms=53552.4
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-chain/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+WORKER index=5 group=1 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 generated= generation_tps= first_token_ms= total_ms=
+WORKER index=6 group=1 mig=31ffbfe4 exit=0 completed=1 text=fede20b0ce61df9a generated=192 generation_tps=3.797 first_token_ms=1864.4 total_ms=53344.1
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-chain/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+WORKER index=7 group=1 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 generated= generation_tps= first_token_ms= total_ms=
+FAULT victim=probe victim_alive=1 alive_at_fault=11 probe_exit=0 probe=route=host,gpu_read=cudaSuccess,words_equal=0,words=16777216,gpu_write=cudaErrorIllegalAddress,file_intact=0
+END_CASE timed_out=0 mps_servers=2 wall_ms=74231 workers_ms=54128
+CASE config=mig_mps fault=kill_worker groups=2 workers=4 turns=3
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-chain/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+PLANNER mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 tokens=11788 publish_ms=11.84
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-chain/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+LEADER group=0 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 tokens=11887 publish_ms=6.79
+LEADER group=1 mig=31ffbfe4 exit=0 completed=1 text=ccaa7b1578fc9b8c tokens=11887 publish_ms=6.38
+STDERR CUDA Graph id 27 reused
+STDERR CUDA Graph id 27 reused
+STDERR CUDA Graph id 27 reused
+WORKER index=0 group=0 mig=fafc828a exit=137 completed=0 text=e3b0c44298fc1c14 generated= generation_tps= first_token_ms= total_ms=
+WORKER index=1 group=0 mig=31ffbfe4 exit=0 completed=1 text=72fc7f37969fe021 generated=192 generation_tps=3.792 first_token_ms=1871.3 total_ms=53399.0
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-chain/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+WORKER index=2 group=0 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 generated= generation_tps= first_token_ms= total_ms=
+WORKER index=3 group=0 mig=31ffbfe4 exit=0 completed=1 text=7be0e5aff5023925 generated=192 generation_tps=3.796 first_token_ms=2071.1 total_ms=53525.2
+WORKER index=4 group=1 mig=31ffbfe4 exit=0 completed=1 text=617b5b8088789bce generated=192 generation_tps=3.793 first_token_ms=2032.6 total_ms=53524.6
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-chain/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+WORKER index=5 group=1 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 generated= generation_tps= first_token_ms= total_ms=
+WORKER index=6 group=1 mig=31ffbfe4 exit=0 completed=1 text=fede20b0ce61df9a generated=192 generation_tps=3.797 first_token_ms=2051.0 total_ms=53490.6
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-chain/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+WORKER index=7 group=1 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 generated= generation_tps= first_token_ms= total_ms=
+FAULT victim=worker0 victim_alive=1 alive_at_fault=11 probe_exit=none probe=none
+END_CASE timed_out=0 mps_servers=2 wall_ms=74235 workers_ms=54140
+CASE config=mig_mps fault=kill_leader groups=2 workers=4 turns=3
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-chain/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+PLANNER mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 tokens=11788 publish_ms=11.77
+STDERR CUDA Graph id 33 reused
+STDERR CUDA Graph id 33 reused
+STDERR CUDA Graph id 33 reused
+LEADER group=0 mig=fafc828a exit=137 completed=0 text=e3b0c44298fc1c14 tokens=11887 publish_ms=6.48
+LEADER group=1 mig=31ffbfe4 exit=0 completed=1 text=ccaa7b1578fc9b8c tokens=11887 publish_ms=6.52
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-chain/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+WORKER index=0 group=0 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 generated= generation_tps= first_token_ms= total_ms=
+WORKER index=1 group=0 mig=31ffbfe4 exit=0 completed=1 text=72fc7f37969fe021 generated=192 generation_tps=3.794 first_token_ms=2082.2 total_ms=53553.7
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-chain/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+WORKER index=2 group=0 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 generated= generation_tps= first_token_ms= total_ms=
+WORKER index=3 group=0 mig=31ffbfe4 exit=0 completed=1 text=7be0e5aff5023925 generated=192 generation_tps=3.794 first_token_ms=2066.1 total_ms=53550.0
+WORKER index=4 group=1 mig=31ffbfe4 exit=0 completed=1 text=617b5b8088789bce generated=192 generation_tps=3.785 first_token_ms=1870.1 total_ms=53483.3
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-chain/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+WORKER index=5 group=1 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 generated= generation_tps= first_token_ms= total_ms=
+WORKER index=6 group=1 mig=31ffbfe4 exit=0 completed=1 text=fede20b0ce61df9a generated=192 generation_tps=3.797 first_token_ms=2052.5 total_ms=53493.6
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-chain/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+WORKER index=7 group=1 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 generated= generation_tps= first_token_ms= total_ms=
+FAULT victim=leader0 victim_alive=1 alive_at_fault=11 probe_exit=none probe=none
+END_CASE timed_out=0 mps_servers=2 wall_ms=74215 workers_ms=54146
+CASE config=mig fault=none groups=2 workers=4 turns=3
+PLANNER mig=fafc828a exit=0 completed=1 text=2986789f8c4a0a5d tokens=11788 publish_ms=11.60
+LEADER group=0 mig=fafc828a exit=0 completed=1 text=172e721640cc24d4 tokens=11887 publish_ms=6.56
+LEADER group=1 mig=31ffbfe4 exit=0 completed=1 text=ccaa7b1578fc9b8c tokens=11887 publish_ms=6.26
+WORKER index=0 group=0 mig=fafc828a exit=0 completed=1 text=34c5ba01e77f923b generated=192 generation_tps=4.660 first_token_ms=1537.9 total_ms=43387.8
+WORKER index=1 group=0 mig=31ffbfe4 exit=0 completed=1 text=72fc7f37969fe021 generated=192 generation_tps=3.282 first_token_ms=2259.2 total_ms=61824.7
+WORKER index=2 group=0 mig=fafc828a exit=0 completed=1 text=d81abdc974c1a615 generated=192 generation_tps=4.688 first_token_ms=2243.5 total_ms=43886.3
+WORKER index=3 group=0 mig=31ffbfe4 exit=0 completed=1 text=7be0e5aff5023925 generated=192 generation_tps=3.281 first_token_ms=2253.0 total_ms=61813.2
+WORKER index=4 group=1 mig=31ffbfe4 exit=0 completed=1 text=617b5b8088789bce generated=192 generation_tps=3.282 first_token_ms=2273.9 total_ms=61813.8
+WORKER index=5 group=1 mig=fafc828a exit=0 completed=1 text=736817ea889e0085 generated=192 generation_tps=4.681 first_token_ms=2107.5 total_ms=43810.1
+WORKER index=6 group=1 mig=31ffbfe4 exit=0 completed=1 text=fede20b0ce61df9a generated=192 generation_tps=3.281 first_token_ms=2050.0 total_ms=61633.8
+WORKER index=7 group=1 mig=fafc828a exit=0 completed=1 text=06acc271f26cb952 generated=192 generation_tps=4.687 first_token_ms=2208.6 total_ms=43856.6
+FAULT victim=none victim_alive=0 alive_at_fault=0 probe_exit=none probe=none
+END_CASE timed_out=0 mps_servers=0 wall_ms=82343 workers_ms=62408
+CASE config=mig fault=write groups=2 workers=4 turns=3
+PLANNER mig=fafc828a exit=0 completed=1 text=2986789f8c4a0a5d tokens=11788 publish_ms=10.43
+LEADER group=0 mig=fafc828a exit=0 completed=1 text=172e721640cc24d4 tokens=11887 publish_ms=6.48
+LEADER group=1 mig=31ffbfe4 exit=0 completed=1 text=ccaa7b1578fc9b8c tokens=11887 publish_ms=6.14
+WORKER index=0 group=0 mig=fafc828a exit=0 completed=1 text=34c5ba01e77f923b generated=192 generation_tps=4.666 first_token_ms=1837.2 total_ms=43642.8
+WORKER index=1 group=0 mig=31ffbfe4 exit=0 completed=1 text=72fc7f37969fe021 generated=192 generation_tps=3.286 first_token_ms=2185.9 total_ms=61671.2
+WORKER index=2 group=0 mig=fafc828a exit=0 completed=1 text=d81abdc974c1a615 generated=192 generation_tps=4.691 first_token_ms=2258.8 total_ms=43864.3
+WORKER index=3 group=0 mig=31ffbfe4 exit=0 completed=1 text=7be0e5aff5023925 generated=192 generation_tps=3.283 first_token_ms=2322.3 total_ms=61858.0
+WORKER index=4 group=1 mig=31ffbfe4 exit=0 completed=1 text=617b5b8088789bce generated=192 generation_tps=3.284 first_token_ms=2318.4 total_ms=61838.8
+WORKER index=5 group=1 mig=fafc828a exit=0 completed=1 text=736817ea889e0085 generated=192 generation_tps=4.682 first_token_ms=2136.6 total_ms=43826.4
+WORKER index=6 group=1 mig=31ffbfe4 exit=0 completed=1 text=fede20b0ce61df9a generated=192 generation_tps=3.284 first_token_ms=2288.8 total_ms=61820.8
+WORKER index=7 group=1 mig=fafc828a exit=0 completed=1 text=06acc271f26cb952 generated=192 generation_tps=4.694 first_token_ms=2255.9 total_ms=43856.9
+FAULT victim=probe victim_alive=1 alive_at_fault=11 probe_exit=0 probe=route=host,gpu_read=cudaSuccess,words_equal=0,words=16777216,gpu_write=cudaErrorIllegalAddress,file_intact=0
+END_CASE timed_out=0 mps_servers=0 wall_ms=82399 workers_ms=62491
+CASE config=mig fault=kill_worker groups=2 workers=4 turns=3
+PLANNER mig=fafc828a exit=0 completed=1 text=2986789f8c4a0a5d tokens=11788 publish_ms=11.44
+LEADER group=0 mig=fafc828a exit=0 completed=1 text=172e721640cc24d4 tokens=11887 publish_ms=6.66
+LEADER group=1 mig=31ffbfe4 exit=0 completed=1 text=ccaa7b1578fc9b8c tokens=11887 publish_ms=6.68
+STDERR CUDA Graph id 27 reused
+STDERR CUDA Graph id 27 reused
+STDERR CUDA Graph id 27 reused
+WORKER index=0 group=0 mig=fafc828a exit=137 completed=0 text=e3b0c44298fc1c14 generated= generation_tps= first_token_ms= total_ms=
+WORKER index=1 group=0 mig=31ffbfe4 exit=0 completed=1 text=72fc7f37969fe021 generated=192 generation_tps=3.314 first_token_ms=2169.0 total_ms=61126.0
+WORKER index=2 group=0 mig=fafc828a exit=0 completed=1 text=d81abdc974c1a615 generated=192 generation_tps=5.773 first_token_ms=2083.7 total_ms=35814.6
+WORKER index=3 group=0 mig=31ffbfe4 exit=0 completed=1 text=7be0e5aff5023925 generated=192 generation_tps=3.312 first_token_ms=2109.2 total_ms=61096.5
+WORKER index=4 group=1 mig=31ffbfe4 exit=0 completed=1 text=617b5b8088789bce generated=192 generation_tps=3.317 first_token_ms=2310.8 total_ms=61207.7
+WORKER index=5 group=1 mig=fafc828a exit=0 completed=1 text=736817ea889e0085 generated=192 generation_tps=5.800 first_token_ms=2287.9 total_ms=35915.9
+WORKER index=6 group=1 mig=31ffbfe4 exit=0 completed=1 text=fede20b0ce61df9a generated=192 generation_tps=3.318 first_token_ms=2307.0 total_ms=61187.0
+WORKER index=7 group=1 mig=fafc828a exit=0 completed=1 text=06acc271f26cb952 generated=192 generation_tps=5.788 first_token_ms=2238.5 total_ms=35911.2
+FAULT victim=worker0 victim_alive=1 alive_at_fault=11 probe_exit=none probe=none
+END_CASE timed_out=0 mps_servers=0 wall_ms=81679 workers_ms=61759
+CASE config=mig fault=kill_leader groups=2 workers=4 turns=3
+PLANNER mig=fafc828a exit=0 completed=1 text=2986789f8c4a0a5d tokens=11788 publish_ms=11.62
+STDERR CUDA Graph id 33 reused
+STDERR CUDA Graph id 33 reused
+STDERR CUDA Graph id 33 reused
+LEADER group=0 mig=fafc828a exit=137 completed=0 text=e3b0c44298fc1c14 tokens=11887 publish_ms=4.72
+LEADER group=1 mig=31ffbfe4 exit=0 completed=1 text=ccaa7b1578fc9b8c tokens=11887 publish_ms=6.24
+WORKER index=0 group=0 mig=fafc828a exit=0 completed=1 text=34c5ba01e77f923b generated=192 generation_tps=4.777 first_token_ms=1543.8 total_ms=42412.8
+WORKER index=1 group=0 mig=31ffbfe4 exit=0 completed=1 text=72fc7f37969fe021 generated=192 generation_tps=3.278 first_token_ms=2026.0 total_ms=61573.9
+WORKER index=2 group=0 mig=fafc828a exit=0 completed=1 text=d81abdc974c1a615 generated=192 generation_tps=4.789 first_token_ms=2042.4 total_ms=42802.0
+WORKER index=3 group=0 mig=31ffbfe4 exit=0 completed=1 text=7be0e5aff5023925 generated=192 generation_tps=3.288 first_token_ms=2340.2 total_ms=61753.3
+WORKER index=4 group=1 mig=31ffbfe4 exit=0 completed=1 text=617b5b8088789bce generated=192 generation_tps=3.287 first_token_ms=2291.1 total_ms=61722.2
+WORKER index=5 group=1 mig=fafc828a exit=0 completed=1 text=736817ea889e0085 generated=192 generation_tps=4.814 first_token_ms=2310.0 total_ms=42875.9
+WORKER index=6 group=1 mig=31ffbfe4 exit=0 completed=1 text=fede20b0ce61df9a generated=192 generation_tps=3.286 first_token_ms=2301.6 total_ms=61734.9
+WORKER index=7 group=1 mig=fafc828a exit=0 completed=1 text=06acc271f26cb952 generated=192 generation_tps=4.818 first_token_ms=2280.7 total_ms=42822.8
+FAULT victim=leader0 victim_alive=1 alive_at_fault=11 probe_exit=none probe=none
+END_CASE timed_out=0 mps_servers=0 wall_ms=82322 workers_ms=62402
+END_KVPIPEFAULT
+BEGIN_KVPIPEFAULT run=5 context=16384
+CASE config=mig fault=none groups=2 workers=4 turns=3
+PLANNER mig=fafc828a exit=0 completed=1 text=2986789f8c4a0a5d tokens=11788 publish_ms=11.72
+LEADER group=0 mig=fafc828a exit=0 completed=1 text=172e721640cc24d4 tokens=11887 publish_ms=6.66
+LEADER group=1 mig=31ffbfe4 exit=0 completed=1 text=ccaa7b1578fc9b8c tokens=11887 publish_ms=6.43
+WORKER index=0 group=0 mig=fafc828a exit=0 completed=1 text=34c5ba01e77f923b generated=192 generation_tps=4.663 first_token_ms=1729.0 total_ms=43553.9
+WORKER index=1 group=0 mig=31ffbfe4 exit=0 completed=1 text=72fc7f37969fe021 generated=192 generation_tps=3.278 first_token_ms=2066.0 total_ms=61664.0
+WORKER index=2 group=0 mig=fafc828a exit=0 completed=1 text=d81abdc974c1a615 generated=192 generation_tps=4.687 first_token_ms=2141.8 total_ms=43797.0
+WORKER index=3 group=0 mig=31ffbfe4 exit=0 completed=1 text=7be0e5aff5023925 generated=192 generation_tps=3.286 first_token_ms=2276.0 total_ms=61776.0
+WORKER index=4 group=1 mig=31ffbfe4 exit=0 completed=1 text=617b5b8088789bce generated=192 generation_tps=3.286 first_token_ms=2348.3 total_ms=61822.0
+WORKER index=5 group=1 mig=fafc828a exit=0 completed=1 text=736817ea889e0085 generated=192 generation_tps=4.689 first_token_ms=2240.3 total_ms=43862.2
+WORKER index=6 group=1 mig=31ffbfe4 exit=0 completed=1 text=fede20b0ce61df9a generated=192 generation_tps=3.286 first_token_ms=2312.8 total_ms=61800.8
+WORKER index=7 group=1 mig=fafc828a exit=0 completed=1 text=06acc271f26cb952 generated=192 generation_tps=4.696 first_token_ms=2276.8 total_ms=43839.6
+FAULT victim=none victim_alive=0 alive_at_fault=0 probe_exit=none probe=none
+END_CASE timed_out=0 mps_servers=0 wall_ms=82336 workers_ms=62447
+CASE config=mig fault=write groups=2 workers=4 turns=3
+PLANNER mig=fafc828a exit=0 completed=1 text=2986789f8c4a0a5d tokens=11788 publish_ms=9.45
+LEADER group=0 mig=fafc828a exit=0 completed=1 text=172e721640cc24d4 tokens=11887 publish_ms=6.64
+LEADER group=1 mig=31ffbfe4 exit=0 completed=1 text=ccaa7b1578fc9b8c tokens=11887 publish_ms=6.56
+WORKER index=0 group=0 mig=fafc828a exit=0 completed=1 text=34c5ba01e77f923b generated=192 generation_tps=4.654 first_token_ms=1835.3 total_ms=43742.5
+WORKER index=1 group=0 mig=31ffbfe4 exit=0 completed=1 text=72fc7f37969fe021 generated=192 generation_tps=3.281 first_token_ms=2198.6 total_ms=61790.0
+WORKER index=2 group=0 mig=fafc828a exit=0 completed=1 text=d81abdc974c1a615 generated=192 generation_tps=4.683 first_token_ms=2226.7 total_ms=43893.3
+WORKER index=3 group=0 mig=31ffbfe4 exit=0 completed=1 text=7be0e5aff5023925 generated=192 generation_tps=3.278 first_token_ms=2154.1 total_ms=61780.1
+WORKER index=4 group=1 mig=31ffbfe4 exit=0 completed=1 text=617b5b8088789bce generated=192 generation_tps=3.285 first_token_ms=2316.2 total_ms=61827.4
+WORKER index=5 group=1 mig=fafc828a exit=0 completed=1 text=736817ea889e0085 generated=192 generation_tps=4.693 first_token_ms=2277.8 total_ms=43877.3
+WORKER index=6 group=1 mig=31ffbfe4 exit=0 completed=1 text=fede20b0ce61df9a generated=192 generation_tps=3.286 first_token_ms=2318.7 total_ms=61817.7
+WORKER index=7 group=1 mig=fafc828a exit=0 completed=1 text=06acc271f26cb952 generated=192 generation_tps=4.690 first_token_ms=2262.9 total_ms=43904.0
+FAULT victim=probe victim_alive=1 alive_at_fault=11 probe_exit=0 probe=route=host,gpu_read=cudaSuccess,words_equal=0,words=16777216,gpu_write=cudaErrorIllegalAddress,file_intact=0
+END_CASE timed_out=0 mps_servers=0 wall_ms=82308 workers_ms=62408
+CASE config=mig fault=kill_worker groups=2 workers=4 turns=3
+PLANNER mig=fafc828a exit=0 completed=1 text=2986789f8c4a0a5d tokens=11788 publish_ms=11.77
+LEADER group=0 mig=fafc828a exit=0 completed=1 text=172e721640cc24d4 tokens=11887 publish_ms=6.57
+LEADER group=1 mig=31ffbfe4 exit=0 completed=1 text=ccaa7b1578fc9b8c tokens=11887 publish_ms=6.16
+STDERR CUDA Graph id 27 reused
+STDERR CUDA Graph id 27 reused
+STDERR CUDA Graph id 27 reused
+WORKER index=0 group=0 mig=fafc828a exit=137 completed=0 text=e3b0c44298fc1c14 generated= generation_tps= first_token_ms= total_ms=
+WORKER index=1 group=0 mig=31ffbfe4 exit=0 completed=1 text=72fc7f37969fe021 generated=192 generation_tps=3.315 first_token_ms=2101.1 total_ms=61027.7
+WORKER index=2 group=0 mig=fafc828a exit=0 completed=1 text=d81abdc974c1a615 generated=192 generation_tps=5.781 first_token_ms=2140.5 total_ms=35879.8
+WORKER index=3 group=0 mig=31ffbfe4 exit=0 completed=1 text=7be0e5aff5023925 generated=192 generation_tps=3.317 first_token_ms=2275.2 total_ms=61178.3
+WORKER index=4 group=1 mig=31ffbfe4 exit=0 completed=1 text=617b5b8088789bce generated=192 generation_tps=3.318 first_token_ms=2313.2 total_ms=61191.2
+WORKER index=5 group=1 mig=fafc828a exit=0 completed=1 text=736817ea889e0085 generated=192 generation_tps=5.782 first_token_ms=2150.3 total_ms=35885.2
+WORKER index=6 group=1 mig=31ffbfe4 exit=0 completed=1 text=fede20b0ce61df9a generated=192 generation_tps=3.317 first_token_ms=2264.4 total_ms=61161.4
+WORKER index=7 group=1 mig=fafc828a exit=0 completed=1 text=06acc271f26cb952 generated=192 generation_tps=5.790 first_token_ms=2211.8 total_ms=35897.9
+FAULT victim=worker0 victim_alive=1 alive_at_fault=11 probe_exit=none probe=none
+END_CASE timed_out=0 mps_servers=0 wall_ms=81580 workers_ms=61698
+CASE config=mig fault=kill_leader groups=2 workers=4 turns=3
+PLANNER mig=fafc828a exit=0 completed=1 text=2986789f8c4a0a5d tokens=11788 publish_ms=11.64
+STDERR CUDA Graph id 33 reused
+STDERR CUDA Graph id 33 reused
+STDERR CUDA Graph id 33 reused
+LEADER group=0 mig=fafc828a exit=137 completed=0 text=e3b0c44298fc1c14 tokens=11887 publish_ms=6.71
+LEADER group=1 mig=31ffbfe4 exit=0 completed=1 text=ccaa7b1578fc9b8c tokens=11887 publish_ms=6.45
+WORKER index=0 group=0 mig=fafc828a exit=0 completed=1 text=34c5ba01e77f923b generated=192 generation_tps=4.769 first_token_ms=1513.3 total_ms=42427.8
+WORKER index=1 group=0 mig=31ffbfe4 exit=0 completed=1 text=72fc7f37969fe021 generated=192 generation_tps=3.276 first_token_ms=1997.4 total_ms=61565.1
+WORKER index=2 group=0 mig=fafc828a exit=0 completed=1 text=d81abdc974c1a615 generated=192 generation_tps=4.811 first_token_ms=2183.1 total_ms=42809.1
+WORKER index=3 group=0 mig=31ffbfe4 exit=0 completed=1 text=7be0e5aff5023925 generated=192 generation_tps=3.284 first_token_ms=2297.7 total_ms=61770.0
+WORKER index=4 group=1 mig=31ffbfe4 exit=0 completed=1 text=617b5b8088789bce generated=192 generation_tps=3.286 first_token_ms=2266.3 total_ms=61706.2
+WORKER index=5 group=1 mig=fafc828a exit=0 completed=1 text=736817ea889e0085 generated=192 generation_tps=4.796 first_token_ms=2128.7 total_ms=42862.5
+WORKER index=6 group=1 mig=31ffbfe4 exit=0 completed=1 text=fede20b0ce61df9a generated=192 generation_tps=3.285 first_token_ms=2293.0 total_ms=61746.1
+WORKER index=7 group=1 mig=fafc828a exit=0 completed=1 text=06acc271f26cb952 generated=192 generation_tps=4.808 first_token_ms=2232.8 total_ms=42858.6
+FAULT victim=leader0 victim_alive=1 alive_at_fault=11 probe_exit=none probe=none
+END_CASE timed_out=0 mps_servers=0 wall_ms=82285 workers_ms=62327
+CASE config=mig_mps fault=none groups=2 workers=4 turns=3
+PLANNER mig=fafc828a exit=0 completed=1 text=2986789f8c4a0a5d tokens=11788 publish_ms=8.45
+LEADER group=0 mig=fafc828a exit=0 completed=1 text=172e721640cc24d4 tokens=11887 publish_ms=4.75
+LEADER group=1 mig=31ffbfe4 exit=0 completed=1 text=ccaa7b1578fc9b8c tokens=11887 publish_ms=6.13
+WORKER index=0 group=0 mig=fafc828a exit=0 completed=1 text=34c5ba01e77f923b generated=192 generation_tps=5.217 first_token_ms=1346.0 total_ms=38869.5
+WORKER index=1 group=0 mig=31ffbfe4 exit=0 completed=1 text=72fc7f37969fe021 generated=192 generation_tps=3.650 first_token_ms=2115.1 total_ms=55649.1
+WORKER index=2 group=0 mig=fafc828a exit=0 completed=1 text=d81abdc974c1a615 generated=192 generation_tps=5.218 first_token_ms=1474.8 total_ms=38971.6
+WORKER index=3 group=0 mig=31ffbfe4 exit=0 completed=1 text=7be0e5aff5023925 generated=192 generation_tps=3.643 first_token_ms=1964.6 total_ms=55582.4
+WORKER index=4 group=1 mig=31ffbfe4 exit=0 completed=1 text=617b5b8088789bce generated=192 generation_tps=3.644 first_token_ms=1975.8 total_ms=55585.6
+WORKER index=5 group=1 mig=fafc828a exit=0 completed=1 text=736817ea889e0085 generated=192 generation_tps=5.263 first_token_ms=1983.7 total_ms=39144.4
+WORKER index=6 group=1 mig=31ffbfe4 exit=0 completed=1 text=fede20b0ce61df9a generated=192 generation_tps=3.648 first_token_ms=2051.8 total_ms=55585.1
+WORKER index=7 group=1 mig=fafc828a exit=0 completed=1 text=06acc271f26cb952 generated=192 generation_tps=5.254 first_token_ms=1897.1 total_ms=39120.0
+FAULT victim=none victim_alive=0 alive_at_fault=0 probe_exit=none probe=none
+END_CASE timed_out=0 mps_servers=2 wall_ms=76333 workers_ms=56200
+CASE config=mig_mps fault=write groups=2 workers=4 turns=3
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-chain/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+PLANNER mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 tokens=11788 publish_ms=11.67
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-chain/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+LEADER group=0 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 tokens=11887 publish_ms=6.55
+LEADER group=1 mig=31ffbfe4 exit=0 completed=1 text=ccaa7b1578fc9b8c tokens=11887 publish_ms=6.37
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-chain/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+WORKER index=0 group=0 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 generated= generation_tps= first_token_ms= total_ms=
+WORKER index=1 group=0 mig=31ffbfe4 exit=0 completed=1 text=72fc7f37969fe021 generated=192 generation_tps=3.792 first_token_ms=1774.7 total_ms=53360.7
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-chain/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+WORKER index=2 group=0 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 generated= generation_tps= first_token_ms= total_ms=
+WORKER index=3 group=0 mig=31ffbfe4 exit=0 completed=1 text=7be0e5aff5023925 generated=192 generation_tps=3.794 first_token_ms=2067.5 total_ms=53563.4
+WORKER index=4 group=1 mig=31ffbfe4 exit=0 completed=1 text=617b5b8088789bce generated=192 generation_tps=3.795 first_token_ms=2068.0 total_ms=53544.6
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-chain/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+WORKER index=5 group=1 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 generated= generation_tps= first_token_ms= total_ms=
+WORKER index=6 group=1 mig=31ffbfe4 exit=0 completed=1 text=fede20b0ce61df9a generated=192 generation_tps=3.796 first_token_ms=2048.2 total_ms=53518.7
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-chain/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+WORKER index=7 group=1 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 generated= generation_tps= first_token_ms= total_ms=
+FAULT victim=probe victim_alive=1 alive_at_fault=11 probe_exit=0 probe=route=host,gpu_read=cudaSuccess,words_equal=0,words=16777216,gpu_write=cudaErrorIllegalAddress,file_intact=0
+END_CASE timed_out=0 mps_servers=2 wall_ms=74190 workers_ms=54115
+CASE config=mig_mps fault=kill_worker groups=2 workers=4 turns=3
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-chain/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+PLANNER mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 tokens=11788 publish_ms=11.40
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-chain/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+LEADER group=0 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 tokens=11887 publish_ms=5.28
+LEADER group=1 mig=31ffbfe4 exit=0 completed=1 text=ccaa7b1578fc9b8c tokens=11887 publish_ms=6.40
+STDERR CUDA Graph id 27 reused
+STDERR CUDA Graph id 27 reused
+STDERR CUDA Graph id 27 reused
+WORKER index=0 group=0 mig=fafc828a exit=137 completed=0 text=e3b0c44298fc1c14 generated= generation_tps= first_token_ms= total_ms=
+WORKER index=1 group=0 mig=31ffbfe4 exit=0 completed=1 text=72fc7f37969fe021 generated=192 generation_tps=3.795 first_token_ms=2088.2 total_ms=53554.8
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-chain/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+WORKER index=2 group=0 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 generated= generation_tps= first_token_ms= total_ms=
+WORKER index=3 group=0 mig=31ffbfe4 exit=0 completed=1 text=7be0e5aff5023925 generated=192 generation_tps=3.795 first_token_ms=2058.5 total_ms=53516.0
+WORKER index=4 group=1 mig=31ffbfe4 exit=0 completed=1 text=617b5b8088789bce generated=192 generation_tps=3.796 first_token_ms=2068.0 total_ms=53505.3
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-chain/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+WORKER index=5 group=1 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 generated= generation_tps= first_token_ms= total_ms=
+WORKER index=6 group=1 mig=31ffbfe4 exit=0 completed=1 text=fede20b0ce61df9a generated=192 generation_tps=3.795 first_token_ms=2045.1 total_ms=53499.8
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-chain/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+WORKER index=7 group=1 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 generated= generation_tps= first_token_ms= total_ms=
+FAULT victim=worker0 victim_alive=1 alive_at_fault=11 probe_exit=none probe=none
+END_CASE timed_out=0 mps_servers=2 wall_ms=74314 workers_ms=54189
+CASE config=mig_mps fault=kill_leader groups=2 workers=4 turns=3
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-chain/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+PLANNER mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 tokens=11788 publish_ms=11.48
+STDERR CUDA Graph id 33 reused
+STDERR CUDA Graph id 33 reused
+STDERR CUDA Graph id 33 reused
+LEADER group=0 mig=fafc828a exit=137 completed=0 text=e3b0c44298fc1c14 tokens=11887 publish_ms=6.46
+LEADER group=1 mig=31ffbfe4 exit=0 completed=1 text=ccaa7b1578fc9b8c tokens=11887 publish_ms=6.35
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-chain/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+WORKER index=0 group=0 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 generated= generation_tps= first_token_ms= total_ms=
+WORKER index=1 group=0 mig=31ffbfe4 exit=0 completed=1 text=72fc7f37969fe021 generated=192 generation_tps=3.796 first_token_ms=2104.8 total_ms=53550.5
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-chain/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+WORKER index=2 group=0 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 generated= generation_tps= first_token_ms= total_ms=
+WORKER index=3 group=0 mig=31ffbfe4 exit=0 completed=1 text=7be0e5aff5023925 generated=192 generation_tps=3.790 first_token_ms=1907.1 total_ms=53459.5
+WORKER index=4 group=1 mig=31ffbfe4 exit=0 completed=1 text=617b5b8088789bce generated=192 generation_tps=3.796 first_token_ms=2054.0 total_ms=53514.4
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-chain/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+WORKER index=5 group=1 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 generated= generation_tps= first_token_ms= total_ms=
+WORKER index=6 group=1 mig=31ffbfe4 exit=0 completed=1 text=fede20b0ce61df9a generated=192 generation_tps=3.796 first_token_ms=2059.8 total_ms=53520.2
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-chain/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+WORKER index=7 group=1 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 generated= generation_tps= first_token_ms= total_ms=
+FAULT victim=leader0 victim_alive=1 alive_at_fault=11 probe_exit=none probe=none
+END_CASE timed_out=0 mps_servers=2 wall_ms=74172 workers_ms=54110
+END_KVPIPEFAULT
+BEGIN_KVPIPEFAULT run=6 context=16384
+CASE config=mig_mps fault=none groups=2 workers=4 turns=3
+PLANNER mig=fafc828a exit=0 completed=1 text=2986789f8c4a0a5d tokens=11788 publish_ms=11.62
+LEADER group=0 mig=fafc828a exit=0 completed=1 text=172e721640cc24d4 tokens=11887 publish_ms=6.75
+LEADER group=1 mig=31ffbfe4 exit=0 completed=1 text=ccaa7b1578fc9b8c tokens=11887 publish_ms=6.37
+WORKER index=0 group=0 mig=fafc828a exit=0 completed=1 text=34c5ba01e77f923b generated=192 generation_tps=5.219 first_token_ms=1423.1 total_ms=38922.0
+WORKER index=1 group=0 mig=31ffbfe4 exit=0 completed=1 text=72fc7f37969fe021 generated=192 generation_tps=3.647 first_token_ms=2050.4 total_ms=55610.3
+WORKER index=2 group=0 mig=fafc828a exit=0 completed=1 text=d81abdc974c1a615 generated=192 generation_tps=5.211 first_token_ms=1482.3 total_ms=39030.6
+WORKER index=3 group=0 mig=31ffbfe4 exit=0 completed=1 text=7be0e5aff5023925 generated=192 generation_tps=3.645 first_token_ms=2044.0 total_ms=55622.0
+WORKER index=4 group=1 mig=31ffbfe4 exit=0 completed=1 text=617b5b8088789bce generated=192 generation_tps=3.647 first_token_ms=2051.2 total_ms=55592.9
+WORKER index=5 group=1 mig=fafc828a exit=0 completed=1 text=736817ea889e0085 generated=192 generation_tps=5.248 first_token_ms=1822.5 total_ms=39078.9
+WORKER index=6 group=1 mig=31ffbfe4 exit=0 completed=1 text=fede20b0ce61df9a generated=192 generation_tps=3.646 first_token_ms=2029.5 total_ms=55601.6
+WORKER index=7 group=1 mig=fafc828a exit=0 completed=1 text=06acc271f26cb952 generated=192 generation_tps=5.268 first_token_ms=1976.9 total_ms=39116.6
+FAULT victim=none victim_alive=0 alive_at_fault=0 probe_exit=none probe=none
+END_CASE timed_out=0 mps_servers=2 wall_ms=76338 workers_ms=56195
+CASE config=mig_mps fault=write groups=2 workers=4 turns=3
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-chain/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+PLANNER mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 tokens=11788 publish_ms=8.41
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-chain/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+LEADER group=0 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 tokens=11887 publish_ms=6.58
+LEADER group=1 mig=31ffbfe4 exit=0 completed=1 text=ccaa7b1578fc9b8c tokens=11887 publish_ms=6.33
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-chain/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+WORKER index=0 group=0 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 generated= generation_tps= first_token_ms= total_ms=
+WORKER index=1 group=0 mig=31ffbfe4 exit=0 completed=1 text=72fc7f37969fe021 generated=192 generation_tps=3.795 first_token_ms=2128.9 total_ms=53581.8
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-chain/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+WORKER index=2 group=0 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 generated= generation_tps= first_token_ms= total_ms=
+WORKER index=3 group=0 mig=31ffbfe4 exit=0 completed=1 text=7be0e5aff5023925 generated=192 generation_tps=3.793 first_token_ms=2046.8 total_ms=53533.6
+WORKER index=4 group=1 mig=31ffbfe4 exit=0 completed=1 text=617b5b8088789bce generated=192 generation_tps=3.799 first_token_ms=2114.9 total_ms=53533.0
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-chain/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+WORKER index=5 group=1 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 generated= generation_tps= first_token_ms= total_ms=
+WORKER index=6 group=1 mig=31ffbfe4 exit=0 completed=1 text=fede20b0ce61df9a generated=192 generation_tps=3.791 first_token_ms=2007.5 total_ms=53527.6
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-chain/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+WORKER index=7 group=1 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 generated= generation_tps= first_token_ms= total_ms=
+FAULT victim=probe victim_alive=1 alive_at_fault=11 probe_exit=0 probe=route=host,gpu_read=cudaSuccess,words_equal=0,words=16777216,gpu_write=cudaErrorIllegalAddress,file_intact=0
+END_CASE timed_out=0 mps_servers=2 wall_ms=74269 workers_ms=54173
+CASE config=mig_mps fault=kill_worker groups=2 workers=4 turns=3
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-chain/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+PLANNER mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 tokens=11788 publish_ms=11.37
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-chain/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+LEADER group=0 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 tokens=11887 publish_ms=6.32
+LEADER group=1 mig=31ffbfe4 exit=0 completed=1 text=ccaa7b1578fc9b8c tokens=11887 publish_ms=6.47
+STDERR CUDA Graph id 27 reused
+STDERR CUDA Graph id 27 reused
+STDERR CUDA Graph id 27 reused
+WORKER index=0 group=0 mig=fafc828a exit=137 completed=0 text=e3b0c44298fc1c14 generated= generation_tps= first_token_ms= total_ms=
+WORKER index=1 group=0 mig=31ffbfe4 exit=0 completed=1 text=72fc7f37969fe021 generated=192 generation_tps=3.794 first_token_ms=1947.0 total_ms=53446.0
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-chain/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+WORKER index=2 group=0 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 generated= generation_tps= first_token_ms= total_ms=
+WORKER index=3 group=0 mig=31ffbfe4 exit=0 completed=1 text=7be0e5aff5023925 generated=192 generation_tps=3.796 first_token_ms=2084.7 total_ms=53559.6
+WORKER index=4 group=1 mig=31ffbfe4 exit=0 completed=1 text=617b5b8088789bce generated=192 generation_tps=3.796 first_token_ms=2048.1 total_ms=53504.4
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-chain/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+WORKER index=5 group=1 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 generated= generation_tps= first_token_ms= total_ms=
+WORKER index=6 group=1 mig=31ffbfe4 exit=0 completed=1 text=fede20b0ce61df9a generated=192 generation_tps=3.796 first_token_ms=2052.6 total_ms=53520.3
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-chain/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+WORKER index=7 group=1 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 generated= generation_tps= first_token_ms= total_ms=
+FAULT victim=worker0 victim_alive=1 alive_at_fault=11 probe_exit=none probe=none
+END_CASE timed_out=0 mps_servers=2 wall_ms=74318 workers_ms=54202
+CASE config=mig_mps fault=kill_leader groups=2 workers=4 turns=3
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-chain/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+PLANNER mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 tokens=11788 publish_ms=11.46
+STDERR CUDA Graph id 33 reused
+STDERR CUDA Graph id 33 reused
+STDERR CUDA Graph id 33 reused
+LEADER group=0 mig=fafc828a exit=137 completed=0 text=e3b0c44298fc1c14 tokens=11887 publish_ms=6.55
+LEADER group=1 mig=31ffbfe4 exit=0 completed=1 text=ccaa7b1578fc9b8c tokens=11887 publish_ms=6.55
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-chain/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+WORKER index=0 group=0 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 generated= generation_tps= first_token_ms= total_ms=
+WORKER index=1 group=0 mig=31ffbfe4 exit=0 completed=1 text=72fc7f37969fe021 generated=192 generation_tps=3.795 first_token_ms=2081.5 total_ms=53551.3
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-chain/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+WORKER index=2 group=0 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 generated= generation_tps= first_token_ms= total_ms=
+WORKER index=3 group=0 mig=31ffbfe4 exit=0 completed=1 text=7be0e5aff5023925 generated=192 generation_tps=3.795 first_token_ms=2058.6 total_ms=53516.3
+WORKER index=4 group=1 mig=31ffbfe4 exit=0 completed=1 text=617b5b8088789bce generated=192 generation_tps=3.797 first_token_ms=2028.0 total_ms=53457.8
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-chain/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+WORKER index=5 group=1 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 generated= generation_tps= first_token_ms= total_ms=
+WORKER index=6 group=1 mig=31ffbfe4 exit=0 completed=1 text=fede20b0ce61df9a generated=192 generation_tps=3.795 first_token_ms=1998.8 total_ms=53480.0
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-chain/ggml/src/ggml-cuda/ggml-cuda.cu:110: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+WORKER index=7 group=1 mig=fafc828a exit=134 completed=0 text=e3b0c44298fc1c14 generated= generation_tps= first_token_ms= total_ms=
+FAULT victim=leader0 victim_alive=1 alive_at_fault=11 probe_exit=none probe=none
+END_CASE timed_out=0 mps_servers=2 wall_ms=74178 workers_ms=54121
+CASE config=mig fault=none groups=2 workers=4 turns=3
+PLANNER mig=fafc828a exit=0 completed=1 text=2986789f8c4a0a5d tokens=11788 publish_ms=11.57
+LEADER group=0 mig=fafc828a exit=0 completed=1 text=172e721640cc24d4 tokens=11887 publish_ms=6.69
+LEADER group=1 mig=31ffbfe4 exit=0 completed=1 text=ccaa7b1578fc9b8c tokens=11887 publish_ms=6.31
+WORKER index=0 group=0 mig=fafc828a exit=0 completed=1 text=34c5ba01e77f923b generated=192 generation_tps=4.661 first_token_ms=1532.7 total_ms=43397.4
+WORKER index=1 group=0 mig=31ffbfe4 exit=0 completed=1 text=72fc7f37969fe021 generated=192 generation_tps=3.279 first_token_ms=2143.0 total_ms=61736.5
+WORKER index=2 group=0 mig=fafc828a exit=0 completed=1 text=d81abdc974c1a615 generated=192 generation_tps=4.689 first_token_ms=2172.6 total_ms=43824.6
+WORKER index=3 group=0 mig=31ffbfe4 exit=0 completed=1 text=7be0e5aff5023925 generated=192 generation_tps=3.269 first_token_ms=1956.0 total_ms=61691.6
+WORKER index=4 group=1 mig=31ffbfe4 exit=0 completed=1 text=617b5b8088789bce generated=192 generation_tps=3.283 first_token_ms=2332.1 total_ms=61843.3
+WORKER index=5 group=1 mig=fafc828a exit=0 completed=1 text=736817ea889e0085 generated=192 generation_tps=4.694 first_token_ms=2256.5 total_ms=43839.4
+WORKER index=6 group=1 mig=31ffbfe4 exit=0 completed=1 text=fede20b0ce61df9a generated=192 generation_tps=3.283 first_token_ms=2298.9 total_ms=61828.7
+WORKER index=7 group=1 mig=fafc828a exit=0 completed=1 text=06acc271f26cb952 generated=192 generation_tps=4.695 first_token_ms=2260.0 total_ms=43837.4
+FAULT victim=none victim_alive=0 alive_at_fault=0 probe_exit=none probe=none
+END_CASE timed_out=0 mps_servers=0 wall_ms=82377 workers_ms=62412
+CASE config=mig fault=write groups=2 workers=4 turns=3
+PLANNER mig=fafc828a exit=0 completed=1 text=2986789f8c4a0a5d tokens=11788 publish_ms=11.56
+LEADER group=0 mig=fafc828a exit=0 completed=1 text=172e721640cc24d4 tokens=11887 publish_ms=6.71
+LEADER group=1 mig=31ffbfe4 exit=0 completed=1 text=ccaa7b1578fc9b8c tokens=11887 publish_ms=6.63
+WORKER index=0 group=0 mig=fafc828a exit=0 completed=1 text=34c5ba01e77f923b generated=192 generation_tps=4.681 first_token_ms=2047.5 total_ms=43723.9
+WORKER index=1 group=0 mig=31ffbfe4 exit=0 completed=1 text=72fc7f37969fe021 generated=192 generation_tps=3.275 first_token_ms=1953.4 total_ms=61555.4
+WORKER index=2 group=0 mig=fafc828a exit=0 completed=1 text=d81abdc974c1a615 generated=192 generation_tps=4.685 first_token_ms=2247.7 total_ms=43913.6
+WORKER index=3 group=0 mig=31ffbfe4 exit=0 completed=1 text=7be0e5aff5023925 generated=192 generation_tps=3.285 first_token_ms=2338.5 total_ms=61824.1
+WORKER index=4 group=1 mig=31ffbfe4 exit=0 completed=1 text=617b5b8088789bce generated=192 generation_tps=3.285 first_token_ms=2311.1 total_ms=61798.5
+WORKER index=5 group=1 mig=fafc828a exit=0 completed=1 text=736817ea889e0085 generated=192 generation_tps=4.688 first_token_ms=2259.5 total_ms=43893.8
+WORKER index=6 group=1 mig=31ffbfe4 exit=0 completed=1 text=fede20b0ce61df9a generated=192 generation_tps=3.284 first_token_ms=2313.8 total_ms=61808.2
+WORKER index=7 group=1 mig=fafc828a exit=0 completed=1 text=06acc271f26cb952 generated=192 generation_tps=4.682 first_token_ms=2104.9 total_ms=43815.8
+FAULT victim=probe victim_alive=1 alive_at_fault=11 probe_exit=0 probe=route=host,gpu_read=cudaSuccess,words_equal=0,words=16777216,gpu_write=cudaErrorIllegalAddress,file_intact=0
+END_CASE timed_out=0 mps_servers=0 wall_ms=82313 workers_ms=62379
+CASE config=mig fault=kill_worker groups=2 workers=4 turns=3
+PLANNER mig=fafc828a exit=0 completed=1 text=2986789f8c4a0a5d tokens=11788 publish_ms=11.51
+LEADER group=0 mig=fafc828a exit=0 completed=1 text=172e721640cc24d4 tokens=11887 publish_ms=6.38
+LEADER group=1 mig=31ffbfe4 exit=0 completed=1 text=ccaa7b1578fc9b8c tokens=11887 publish_ms=6.80
+STDERR CUDA Graph id 27 reused
+STDERR CUDA Graph id 27 reused
+STDERR CUDA Graph id 27 reused
+WORKER index=0 group=0 mig=fafc828a exit=137 completed=0 text=e3b0c44298fc1c14 generated= generation_tps= first_token_ms= total_ms=
+WORKER index=1 group=0 mig=31ffbfe4 exit=0 completed=1 text=72fc7f37969fe021 generated=192 generation_tps=3.301 first_token_ms=1840.1 total_ms=60947.1
+WORKER index=2 group=0 mig=fafc828a exit=0 completed=1 text=d81abdc974c1a615 generated=192 generation_tps=5.798 first_token_ms=2188.4 total_ms=35828.8
+WORKER index=3 group=0 mig=31ffbfe4 exit=0 completed=1 text=7be0e5aff5023925 generated=192 generation_tps=3.316 first_token_ms=2267.4 total_ms=61166.0
+WORKER index=4 group=1 mig=31ffbfe4 exit=0 completed=1 text=617b5b8088789bce generated=192 generation_tps=3.317 first_token_ms=2319.8 total_ms=61202.3
+WORKER index=5 group=1 mig=fafc828a exit=0 completed=1 text=736817ea889e0085 generated=192 generation_tps=5.806 first_token_ms=2251.9 total_ms=35854.2
+WORKER index=6 group=1 mig=31ffbfe4 exit=0 completed=1 text=fede20b0ce61df9a generated=192 generation_tps=3.314 first_token_ms=2270.1 total_ms=61189.8
+WORKER index=7 group=1 mig=fafc828a exit=0 completed=1 text=06acc271f26cb952 generated=192 generation_tps=5.799 first_token_ms=2229.4 total_ms=35868.9
+FAULT victim=worker0 victim_alive=1 alive_at_fault=11 probe_exit=none probe=none
+END_CASE timed_out=0 mps_servers=0 wall_ms=81688 workers_ms=61761
+CASE config=mig fault=kill_leader groups=2 workers=4 turns=3
+PLANNER mig=fafc828a exit=0 completed=1 text=2986789f8c4a0a5d tokens=11788 publish_ms=11.52
+STDERR CUDA Graph id 33 reused
+STDERR CUDA Graph id 33 reused
+STDERR CUDA Graph id 33 reused
+LEADER group=0 mig=fafc828a exit=137 completed=0 text=e3b0c44298fc1c14 tokens=11887 publish_ms=6.53
+LEADER group=1 mig=31ffbfe4 exit=0 completed=1 text=ccaa7b1578fc9b8c tokens=11887 publish_ms=6.13
+WORKER index=0 group=0 mig=fafc828a exit=0 completed=1 text=34c5ba01e77f923b generated=192 generation_tps=4.775 first_token_ms=1507.8 total_ms=42394.7
+WORKER index=1 group=0 mig=31ffbfe4 exit=0 completed=1 text=72fc7f37969fe021 generated=192 generation_tps=3.282 first_token_ms=2081.6 total_ms=61600.9
+WORKER index=2 group=0 mig=fafc828a exit=0 completed=1 text=d81abdc974c1a615 generated=192 generation_tps=4.790 first_token_ms=2042.9 total_ms=42828.0
+WORKER index=3 group=0 mig=31ffbfe4 exit=0 completed=1 text=7be0e5aff5023925 generated=192 generation_tps=3.287 first_token_ms=2347.0 total_ms=61777.3
+WORKER index=4 group=1 mig=31ffbfe4 exit=0 completed=1 text=617b5b8088789bce generated=192 generation_tps=3.288 first_token_ms=2330.6 total_ms=61745.2
+WORKER index=5 group=1 mig=fafc828a exit=0 completed=1 text=736817ea889e0085 generated=192 generation_tps=4.811 first_token_ms=2260.8 total_ms=42855.9
+WORKER index=6 group=1 mig=31ffbfe4 exit=0 completed=1 text=fede20b0ce61df9a generated=192 generation_tps=3.286 first_token_ms=2307.2 total_ms=61753.3
+WORKER index=7 group=1 mig=fafc828a exit=0 completed=1 text=06acc271f26cb952 generated=192 generation_tps=4.810 first_token_ms=2251.2 total_ms=42868.1
+FAULT victim=leader0 victim_alive=1 alive_at_fault=11 probe_exit=none probe=none
+END_CASE timed_out=0 mps_servers=0 wall_ms=82268 workers_ms=62385
+END_KVPIPEFAULT

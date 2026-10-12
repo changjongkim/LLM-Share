@@ -55,3 +55,4 @@ __pycache__/
 # metadata of the editable installation of the plugin
 /vllm_share_mount/
 *.egg-info/
+/kv_agent2

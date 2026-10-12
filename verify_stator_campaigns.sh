@@ -1029,6 +1029,56 @@ if present 20261010-engine-kvbatch-v2; then
     }'
 fi
 
+# --- resident agents against released agents -----------------------------------
+if present 20261012-engine-kvresident-v1; then
+  dir="$results/20261012-engine-kvresident-v1"
+  check_hashes "$dir"
+  awk -f "$script_dir/summarize_engine_kvresident.awk" "$dir/raw.log" >"$scratch/kvresident.csv"
+  same "$scratch/kvresident.csv" "$dir/engine_kvresident_summary.csv"
+  reserve=$(awk -F= '$1 == "reserve_gib" { print $2 * 1024 }' "$dir/metadata.txt")
+  gates kvresident "$dir/engine_kvresident_summary.csv" '
+    {
+      n = $c["residents"]
+      # R1: no process fails, and no case is skipped or ended.
+      if ($c["failed_processes"] != 0 || $c["skipped_runs"] != 0 || $c["guard_runs"] != 0 || $c["timed_out_runs"] != 0)
+        print "!R1 " n
+      # R2: a released agent writes one text at every count.
+      if ($c["texts_equal_to_smallest"] != $c["texts_compared"] || $c["texts_compared"] != $c["runs"] * $c["active"])
+        print "!R2 " n " " $c["texts_equal_to_smallest"] "/" $c["texts_compared"]
+      # R4: the reserve remains with the mapped model file counted as used.
+      if ($c["remaining_without_model_min_mib"] < '"$reserve"') print "!R4 " n " " $c["remaining_without_model_min_mib"]
+      last = $c["vs_smallest"]; largest = n
+    }
+    END {
+      # R3: the released agents keep 0.95 of their rate at the largest count.
+      if (last < 0.95) print "!R3 " largest " " last
+    }'
+fi
+
+# --- a pipeline of agents in which one process fails -----------------------------
+if present 20261012-engine-kvpipefault-v1; then
+  dir="$results/20261012-engine-kvpipefault-v1"
+  check_hashes "$dir"
+  awk -f "$script_dir/summarize_engine_kvpipefault.awk" "$dir/raw.log" >"$scratch/kvpipefault.csv"
+  same "$scratch/kvpipefault.csv" "$dir/engine_kvpipefault_summary.csv"
+  gates kvpipefault "$dir/engine_kvpipefault_summary.csv" '
+    {
+      config = $c["config"]; fault = $c["fault"]; isolated = (config == "mig")
+      # Q1: without a fault every process completes.
+      if (fault == "none" && $c["others_completed"] != $c["others_started"]) print "!Q1 " config
+      # Q2: the write is refused.
+      if (fault == "write" && $c["writes_refused"] != $c["writes_injected"]) print "!Q2 " config
+      # Q3: without MPS the other processes complete and the workers write the reference text.
+      if (isolated && fault != "none" && ($c["others_completed"] != $c["others_started"] ||
+          $c["workers_with_reference_text"] != $c["workers_started"]))
+        print "!Q3 " fault " " $c["others_completed"] "/" $c["others_started"] " texts " $c["workers_with_reference_text"] "/" $c["workers_started"]
+      # Q4: without MPS the pipeline with a fault is not slower than 1.10.
+      if (isolated && fault != "none" && $c["wall_vs_none"] > 1.10) print "!Q4 " fault " " $c["wall_vs_none"]
+      if (!isolated && fault != "none" && $c["others_completed"] != $c["others_started"])
+        print "counted " config " " fault " others_completed=" $c["others_completed"] "/" $c["others_started"]
+    }'
+fi
+
 echo "stator_campaign_verification=PASS"
 echo "campaigns_verified=${#verified[@]} ${verified[*]:-}"
 echo "campaigns_absent=${#absent[@]} ${absent[*]:-}"

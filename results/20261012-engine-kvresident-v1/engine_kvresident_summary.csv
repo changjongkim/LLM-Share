@@ -1,0 +1,5 @@
+residents,active,runs,skipped_runs,failed_processes,guard_runs,timed_out_runs,prefix_tokens,cache_file_mib,ready_s,memory_mib,memory_ci95,memory_per_resident_mib,remaining_without_model_min_mib,pss_anon_mib,pss_file_mib,pss_shmem_mib,device_mib,release_to_decoded_ms,release_to_decoded_ci95,input_decode_ms,active_s,active_tps_sum,active_tps_ci95,vs_smallest,vs_smallest_low,vs_smallest_high,vs_smallest_median,tps_12sm,tps_8sm,vs_smallest_12sm,vs_smallest_8sm,texts_equal_to_smallest,texts_compared
+8,8,6,0,0,0,0,14282,784,2.0,5572,40,696.6,109306,1763,4705,1246,3096,426.1,2.0,426.0,19.88,34.24,0.02,1.0000,1.0000,1.0000,1.0000,20.66,13.57,1.0000,1.0000,48,48
+32,8,6,0,0,0,0,14282,784,6.5,22077,68,689.9,92783,7069,5201,2643,12384,424.7,1.1,424.7,19.82,34.27,0.02,1.0009,1.0002,1.0016,1.0007,20.68,13.58,1.0010,1.0008,48,48
+64,8,6,0,0,0,0,14282,784,13.4,44150,16,689.8,70737,14139,5860,4505,24768,426.7,2.7,426.7,19.88,34.28,0.01,1.0012,1.0005,1.0019,1.0013,20.70,13.58,1.0017,1.0006,48,48
+140,8,6,0,0,0,0,14282,784,32.2,96551,111,689.6,18364,30927,7425,8929,54180,427.3,2.4,427.3,19.96,34.25,0.01,1.0003,0.9998,1.0008,1.0004,20.68,13.57,1.0005,1.0000,48,48
