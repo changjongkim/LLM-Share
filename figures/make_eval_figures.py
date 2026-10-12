@@ -15,10 +15,12 @@ and writes one PDF and one PNG per figure next to this script.
 """
 import csv
 import os
+import re
 
 import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
+from matplotlib.transforms import Bbox
 import numpy as np
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -44,6 +46,15 @@ plt.rcParams.update({
 })
 
 
+# Half-column panels; make_paper_figures.py sets its own size and text sizes.
+PANEL = (3.6, 2.7)
+TIP = 10.5
+# the smallest sizes that fit_texts sets for an axis label, a tick label and a value
+LABEL_MIN, TICK_MIN, VALUE_MIN = 11.0, 10.0, 9.0
+PAD = 1.08       # margin of the layout around a plot, in units of the text size
+FIXED = False    # a plot is saved as its whole canvas, so that all panels have one size
+
+
 def rows(*path):
     with open(os.path.join(RES, *path), newline="") as handle:
         return list(csv.DictReader(handle))
@@ -57,10 +68,197 @@ def style(ax, grid="y"):
     ax.tick_params(length=0)
 
 
+def _overlaps(boxes, apart=0.0):
+    """Pairs of boxes that overlap, or that are side by side with less than `apart` pixels between them."""
+    pairs = []
+    for i in range(len(boxes)):
+        for j in range(i + 1, len(boxes)):
+            a, b = boxes[i][1], boxes[j][1]
+            if min(a.x1, b.x1) - max(a.x0, b.x0) > 1 - apart and min(a.y1, b.y1) - max(a.y0, b.y0) > 1:
+                pairs.append((boxes[i][0], boxes[j][0]))
+    return pairs
+
+
+def _raise_top(fig, ax):
+    """Raises the upper limit of the value axis until every text ends below it."""
+    for _ in range(120):
+        fig.canvas.draw()
+        box = ax.get_window_extent()
+        top = max(text.get_window_extent().y1 for text in ax.texts)
+        if top <= box.y1 - 1.0:
+            return
+        low, high = ax.get_ylim()
+        if ax.get_yscale() == "log":
+            ax.set_ylim(low, high * 1.25)
+        else:
+            ax.set_ylim(low, high + 0.04 * (high - low))
+
+
+def _upright(fig, ax, values):
+    for text in values:
+        text.set_rotation(90)
+    _raise_top(fig, ax)
+
+
+def _layout(fig):
+    rect = getattr(fig, "layout_rect", None)
+    if rect is None:
+        fig.tight_layout(pad=PAD)
+    else:
+        fig.tight_layout(pad=PAD, rect=rect)
+
+
+def _beyond(fig):
+    """By how many inches the content of a figure leaves its canvas. The
+    labels of the axes count at their whole length, which the layout of
+    Matplotlib leaves out for a label that is longer than its axis."""
+    renderer = fig.canvas.get_renderer()
+    boxes = [ax.get_tightbbox(renderer, for_layout_only=False) for ax in fig.axes]
+    boxes += [ax.xaxis.label.get_window_extent() for ax in fig.axes if ax.xaxis.label.get_text()]
+    boxes += [ax.yaxis.label.get_window_extent() for ax in fig.axes if ax.yaxis.label.get_text()]
+    boxes += [item.get_window_extent() for item in fig.legends]
+    tight = Bbox.union(boxes).transformed(fig.dpi_scale_trans.inverted())
+    width, height = fig.get_size_inches()
+    return max(-tight.x0, tight.x1 - width, -tight.y0, tight.y1 - height), tight
+
+
+def _fit_axes(fig, ax, name, report):
+    def warn(text):
+        if report:
+            print(f"WARN {name}: {text}")
+
+    fig.canvas.draw()
+    box = ax.get_window_extent()
+    label = ax.yaxis.label
+    if label.get_text() and "\n" not in label.get_text() and \
+            label.get_window_extent().height > box.height + 2:
+        words = label.get_text().split(" ")
+        if len(words) > 1:
+            best = min(range(1, len(words)),
+                       key=lambda k: abs(len(" ".join(words[:k])) - len(" ".join(words[k:]))))
+            label.set_text(" ".join(words[:best]) + "\n" + " ".join(words[best:]))
+            _layout(fig)
+    # the label of the value axis is as long as that axis at most, and the
+    # label of the x axis as wide as the canvas within its margins
+    for axis_label, extent in ((ax.yaxis.label, "height"), (ax.xaxis.label, "width")):
+        while axis_label.get_text():
+            fig.canvas.draw()
+            room = ax.get_window_extent().height if extent == "height" else \
+                fig.bbox.width - 2 * PAD * plt.rcParams["font.size"] * fig.dpi / 72
+            if getattr(axis_label.get_window_extent(), extent) <= room + 2:
+                break
+            if axis_label.get_fontsize() - 0.5 < LABEL_MIN:
+                warn(f"the label '{axis_label.get_text()}' is longer than its axis")
+                break
+            axis_label.set_fontsize(axis_label.get_fontsize() - 0.5)
+            _layout(fig)
+    if FIXED and ax.xaxis.label.get_text():
+        fig.canvas.draw()
+        margin = PAD * plt.rcParams["font.size"] * fig.dpi / 72
+        extent = ax.xaxis.label.get_window_extent()
+        shift = min(0.0, fig.bbox.width - margin - extent.x1) + max(0.0, margin - extent.x0)
+        if abs(shift) > 0.5:    # centred under the axis unless it would leave the canvas
+            ax.xaxis.label.set_x(ax.xaxis.label.get_position()[0] + shift / ax.get_window_extent().width)
+    for _ in range(10):
+        fig.canvas.draw()
+        ticks = [t.get_window_extent() for t in ax.get_xticklabels() if t.get_text()]
+        size = ax.get_xticklabels()[0].get_fontsize()
+        gap = 0.22 * size * fig.dpi / 72    # two thirds of a space between words
+        if not any(a.x1 > b.x0 - gap for a, b in zip(ticks, ticks[1:])):
+            break
+        if size - 0.5 < TICK_MIN:
+            warn("tick labels on the x axis overlap")
+            break
+        ax.tick_params(axis="x", labelsize=size - 0.5)
+        _layout(fig)
+    if not ax.texts:
+        return
+    values = [text for text in ax.texts if re.fullmatch(r"[\d.,]+", text.get_text())]
+    _raise_top(fig, ax)
+    bars = [patch for patch in ax.patches if isinstance(patch, plt.Rectangle) and patch.get_height() > 0]
+    fig.canvas.draw()
+    marks = [("bar", bar.get_window_extent()) for bar in bars]
+    apart = 0.2 * TIP * fig.dpi / 72    # room between a value and the next value or bar
+    if values and any(text.get_rotation() == 0 for text in values) and any(
+            text.get_va() != "center" and _overlaps([(text.get_text(), text.get_window_extent()), mark], apart)
+            for text in values for mark in marks):
+        _upright(fig, ax, values)
+    for _ in range(8):
+        fig.canvas.draw()
+        pairs = _overlaps([(text.get_text(), text.get_window_extent()) for text in values], apart)
+        if not pairs:
+            break
+        if any(text.get_rotation() == 0 for text in values):
+            _upright(fig, ax, values)
+            continue
+        size = values[0].get_fontsize()
+        if size - 0.5 < VALUE_MIN:
+            break
+        for text in values:
+            text.set_fontsize(size - 0.5)
+        _raise_top(fig, ax)
+    fig.canvas.draw()
+    box = ax.get_window_extent()
+    boxes = [(text.get_text(), text.get_window_extent()) for text in ax.texts if text.get_text()]
+    for label_text, b in boxes:
+        if b.x0 < box.x0 - 1 or b.x1 > box.x1 + 1 or b.y1 > box.y1 + 1 or b.y0 < box.y0 - 1:
+            warn(f"text '{label_text}' leaves the axes")
+    for first, second in _overlaps(boxes):
+        warn(f"texts '{first}' and '{second}' overlap")
+    marks = [("bar", bar.get_window_extent()) for bar in bars]
+    for text in values:
+        if text.get_va() != "center" and \
+                any(_overlaps([(text.get_text(), text.get_window_extent()), mark]) for mark in marks):
+            warn(f"value '{text.get_text()}' lies on a bar")
+
+
+def fit_texts(fig, name):
+    """Keeps the text of a plot inside the plot and apart:
+
+    an axis label that is longer than its axis is set on two lines (value
+    axis) and then smaller; tick labels of the x axis that touch are set
+    smaller; values on marks that overlap one another or a bar of another
+    series are set upright and, if they still overlap, smaller; and the upper
+    limit of the value axis is raised until the highest text ends below the
+    top of the axes. No text is set below LABEL_MIN, TICK_MIN or VALUE_MIN.
+    With a fixed canvas the plot is laid out again after these steps, which
+    change the width of its labels, until it lies on the canvas. What none of
+    this repairs, and content that leaves the canvas, is reported."""
+    if FIXED and fig.axes:
+        for _ in range(6):
+            _layout(fig)
+            for ax in fig.axes:
+                _fit_axes(fig, ax, name, False)
+            fig.canvas.draw()
+            if _beyond(fig)[0] <= 0.0:
+                break
+    for ax in fig.axes:
+        _fit_axes(fig, ax, name, True)
+    fig.canvas.draw()
+    for ax in fig.axes:
+        label = ax.yaxis.label
+        if label.get_text() and label.get_window_extent().height > ax.get_window_extent().height + 6:
+            print(f"WARN {name}: the label of the value axis is longer than the axis")
+    if fig.axes:
+        over, tight = _beyond(fig)
+        width, height = fig.get_size_inches()
+        if over > (0.0 if FIXED else 0.01):
+            print(f"WARN {name}: content leaves the canvas by {over * 72:.1f} pt "
+                  f"(x {tight.x0 * 72:.0f}..{tight.x1 * 72:.0f} of {width * 72:.0f}, "
+                  f"y {tight.y0 * 72:.0f}..{tight.y1 * 72:.0f} of {height * 72:.0f})")
+
+
 def save(fig, name):
+    if FIXED:   # the panels of the paper; the figures of the README are saved as drawn
+        fit_texts(fig, name)
     # Matplotlib otherwise embeds the wall-clock creation time, which makes
     # a figure rebuilt from identical CSV inputs differ byte-for-byte.
     pdf_metadata = {"CreationDate": None, "ModDate": None}
+    if FIXED and fig.axes:
+        fig.savefig(os.path.join(HERE, name + ".pdf"), metadata=pdf_metadata)
+        fig.savefig(os.path.join(HERE, name + ".png"), dpi=200)
+        plt.close(fig)
+        return
     fig.savefig(os.path.join(HERE, name + ".pdf"), bbox_inches="tight", pad_inches=0.03,
                 metadata=pdf_metadata)
     fig.savefig(os.path.join(HERE, name + ".png"), bbox_inches="tight", pad_inches=0.06, dpi=200)
@@ -83,7 +281,7 @@ def grouped(ax, groups, series, width=0.25):
 def tip(ax, bar, text, dy=0.0):
     ax.annotate(text, (bar.get_x() + bar.get_width() / 2, bar.get_height()),
                 xytext=(0, 3 + dy), textcoords="offset points", ha="center",
-                va="bottom", fontsize=10.5, color=INK)
+                va="bottom", fontsize=TIP, color=INK)
 
 
 # ----------------------------------------------------------------- weights
@@ -369,7 +567,7 @@ def bg_state():
               for r in rows("20261005-engine-agents-v1", "engine_agents_summary.csv")}
     counts = sorted({k[2] for k in agents if k[0] == "mig" and k[1] == "copy"})
     memory = [float(agents["mig", "copy", n]["memory_total_mib"]) / 1024 for n in counts]
-    fig, ax = plt.subplots(figsize=(3.6, 2.7))
+    fig, ax = plt.subplots(figsize=PANEL)
     bars = ax.bar([str(n) for n in counts], memory, 0.6, color=COPY, edgecolor="white",
                   linewidth=1.5)
     for bar in bars:
@@ -389,7 +587,7 @@ def bg_state():
              for r in rows("20261006-engine-kvshare-v1", "engine_kvshare_summary.csv")}
     sizes = sorted({k[0] for k in share}, key=int)
     counts = [1, 4, 8]
-    fig, ax = plt.subplots(figsize=(3.6, 2.7))
+    fig, ax = plt.subplots(figsize=PANEL)
     series = []
     for size, colour in zip(sizes, ("#c3c2b7", COPY)):
         tokens = int(share[size, "restore", 1]["prefix_tokens"])
@@ -409,7 +607,8 @@ def bg_state():
 
 
 if __name__ == "__main__":
+    # bg_state() is drawn by make_paper_figures.py, on the canvas of the paper
     for figure in (eval_weights, eval_memory, eval_handover, eval_cow, eval_speed,
-                   eval_inproc, eval_vmm, bg_state):
+                   eval_inproc, eval_vmm):
         figure()
         print("wrote", figure.__name__)
