@@ -39,6 +39,7 @@ DEMAND_LIGHT = "#b9cfe9"
 DEVICE_LIGHT = "#c9bdf0"   # violet (DEVICE) is the third entry
 COPY_LIGHT = "#b7b5af"
 COPY_PALE = "#d9d7d1"
+OURS_PALE = "#c9e9e5"    # teal (OURS, OURS_LIGHT): a second part left out
 # Text sizes in points on a canvas that the paper places at 0.48 of its size
 # (a quarter of the page or half a column), so that all panels print alike.
 # A legend that two panels share is a strip above them (legend()).
@@ -285,10 +286,13 @@ def mode():
 def cow():
     data = {(r["mode"], int(r["agents"])): r
             for r in rows("20261006-engine-kvcow-v1", "engine_kvcow_summary.csv")}
-    # the mapping as the kernel provides it, then with the CPU read pass added
-    # on each page size (darker as the baseline is tuned), then the extents
-    order = (("CoW\nMap", "cow_noread", "#f6c3ad"), ("+Read\n4 KiB", "cow_small", "#f09672"),
-             ("+Read\n2 MiB", "cow", COW), (NAME, "extent_lazy", OURS))
+    # an ablation: the baseline is the mapping as the kernel provides it; the
+    # next two bars add the CPU read pass of STATOR on each page size and keep
+    # the writable private mapping (tints of STATOR: a part left out); the
+    # last bar is STATOR with its extents
+    order = (("CoW\nMap", "cow_noread", COW),
+             (NAME + "\n(Read,\n4 KiB)", "cow_small", OURS_PALE),
+             (NAME + "\n(Read,\n2 MiB)", "cow", OURS_LIGHT), (NAME, "extent_lazy", OURS))
     for name, column, ylabel, scale, form in (
             ("eval_cow_mem", "memory_mib", "Memory (GiB)", 1024.0, "{:.1f}"),
             ("eval_cow_time", "first_token_ms", "TTFT (s)", 1000.0, "{:.2f}")):
