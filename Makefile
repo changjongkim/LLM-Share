@@ -167,6 +167,14 @@ kv_agent2: kv_agent.cpp
 	  -L$(KV2_ENGINE)/build/bin -lllama -lggml -lggml-base \
 	  -Wl,-rpath,'$$ORIGIN/$(KV2_ENGINE)/build/bin'
 
+# The resident agent against the unmodified engine: every agent copies the
+# weights to device memory and restores the prefix from a state file.
+kv_agent_stock: kv_agent.cpp
+	$(CXX) $(CXXFLAGS) -isystem $(STOCK_ENGINE)/include \
+	  -isystem $(STOCK_ENGINE)/ggml/include $< -o $@ \
+	  -L$(STOCK_ENGINE)/build/bin -lllama -lggml -lggml-base \
+	  -Wl,-rpath,'$$ORIGIN/$(STOCK_ENGINE)/build/bin'
+
 kv_fork_tuned2: kv_fork.cpp
 	$(CXX) $(CXXFLAGS) -isystem $(TUNED2_ENGINE)/include \
 	  -isystem $(TUNED2_ENGINE)/ggml/include $< -o $@ \

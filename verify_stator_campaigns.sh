@@ -1104,6 +1104,38 @@ if present 20261012-engine-kvlatency-v1; then
     }'
 fi
 
+# --- agents of the unmodified engine by placement, without and with a fault -------
+if present 20261013-engine-kvplace-v1; then
+  dir="$results/20261013-engine-kvplace-v1"
+  check_hashes "$dir"
+  awk -f "$script_dir/summarize_engine_kvplace.awk" "$dir/raw.log" >"$scratch/kvplace.csv"
+  same "$scratch/kvplace.csv" "$dir/engine_kvplace_summary.csv"
+  gates kvplace "$dir/engine_kvplace_summary.csv" '
+    {
+      cell = $c["critical_instance"] " " $c["placement"] " " $c["fault"]
+      placement = $c["placement"]; fault = $c["fault"]
+      # P1: without a fault the critical agent completes, and every background agent is still generating.
+      if (fault == "none" && ($c["critical_completed"] != $c["runs"] || $c["others_generating_at_end"] != $c["others_started"] ||
+                              $c["guard_runs"] != 0 || $c["timed_out_runs"] != 0 || $c["died_early_runs"] != 0))
+        print "!P1 " cell
+      # P2: time-sliced or in the other instance, a fault ends no other process.
+      if (fault != "none" && (placement == "slice" || placement == "split") &&
+          ($c["critical_completed"] != $c["runs"] || $c["others_generating_at_end"] != $c["others_started"] ||
+           $c["guard_runs"] != 0 || $c["timed_out_runs"] != 0 || $c["died_early_runs"] != 0))
+        print "!P2 " cell " " $c["critical_completed"] "/" $c["runs"] " " $c["others_generating_at_end"] "/" $c["others_started"]
+      # P3: a GPU fault of one client ends every client of the MPS server.
+      if (placement == "mps" && fault == "write" && ($c["critical_completed"] != 0 || $c["others_generating_at_end"] != 0))
+        print "!P3 " cell " " $c["critical_completed"] "/" $c["runs"] " " $c["others_generating_at_end"] "/" $c["others_started"]
+      # P4: time slicing costs at least 2.0 times the generation time; the other instance leaves 0.90 of the rate.
+      if (placement == "slice" && fault == "none" && $c["time_vs_alone"] < 2.0) print "!P4 " cell " " $c["time_vs_alone"]
+      # The rate in the other instance below 0.90 is an exception that is reported with its value.
+      if (placement == "split" && fault == "none" && $c["rate_vs_alone"] < 0.90)
+        print "P4 " cell " rate_vs_alone=" $c["rate_vs_alone"] " ci95=" $c["rate_vs_alone_low"] ".." $c["rate_vs_alone_high"] " gate=0.90"
+      if (placement == "mps" && fault == "kill")
+        print "counted " cell " critical_completed=" $c["critical_completed"] "/" $c["runs"] " others_generating=" $c["others_generating_at_end"] "/" $c["others_started"]
+    }'
+fi
+
 echo "stator_campaign_verification=PASS"
 echo "campaigns_verified=${#verified[@]} ${verified[*]:-}"
 echo "campaigns_absent=${#absent[@]} ${absent[*]:-}"

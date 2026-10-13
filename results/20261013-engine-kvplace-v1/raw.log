@@ -1,0 +1,378 @@
+BEGIN_KVPLACE run=1 context=16384 prefix_tokens=14282 state_mib=781
+CASE critical_mig=fafc828a placement=alone fault=none background=0
+CRITICAL exit=0 completed=1 text=06ead62102b21987 load_ms=122.51 released_ms=4624.6 decoded_ms=4702.0 input_ms=77.40 generation_ms=2561.21 generated=64
+BACKGROUND started=0 others=0 generating_at_end=0 mig=fafc828a
+MEMORY resident_drop_mib=6175 lowest_drop_mib=6187 mem_available_before_mib=117623
+END_CASE guard=0 timed_out=0 died_early=0 mps_servers=0 critical_s=2.98 wall_s=7.7
+CASE critical_mig=fafc828a placement=slice fault=none background=7
+CRITICAL exit=0 completed=1 text=06ead62102b21987 load_ms=257.11 released_ms=7493.5 decoded_ms=8089.4 input_ms=595.91 generation_ms=21337.67 generated=64
+BACKGROUND started=7 others=7 generating_at_end=7 mig=fafc828a
+MEMORY resident_drop_mib=48950 lowest_drop_mib=49040 mem_available_before_mib=117587
+END_CASE guard=0 timed_out=0 died_early=0 mps_servers=0 critical_s=22.28 wall_s=31.3
+CASE critical_mig=fafc828a placement=slice fault=write background=7
+FAULT victim=probe fault_ms=637 critical_alive=1 background_alive=7 probe_exit=0 probe=route=host,gpu_read=cudaSuccess,words_equal=0,words=16777216,gpu_write=cudaErrorIllegalAddress,file_intact=0
+CRITICAL exit=0 completed=1 text=06ead62102b21987 load_ms=175.23 released_ms=11124.7 decoded_ms=11704.2 input_ms=579.47 generation_ms=21340.99 generated=64
+BACKGROUND started=7 others=7 generating_at_end=7 mig=fafc828a
+MEMORY resident_drop_mib=48975 lowest_drop_mib=49123 mem_available_before_mib=117713
+END_CASE guard=0 timed_out=0 died_early=0 mps_servers=0 critical_s=22.27 wall_s=35.0
+CASE critical_mig=fafc828a placement=slice fault=kill background=7
+FAULT victim=agent1 fault_ms=2 critical_alive=1 background_alive=6 probe_exit=none probe=none
+CRITICAL exit=0 completed=1 text=06ead62102b21987 load_ms=204.32 released_ms=10685.6 decoded_ms=11235.0 input_ms=549.30 generation_ms=18724.40 generated=64
+BACKGROUND started=7 others=6 generating_at_end=6 mig=fafc828a
+MEMORY resident_drop_mib=49030 lowest_drop_mib=49071 mem_available_before_mib=117732
+END_CASE guard=0 timed_out=0 died_early=0 mps_servers=0 critical_s=19.62 wall_s=31.6
+CASE critical_mig=fafc828a placement=mps fault=none background=7
+CRITICAL exit=0 completed=1 text=06ead62102b21987 load_ms=174.57 released_ms=6693.0 decoded_ms=7289.6 input_ms=596.61 generation_ms=19218.09 generated=64
+BACKGROUND started=7 others=7 generating_at_end=7 mig=fafc828a
+MEMORY resident_drop_mib=49039 lowest_drop_mib=49147 mem_available_before_mib=117730
+END_CASE guard=0 timed_out=0 died_early=0 mps_servers=1 critical_s=20.14 wall_s=28.3
+CASE critical_mig=fafc828a placement=mps fault=write background=7
+FAULT victim=probe fault_ms=340 critical_alive=1 background_alive=5 probe_exit=0 probe=route=host,gpu_read=cudaSuccess,words_equal=0,words=16777216,gpu_write=cudaErrorIllegalAddress,file_intact=0
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-stock/ggml/src/ggml-cuda/ggml-cuda.cu:109: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+CRITICAL exit=134 completed=0 text=none load_ms=190.28 released_ms=9966.0 decoded_ms=2375.7 input_ms=154.38 generation_ms= generated=
+BACKGROUND started=7 others=7 generating_at_end=0 mig=fafc828a
+MEMORY resident_drop_mib=49074 lowest_drop_mib=49109 mem_available_before_mib=117742
+END_CASE guard=0 timed_out=0 died_early=0 mps_servers=1 critical_s=5.87 wall_s=15.9
+CASE critical_mig=fafc828a placement=mps fault=kill background=7
+FAULT victim=agent1 fault_ms=1 critical_alive=1 background_alive=4 probe_exit=none probe=none
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-stock/ggml/src/ggml-cuda/ggml-cuda.cu:109: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+CRITICAL exit=134 completed=0 text=none load_ms=187.88 released_ms=9723.7 decoded_ms=2363.3 input_ms=139.39 generation_ms= generated=
+BACKGROUND started=7 others=6 generating_at_end=0 mig=fafc828a
+MEMORY resident_drop_mib=48904 lowest_drop_mib=48927 mem_available_before_mib=117606
+END_CASE guard=0 timed_out=0 died_early=0 mps_servers=1 critical_s=4.99 wall_s=14.8
+CASE critical_mig=fafc828a placement=split fault=none background=7
+CRITICAL exit=0 completed=1 text=06ead62102b21987 load_ms=180.72 released_ms=7766.9 decoded_ms=7849.4 input_ms=82.47 generation_ms=2874.31 generated=64
+BACKGROUND started=7 others=7 generating_at_end=7 mig=31ffbfe4
+MEMORY resident_drop_mib=48713 lowest_drop_mib=48832 mem_available_before_mib=117561
+END_CASE guard=0 timed_out=0 died_early=0 mps_servers=0 critical_s=3.32 wall_s=12.6
+CASE critical_mig=fafc828a placement=split fault=write background=7
+FAULT victim=probe fault_ms=665 critical_alive=1 background_alive=7 probe_exit=0 probe=route=host,gpu_read=cudaSuccess,words_equal=0,words=16777216,gpu_write=cudaErrorIllegalAddress,file_intact=0
+CRITICAL exit=0 completed=1 text=06ead62102b21987 load_ms=173.67 released_ms=11465.1 decoded_ms=11547.0 input_ms=81.87 generation_ms=2861.90 generated=64
+BACKGROUND started=7 others=7 generating_at_end=7 mig=31ffbfe4
+MEMORY resident_drop_mib=48903 lowest_drop_mib=49005 mem_available_before_mib=117725
+END_CASE guard=0 timed_out=0 died_early=0 mps_servers=0 critical_s=3.32 wall_s=16.3
+CASE critical_mig=fafc828a placement=split fault=kill background=7
+FAULT victim=agent1 fault_ms=2 critical_alive=1 background_alive=6 probe_exit=none probe=none
+CRITICAL exit=0 completed=1 text=06ead62102b21987 load_ms=173.43 released_ms=10649.3 decoded_ms=10730.9 input_ms=81.49 generation_ms=2867.56 generated=64
+BACKGROUND started=7 others=6 generating_at_end=6 mig=31ffbfe4
+MEMORY resident_drop_mib=48887 lowest_drop_mib=48901 mem_available_before_mib=117706
+END_CASE guard=0 timed_out=0 died_early=0 mps_servers=0 critical_s=3.31 wall_s=15.2
+END_KVPLACE
+BEGIN_KVPLACE run=2 context=16384 prefix_tokens=14282 state_mib=781
+CASE critical_mig=fafc828a placement=split fault=kill background=7
+FAULT victim=agent1 fault_ms=1 critical_alive=1 background_alive=6 probe_exit=none probe=none
+CRITICAL exit=0 completed=1 text=06ead62102b21987 load_ms=167.78 released_ms=10883.0 decoded_ms=10965.0 input_ms=81.98 generation_ms=2855.64 generated=64
+BACKGROUND started=7 others=6 generating_at_end=6 mig=31ffbfe4
+MEMORY resident_drop_mib=48865 lowest_drop_mib=48868 mem_available_before_mib=117712
+END_CASE guard=0 timed_out=0 died_early=0 mps_servers=0 critical_s=3.29 wall_s=15.5
+CASE critical_mig=fafc828a placement=split fault=write background=7
+FAULT victim=probe fault_ms=674 critical_alive=1 background_alive=7 probe_exit=0 probe=route=host,gpu_read=cudaSuccess,words_equal=0,words=16777216,gpu_write=cudaErrorIllegalAddress,file_intact=0
+CRITICAL exit=0 completed=1 text=06ead62102b21987 load_ms=168.11 released_ms=11393.1 decoded_ms=11475.1 input_ms=82.02 generation_ms=2847.83 generated=64
+BACKGROUND started=7 others=7 generating_at_end=7 mig=31ffbfe4
+MEMORY resident_drop_mib=48900 lowest_drop_mib=49013 mem_available_before_mib=117709
+END_CASE guard=0 timed_out=0 died_early=0 mps_servers=0 critical_s=3.29 wall_s=16.2
+CASE critical_mig=fafc828a placement=split fault=none background=7
+CRITICAL exit=0 completed=1 text=06ead62102b21987 load_ms=161.19 released_ms=7578.6 decoded_ms=7660.6 input_ms=81.93 generation_ms=2869.12 generated=64
+BACKGROUND started=7 others=7 generating_at_end=7 mig=31ffbfe4
+MEMORY resident_drop_mib=48884 lowest_drop_mib=48987 mem_available_before_mib=117718
+END_CASE guard=0 timed_out=0 died_early=0 mps_servers=0 critical_s=3.33 wall_s=12.4
+CASE critical_mig=fafc828a placement=mps fault=kill background=7
+FAULT victim=agent1 fault_ms=2 critical_alive=1 background_alive=4 probe_exit=none probe=none
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-stock/ggml/src/ggml-cuda/ggml-cuda.cu:109: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+CRITICAL exit=134 completed=0 text=none load_ms=164.67 released_ms=9779.0 decoded_ms=2200.3 input_ms=137.74 generation_ms= generated=
+BACKGROUND started=7 others=6 generating_at_end=0 mig=fafc828a
+MEMORY resident_drop_mib=49013 lowest_drop_mib=49036 mem_available_before_mib=117732
+END_CASE guard=0 timed_out=0 died_early=0 mps_servers=1 critical_s=5.03 wall_s=14.9
+CASE critical_mig=fafc828a placement=mps fault=write background=7
+FAULT victim=probe fault_ms=328 critical_alive=1 background_alive=5 probe_exit=0 probe=route=host,gpu_read=cudaSuccess,words_equal=0,words=16777216,gpu_write=cudaErrorIllegalAddress,file_intact=0
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-stock/ggml/src/ggml-cuda/ggml-cuda.cu:109: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+CRITICAL exit=134 completed=0 text=none load_ms=171.79 released_ms=10040.8 decoded_ms=2221.4 input_ms=143.63 generation_ms= generated=
+BACKGROUND started=7 others=7 generating_at_end=0 mig=fafc828a
+MEMORY resident_drop_mib=48925 lowest_drop_mib=48928 mem_available_before_mib=117599
+END_CASE guard=0 timed_out=0 died_early=0 mps_servers=1 critical_s=5.81 wall_s=16.0
+CASE critical_mig=fafc828a placement=mps fault=none background=7
+CRITICAL exit=0 completed=1 text=06ead62102b21987 load_ms=169.38 released_ms=6677.0 decoded_ms=7268.9 input_ms=591.77 generation_ms=19183.48 generated=64
+BACKGROUND started=7 others=7 generating_at_end=7 mig=fafc828a
+MEMORY resident_drop_mib=48671 lowest_drop_mib=48852 mem_available_before_mib=117402
+END_CASE guard=0 timed_out=0 died_early=0 mps_servers=1 critical_s=20.11 wall_s=28.3
+CASE critical_mig=fafc828a placement=slice fault=kill background=7
+FAULT victim=agent1 fault_ms=2 critical_alive=1 background_alive=6 probe_exit=none probe=none
+CRITICAL exit=0 completed=1 text=06ead62102b21987 load_ms=214.13 released_ms=10469.3 decoded_ms=11000.8 input_ms=531.44 generation_ms=18675.11 generated=64
+BACKGROUND started=7 others=6 generating_at_end=6 mig=fafc828a
+MEMORY resident_drop_mib=49038 lowest_drop_mib=49067 mem_available_before_mib=117736
+END_CASE guard=0 timed_out=0 died_early=0 mps_servers=0 critical_s=19.56 wall_s=31.3
+CASE critical_mig=fafc828a placement=slice fault=write background=7
+FAULT victim=probe fault_ms=636 critical_alive=1 background_alive=7 probe_exit=0 probe=route=host,gpu_read=cudaSuccess,words_equal=0,words=16777216,gpu_write=cudaErrorIllegalAddress,file_intact=0
+CRITICAL exit=0 completed=1 text=06ead62102b21987 load_ms=174.28 released_ms=11172.2 decoded_ms=11750.7 input_ms=578.46 generation_ms=21341.15 generated=64
+BACKGROUND started=7 others=7 generating_at_end=7 mig=fafc828a
+MEMORY resident_drop_mib=49027 lowest_drop_mib=49160 mem_available_before_mib=117745
+END_CASE guard=0 timed_out=0 died_early=0 mps_servers=0 critical_s=22.29 wall_s=35.0
+CASE critical_mig=fafc828a placement=slice fault=none background=7
+CRITICAL exit=0 completed=1 text=06ead62102b21987 load_ms=214.33 released_ms=7510.3 decoded_ms=8102.8 input_ms=592.44 generation_ms=21335.77 generated=64
+BACKGROUND started=7 others=7 generating_at_end=7 mig=fafc828a
+MEMORY resident_drop_mib=49023 lowest_drop_mib=49172 mem_available_before_mib=117731
+END_CASE guard=0 timed_out=0 died_early=0 mps_servers=0 critical_s=22.29 wall_s=31.4
+CASE critical_mig=fafc828a placement=alone fault=none background=0
+CRITICAL exit=0 completed=1 text=06ead62102b21987 load_ms=119.68 released_ms=4634.0 decoded_ms=4711.5 input_ms=77.42 generation_ms=2568.79 generated=64
+BACKGROUND started=0 others=0 generating_at_end=0 mig=fafc828a
+MEMORY resident_drop_mib=6149 lowest_drop_mib=6193 mem_available_before_mib=117738
+END_CASE guard=0 timed_out=0 died_early=0 mps_servers=0 critical_s=3.01 wall_s=7.7
+END_KVPLACE
+BEGIN_KVPLACE run=3 context=16384 prefix_tokens=14282 state_mib=781
+CASE critical_mig=fafc828a placement=alone fault=none background=0
+CRITICAL exit=0 completed=1 text=06ead62102b21987 load_ms=122.48 released_ms=4639.1 decoded_ms=4716.9 input_ms=77.75 generation_ms=2571.23 generated=64
+BACKGROUND started=0 others=0 generating_at_end=0 mig=fafc828a
+MEMORY resident_drop_mib=6060 lowest_drop_mib=6087 mem_available_before_mib=117601
+END_CASE guard=0 timed_out=0 died_early=0 mps_servers=0 critical_s=2.98 wall_s=7.7
+CASE critical_mig=fafc828a placement=slice fault=none background=7
+CRITICAL exit=0 completed=1 text=06ead62102b21987 load_ms=234.95 released_ms=7544.7 decoded_ms=8139.3 input_ms=594.55 generation_ms=21334.07 generated=64
+BACKGROUND started=7 others=7 generating_at_end=7 mig=fafc828a
+MEMORY resident_drop_mib=48987 lowest_drop_mib=49143 mem_available_before_mib=117666
+END_CASE guard=0 timed_out=0 died_early=0 mps_servers=0 critical_s=22.27 wall_s=31.3
+CASE critical_mig=fafc828a placement=slice fault=write background=7
+FAULT victim=probe fault_ms=644 critical_alive=1 background_alive=7 probe_exit=0 probe=route=host,gpu_read=cudaSuccess,words_equal=0,words=16777216,gpu_write=cudaErrorIllegalAddress,file_intact=0
+CRITICAL exit=0 completed=1 text=06ead62102b21987 load_ms=208.61 released_ms=11163.2 decoded_ms=11755.3 input_ms=592.07 generation_ms=21351.87 generated=64
+BACKGROUND started=7 others=7 generating_at_end=7 mig=fafc828a
+MEMORY resident_drop_mib=49008 lowest_drop_mib=49126 mem_available_before_mib=117748
+END_CASE guard=0 timed_out=0 died_early=0 mps_servers=0 critical_s=22.32 wall_s=35.0
+CASE critical_mig=fafc828a placement=slice fault=kill background=7
+FAULT victim=agent1 fault_ms=2 critical_alive=1 background_alive=6 probe_exit=none probe=none
+CRITICAL exit=0 completed=1 text=06ead62102b21987 load_ms=174.05 released_ms=10453.9 decoded_ms=10963.1 input_ms=509.21 generation_ms=18669.77 generated=64
+BACKGROUND started=7 others=6 generating_at_end=6 mig=fafc828a
+MEMORY resident_drop_mib=49042 lowest_drop_mib=49071 mem_available_before_mib=117748
+END_CASE guard=0 timed_out=0 died_early=0 mps_servers=0 critical_s=19.54 wall_s=31.3
+CASE critical_mig=fafc828a placement=mps fault=none background=7
+CRITICAL exit=0 completed=1 text=06ead62102b21987 load_ms=170.93 released_ms=6691.1 decoded_ms=7278.1 input_ms=586.98 generation_ms=19183.89 generated=64
+BACKGROUND started=7 others=7 generating_at_end=7 mig=fafc828a
+MEMORY resident_drop_mib=49029 lowest_drop_mib=49184 mem_available_before_mib=117749
+END_CASE guard=0 timed_out=0 died_early=0 mps_servers=1 critical_s=20.16 wall_s=28.3
+CASE critical_mig=fafc828a placement=mps fault=write background=7
+FAULT victim=probe fault_ms=332 critical_alive=1 background_alive=5 probe_exit=0 probe=route=host,gpu_read=cudaSuccess,words_equal=0,words=16777216,gpu_write=cudaErrorIllegalAddress,file_intact=0
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-stock/ggml/src/ggml-cuda/ggml-cuda.cu:109: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+CRITICAL exit=134 completed=0 text=none load_ms=172.08 released_ms=10055.0 decoded_ms=2196.3 input_ms=145.55 generation_ms= generated=
+BACKGROUND started=7 others=7 generating_at_end=0 mig=fafc828a
+MEMORY resident_drop_mib=49038 lowest_drop_mib=49058 mem_available_before_mib=117747
+END_CASE guard=0 timed_out=0 died_early=0 mps_servers=1 critical_s=5.85 wall_s=16.0
+CASE critical_mig=fafc828a placement=mps fault=kill background=7
+FAULT victim=agent1 fault_ms=2 critical_alive=1 background_alive=4 probe_exit=none probe=none
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-stock/ggml/src/ggml-cuda/ggml-cuda.cu:109: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+CRITICAL exit=134 completed=0 text=none load_ms=175.98 released_ms=9599.9 decoded_ms=2380.6 input_ms=168.92 generation_ms= generated=
+BACKGROUND started=7 others=6 generating_at_end=0 mig=fafc828a
+MEMORY resident_drop_mib=48822 lowest_drop_mib=48822 mem_available_before_mib=117500
+END_CASE guard=0 timed_out=0 died_early=0 mps_servers=1 critical_s=5.05 wall_s=14.8
+CASE critical_mig=fafc828a placement=split fault=none background=7
+CRITICAL exit=0 completed=1 text=06ead62102b21987 load_ms=160.76 released_ms=7815.4 decoded_ms=7897.0 input_ms=81.55 generation_ms=2849.03 generated=64
+BACKGROUND started=7 others=7 generating_at_end=7 mig=31ffbfe4
+MEMORY resident_drop_mib=48632 lowest_drop_mib=48705 mem_available_before_mib=117375
+END_CASE guard=0 timed_out=0 died_early=0 mps_servers=0 critical_s=3.30 wall_s=12.6
+CASE critical_mig=fafc828a placement=split fault=write background=7
+FAULT victim=probe fault_ms=668 critical_alive=1 background_alive=7 probe_exit=0 probe=route=host,gpu_read=cudaSuccess,words_equal=0,words=16777216,gpu_write=cudaErrorIllegalAddress,file_intact=0
+CRITICAL exit=0 completed=1 text=06ead62102b21987 load_ms=164.71 released_ms=11329.2 decoded_ms=11412.2 input_ms=83.00 generation_ms=2876.00 generated=64
+BACKGROUND started=7 others=7 generating_at_end=7 mig=31ffbfe4
+MEMORY resident_drop_mib=48872 lowest_drop_mib=48981 mem_available_before_mib=117714
+END_CASE guard=0 timed_out=0 died_early=0 mps_servers=0 critical_s=3.34 wall_s=16.2
+CASE critical_mig=fafc828a placement=split fault=kill background=7
+FAULT victim=agent1 fault_ms=2 critical_alive=1 background_alive=6 probe_exit=none probe=none
+CRITICAL exit=0 completed=1 text=06ead62102b21987 load_ms=165.44 released_ms=10555.4 decoded_ms=10637.2 input_ms=81.81 generation_ms=2866.01 generated=64
+BACKGROUND started=7 others=6 generating_at_end=6 mig=31ffbfe4
+MEMORY resident_drop_mib=48898 lowest_drop_mib=48957 mem_available_before_mib=117767
+END_CASE guard=0 timed_out=0 died_early=0 mps_servers=0 critical_s=3.30 wall_s=15.2
+END_KVPLACE
+BEGIN_KVPLACE run=4 context=16384 prefix_tokens=14282 state_mib=781
+CASE critical_mig=fafc828a placement=split fault=kill background=7
+FAULT victim=agent1 fault_ms=1 critical_alive=1 background_alive=6 probe_exit=none probe=none
+CRITICAL exit=0 completed=1 text=06ead62102b21987 load_ms=165.94 released_ms=10796.4 decoded_ms=10878.2 input_ms=81.76 generation_ms=2867.32 generated=64
+BACKGROUND started=7 others=6 generating_at_end=6 mig=31ffbfe4
+MEMORY resident_drop_mib=48709 lowest_drop_mib=48781 mem_available_before_mib=117536
+END_CASE guard=0 timed_out=0 died_early=0 mps_servers=0 critical_s=3.31 wall_s=15.4
+CASE critical_mig=fafc828a placement=split fault=write background=7
+FAULT victim=probe fault_ms=656 critical_alive=1 background_alive=7 probe_exit=0 probe=route=host,gpu_read=cudaSuccess,words_equal=0,words=16777216,gpu_write=cudaErrorIllegalAddress,file_intact=0
+CRITICAL exit=0 completed=1 text=06ead62102b21987 load_ms=167.79 released_ms=11469.0 decoded_ms=11550.9 input_ms=81.87 generation_ms=2867.26 generated=64
+BACKGROUND started=7 others=7 generating_at_end=7 mig=31ffbfe4
+MEMORY resident_drop_mib=48859 lowest_drop_mib=48984 mem_available_before_mib=117700
+END_CASE guard=0 timed_out=0 died_early=0 mps_servers=0 critical_s=3.29 wall_s=16.2
+CASE critical_mig=fafc828a placement=split fault=none background=7
+CRITICAL exit=0 completed=1 text=06ead62102b21987 load_ms=176.33 released_ms=7833.2 decoded_ms=7915.4 input_ms=82.16 generation_ms=2861.07 generated=64
+BACKGROUND started=7 others=7 generating_at_end=7 mig=31ffbfe4
+MEMORY resident_drop_mib=48902 lowest_drop_mib=49017 mem_available_before_mib=117731
+END_CASE guard=0 timed_out=0 died_early=0 mps_servers=0 critical_s=3.31 wall_s=12.7
+CASE critical_mig=fafc828a placement=mps fault=kill background=7
+FAULT victim=agent1 fault_ms=2 critical_alive=1 background_alive=4 probe_exit=none probe=none
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-stock/ggml/src/ggml-cuda/ggml-cuda.cu:109: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+CRITICAL exit=134 completed=0 text=none load_ms=171.04 released_ms=9667.3 decoded_ms=2267.2 input_ms=157.68 generation_ms= generated=
+BACKGROUND started=7 others=6 generating_at_end=0 mig=fafc828a
+MEMORY resident_drop_mib=48993 lowest_drop_mib=49015 mem_available_before_mib=117680
+END_CASE guard=0 timed_out=0 died_early=0 mps_servers=1 critical_s=5.03 wall_s=14.8
+CASE critical_mig=fafc828a placement=mps fault=write background=7
+FAULT victim=probe fault_ms=330 critical_alive=1 background_alive=5 probe_exit=0 probe=route=host,gpu_read=cudaSuccess,words_equal=0,words=16777216,gpu_write=cudaErrorIllegalAddress,file_intact=0
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-stock/ggml/src/ggml-cuda/ggml-cuda.cu:109: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+CRITICAL exit=134 completed=0 text=none load_ms=175.19 released_ms=10026.6 decoded_ms=2211.5 input_ms=145.64 generation_ms= generated=
+BACKGROUND started=7 others=7 generating_at_end=0 mig=fafc828a
+MEMORY resident_drop_mib=48848 lowest_drop_mib=48856 mem_available_before_mib=117471
+END_CASE guard=0 timed_out=0 died_early=0 mps_servers=1 critical_s=5.82 wall_s=15.9
+CASE critical_mig=fafc828a placement=mps fault=none background=7
+CRITICAL exit=0 completed=1 text=06ead62102b21987 load_ms=173.02 released_ms=6718.0 decoded_ms=7301.0 input_ms=582.97 generation_ms=19170.55 generated=64
+BACKGROUND started=7 others=7 generating_at_end=7 mig=fafc828a
+MEMORY resident_drop_mib=48825 lowest_drop_mib=48894 mem_available_before_mib=117429
+END_CASE guard=0 timed_out=0 died_early=0 mps_servers=1 critical_s=20.12 wall_s=28.3
+CASE critical_mig=fafc828a placement=slice fault=kill background=7
+FAULT victim=agent1 fault_ms=2 critical_alive=1 background_alive=6 probe_exit=none probe=none
+CRITICAL exit=0 completed=1 text=06ead62102b21987 load_ms=193.96 released_ms=10304.5 decoded_ms=10817.4 input_ms=512.90 generation_ms=18671.89 generated=64
+BACKGROUND started=7 others=6 generating_at_end=6 mig=fafc828a
+MEMORY resident_drop_mib=49021 lowest_drop_mib=49046 mem_available_before_mib=117729
+END_CASE guard=0 timed_out=0 died_early=0 mps_servers=0 critical_s=19.56 wall_s=31.1
+CASE critical_mig=fafc828a placement=slice fault=write background=7
+FAULT victim=probe fault_ms=641 critical_alive=1 background_alive=7 probe_exit=0 probe=route=host,gpu_read=cudaSuccess,words_equal=0,words=16777216,gpu_write=cudaErrorIllegalAddress,file_intact=0
+CRITICAL exit=0 completed=1 text=06ead62102b21987 load_ms=197.42 released_ms=10962.7 decoded_ms=11564.9 input_ms=602.21 generation_ms=21365.41 generated=64
+BACKGROUND started=7 others=7 generating_at_end=7 mig=fafc828a
+MEMORY resident_drop_mib=49009 lowest_drop_mib=49153 mem_available_before_mib=117719
+END_CASE guard=0 timed_out=0 died_early=0 mps_servers=0 critical_s=22.36 wall_s=34.9
+CASE critical_mig=fafc828a placement=slice fault=none background=7
+CRITICAL exit=0 completed=1 text=06ead62102b21987 load_ms=198.22 released_ms=7360.0 decoded_ms=7962.9 input_ms=602.83 generation_ms=21330.66 generated=64
+BACKGROUND started=7 others=7 generating_at_end=7 mig=fafc828a
+MEMORY resident_drop_mib=49020 lowest_drop_mib=49179 mem_available_before_mib=117751
+END_CASE guard=0 timed_out=0 died_early=0 mps_servers=0 critical_s=22.27 wall_s=31.1
+CASE critical_mig=fafc828a placement=alone fault=none background=0
+CRITICAL exit=0 completed=1 text=06ead62102b21987 load_ms=119.97 released_ms=4634.3 decoded_ms=4711.1 input_ms=76.79 generation_ms=2572.09 generated=64
+BACKGROUND started=0 others=0 generating_at_end=0 mig=fafc828a
+MEMORY resident_drop_mib=6159 lowest_drop_mib=6200 mem_available_before_mib=117739
+END_CASE guard=0 timed_out=0 died_early=0 mps_servers=0 critical_s=3.03 wall_s=7.8
+END_KVPLACE
+BEGIN_KVPLACE run=5 context=16384 prefix_tokens=14282 state_mib=781
+CASE critical_mig=fafc828a placement=alone fault=none background=0
+CRITICAL exit=0 completed=1 text=06ead62102b21987 load_ms=121.36 released_ms=4624.6 decoded_ms=4702.2 input_ms=77.47 generation_ms=2559.83 generated=64
+BACKGROUND started=0 others=0 generating_at_end=0 mig=fafc828a
+MEMORY resident_drop_mib=6142 lowest_drop_mib=6180 mem_available_before_mib=117455
+END_CASE guard=0 timed_out=0 died_early=0 mps_servers=0 critical_s=2.95 wall_s=7.7
+CASE critical_mig=fafc828a placement=slice fault=none background=7
+CRITICAL exit=0 completed=1 text=06ead62102b21987 load_ms=265.89 released_ms=7371.4 decoded_ms=7963.8 input_ms=592.41 generation_ms=21334.29 generated=64
+BACKGROUND started=7 others=7 generating_at_end=7 mig=fafc828a
+MEMORY resident_drop_mib=48881 lowest_drop_mib=48943 mem_available_before_mib=117416
+END_CASE guard=0 timed_out=0 died_early=0 mps_servers=0 critical_s=22.25 wall_s=31.1
+CASE critical_mig=fafc828a placement=slice fault=write background=7
+FAULT victim=probe fault_ms=641 critical_alive=1 background_alive=7 probe_exit=0 probe=route=host,gpu_read=cudaSuccess,words_equal=0,words=16777216,gpu_write=cudaErrorIllegalAddress,file_intact=0
+CRITICAL exit=0 completed=1 text=06ead62102b21987 load_ms=198.87 released_ms=10946.5 decoded_ms=11541.2 input_ms=594.64 generation_ms=21336.63 generated=64
+BACKGROUND started=7 others=7 generating_at_end=7 mig=fafc828a
+MEMORY resident_drop_mib=49011 lowest_drop_mib=49146 mem_available_before_mib=117729
+END_CASE guard=0 timed_out=0 died_early=0 mps_servers=0 critical_s=22.27 wall_s=34.7
+CASE critical_mig=fafc828a placement=slice fault=kill background=7
+FAULT victim=agent1 fault_ms=2 critical_alive=1 background_alive=6 probe_exit=none probe=none
+CRITICAL exit=0 completed=1 text=06ead62102b21987 load_ms=200.39 released_ms=10317.2 decoded_ms=10832.1 input_ms=514.89 generation_ms=18664.47 generated=64
+BACKGROUND started=7 others=6 generating_at_end=6 mig=fafc828a
+MEMORY resident_drop_mib=49011 lowest_drop_mib=49038 mem_available_before_mib=117720
+END_CASE guard=0 timed_out=0 died_early=0 mps_servers=0 critical_s=19.57 wall_s=31.2
+CASE critical_mig=fafc828a placement=mps fault=none background=7
+CRITICAL exit=0 completed=1 text=06ead62102b21987 load_ms=174.77 released_ms=6766.7 decoded_ms=7356.9 input_ms=590.16 generation_ms=19074.36 generated=64
+BACKGROUND started=7 others=7 generating_at_end=7 mig=fafc828a
+MEMORY resident_drop_mib=49022 lowest_drop_mib=49211 mem_available_before_mib=117719
+END_CASE guard=0 timed_out=0 died_early=0 mps_servers=1 critical_s=20.03 wall_s=28.3
+CASE critical_mig=fafc828a placement=mps fault=write background=7
+FAULT victim=probe fault_ms=322 critical_alive=1 background_alive=5 probe_exit=0 probe=route=host,gpu_read=cudaSuccess,words_equal=0,words=16777216,gpu_write=cudaErrorIllegalAddress,file_intact=0
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-stock/ggml/src/ggml-cuda/ggml-cuda.cu:109: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+CRITICAL exit=134 completed=0 text=none load_ms=173.96 released_ms=10043.6 decoded_ms=2241.1 input_ms=172.19 generation_ms= generated=
+BACKGROUND started=7 others=7 generating_at_end=0 mig=fafc828a
+MEMORY resident_drop_mib=49005 lowest_drop_mib=49038 mem_available_before_mib=117716
+END_CASE guard=0 timed_out=0 died_early=0 mps_servers=1 critical_s=5.83 wall_s=16.0
+CASE critical_mig=fafc828a placement=mps fault=kill background=7
+FAULT victim=agent1 fault_ms=2 critical_alive=1 background_alive=6 probe_exit=none probe=none
+CRITICAL exit=0 completed=1 text=06ead62102b21987 load_ms=170.11 released_ms=9722.2 decoded_ms=10255.1 input_ms=532.80 generation_ms=16790.88 generated=64
+BACKGROUND started=7 others=6 generating_at_end=6 mig=fafc828a
+MEMORY resident_drop_mib=48813 lowest_drop_mib=48834 mem_available_before_mib=117492
+END_CASE guard=0 timed_out=0 died_early=0 mps_servers=1 critical_s=17.67 wall_s=28.7
+CASE critical_mig=fafc828a placement=split fault=none background=7
+CRITICAL exit=0 completed=1 text=06ead62102b21987 load_ms=165.75 released_ms=7839.2 decoded_ms=7921.2 input_ms=82.00 generation_ms=2858.39 generated=64
+BACKGROUND started=7 others=7 generating_at_end=7 mig=31ffbfe4
+MEMORY resident_drop_mib=48872 lowest_drop_mib=49004 mem_available_before_mib=117715
+END_CASE guard=0 timed_out=0 died_early=0 mps_servers=0 critical_s=3.29 wall_s=12.7
+CASE critical_mig=fafc828a placement=split fault=write background=7
+FAULT victim=probe fault_ms=663 critical_alive=1 background_alive=7 probe_exit=0 probe=route=host,gpu_read=cudaSuccess,words_equal=0,words=16777216,gpu_write=cudaErrorIllegalAddress,file_intact=0
+CRITICAL exit=0 completed=1 text=06ead62102b21987 load_ms=166.81 released_ms=11384.6 decoded_ms=11467.0 input_ms=82.45 generation_ms=2864.05 generated=64
+BACKGROUND started=7 others=7 generating_at_end=7 mig=31ffbfe4
+MEMORY resident_drop_mib=48884 lowest_drop_mib=48971 mem_available_before_mib=117657
+END_CASE guard=0 timed_out=0 died_early=0 mps_servers=0 critical_s=3.32 wall_s=16.2
+CASE critical_mig=fafc828a placement=split fault=kill background=7
+FAULT victim=agent1 fault_ms=2 critical_alive=1 background_alive=6 probe_exit=none probe=none
+CRITICAL exit=0 completed=1 text=06ead62102b21987 load_ms=171.59 released_ms=10718.0 decoded_ms=10800.0 input_ms=81.90 generation_ms=2867.30 generated=64
+BACKGROUND started=7 others=6 generating_at_end=6 mig=31ffbfe4
+MEMORY resident_drop_mib=48878 lowest_drop_mib=48899 mem_available_before_mib=117686
+END_CASE guard=0 timed_out=0 died_early=0 mps_servers=0 critical_s=3.33 wall_s=15.3
+END_KVPLACE
+BEGIN_KVPLACE run=6 context=16384 prefix_tokens=14282 state_mib=781
+CASE critical_mig=fafc828a placement=split fault=kill background=7
+FAULT victim=agent1 fault_ms=2 critical_alive=1 background_alive=6 probe_exit=none probe=none
+CRITICAL exit=0 completed=1 text=06ead62102b21987 load_ms=167.26 released_ms=10792.7 decoded_ms=10874.8 input_ms=81.99 generation_ms=2861.77 generated=64
+BACKGROUND started=7 others=6 generating_at_end=6 mig=31ffbfe4
+MEMORY resident_drop_mib=48855 lowest_drop_mib=48855 mem_available_before_mib=117416
+END_CASE guard=0 timed_out=0 died_early=0 mps_servers=0 critical_s=3.29 wall_s=15.3
+CASE critical_mig=fafc828a placement=split fault=write background=7
+FAULT victim=probe fault_ms=667 critical_alive=1 background_alive=7 probe_exit=0 probe=route=host,gpu_read=cudaSuccess,words_equal=0,words=16777216,gpu_write=cudaErrorIllegalAddress,file_intact=0
+CRITICAL exit=0 completed=1 text=06ead62102b21987 load_ms=166.87 released_ms=11620.9 decoded_ms=11703.1 input_ms=82.12 generation_ms=2861.56 generated=64
+BACKGROUND started=7 others=7 generating_at_end=7 mig=31ffbfe4
+MEMORY resident_drop_mib=48850 lowest_drop_mib=48940 mem_available_before_mib=117666
+END_CASE guard=0 timed_out=0 died_early=0 mps_servers=0 critical_s=3.28 wall_s=16.4
+CASE critical_mig=fafc828a placement=split fault=none background=7
+CRITICAL exit=0 completed=1 text=06ead62102b21987 load_ms=165.45 released_ms=7886.0 decoded_ms=7967.9 input_ms=81.89 generation_ms=2866.68 generated=64
+BACKGROUND started=7 others=7 generating_at_end=7 mig=31ffbfe4
+MEMORY resident_drop_mib=48909 lowest_drop_mib=49015 mem_available_before_mib=117721
+END_CASE guard=0 timed_out=0 died_early=0 mps_servers=0 critical_s=3.32 wall_s=12.7
+CASE critical_mig=fafc828a placement=mps fault=kill background=7
+FAULT victim=agent1 fault_ms=2 critical_alive=1 background_alive=6 probe_exit=none probe=none
+CRITICAL exit=0 completed=1 text=06ead62102b21987 load_ms=175.94 released_ms=9785.2 decoded_ms=10317.1 input_ms=531.89 generation_ms=16800.12 generated=64
+BACKGROUND started=7 others=6 generating_at_end=6 mig=fafc828a
+MEMORY resident_drop_mib=49021 lowest_drop_mib=49026 mem_available_before_mib=117711
+END_CASE guard=0 timed_out=0 died_early=0 mps_servers=1 critical_s=17.69 wall_s=28.8
+CASE critical_mig=fafc828a placement=mps fault=write background=7
+FAULT victim=probe fault_ms=328 critical_alive=1 background_alive=5 probe_exit=0 probe=route=host,gpu_read=cudaSuccess,words_equal=0,words=16777216,gpu_write=cudaErrorIllegalAddress,file_intact=0
+STDERR   cudaStreamSynchronize(cuda_ctx->stream())
+STDERR /home/thor/kcj/llm_share/llama.cpp-stock/ggml/src/ggml-cuda/ggml-cuda.cu:109: CUDA error
+STDERR warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+CRITICAL exit=134 completed=0 text=none load_ms=174.89 released_ms=10058.1 decoded_ms=2185.4 input_ms=159.04 generation_ms= generated=
+BACKGROUND started=7 others=7 generating_at_end=0 mig=fafc828a
+MEMORY resident_drop_mib=48976 lowest_drop_mib=49005 mem_available_before_mib=117691
+END_CASE guard=0 timed_out=0 died_early=0 mps_servers=1 critical_s=5.86 wall_s=16.0
+CASE critical_mig=fafc828a placement=mps fault=none background=7
+CRITICAL exit=0 completed=1 text=06ead62102b21987 load_ms=171.41 released_ms=6759.8 decoded_ms=7352.2 input_ms=592.30 generation_ms=19199.95 generated=64
+BACKGROUND started=7 others=7 generating_at_end=7 mig=fafc828a
+MEMORY resident_drop_mib=48880 lowest_drop_mib=49025 mem_available_before_mib=117541
+END_CASE guard=0 timed_out=0 died_early=0 mps_servers=1 critical_s=20.17 wall_s=28.5
+CASE critical_mig=fafc828a placement=slice fault=kill background=7
+FAULT victim=agent1 fault_ms=2 critical_alive=1 background_alive=6 probe_exit=none probe=none
+CRITICAL exit=0 completed=1 text=06ead62102b21987 load_ms=197.67 released_ms=10377.6 decoded_ms=10900.0 input_ms=522.30 generation_ms=18671.06 generated=64
+BACKGROUND started=7 others=6 generating_at_end=6 mig=fafc828a
+MEMORY resident_drop_mib=49027 lowest_drop_mib=49044 mem_available_before_mib=117732
+END_CASE guard=0 timed_out=0 died_early=0 mps_servers=0 critical_s=19.58 wall_s=31.3
+CASE critical_mig=fafc828a placement=slice fault=write background=7
+FAULT victim=probe fault_ms=633 critical_alive=1 background_alive=7 probe_exit=0 probe=route=host,gpu_read=cudaSuccess,words_equal=0,words=16777216,gpu_write=cudaErrorIllegalAddress,file_intact=0
+CRITICAL exit=0 completed=1 text=06ead62102b21987 load_ms=203.44 released_ms=11039.4 decoded_ms=11639.1 input_ms=599.72 generation_ms=21337.37 generated=64
+BACKGROUND started=7 others=7 generating_at_end=7 mig=fafc828a
+MEMORY resident_drop_mib=49043 lowest_drop_mib=49134 mem_available_before_mib=117703
+END_CASE guard=0 timed_out=0 died_early=0 mps_servers=0 critical_s=22.31 wall_s=34.9
+CASE critical_mig=fafc828a placement=slice fault=none background=7
+CRITICAL exit=0 completed=1 text=06ead62102b21987 load_ms=187.80 released_ms=7576.7 decoded_ms=8160.2 input_ms=583.42 generation_ms=21338.68 generated=64
+BACKGROUND started=7 others=7 generating_at_end=7 mig=fafc828a
+MEMORY resident_drop_mib=49022 lowest_drop_mib=49193 mem_available_before_mib=117747
+END_CASE guard=0 timed_out=0 died_early=0 mps_servers=0 critical_s=22.30 wall_s=31.4
+CASE critical_mig=fafc828a placement=alone fault=none background=0
+CRITICAL exit=0 completed=1 text=06ead62102b21987 load_ms=120.24 released_ms=4635.1 decoded_ms=4712.6 input_ms=77.43 generation_ms=2561.95 generated=64
+BACKGROUND started=0 others=0 generating_at_end=0 mig=fafc828a
+MEMORY resident_drop_mib=6164 lowest_drop_mib=6203 mem_available_before_mib=117736
+END_CASE guard=0 timed_out=0 died_early=0 mps_servers=0 critical_s=3.00 wall_s=7.7
+END_KVPLACE

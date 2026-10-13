@@ -56,3 +56,4 @@ __pycache__/
 /vllm_share_mount/
 *.egg-info/
 /kv_agent2
+/kv_agent_stock

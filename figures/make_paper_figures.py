@@ -1063,6 +1063,64 @@ def wshare():
     finish(fig, ax, "eval_wshare_mem", "", "Memory (GiB)", max(max(v) for _, _, v in series) * 1.3)
 
 
+# ------------------------------------- placement of agents (background)
+PLACE = "20261013-engine-kvplace-v1"
+
+
+def cross(ax, bar, colour):
+    """A cross in place of a bar whose agents do not all complete."""
+    bar.set_height(0)
+    ax.annotate("\u00d7", (bar.get_x() + bar.get_width() / 2, 0), xytext=(0, 2),
+                textcoords="offset points", ha="center", va="bottom", fontsize=LEGEND,
+                color=colour, xycoords=("data", "axes fraction"))
+
+
+def bg_place():
+    """Two half-column panels for the background, both on the unmodified
+    engine: the speed of an agent next to seven others by placement, without
+    a fault and after a GPU fault of another process, and the memory of eight
+    agents whose weights a public library shares in device memory."""
+    if have(PLACE, "engine_kvplace_summary.csv"):
+        data = {(r["placement"], r["fault"]): r for r in rows(PLACE, "engine_kvplace_summary.csv")
+                if r["critical_instance"] == "12sm"}
+        placements = (("Time\nSlicing", "slice"), ("MPS", "mps"), ("Other\nInstance", "split"))
+        cases = (("No Fault", COPY_LIGHT, "none"), ("After a Fault", COPY, "write"))
+        fig, ax = panel()
+        series = [(label, colour, [float(data[key, fault]["rate_vs_alone"]) for _, key in placements])
+                  for label, colour, fault in cases]
+        groups = grouped(ax, [label for label, _ in placements], series, 0.36)
+        for (label, colour, fault), group in zip(cases, groups):
+            for bar, (_, key) in zip(group, placements):
+                if int(data[key, fault]["critical_completed"]) < int(data[key, fault]["runs"]):
+                    cross(ax, bar, colour)
+                else:
+                    tip(ax, bar, f"{bar.get_height():.2f}")
+        ax.axhline(1.0, color=AXIS, linewidth=1.0)
+        ax.legend(loc="upper center", ncol=2, handlelength=1.0, fontsize=LEGEND, columnspacing=1.0)
+        ax.tick_params(axis="x", labelsize=TICK2)
+        finish(fig, ax, "bg_place_speed", "", "Relative Speed", 1.25)
+
+    directory = "20261007-ext-weightshare-v1"
+    if have(directory, "ext_weightshare_summary.csv"):
+        data = {(r["placement"], r["stack"]): r for r in rows(directory, "ext_weightshare_summary.csv")}
+        placements = (("Same\nInstance", "same"), ("Across\nInstances", "cross"))
+        stacks = (("Existing Engine", COPY, "stock"), ("CUDA IPC Library", DEVICE, "ipc"))
+        fig, ax = panel()
+        series = [(label, colour, [float(data[key, m]["memory_mib"]) / 1024 for _, key in placements])
+                  for label, colour, m in stacks]
+        top = max(max(values) for _, _, values in series)
+        groups = grouped(ax, [label for label, _ in placements], series, 0.36)
+        for (label, colour, m), group in zip(stacks, groups):
+            for bar, (_, key) in zip(group, placements):
+                if int(data[key, m]["agents_finished"]) < int(data[key, m]["agents_started"]):
+                    cross(ax, bar, colour)
+                else:
+                    tip(ax, bar, f"{bar.get_height():.1f}")
+        ax.legend(loc="upper center", ncol=2, handlelength=1.0, fontsize=LEGEND, columnspacing=1.0)
+        ax.tick_params(axis="x", labelsize=TICK2)
+        finish(fig, ax, "bg_place_share", "", "Memory (GiB)", top * 1.22)
+
+
 # ------------------------------------------------------- vLLM servers on extents
 VLLM_MODES = (("vLLM", COPY, "vllm"), ("vLLM-\nCPU", COPY_LIGHT, "cpu"), ("vLLM-\nLMCache", DEMAND, "lmcache"),
               ("vLLM-\n" + NAME, OURS, "stator"))
@@ -1113,7 +1171,7 @@ def vshare():
 
 
 if __name__ == "__main__":
-    for figure in (base.bg_state, pair_legend, mem, weights, hand, speed, reach, mode, cow, resident, latency, dev, sota, attach, protect, tree, scale,
+    for figure in (base.bg_state, bg_place, pair_legend, mem, weights, hand, speed, reach, mode, cow, resident, latency, dev, sota, attach, protect, tree, scale,
                    variants, inproc, server, limit, stack, local, pipe, deep, wshare, prefix_length, vshare):
         figure()
         print("wrote", figure.__name__)
