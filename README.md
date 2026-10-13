@@ -1336,6 +1336,38 @@ Q1~Q4 성립). 강제 종료한 리더의 리프도 완료한다. MPS에서는 �
 것이다(같은 인스턴스 53.9 GiB 대 21.1 GiB, 인스턴스 사이에서는 다른 인스턴스의 에이전트
 24개가 모두 실패).
 
+**STATOR의 단계가 없는 copy-on-write 매핑 (`run_engine_kvmech.sh`,
+`20261013-engine-kvmech-cowplain-v1`).** 메커니즘 캠페인(`20261010-engine-kvmech-v2`)의
+`cow` 모드는 사설 쓰기 가능 매핑에 STATOR의 CPU 읽기와 2 MiB 페이지를 더한 구성이다. 커널이
+제공하는 copy-on-write 그대로의 구성은 그 캠페인에 없었다. 이 캠페인은 같은 엔진과 같은
+셀에서 CPU 읽기가 없는 사설 쓰기 가능 매핑(`writable_no_read`)을 측정하고, 비교 가능성을
+확인하려고 `copy`와 `extent`를 다시 측정한다. 실행은
+`MODE_SET=baselines MODES="copy writable_no_read extent" CELLS="same:8:320 cross:8:320 same:8:80"`
+에 `TUNED_ENGINE`, `PARENT_DRIVER`, `CHILD_DRIVER`를 v2 엔진과 드라이버로 지정한 것이다.
+자식 8개, 6회 반복의 평균이다.
+
+| 셀 | 모드 | 자식 메모리 (GiB) | attach (ms) | 첫 토큰 (s) | 부모 정지 (ms) | 생성 속도 (copy 대비) | 완료 |
+|---|---|---:|---:|---:|---:|---:|---:|
+| 같은 인스턴스, 16,321토큰 | copy | 19.8 | 525 | 2.65 | 541 | 1.000 | 48/48 |
+| | writable_no_read | 12.9 | 53 | 7.38 | 11.4 | 1.006 | 48/48 |
+| | extent | 5.9 | 53 | 2.17 | 11.6 | 1.001 | 48/48 |
+| 두 인스턴스, 16,321토큰 | copy | 19.8 | 507 | 2.40 | 543 | 1.000 | 48/48 |
+| | writable_no_read | 12.8 | 49 | 5.26 | 10.7 | 0.981 | 48/48 |
+| | extent | 5.8 | 50 | 1.90 | 10.7 | 0.974 | 48/48 |
+| 같은 인스턴스, 4,081토큰 | copy | 9.0 | 258 | 2.27 | 212 | 1.000 | 48/48 |
+| | writable_no_read | 7.4 | 29 | 4.49 | 5.0 | 0.990 | 48/48 |
+| | extent | 5.7 | 31 | 2.04 | 4.9 | 0.990 | 48/48 |
+
+CPU 읽기가 없는 매핑에서는 자식이 extent와 같은 시간에 attach하지만 첫 토큰이 2.2~3.4배
+늦고 메모리가 2.2배이다. GPU가 매핑된 프리픽스에서 fault를 내고 커널이 그 블록을 자식마다
+복사하기 때문이다(4.11절의 ablation에서 `writable_no_read`가 12.8 GiB, 5.17 s였다). 자식은
+모두 완료하고 copy와 같은 텍스트를 쓴다. 게이트 W1~W4가 성립한다. `copy`와 `extent`의
+메모리는 v2 캠페인의 같은 셀과 0.2% 안에서 같다.
+
+논문의 메커니즘 그림(`eval_hand_pause`, `eval_sota_*`)은 `CoW Map`을 이 캠페인의
+`writable_no_read`에서 가져온다. v2 캠페인의 `cow`는 STATOR의 한 부분이며 copy-on-write
+그림(`eval_cow_*`)에서 `STATOR (Read, 2 MiB)`로 나온다.
+
 ## 5. 한계
 
 - 주 평가는 장치 한 대, 엔진 하나, 7B 모델 하나에서 수행하였고, 8B와 14B

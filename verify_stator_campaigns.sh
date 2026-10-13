@@ -1136,6 +1136,53 @@ if present 20261013-engine-kvplace-v1; then
     }'
 fi
 
+# --- the copy-on-write mapping of the kernel without a step of STATOR -------------
+# Gates, fixed before the campaign: W1 the parents complete, no case is ended
+# by the time limit, and every child completes in copy and extent; W2 the
+# children of copy and extent write the text of copy; the children of the
+# plain mapping are counted; W3 on the long prefix, in both placements, the
+# children of the plain mapping hold at least 1.5 times the memory of extent
+# and reach the first token at least 1.5 times later; W4 copy and extent
+# repeat the memory of the same cells of 20261010-engine-kvmech-v2 within 5%,
+# since the figure of the mechanisms takes the plain mapping from here.
+if present 20261013-engine-kvmech-cowplain-v1; then
+  dir="$results/20261013-engine-kvmech-cowplain-v1"
+  check_hashes "$dir"
+  order=$(awk -F= '$1 == "modes" { print $2 }' "$dir/metadata.txt")
+  awk -v order="$order" -f "$script_dir/summarize_engine_kvmech.awk" "$dir/raw.log" >"$scratch/kvmech-cowplain.csv"
+  same "$scratch/kvmech-cowplain.csv" "$dir/engine_kvmech_summary.csv"
+  gates kvmech-cowplain "$dir/engine_kvmech_summary.csv" '
+    {
+      cell = $c["placement"] ":" $c["children"] ":" $c["paragraphs"]; mode = $c["mode"]
+      complete = ($c["parents_completed"] == $c["runs"] && $c["timed_out"] == 0 && $c["children_finished"] == $c["children_started"])
+      equal = ($c["texts_equal_to_copy"] == $c["texts_compared"] && $c["texts_compared"] == $c["children_finished"])
+      if (mode != "writable_no_read" && !complete) print "!W1 " cell " " mode
+      if (mode != "writable_no_read" && !equal) print "!W2 " cell " " mode " " $c["texts_equal_to_copy"] "/" $c["children_finished"]
+      if (mode == "writable_no_read" && !(complete && equal))
+        print "counted " cell " " mode " finished=" $c["children_finished"] "/" $c["children_started"] " equal=" $c["texts_equal_to_copy"]
+      memory[cell, mode] = $c["children_memory_mib"]; first[cell, mode] = $c["child_first_token_ms"]; long[cell] = ($c["paragraphs"] == 320)
+    }
+    END {
+      for (cell in long) if (long[cell]) {
+        if (!(memory[cell, "writable_no_read"] >= 1.5 * memory[cell, "extent"]))
+          print "!W3 memory " cell " " memory[cell, "writable_no_read"] " " memory[cell, "extent"]
+        if (!(first[cell, "writable_no_read"] >= 1.5 * first[cell, "extent"]))
+          print "!W3 first_token " cell " " first[cell, "writable_no_read"] " " first[cell, "extent"]
+      }
+    }'
+  awk -F, '
+    NR == FNR { if (FNR == 1) { for (i = 1; i <= NF; ++i) a[$i] = i; next }
+                ref[$a["placement"], $a["children"], $a["paragraphs"], $a["mode"]] = $a["children_memory_mib"]; next }
+    FNR == 1 { for (i = 1; i <= NF; ++i) b[$i] = i; next }
+    $b["mode"] == "copy" || $b["mode"] == "extent" {
+      key = $b["placement"] SUBSEP $b["children"] SUBSEP $b["paragraphs"] SUBSEP $b["mode"]; rows++
+      if (!(key in ref) || $b["children_memory_mib"] < 0.95 * ref[key] || $b["children_memory_mib"] > 1.05 * ref[key]) bad++
+    }
+    END { exit (bad || rows != 6) ? 1 : 0 }' \
+    "$results/20261010-engine-kvmech-v2/engine_kvmech_summary.csv" "$dir/engine_kvmech_summary.csv" ||
+    fail "W4 does not hold in kvmech-cowplain"
+fi
+
 echo "stator_campaign_verification=PASS"
 echo "campaigns_verified=${#verified[@]} ${verified[*]:-}"
 echo "campaigns_absent=${#absent[@]} ${absent[*]:-}"

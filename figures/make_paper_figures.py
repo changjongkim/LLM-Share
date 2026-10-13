@@ -190,19 +190,30 @@ def weights():
 
 
 # ---------------------------------------------------------------- handover
+# CoW Map is the private writable mapping of the kernel without a step of
+# STATOR (mode writable_no_read). The mode `cow` of the campaigns adds the CPU
+# read pass of STATOR on 2 MiB pages; it is a part of STATOR and is drawn as
+# one in cow().
 MECHANISMS = (("Copy", COPY, "copy"), ("Demand", DEMAND, "demand"), ("Device", DEVICE, "device_merged"),
-              ("CoW Map", COW, "cow"), (NAME, OURS, "extent"))
+              ("CoW Map", COW, "writable_no_read"), (NAME, OURS, "extent"))
 # The second campaign runs the engine that puts the entries of a divided 2 MiB
 # block back at a publish; the first, which also has the cells with one and
 # four children, is kept for the panels by the number of agents.
 MECH = "20261010-engine-kvmech-v2"
 MECH_COUNTS = "20261007-engine-kvmech-v1"
+# The plain mapping was measured later in the cells of MECH, with copy and
+# extent repeated as a check (within 5% in memory, gate W4 of the verifier).
+MECH_PLAIN = "20261013-engine-kvmech-cowplain-v1"
 
 
 def mechanisms(directory=None):
     """The campaign that runs every mechanism in one engine, by cell and mode."""
-    return {(r["placement"], int(r["children"]), int(r["paragraphs"]), r["mode"]): r
+    data = {(r["placement"], int(r["children"]), int(r["paragraphs"]), r["mode"]): r
             for r in rows(directory or MECH, "engine_kvmech_summary.csv")}
+    if directory is None and have(MECH_PLAIN, "engine_kvmech_summary.csv"):
+        data.update({(r["placement"], int(r["children"]), int(r["paragraphs"]), r["mode"]): r
+                     for r in rows(MECH_PLAIN, "engine_kvmech_summary.csv") if r["mode"] == "writable_no_read"})
+    return data
 
 
 def hand():
@@ -217,8 +228,9 @@ def hand():
 
     def bars(name, groups, cells, column, ylabel, scale, form, log, xlabel):
         fig, ax = panel()
+        # a mechanism that a campaign does not have is left out of its panels
         series = [(label, colour, [float(data[cell + (m,)][column]) / scale for cell in cells])
-                  for label, colour, m in MECHANISMS]
+                  for label, colour, m in MECHANISMS if all(cell + (m,) in data for cell in cells)]
         for group in grouped(ax, groups, series, 0.17):
             labels(ax, group, form, DENSE)
             for text in ax.texts[-len(group):]:
