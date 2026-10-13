@@ -145,7 +145,7 @@ def finish(fig, ax, name, xlabel, ylabel, top=None, log=False, xtick=None, plain
 def mem():
     data = {(r["paragraphs"], r["mode"], int(r["agents"])): r
             for r in rows("20261006-engine-kvshare-v1", "engine_kvshare_summary.csv")}
-    series_of = (("Copy", COPY, "restore"), ("Extents, Allocated at Once", OURS_LIGHT, "extent"),
+    series_of = (("Copy", COPY, "restore"), (f"{NAME} (Allocated at Once)", OURS_LIGHT, "extent"),
                  (NAME, OURS, "extent_lazy"))
     legend("eval_mem_legend", [(label, colour) for label, colour, _ in series_of], 3)
     counts = [1, 4, 8]
@@ -171,8 +171,8 @@ def weights():
     finish(fig, ax, "eval_weights_mem", "Serving Processes", "Memory (GiB)", 47)
 
     pages = {r["mode"]: r for r in rows("20261005-engine-pages-v1", "engine_pages_summary.csv")}
-    order = (("Device\nCopy", "copy", COPY), ("In Place\n4 KiB", "inplace_4k", OURS_LIGHT),
-             ("In Place\n2 MiB", "inplace_thp", OURS))
+    order = (("Device\nCopy", "copy", COPY), (f"{NAME}\n(4 KiB)", "inplace_4k", OURS_LIGHT),
+             (f"{NAME}\n(2 MiB)", "inplace_thp", OURS))
     fig, ax = panel()
     values = [float(pages[mode]["generation_vs_copy"]) for _, mode, _ in order]
     low = [v - float(pages[mode]["lower_ci95"]) for v, (_, mode, _) in zip(values, order)]
@@ -521,7 +521,7 @@ def tree():
     if not have(directory, "engine_kvtree_summary.csv"):
         return
     data = {r["mode"]: r for r in rows(directory, "engine_kvtree_summary.csv")}
-    order = (("Copy", "copy", COPY), ("Extents\n(One Level)", "flat", OURS_LIGHT),
+    order = (("Copy", "copy", COPY), (f"{NAME}\n(One Level)", "flat", OURS_LIGHT),
              (f"{NAME}\n(Chains)", "chain", OURS))
     fig, ax = panel()
     values = [float(data[m]["tree_memory_mib"]) / 1024 for _, m, _ in order]
@@ -767,8 +767,10 @@ def limit():
 
 
 # ------------------------------------------------------------ whole stack
-STACKS = (("Existing llama.cpp Engine", COPY, "none", "s"), ("KV Shared", DEMAND, "kv", "D"),
-          ("Weights Shared", DEVICE, "weights", "^"), (NAME, OURS, "both", "o"))
+# The two stacks between the existing engine and STATOR apply one of its two
+# mechanisms; they are parts of STATOR and carry its colour in a lighter tint.
+STACKS = (("Existing llama.cpp Engine", COPY, "none", "s"), (f"{NAME} (KV)", OURS_PALE, "kv", "D"),
+          (f"{NAME} (Weights)", OURS_LIGHT, "weights", "^"), (NAME, OURS, "both", "o"))
 
 
 def ran(directory, mode):
@@ -803,8 +805,10 @@ def stack():
     for label, colour, m, marker in STACKS:
         counts = sorted(n for mode, n in line if mode == m)
         shared = float(fit[m]["model_file_shared_mib"]) + float(fit[m]["cache_file_shared_mib"])
+        # a marker in a light tint has an outline in the colour of STATOR, so that it shows on white
         ax.plot(counts, [(float(line[m, n]["memory_mib"]) + shared) / 1024 for n in counts],
-                color=colour, marker=marker, markersize=5.5, linewidth=2, markeredgecolor="white",
+                color=colour, marker=marker, markersize=5.5, linewidth=2,
+                markeredgecolor=OURS if colour in (OURS_PALE, OURS_LIGHT) else "white",
                 markeredgewidth=0.9, label=label)
     ax.axhline(room, color=INK, linewidth=1.1, linestyle=(0, (4, 2)))
     ax.text(0.03, room * 1.015, f"Available: {room:.0f} GiB", ha="left", va="bottom", fontsize=VALUE,
@@ -828,10 +832,10 @@ def stack():
              ("Agent State", COPY_PALE, (both, both, both, both)),
              ("Shared Files", OURS, (0.0, cache_file, model_file, model_file + cache_file)))
     fig, ax = panel()
-    names = ["Existing\nEngine", "KV\nShared", "Weights\nShared", NAME]
+    names = ["Existing\nEngine", f"{NAME}\n(KV)", f"{NAME}\n(Weights)", NAME]
     bottom = np.zeros(4)
     for label, colour, values in parts:
-        ax.bar(names, values, 0.58, bottom=bottom, color=colour, edgecolor="white", linewidth=1.5,
+        ax.bar(names, values, 0.54, bottom=bottom, color=colour, edgecolor="white", linewidth=1.5,
                label=label)
         bottom += np.array(values)
     for x, total in enumerate(bottom):
@@ -839,6 +843,7 @@ def stack():
                     ha="center", va="bottom", fontsize=VALUE, color=INK)
     ax.legend(loc="upper right", handlelength=1.1, fontsize=LEGEND, labelspacing=0.3)
     ax.tick_params(axis="x", labelsize=TICK2 - 1)
+    ax.set_xlim(-0.32, len(names) - 0.68)    # the names of two lines need the whole width of the axis
     finish(fig, ax, "eval_stack_parts", "", "Memory (GiB)", bottom.max() * 1.18)
 
     # how many agents fit by the line of the unmodified stack and of the stack
@@ -869,7 +874,7 @@ def stack():
              for r in rows(huge_dir, "engine_kvstack_summary.csv") if int(r["runs"]) > 0}
             if have(huge_dir, "engine_kvstack_summary.csv") else {})
     fig, ax = panel()
-    shown = [("KV\nShared", "kv", DEMAND, DEMAND_LIGHT), ("Weights\nShared", "weights", DEVICE, DEVICE_LIGHT),
+    shown = [(f"{NAME}\n(KV)", "kv", OURS, OURS_LIGHT), (f"{NAME}\n(Weights)", "weights", OURS, OURS_LIGHT),
              (NAME, "both", OURS, OURS_LIGHT)]
     width = 0.36
     for x, (label, m, full, light) in enumerate(shown):
@@ -888,7 +893,7 @@ def stack():
     ax.set_xticks(range(len(shown)), [label for label, _, _, _ in shown])
     ax.tick_params(axis="x", labelsize=TICK2 - 1)   # as in the panel of the parts
     ax.axhline(1.0, color=AXIS, linewidth=1.0)
-    handles = [plt.Rectangle((0, 0), 1, 1, color=COPY_PALE), plt.Rectangle((0, 0), 1, 1, color=COPY)]
+    handles = [plt.Rectangle((0, 0), 1, 1, color=OURS_LIGHT), plt.Rectangle((0, 0), 1, 1, color=OURS)]
     ax.legend(handles, ["4 KiB Pages", "2 MiB Pages"], loc="upper center", ncol=2,
               handlelength=1.1, fontsize=LEGEND, columnspacing=1.2)
     finish(fig, ax, "eval_stack_speed", "", "Relative\nSpeed", 1.42)
