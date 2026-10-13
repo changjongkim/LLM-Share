@@ -1434,7 +1434,7 @@ Q1~Q4 성립). 강제 종료한 리더의 리프도 완료한다. MPS에서는 �
 | `run_engine_kvresident.sh` | 상주 에이전트 수에 따른 생성 에이전트 8개의 속도와 상주 메모리 | 4.14 |
 | `run_engine_kvpipefault.sh` | 파이프라인 실행 중 GPU 쓰기, 리프 종료, 리더 종료 뒤에 완료하는 프로세스 수 | 4.14 |
 | `run_engine_kvlatency.sh` | 백그라운드 에이전트의 배치(같은 인스턴스, 다른 인스턴스)에 따른 에이전트 하나의 생성 시간 | 4.14 |
-| `run_engine_kvplace.sh` | 수정하지 않은 엔진의 에이전트 하나와 백그라운드 7개: 시분할, MPS, 다른 인스턴스 배치에서의 생성 속도와 결함(GPU 쓰기, 강제 종료) 뒤의 완료 여부. `summarize_engine_kvplace.awk`가 요약한다 |
+| `run_engine_kvplace.sh` | 수정하지 않은 엔진의 에이전트 하나와 백그라운드 7개: 시분할, MPS, 다른 인스턴스 배치에서의 생성 속도와 결함(GPU 쓰기, 강제 종료) 뒤의 완료 여부. `summarize_engine_kvplace.awk`가 요약한다 | 4.15 |
 | `run_engine_kvdeep.sh` | 깊거나 넓은 트리, 서브트리 종료 시 메모리 반환 | 4.11 |
 | `run_ext_weightshare.sh` | CUDA IPC로 가중치를 공유하는 공개 라이브러리 기준선 | 4.11 |
 | `run_weights_publish.sh` | 모델 파일을 2 MiB 페이지에 올리는 세 방법의 시간과 메모리 | 4.11 |
