@@ -9,18 +9,22 @@ next to this script for every table whose campaign has been run:
 """
 import csv
 import os
+import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 RES = os.path.join(HERE, "..", "results")
+sys.path.insert(0, HERE)
+# the reruns on the whole GPU take the place of the first campaigns (STATOR_FULL)
+from make_eval_figures import resolve  # noqa: E402
 
 
 def rows(*path):
-    with open(os.path.join(RES, *path), newline="") as handle:
+    with open(os.path.join(RES, resolve(path[0]), *path[1:]), newline="") as handle:
         return list(csv.DictReader(handle))
 
 
 def have(*path):
-    return os.path.exists(os.path.join(RES, *path))
+    return os.path.exists(os.path.join(RES, resolve(path[0]), *path[1:]))
 
 
 def write(name, lines):

@@ -1,0 +1,84 @@
+BEGIN_PROBES run=1
+FORK mode=gpu size_mib=1024 cpu_read_s=0.0000 gpu_read_s=3.2338 right=1 child_private_before_mib=29.4 child_private_after_mib=1049.5
+FORK mode=cpu size_mib=1024 cpu_read_s=0.0025 gpu_read_s=0.0044 right=1 child_private_before_mib=27.1 child_private_after_mib=27.2
+FORK_AFTER_INIT parent_gpu_read_s=0.0006 right=1
+FORK_AFTER_INIT child_malloc=initialization error child_gpu_read_s=-1.0000 right=0 last=initialization error
+REGISTER where=pagecache procs=4 index=0 size_mib=4466 register=cudaErrorNotSupported register_s=0.0000 gpu_read_s=0.1497 right=1 unregister=cudaErrorInvalidValue unregister_s=0.0000 locked_mib=0.0 pinned_mib=0.0
+REGISTER where=pagecache procs=4 index=1 size_mib=4466 register=cudaErrorNotSupported register_s=0.0000 gpu_read_s=0.1514 right=1 unregister=cudaErrorInvalidValue unregister_s=0.0000 locked_mib=0.0 pinned_mib=0.0
+REGISTER where=pagecache procs=4 index=2 size_mib=4466 register=cudaErrorNotSupported register_s=0.0000 gpu_read_s=0.1481 right=1 unregister=cudaErrorInvalidValue unregister_s=0.0000 locked_mib=0.0 pinned_mib=0.0
+REGISTER where=pagecache procs=4 index=3 size_mib=4466 register=cudaErrorNotSupported register_s=0.0000 gpu_read_s=0.1462 right=1 unregister=cudaErrorInvalidValue unregister_s=0.0000 locked_mib=0.0 pinned_mib=0.0
+REGISTER where=memfs procs=4 index=0 size_mib=4466 register=cudaErrorNotSupported register_s=0.0001 gpu_read_s=0.0483 right=1 unregister=cudaErrorInvalidValue unregister_s=0.0000 locked_mib=0.0 pinned_mib=0.0
+REGISTER where=memfs procs=4 index=1 size_mib=4466 register=cudaErrorNotSupported register_s=0.0000 gpu_read_s=0.0649 right=1 unregister=cudaErrorInvalidValue unregister_s=0.0000 locked_mib=0.0 pinned_mib=0.0
+REGISTER where=memfs procs=4 index=2 size_mib=4466 register=cudaErrorNotSupported register_s=0.0000 gpu_read_s=0.0406 right=1 unregister=cudaErrorInvalidValue unregister_s=0.0000 locked_mib=0.0 pinned_mib=0.0
+REGISTER where=memfs procs=4 index=3 size_mib=4466 register=cudaErrorNotSupported register_s=0.0000 gpu_read_s=0.0543 right=1 unregister=cudaErrorInvalidValue unregister_s=0.0000 locked_mib=0.0 pinned_mib=0.0
+END_PROBES
+BEGIN_PROBES run=2
+FORK mode=cpu size_mib=1024 cpu_read_s=0.0025 gpu_read_s=0.0044 right=1 child_private_before_mib=25.4 child_private_after_mib=25.5
+FORK mode=gpu size_mib=1024 cpu_read_s=0.0000 gpu_read_s=3.2934 right=1 child_private_before_mib=27.4 child_private_after_mib=1049.5
+FORK_AFTER_INIT parent_gpu_read_s=0.0006 right=1
+FORK_AFTER_INIT child_malloc=initialization error child_gpu_read_s=-1.0000 right=0 last=initialization error
+REGISTER where=pagecache procs=4 index=0 size_mib=4466 register=cudaErrorNotSupported register_s=0.0000 gpu_read_s=0.1555 right=1 unregister=cudaErrorInvalidValue unregister_s=0.0000 locked_mib=0.0 pinned_mib=0.0
+REGISTER where=pagecache procs=4 index=1 size_mib=4466 register=cudaErrorNotSupported register_s=0.0000 gpu_read_s=0.1535 right=1 unregister=cudaErrorInvalidValue unregister_s=0.0000 locked_mib=0.0 pinned_mib=0.0
+REGISTER where=pagecache procs=4 index=2 size_mib=4466 register=cudaErrorNotSupported register_s=0.0000 gpu_read_s=0.1514 right=1 unregister=cudaErrorInvalidValue unregister_s=0.0000 locked_mib=0.0 pinned_mib=0.0
+REGISTER where=pagecache procs=4 index=3 size_mib=4466 register=cudaErrorNotSupported register_s=0.0000 gpu_read_s=0.1547 right=1 unregister=cudaErrorInvalidValue unregister_s=0.0000 locked_mib=0.0 pinned_mib=0.0
+REGISTER where=memfs procs=4 index=0 size_mib=4466 register=cudaErrorNotSupported register_s=0.0001 gpu_read_s=0.0605 right=1 unregister=cudaErrorInvalidValue unregister_s=0.0000 locked_mib=0.0 pinned_mib=0.0
+REGISTER where=memfs procs=4 index=1 size_mib=4466 register=cudaErrorNotSupported register_s=0.0000 gpu_read_s=0.0703 right=1 unregister=cudaErrorInvalidValue unregister_s=0.0000 locked_mib=0.0 pinned_mib=0.0
+REGISTER where=memfs procs=4 index=2 size_mib=4466 register=cudaErrorNotSupported register_s=0.0000 gpu_read_s=0.0654 right=1 unregister=cudaErrorInvalidValue unregister_s=0.0000 locked_mib=0.0 pinned_mib=0.0
+REGISTER where=memfs procs=4 index=3 size_mib=4466 register=cudaErrorNotSupported register_s=0.0000 gpu_read_s=0.0558 right=1 unregister=cudaErrorInvalidValue unregister_s=0.0000 locked_mib=0.0 pinned_mib=0.0
+END_PROBES
+BEGIN_PROBES run=3
+FORK mode=gpu size_mib=1024 cpu_read_s=0.0000 gpu_read_s=3.2365 right=1 child_private_before_mib=22.8 child_private_after_mib=1046.9
+FORK mode=cpu size_mib=1024 cpu_read_s=0.0026 gpu_read_s=0.0043 right=1 child_private_before_mib=27.1 child_private_after_mib=27.2
+FORK_AFTER_INIT parent_gpu_read_s=0.0005 right=1
+FORK_AFTER_INIT child_malloc=initialization error child_gpu_read_s=-1.0000 right=0 last=initialization error
+REGISTER where=pagecache procs=4 index=0 size_mib=4466 register=cudaErrorNotSupported register_s=0.0000 gpu_read_s=0.1494 right=1 unregister=cudaErrorInvalidValue unregister_s=0.0000 locked_mib=0.0 pinned_mib=0.0
+REGISTER where=pagecache procs=4 index=1 size_mib=4466 register=cudaErrorNotSupported register_s=0.0000 gpu_read_s=0.1457 right=1 unregister=cudaErrorInvalidValue unregister_s=0.0000 locked_mib=0.0 pinned_mib=0.0
+REGISTER where=pagecache procs=4 index=2 size_mib=4466 register=cudaErrorNotSupported register_s=0.0000 gpu_read_s=0.1501 right=1 unregister=cudaErrorInvalidValue unregister_s=0.0000 locked_mib=0.0 pinned_mib=0.0
+REGISTER where=pagecache procs=4 index=3 size_mib=4466 register=cudaErrorNotSupported register_s=0.0000 gpu_read_s=0.1473 right=1 unregister=cudaErrorInvalidValue unregister_s=0.0000 locked_mib=0.0 pinned_mib=0.0
+REGISTER where=memfs procs=4 index=0 size_mib=4466 register=cudaErrorNotSupported register_s=0.0000 gpu_read_s=0.0578 right=1 unregister=cudaErrorInvalidValue unregister_s=0.0000 locked_mib=0.0 pinned_mib=0.0
+REGISTER where=memfs procs=4 index=1 size_mib=4466 register=cudaErrorNotSupported register_s=0.0000 gpu_read_s=0.0226 right=1 unregister=cudaErrorInvalidValue unregister_s=0.0000 locked_mib=0.0 pinned_mib=0.0
+REGISTER where=memfs procs=4 index=2 size_mib=4466 register=cudaErrorNotSupported register_s=0.0000 gpu_read_s=0.0540 right=1 unregister=cudaErrorInvalidValue unregister_s=0.0000 locked_mib=0.0 pinned_mib=0.0
+REGISTER where=memfs procs=4 index=3 size_mib=4466 register=cudaErrorNotSupported register_s=0.0000 gpu_read_s=0.0595 right=1 unregister=cudaErrorInvalidValue unregister_s=0.0000 locked_mib=0.0 pinned_mib=0.0
+END_PROBES
+BEGIN_PROBES run=4
+FORK mode=cpu size_mib=1024 cpu_read_s=0.0025 gpu_read_s=0.0044 right=1 child_private_before_mib=27.7 child_private_after_mib=27.8
+FORK mode=gpu size_mib=1024 cpu_read_s=0.0000 gpu_read_s=3.2756 right=1 child_private_before_mib=27.7 child_private_after_mib=1049.8
+FORK_AFTER_INIT parent_gpu_read_s=0.0005 right=1
+FORK_AFTER_INIT child_malloc=initialization error child_gpu_read_s=-1.0000 right=0 last=initialization error
+REGISTER where=pagecache procs=4 index=0 size_mib=4466 register=cudaErrorNotSupported register_s=0.0000 gpu_read_s=0.1450 right=1 unregister=cudaErrorInvalidValue unregister_s=0.0000 locked_mib=0.0 pinned_mib=0.0
+REGISTER where=pagecache procs=4 index=1 size_mib=4466 register=cudaErrorNotSupported register_s=0.0000 gpu_read_s=0.1467 right=1 unregister=cudaErrorInvalidValue unregister_s=0.0000 locked_mib=0.0 pinned_mib=0.0
+REGISTER where=pagecache procs=4 index=2 size_mib=4466 register=cudaErrorNotSupported register_s=0.0000 gpu_read_s=0.1457 right=1 unregister=cudaErrorInvalidValue unregister_s=0.0000 locked_mib=0.0 pinned_mib=0.0
+REGISTER where=pagecache procs=4 index=3 size_mib=4466 register=cudaErrorNotSupported register_s=0.0000 gpu_read_s=0.1464 right=1 unregister=cudaErrorInvalidValue unregister_s=0.0000 locked_mib=0.0 pinned_mib=0.0
+REGISTER where=memfs procs=4 index=0 size_mib=4466 register=cudaErrorNotSupported register_s=0.0000 gpu_read_s=0.0668 right=1 unregister=cudaErrorInvalidValue unregister_s=0.0000 locked_mib=0.0 pinned_mib=0.0
+REGISTER where=memfs procs=4 index=1 size_mib=4466 register=cudaErrorNotSupported register_s=0.0000 gpu_read_s=0.0602 right=1 unregister=cudaErrorInvalidValue unregister_s=0.0000 locked_mib=0.0 pinned_mib=0.0
+REGISTER where=memfs procs=4 index=2 size_mib=4466 register=cudaErrorNotSupported register_s=0.0000 gpu_read_s=0.0383 right=1 unregister=cudaErrorInvalidValue unregister_s=0.0000 locked_mib=0.0 pinned_mib=0.0
+REGISTER where=memfs procs=4 index=3 size_mib=4466 register=cudaErrorNotSupported register_s=0.0000 gpu_read_s=0.0582 right=1 unregister=cudaErrorInvalidValue unregister_s=0.0000 locked_mib=0.0 pinned_mib=0.0
+END_PROBES
+BEGIN_PROBES run=5
+FORK mode=gpu size_mib=1024 cpu_read_s=0.0000 gpu_read_s=3.2571 right=1 child_private_before_mib=27.7 child_private_after_mib=1045.8
+FORK mode=cpu size_mib=1024 cpu_read_s=0.0025 gpu_read_s=0.0044 right=1 child_private_before_mib=29.7 child_private_after_mib=29.8
+FORK_AFTER_INIT parent_gpu_read_s=0.0006 right=1
+FORK_AFTER_INIT child_malloc=initialization error child_gpu_read_s=-1.0000 right=0 last=initialization error
+REGISTER where=pagecache procs=4 index=0 size_mib=4466 register=cudaErrorNotSupported register_s=0.0000 gpu_read_s=0.1460 right=1 unregister=cudaErrorInvalidValue unregister_s=0.0000 locked_mib=0.0 pinned_mib=0.0
+REGISTER where=pagecache procs=4 index=1 size_mib=4466 register=cudaErrorNotSupported register_s=0.0000 gpu_read_s=0.1501 right=1 unregister=cudaErrorInvalidValue unregister_s=0.0000 locked_mib=0.0 pinned_mib=0.0
+REGISTER where=pagecache procs=4 index=2 size_mib=4466 register=cudaErrorNotSupported register_s=0.0000 gpu_read_s=0.1479 right=1 unregister=cudaErrorInvalidValue unregister_s=0.0000 locked_mib=0.0 pinned_mib=0.0
+REGISTER where=pagecache procs=4 index=3 size_mib=4466 register=cudaErrorNotSupported register_s=0.0000 gpu_read_s=0.1520 right=1 unregister=cudaErrorInvalidValue unregister_s=0.0000 locked_mib=0.0 pinned_mib=0.0
+REGISTER where=memfs procs=4 index=0 size_mib=4466 register=cudaErrorNotSupported register_s=0.0000 gpu_read_s=0.0556 right=1 unregister=cudaErrorInvalidValue unregister_s=0.0000 locked_mib=0.0 pinned_mib=0.0
+REGISTER where=memfs procs=4 index=1 size_mib=4466 register=cudaErrorNotSupported register_s=0.0000 gpu_read_s=0.0745 right=1 unregister=cudaErrorInvalidValue unregister_s=0.0000 locked_mib=0.0 pinned_mib=0.0
+REGISTER where=memfs procs=4 index=2 size_mib=4466 register=cudaErrorNotSupported register_s=0.0000 gpu_read_s=0.0507 right=1 unregister=cudaErrorInvalidValue unregister_s=0.0000 locked_mib=0.0 pinned_mib=0.0
+REGISTER where=memfs procs=4 index=3 size_mib=4466 register=cudaErrorNotSupported register_s=0.0000 gpu_read_s=0.0705 right=1 unregister=cudaErrorInvalidValue unregister_s=0.0000 locked_mib=0.0 pinned_mib=0.0
+END_PROBES
+BEGIN_PROBES run=6
+FORK mode=cpu size_mib=1024 cpu_read_s=0.0025 gpu_read_s=0.0044 right=1 child_private_before_mib=26.0 child_private_after_mib=26.1
+FORK mode=gpu size_mib=1024 cpu_read_s=0.0000 gpu_read_s=3.2582 right=1 child_private_before_mib=28.0 child_private_after_mib=1050.1
+FORK_AFTER_INIT parent_gpu_read_s=0.0006 right=1
+FORK_AFTER_INIT child_malloc=initialization error child_gpu_read_s=-1.0000 right=0 last=initialization error
+REGISTER where=pagecache procs=4 index=0 size_mib=4466 register=cudaErrorNotSupported register_s=0.0000 gpu_read_s=0.1549 right=1 unregister=cudaErrorInvalidValue unregister_s=0.0000 locked_mib=0.0 pinned_mib=0.0
+REGISTER where=pagecache procs=4 index=1 size_mib=4466 register=cudaErrorNotSupported register_s=0.0000 gpu_read_s=0.1549 right=1 unregister=cudaErrorInvalidValue unregister_s=0.0000 locked_mib=0.0 pinned_mib=0.0
+REGISTER where=pagecache procs=4 index=2 size_mib=4466 register=cudaErrorNotSupported register_s=0.0000 gpu_read_s=0.1531 right=1 unregister=cudaErrorInvalidValue unregister_s=0.0000 locked_mib=0.0 pinned_mib=0.0
+REGISTER where=pagecache procs=4 index=3 size_mib=4466 register=cudaErrorNotSupported register_s=0.0000 gpu_read_s=0.1540 right=1 unregister=cudaErrorInvalidValue unregister_s=0.0000 locked_mib=0.0 pinned_mib=0.0
+REGISTER where=memfs procs=4 index=0 size_mib=4466 register=cudaErrorNotSupported register_s=0.0000 gpu_read_s=0.0510 right=1 unregister=cudaErrorInvalidValue unregister_s=0.0000 locked_mib=0.0 pinned_mib=0.0
+REGISTER where=memfs procs=4 index=1 size_mib=4466 register=cudaErrorNotSupported register_s=0.0000 gpu_read_s=0.0531 right=1 unregister=cudaErrorInvalidValue unregister_s=0.0000 locked_mib=0.0 pinned_mib=0.0
+REGISTER where=memfs procs=4 index=2 size_mib=4466 register=cudaErrorNotSupported register_s=0.0000 gpu_read_s=0.0457 right=1 unregister=cudaErrorInvalidValue unregister_s=0.0000 locked_mib=0.0 pinned_mib=0.0
+REGISTER where=memfs procs=4 index=3 size_mib=4466 register=cudaErrorNotSupported register_s=0.0000 gpu_read_s=0.0616 right=1 unregister=cudaErrorInvalidValue unregister_s=0.0000 locked_mib=0.0 pinned_mib=0.0
+END_PROBES

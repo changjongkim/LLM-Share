@@ -1,0 +1,1 @@
+TEXT  The text describes the operations of a scheduler and the handling of a page fault in a system. The scheduler maintains a run queue for each processor and redistributes tasks between queues based on load balancing. When a page fault occurs, the kernel processes it by locating the memory mapping, allocating a new frame, filling it with data

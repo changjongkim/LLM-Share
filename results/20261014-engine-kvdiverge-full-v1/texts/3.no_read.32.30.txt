@@ -1,0 +1,1 @@
+TEXT  The scheduler maintains run queues for each processor and redistributes tasks between queues based on load balancing. When a page fault occurs, the kernel locates the memory mapping, allocates a frame, fills it with data, and updates the page table. The task then resumes execution. The scheduler continues to manage the run queues to

@@ -1,0 +1,300 @@
+BEGIN_RECLAIM run=1
+CASE mode=device pressure=none agents=4
+AGENT index=0 tps=9.70 text=a22f6234dff865a1 bytes=2811
+AGENT index=1 tps=9.70 text=a22f6234dff865a1 bytes=2811
+AGENT index=2 tps=9.70 text=a22f6234dff865a1 bytes=2811
+AGENT index=3 tps=9.70 text=a22f6234dff865a1 bytes=2811
+KERNEL gpu_fault_pages=0 fault_thread_ms=0 major_faults=0 refault_file=0 file_before_mib=5820 file_last_mib=0
+RECLAIM attempts=0 succeeded=0
+END_CASE exit=0 timed_out=0
+CASE mode=device pressure=reclaim agents=4
+AGENT index=0 tps=9.71 text=a22f6234dff865a1 bytes=2811
+AGENT index=1 tps=9.70 text=a22f6234dff865a1 bytes=2811
+AGENT index=2 tps=9.71 text=a22f6234dff865a1 bytes=2811
+AGENT index=3 tps=9.71 text=a22f6234dff865a1 bytes=2811
+KERNEL gpu_fault_pages=0 fault_thread_ms=0 major_faults=0 refault_file=0 file_before_mib=5820 file_last_mib=981
+RECLAIM attempts=47 succeeded=8
+END_CASE exit=0 timed_out=0
+CASE mode=pagecache pressure=none agents=4
+AGENT index=0 tps=9.28 text=a22f6234dff865a1 bytes=2811
+AGENT index=1 tps=9.28 text=a22f6234dff865a1 bytes=2811
+AGENT index=2 tps=9.28 text=a22f6234dff865a1 bytes=2811
+AGENT index=3 tps=9.28 text=a22f6234dff865a1 bytes=2811
+KERNEL gpu_fault_pages=0 fault_thread_ms=0 major_faults=789 refault_file=0 file_before_mib=4650 file_last_mib=0
+RECLAIM attempts=0 succeeded=0
+END_CASE exit=0 timed_out=0
+CASE mode=pagecache pressure=reclaim agents=4
+AGENT index=0 tps=7.28 text=a22f6234dff865a1 bytes=2811
+AGENT index=1 tps=7.27 text=a22f6234dff865a1 bytes=2811
+AGENT index=2 tps=7.27 text=a22f6234dff865a1 bytes=2811
+AGENT index=3 tps=7.26 text=a22f6234dff865a1 bytes=2811
+KERNEL gpu_fault_pages=16948752 fault_thread_ms=6940 major_faults=828 refault_file=15330 file_before_mib=4650 file_last_mib=4066
+RECLAIM attempts=1 succeeded=1
+END_CASE exit=0 timed_out=0
+CASE mode=memfs pressure=none agents=4
+AGENT index=0 tps=10.26 text=a22f6234dff865a1 bytes=2811
+AGENT index=1 tps=10.27 text=a22f6234dff865a1 bytes=2811
+AGENT index=2 tps=10.27 text=a22f6234dff865a1 bytes=2811
+AGENT index=3 tps=10.27 text=a22f6234dff865a1 bytes=2811
+KERNEL gpu_fault_pages=0 fault_thread_ms=0 major_faults=0 refault_file=0 file_before_mib=4652 file_last_mib=0
+RECLAIM attempts=0 succeeded=0
+END_CASE exit=0 timed_out=0
+CASE mode=memfs pressure=reclaim agents=4
+AGENT index=0 tps=10.31 text=a22f6234dff865a1 bytes=2811
+AGENT index=1 tps=10.32 text=a22f6234dff865a1 bytes=2811
+AGENT index=2 tps=10.31 text=a22f6234dff865a1 bytes=2811
+AGENT index=3 tps=10.30 text=a22f6234dff865a1 bytes=2811
+KERNEL gpu_fault_pages=0 fault_thread_ms=0 major_faults=0 refault_file=0 file_before_mib=4652 file_last_mib=4652
+RECLAIM attempts=43 succeeded=0
+END_CASE exit=0 timed_out=0
+END_RECLAIM
+BEGIN_RECLAIM run=2
+CASE mode=memfs pressure=none agents=4
+AGENT index=0 tps=10.32 text=a22f6234dff865a1 bytes=2811
+AGENT index=1 tps=10.29 text=a22f6234dff865a1 bytes=2811
+AGENT index=2 tps=10.31 text=a22f6234dff865a1 bytes=2811
+AGENT index=3 tps=10.30 text=a22f6234dff865a1 bytes=2811
+KERNEL gpu_fault_pages=0 fault_thread_ms=0 major_faults=0 refault_file=0 file_before_mib=4652 file_last_mib=0
+RECLAIM attempts=0 succeeded=0
+END_CASE exit=0 timed_out=0
+CASE mode=memfs pressure=reclaim agents=4
+AGENT index=0 tps=10.30 text=a22f6234dff865a1 bytes=2811
+AGENT index=1 tps=10.32 text=a22f6234dff865a1 bytes=2811
+AGENT index=2 tps=10.31 text=a22f6234dff865a1 bytes=2811
+AGENT index=3 tps=10.31 text=a22f6234dff865a1 bytes=2811
+KERNEL gpu_fault_pages=0 fault_thread_ms=0 major_faults=0 refault_file=0 file_before_mib=4652 file_last_mib=4652
+RECLAIM attempts=43 succeeded=0
+END_CASE exit=0 timed_out=0
+CASE mode=pagecache pressure=none agents=4
+AGENT index=0 tps=9.28 text=a22f6234dff865a1 bytes=2811
+AGENT index=1 tps=9.28 text=a22f6234dff865a1 bytes=2811
+AGENT index=2 tps=9.28 text=a22f6234dff865a1 bytes=2811
+AGENT index=3 tps=9.29 text=a22f6234dff865a1 bytes=2811
+KERNEL gpu_fault_pages=0 fault_thread_ms=0 major_faults=835 refault_file=0 file_before_mib=4650 file_last_mib=0
+RECLAIM attempts=0 succeeded=0
+END_CASE exit=0 timed_out=0
+CASE mode=pagecache pressure=reclaim agents=4
+AGENT index=0 tps=7.23 text=a22f6234dff865a1 bytes=2811
+AGENT index=1 tps=7.23 text=a22f6234dff865a1 bytes=2811
+AGENT index=2 tps=7.23 text=a22f6234dff865a1 bytes=2811
+AGENT index=3 tps=7.23 text=a22f6234dff865a1 bytes=2811
+KERNEL gpu_fault_pages=16697938 fault_thread_ms=7110 major_faults=764 refault_file=15147 file_before_mib=4650 file_last_mib=4118
+RECLAIM attempts=1 succeeded=1
+END_CASE exit=0 timed_out=0
+CASE mode=device pressure=none agents=4
+AGENT index=0 tps=9.71 text=a22f6234dff865a1 bytes=2811
+AGENT index=1 tps=9.71 text=a22f6234dff865a1 bytes=2811
+AGENT index=2 tps=9.71 text=a22f6234dff865a1 bytes=2811
+AGENT index=3 tps=9.71 text=a22f6234dff865a1 bytes=2811
+KERNEL gpu_fault_pages=0 fault_thread_ms=0 major_faults=0 refault_file=0 file_before_mib=5820 file_last_mib=0
+RECLAIM attempts=0 succeeded=0
+END_CASE exit=0 timed_out=0
+CASE mode=device pressure=reclaim agents=4
+AGENT index=0 tps=9.70 text=a22f6234dff865a1 bytes=2811
+AGENT index=1 tps=9.70 text=a22f6234dff865a1 bytes=2811
+AGENT index=2 tps=9.70 text=a22f6234dff865a1 bytes=2811
+AGENT index=3 tps=9.70 text=a22f6234dff865a1 bytes=2811
+KERNEL gpu_fault_pages=0 fault_thread_ms=0 major_faults=0 refault_file=0 file_before_mib=5820 file_last_mib=1294
+RECLAIM attempts=46 succeeded=8
+END_CASE exit=0 timed_out=0
+END_RECLAIM
+BEGIN_RECLAIM run=3
+CASE mode=device pressure=none agents=4
+AGENT index=0 tps=9.71 text=a22f6234dff865a1 bytes=2811
+AGENT index=1 tps=9.71 text=a22f6234dff865a1 bytes=2811
+AGENT index=2 tps=9.71 text=a22f6234dff865a1 bytes=2811
+AGENT index=3 tps=9.71 text=a22f6234dff865a1 bytes=2811
+KERNEL gpu_fault_pages=0 fault_thread_ms=0 major_faults=0 refault_file=0 file_before_mib=5820 file_last_mib=0
+RECLAIM attempts=0 succeeded=0
+END_CASE exit=0 timed_out=0
+CASE mode=device pressure=reclaim agents=4
+AGENT index=0 tps=9.71 text=a22f6234dff865a1 bytes=2811
+AGENT index=1 tps=9.71 text=a22f6234dff865a1 bytes=2811
+AGENT index=2 tps=9.71 text=a22f6234dff865a1 bytes=2811
+AGENT index=3 tps=9.71 text=a22f6234dff865a1 bytes=2811
+KERNEL gpu_fault_pages=0 fault_thread_ms=0 major_faults=0 refault_file=0 file_before_mib=5820 file_last_mib=1274
+RECLAIM attempts=46 succeeded=8
+END_CASE exit=0 timed_out=0
+CASE mode=pagecache pressure=none agents=4
+AGENT index=0 tps=9.28 text=a22f6234dff865a1 bytes=2811
+AGENT index=1 tps=9.29 text=a22f6234dff865a1 bytes=2811
+AGENT index=2 tps=9.28 text=a22f6234dff865a1 bytes=2811
+AGENT index=3 tps=9.28 text=a22f6234dff865a1 bytes=2811
+KERNEL gpu_fault_pages=0 fault_thread_ms=0 major_faults=768 refault_file=0 file_before_mib=4650 file_last_mib=0
+RECLAIM attempts=0 succeeded=0
+END_CASE exit=0 timed_out=0
+CASE mode=pagecache pressure=reclaim agents=4
+AGENT index=0 tps=7.23 text=a22f6234dff865a1 bytes=2811
+AGENT index=1 tps=7.24 text=a22f6234dff865a1 bytes=2811
+AGENT index=2 tps=7.23 text=a22f6234dff865a1 bytes=2811
+AGENT index=3 tps=7.23 text=a22f6234dff865a1 bytes=2811
+KERNEL gpu_fault_pages=17054224 fault_thread_ms=7000 major_faults=797 refault_file=15147 file_before_mib=4650 file_last_mib=4091
+RECLAIM attempts=1 succeeded=1
+END_CASE exit=0 timed_out=0
+CASE mode=memfs pressure=none agents=4
+AGENT index=0 tps=10.28 text=a22f6234dff865a1 bytes=2811
+AGENT index=1 tps=10.29 text=a22f6234dff865a1 bytes=2811
+AGENT index=2 tps=10.29 text=a22f6234dff865a1 bytes=2811
+AGENT index=3 tps=10.28 text=a22f6234dff865a1 bytes=2811
+KERNEL gpu_fault_pages=0 fault_thread_ms=0 major_faults=0 refault_file=0 file_before_mib=4652 file_last_mib=0
+RECLAIM attempts=0 succeeded=0
+END_CASE exit=0 timed_out=0
+CASE mode=memfs pressure=reclaim agents=4
+AGENT index=0 tps=10.29 text=a22f6234dff865a1 bytes=2811
+AGENT index=1 tps=10.29 text=a22f6234dff865a1 bytes=2811
+AGENT index=2 tps=10.29 text=a22f6234dff865a1 bytes=2811
+AGENT index=3 tps=10.29 text=a22f6234dff865a1 bytes=2811
+KERNEL gpu_fault_pages=0 fault_thread_ms=0 major_faults=0 refault_file=0 file_before_mib=4652 file_last_mib=4652
+RECLAIM attempts=43 succeeded=0
+END_CASE exit=0 timed_out=0
+END_RECLAIM
+BEGIN_RECLAIM run=4
+CASE mode=memfs pressure=none agents=4
+AGENT index=0 tps=10.28 text=a22f6234dff865a1 bytes=2811
+AGENT index=1 tps=10.29 text=a22f6234dff865a1 bytes=2811
+AGENT index=2 tps=10.28 text=a22f6234dff865a1 bytes=2811
+AGENT index=3 tps=10.27 text=a22f6234dff865a1 bytes=2811
+KERNEL gpu_fault_pages=0 fault_thread_ms=0 major_faults=0 refault_file=0 file_before_mib=4652 file_last_mib=0
+RECLAIM attempts=0 succeeded=0
+END_CASE exit=0 timed_out=0
+CASE mode=memfs pressure=reclaim agents=4
+AGENT index=0 tps=10.28 text=a22f6234dff865a1 bytes=2811
+AGENT index=1 tps=10.28 text=a22f6234dff865a1 bytes=2811
+AGENT index=2 tps=10.28 text=a22f6234dff865a1 bytes=2811
+AGENT index=3 tps=10.28 text=a22f6234dff865a1 bytes=2811
+KERNEL gpu_fault_pages=0 fault_thread_ms=0 major_faults=0 refault_file=0 file_before_mib=4652 file_last_mib=4652
+RECLAIM attempts=43 succeeded=0
+END_CASE exit=0 timed_out=0
+CASE mode=pagecache pressure=none agents=4
+AGENT index=0 tps=9.28 text=a22f6234dff865a1 bytes=2811
+AGENT index=1 tps=9.28 text=a22f6234dff865a1 bytes=2811
+AGENT index=2 tps=9.28 text=a22f6234dff865a1 bytes=2811
+AGENT index=3 tps=9.28 text=a22f6234dff865a1 bytes=2811
+KERNEL gpu_fault_pages=0 fault_thread_ms=0 major_faults=825 refault_file=0 file_before_mib=4650 file_last_mib=0
+RECLAIM attempts=0 succeeded=0
+END_CASE exit=0 timed_out=0
+CASE mode=pagecache pressure=reclaim agents=4
+AGENT index=0 tps=7.16 text=a22f6234dff865a1 bytes=2811
+AGENT index=1 tps=7.15 text=a22f6234dff865a1 bytes=2811
+AGENT index=2 tps=7.17 text=a22f6234dff865a1 bytes=2811
+AGENT index=3 tps=7.16 text=a22f6234dff865a1 bytes=2811
+KERNEL gpu_fault_pages=17245712 fault_thread_ms=7230 major_faults=841 refault_file=15329 file_before_mib=4650 file_last_mib=4092
+RECLAIM attempts=1 succeeded=1
+END_CASE exit=0 timed_out=0
+CASE mode=device pressure=none agents=4
+AGENT index=0 tps=9.70 text=a22f6234dff865a1 bytes=2811
+AGENT index=1 tps=9.71 text=a22f6234dff865a1 bytes=2811
+AGENT index=2 tps=9.70 text=a22f6234dff865a1 bytes=2811
+AGENT index=3 tps=9.70 text=a22f6234dff865a1 bytes=2811
+KERNEL gpu_fault_pages=0 fault_thread_ms=0 major_faults=0 refault_file=0 file_before_mib=5820 file_last_mib=0
+RECLAIM attempts=0 succeeded=0
+END_CASE exit=0 timed_out=0
+CASE mode=device pressure=reclaim agents=4
+AGENT index=0 tps=9.70 text=a22f6234dff865a1 bytes=2811
+AGENT index=1 tps=9.70 text=a22f6234dff865a1 bytes=2811
+AGENT index=2 tps=9.70 text=a22f6234dff865a1 bytes=2811
+AGENT index=3 tps=9.70 text=a22f6234dff865a1 bytes=2811
+KERNEL gpu_fault_pages=0 fault_thread_ms=0 major_faults=0 refault_file=0 file_before_mib=5820 file_last_mib=981
+RECLAIM attempts=46 succeeded=8
+END_CASE exit=0 timed_out=0
+END_RECLAIM
+BEGIN_RECLAIM run=5
+CASE mode=device pressure=none agents=4
+AGENT index=0 tps=9.70 text=a22f6234dff865a1 bytes=2811
+AGENT index=1 tps=9.70 text=a22f6234dff865a1 bytes=2811
+AGENT index=2 tps=9.70 text=a22f6234dff865a1 bytes=2811
+AGENT index=3 tps=9.70 text=a22f6234dff865a1 bytes=2811
+KERNEL gpu_fault_pages=0 fault_thread_ms=0 major_faults=0 refault_file=0 file_before_mib=5820 file_last_mib=0
+RECLAIM attempts=0 succeeded=0
+END_CASE exit=0 timed_out=0
+CASE mode=device pressure=reclaim agents=4
+AGENT index=0 tps=9.70 text=a22f6234dff865a1 bytes=2811
+AGENT index=1 tps=9.70 text=a22f6234dff865a1 bytes=2811
+AGENT index=2 tps=9.71 text=a22f6234dff865a1 bytes=2811
+AGENT index=3 tps=9.70 text=a22f6234dff865a1 bytes=2811
+KERNEL gpu_fault_pages=0 fault_thread_ms=0 major_faults=0 refault_file=0 file_before_mib=5820 file_last_mib=1127
+RECLAIM attempts=46 succeeded=8
+END_CASE exit=0 timed_out=0
+CASE mode=pagecache pressure=none agents=4
+AGENT index=0 tps=9.28 text=a22f6234dff865a1 bytes=2811
+AGENT index=1 tps=9.28 text=a22f6234dff865a1 bytes=2811
+AGENT index=2 tps=9.28 text=a22f6234dff865a1 bytes=2811
+AGENT index=3 tps=9.28 text=a22f6234dff865a1 bytes=2811
+KERNEL gpu_fault_pages=0 fault_thread_ms=0 major_faults=769 refault_file=0 file_before_mib=4650 file_last_mib=0
+RECLAIM attempts=0 succeeded=0
+END_CASE exit=0 timed_out=0
+CASE mode=pagecache pressure=reclaim agents=4
+AGENT index=0 tps=7.32 text=a22f6234dff865a1 bytes=2811
+AGENT index=1 tps=7.33 text=a22f6234dff865a1 bytes=2811
+AGENT index=2 tps=7.33 text=a22f6234dff865a1 bytes=2811
+AGENT index=3 tps=7.33 text=a22f6234dff865a1 bytes=2811
+KERNEL gpu_fault_pages=16642576 fault_thread_ms=6040 major_faults=763 refault_file=15130 file_before_mib=4650 file_last_mib=4117
+RECLAIM attempts=1 succeeded=1
+END_CASE exit=0 timed_out=0
+CASE mode=memfs pressure=none agents=4
+AGENT index=0 tps=10.30 text=a22f6234dff865a1 bytes=2811
+AGENT index=1 tps=10.30 text=a22f6234dff865a1 bytes=2811
+AGENT index=2 tps=10.30 text=a22f6234dff865a1 bytes=2811
+AGENT index=3 tps=10.32 text=a22f6234dff865a1 bytes=2811
+KERNEL gpu_fault_pages=0 fault_thread_ms=0 major_faults=0 refault_file=0 file_before_mib=4652 file_last_mib=0
+RECLAIM attempts=0 succeeded=0
+END_CASE exit=0 timed_out=0
+CASE mode=memfs pressure=reclaim agents=4
+AGENT index=0 tps=10.30 text=a22f6234dff865a1 bytes=2811
+AGENT index=1 tps=10.34 text=a22f6234dff865a1 bytes=2811
+AGENT index=2 tps=10.31 text=a22f6234dff865a1 bytes=2811
+AGENT index=3 tps=10.30 text=a22f6234dff865a1 bytes=2811
+KERNEL gpu_fault_pages=0 fault_thread_ms=0 major_faults=0 refault_file=0 file_before_mib=4652 file_last_mib=4650
+RECLAIM attempts=43 succeeded=0
+END_CASE exit=0 timed_out=0
+END_RECLAIM
+BEGIN_RECLAIM run=6
+CASE mode=memfs pressure=none agents=4
+AGENT index=0 tps=10.28 text=a22f6234dff865a1 bytes=2811
+AGENT index=1 tps=10.28 text=a22f6234dff865a1 bytes=2811
+AGENT index=2 tps=10.28 text=a22f6234dff865a1 bytes=2811
+AGENT index=3 tps=10.27 text=a22f6234dff865a1 bytes=2811
+KERNEL gpu_fault_pages=0 fault_thread_ms=0 major_faults=0 refault_file=0 file_before_mib=4652 file_last_mib=0
+RECLAIM attempts=0 succeeded=0
+END_CASE exit=0 timed_out=0
+CASE mode=memfs pressure=reclaim agents=4
+AGENT index=0 tps=10.30 text=a22f6234dff865a1 bytes=2811
+AGENT index=1 tps=10.30 text=a22f6234dff865a1 bytes=2811
+AGENT index=2 tps=10.32 text=a22f6234dff865a1 bytes=2811
+AGENT index=3 tps=10.30 text=a22f6234dff865a1 bytes=2811
+KERNEL gpu_fault_pages=0 fault_thread_ms=0 major_faults=0 refault_file=0 file_before_mib=4652 file_last_mib=4652
+RECLAIM attempts=43 succeeded=0
+END_CASE exit=0 timed_out=0
+CASE mode=pagecache pressure=none agents=4
+AGENT index=0 tps=9.28 text=a22f6234dff865a1 bytes=2811
+AGENT index=1 tps=9.28 text=a22f6234dff865a1 bytes=2811
+AGENT index=2 tps=9.28 text=a22f6234dff865a1 bytes=2811
+AGENT index=3 tps=9.29 text=a22f6234dff865a1 bytes=2811
+KERNEL gpu_fault_pages=0 fault_thread_ms=0 major_faults=673 refault_file=0 file_before_mib=4650 file_last_mib=0
+RECLAIM attempts=0 succeeded=0
+END_CASE exit=0 timed_out=0
+CASE mode=pagecache pressure=reclaim agents=4
+AGENT index=0 tps=7.24 text=a22f6234dff865a1 bytes=2811
+AGENT index=1 tps=7.25 text=a22f6234dff865a1 bytes=2811
+AGENT index=2 tps=7.25 text=a22f6234dff865a1 bytes=2811
+AGENT index=3 tps=7.26 text=a22f6234dff865a1 bytes=2811
+KERNEL gpu_fault_pages=17028756 fault_thread_ms=7130 major_faults=769 refault_file=15149 file_before_mib=4650 file_last_mib=4065
+RECLAIM attempts=1 succeeded=1
+END_CASE exit=0 timed_out=0
+CASE mode=device pressure=none agents=4
+AGENT index=0 tps=9.70 text=a22f6234dff865a1 bytes=2811
+AGENT index=1 tps=9.70 text=a22f6234dff865a1 bytes=2811
+AGENT index=2 tps=9.70 text=a22f6234dff865a1 bytes=2811
+AGENT index=3 tps=9.70 text=a22f6234dff865a1 bytes=2811
+KERNEL gpu_fault_pages=0 fault_thread_ms=0 major_faults=0 refault_file=0 file_before_mib=5820 file_last_mib=0
+RECLAIM attempts=0 succeeded=0
+END_CASE exit=0 timed_out=0
+CASE mode=device pressure=reclaim agents=4
+AGENT index=0 tps=9.70 text=a22f6234dff865a1 bytes=2811
+AGENT index=1 tps=9.70 text=a22f6234dff865a1 bytes=2811
+AGENT index=2 tps=9.70 text=a22f6234dff865a1 bytes=2811
+AGENT index=3 tps=9.70 text=a22f6234dff865a1 bytes=2811
+KERNEL gpu_fault_pages=0 fault_thread_ms=0 major_faults=0 refault_file=0 file_before_mib=5820 file_last_mib=1274
+RECLAIM attempts=46 succeeded=8
+END_CASE exit=0 timed_out=0
+END_RECLAIM

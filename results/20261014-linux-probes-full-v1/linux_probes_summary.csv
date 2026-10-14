@@ -1,0 +1,6 @@
+probe,cases,failed,right,registered,child_cuda_refused,size_mib,child_growth_mib,child_growth_ci95,gpu_read_s,gpu_read_ci95,cpu_read_s,register_s,register_ci95,unregister_s,locked_mib,pinned_mib
+fork_gpu,6,0,6,0,0,1024,1021.4,2.2,3.2591,0.0240,0.0000,0.0000,0.0000,0.0000,0.0,0.0
+fork_cpu,6,0,6,0,0,1024,0.1,0.0,0.0044,0.0000,0.0025,0.0000,0.0000,0.0000,0.0,0.0
+fork_after_init,6,0,0,0,6,0,0.0,0.0,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,0.0,0.0
+register_pagecache,24,0,24,0,0,4466,0.0,0.0,0.1500,0.0014,0.0000,0.0000,0.0000,0.0000,0.0,0.0
+register_memfs,24,0,24,0,0,4466,0.0,0.0,0.0558,0.0048,0.0000,0.0000,0.0000,0.0000,0.0,0.0

@@ -99,7 +99,7 @@ base.save = save
 
 
 def have(*path):
-    return os.path.exists(os.path.join(RES, *path))
+    return os.path.exists(os.path.join(RES, base.resolve(path[0]), *path[1:]))
 
 
 def panel(size=PANEL):
@@ -161,17 +161,20 @@ def mem():
 def weights():
     agents = {(r["config"], r["mode"], int(r["agents"])): r
               for r in rows("20261005-engine-agents-v1", "engine_agents_summary.csv")}
-    counts = sorted({k[2] for k in agents if k[0] == "mig"})
+    # processes in different MIG instances on the first platform, time-sliced
+    # on the whole GPU
+    config = "mig" if any(k[0] == "mig" for k in agents) else "timeslice"
+    counts = sorted({k[2] for k in agents if k[0] == config})
     fig, ax = panel()
-    series = [(label, colour, [float(agents["mig", mode, n]["memory_total_mib"]) / 1024 for n in counts])
-              for label, colour, mode in (("Device Copy", COPY, "copy"), (NAME, OURS, "inplace"))]
+    series = [(label, colour, [float(agents[config, mode, n]["memory_total_mib"]) / 1024 for n in counts])
+              for label, colour, mode in (("Existing Engine", COPY, "copy"), (NAME, OURS, "inplace"))]
     for group in grouped(ax, [str(n) for n in counts], series, 0.38):
         labels(ax, group)
     ax.legend(loc="upper left", handlelength=1.2)
     finish(fig, ax, "eval_weights_mem", "Serving Processes", "Memory (GiB)", 47)
 
     pages = {r["mode"]: r for r in rows("20261005-engine-pages-v1", "engine_pages_summary.csv")}
-    order = (("Device\nCopy", "copy", COPY), (f"{NAME}\n(4 KiB)", "inplace_4k", OURS_LIGHT),
+    order = (("Existing\nEngine", "copy", COPY), (f"{NAME}\n(4 KiB)", "inplace_4k", OURS_LIGHT),
              (f"{NAME}\n(2 MiB)", "inplace_thp", OURS))
     fig, ax = panel()
     values = [float(pages[mode]["generation_vs_copy"]) for _, mode, _ in order]
@@ -307,7 +310,8 @@ def mode():
             for r in rows(directory, "engine_kvmps_summary.csv")}
     children = max(k[1] for k in data)
     tokens = max({k[2] for k in data}, key=int)
-    configs = (("Time\nSlicing", "timeslice"), ("MPS", "mps"), ("MIG", "mig"), ("MIG\n+MPS", "mig_mps"))
+    configs = tuple(c for c in (("Time\nSlicing", "timeslice"), ("MPS", "mps"), ("MIG", "mig"),
+                                ("MIG\n+MPS", "mig_mps")) if any(k[0] == c[1] for k in data))
     pair = (("Copy", COPY, "copy"), (NAME, OURS, "extent"))
     legend("eval_mode_legend", [(label, colour) for label, colour, _ in pair], 2)
     for name, column, ylabel, scale, form in (
@@ -434,20 +438,29 @@ def sota():
     size = max(k[2] for k in data)
     children = 8
     legend("eval_sota_legend", [(label, colour) for label, colour, _ in MECHANISMS], 5)
-    placements = [(label, key) for label, key in (("Same\nInstance", "same"), ("Across\nInstances", "cross"))
-                  if (key, children, size, "copy") in data]
+    if any(k[0] == "cross" for k in data):
+        placements = [(label, (key, children, size)) for label, key in
+                      (("Same\nInstance", "same"), ("Across\nInstances", "cross"))
+                      if (key, children, size, "copy") in data]
+        xlabel = ""
+    else:
+        # the whole GPU: the two prefix lengths, as in the panel of the pause
+        sizes = sorted({k[2] for k in data if k[0] == "same" and k[1] == children})
+        placements = [(f"{int(float(data['same', children, s, 'copy']['prefix_tokens'])):,}",
+                       ("same", children, s)) for s in sizes]
+        xlabel = "Prefix (Tokens)"
     for name, column, ylabel, scale, form, log in (
             ("eval_sota_mem", "children_memory_mib", "Memory (GiB)", 1024.0, "{:.1f}", False),
             ("eval_sota_attach", "child_attach_ms", "Attach Time (ms, log)", 1.0, "{:.0f}", True),
             ("eval_sota_ttft", "child_first_token_ms", "TTFT (s)", 1000.0, "{:.2f}", False),
             ("eval_sota_tps", "children_tps_sum", "Throughput (tokens/s)", 1.0, "{:.1f}", False)):
         fig, ax = panel()
-        series = [(label, colour, [float(data[key, children, size, m][column]) / scale for _, key in placements])
+        series = [(label, colour, [float(data[cell + (m,)][column]) / scale for _, cell in placements])
                   for label, colour, m in MECHANISMS]
         groups = grouped(ax, [label for label, _ in placements], series, 0.17)
         for (label, colour, m), group in zip(MECHANISMS, groups):
-            for bar, (_, key) in zip(group, placements):
-                row = data[key, children, size, m]
+            for bar, (_, cell) in zip(group, placements):
+                row = data[cell + (m,)]
                 done, started = int(row["children_finished"]), int(row["children_started"])
                 if done < started:
                     # Not every child completed: a value over the children that did
@@ -463,7 +476,7 @@ def sota():
         top = max(bar.get_height() for group in groups for bar in group)
         if log:
             ax.set_ylim(1, top * 12)
-        finish(fig, ax, name, "", ylabel, None if log else top * 1.22, log)
+        finish(fig, ax, name, xlabel, ylabel, None if log else top * 1.22, log)
 
     # the device-memory baseline by how far it is tuned, against the extents
     stages = (("Device", DEVICE_LIGHT, "device"), ("+ Batched", "#a18fe0", "device_tuned"),
@@ -508,7 +521,7 @@ def attach():
 def protect():
     """Writes through the GPU that changed state shared with another process."""
     directory = "20261006-protect-v1"
-    path = os.path.join(RES, directory, "protect_summary.csv")
+    path = os.path.join(RES, base.resolve(directory), "protect_summary.csv")
     if not os.path.exists(path):
         return
     lines_of = [line.strip().split(",") for line in open(path) if line.strip()]
@@ -915,6 +928,9 @@ def stack():
 def local():
     """Where the loss of speed with host memory comes from, by MIG instance."""
     cells = (("12-SM\nInstance", "20261007-engine-kvlocal-12sm-v1"), ("8-SM\nInstance", "20261007-engine-kvlocal-6sm-v1"))
+    if base.resolve(cells[0][1]) != cells[0][1]:
+        # the rerun on the whole GPU, which has no instances
+        cells = (("Whole\nGPU", cells[0][1]),)
     if all(have(d, "engine_kvmech_summary.csv") for _, d in cells):
         # A private cache in host memory is a copy (grey, lighter on 4 KiB
         # pages). The two variants of the extent page sizes (grow_all,
@@ -956,7 +972,8 @@ def local():
         sms = sorted({k[0] for k in cell}, reverse=True)
         groups, order = [], []
         for kernel, name in (("gather", "Read"), ("scatter", "Write")):
-            for count, label in zip(sms, ("12 SM", "8 SM")):
+            for count in sms:
+                label = f"{count} SM"
                 groups.append(f"{name}\n{label}")
                 order.append((kernel, count))
         series = [(label, colour, [float(cell[count, kind][f"{kernel}_vs_device"]) for kernel, count in order])
@@ -1187,8 +1204,108 @@ def vshare():
     finish(fig, ax, "eval_vllm_tps", "", "Tokens/s", bottom.max() * 1.3, xtick=VLLM_TICK)
 
 
+# --------------------------------------------- the kernel's sharing mechanisms
+def full(name):
+    """The newest campaign of a runner on the whole GPU (MIG disabled), or None."""
+    found = sorted(d for d in os.listdir(RES)
+                   if d.endswith(f"-{name}-full-v1") and have(d, "source_hashes.txt"))
+    return found[-1] if found else None
+
+
+# Eight agents on one prefix through the mechanisms of the kernel, none of
+# which holds a step of STATOR; CoW Map keeps the colour it has in the other
+# panels.
+LINUX = (("Copy", COPY, "copy"), ("Shared Map", DEMAND, "shared_rw"), ("CoW Map", COW, "cow_plain"))
+
+
+def bg_linux():
+    """Two half-column panels for the background: the memory of eight agents
+    and the page faults that the kernel serves for the GPU."""
+    directory = full("engine-kvlinux-mechanisms")
+    if directory is None:
+        return
+    data = {r["mode"]: r for r in rows(directory, "engine_kvlinux_summary.csv") if r["children"] == "8"}
+    for name, column, ylabel, scale, form in (
+            ("bg_linux_mem", "children_memory_mib", "Memory (GiB)", 1024.0, "{:.1f}"),
+            ("bg_linux_faults", "gpu_fault_pages", "GPU Page Faults (M)", 1e6, "{:.2f}")):
+        fig, ax = panel()
+        values = [float(data[m][column]) / scale for _, _, m in LINUX]
+        bars = ax.bar(range(len(LINUX)), values, 0.6, color=[colour for _, colour, _ in LINUX],
+                      edgecolor="white", linewidth=1.5)
+        ax.set_xticks(range(len(LINUX)), [label.replace(" ", "\n") for label, _, _ in LINUX])
+        labels(ax, bars, form)
+        ax.tick_params(axis="x", labelsize=TICK2)
+        finish(fig, ax, name, "", ylabel, max(values) * 1.22)
+
+
+# The same agents by their number, with the steps of STATOR that remove GPU
+# faults left out (Map Only: the prefix mapped read-only, no CPU read, own rows
+# in memory that the kernel provides on the GPU's first write).
+SCALING = (("Copy", COPY, "copy", "s"), ("CoW Map", COW, "cow_plain", "^"),
+           (f"{NAME} (Map Only)", OURS_LIGHT, "ro_plain", "D"), (NAME, OURS, "extent", "o"))
+
+
+def linux_scale():
+    directory = full("engine-kvlinux-scaling")
+    if directory is None:
+        return
+    data = {(r["mode"], int(r["children"])): r for r in rows(directory, "engine_kvlinux_summary.csv")}
+    counts = sorted({n for _, n in data})
+    legend("eval_lscale_legend", [(label, colour) for label, colour, _, _ in SCALING], 4)
+    for name, column, ylabel, scale in (
+            ("eval_lscale_ttft", "child_first_token_ms", "TTFT (s)", 1000.0),
+            ("eval_lscale_kernel", "fault_thread_ms", "Fault Service (s)", 1000.0),
+            ("eval_lscale_mem", "children_memory_mib", "Memory (GiB)", 1024.0)):
+        fig, ax = panel()
+        top = 0.0
+        for label, colour, m, marker in SCALING:
+            points = [(n, float(data[m, n][column]) / scale) for n in counts if (m, n) in data]
+            if not points:
+                continue
+            top = max(top, max(value for _, value in points))
+            ax.plot([p[0] for p in points], [p[1] for p in points], color=colour, marker=marker,
+                    markersize=7, linewidth=2, label=label, markeredgecolor="white", markeredgewidth=1.2)
+        ax.set_xscale("log", base=2)
+        ax.set_xticks(counts, [str(n) for n in counts])
+        ax.minorticks_off()
+        finish(fig, ax, name, "Agents", ylabel, top * 1.15)
+
+
+# Model weights read in place under the reclaim of the kernel.
+RECLAIM = (("Existing Engine", COPY, "device"), (f"{NAME} (4 KiB)", OURS_LIGHT, "pagecache"),
+           (f"{NAME} (2 MiB)", OURS, "memfs"))
+
+
+def reclaim():
+    directory = full("engine-reclaim")
+    if directory is None:
+        return
+    data = {(r["mode"], r["pressure"]): r for r in rows(directory, "engine_reclaim_summary.csv")}
+    legend("eval_reclaim_legend", [(label, colour) for label, colour, _ in RECLAIM], 3)
+    for name, column, ylabel, scale, form in (
+            ("eval_reclaim_speed", "tps_vs_none", "Speed under Reclaim", 1.0, "{:.2f}"),
+            ("eval_reclaim_faults", "gpu_fault_pages", "GPU Page Faults (M)", 1e6, "{:.1f}")):
+        fig, ax = panel()
+        values = [float(data[m, "reclaim"][column]) / scale for _, _, m in RECLAIM]
+        bars = ax.bar(range(len(RECLAIM)), values, 0.6, color=[colour for _, colour, _ in RECLAIM],
+                      edgecolor="white", linewidth=1.5)
+        ax.set_xticks(range(len(RECLAIM)), ["" for _ in RECLAIM])
+        ax.tick_params(axis="x", length=0)
+        labels(ax, bars, form)
+        finish(fig, ax, name, "", ylabel, max(max(values), 1e-9) * 1.22)
+
+
 if __name__ == "__main__":
-    for figure in (base.bg_state, bg_place, pair_legend, mem, weights, hand, speed, reach, mode, cow, resident, latency, dev, sota, attach, protect, tree, scale,
-                   variants, inproc, server, limit, stack, local, pipe, deep, wshare, prefix_length, vshare):
+    for figure in (bg_linux, linux_scale, reclaim):
+        figure()
+        print("wrote", figure.__name__)
+    # the first platform (STATOR_FULL=0) draws every panel; the whole GPU draws
+    # the panels of the paper, without those of the MIG instances
+    every = (base.bg_state, bg_place, pair_legend, mem, weights, hand, speed, reach, mode, cow, resident, latency,
+             dev, sota, attach, protect, tree, scale, variants, inproc, server, limit, stack, local, pipe, deep,
+             wshare, prefix_length, vshare)
+    paper = (base.bg_state, pair_legend, mem, weights, hand, mode, cow, resident, sota, attach, protect, tree,
+             scale, variants, inproc, stack, local, vshare)
+    for figure in (every if base.MODE == "0" else paper):
         figure()
         print("wrote", figure.__name__)

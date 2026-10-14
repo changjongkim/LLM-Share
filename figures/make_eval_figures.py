@@ -55,8 +55,92 @@ PAD = 1.08       # margin of the layout around a plot, in units of the text size
 FIXED = False    # a plot is saved as its whole canvas, so that all panels have one size
 
 
+# The campaigns of the paper were measured again on the whole GPU with MIG
+# disabled (2026-10-14, result directories *-<runner>-full-v1). A figure
+# names the first campaign; resolve() reads the rerun of the same runner when
+# it exists. STATOR_FULL=0 reads the first campaigns; STATOR_FULL=strict fails
+# when a rerun is missing, so that no figure mixes the two platforms.
+FULL = {
+    "20261005-engine-agents-v1": "engine-agents",
+    "20261005-engine-pages-v1": "engine-pages",
+    "20261006-engine-kvbatch-v1": "engine-kvbatch",
+    "20261010-engine-kvbatch-v2": "engine-kvbatch",
+    "20261006-engine-kvcow-v1": "engine-kvcow",
+    "20261006-engine-kvlimit-v1": "engine-kvlimit",
+    "20261006-engine-kvscale-v1": "engine-kvscale",
+    "20261007-engine-kvscale-32-v2": "engine-kvscale",
+    "20261007-engine-kvscale-p20-v1": "engine-kvscale-p20",
+    "20261007-engine-kvscale-p600-v1": "engine-kvscale-p600",
+    "20261006-engine-kvscale-agent-v1": "engine-kvscale-agent",
+    "20261006-engine-kvscale-llama8b-v1": "engine-kvscale-llama8b",
+    "20261006-engine-kvscale-qwen14b-v1": "engine-kvscale-qwen14b",
+    "20261006-engine-kvserver-v1": "engine-kvserver2",
+    "20261010-engine-kvserver2-v2": "engine-kvserver2",
+    "20261006-engine-kvshare-v1": "engine-kvshare",
+    "20261006-engine-kvspeed-v1": "engine-kvspeed",
+    "20261006-engine-kvspeed-long-v1": "engine-kvspeed-long",
+    "20261006-engine-kvvmm-v1": "engine-kvvmm",
+    "20261006-ollama-agents-v1": "ollama-agents",
+    "20261006-protect-v1": "protect",
+    "20261006-read-path-v1": "read-path",
+    "20261006-vmm-attach-v1": "vmm-attach",
+    "20261007-tlb-probe-v1": "tlb-probe",
+    "20261007-engine-kvdeep-v1": "engine-kvdeep",
+    "20261007-engine-kvdeep-wide-v1": "engine-kvdeep-wide",
+    "20261007-engine-kvlocal-12sm-v1": "engine-kvlocal",
+    "20261007-engine-kvmech-v1": "engine-kvmech",
+    "20261010-engine-kvmech-v2": "engine-kvmech",
+    "20261013-engine-kvmech-cowplain-v1": "engine-kvmech",
+    "20261007-engine-kvablate-v1": "engine-kvablate",
+    "20261007-engine-kvstack-v1": "engine-kvstack",
+    "20261007-engine-kvstack-huge-v1": "engine-kvstack-huge",
+    "20261008-engine-kvstack-capacity-v2": "engine-kvstack-capacity",
+    "20261008-engine-kvstack-capacity-136-v1": "engine-kvstack-capacity",
+    "20261008-engine-kvstack-capacity-140-v1": "engine-kvstack-capacity",
+    "20261009-engine-kvstack-capacity-copy-v1": "engine-kvstack-capacity",
+    "20261008-engine-kvstack-qwen14b-v1": "engine-kvstack-qwen14b",
+    "20261008-engine-kvstack-qwen14b-none8-v1": "engine-kvstack-qwen14b-none8",
+    "20261008-engine-kvstack-capacity-qwen14b-118-v1": "engine-kvstack-capacity-qwen14b",
+    "20261010-engine-kvstack-qwen14b-huge-v1": "engine-kvstack-qwen14b-huge",
+    "20261007-ext-vllm-v1": "ext-vllm",
+    "20261007-ext-weightshare-v1": "ext-weightshare",
+    "20261008-vllm-share-v2": "vllm-share",
+    "20261010-engine-kvmps-v2": "engine-kvmps",
+    "20261010-engine-kvpipe-huge-v2": "engine-kvpipe-huge",
+    "20261010-engine-kvtree-v2": "engine-kvtree",
+    "20261012-engine-kvresident-v1": "engine-kvresident",
+    "20261012-engine-kvpipefault-v1": "engine-kvpipefault",
+    "20261010-engine-kvfaultcount-v2": "engine-kvfaultcount",
+    "20261010-engine-kvfork-v2": "engine-kvfork",
+    "20261007-engine-kvscale-gen2k-v1": "engine-kvscale-gen2k",
+    "20261005-engine-adapters-v1": "engine-adapters",
+}
+# Campaigns that only exist with MIG instances; a figure of the whole GPU
+# must not read them.
+MIG_ONLY = {"20261006-engine-kvspeed-6sm-v1", "20261006-engine-kvspeed-6sm-long-v1",
+            "20261007-engine-kvlocal-6sm-v1", "20261012-engine-kvlatency-v1",
+            "20261013-engine-kvplace-v1"}
+MODE = os.environ.get("STATOR_FULL", "1")
+
+
+def resolve(directory):
+    """The directory to read for a campaign name of the first platform."""
+    if MODE == "strict" and directory in MIG_ONLY:
+        raise SystemExit(f"{directory} exists only with MIG instances")
+    if MODE == "0" or directory not in FULL:
+        return directory
+    name = FULL[directory]
+    found = sorted(d for d in os.listdir(RES) if d.endswith(f"-{name}-full-v1")
+                   and os.path.exists(os.path.join(RES, d, "source_hashes.txt")))
+    if found:
+        return found[-1]
+    if MODE == "strict":
+        raise SystemExit(f"no rerun on the whole GPU for {directory} ({name})")
+    return directory
+
+
 def rows(*path):
-    with open(os.path.join(RES, *path), newline="") as handle:
+    with open(os.path.join(RES, resolve(path[0]), *path[1:]), newline="") as handle:
         return list(csv.DictReader(handle))
 
 
@@ -435,11 +519,16 @@ def eval_cow():
 def eval_speed():
     runs = [("20261006-engine-kvspeed-v1", "12-SM"), ("20261006-engine-kvspeed-long-v1", "12-SM"),
             ("20261006-engine-kvspeed-6sm-v1", "8-SM"), ("20261006-engine-kvspeed-6sm-long-v1", "8-SM")]
+    rerun = [(tag, "whole GPU") for tag, _ in runs if resolve(tag) != tag]
+    if rerun:
+        # the reruns on the whole GPU, which has no instances
+        runs = rerun
     labels, points = [], {"anon": [], "extent_lazy": []}
     for tag, instance in runs:
         data = {(r["processes"], r["mode"]): r for r in rows(tag, "engine_kvspeed_summary.csv")}
         tokens = int(data["1", "device"]["prefix_tokens"])
-        labels.append(f"{instance} instance\n{tokens:,}-token prefix")
+        where = instance if rerun else f"{instance} instance"
+        labels.append(f"{where[0].upper() + where[1:]}\n{tokens:,}-token prefix")
         for mode in points:
             r = data["1", mode]
             points[mode].append((float(r["generation_vs_device"]), float(r["lower_ci95"]),
@@ -565,14 +654,17 @@ def bg_state():
     """Two half-column panels: what the unmodified engine holds per process."""
     agents = {(r["config"], r["mode"], int(r["agents"])): r
               for r in rows("20261005-engine-agents-v1", "engine_agents_summary.csv")}
-    counts = sorted({k[2] for k in agents if k[0] == "mig" and k[1] == "copy"})
-    memory = [float(agents["mig", "copy", n]["memory_total_mib"]) / 1024 for n in counts]
+    # processes in different MIG instances on the first platform, time-sliced
+    # on the whole GPU
+    config = "mig" if any(k[0] == "mig" for k in agents) else "timeslice"
+    counts = sorted({k[2] for k in agents if k[0] == config and k[1] == "copy"})
+    memory = [float(agents[config, "copy", n]["memory_total_mib"]) / 1024 for n in counts]
     fig, ax = plt.subplots(figsize=PANEL)
     bars = ax.bar([str(n) for n in counts], memory, 0.6, color=COPY, edgecolor="white",
                   linewidth=1.5)
     for bar in bars:
         tip(ax, bar, f"{bar.get_height():.1f}")
-    model = float(agents["mig", "inplace", 1]["model_mapped_mib"]) / 1024
+    model = float(agents[config, "inplace", 1]["model_mapped_mib"]) / 1024
     ax.axhline(model, color=OURS, linewidth=1.6, linestyle=(0, (4, 2)))
     ax.text(0.04, 0.72, f"dashed: model file\n({model:.1f} GiB)", color=OURS, fontsize=11,
             ha="left", va="center", transform=ax.transAxes)

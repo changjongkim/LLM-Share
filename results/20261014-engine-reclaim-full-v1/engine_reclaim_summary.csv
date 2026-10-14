@@ -1,0 +1,7 @@
+mode,pressure,runs,failed,timed_out,agents,agents_with_speed,texts_equal_to_none,texts_compared,tps_sum,tps_ci95,tps_vs_none,vs_none_low,vs_none_high,gpu_fault_pages,gpu_fault_pages_ci95,fault_thread_ms,fault_thread_ci95,major_faults,major_faults_ci95,refault_file_pages,refault_file_ci95,reclaim_attempts,reclaim_succeeded
+device,none,6,0,0,24,24,24,24,38.82,0.02,1.0000,1.0000,1.0000,0,0,0,0,0,0,0,0,0,0
+device,reclaim,6,0,0,24,24,24,24,38.81,0.02,1.0000,0.9993,1.0006,0,0,0,0,0,0,0,0,277,48
+pagecache,none,6,0,0,24,24,24,24,37.12,0.01,1.0000,1.0000,1.0000,0,0,0,0,776,61,0,0,0,0
+pagecache,reclaim,6,0,0,24,24,24,24,28.98,0.23,0.7806,0.7744,0.7868,16936326,240007,6908,459,794,36,15205,101,6,6
+memfs,none,6,0,0,24,24,24,24,41.15,0.06,1.0000,1.0000,1.0000,0,0,0,0,0,0,0,0,0,0
+memfs,reclaim,6,0,0,24,24,24,24,41.21,0.06,1.0014,0.9997,1.0031,0,0,0,0,0,0,0,0,258,0

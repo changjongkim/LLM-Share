@@ -1,0 +1,1 @@
+TEXT  The text describes the operations of a scheduler and the handling of a page fault in a multitasking operating system. The scheduler maintains a run queue for each processor and redistributes tasks between queues based on the load balance. When a page fault occurs, the kernel is invoked. The kernel locates the memory mapping, allocates
