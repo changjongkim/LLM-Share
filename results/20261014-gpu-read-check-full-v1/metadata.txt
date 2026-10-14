@@ -1,0 +1,15 @@
+timestamp=2026-10-14T21:24:44+09:00
+mig=GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600
+repetitions=4
+size_mib=1024
+head_mib=896
+rounds=4
+procs_set=1 32
+fs_set=memfs ext4
+writer_set=cpu gpu
+read_set=gpu cpu
+ext4_fs=ext2/ext3
+boot_id=f9776703-a137-43bc-822b-124c6147ff68
+GPU 0: NVIDIA Thor (UUID: GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600)
+508cbab9fcf8fa4131ab21162a6aabead7313bae929de304b50153e01f62cdab  /home/thor/kcj/llm_share/gpu_read_check
+525bb2e075b5ba6afe3ed5de7b737969c77e1694899ad30670972013858e1d98  /home/thor/kcj/llm_share/linux_share_probe

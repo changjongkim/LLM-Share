@@ -133,7 +133,7 @@ weights_publish: weights_publish.c
 
 clean:
 	$(RM) cuda_ipc_probe cuda_vmm_probe cuda_share_load_probe kv_fork kv_batch kv_fork_vmm kv_spawn kv_tree kv_fork_sota kv_spawn_sota kv_fork_stock kv_fork_nommap kv_fork_tuned kv_spawn_tuned kv_tree_stock weights_publish cuda_tlb_probe cuda_reach_probe cuda_vmm_attach_probe cuda_protect_probe ollama_mig_visible.so \
-	  kv_fork_linux kv_spawn_linux linux_share_probe ksm_merge_shim.so ksm_probe gpu_read_check
+	  kv_fork_linux kv_spawn_linux linux_share_probe ksm_merge_shim.so ksm_probe gpu_read_check gpu_read_trace
 
 # The same programs against the engines of kv_extents2.patch, kv_chain2.patch
 # and kv_tuned2.patch, in which a publisher puts the entries of a divided
@@ -215,6 +215,10 @@ ksm_probe: ksm_probe.cu
 
 # Every word that the GPU reads when it faults on a read-only file mapping.
 gpu_read_check: gpu_read_check.cu
+	$(NVCC) $(NVCCFLAGS) $< -o $@
+
+# The same check, with a CPU read and a second GPU pass after a wrong read.
+gpu_read_trace: gpu_read_trace.cu
 	$(NVCC) $(NVCCFLAGS) $< -o $@
 
 # Preloaded into a process: asks KSM to merge all of its anonymous memory.
