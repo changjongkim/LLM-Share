@@ -12,11 +12,12 @@
 % ---------------- GPU ----------------
 \draw[sub, fill=gpuc] (0,6.95) rectangle (8.9,7.75);
 \node[ttl, anchor=west] at (0.12,7.35) {GPU};
-% one context per serving process, above the process that owns it
-\foreach \x in {1.75,4.45,7.15} {
-  \node[comp, minimum width=1.2cm, minimum height=0.5cm] at (\x,7.35) {Context};
+% one context per serving process; the processes above which no box is drawn
+% are those of the dots
+\foreach \x in {1.75,3.10,4.45,5.80,7.15} {
+  \node[comp, minimum width=1.15cm, minimum height=0.5cm] at (\x,7.35) {Context};
 }
-\node[ttl] at (8.5,7.35) {$\cdots$};
+\node[ttl] at (8.35,7.35) {$\cdots$};
 
 % ---------------- serving processes ----------------
 \draw[layer] (0,4.3) rectangle (8.9,6.45);

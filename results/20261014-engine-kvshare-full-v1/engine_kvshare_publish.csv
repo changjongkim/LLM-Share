@@ -1,0 +1,7 @@
+paragraphs,store,runs,failed_runs,prefix_tokens,prefix_ms,publish_ms,state_mib,file_used_mib
+80,device,6,0,4081,2820,238.10,223.24,0
+80,huge,6,0,4081,2820,5.11,0.06,224
+80,small,6,0,4081,2933,6.02,0.06,224
+320,device,6,0,16321,12503,572.21,892.80,0
+320,huge,6,0,16321,12608,11.74,0.25,896
+320,small,6,0,16321,12709,15.67,0.25,896
