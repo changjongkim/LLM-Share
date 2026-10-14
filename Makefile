@@ -132,7 +132,8 @@ weights_publish: weights_publish.c
 	$(CC) $(CFLAGS) $< -o $@ -lpthread
 
 clean:
-	$(RM) cuda_ipc_probe cuda_vmm_probe cuda_share_load_probe kv_fork kv_batch kv_fork_vmm kv_spawn kv_tree kv_fork_sota kv_spawn_sota kv_fork_stock kv_fork_nommap kv_fork_tuned kv_spawn_tuned kv_tree_stock weights_publish cuda_tlb_probe cuda_reach_probe cuda_vmm_attach_probe cuda_protect_probe ollama_mig_visible.so
+	$(RM) cuda_ipc_probe cuda_vmm_probe cuda_share_load_probe kv_fork kv_batch kv_fork_vmm kv_spawn kv_tree kv_fork_sota kv_spawn_sota kv_fork_stock kv_fork_nommap kv_fork_tuned kv_spawn_tuned kv_tree_stock weights_publish cuda_tlb_probe cuda_reach_probe cuda_vmm_attach_probe cuda_protect_probe ollama_mig_visible.so \
+	  kv_fork_linux kv_spawn_linux linux_share_probe ksm_merge_shim.so ksm_probe gpu_read_check
 
 # The same programs against the engines of kv_extents2.patch, kv_chain2.patch
 # and kv_tuned2.patch, in which a publisher puts the entries of a divided
@@ -186,4 +187,37 @@ kv_spawn_tuned2: kv_spawn.cpp
 	  -isystem $(TUNED2_ENGINE)/ggml/include $< -o $@ \
 	  -L$(TUNED2_ENGINE)/build/bin -lllama -lggml -lggml-base \
 	  -Wl,-rpath,'$$ORIGIN/$(TUNED2_ENGINE)/build/bin'
+
+# The same programs against the engine of kv_tuned2.patch and kv_linux.patch,
+# which adds a baseline: an agent maps the prefix shared and writable
+# (LLAMA_KV_SHARED=1). Without the variable the engine is that of tuned2.
+LINUX_ENGINE ?= llama.cpp-linux
+
+kv_fork_linux: kv_fork.cpp
+	$(CXX) $(CXXFLAGS) -isystem $(LINUX_ENGINE)/include \
+	  -isystem $(LINUX_ENGINE)/ggml/include $< -o $@ \
+	  -L$(LINUX_ENGINE)/build/bin -lllama -lggml -lggml-base \
+	  -Wl,-rpath,'$$ORIGIN/$(LINUX_ENGINE)/build/bin'
+
+kv_spawn_linux: kv_spawn.cpp
+	$(CXX) $(CXXFLAGS) -isystem $(LINUX_ENGINE)/include \
+	  -isystem $(LINUX_ENGINE)/ggml/include $< -o $@ \
+	  -L$(LINUX_ENGINE)/build/bin -lllama -lggml -lggml-base \
+	  -Wl,-rpath,'$$ORIGIN/$(LINUX_ENGINE)/build/bin'
+
+# The sharing mechanisms of the kernel on memory that the GPU reads.
+linux_share_probe: linux_share_probe.cu
+	$(NVCC) $(NVCCFLAGS) $< -o $@
+
+# KSM on memory that the GPU reads and writes.
+ksm_probe: ksm_probe.cu
+	$(NVCC) $(NVCCFLAGS) $< -o $@
+
+# Every word that the GPU reads when it faults on a read-only file mapping.
+gpu_read_check: gpu_read_check.cu
+	$(NVCC) $(NVCCFLAGS) $< -o $@
+
+# Preloaded into a process: asks KSM to merge all of its anonymous memory.
+ksm_merge_shim.so: ksm_merge_shim.c
+	$(CC) $(CFLAGS) -shared -fPIC $< -o $@
 

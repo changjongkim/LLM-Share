@@ -57,3 +57,12 @@ __pycache__/
 *.egg-info/
 /kv_agent2
 /kv_agent_stock
+# the engine of kv_tuned2.patch and kv_linux.patch, and the programs of the
+# whole-GPU campaigns
+/llama.cpp-linux/
+/kv_fork_linux
+/kv_spawn_linux
+/linux_share_probe
+/ksm_probe
+/ksm_merge_shim.so
+/gpu_read_check
