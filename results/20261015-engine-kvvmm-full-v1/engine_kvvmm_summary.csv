@@ -1,0 +1,11 @@
+paragraphs,parent_mig,mode,runs,prefix_tokens,publish_ms,state_mib,parent_generation_tps,parent_texts_equal_to_copy,children_started,children_finished,child_texts_equal_to_copy,child_attach_ms,child_first_token_ms,child_generation_tps,children_memory_mib
+80,a7c66ad2,copy,6,4081,218.90,223.24,13.08,6,24,24,24,188.6,1365,7.98,4679
+80,a7c66ad2,extent,6,4081,2.86,0.06,11.36,6,24,24,24,26.6,1182,7.75,3052
+80,a7c66ad2,vmm,6,4081,7.42,0.06,14.10,6,24,24,24,276.6,1479,8.08,3900
+80,a7c66ad2,extent_cross,6,4081,3.18,0.06,20.99,6,6,6,6,25.0,723,21.27,852
+80,a7c66ad2,vmm_cross,6,4081,7.69,0.06,22.28,6,6,6,6,172.9,920,22.99,1056
+320,a7c66ad2,copy,6,16321,548.68,892.80,13.25,6,24,24,24,487.0,1732,7.43,10251
+320,a7c66ad2,extent,6,16321,9.07,0.25,10.52,6,24,24,24,49.8,1252,7.18,3171
+320,a7c66ad2,vmm,6,16321,43.97,0.25,13.71,6,24,24,24,447.3,1685,7.49,4060
+320,a7c66ad2,extent_cross,6,16321,9.04,0.25,19.25,6,6,6,6,43.4,749,19.41,878
+320,a7c66ad2,vmm_cross,6,16321,42.54,0.25,20.41,6,6,6,6,230.8,989,21.01,1102

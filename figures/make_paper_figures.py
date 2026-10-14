@@ -515,7 +515,7 @@ def attach():
     ax.set_yticks([1, 2, 5, 10, 20, 50], ["1", "2", "5", "10", "20", "50"])
     ax.minorticks_off()
     ax.set_ylim(1, 60)
-    finish(fig, ax, "eval_attach_granule", "Allocation Size (MiB)", "Attach Time (ms, log)", log=True)
+    finish(fig, ax, "eval_attach_granule", "Allocation Size (MiB)", "Attach (ms, log)", log=True)
 
 
 def protect():
@@ -670,9 +670,9 @@ def inproc():
         ("8 Processes", gib(share["320", "restore", 8]),
          float(share["320", "restore", 8]["generation_tps_total"]), "o", COPY, (2, 10), "center"),
         ("8 Processes", gib(share["320", "extent_lazy", 8]) + file_gib,
-         float(share["320", "extent_lazy", 8]["generation_tps_total"]), "o", OURS, (0, -17), "center"),
+         float(share["320", "extent_lazy", 8]["generation_tps_total"]), "o", OURS, (10, -4), "left"),
         ("1 Server", gib(batch["one_server"]), float(batch["one_server"]["generation_tps_total"]),
-         "s", COPY, (9, -4), "left"),
+         "s", COPY, (0, -17), "center"),
         ("2 Servers", gib(batch["two_servers_copy"]), float(batch["two_servers_copy"]["generation_tps_total"]),
          "^", COPY, (9, -4), "left"),
         ("2 Servers", gib(batch["two_servers_extent"]), float(batch["two_servers_extent"]["generation_tps_total"]),
@@ -711,7 +711,7 @@ def inproc():
     else:
         ax.legend(handles=handles, loc="upper right", handlelength=1.0)
     ax.set_xlim(0, 27)
-    ax.set_ylim(0, 190 if vllm is not None else 125)
+    ax.set_ylim(0, 190 if vllm is not None else 140)
     ax.set_xlabel("Memory (GiB)")
     ax.set_ylabel("Throughput (tokens/s)")
     style(ax, "both")

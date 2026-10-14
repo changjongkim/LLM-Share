@@ -1,0 +1,18 @@
+PROBE run=1 mig=a7c66ad2 route=host gpu_read=cudaSuccess words_equal=16777216 words=16777216 gpu_write=cudaErrorIllegalAddress file_intact=1
+PROBE run=1 mig=a7c66ad2 route=host gpu_read=cudaSuccess words_equal=16777216 words=16777216 gpu_write=cudaErrorIllegalAddress file_intact=1
+PROBE run=1 mig=a7c66ad2 route=vmm importer_raise=CUDA_SUCCESS importer_write=CUDA_SUCCESS exporter_read=CUDA_SUCCESS exporter_intact=0
+PROBE run=2 mig=a7c66ad2 route=host gpu_read=cudaSuccess words_equal=16777216 words=16777216 gpu_write=cudaErrorIllegalAddress file_intact=1
+PROBE run=2 mig=a7c66ad2 route=host gpu_read=cudaSuccess words_equal=16777216 words=16777216 gpu_write=cudaErrorIllegalAddress file_intact=1
+PROBE run=2 mig=a7c66ad2 route=vmm importer_raise=CUDA_SUCCESS importer_write=CUDA_SUCCESS exporter_read=CUDA_SUCCESS exporter_intact=0
+PROBE run=3 mig=a7c66ad2 route=host gpu_read=cudaSuccess words_equal=16777216 words=16777216 gpu_write=cudaErrorIllegalAddress file_intact=1
+PROBE run=3 mig=a7c66ad2 route=host gpu_read=cudaSuccess words_equal=16777216 words=16777216 gpu_write=cudaErrorIllegalAddress file_intact=1
+PROBE run=3 mig=a7c66ad2 route=vmm importer_raise=CUDA_SUCCESS importer_write=CUDA_SUCCESS exporter_read=CUDA_SUCCESS exporter_intact=0
+PROBE run=4 mig=a7c66ad2 route=host gpu_read=cudaSuccess words_equal=16777216 words=16777216 gpu_write=cudaErrorIllegalAddress file_intact=1
+PROBE run=4 mig=a7c66ad2 route=host gpu_read=cudaSuccess words_equal=16777216 words=16777216 gpu_write=cudaErrorIllegalAddress file_intact=1
+PROBE run=4 mig=a7c66ad2 route=vmm importer_raise=CUDA_SUCCESS importer_write=CUDA_SUCCESS exporter_read=CUDA_SUCCESS exporter_intact=0
+PROBE run=5 mig=a7c66ad2 route=host gpu_read=cudaSuccess words_equal=16777216 words=16777216 gpu_write=cudaErrorIllegalAddress file_intact=1
+PROBE run=5 mig=a7c66ad2 route=host gpu_read=cudaSuccess words_equal=16777216 words=16777216 gpu_write=cudaErrorIllegalAddress file_intact=1
+PROBE run=5 mig=a7c66ad2 route=vmm importer_raise=CUDA_SUCCESS importer_write=CUDA_SUCCESS exporter_read=CUDA_SUCCESS exporter_intact=0
+PROBE run=6 mig=a7c66ad2 route=host gpu_read=cudaSuccess words_equal=16777216 words=16777216 gpu_write=cudaErrorIllegalAddress file_intact=1
+PROBE run=6 mig=a7c66ad2 route=host gpu_read=cudaSuccess words_equal=16777216 words=16777216 gpu_write=cudaErrorIllegalAddress file_intact=1
+PROBE run=6 mig=a7c66ad2 route=vmm importer_raise=CUDA_SUCCESS importer_write=CUDA_SUCCESS exporter_read=CUDA_SUCCESS exporter_intact=0

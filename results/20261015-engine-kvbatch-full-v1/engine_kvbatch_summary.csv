@@ -1,0 +1,5 @@
+config,runs,failed_servers,prefix_tokens,ready_first_server_ms,ready_all_servers_ms,generation_tps_total,generation_tps_12sm,generation_tps_6sm,second_server_attach_ms,publish_ms,state_mib,memory_mib,texts_equal_to_copy,texts_compared
+one_server,6,0,16321,13428,13428,111.41,111.41,0.00,0.0,0.00,0.00,2621,36,48
+two_servers_compute,6,0,16321,29440,29450,100.21,50.13,50.08,77.0,0.00,0.00,5172,48,48
+two_servers_copy,6,0,16321,13923,14979,116.15,57.46,58.69,273.5,559.77,892.80,5194,48,48
+two_servers_extent,6,0,16321,13441,14219,113.29,56.32,56.97,43.3,11.20,0.25,2540,48,48

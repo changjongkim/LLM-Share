@@ -1,0 +1,5 @@
+mode,runs,counts,largest_count,slope_mib_per_agent,slope_ci95,intercept_mib,slope_vs_none,slope_vs_none_max,model_file_shared_mib,cache_file_shared_mib,memory_available_mib,agents_that_fit_by_line
+none,6,5,12,6169.7,6.3,-21.9,1.0000,1.0000,0,0,120272,19
+kv,6,5,12,5273.2,12.4,-12.2,0.8547,0.8568,0,784,120273,22
+weights,6,7,32,1644.0,1.2,39.9,0.2665,0.2667,4466,0,120357,70
+both,6,8,64,745.9,5.9,102.9,0.1209,0.1218,4466,784,120348,155

@@ -95,8 +95,10 @@ FULL = {
     "20261007-engine-kvstack-v1": "engine-kvstack",
     "20261007-engine-kvstack-huge-v1": "engine-kvstack-huge",
     "20261008-engine-kvstack-capacity-v2": "engine-kvstack-capacity",
-    "20261008-engine-kvstack-capacity-136-v1": "engine-kvstack-capacity",
-    "20261008-engine-kvstack-capacity-140-v1": "engine-kvstack-capacity",
+    # STATOR at its capacity: the whole GPU measures it with the model file on
+    # 2 MiB pages, its own placement (the page cache run had failed agents)
+    "20261008-engine-kvstack-capacity-136-v1": "engine-kvstack-capacity-huge",
+    "20261008-engine-kvstack-capacity-140-v1": "engine-kvstack-capacity-huge",
     "20261009-engine-kvstack-capacity-copy-v1": "engine-kvstack-capacity",
     "20261008-engine-kvstack-qwen14b-v1": "engine-kvstack-qwen14b",
     "20261008-engine-kvstack-qwen14b-none8-v1": "engine-kvstack-qwen14b-none8",
@@ -376,8 +378,10 @@ def eval_weights():
     fig, (left, right) = plt.subplots(1, 2, figsize=(9.6, 3.0), gridspec_kw={"width_ratios": [1.25, 1]})
 
     counts = [1, 2, 4, 8]
-    copy = [float(agents["mig", "copy", n]["memory_total_mib"]) / 1024 for n in counts]
-    place = [float(agents["mig", "inplace", n]["memory_total_mib"]) / 1024 for n in counts]
+    # processes in different MIG instances on the first platform, time-sliced on the whole GPU
+    config = "mig" if any(k[0] == "mig" for k in agents) else "timeslice"
+    copy = [float(agents[config, "copy", n]["memory_total_mib"]) / 1024 for n in counts]
+    place = [float(agents[config, "inplace", n]["memory_total_mib"]) / 1024 for n in counts]
     bars = grouped(left, [str(n) for n in counts],
                    [("Device copy (upstream)", COPY, copy), ("Weights in place", OURS, place)], 0.34)
     tip(left, bars[0][-1], f"{copy[-1]:.1f}")
@@ -608,6 +612,9 @@ def eval_vmm():
     data = {(r["paragraphs"], r["parent_mig"], r["mode"]): r
             for r in rows("20261006-engine-kvvmm-v1", "engine_kvvmm_summary.csv")}
     instances = [("fafc828a", "12-SM"), ("31ffbfe4", "8-SM")]
+    if not any(k[1] == "fafc828a" for k in data):
+        # the rerun on the whole GPU, which has no instances
+        instances = [(sorted({k[1] for k in data})[0], "Whole GPU")]
     modes = [("copy", "Copy (upstream)", COPY), ("vmm", "Device-memory cache", DEVICE),
              ("extent", "Host extents", OURS)]
     size = "320"
@@ -634,7 +641,7 @@ def eval_vmm():
                             (bar.get_x() + bar.get_width() / 2, bar.get_height()),
                             xytext=(0, 3), textcoords="offset points", ha="center",
                             va="bottom", fontsize=9.5, color=INK)
-        ax.set_xlabel("MIG Instance")
+        ax.set_xlabel("MIG Instance" if len(instances) > 1 else "")
         ax.set_ylabel(label)
         top = max(max(values) for _, _, values in series)
         ax.set_ylim(0, top * 1.18)
@@ -644,7 +651,8 @@ def eval_vmm():
     fig.tight_layout(w_pad=1.6)
     fig.legend(handles, labels, loc="lower center", ncol=3, bbox_to_anchor=(0.5, 1.0),
                columnspacing=1.6, handlelength=1.4)
-    fig.suptitle(f"A Parent and Four Children in One MIG Instance, {tokens:,}-Token Prefix",
+    where = "in One MIG Instance" if len(instances) > 1 else "on the Whole GPU"
+    fig.suptitle(f"A Parent and Four Children {where}, {tokens:,}-Token Prefix",
                  y=1.2, fontsize=12.5, fontweight="bold")
     save(fig, "eval_vmm")
 

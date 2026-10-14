@@ -1,0 +1,8 @@
+timestamp=2026-10-15T08:32:18+09:00
+mig_a=GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600
+mig_b=GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600
+repetitions=6
+size_mib=64
+boot_id=f9776703-a137-43bc-822b-124c6147ff68
+GPU 0: NVIDIA Thor (UUID: GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600)
+2659b3a5823a4bcaacce2be2c9beffa9552aa8112c1a2af4b8526db27cce69b3  /home/thor/kcj/llm_share/cuda_protect_probe

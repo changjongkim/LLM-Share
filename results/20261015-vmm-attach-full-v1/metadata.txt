@@ -1,0 +1,8 @@
+timestamp=2026-10-15T08:33:05+09:00
+mig=GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600
+repetitions=6
+total_mib=896
+granules_mib=2 4 8 16 32 64 128 448 896
+boot_id=f9776703-a137-43bc-822b-124c6147ff68
+GPU 0: NVIDIA Thor (UUID: GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600)
+987f97d2e4b873894a54bdc11ec5c85df7632fb1440ab4a9e3b1d3b4d4bc438f  /home/thor/kcj/llm_share/cuda_vmm_attach_probe

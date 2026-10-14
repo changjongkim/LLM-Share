@@ -1,0 +1,13 @@
+timestamp=2026-10-15T00:43:38+09:00
+mig_a=GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600
+mig_b=GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600
+repetitions=6
+agent_counts=1 2 4 8
+n_prompt=512
+n_gen=128
+model=Qwen2.5-7B-Instruct-Q4_K_M.gguf
+model_bytes=4683074240
+engine_commit=6f767fe960c3b97cf37fac4626c86400561ca1e4
+boot_id=f9776703-a137-43bc-822b-124c6147ff68
+GPU 0: NVIDIA Thor (UUID: GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600)
+0158e7c8e7fb872a98b8dc6fb26e900e2023b2ab000e66731ca5a8baaa3d68a8  /home/thor/kcj/llm_share/llama.cpp/build/bin/llama-bench

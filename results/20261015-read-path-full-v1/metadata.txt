@@ -1,0 +1,9 @@
+timestamp=2026-10-15T08:32:27+09:00
+mig_a=GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600
+mig_b=GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600
+repetitions=6
+sizes_mib=256 1024
+passes=30
+boot_id=f9776703-a137-43bc-822b-124c6147ff68
+GPU 0: NVIDIA Thor (UUID: GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600)
+950072cdc6ed496c3bb1cb2389bffee4f66e8b2146786cfb3e6161333ef89a94  /home/thor/kcj/llm_share/cuda_reach_probe

@@ -1,0 +1,9 @@
+timestamp=2026-10-15T08:33:37+09:00
+mig_a=GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600
+mig_b=GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600
+repetitions=6
+sizes_mib=1024
+strides_kib=4 64
+boot_id=f9776703-a137-43bc-822b-124c6147ff68
+GPU 0: NVIDIA Thor (UUID: GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600)
+65e65b4fa779f305aef81731ed9fd6514767fc2cbeca90b8905a6108cc4e3647  /home/thor/kcj/llm_share/cuda_tlb_probe
