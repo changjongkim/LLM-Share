@@ -170,6 +170,18 @@ if [[ -n "$dir" ]]; then
     if (\$c[\"read\"] == \"cpu\" && \$c[\"differ_words\"] != 0) print \"!T2 \" \$c[\"mapping\"] \" \" \$c[\"procs\"] }"
 fi
 
+# --- the read check with the file mapped shared and read-only --------------------
+campaign gpu-read-map
+if [[ -n "$dir" ]]; then
+  check_hashes "$dir"
+  awk -f "$script_dir/summarize_gpu_read_trace.awk" "$dir/raw.log" >"$scratch/read-map.csv"
+  same "$scratch/read-map.csv" "$dir/gpu_read_map_summary.csv"
+  rounds=$(sed -n 's/^rounds=//p' "$dir/metadata.txt")
+  gates read-map "$dir/gpu_read_map_summary.csv" "{
+    if (\$c[\"failed\"] + \$c[\"errors\"] != 0 || \$c[\"reader_rounds\"] != \$c[\"runs\"] * \$c[\"procs\"] * $rounds) print \"!T1 \" \$c[\"mapping\"] \" \" \$c[\"read\"] \" \" \$c[\"procs\"]
+    if (\$c[\"read\"] == \"cpu\" && \$c[\"differ_words\"] != 0) print \"!T2 \" \$c[\"mapping\"] \" \" \$c[\"procs\"] }"
+fi
+
 # --- weights read in place under the reclaim of the kernel -----------------------
 campaign engine-reclaim
 if [[ -n "$dir" ]]; then

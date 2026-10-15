@@ -1,0 +1,5 @@
+mapping,read,procs,runs,failed,errors,reader_rounds,words_checked,differ_rounds,differ_words,cpu_wrong_rounds,again_wrong_rounds,examples,examples_from_first_page,examples_cpu_ok,pmd_kib,gpu_ms,gpu_fault_pages,fault_thread_ms
+shared,gpu,32,16,0,0,2048,240518168576,6,13152,0,0,24,24,24,0,2151.3,19541969,8230
+huge,gpu,32,16,0,0,2048,240518168576,5,4992,0,0,20,20,20,0,2184.1,19466388,8259
+shared,gpu,8,16,0,0,512,60129542144,0,0,0,0,0,0,0,0,711.1,5041239,2189
+shared,cpu,32,16,0,0,2048,240518168576,0,0,0,0,0,0,0,0,36.7,0,0

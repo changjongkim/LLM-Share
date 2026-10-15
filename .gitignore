@@ -67,3 +67,4 @@ __pycache__/
 /ksm_merge_shim.so
 /gpu_read_check
 /gpu_read_trace
+/gpu_read_map

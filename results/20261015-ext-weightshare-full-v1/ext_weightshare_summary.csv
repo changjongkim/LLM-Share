@@ -1,0 +1,4 @@
+placement,stack,runs,agents_started,agents_finished,own_instance_finished,own_instance_started,other_instance_finished,other_instance_started,library_workers,library_masters,library_fallbacks,weights_load_ms,first_token_ms,agents_tps_sum,memory_mib,memory_ci95,timed_out,texts_equal_to_stock,texts_compared
+same,stock,6,48,48,48,48,0,0,0,0,0,2749,3650,35.17,55448,188,0,48,48
+same,ipc,6,48,48,48,48,0,0,48,0,0,2030,2925,31.51,21775,23,0,48,48
+same,inplace,6,48,48,48,48,0,0,0,0,0,1097,2078,32.43,14869,18,0,48,48

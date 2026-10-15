@@ -1,0 +1,18 @@
+timestamp=2026-10-15T09:31:08+09:00
+mig_a=GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600
+mig_b=GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600
+repetitions=6
+agents=8
+placements=same
+context=16384
+n_gen=64
+model=Qwen2.5-7B-Instruct-Q4_K_M.gguf
+shared_allocation_bytes=4370558976
+library_commit=15bcecaebdbcec479f13df1c4396d5318b5bb85d
+engine_commit=6f767fe960c3b97cf37fac4626c86400561ca1e4
+stock_engine_commit=6f767fe960c3b97cf37fac4626c86400561ca1e4
+boot_id=f9776703-a137-43bc-822b-124c6147ff68
+GPU 0: NVIDIA Thor (UUID: GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600)
+1afce555d822cd46bd258114c9c6c155022fea477e4e09c493638f8db46eeead  /home/thor/kcj/llm_share/kv_fork
+2184b6f2610f3d2d49eb560218b56aaaba51d0f5e275501d644bd90c6f0da3d4  /home/thor/kcj/llm_share/kv_fork_stock
+c2c7fbd5e841a37885d7ec0659912f15c4255f47600b8b162790ab1941499bfd  /home/thor/kcj/llm_share/ext/cuda-llm-weight-share/cuda-llm-weight-share.so

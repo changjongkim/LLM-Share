@@ -1,0 +1,18 @@
+BEGIN_KVPIPE run=1 context=16384
+CASE mode=stock groups=2 workers=4 turns=3
+PLANNER exit=0 text=12d5f24f39ace8b4 tokens=11788 publish_ms=440.07 state_bytes=676160389 generation_tps=9.423
+LEADER group=0 mig=a7c66ad2 exit=0 text=32cd494041044186 tokens=11887 context_ms=40.0 load_ms=204.85 publish_ms=433.57 state_bytes=681839029 generation_tps=12.476
+LEADER group=1 mig=a7c66ad2 exit=0 text=61a5e1bd5bdd0d3d tokens=11887 context_ms=37.2 load_ms=120.20 publish_ms=475.30 state_bytes=681839029 generation_tps=12.426
+WORKER index=0 group=0 mig=a7c66ad2 exit=0 text=47f120fe929e28c4 tokens=12166 context_ms=161.2 load_ms=125.88 decode_ms=969.0 first_token_ms=7658.9 generated=192 generation_tps=4.301 total_ms=53001.9
+WORKER index=1 group=0 mig=a7c66ad2 exit=0 text=0d6c745a46fff43a tokens=12161 context_ms=102.2 load_ms=229.26 decode_ms=967.6 first_token_ms=7804.2 generated=192 generation_tps=4.286 total_ms=53314.1
+WORKER index=2 group=0 mig=a7c66ad2 exit=0 text=988d50699eca92fd tokens=12167 context_ms=144.3 load_ms=177.51 decode_ms=1127.6 first_token_ms=7980.4 generated=192 generation_tps=4.286 total_ms=53531.8
+WORKER index=3 group=0 mig=a7c66ad2 exit=0 text=4eb6a3168016c27a tokens=12167 context_ms=163.9 load_ms=194.42 decode_ms=1178.1 first_token_ms=8072.8 generated=192 generation_tps=4.293 total_ms=53554.9
+WORKER index=4 group=1 mig=a7c66ad2 exit=0 text=cce11c1a9da05272 tokens=12161 context_ms=167.4 load_ms=340.71 decode_ms=1353.4 first_token_ms=8233.3 generated=192 generation_tps=4.308 total_ms=53640.1
+WORKER index=5 group=1 mig=a7c66ad2 exit=0 text=a9930089fcd7e72a tokens=12172 context_ms=115.8 load_ms=147.18 decode_ms=1011.3 first_token_ms=7783.9 generated=192 generation_tps=4.285 total_ms=53296.9
+WORKER index=6 group=1 mig=a7c66ad2 exit=0 text=cb691d36d75c8d1f tokens=12167 context_ms=166.1 load_ms=260.17 decode_ms=1346.8 first_token_ms=8202.0 generated=192 generation_tps=4.308 total_ms=53604.7
+WORKER index=7 group=1 mig=a7c66ad2 exit=0 text=4dc0460a9053c029 tokens=12175 context_ms=167.4 load_ms=336.09 decode_ms=1337.7 first_token_ms=8241.0 generated=192 generation_tps=4.305 total_ms=53622.8
+MEMORY pipeline_drop_mib=57243 files_mib=0
+ENERGY phase=prefix seconds=10.57 vin_joules=664.2 gpu_joules=376.1
+ENERGY phase=leaders seconds=5.68 vin_joules=371.9 gpu_joules=153.7
+ENERGY phase=workers seconds=54.68 vin_joules=4450.9 gpu_joules=1904.8
+END_CASE failed=0 timed_out=0 wall_ms=70935 power_samples=356

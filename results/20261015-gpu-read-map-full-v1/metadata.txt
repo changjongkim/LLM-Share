@@ -1,0 +1,11 @@
+timestamp=2026-10-15T09:41:28+09:00
+mig=GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600
+repetitions=16
+size_mib=1024
+head_mib=896
+rounds=4
+cases=shared:gpu:32 huge:gpu:32 shared:gpu:8 shared:cpu:32
+boot_id=f9776703-a137-43bc-822b-124c6147ff68
+GPU 0: NVIDIA Thor (UUID: GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600)
+529a8397996fa5cd66bd6773ef78850e70229a11ac726da6fdf7d725946aa9b5  /home/thor/kcj/llm_share/gpu_read_map
+525bb2e075b5ba6afe3ed5de7b737969c77e1694899ad30670972013858e1d98  /home/thor/kcj/llm_share/linux_share_probe
