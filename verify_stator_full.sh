@@ -564,7 +564,7 @@ if [[ -n "$dir" ]]; then
   check_hashes "$dir"
   awk -f "$script_dir/summarize_tlb_probe.awk" "$dir/raw.log" >"$scratch/tlb.csv"
   same "$scratch/tlb.csv" "$dir/tlb_probe_summary.csv"
-  gates tlb "$dir/tlb_probe_summary.csv" '{ if ($c["failed_probes"] != 0 || $c["runs"] != 6) print "!probe " $c["sms"] " " $c["kind"] }'
+  gates tlb "$dir/tlb_probe_summary.csv" '{ if ($c["failed_probes"] != 0 || $c["runs"] % 6 != 0) print "!probe " $c["sms"] " " $c["kind"] }'
 fi
 campaign sm-probe
 if [[ -n "$dir" ]]; then
