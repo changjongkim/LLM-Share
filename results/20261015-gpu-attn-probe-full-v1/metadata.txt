@@ -1,0 +1,11 @@
+timestamp=2026-10-15T10:57:10+09:00
+mig=GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600
+repetitions=3
+rounds=6
+size_mib=1024
+kinds=device host_4k host_thp tlb_2m tlb_1g file_ro
+rows=1024 2048
+hugepages_2m=544 hugepages_1g=0 (reserved for the campaign)
+boot_id=f9776703-a137-43bc-822b-124c6147ff68
+GPU 0: NVIDIA Thor (UUID: GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600)
+e0a1853be8734d02e2868c1612589b4da17a5e21ea38af6f83d39888b2db718b  /home/thor/kcj/llm_share/gpu_attn_probe

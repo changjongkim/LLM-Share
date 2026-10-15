@@ -202,6 +202,54 @@ if [[ -n "$dir" ]]; then
     }' "$dir/engine_reclaim_summary.csv" || fail "a gate of engine-reclaim does not hold"
 fi
 
+# --- the page cache locked with mlock under reclaim (K3) -------------------------
+campaign engine-reclaim-mlock
+if [[ -n "$dir" ]]; then
+  check_hashes "$dir"
+  awk -v order="$(sed -n 's/^modes=//p' "$dir/metadata.txt")" \
+    -f "$script_dir/summarize_engine_reclaim.awk" "$dir/raw.log" >"$scratch/reclaim-mlock.csv"
+  same "$scratch/reclaim-mlock.csv" "$dir/engine_reclaim_summary.csv"
+  gates reclaim-mlock "$dir/engine_reclaim_summary.csv" '
+    { if ($c["failed"] + $c["timed_out"] != 0 || $c["agents_with_speed"] != $c["agents"]) print "!R1 " $c["mode"] " " $c["pressure"]
+      if ($c["pressure"] == "reclaim") flt[$c["mode"]] = $c["gpu_fault_pages"] }
+    END { if (!(flt["mlock"] < flt["pagecache"])) print "M1 mlock=" flt["mlock"] " pagecache=" flt["pagecache"] }'
+fi
+
+# --- calls of the kernel against the CPU pass of STATOR (K2) ----------------------
+campaign gpu-populate-probe
+if [[ -n "$dir" ]]; then
+  check_hashes "$dir"
+  awk -f "$script_dir/summarize_gpu_populate_probe.awk" "$dir/raw.log" >"$scratch/populate.csv"
+  same "$scratch/populate.csv" "$dir/gpu_populate_probe_summary.csv"
+  gates populate "$dir/gpu_populate_probe_summary.csv" '
+    { if ($c["failed"] != 0 || $c["checked"] != $c["runs"]) print "!Q1 " $c["mode"] " " $c["fs"] " " $c["step"]
+      f[$c["mode"], $c["fs"], $c["step"]] = $c["gpu_fault_pages"] }
+    END { for (k in f) { split(k, p, SUBSEP); if (p[3] == "touch" && f[k] > 0.01 * f[p[1], p[2], "none"]) print "Q2 " p[1] " " p[2] " touch=" f[k] " none=" f[p[1], p[2], "none"] } }'
+fi
+
+# --- the read pattern of attention by memory kind (D1) -----------------------------
+campaign gpu-attn-probe
+if [[ -n "$dir" ]]; then
+  check_hashes "$dir"
+  awk -f "$script_dir/summarize_gpu_attn_probe.awk" "$dir/raw.log" >"$scratch/attn.csv"
+  same "$scratch/attn.csv" "$dir/gpu_attn_probe_summary.csv"
+  gates attn "$dir/gpu_attn_probe_summary.csv" '
+    { if ($c["failed"] != 0) print "unavailable " $c["kind"] " row=" $c["row_bytes"] }'
+fi
+
+# --- kernel paths of each mechanism, counted with tracepoints (K9) -----------------
+campaign kernel-costs
+if [[ -n "$dir" ]]; then
+  check_hashes "$dir"
+  awk -f "$script_dir/summarize_kernel_costs.awk" "$dir/raw.log" >"$scratch/kcosts.csv"
+  same "$scratch/kcosts.csv" "$dir/kernel_costs_summary.csv"
+  gates kernel-costs "$dir/kernel_costs_summary.csv" '
+    { if ($c["status"] != 0) print "!C1 " $c["scenario"]
+      g[$c["scenario"]] = $c["gpu_fault_pages"]; a[$c["scenario"]] = $c["kmem:mm_page_alloc"] }
+    END { if (!(g["kv:extent"] < g["kv:ro_plain"] && g["kv:extent"] < g["kv:cow_plain"] && a["kv:cow_plain"] > a["kv:extent"]))
+            print "C2 extent=" g["kv:extent"] " ro=" g["kv:ro_plain"] " cow=" g["kv:cow_plain"] }'
+fi
+
 # --- fork and registration on memory that the GPU reads ---------------------------
 campaign linux-probes
 if [[ -n "$dir" ]]; then
@@ -309,6 +357,10 @@ verify_mech() {  # runner-name label set
 verify_mech engine-kvmech kvmech baselines
 verify_mech engine-kvablate kvablate ablation
 verify_mech engine-kvlocal kvlocal locality
+verify_mech engine-kvlocal-llama8b kvlocal-llama8b locality
+verify_mech engine-kvlocal-llama8b-gqa kvlocal-llama8b-gqa locality
+verify_mech engine-kvlocal-llama8b-upstream kvlocal-llama8b-upstream locality
+verify_mech engine-kvlocal-gqa kvlocal-gqa locality
 
 # --- the memory of the whole stack and how many agents fit (gates K1-K5 of
 # run_engine_kvstack.sh) ---------------------------------------------------------
@@ -464,6 +516,7 @@ verify_scale engine-kvscale-p20 kvscale-p20
 verify_scale engine-kvscale-p600 kvscale-p600
 verify_scale engine-kvscale-agent kvscale-agent
 verify_scale engine-kvscale-llama8b kvscale-llama8b
+verify_scale engine-kvscale-llama8b-gqa kvscale-llama8b-gqa
 verify_scale engine-kvscale-qwen14b kvscale-qwen14b
 verify_scale engine-kvscale-gen2k kvscale-gen2k
 

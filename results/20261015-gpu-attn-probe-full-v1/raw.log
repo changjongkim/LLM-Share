@@ -1,0 +1,228 @@
+CASE run=1 kind=device row_bytes=1024
+ATTN kind=device size_mib=1024 row_bytes=1024 round=1 heads_gbs=135.73 rows_gbs=237.17 random_gbs=154.29
+ATTN kind=device size_mib=1024 row_bytes=1024 round=2 heads_gbs=243.29 rows_gbs=224.44 random_gbs=154.54
+ATTN kind=device size_mib=1024 row_bytes=1024 round=3 heads_gbs=243.23 rows_gbs=243.13 random_gbs=154.45
+ATTN kind=device size_mib=1024 row_bytes=1024 round=4 heads_gbs=244.01 rows_gbs=234.71 random_gbs=154.36
+ATTN kind=device size_mib=1024 row_bytes=1024 round=5 heads_gbs=243.64 rows_gbs=233.31 random_gbs=154.34
+ATTN kind=device size_mib=1024 row_bytes=1024 round=6 heads_gbs=244.46 rows_gbs=239.23 random_gbs=154.09
+CASE run=1 kind=host_4k row_bytes=1024
+ATTN kind=host_4k size_mib=1024 row_bytes=1024 round=1 heads_gbs=168.39 rows_gbs=194.69 random_gbs=11.10
+ATTN kind=host_4k size_mib=1024 row_bytes=1024 round=2 heads_gbs=172.41 rows_gbs=196.96 random_gbs=11.11
+ATTN kind=host_4k size_mib=1024 row_bytes=1024 round=3 heads_gbs=173.10 rows_gbs=193.71 random_gbs=10.57
+ATTN kind=host_4k size_mib=1024 row_bytes=1024 round=4 heads_gbs=162.95 rows_gbs=169.04 random_gbs=10.61
+ATTN kind=host_4k size_mib=1024 row_bytes=1024 round=5 heads_gbs=159.97 rows_gbs=165.86 random_gbs=10.61
+ATTN kind=host_4k size_mib=1024 row_bytes=1024 round=6 heads_gbs=158.07 rows_gbs=178.36 random_gbs=10.61
+CASE run=1 kind=host_thp row_bytes=1024
+ATTN kind=host_thp size_mib=1024 row_bytes=1024 round=1 heads_gbs=228.17 rows_gbs=256.01 random_gbs=144.73
+ATTN kind=host_thp size_mib=1024 row_bytes=1024 round=2 heads_gbs=228.77 rows_gbs=238.71 random_gbs=154.25
+ATTN kind=host_thp size_mib=1024 row_bytes=1024 round=3 heads_gbs=241.62 rows_gbs=227.15 random_gbs=154.41
+ATTN kind=host_thp size_mib=1024 row_bytes=1024 round=4 heads_gbs=243.16 rows_gbs=235.50 random_gbs=154.10
+ATTN kind=host_thp size_mib=1024 row_bytes=1024 round=5 heads_gbs=242.32 rows_gbs=229.21 random_gbs=154.02
+ATTN kind=host_thp size_mib=1024 row_bytes=1024 round=6 heads_gbs=243.20 rows_gbs=245.11 random_gbs=153.73
+CASE run=1 kind=tlb_2m row_bytes=1024
+ATTN kind=tlb_2m size_mib=1024 row_bytes=1024 round=1 heads_gbs=235.47 rows_gbs=256.02 random_gbs=144.22
+ATTN kind=tlb_2m size_mib=1024 row_bytes=1024 round=2 heads_gbs=233.79 rows_gbs=255.93 random_gbs=144.73
+ATTN kind=tlb_2m size_mib=1024 row_bytes=1024 round=3 heads_gbs=232.75 rows_gbs=256.76 random_gbs=154.18
+ATTN kind=tlb_2m size_mib=1024 row_bytes=1024 round=4 heads_gbs=236.09 rows_gbs=237.72 random_gbs=154.44
+ATTN kind=tlb_2m size_mib=1024 row_bytes=1024 round=5 heads_gbs=235.62 rows_gbs=241.44 random_gbs=154.27
+ATTN kind=tlb_2m size_mib=1024 row_bytes=1024 round=6 heads_gbs=236.21 rows_gbs=240.54 random_gbs=154.35
+CASE run=1 kind=tlb_1g row_bytes=1024
+ERROR kind=tlb_1g: cannot map the buffer
+FAILED kind=tlb_1g row_bytes=1024
+CASE run=1 kind=file_ro row_bytes=1024
+ATTN kind=file_ro size_mib=1024 row_bytes=1024 round=1 heads_gbs=227.01 rows_gbs=215.84 random_gbs=134.13
+ATTN kind=file_ro size_mib=1024 row_bytes=1024 round=2 heads_gbs=212.95 rows_gbs=227.77 random_gbs=153.03
+ATTN kind=file_ro size_mib=1024 row_bytes=1024 round=3 heads_gbs=211.94 rows_gbs=253.13 random_gbs=153.60
+ATTN kind=file_ro size_mib=1024 row_bytes=1024 round=4 heads_gbs=230.75 rows_gbs=253.07 random_gbs=153.47
+ATTN kind=file_ro size_mib=1024 row_bytes=1024 round=5 heads_gbs=229.15 rows_gbs=253.82 random_gbs=153.60
+ATTN kind=file_ro size_mib=1024 row_bytes=1024 round=6 heads_gbs=244.11 rows_gbs=230.08 random_gbs=153.70
+CASE run=1 kind=device row_bytes=2048
+ATTN kind=device size_mib=1024 row_bytes=2048 round=1 heads_gbs=234.92 rows_gbs=256.98 random_gbs=148.30
+ATTN kind=device size_mib=1024 row_bytes=2048 round=2 heads_gbs=235.69 rows_gbs=256.95 random_gbs=152.39
+ATTN kind=device size_mib=1024 row_bytes=2048 round=3 heads_gbs=237.50 rows_gbs=257.38 random_gbs=153.55
+ATTN kind=device size_mib=1024 row_bytes=2048 round=4 heads_gbs=238.84 rows_gbs=257.12 random_gbs=154.24
+ATTN kind=device size_mib=1024 row_bytes=2048 round=5 heads_gbs=235.07 rows_gbs=257.31 random_gbs=154.38
+ATTN kind=device size_mib=1024 row_bytes=2048 round=6 heads_gbs=233.45 rows_gbs=250.55 random_gbs=154.34
+CASE run=1 kind=host_4k row_bytes=2048
+ATTN kind=host_4k size_mib=1024 row_bytes=2048 round=1 heads_gbs=155.04 rows_gbs=173.41 random_gbs=9.82
+ATTN kind=host_4k size_mib=1024 row_bytes=2048 round=2 heads_gbs=160.50 rows_gbs=177.18 random_gbs=9.77
+ATTN kind=host_4k size_mib=1024 row_bytes=2048 round=3 heads_gbs=154.83 rows_gbs=178.31 random_gbs=9.80
+ATTN kind=host_4k size_mib=1024 row_bytes=2048 round=4 heads_gbs=160.01 rows_gbs=169.78 random_gbs=9.78
+ATTN kind=host_4k size_mib=1024 row_bytes=2048 round=5 heads_gbs=161.32 rows_gbs=176.40 random_gbs=9.84
+ATTN kind=host_4k size_mib=1024 row_bytes=2048 round=6 heads_gbs=153.68 rows_gbs=177.49 random_gbs=9.84
+CASE run=1 kind=host_thp row_bytes=2048
+ATTN kind=host_thp size_mib=1024 row_bytes=2048 round=1 heads_gbs=235.46 rows_gbs=255.51 random_gbs=143.80
+ATTN kind=host_thp size_mib=1024 row_bytes=2048 round=2 heads_gbs=235.01 rows_gbs=256.14 random_gbs=154.36
+ATTN kind=host_thp size_mib=1024 row_bytes=2048 round=3 heads_gbs=236.26 rows_gbs=236.12 random_gbs=154.41
+ATTN kind=host_thp size_mib=1024 row_bytes=2048 round=4 heads_gbs=235.11 rows_gbs=241.05 random_gbs=154.27
+ATTN kind=host_thp size_mib=1024 row_bytes=2048 round=5 heads_gbs=234.50 rows_gbs=241.48 random_gbs=154.33
+ATTN kind=host_thp size_mib=1024 row_bytes=2048 round=6 heads_gbs=236.60 rows_gbs=239.61 random_gbs=154.34
+CASE run=1 kind=tlb_2m row_bytes=2048
+ATTN kind=tlb_2m size_mib=1024 row_bytes=2048 round=1 heads_gbs=235.48 rows_gbs=246.77 random_gbs=144.94
+ATTN kind=tlb_2m size_mib=1024 row_bytes=2048 round=2 heads_gbs=241.87 rows_gbs=241.62 random_gbs=148.61
+ATTN kind=tlb_2m size_mib=1024 row_bytes=2048 round=3 heads_gbs=244.55 rows_gbs=240.23 random_gbs=152.85
+ATTN kind=tlb_2m size_mib=1024 row_bytes=2048 round=4 heads_gbs=243.56 rows_gbs=243.17 random_gbs=152.94
+ATTN kind=tlb_2m size_mib=1024 row_bytes=2048 round=5 heads_gbs=244.46 rows_gbs=240.67 random_gbs=153.03
+ATTN kind=tlb_2m size_mib=1024 row_bytes=2048 round=6 heads_gbs=244.34 rows_gbs=244.53 random_gbs=153.14
+CASE run=1 kind=tlb_1g row_bytes=2048
+ERROR kind=tlb_1g: cannot map the buffer
+FAILED kind=tlb_1g row_bytes=2048
+CASE run=1 kind=file_ro row_bytes=2048
+ATTN kind=file_ro size_mib=1024 row_bytes=2048 round=1 heads_gbs=227.93 rows_gbs=232.57 random_gbs=135.87
+ATTN kind=file_ro size_mib=1024 row_bytes=2048 round=2 heads_gbs=239.42 rows_gbs=252.00 random_gbs=145.80
+ATTN kind=file_ro size_mib=1024 row_bytes=2048 round=3 heads_gbs=244.45 rows_gbs=256.01 random_gbs=151.99
+ATTN kind=file_ro size_mib=1024 row_bytes=2048 round=4 heads_gbs=244.08 rows_gbs=235.85 random_gbs=152.72
+ATTN kind=file_ro size_mib=1024 row_bytes=2048 round=5 heads_gbs=228.66 rows_gbs=256.05 random_gbs=153.12
+ATTN kind=file_ro size_mib=1024 row_bytes=2048 round=6 heads_gbs=228.22 rows_gbs=256.37 random_gbs=153.08
+CASE run=2 kind=device row_bytes=1024
+ATTN kind=device size_mib=1024 row_bytes=1024 round=1 heads_gbs=225.47 rows_gbs=257.34 random_gbs=145.66
+ATTN kind=device size_mib=1024 row_bytes=1024 round=2 heads_gbs=226.55 rows_gbs=257.33 random_gbs=153.79
+ATTN kind=device size_mib=1024 row_bytes=1024 round=3 heads_gbs=236.70 rows_gbs=257.12 random_gbs=153.83
+ATTN kind=device size_mib=1024 row_bytes=1024 round=4 heads_gbs=239.36 rows_gbs=256.99 random_gbs=154.24
+ATTN kind=device size_mib=1024 row_bytes=1024 round=5 heads_gbs=233.65 rows_gbs=256.87 random_gbs=154.06
+ATTN kind=device size_mib=1024 row_bytes=1024 round=6 heads_gbs=229.62 rows_gbs=252.92 random_gbs=154.31
+CASE run=2 kind=host_4k row_bytes=1024
+ATTN kind=host_4k size_mib=1024 row_bytes=1024 round=1 heads_gbs=153.73 rows_gbs=164.74 random_gbs=9.60
+ATTN kind=host_4k size_mib=1024 row_bytes=1024 round=2 heads_gbs=163.85 rows_gbs=176.60 random_gbs=9.61
+ATTN kind=host_4k size_mib=1024 row_bytes=1024 round=3 heads_gbs=158.14 rows_gbs=178.52 random_gbs=9.62
+ATTN kind=host_4k size_mib=1024 row_bytes=1024 round=4 heads_gbs=157.32 rows_gbs=178.00 random_gbs=9.62
+ATTN kind=host_4k size_mib=1024 row_bytes=1024 round=5 heads_gbs=162.68 rows_gbs=172.72 random_gbs=9.62
+ATTN kind=host_4k size_mib=1024 row_bytes=1024 round=6 heads_gbs=164.20 rows_gbs=167.73 random_gbs=9.62
+CASE run=2 kind=host_thp row_bytes=1024
+ATTN kind=host_thp size_mib=1024 row_bytes=1024 round=1 heads_gbs=227.75 rows_gbs=240.20 random_gbs=143.43
+ATTN kind=host_thp size_mib=1024 row_bytes=1024 round=2 heads_gbs=242.03 rows_gbs=227.74 random_gbs=150.57
+ATTN kind=host_thp size_mib=1024 row_bytes=1024 round=3 heads_gbs=244.91 rows_gbs=235.50 random_gbs=153.32
+ATTN kind=host_thp size_mib=1024 row_bytes=1024 round=4 heads_gbs=244.33 rows_gbs=236.53 random_gbs=153.34
+ATTN kind=host_thp size_mib=1024 row_bytes=1024 round=5 heads_gbs=244.86 rows_gbs=236.76 random_gbs=153.23
+ATTN kind=host_thp size_mib=1024 row_bytes=1024 round=6 heads_gbs=244.18 rows_gbs=233.21 random_gbs=152.92
+CASE run=2 kind=tlb_2m row_bytes=1024
+ATTN kind=tlb_2m size_mib=1024 row_bytes=1024 round=1 heads_gbs=242.95 rows_gbs=253.68 random_gbs=145.00
+ATTN kind=tlb_2m size_mib=1024 row_bytes=1024 round=2 heads_gbs=242.79 rows_gbs=256.13 random_gbs=144.43
+ATTN kind=tlb_2m size_mib=1024 row_bytes=1024 round=3 heads_gbs=243.79 rows_gbs=256.00 random_gbs=153.03
+ATTN kind=tlb_2m size_mib=1024 row_bytes=1024 round=4 heads_gbs=223.13 rows_gbs=256.49 random_gbs=153.03
+ATTN kind=tlb_2m size_mib=1024 row_bytes=1024 round=5 heads_gbs=227.32 rows_gbs=256.42 random_gbs=153.26
+ATTN kind=tlb_2m size_mib=1024 row_bytes=1024 round=6 heads_gbs=227.90 rows_gbs=256.50 random_gbs=152.83
+CASE run=2 kind=tlb_1g row_bytes=1024
+ERROR kind=tlb_1g: cannot map the buffer
+FAILED kind=tlb_1g row_bytes=1024
+CASE run=2 kind=file_ro row_bytes=1024
+ATTN kind=file_ro size_mib=1024 row_bytes=1024 round=1 heads_gbs=240.65 rows_gbs=255.23 random_gbs=138.92
+ATTN kind=file_ro size_mib=1024 row_bytes=1024 round=2 heads_gbs=244.18 rows_gbs=256.39 random_gbs=151.86
+ATTN kind=file_ro size_mib=1024 row_bytes=1024 round=3 heads_gbs=245.10 rows_gbs=256.44 random_gbs=151.70
+ATTN kind=file_ro size_mib=1024 row_bytes=1024 round=4 heads_gbs=244.98 rows_gbs=255.75 random_gbs=152.02
+ATTN kind=file_ro size_mib=1024 row_bytes=1024 round=5 heads_gbs=244.12 rows_gbs=256.20 random_gbs=151.87
+ATTN kind=file_ro size_mib=1024 row_bytes=1024 round=6 heads_gbs=244.83 rows_gbs=256.11 random_gbs=151.81
+CASE run=2 kind=device row_bytes=2048
+ATTN kind=device size_mib=1024 row_bytes=2048 round=1 heads_gbs=227.76 rows_gbs=233.26 random_gbs=147.29
+ATTN kind=device size_mib=1024 row_bytes=2048 round=2 heads_gbs=243.99 rows_gbs=216.07 random_gbs=152.74
+ATTN kind=device size_mib=1024 row_bytes=2048 round=3 heads_gbs=243.26 rows_gbs=232.92 random_gbs=154.05
+ATTN kind=device size_mib=1024 row_bytes=2048 round=4 heads_gbs=244.33 rows_gbs=234.03 random_gbs=154.28
+ATTN kind=device size_mib=1024 row_bytes=2048 round=5 heads_gbs=242.97 rows_gbs=235.22 random_gbs=154.23
+ATTN kind=device size_mib=1024 row_bytes=2048 round=6 heads_gbs=243.54 rows_gbs=232.52 random_gbs=154.01
+CASE run=2 kind=host_4k row_bytes=2048
+ATTN kind=host_4k size_mib=1024 row_bytes=2048 round=1 heads_gbs=153.92 rows_gbs=173.25 random_gbs=9.67
+ATTN kind=host_4k size_mib=1024 row_bytes=2048 round=2 heads_gbs=158.69 rows_gbs=170.32 random_gbs=9.73
+ATTN kind=host_4k size_mib=1024 row_bytes=2048 round=3 heads_gbs=160.35 rows_gbs=172.33 random_gbs=9.66
+ATTN kind=host_4k size_mib=1024 row_bytes=2048 round=4 heads_gbs=153.09 rows_gbs=178.73 random_gbs=9.71
+ATTN kind=host_4k size_mib=1024 row_bytes=2048 round=5 heads_gbs=153.77 rows_gbs=173.48 random_gbs=9.72
+ATTN kind=host_4k size_mib=1024 row_bytes=2048 round=6 heads_gbs=159.13 rows_gbs=165.04 random_gbs=9.71
+CASE run=2 kind=host_thp row_bytes=2048
+ATTN kind=host_thp size_mib=1024 row_bytes=2048 round=1 heads_gbs=239.27 rows_gbs=246.31 random_gbs=142.34
+ATTN kind=host_thp size_mib=1024 row_bytes=2048 round=2 heads_gbs=241.51 rows_gbs=245.69 random_gbs=150.37
+ATTN kind=host_thp size_mib=1024 row_bytes=2048 round=3 heads_gbs=243.89 rows_gbs=256.12 random_gbs=151.79
+ATTN kind=host_thp size_mib=1024 row_bytes=2048 round=4 heads_gbs=244.44 rows_gbs=256.40 random_gbs=153.14
+ATTN kind=host_thp size_mib=1024 row_bytes=2048 round=5 heads_gbs=233.70 rows_gbs=256.18 random_gbs=153.14
+ATTN kind=host_thp size_mib=1024 row_bytes=2048 round=6 heads_gbs=229.96 rows_gbs=256.31 random_gbs=153.19
+CASE run=2 kind=tlb_2m row_bytes=2048
+ATTN kind=tlb_2m size_mib=1024 row_bytes=2048 round=1 heads_gbs=222.68 rows_gbs=255.38 random_gbs=144.96
+ATTN kind=tlb_2m size_mib=1024 row_bytes=2048 round=2 heads_gbs=226.20 rows_gbs=248.30 random_gbs=153.06
+ATTN kind=tlb_2m size_mib=1024 row_bytes=2048 round=3 heads_gbs=231.96 rows_gbs=251.06 random_gbs=153.94
+ATTN kind=tlb_2m size_mib=1024 row_bytes=2048 round=4 heads_gbs=229.40 rows_gbs=252.61 random_gbs=153.62
+ATTN kind=tlb_2m size_mib=1024 row_bytes=2048 round=5 heads_gbs=230.68 rows_gbs=251.88 random_gbs=153.63
+ATTN kind=tlb_2m size_mib=1024 row_bytes=2048 round=6 heads_gbs=228.23 rows_gbs=252.61 random_gbs=153.66
+CASE run=2 kind=tlb_1g row_bytes=2048
+ERROR kind=tlb_1g: cannot map the buffer
+FAILED kind=tlb_1g row_bytes=2048
+CASE run=2 kind=file_ro row_bytes=2048
+ATTN kind=file_ro size_mib=1024 row_bytes=2048 round=1 heads_gbs=240.70 rows_gbs=255.50 random_gbs=137.33
+ATTN kind=file_ro size_mib=1024 row_bytes=2048 round=2 heads_gbs=244.57 rows_gbs=256.46 random_gbs=151.55
+ATTN kind=file_ro size_mib=1024 row_bytes=2048 round=3 heads_gbs=243.51 rows_gbs=256.20 random_gbs=151.90
+ATTN kind=file_ro size_mib=1024 row_bytes=2048 round=4 heads_gbs=244.68 rows_gbs=256.21 random_gbs=151.97
+ATTN kind=file_ro size_mib=1024 row_bytes=2048 round=5 heads_gbs=243.87 rows_gbs=256.50 random_gbs=152.13
+ATTN kind=file_ro size_mib=1024 row_bytes=2048 round=6 heads_gbs=244.46 rows_gbs=256.57 random_gbs=152.24
+CASE run=3 kind=device row_bytes=1024
+ATTN kind=device size_mib=1024 row_bytes=1024 round=1 heads_gbs=229.54 rows_gbs=257.17 random_gbs=149.34
+ATTN kind=device size_mib=1024 row_bytes=1024 round=2 heads_gbs=227.22 rows_gbs=257.46 random_gbs=153.59
+ATTN kind=device size_mib=1024 row_bytes=1024 round=3 heads_gbs=226.67 rows_gbs=257.50 random_gbs=153.46
+ATTN kind=device size_mib=1024 row_bytes=1024 round=4 heads_gbs=226.19 rows_gbs=256.51 random_gbs=153.53
+ATTN kind=device size_mib=1024 row_bytes=1024 round=5 heads_gbs=227.33 rows_gbs=257.45 random_gbs=153.77
+ATTN kind=device size_mib=1024 row_bytes=1024 round=6 heads_gbs=226.46 rows_gbs=256.94 random_gbs=153.65
+CASE run=3 kind=host_4k row_bytes=1024
+ATTN kind=host_4k size_mib=1024 row_bytes=1024 round=1 heads_gbs=154.90 rows_gbs=164.20 random_gbs=9.71
+ATTN kind=host_4k size_mib=1024 row_bytes=1024 round=2 heads_gbs=163.73 rows_gbs=176.72 random_gbs=9.73
+ATTN kind=host_4k size_mib=1024 row_bytes=1024 round=3 heads_gbs=150.40 rows_gbs=178.13 random_gbs=9.73
+ATTN kind=host_4k size_mib=1024 row_bytes=1024 round=4 heads_gbs=161.50 rows_gbs=166.86 random_gbs=9.73
+ATTN kind=host_4k size_mib=1024 row_bytes=1024 round=5 heads_gbs=163.93 rows_gbs=167.13 random_gbs=9.74
+ATTN kind=host_4k size_mib=1024 row_bytes=1024 round=6 heads_gbs=159.00 rows_gbs=176.29 random_gbs=9.72
+CASE run=3 kind=host_thp row_bytes=1024
+ATTN kind=host_thp size_mib=1024 row_bytes=1024 round=1 heads_gbs=236.42 rows_gbs=231.91 random_gbs=145.60
+ATTN kind=host_thp size_mib=1024 row_bytes=1024 round=2 heads_gbs=241.79 rows_gbs=243.39 random_gbs=148.04
+ATTN kind=host_thp size_mib=1024 row_bytes=1024 round=3 heads_gbs=243.65 rows_gbs=242.28 random_gbs=152.85
+ATTN kind=host_thp size_mib=1024 row_bytes=1024 round=4 heads_gbs=243.67 rows_gbs=245.34 random_gbs=153.03
+ATTN kind=host_thp size_mib=1024 row_bytes=1024 round=5 heads_gbs=244.45 rows_gbs=241.32 random_gbs=151.33
+ATTN kind=host_thp size_mib=1024 row_bytes=1024 round=6 heads_gbs=244.95 rows_gbs=242.50 random_gbs=153.03
+CASE run=3 kind=tlb_2m row_bytes=1024
+ATTN kind=tlb_2m size_mib=1024 row_bytes=1024 round=1 heads_gbs=229.31 rows_gbs=256.17 random_gbs=145.58
+ATTN kind=tlb_2m size_mib=1024 row_bytes=1024 round=2 heads_gbs=229.24 rows_gbs=255.90 random_gbs=154.27
+ATTN kind=tlb_2m size_mib=1024 row_bytes=1024 round=3 heads_gbs=223.29 rows_gbs=255.83 random_gbs=154.39
+ATTN kind=tlb_2m size_mib=1024 row_bytes=1024 round=4 heads_gbs=229.49 rows_gbs=241.22 random_gbs=154.23
+ATTN kind=tlb_2m size_mib=1024 row_bytes=1024 round=5 heads_gbs=228.23 rows_gbs=244.96 random_gbs=154.34
+ATTN kind=tlb_2m size_mib=1024 row_bytes=1024 round=6 heads_gbs=228.61 rows_gbs=247.98 random_gbs=154.34
+CASE run=3 kind=tlb_1g row_bytes=1024
+ERROR kind=tlb_1g: cannot map the buffer
+FAILED kind=tlb_1g row_bytes=1024
+CASE run=3 kind=file_ro row_bytes=1024
+ATTN kind=file_ro size_mib=1024 row_bytes=1024 round=1 heads_gbs=232.72 rows_gbs=255.45 random_gbs=135.11
+ATTN kind=file_ro size_mib=1024 row_bytes=1024 round=2 heads_gbs=230.59 rows_gbs=256.20 random_gbs=154.41
+ATTN kind=file_ro size_mib=1024 row_bytes=1024 round=3 heads_gbs=231.23 rows_gbs=235.75 random_gbs=154.25
+ATTN kind=file_ro size_mib=1024 row_bytes=1024 round=4 heads_gbs=229.88 rows_gbs=234.99 random_gbs=154.38
+ATTN kind=file_ro size_mib=1024 row_bytes=1024 round=5 heads_gbs=228.70 rows_gbs=233.06 random_gbs=154.34
+ATTN kind=file_ro size_mib=1024 row_bytes=1024 round=6 heads_gbs=229.61 rows_gbs=236.86 random_gbs=154.29
+CASE run=3 kind=device row_bytes=2048
+ATTN kind=device size_mib=1024 row_bytes=2048 round=1 heads_gbs=243.41 rows_gbs=229.56 random_gbs=150.75
+ATTN kind=device size_mib=1024 row_bytes=2048 round=2 heads_gbs=244.03 rows_gbs=234.18 random_gbs=153.61
+ATTN kind=device size_mib=1024 row_bytes=2048 round=3 heads_gbs=245.34 rows_gbs=230.81 random_gbs=153.70
+ATTN kind=device size_mib=1024 row_bytes=2048 round=4 heads_gbs=243.90 rows_gbs=231.63 random_gbs=153.62
+ATTN kind=device size_mib=1024 row_bytes=2048 round=5 heads_gbs=228.68 rows_gbs=234.69 random_gbs=153.61
+ATTN kind=device size_mib=1024 row_bytes=2048 round=6 heads_gbs=245.74 rows_gbs=231.01 random_gbs=153.61
+CASE run=3 kind=host_4k row_bytes=2048
+ATTN kind=host_4k size_mib=1024 row_bytes=2048 round=1 heads_gbs=154.01 rows_gbs=174.03 random_gbs=9.65
+ATTN kind=host_4k size_mib=1024 row_bytes=2048 round=2 heads_gbs=159.44 rows_gbs=168.24 random_gbs=9.69
+ATTN kind=host_4k size_mib=1024 row_bytes=2048 round=3 heads_gbs=160.97 rows_gbs=169.21 random_gbs=9.68
+ATTN kind=host_4k size_mib=1024 row_bytes=2048 round=4 heads_gbs=152.18 rows_gbs=178.66 random_gbs=9.72
+ATTN kind=host_4k size_mib=1024 row_bytes=2048 round=5 heads_gbs=151.69 rows_gbs=178.18 random_gbs=9.67
+ATTN kind=host_4k size_mib=1024 row_bytes=2048 round=6 heads_gbs=160.11 rows_gbs=169.26 random_gbs=9.71
+CASE run=3 kind=host_thp row_bytes=2048
+ATTN kind=host_thp size_mib=1024 row_bytes=2048 round=1 heads_gbs=240.98 rows_gbs=255.80 random_gbs=143.25
+ATTN kind=host_thp size_mib=1024 row_bytes=2048 round=2 heads_gbs=226.18 rows_gbs=256.33 random_gbs=153.12
+ATTN kind=host_thp size_mib=1024 row_bytes=2048 round=3 heads_gbs=234.68 rows_gbs=255.45 random_gbs=153.30
+ATTN kind=host_thp size_mib=1024 row_bytes=2048 round=4 heads_gbs=235.92 rows_gbs=255.99 random_gbs=153.37
+ATTN kind=host_thp size_mib=1024 row_bytes=2048 round=5 heads_gbs=237.41 rows_gbs=256.75 random_gbs=153.54
+ATTN kind=host_thp size_mib=1024 row_bytes=2048 round=6 heads_gbs=237.50 rows_gbs=256.00 random_gbs=153.79
+CASE run=3 kind=tlb_2m row_bytes=2048
+ATTN kind=tlb_2m size_mib=1024 row_bytes=2048 round=1 heads_gbs=241.61 rows_gbs=255.56 random_gbs=143.52
+ATTN kind=tlb_2m size_mib=1024 row_bytes=2048 round=2 heads_gbs=242.31 rows_gbs=242.95 random_gbs=144.51
+ATTN kind=tlb_2m size_mib=1024 row_bytes=2048 round=3 heads_gbs=243.10 rows_gbs=240.65 random_gbs=153.71
+ATTN kind=tlb_2m size_mib=1024 row_bytes=2048 round=4 heads_gbs=227.67 rows_gbs=251.51 random_gbs=153.63
+ATTN kind=tlb_2m size_mib=1024 row_bytes=2048 round=5 heads_gbs=231.20 rows_gbs=252.95 random_gbs=153.30
+ATTN kind=tlb_2m size_mib=1024 row_bytes=2048 round=6 heads_gbs=230.33 rows_gbs=251.87 random_gbs=153.82
+CASE run=3 kind=tlb_1g row_bytes=2048
+ERROR kind=tlb_1g: cannot map the buffer
+FAILED kind=tlb_1g row_bytes=2048
+CASE run=3 kind=file_ro row_bytes=2048
+ATTN kind=file_ro size_mib=1024 row_bytes=2048 round=1 heads_gbs=239.37 rows_gbs=236.58 random_gbs=135.17
+ATTN kind=file_ro size_mib=1024 row_bytes=2048 round=2 heads_gbs=239.23 rows_gbs=255.57 random_gbs=138.26
+ATTN kind=file_ro size_mib=1024 row_bytes=2048 round=3 heads_gbs=243.89 rows_gbs=253.94 random_gbs=151.95
+ATTN kind=file_ro size_mib=1024 row_bytes=2048 round=4 heads_gbs=244.18 rows_gbs=256.01 random_gbs=151.81
+ATTN kind=file_ro size_mib=1024 row_bytes=2048 round=5 heads_gbs=232.71 rows_gbs=255.87 random_gbs=151.97
+ATTN kind=file_ro size_mib=1024 row_bytes=2048 round=6 heads_gbs=244.65 rows_gbs=256.49 random_gbs=151.92

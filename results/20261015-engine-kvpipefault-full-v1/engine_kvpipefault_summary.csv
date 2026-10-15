@@ -1,0 +1,9 @@
+config,fault,shape,runs,victim_alive_runs,others_started,others_completed,planner_completed,leaders_started,leaders_completed,workers_started,workers_completed,workers_with_reference_text,workers_compared,writes_injected,writes_refused,write_error,timed_out,mps_servers_after,wall_s,wall_ci95,wall_vs_none,wall_vs_none_low,wall_vs_none_high,wall_vs_none_median,workers_phase_s
+timeslice,none,2x4x3,6,0,66,66,6,12,12,48,48,48,48,0,0,none,0,0.0,68.9,0.1,1.0000,1.0000,1.0000,1.0000,54.6
+timeslice,write,2x4x3,6,6,66,66,6,12,12,48,48,48,48,6,6,cudaErrorIllegalAddress,0,0.0,68.8,0.0,0.9994,0.9986,1.0002,0.9995,54.6
+timeslice,kill_worker,2x4x3,6,6,60,60,6,12,12,42,42,42,42,0,0,none,0,0.0,63.6,0.0,0.9238,0.9228,0.9248,0.9240,49.4
+timeslice,kill_leader,2x4x3,6,6,60,60,6,6,6,48,48,48,48,0,0,none,0,0.0,68.0,0.1,0.9878,0.9862,0.9895,0.9877,53.8
+mps,none,2x4x3,6,0,66,66,6,12,12,48,48,48,48,0,0,none,0,1.0,61.2,0.1,1.0000,1.0000,1.0000,1.0000,47.1
+mps,write,2x4x3,6,6,66,0,0,12,0,48,0,0,0,6,6,cudaErrorIllegalAddress,0,1.0,35.4,0.1,0.5780,0.5763,0.5797,0.5783,21.4
+mps,kill_worker,2x4x3,6,6,60,0,0,12,0,42,0,0,0,0,0,none,0,1.0,35.5,0.2,0.5810,0.5792,0.5828,0.5807,21.3
+mps,kill_leader,2x4x3,6,6,60,0,0,6,0,48,0,0,0,0,0,none,0,1.0,35.6,0.1,0.5824,0.5802,0.5845,0.5830,21.4

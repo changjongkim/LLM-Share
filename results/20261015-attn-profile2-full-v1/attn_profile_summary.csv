@@ -1,0 +1,13 @@
+model,kind,device_ms,host_ms,host_vs_device
+Meta-Llama-3.1-8B,attn_vec,4763.2,6183.3,1.2981
+Meta-Llama-3.1-8B,attn_other,4319.2,5305.0,1.2282
+Meta-Llama-3.1-8B,matvec,13150.2,13696.8,1.0416
+Meta-Llama-3.1-8B,matmul,10367.7,10368.4,1.0001
+Meta-Llama-3.1-8B,other,1829.2,2314.9,1.2655
+Meta-Llama-3.1-8B,all,34429.5,37868.3,1.0999
+Qwen2.5-7B,attn_vec,0.0,0.0,0.0000
+Qwen2.5-7B,attn_other,3659.2,3835.6,1.0482
+Qwen2.5-7B,matvec,9236.0,9234.2,0.9998
+Qwen2.5-7B,matmul,9462.1,9395.9,0.9930
+Qwen2.5-7B,other,1255.8,1173.9,0.9348
+Qwen2.5-7B,all,23613.1,23639.6,1.0011

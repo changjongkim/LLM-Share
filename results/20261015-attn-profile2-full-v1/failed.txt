@@ -1,0 +1,4 @@
+FAILED Qwen2.5-7B.device.1
+FAILED Qwen2.5-7B.host.1
+FAILED Qwen2.5-7B.device.2
+FAILED Qwen2.5-7B.host.2

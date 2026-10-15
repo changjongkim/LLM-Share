@@ -68,3 +68,12 @@ __pycache__/
 /gpu_read_check
 /gpu_read_trace
 /gpu_read_map
+/gpu_attn_probe
+/gpu_populate_probe
+/tp_count
+/gpu_seal_probe
+/llama.cpp-tuned3/
+/kv_fork_tuned3
+/kv_spawn_tuned3
+/llama.cpp-kv3/
+/kv_fork3

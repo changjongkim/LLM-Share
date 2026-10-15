@@ -1,0 +1,47 @@
+--- a/ggml/src/ggml-cuda/fattn.cu	2026-10-07 10:58:47.397241677 +0900
++++ b/ggml/src/ggml-cuda/fattn.cu	2026-10-15 11:20:23.290552827 +0900
+@@ -514,6 +514,34 @@
+ }
+ 
+ // Best FlashAttention kernel for a specific GPU:
++// STATOR: whether the KV cache is host memory that the GPU reads through the
++// host page tables (pageable or registered), as with GGML_CUDA_HOST_PTR.
++static bool ggml_cuda_fattn_kv_in_host_memory(const ggml_tensor * K) {
++    cudaPointerAttributes attr;
++    if (cudaPointerGetAttributes(&attr, K->data) != cudaSuccess) {
++        (void) cudaGetLastError();
++        return false;
++    }
++    return attr.type == cudaMemoryTypeUnregistered || attr.type == cudaMemoryTypeHost;
++}
++
++// STATOR: with the cache in host memory, a decoding step reads each row of the
++// cache once per group of query heads in the MMA kernel and once per query head
++// in the vector kernel, and a read of host memory costs more than a read of
++// device memory. GGML_CUDA_FATTN_HOST_GQA=0 restores the choice of upstream,
++// and GGML_CUDA_FATTN_HOST_GQA=2 groups the query heads for a cache anywhere
++// (to give a baseline in device memory the same choice).
++static bool ggml_cuda_fattn_group_host_kv(const ggml_tensor * K, const bool gqa_opt_applies) {
++    static const int mode = [] {
++        const char * value = getenv("GGML_CUDA_FATTN_HOST_GQA");
++        return value == nullptr ? 1 : atoi(value);
++    }();
++    if (mode == 0 || !gqa_opt_applies) {
++        return false;
++    }
++    return mode == 2 || ggml_cuda_fattn_kv_in_host_memory(K);
++}
++
+ enum best_fattn_kernel {
+     BEST_FATTN_KERNEL_NONE    =   0,
+     BEST_FATTN_KERNEL_TILE    = 200,
+@@ -643,7 +671,8 @@
+                     ggml_cuda_flash_attn_ext_mma_f16_may_use_sparse(K->ne[0], V->ne[0], 1, 8) &&
+                     ggml_cuda_flash_attn_ext_mma_f16_shall_use_sparse(cc, dst, 1, 8);
+                 if (!sparse_decode && cc >= GGML_CUDA_CC_ADA_LOVELACE && Q->ne[1] == 1 && Q->ne[3] == 1 &&
+-                        !(gqa_ratio > 4 && (Q->ne[0] >= 256 || K->ne[1] >= 8192))) {
++                        !(gqa_ratio > 4 && (Q->ne[0] >= 256 || K->ne[1] >= 8192)) &&
++                        !ggml_cuda_fattn_group_host_kv(K, gqa_opt_applies)) {
+                     return BEST_FATTN_KERNEL_VEC;
+                 }
+             } else {

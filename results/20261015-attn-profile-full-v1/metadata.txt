@@ -1,0 +1,8 @@
+timestamp=2026-10-15T11:00:46+09:00
+mig=GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600
+repetitions=2
+n_gen=256
+models=Qwen2.5-7B-Instruct-Q4_K_M.gguf Meta-Llama-3.1-8B-Instruct-Q4_K_M.gguf
+boot_id=f9776703-a137-43bc-822b-124c6147ff68
+NVIDIA Nsight Systems version 2025.3.2.367-253236224375v0
+44be0639ed7c302ec9dc386c66d4e9b34880db0653259b8d5fa954ff1b3e2cca  /home/thor/kcj/llm_share/kv_fork_tuned2

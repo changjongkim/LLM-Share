@@ -1,0 +1,26 @@
+timestamp=2026-10-15T10:13:10+09:00
+mig_a=GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600
+mig_b=GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600
+repetitions=6
+configs=timeslice mps
+faults=none write kill_worker kill_leader
+groups=2
+workers=4
+turns=3
+context=16384
+n_gen=64
+grow_rows=256
+fault_after_s=10
+probe_mib=64
+prefix_file=bfcl_prefix.txt
+prefix_sha256=427ed6c4b2da6195984d4acc88062a5c18ead7e98deef5b8a831956f20d40d28
+tasks_file=bfcl_tasks.txt
+tasks_sha256=2ce7a34559297dfe42f538f5480207112e6fea7907a7de6a860ca382e59fab55
+model=Qwen2.5-7B-Instruct-Q4_K_M.gguf
+engine_commit=6f767fe960c3b97cf37fac4626c86400561ca1e4
+boot_id=f9776703-a137-43bc-822b-124c6147ff68
+GPU 0: NVIDIA Thor (UUID: GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600)
+f07afbb2741da6679cd3b1c32391dbf7f9d714f6f3212b0afc74ad0ee29e09db  /home/thor/kcj/llm_share/kv_tree2
+2659b3a5823a4bcaacce2be2c9beffa9552aa8112c1a2af4b8526db27cce69b3  /home/thor/kcj/llm_share/cuda_protect_probe
+a123574b855c5c32fcc2dd3cc13b403f5759e015994dd9d4532bde42f841826d  /home/thor/kcj/llm_share/llama.cpp-chain2/build/bin/libllama.so
+ca904f20acac9d7d83b1eb1bf14f3b4457e20a65e3747851b57840f49285a811  /home/thor/kcj/llm_share/llama.cpp-chain2/build/bin/libggml-cuda.so
