@@ -18,8 +18,10 @@ its unit on the axis and the value on the bar.
   eval_attach_*    attach cost of shared device memory by allocation size
   eval_scale_*     more agents; eval_model_*, eval_work_*: other models, workload
 """
+import math
 import os
 import re
+import statistics
 import sys
 
 import matplotlib.pyplot as plt
@@ -36,7 +38,12 @@ NAME = "STATOR"
 # state (Copy, the existing engine, vLLM), then blue, violet and orange for the other
 # mechanisms or systems of a panel, and teal for STATOR. A lighter tint of a
 # colour is a variant of the same thing (other page size, a part left out).
-DEMAND = "#4f86c6"         # blue: Demand; the second entry of a panel
+DEMAND = "#6aa3dd"         # blue: Demand
+EXISTING = "#3d3c39"       # dark grey: the existing engine (and the unmodified vLLM server)
+OLLAMA = "#8c564b"         # brown: Ollama
+SHARED_MAP = "#d9ae1e"     # gold: shared writable mapping
+RO_MAP = "#ecd27a"         # light gold: read-only shared mapping
+LIGHT_GRAY = "#cfcdc6"     # light grey: CPU offloading of vLLM
 DEMAND_LIGHT = "#b9cfe9"
 DEVICE_LIGHT = "#c9bdf0"   # violet (DEVICE) is the third entry
 COPY_LIGHT = "#b7b5af"
@@ -167,7 +174,7 @@ def weights():
     counts = sorted({k[2] for k in agents if k[0] == config})
     fig, ax = panel()
     series = [(label, colour, [float(agents[config, mode, n]["memory_total_mib"]) / 1024 for n in counts])
-              for label, colour, mode in (("Existing Engine", COPY, "copy"), (NAME, OURS, "inplace"))]
+              for label, colour, mode in (("Existing Engine", EXISTING, "copy"), (NAME, OURS, "inplace"))]
     for group in grouped(ax, [str(n) for n in counts], series, 0.38):
         labels(ax, group)
     ax.legend(loc="upper left", handlelength=1.2)
@@ -342,7 +349,7 @@ def cow():
              (NAME + "\n(Read,\n2 MiB)", "cow", OURS_LIGHT), (NAME, "extent_lazy", OURS))
     for name, column, ylabel, scale, form in (
             ("eval_cow_mem", "memory_mib", "Memory (GiB)", 1024.0, "{:.1f}"),
-            ("eval_cow_time", "first_token_ms", "TTFT (s)", 1000.0, "{:.2f}")):
+            ("eval_cow_time", "first_token_ms", "TTFT (ms)", 1.0, "{:,.0f}")):
         fig, ax = panel()
         values = [float(data[m, 8][column]) / scale for _, m, _ in order]
         bars = ax.bar([label for label, _, _ in order], values, 0.62,
@@ -449,6 +456,12 @@ def sota():
         placements = [(f"{int(float(data['same', children, s, 'copy']['prefix_tokens'])):,}",
                        ("same", children, s)) for s in sizes]
         xlabel = "Prefix (Tokens)"
+        # 32 children on the longer prefix, up to the memory of Copy (10-15)
+        extra = full("engine-kvmech-32")
+        if extra is not None and have(extra, "engine_kvmech_summary.csv"):
+            data.update(mechanisms(extra))
+            placements = [(f"{label}\n8 Agents", cell) for label, cell in placements]
+            placements.append((f"{placements[-1][0].split()[0]}\n32 Agents", ("same", 32, max(sizes))))
     for name, column, ylabel, scale, form, log in (
             ("eval_sota_mem", "children_memory_mib", "Memory (GiB)", 1024.0, "{:.1f}", False),
             ("eval_sota_attach", "child_attach_ms", "Attach Time (ms, log)", 1.0, "{:.0f}", True),
@@ -668,9 +681,9 @@ def inproc():
     # (label, memory GiB, tokens/s, marker, colour, label offset in points, alignment)
     points = [
         ("8 Processes", gib(share["320", "restore", 8]),
-         float(share["320", "restore", 8]["generation_tps_total"]), "o", COPY, (2, 10), "center"),
+         float(share["320", "restore", 8]["generation_tps_total"]), "o", COPY, (10, -4), "left"),
         ("8 Processes", gib(share["320", "extent_lazy", 8]) + file_gib,
-         float(share["320", "extent_lazy", 8]["generation_tps_total"]), "o", OURS, (10, -4), "left"),
+         float(share["320", "extent_lazy", 8]["generation_tps_total"]), "o", OURS, (-10, -4), "right"),
         ("1 Server", gib(batch["one_server"]), float(batch["one_server"]["generation_tps_total"]),
          "s", COPY, (0, -17), "center"),
         ("2 Servers", gib(batch["two_servers_copy"]), float(batch["two_servers_copy"]["generation_tps_total"]),
@@ -683,7 +696,7 @@ def inproc():
         ollama = {(r["config"], r["round"]): r for r in rows(directory, "ollama_agents_summary.csv")}
         points += [
             ("1 Server", gib(ollama["one", "warm"]), float(ollama["one", "warm"]["generation_tps_sum"]),
-             "s", DEMAND, (-9, -11), "right"),
+             "s", DEMAND, (0, 9), "center"),
             ("2 Servers", gib(ollama["two", "warm"]), float(ollama["two", "warm"]["generation_tps_sum"]),
              "^", DEMAND, (0, 9), "center"),
         ]
@@ -696,11 +709,30 @@ def inproc():
         points.append(("1 Server", gib(warm, "peak_memory_mib"), float(warm["agents_tps_sum"]),
                        "s", DEVICE, (11, -4), "left"))
     fig, ax = plt.subplots(figsize=(6.4, 2.0))
-    for label, memory, speed, marker, colour, offset, align in points:
+    for index, (label, memory, speed, marker, colour, offset, align) in enumerate(points):
+        if index == 2:
+            # one batching server lies next to two servers on STATOR: a hollow,
+            # larger square keeps the triangle inside it visible
+            ax.scatter([memory], [speed], s=300, marker=marker, facecolors="none", edgecolors=colour,
+                       linewidth=2.0, zorder=4)
+            ax.annotate(label, (memory, speed), xytext=(0, -21), textcoords="offset points",
+                        ha="center", va="center", fontsize=VALUE,
+                        arrowprops=dict(arrowstyle="-", color=INK, lw=0.7, shrinkA=1, shrinkB=9))
+            continue
         ax.scatter([memory], [speed], s=130, marker=marker, color=colour, edgecolor="white",
                    linewidth=1.5, zorder=3)
+        if index == 4:
+            ax.annotate(label, (memory, speed), xytext=(0, 19), textcoords="offset points",
+                        ha="center", va="center", fontsize=VALUE,
+                        arrowprops=dict(arrowstyle="-", color=INK, lw=0.7, shrinkA=1, shrinkB=6))
+            continue
         ax.annotate(label, (memory, speed), xytext=offset, textcoords="offset points", ha=align,
                     fontsize=VALUE)
+    # Copy to STATOR within one deployment: the same throughput in less memory
+    for copy, ours in ((points[0], points[1]), (points[3], points[4])):
+        ax.annotate("", xy=(ours[1], ours[2]), xytext=(copy[1], copy[2]),
+                    arrowprops=dict(arrowstyle="-|>", color=OURS, lw=1.6, mutation_scale=12,
+                                    shrinkA=7, shrinkB=7), zorder=2)
     handles = [plt.Line2D([], [], marker="o", linestyle="", color=colour, markersize=9,
                           markeredgecolor="white", label=label)
                for label, colour in (("llama.cpp, Copy", COPY), (f"llama.cpp, {NAME}", OURS), ("Ollama", DEMAND))
@@ -711,7 +743,7 @@ def inproc():
     else:
         ax.legend(handles=handles, loc="upper right", handlelength=1.0)
     ax.set_xlim(0, 27)
-    ax.set_ylim(0, 190 if vllm is not None else 140)
+    ax.set_ylim(0, 190 if vllm is not None else 160)
     ax.set_xlabel("Memory (GiB)")
     ax.set_ylabel("Throughput (tokens/s)")
     style(ax, "both")
@@ -794,7 +826,7 @@ def limit():
 # ------------------------------------------------------------ whole stack
 # The two stacks between the existing engine and STATOR apply one of its two
 # mechanisms; they are parts of STATOR and carry its colour in a lighter tint.
-STACKS = (("Existing llama.cpp Engine", COPY, "none", "s"), (f"{NAME} (KV)", OURS_PALE, "kv", "D"),
+STACKS = (("Existing Engine", EXISTING, "none", "s"), (f"{NAME} (KV)", OURS_PALE, "kv", "D"),
           (f"{NAME} (Weights)", OURS_LIGHT, "weights", "^"), (NAME, OURS, "both", "o"))
 
 
@@ -940,10 +972,21 @@ def local():
         data = {label: {r["mode"]: r for r in rows(d, "engine_kvmech_summary.csv")} for label, d in cells}
         fig, ax = panel()
         width = 0.27
+        # generation-window throughput, paired within a repetition (10-20)
+        from make_paper_figures_1020 import windows
+        T95 = {2: 12.706, 3: 4.303, 4: 3.182, 5: 2.776, 6: 2.571}
+        def window_ratio(directory, m):
+            rates = windows(base.resolve(directory), "CHILD", ("mode",))
+            r = [rates[(m,)][k] / rates[("copy",)][k] for k in rates[(m,)] if k in rates[("copy",)]]
+            g = [math.log(x) for x in r]
+            mu = statistics.mean(g)
+            h = T95.get(len(g), 1.96) * statistics.stdev(g) / math.sqrt(len(g)) if len(g) > 1 else 0
+            return math.exp(mu), math.exp(mu - h), math.exp(mu + h)
         for index, (label, colour, m) in enumerate(forms):
-            values = [float(data[cell][m]["children_tps_vs_copy"]) for cell, _ in cells]
-            low = [v - float(data[cell][m]["vs_copy_low"]) for v, (cell, _) in zip(values, cells)]
-            high = [float(data[cell][m]["vs_copy_high"]) - v for v, (cell, _) in zip(values, cells)]
+            trio = [window_ratio(d, m) for _, d in cells]
+            values = [t[0] for t in trio]
+            low = [t[0] - t[1] for t in trio]
+            high = [t[2] - t[0] for t in trio]
             x = np.arange(len(cells)) + (index - 1) * width
             ax.bar(x, values, width, color=colour, edgecolor="white", linewidth=1.5, label=label,
                    yerr=[low, high], error_kw={"ecolor": INK, "elinewidth": 1.0, "capsize": 2})
@@ -1156,14 +1199,15 @@ def bg_place():
 
 
 # ------------------------------------------------------- vLLM servers on extents
-VLLM_MODES = (("vLLM", COPY, "vllm"), ("vLLM-\nCPU", COPY_LIGHT, "cpu"), ("vLLM-\nLMCache", DEMAND, "lmcache"),
+VLLM_MODES = (("vLLM", EXISTING, "vllm"), ("vLLM-\nCPU", LIGHT_GRAY, "cpu"), ("vLLM-\nLMCache", COPY, "lmcache"),
               ("vLLM-\n" + NAME, OURS, "stator"))
 VLLM_TICK = TICK2 - 1
 
 
 def vshare():
-    """Two vLLM servers, one per MIG instance, on one prefix."""
-    directory = "20261008-vllm-share-v2"
+    """Two vLLM servers on one prefix: on the whole GPU when that campaign has
+    been run, otherwise one per MIG instance."""
+    directory = full("vllm-share") or "20261008-vllm-share-v2"
     if not have(directory, "vllm_share_summary.csv"):
         return
     data = {r["mode"]: r for r in rows(directory, "vllm_share_summary.csv")}
@@ -1177,15 +1221,15 @@ def vshare():
         labels(ax, drawn, form)
         if log:
             ax.set_yscale("log")
-            ax.set_ylim(0.1, max(values) * 4.0)
+            ax.set_ylim(100 if min(values) >= 100 else 0.1, max(values) * 4.0)
         # the names of two lines need the whole width of the axis
         ax.set_xlim(-0.38, len(names) - 0.62)
         finish(fig, ax, name, "", ylabel, max(values) * (4.0 if log else 1.18), log=log, xtick=VLLM_TICK,
-               plain=log)
+               plain=log and ylabel != "TTFT (ms)")
 
     bars("eval_vllm_mem", [float(data[m]["memory_mib"]) / 1024 for _, _, m in modes], "Memory (GiB)", "{:.1f}")
-    bars("eval_vllm_ttft", [float(data[m]["first_token_ms"]) / 1000 for _, _, m in modes],
-         "TTFT (s)", "{:.2f}", log=True)
+    bars("eval_vllm_ttft", [float(data[m]["first_token_ms"]) for _, _, m in modes],
+         "TTFT (ms)", "{:,.0f}", log=True)
     fig, ax = panel()
     bottom = np.zeros(len(modes))
     for label, column, colour in (("12-SM Instance", "tps_first_instance", COPY),
@@ -1215,7 +1259,7 @@ def full(name):
 # Eight agents on one prefix through the mechanisms of the kernel, none of
 # which holds a step of STATOR; CoW Map keeps the colour it has in the other
 # panels.
-LINUX = (("Copy", COPY, "copy"), ("Shared Map", DEMAND, "shared_rw"), ("CoW Map", COW, "cow_plain"))
+LINUX = (("Copy", COPY, "copy"), ("Shared Map", SHARED_MAP, "shared_rw"), ("CoW Map", COW, "cow_plain"))
 
 
 def bg_linux():
@@ -1238,11 +1282,12 @@ def bg_linux():
         finish(fig, ax, name, "", ylabel, max(values) * 1.22)
 
 
-# The same agents by their number, with the steps of STATOR that remove GPU
-# faults left out (Map Only: the prefix mapped read-only, no CPU read, own rows
-# in memory that the kernel provides on the GPU's first write).
+# The same agents by their number. Read-Only Map is the read-only shared mapping of the
+# kernel: the prefix mapped read-only as STATOR maps it, but without the CPU
+# read and the populate-ahead, so every page comes through a fault. It takes
+# the light tint of the blue of Shared Map, the other shared mapping.
 SCALING = (("Copy", COPY, "copy", "s"), ("CoW Map", COW, "cow_plain", "^"),
-           (f"{NAME} (Map Only)", OURS_LIGHT, "ro_plain", "D"), (NAME, OURS, "extent", "o"))
+           ("Read-Only Map", RO_MAP, "ro_plain", "D"), (NAME, OURS, "extent", "o"))
 
 
 def linux_scale():
@@ -1250,10 +1295,17 @@ def linux_scale():
     if directory is None:
         return
     data = {(r["mode"], int(r["children"])): r for r in rows(directory, "engine_kvlinux_summary.csv")}
+    # 48 to 128 agents, up to the count at which each mode still fits (10-15)
+    for large in ("engine-kvlinux-scaling-large", "engine-kvlinux-scaling-large-cow"):
+        extra = full(large)
+        if extra is not None and have(extra, "engine_kvlinux_summary.csv"):
+            data.update({(r["mode"], int(r["children"])): r for r in rows(extra, "engine_kvlinux_summary.csv")
+                         if int(r["children"]) > 32})
     counts = sorted({n for _, n in data})
+    ticks = [n for n in counts if n & (n - 1) == 0]
     legend("eval_lscale_legend", [(label, colour) for label, colour, _, _ in SCALING], 4)
     for name, column, ylabel, scale in (
-            ("eval_lscale_ttft", "child_first_token_ms", "TTFT (s)", 1000.0),
+            ("eval_lscale_ttft", "child_first_token_ms", "TTFT (ms)", 1.0),
             ("eval_lscale_kernel", "fault_thread_ms", "Fault Service (s)", 1000.0),
             ("eval_lscale_mem", "children_memory_mib", "Memory (GiB)", 1024.0)):
         fig, ax = panel()
@@ -1266,13 +1318,13 @@ def linux_scale():
             ax.plot([p[0] for p in points], [p[1] for p in points], color=colour, marker=marker,
                     markersize=7, linewidth=2, label=label, markeredgecolor="white", markeredgewidth=1.2)
         ax.set_xscale("log", base=2)
-        ax.set_xticks(counts, [str(n) for n in counts])
+        ax.set_xticks(ticks, [str(n) for n in ticks])
         ax.minorticks_off()
         finish(fig, ax, name, "Agents", ylabel, top * 1.15)
 
 
 # Model weights read in place under the reclaim of the kernel.
-RECLAIM = (("Existing Engine", COPY, "device"), (f"{NAME} (4 KiB)", OURS_LIGHT, "pagecache"),
+RECLAIM = (("Existing Engine", EXISTING, "device"), (f"{NAME} (4 KiB)", OURS_LIGHT, "pagecache"),
            (f"{NAME} (2 MiB)", OURS, "memfs"))
 
 
@@ -1295,8 +1347,265 @@ def reclaim():
         finish(fig, ax, name, "", ylabel, max(max(values), 1e-9) * 1.22)
 
 
+# Each sharing mechanism of the kernel with the CPU or the GPU as the reader
+# of the same 1 GiB of shared pages (mech_probe.cu); the reader is the only
+# difference between the two bars of a group. The shared mapping comes from
+# the rerun with the file opened read-write (mech-probe-shared).
+ACCESS = (("CPU", DEMAND, "cpu"), ("GPU", COW, "gpu"))
+COW_LIGHT = "#f6b28f"   # orange tint: the GPU with the page cache locked
+MECHS = (("Private", "private"), ("Shared", "shared"), ("fork", "fork"), ("KSM", "ksm"))
+
+
+def compact(value):
+    if value < 0.0005:
+        return "0"
+    if value < 0.1:
+        return f"{value:.3f}"
+    return f"{value:.2f}" if value < 10 else f"{value:.1f}"
+
+
+def bg_mech():
+    """Three quarter-width panels for the background: the time of a read of
+    every word, the memory that this read copies, and the speed of repeated
+    reads of a hot file while the kernel reclaims from its control group."""
+    directory = full("mech-probe")
+    if directory is None:
+        return
+    data = {}
+    for d in (directory, full("mech-probe-shared")):
+        if d is None:
+            continue
+        for r in rows(d, "mech_probe_summary.csv"):
+            if r["mech"] == "gate" or r["step"] == "events":
+                continue
+            if d == directory and r["mech"] == "shared":
+                continue   # every shared case of the first campaign failed
+            data[(r["mech"], r["step"], r["access"], r["pressure"])] = r
+    legend("bg_mech_legend", [(label, colour) for label, colour, _ in ACCESS], 2)
+
+    def value(mech, step, access, column, scale=1.0):
+        row = data.get((mech, step, access, ""))
+        return float(row[column]) / scale if row and row[column] else 0.0
+
+    for name, column, ylabel, scale, log in (
+            ("bg_mech_read", "seconds", "Read Time (s)", 1.0, True),
+            ("bg_mech_copy", "copied_mib", "Copied (GiB)", 1024.0, False)):
+        fig, ax = panel()
+        series = [(label, colour, [value(m, "read", access, column, scale) for _, m in MECHS])
+                  for label, colour, access in ACCESS]
+        bars = grouped(ax, [label for label, _ in MECHS], series, width=0.38)
+        for group in bars:
+            for bar in group:
+                tip(ax, bar, compact(bar.get_height()))
+                ax.texts[-1].set_fontsize(DENSE)
+        ax.tick_params(axis="x", labelsize=TICK2)
+        ax.legend()   # save() sets it as a row above the plot of this panel
+        top = max(max(v for _, _, vs in series for v in vs), 1e-9)
+        if not log:
+            finish(fig, ax, name, "", ylabel, top * 1.25)
+            continue
+        low = min(v for _, _, vs in series for v in vs if v > 0)
+        ax.set_yscale("log")
+        ax.yaxis.set_major_formatter(FuncFormatter(lambda v, _: f"{v:g}"))
+        ax.set_ylim(low / 3, top * 8)
+        ax.set_ylabel(ylabel)
+        style(ax)
+        fig.tight_layout()
+        save(fig, name)
+
+    fig, ax = panel()
+    entries = (("CPU", DEMAND, "none", "cpu"), ("GPU", COW, "none", "gpu"), ("GPU\nLocked", COW_LIGHT, "lock", "gpu"))
+    values = []
+    for _, _, pin, access in entries:
+        row = data.get(("reclaim", pin, access, "pressure"))
+        values.append(float(row["rate_vs_none"]) if row and row["rate_vs_none"] else 0.0)
+    bars = ax.bar(range(len(entries)), values, 0.55, color=[c for _, c, _, _ in entries],
+                  edgecolor="white", linewidth=1.5)
+    ax.set_xticks(range(len(entries)), [label for label, _, _, _ in entries])
+    ax.tick_params(axis="x", labelsize=TICK2)
+    labels(ax, bars, "{:.2f}")
+    finish(fig, ax, "bg_mech_reclaim", "", "Speed under Reclaim", 1.25)
+
+
+# Eight agents by deployment, Copy against STATOR within each deployment: eight
+# separate processes, two batching servers, and one batching server that holds
+# all agents (the in-process reference, one bar).
+def inproc_bars():
+    share = {(r["paragraphs"], r["mode"], int(r["agents"])): r
+             for r in rows("20261006-engine-kvshare-v1", "engine_kvshare_summary.csv")}
+    publish = {(r["paragraphs"], r["store"]): r
+               for r in rows("20261006-engine-kvshare-v1", "engine_kvshare_publish.csv")}
+    batch = {r["config"]: r for r in rows("20261010-engine-kvbatch-v2", "engine_kvbatch_summary.csv")}
+    ollama = {(r["config"], r["round"]): r for r in rows("20261006-ollama-agents-v1", "ollama_agents_summary.csv")}
+    file_gib = float(publish["320", "huge"]["file_used_mib"]) / 1024
+    gib = lambda row: float(row["memory_mib"]) / 1024
+    tps = lambda row, key="generation_tps_total": float(row[key])
+    copy8, ours8 = share["320", "restore", 8], share["320", "extent_lazy", 8]
+    groups = ["8 Processes", "2 Servers", "1 Server"]
+    w = 0.27
+    # (x, memory GiB, tokens/s, colour); Ollama runs with its own code and no STATOR
+    bars = [
+        (-w / 2, gib(copy8), tps(copy8), COPY),
+        (w / 2, gib(ours8) + file_gib, tps(ours8), OURS),
+        (1 - w, gib(batch["two_servers_copy"]), tps(batch["two_servers_copy"]), COPY),
+        (1, gib(batch["two_servers_extent"]), tps(batch["two_servers_extent"]), OURS),
+        (1 + w, gib(ollama["two", "warm"]), tps(ollama["two", "warm"], "generation_tps_sum"), DEVICE),
+        (2 - w / 2, gib(batch["one_server"]), tps(batch["one_server"]), DEMAND),
+        (2 + w / 2, gib(ollama["one", "warm"]), tps(ollama["one", "warm"], "generation_tps_sum"), DEVICE),
+    ]
+    legend("eval_proc_legend", [("Copy", COPY), (NAME, OURS), ("One Batching Server", DEMAND), ("Ollama", DEVICE)], 4)
+    for name, index, ylabel, form in (("eval_proc_mem", 1, "Memory (GiB)", "{:.1f}"),
+                                      ("eval_proc_tps", 2, "Throughput (tokens/s)", "{:.0f}")):
+        fig, ax = panel()
+        drawn = ax.bar([b[0] for b in bars], [b[index] for b in bars], w,
+                       color=[b[3] for b in bars], edgecolor="white", linewidth=1.5)
+        for bar in drawn:
+            tip(ax, bar, form.format(bar.get_height()))
+            ax.texts[-1].set_fontsize(DENSE)
+            ax.texts[-1].set_rotation(0)
+        ax.set_xticks(range(len(groups)), groups)
+        ax.tick_params(axis="x", labelsize=TICK2)
+        finish(fig, ax, name, "", ylabel, max(b[index] for b in bars) * 1.22)
+
+
+# Eight agents in one batching server or split over 2, 4 and 8 servers, one
+# campaign (run_engine_kvbatch_n.sh). The throughput is that of the round, from
+# the first token of the first server to the last token of the last: summed
+# rates would add the publisher's rate while the servers of Copy still copy.
+def round_tps(directory):
+    path = os.path.join(RES, base.resolve(directory), "raw.log")
+    rounds, case = {}, None
+    for line in open(path):
+        if line.startswith("BEGIN_KVBATCH"):
+            run = re.search(r"run=(\d+)", line).group(1)
+        elif line.startswith("CASE"):
+            case = (re.search(r"config=(\S+)", line).group(1), run)
+            rounds[case] = []
+        elif line.startswith("SERVER") and case is not None:
+            f = dict(x.split("=", 1) for x in line.split()[1:] if "=" in x)
+            if f.get("exit") != "0" or not f.get("generation_tps"):
+                continue
+            start = float(f["started_ms"]) + float(f["first_token_ms"])
+            tokens = int(f["sequences"]) * 64
+            rounds[case].append((start, start + tokens / float(f["generation_tps"]) * 1000, tokens))
+    out = {}
+    for (config, _), servers in rounds.items():
+        begin, end = min(s[0] for s in servers), max(s[1] for s in servers)
+        out.setdefault(config, []).append(sum(s[2] for s in servers) / ((end - begin) / 1000))
+    return {config: sum(v) / len(v) for config, v in out.items()}
+
+
+def inproc_n():
+    directory = full("engine-kvbatch-n")
+    if directory is None:
+        return
+    mem = {r["config"]: float(r["memory_mib"]) / 1024
+           for r in rows(directory, "engine_kvbatch_n_summary.csv")}
+    tps = round_tps(directory)
+    ollama = {(r["config"], r["round"]): r for r in rows("20261006-ollama-agents-v1", "ollama_agents_summary.csv")}
+    marker = {2: "^", 4: "D", 8: "o"}
+    fig, ax = plt.subplots(figsize=(6.4, 2.0))
+    # one batching server: a level mark, which keeps the point of two servers on STATOR below it visible
+    ax.scatter([mem["1:none"]], [tps["1:none"]], s=360, marker="_", color=COPY, linewidth=3.0, zorder=4)
+    ax.annotate("1 Server", (mem["1:none"], tps["1:none"]), xytext=(0, 6), textcoords="offset points",
+                ha="center", va="bottom", fontsize=VALUE)
+    for n in (2, 4, 8):
+        copy, ours = (mem[f"{n}:copy"], tps[f"{n}:copy"]), (mem[f"{n}:extent"], tps[f"{n}:extent"])
+        ax.scatter([copy[0]], [copy[1]], s=130, marker=marker[n], color=COPY, edgecolor="white", linewidth=1.5, zorder=3)
+        ax.scatter([ours[0]], [ours[1]], s=130, marker=marker[n], color=OURS, edgecolor="white", linewidth=1.5, zorder=3)
+        ax.annotate("", xy=ours, xytext=copy, arrowprops=dict(arrowstyle="-|>", color=OURS, lw=1.6,
+                    mutation_scale=12, shrinkA=7, shrinkB=7), zorder=2)
+        # the marker shape names the pair, so only the point of Copy carries the label
+        ax.annotate(f"{n} Servers", copy, xytext=(10, -4), textcoords="offset points", ha="left", fontsize=VALUE)
+    for key, label, mark, offset in ((("one", "warm"), "1 Server", "s", (0, 9)),
+                                     (("two", "warm"), "2 Servers", "^", (0, 9))):
+        row = ollama[key]
+        point = (float(row["memory_mib"]) / 1024, float(row["generation_tps_sum"]))
+        ax.scatter([point[0]], [point[1]], s=130, marker=mark, color=DEVICE, edgecolor="white", linewidth=1.5, zorder=3)
+        ax.annotate(label, point, xytext=offset, textcoords="offset points", ha="center", fontsize=VALUE)
+    handles = [plt.Line2D([], [], marker="o", linestyle="", color=colour, markersize=9, markeredgecolor="white",
+                          label=label)
+               for label, colour in (("llama.cpp, Copy", COPY), (f"llama.cpp, {NAME}", OURS), ("Ollama", DEVICE))]
+    ax.legend(handles=handles, loc="upper right", handlelength=1.0)
+    ax.set_xlim(0, 27)
+    ax.set_ylim(0, 160)
+    ax.set_xlabel("Memory (GiB)")
+    ax.set_ylabel("Throughput (tokens/s)")
+    style(ax, "both")
+    fig.tight_layout()
+    save(fig, "eval_proc")
+
+
+# Eight agents per batching server on 2, 4 and 8 servers (16 to 64 agents),
+# Copy or STATOR between the servers, and one server with all agents as the
+# in-process reference (run_engine_kvbatch_n.sh, AGENTS = 8 N). Throughput of
+# the round, as in inproc_n.
+def inproc_per8(reference=True, name="eval_proc8"):
+    dirs = {n: full(f"engine-kvbatch-per8-n{n}") for n in (2, 4, 8)}
+    if any(d is None for d in dirs.values()):
+        return
+    marker = {2: "^", 4: "D", 8: "o"}
+    fig, ax = plt.subplots(figsize=(6.4, 2.0))
+    top = 0.0
+    for n, directory in dirs.items():
+        mem = {r["config"]: float(r["memory_mib"]) / 1024 for r in rows(directory, "engine_kvbatch_n_summary.csv")}
+        tps = round_tps(directory)
+        copy, ours = (mem[f"{n}:copy"], tps[f"{n}:copy"]), (mem[f"{n}:extent"], tps[f"{n}:extent"])
+        ax.scatter([copy[0]], [copy[1]], s=130, marker=marker[n], color=COPY, edgecolor="white", linewidth=1.5, zorder=3)
+        ax.scatter([ours[0]], [ours[1]], s=130, marker=marker[n], color=OURS, edgecolor="white", linewidth=1.5, zorder=3)
+        ax.annotate("", xy=ours, xytext=copy, arrowprops=dict(arrowstyle="-|>", color=OURS, lw=1.6,
+                    mutation_scale=12, shrinkA=7, shrinkB=7), zorder=2)
+        ax.annotate(f"{n} Servers", copy, xytext=(10, -4), textcoords="offset points", ha="left", fontsize=VALUE)
+        top = max(top, copy[1], ours[1])
+        if reference:
+            one = (mem["1:none"], tps["1:none"])
+            ax.scatter([one[0]], [one[1]], s=130, marker=marker[n], facecolors="none", edgecolors=COPY,
+                       linewidth=1.8, zorder=3)
+            ax.annotate(f"{8 * n} Agents", one, xytext=(10, -4), textcoords="offset points", ha="left",
+                        fontsize=VALUE)
+            top = max(top, one[1])
+    handles = [plt.Line2D([], [], marker="o", linestyle="", color=COPY, markersize=9, markeredgecolor="white",
+                          label="Servers, Copy"),
+               plt.Line2D([], [], marker="o", linestyle="", color=OURS, markersize=9, markeredgecolor="white",
+                          label=f"Servers, {NAME}")]
+    if reference:
+        handles.append(plt.Line2D([], [], marker="o", linestyle="", markerfacecolor="none", color=COPY,
+                                  markersize=9, markeredgewidth=1.8, label="One Server"))
+    ax.legend(handles=handles, loc="upper right", handlelength=1.0)
+    ax.set_xlim(0, 23)
+    ax.set_ylim(0, top * 1.25)
+    ax.set_xlabel("Memory (GiB)")
+    ax.set_ylabel("Throughput (tokens/s)")
+    style(ax, "both")
+    fig.tight_layout()
+    save(fig, name)
+
+
+def inproc_per8_bars():
+    dirs = {n: full(f"engine-kvbatch-per8-n{n}") for n in (2, 4, 8)}
+    if any(d is None for d in dirs.values()):
+        return
+    mem, tps = {}, {}
+    for n, directory in dirs.items():
+        m = {r["config"]: float(r["memory_mib"]) / 1024 for r in rows(directory, "engine_kvbatch_n_summary.csv")}
+        t = round_tps(directory)
+        mem[n] = (m[f"{n}:copy"], m[f"{n}:extent"], m["1:none"])
+        tps[n] = (t[f"{n}:copy"], t[f"{n}:extent"], t["1:none"])
+    order = (("Servers, Copy", COPY), (f"Servers, {NAME}", OURS), ("One Server", COPY_LIGHT))
+    legend("eval_proc8_legend", list(order), 3)
+    groups = [f"{n} ({8 * n})" for n in dirs]
+    for name, data, ylabel, form in (("eval_proc8_mem", mem, "Memory (GiB)", "{:.1f}"),
+                                     ("eval_proc8_tps", tps, "Throughput (tokens/s)", "{:.0f}")):
+        fig, ax = panel()
+        series = [(label, colour, [data[n][i] for n in dirs]) for i, (label, colour) in enumerate(order)]
+        for group in grouped(ax, groups, series, 0.25):
+            labels(ax, group, form, DENSE)
+        top = max(max(v) for _, _, v in series)
+        finish(fig, ax, name, "Servers (Agents)", ylabel, top * 1.22)
+
+
 if __name__ == "__main__":
-    for figure in (bg_linux, linux_scale, reclaim):
+    for figure in (bg_linux, linux_scale, reclaim, bg_mech, inproc_bars, inproc_n):
         figure()
         print("wrote", figure.__name__)
     # the first platform (STATOR_FULL=0) draws every panel; the whole GPU draws
