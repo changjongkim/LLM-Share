@@ -34,6 +34,11 @@ E4B = KCJ + "/portable_bench_a30/validation/thor_e4b/analysis"
 E4BX = KCJ + "/portable_bench_a30/validation/thor_e4b_ext/analysis"
 MECHS = (("Copy", COPY, "copy"), ("Demand", DEMAND, "demand"), ("Device", DEVICE, "device_merged"),
          ("CoW Map", COW, "writable_no_read"), (NAME, OURS, "extent"))
+# review of 2026-10-21 (130): STATOR with its conversion replaced by a copy of the rows into a file, which the
+# children map read-only with the other steps of STATOR. It carries steps of STATOR, so it is an ablation of STATOR
+# in a tint of its colour, just before the full system.
+MECHS6 = (("Copy", COPY, "copy"), ("Demand", DEMAND, "demand"), ("Device", DEVICE, "device_merged"),
+          ("CoW Map", COW, "writable_no_read"), (f"{NAME} (Copied File)", OURS_LIGHT, "copy_map"), (NAME, OURS, "extent"))
 
 
 def geo(values):
@@ -105,14 +110,18 @@ def ablation_speed():
 
 
 # ------------------------------------------------------------- hand-over
-def sota_e1():
-    """Figure of the hand-over: pause, child memory, attach, child TTFT (107)."""
-    data = {(r["prefix_tokens"], r["children"], r["mode"]): r
-            for r in csv_rows(REPORTS + "/107-live-publish-formal/analysis_summary.csv")}
-    legend("eval_sota_legend", [(lab, col) for lab, col, _ in MECHS], 5)
+def sota_e1(summary=REPORTS + "/107-live-publish-formal/analysis_summary.csv", mechs=MECHS, long_only=False):
+    """Figure of the hand-over: pause, child memory, attach, child TTFT (107; with HANDOVER_RESULT, the
+    campaign 130 of the review, which adds the copied file)."""
+    data = {(r["prefix_tokens"], r["children"], r["mode"]): r for r in csv_rows(summary)}
+    MECHS = mechs
+    legend("eval_sota_legend", [(lab, col) for lab, col, _ in MECHS], len(MECHS))
     cells = [("4081", "8"), ("16321", "8"), ("16321", "32")]
     pause_cells = cells[:2]
     names = ["4,081\n8 Agents", "16,321\n8 Agents", "16,321\n32 Agents"]
+    if long_only:
+        # six mechanisms: the values of three groups do not fit, and the text reads (b)-(d) on 16,321 tokens only
+        cells, names = cells[1:], names[1:]
     for name, column, ylabel, scale, form, log, which in (
             ("eval_hand_pause", "publish_ms", "Pause (ms, log)", 1.0, "{:.0f}", True, pause_cells),
             ("eval_sota_mem", "child_increment_peak_gib", "Memory (GiB)", 1.0, "{:.1f}", False, cells),
@@ -126,7 +135,7 @@ def sota_e1():
             return float(row[column]) / scale
         series = [(lab, col, [value(data[c + (m,)]) for c in which]) for lab, col, m in MECHS]
         group_names = ["4,081", "16,321"] if which is pause_cells else names
-        for group in grouped(ax, group_names, series, 0.17):
+        for group in grouped(ax, group_names, series, 0.85 / len(MECHS)):
             labels(ax, group, form, DENSE)
             for text in ax.texts[-len(group):]:
                 text.set_rotation(90)
@@ -335,7 +344,10 @@ def dynamic_e4b():
 if __name__ == "__main__":
     print("stack speed", stack_speed())
     print("ablation speed", ablation_speed())
-    sota_e1()
+    if os.environ.get("HANDOVER_RESULT"):
+        sota_e1(os.environ["HANDOVER_RESULT"] + "/analysis_summary.csv", MECHS6, long_only=True)
+    else:
+        sota_e1()
     tree_e2()
     print("resident", resident_117(*filter(None, [os.environ.get("RESIDENT_RESULT")]))[1])
     print("proc8", proc8_bars())

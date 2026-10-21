@@ -1994,6 +1994,72 @@ kvserver2, kvtree)은 일치 수만 센다.
 남는다. 이 커널은 arm64에서 fault-around로 미리 매핑한 항목의 accessed flag를 비워 두므로(`arch_wants_old_prefaulted_pte`),
 CPU가 각 페이지를 읽어야 모든 항목에 flag가 선다고 본다. `MADV_WILLNEED`는 폴트를 줄이지 않는다.
 
+**fault-around 검증 (B1, 리뷰 10-21, `20261021-gpu-faultaround-probe-full-v1`).** 같은 probe(`gpu_populate_probe`, 해시 동일)를
+`run_gpu_faultaround_probe.sh`로 돌린다. ext4 page cache(4 KiB)의 896 MiB 파일에서 `/sys/kernel/debug/fault_around_bytes`를
+기본값 65536과 4096(한 페이지)으로 번갈아 바꾸며 6회 반복하고, 끝나면 기본값으로 되돌린다. 판정 조건(합 검사 36/36 정상,
+CPU 읽기의 GPU 폴트 0)은 모두 통과했다.
+
+| fault-around (바이트) | 준비 | 준비 (ms) | GPU 접근 (ms) | GPU 폴트 (페이지) |
+|---|---|---:|---:|---:|
+| 65536 | 없음 | 0 | 384.3 | 920,779 |
+| 65536 | CPU 읽기 (STATOR) | 50.0 | 6.77 | 0 |
+| 65536 | MADV_POPULATE_READ | 47.1 | 178.9 | 475,648 |
+| 4096 | 없음 | 0 | 458.8 | 918,702 |
+| 4096 | CPU 읽기 (STATOR) | 160.4 | 10.73 | 0 |
+| 4096 | MADV_POPULATE_READ | 80.0 | 7.96 | 0 (6/6) |
+
+fault-around를 한 페이지로 줄이면 populate 요청도 GPU 폴트를 남기지 않는다. 4 KiB page cache에서 남던 폴트는 커널이
+fault-around로 이웃 페이지를 accessed flag 없이 매핑한 항목에서 생긴 것이다. CPU 읽기는 커널 설정을 바꾸지 않고 두 페이지
+크기에서 모두 폴트를 없애므로 STATOR는 CPU 읽기를 쓴다. fault-around가 꺼지면 CPU 읽기는 페이지마다 폴트가 나서 160 ms로 느려진다.
+
+**복사한 파일과 봉인한 파일 (B2, C, 리뷰 10-21).** 엔진 `llama.cpp-tuned4`는 `tuned3`에 `kv_review.patch`를 더한 것이고,
+환경 변수로만 켜지는 두 모드를 더한다. 꺼져 있으면 `tuned3`과 같다.
+- `LLAMA_KV_PUBLISH_COPY=1` (STATOR (Copied File)): 게시자는 행을 사설 메모리에 두고, 게시할 때 게시한 행을 같은 배치로
+  2 MiB tmpfs 파일에 복사한다. 자식은 STATOR와 똑같이 읽기 전용 매핑, CPU 읽기, populate-ahead로 붙는다. 리눅스가 제공하는
+  읽기 전용 파일 매핑에 STATOR의 나머지 단계를 모두 더한 구성이다.
+- `LLAMA_KV_SEAL=1` (봉인한 STATOR): 캐시 파일은 봉인할 수 있는 memfd이다. 게시자는 게시할 때 게시한 행을 읽기 전용
+  descriptor로 다시 매핑하고, 그 뒤 행은 사설 메모리로 옮긴다(걸친 4 KiB 이하만 복사). 파일에서 게시한 행 밖의 페이지를
+  해제한 뒤 `F_SEAL_WRITE`를 건다. 리눅스는 쓰기 가능 매핑이 남아 있으면 이 봉인을 거부하므로(K1), 실행 중인 게시자는
+  이 전환을 거쳐야 봉인할 수 있다. 자식은 상속받은 memfd를 열어 봉인을 확인한 뒤에만 매핑한다. memfd가 2 MiB 페이지를 쓰려면
+  `/sys/kernel/mm/transparent_hugepage/shmem_enabled`가 `advise`여야 하며, 큐 항목이 실행 중에만 바꾸고 되돌린다.
+
+러너는 `stator_campaign_20261016/tools/run_live_publish_v3.py`(v2에 두 모드와 쓰기 시도를 더함)이다. 봉인 모드에서는 게시 직후
+자식을 풀기 전에, 같은 사용자가 `/proc`의 memfd를 쓰기 모드로 열어 이미 있는 바이트를 `pwrite`와 쓰기 가능 공유 `mmap`으로
+다시 쓰려고 한다.
+
+캠페인 세 개를 돌렸다.
+- 128 (`20261021-review-publish-formal-v1`): Copy, STATOR, 봉인, 복사 4개 모드. 이 캠페인은 `GGML_CUDA_FATTN_HOST_GQA=2`를
+  빠뜨려 Copy만 다른 attention 커널을 썼다. 호스트 캐시 세 모드끼리는 텍스트가 918/918 같다.
+- 129 (`20261021-review-publish-copy-gqa2-v1`): 같은 커널 설정으로 Copy만 다시 쟀다. 128의 세 모드와 텍스트가 918/918 같다.
+- 130 (`20261021-review-handover-all-v1`): 논문 Figure 14의 다섯 메커니즘, 복사, 봉인 7개 모드를 한 캠페인에서 6회씩 쟀다
+  (`GGML_CUDA_FATTN_HOST_GQA=2`, 126개 케이스, 검사 통과). Copy와 비교한 1,836개 프로세스의 토큰이 모두 같다.
+
+130의 결과(6회 평균):
+
+| 16,321 토큰 | 게시 정지 (ms) | attach (ms) | 자식 메모리 (GiB) | 전체 (GiB) | 자식 TTFT (ms) | 처리량 / Copy | GPU 폴트 |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| Copy, 자식 8 | 574.5 | 560 | 20.44 | 27.87 | 2,462 | 1.000 | 0 |
+| Demand | 567.7 | 786 | 14.34 | 20.60 | 2,695 | 0.994 | 0 |
+| Device | 106.9 | 203 | 7.84 | 13.84 | 2,076 | 0.996 | 0 |
+| CoW Map | 11.7 | 58 | 12.93 | 18.91 | 6,577 | 1.018 | 7,527,996 |
+| STATOR (Copied File) | 82.7 | 64 | 6.05 | 12.91 | 1,959 | 1.018 | 0 |
+| STATOR | 11.8 | 63 | 6.17 | 12.12 | 1,955 | 1.015 | 0 |
+| STATOR, 봉인 | 19.1 | 65 | 6.02 | 11.99 | 1,973 | 1.018 | 0 |
+| Copy, 자식 32 | 572.5 | 1,560 | 81.26 | 88.79 | 8,013 | 1.000 | 0 |
+| CoW Map, 자식 32 | 11.9 | 93 | 52.02 | 57.58 | 22,857 | 0.835 | 32,185,564 |
+| STATOR (Copied File), 자식 32 | 82.3 | 92 | 23.97 | 30.82 | 6,224 | 1.031 | 0 |
+| STATOR, 자식 32 | 11.9 | 88 | 24.08 | 30.07 | 6,254 | 1.032 | 0 |
+| STATOR, 봉인, 자식 32 | 19.2 | 93 | 24.04 | 30.03 | 6,271 | 1.032 | 0 |
+
+4,081 토큰, 자식 8개에서 게시 정지는 Copy 235.3, STATOR (Copied File) 23.6, STATOR 5.2, 봉인 13.0 ms이다. 복사한 파일은
+자식 메모리와 TTFT가 STATOR와 같고, 게시자가 행을 복사하는 만큼 정지(24 ms, 83 ms)와 사본 하나(전체 약 0.8 GiB)가 남는다.
+복사 시간은 프리픽스에 비례하고, 보호 변경은 거의 늘지 않는다. 봉인은 게시를 7~8 ms 늘리고, 게시 뒤 같은 사용자의 쓰기 시도는
+18/18 모두 EPERM으로 거부된다(봉인하지 않은 STATOR는 18/18 모두 쓰기 모드로 열린다). CoW Map 자식 32개의 GPU 폴트는 3,220만으로,
+논문의 "최대 3,220만 GPU 폴트"가 이 값이다(10-16 캠페인에서는 3,360만). Figure 14는
+`RESIDENT_RESULT=... HANDOVER_RESULT=results/20261021-review-handover-all-v1 python3 figures/make_paper_figures_1020.py`로
+그리며, 메커니즘이 6개라 (b)~(d)는 값이 들어가는 16,321 토큰 두 그룹만 그린다. 텍스트 일치 수는 `count_texts.py`에 이 캠페인을
+더해 5,354개 중 5,354개이다.
+
 **page cache를 mlock으로 잠그면 (K3, `20261015-engine-reclaim-mlock-full-v2`).** 회수 캠페인과 같은 설정(에이전트 4개, 512토큰,
 1초마다 512 MiB 회수)에 `mlock` 모드를 더한다(llama.cpp `--mlock`, 6회 반복). 첫 실행(`-full-v1`)은 기록만 남기고 실패했다.
 

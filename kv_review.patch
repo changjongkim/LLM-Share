@@ -1,0 +1,179 @@
+--- a/src/llama-kv-cache.cpp	2026-10-10 17:57:43.107768538 +0900
++++ b/src/llama-kv-cache.cpp	2026-10-21 19:07:25.129323328 +0900
+@@ -61,6 +61,9 @@
+     bool publisher = false; // this process fills the file
+     bool agent = false;     // this process maps rows of the file
+     bool cow = false;       // agent that maps the whole file, writable and private
++    bool copy_publish = false; // LLAMA_KV_PUBLISH_COPY=1: the publisher keeps its rows private and copies the published ones into the file
++    bool seal = false;         // LLAMA_KV_SEAL=1: the file is a sealable memfd that a publish seals against every write
++    int seal_fd = -1;          // publisher with LLAMA_KV_SEAL: the memfd, which the processes it starts inherit
+     // device memory composed with the virtual memory interface of the backend (LLAMA_KV_VMM)
+     bool vmm = false;
+     bool demand = false;    // LLAMA_KV_VMM=2: private, follows the rows in use, neither published nor imported
+@@ -281,6 +284,80 @@
+         host->rows_mapped = rows;
+         return true;
+     }
++    if (host->copy_publish) {
++        // the read-only mapping of a file: the publisher copies the published rows into it and keeps its own
++        if (host->rows_mapped > 0) {
++            throw std::runtime_error("kv cache: a publisher that copies publishes once");
++        }
++        size_t total = 0;
++        for (const auto & t : host->tensors) {
++            total = std::max(total, t.offset + t.size);
++        }
++        const int fd = open(host->path.c_str(), O_RDWR | O_CREAT | O_TRUNC, 0600);
++        if (fd < 0 || ftruncate(fd, (off_t) total) != 0) {
++            throw std::runtime_error("kv cache: cannot create " + host->path);
++        }
++        char * file = (char *) mmap(nullptr, total, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0);
++        if (file == MAP_FAILED) {
++            throw std::runtime_error("kv cache: cannot map " + host->path);
++        }
++        for (const auto & t : host->tensors) {
++            memcpy(file + t.offset, host->base + t.offset, std::min(rows, t.rows) * t.row);
++        }
++        munmap(file, total);
++        close(fd);
++        host->rows_mapped = rows;
++        return true;
++    }
++    if (host->seal) {
++        if (host->rows_mapped > 0) {
++            throw std::runtime_error("kv cache: a sealed cache publishes once");
++        }
++        const size_t page = llama_kv_host_page;
++        const int ro = open(host->path.c_str(), O_RDONLY);
++        if (ro < 0) {
++            throw std::runtime_error("kv cache: cannot open " + host->path + " read-only");
++        }
++        std::vector<std::pair<const char *, size_t>> frozen;
++        std::vector<char> part;
++        for (const auto & t : host->tensors) {
++            char * start = host->base + t.offset;
++            const size_t filled = std::min(rows, t.rows) * t.row;
++            const size_t whole = filled / page * page;
++            const size_t ready = std::min((std::min(host->rows_ready, t.rows) * t.row + page - 1) / page * page, t.size);
++            part.assign(start + whole, start + filled);
++            // the published rows, again from a descriptor without write access: no writable mapping remains
++            if (whole > 0) {
++                if (mmap(start, whole, PROT_READ, MAP_SHARED | MAP_FIXED, ro, (off_t) t.offset) == MAP_FAILED) {
++                    throw std::runtime_error("kv cache: cannot map the published rows read-only");
++                }
++                (void) madvise(start, whole, MADV_HUGEPAGE);
++                frozen.emplace_back(start, whole);
++            }
++            // the rows after them become private memory, as in an agent, with the bytes of the page the prefix ends in
++            if (mmap(start + whole, t.size - whole, PROT_READ | PROT_WRITE, MAP_PRIVATE | MAP_ANONYMOUS | MAP_FIXED | MAP_NORESERVE, -1, 0) == MAP_FAILED) {
++                throw std::runtime_error("kv cache: cannot map private memory behind the published rows");
++            }
++            (void) madvise(start + whole, t.size - whole, host->grow > 0 ? MADV_NOHUGEPAGE : MADV_HUGEPAGE);
++            if (ready > whole && madvise(start + whole, ready - whole, MADV_POPULATE_WRITE) != 0) {
++                throw std::runtime_error("kv cache: cannot put memory behind the rows after the published ones");
++            }
++            memcpy(start + whole, part.data(), part.size());
++            // the file keeps the pages that hold published rows
++            const size_t keep = (filled + page - 1) / page * page;
++            if (t.size > keep && fallocate(host->seal_fd, FALLOC_FL_PUNCH_HOLE | FALLOC_FL_KEEP_SIZE,
++                                           (off_t) (t.offset + keep), (off_t) (t.size - keep)) != 0) {
++                throw std::runtime_error("kv cache: cannot release the pages after the published rows");
++            }
++        }
++        close(ro);
++        if (fcntl(host->seal_fd, F_ADD_SEALS, F_SEAL_WRITE | F_SEAL_SHRINK | F_SEAL_GROW | F_SEAL_SEAL) != 0) {
++            throw std::runtime_error("kv cache: cannot seal the published rows");
++        }
++        llama_kv_host_touch(frozen);
++        host->rows_mapped = rows;
++        return true;
++    }
+     for (const auto & t : host->tensors) {
+         const size_t whole = std::min(rows, t.rows) * t.row / llama_kv_host_page * llama_kv_host_page;
+         if (whole > 0 && mprotect(host->base + t.offset, whole, PROT_READ) != 0) {
+@@ -577,6 +654,12 @@
+ // LLAMA_KV_HOST=PATH LLAMA_KV_PREFIX=ROWS: agent, the first ROWS rows are a read-only mapping of the file, the rest is private.
+ // LLAMA_KV_COW=1 with the above: agent, the whole file as a writable private mapping (copy-on-write); 2: the same without the CPU read of the prefix.
+ // LLAMA_KV_GROW=ROWS: memory follows the rows in use, ROWS at a time.
++// LLAMA_KV_PUBLISH_COPY=1: publisher, the rows are private memory and a publish copies the published rows into the file
++//                          (the read-only mapping of a file that Linux provides, for state that a running process wrote).
++// LLAMA_KV_SEAL=1: the file is a memfd. A publisher maps it shared and, at its publish, maps the published rows again from a
++//                  read-only descriptor, moves the rows after them to private memory, and seals the file against writes
++//                  (F_SEAL_WRITE), which no writable mapping then prevents. Its processes inherit the memfd
++//                  (LLAMA_KV_SEAL_FD_INDEX), and an agent maps the prefix only from a sealed file.
+ // Returns nullptr when the mode is off or the device cannot do it.
+ static ggml_backend_buffer_t llama_kv_alloc_host(ggml_context * ctx, ggml_backend_buffer_type_t buft, int index, bool rows_are_cells) {
+     const char * vmm = getenv("LLAMA_KV_VMM");
+@@ -634,6 +717,21 @@
+     const bool touch = !(host.cow && cow_env[0] == '2');
+     host.path = anonymous ? "" : std::string(mode) + "." + std::to_string(index);
+     host.grow = !host.cow && grow_env != nullptr ? strtoull(grow_env, nullptr, 10) : 0;
++    const char * copy_env = getenv("LLAMA_KV_PUBLISH_COPY");
++    const char * seal_env = getenv("LLAMA_KV_SEAL");
++    host.copy_publish = host.publisher && copy_env != nullptr && copy_env[0] == '1';
++    host.seal = !anonymous && !host.cow && seal_env != nullptr && seal_env[0] == '1';
++    if (host.copy_publish && host.seal) {
++        throw std::runtime_error("kv cache: LLAMA_KV_PUBLISH_COPY and LLAMA_KV_SEAL exclude each other");
++    }
++    const std::string seal_name = "LLAMA_KV_SEAL_FD_" + std::to_string(index);
++    if (host.seal && host.agent) {
++        const char * fd_env = getenv(seal_name.c_str());
++        if (fd_env == nullptr || fd_env[0] == '\0') {
++            throw std::runtime_error("kv cache: no sealed file for the prefix (" + seal_name + ")");
++        }
++        host.path = std::string("/proc/self/fd/") + fd_env;
++    }
+ 
+     // rows must be cells: with a transposed value tensor or several streams a prefix is not a leading range
+     if (host.agent && !(rows_are_cells && one_stream)) {
+@@ -653,6 +751,26 @@
+             throw std::runtime_error("kv cache: cannot map " + host.path);
+         }
+         close(fd);
++    } else if (host.publisher && host.copy_publish) {
++        // the rows stay private memory; a publish copies the published ones into the file
++        if (mmap(base, total, PROT_READ | PROT_WRITE, MAP_PRIVATE | MAP_ANONYMOUS | MAP_FIXED | MAP_NORESERVE, -1, 0) == MAP_FAILED) {
++            throw std::runtime_error("kv cache: cannot map private memory");
++        }
++        (void) madvise(base, total, host.grow > 0 ? MADV_NOHUGEPAGE : MADV_HUGEPAGE);
++    } else if (host.publisher && host.seal) {
++        // no FD_CLOEXEC: the processes that this one starts inherit the memfd
++        const int fd = memfd_create(("llama-kv-" + std::to_string(index)).c_str(), MFD_ALLOW_SEALING);
++        if (fd < 0 || ftruncate(fd, (off_t) total) != 0) {
++            throw std::runtime_error("kv cache: cannot create a sealable file");
++        }
++        if (mmap(base, total, PROT_READ | PROT_WRITE, MAP_SHARED | MAP_FIXED, fd, 0) == MAP_FAILED) {
++            throw std::runtime_error("kv cache: cannot map the sealable file");
++        }
++        // 2 MiB pages, as on the memory file system, with /sys/kernel/mm/transparent_hugepage/shmem_enabled = advise
++        (void) madvise(base, total, MADV_HUGEPAGE);
++        host.seal_fd = fd;
++        host.path = "/proc/self/fd/" + std::to_string(fd);
++        setenv(seal_name.c_str(), std::to_string(fd).c_str(), 1);
+     } else if (host.publisher) {
+         const int fd = open(host.path.c_str(), O_RDWR | O_CREAT | O_TRUNC, 0600);
+         if (fd < 0 || ftruncate(fd, (off_t) total) != 0) {
+@@ -683,6 +801,13 @@
+         if (fd < 0) {
+             throw std::runtime_error("kv cache: cannot open " + host.path);
+         }
++        if (host.seal) {
++            // a sealed file cannot change any more, through any descriptor or mapping
++            const int seals = fcntl(fd, F_GET_SEALS);
++            if (seals < 0 || (seals & F_SEAL_WRITE) == 0) {
++                throw std::runtime_error("kv cache: the prefix file is not sealed");
++            }
++        }
+         for (const auto & t : host.tensors) {
+             const size_t filled = std::min(host.rows_mapped, t.rows) * t.row;
+             const size_t whole = filled / page * page;
+@@ -690,6 +815,9 @@
+                 if (mmap(base + t.offset, whole, PROT_READ, MAP_PRIVATE | MAP_FIXED | MAP_NORESERVE, fd, (off_t) t.offset) == MAP_FAILED) {
+                     throw std::runtime_error("kv cache: cannot map the prefix");
+                 }
++                if (host.seal) {
++                    (void) madvise(base + t.offset, whole, MADV_HUGEPAGE);
++                }
+                 mapped.emplace_back(base + t.offset, whole);
+                 shared_bytes += whole;
+             }

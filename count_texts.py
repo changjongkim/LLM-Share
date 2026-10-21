@@ -3,7 +3,7 @@
 Copy or on the existing engine, over the campaigns on the whole GPU (names
 ending in -full-v1 or -full-v2, and the formal runs e1, e2, e3). Only the
 STATOR configuration of each campaign counts, not its variants (a step
-removed, a cache allocated at once). Gemma-2 is left out, since STATOR does not
+removed, a cache allocated at once). The hand-over campaign of the review (130) counts as well. Gemma-2 is left out, since STATOR does not
 support its sliding-window cache (0 of 2 texts in its smoke run).
 
 Usage: count_texts.py [RESULTS_DIR]
@@ -92,6 +92,24 @@ def e1():
     return e, n
 
 
+def handover_review():
+    """STATOR (extent) against Copy of the same run in the hand-over campaign of the review (130): children and
+    parent of every case."""
+    cases = json.load(open(os.path.join(RES, newest("review-handover-all-v1"), "cases.json")))
+    by = collections.defaultdict(dict)
+    for c in cases:
+        if c.get("status") == "ok":
+            by[(c["run"], c["children"], c["paragraphs"])][c["mode"]] = c
+    e = n = 0
+    for m in by.values():
+        if "copy" in m and "extent" in m:
+            pairs = list(zip(m["copy"]["child_text_sha256"], m["extent"]["child_text_sha256"]))
+            pairs.append((m["copy"]["parent_text_sha256"], m["extent"]["parent_text_sha256"]))
+            e += sum(a == b for a, b in pairs)
+            n += len(pairs)
+    return e, n
+
+
 def validation(suffix, mode):
     v = json.load(open(os.path.join(RES, newest(suffix), "validation.json")))
     rows = [x for x in v["comparisons"] if x["case"].split("-")[1] == mode]
@@ -110,6 +128,7 @@ def main():
             if rows:
                 lines.append((directory, *count(rows, ("extent_lazy",), "texts_equal_to_restore", "texts_compared")))
     lines.append(("e1-live-publish-formal-v1", *e1()))
+    lines.append(("review-handover-all-v1", *handover_review()))
     lines.append(("e2-tree11-formal-v1", *validation("e2-tree11-formal-v1", "chain")))
     lines.append(("e2-tree23-31-formal-v1", *validation("e2-tree23-31-formal-v1", "chain")))
     lines.append(("e3-resident-tmpfs-v1", *validation("e3-resident-tmpfs-v1", "extent")))
