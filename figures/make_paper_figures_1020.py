@@ -160,8 +160,9 @@ def tree_e2():
 
 
 # -------------------------------------------------------------- resident
-def resident_117():
-    D = RES + "/20261020-e3-resident-formal-v1"
+def resident_117(D=RES + "/20261020-e3-resident-formal-v1"):
+    # 124 (20261021-e3-resident-tmpfs-v1) repeats this sweep with the model file on the
+    # memory file system of STATOR and Copy up to its own limit of 56 agents
     cases = json.load(open(D + "/cases.json"))
     agg = defaultdict(lambda: defaultdict(list))
     for c in cases:
@@ -205,7 +206,7 @@ def resident_117():
     # token, over the eight active agents of every repetition: median and 95th percentile
     fig, ax = panel()
     top = 0
-    # STATOR first, so that Copy, which ends at 48 agents, stays visible on top of it
+    # STATOR first, so that Copy, which ends at fewer agents, stays visible on top of it
     for lab, col, m, mk in reversed(modes):
         pts = sorted((n, resume[(mm, n)]) for (mm, n) in resume if mm == m)
         for index, style_ in ((0, "-"), (1, (0, (3, 2)))):
@@ -336,7 +337,7 @@ if __name__ == "__main__":
     print("ablation speed", ablation_speed())
     sota_e1()
     tree_e2()
-    print("resident", resident_117()[1])
+    print("resident", resident_117(*filter(None, [os.environ.get("RESIDENT_RESULT")]))[1])
     print("proc8", proc8_bars())
     s = dynamic_e4b()
     for k in sorted(s):
