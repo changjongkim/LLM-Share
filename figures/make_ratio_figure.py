@@ -9,10 +9,10 @@ the repetitions with their 95% confidence intervals.
 import json
 import os
 
-from make_paper_figures import COPY, COPY_PALE, NAME, OURS, finish, legend, panel
+from make_paper_figures import COPY, COPY_LIGHT, NAME, OURS, finish, legend, panel
 
-# No Sharing takes the pale tint of Copy: the same device cache, without the restored prefix
-MODES = (("No Sharing", COPY_PALE, "alone", "D"), ("Copy", COPY, "copy", "s"), (NAME, OURS, "extent", "o"))
+# No Sharing takes the tint of Copy: the same device cache, without the restored prefix
+MODES = (("No Sharing", COPY_LIGHT, "alone", "D"), ("Copy", COPY, "copy", "s"), (NAME, OURS, "extent", "o"))
 
 
 def ratio_figure(result):

@@ -34,8 +34,8 @@ from make_eval_figures import (AXIS, COPY, COW, DEVICE, GRID, INK, OURS,  # noqa
                                OURS_LIGHT, RES, grouped, rows, save, style, tip)
 
 NAME = "STATOR"
-# One palette for every panel, in a fixed order: grey for what copies the
-# state (Copy, the existing engine, vLLM), then blue, violet and orange for the other
+# One palette for every panel, in a fixed order: blue for what copies the state (Copy and its
+# variants, 10-23), dark grey for the existing engine and vLLM, then blue, violet and orange for the other
 # mechanisms or systems of a panel, and teal for STATOR. A lighter tint of a
 # colour is a variant of the same thing (other page size, a part left out).
 DEMAND = "#6aa3dd"         # blue: Demand
@@ -43,11 +43,11 @@ EXISTING = "#3d3c39"       # dark grey: the existing engine (and the unmodified 
 OLLAMA = "#8c564b"         # brown: Ollama
 SHARED_MAP = "#d9ae1e"     # gold: shared writable mapping
 RO_MAP = "#ecd27a"         # light gold: read-only shared mapping
-LIGHT_GRAY = "#cfcdc6"     # light grey: CPU offloading of vLLM
+LIGHT_GRAY = "#6f97d4"     # a tint of Copy: CPU offloading of vLLM (copies to host memory)
 DEMAND_LIGHT = "#b9cfe9"
 DEVICE_LIGHT = "#c9bdf0"   # violet (DEVICE) is the third entry
-COPY_LIGHT = "#b7b5af"
-COPY_PALE = "#d9d7d1"
+COPY_LIGHT = "#6f97d4"     # tints of Copy (10-23): 9.0 from teal under CVD simulation
+COPY_PALE = "#b8cdee"
 OURS_PALE = "#c9e9e5"    # teal (OURS, OURS_LIGHT): a second part left out
 # Text sizes in points on a canvas that the paper places at 0.51 of its size
 # (a quarter of the page or half a column): a low canvas with large text,
@@ -181,7 +181,7 @@ def weights():
     finish(fig, ax, "eval_weights_mem", "Serving Processes", "Memory (GiB)", 47)
 
     pages = {r["mode"]: r for r in rows("20261005-engine-pages-v1", "engine_pages_summary.csv")}
-    order = (("Existing\nEngine", "copy", COPY), (f"{NAME}\n(4 KiB)", "inplace_4k", OURS_LIGHT),
+    order = (("Existing\nEngine", "copy", EXISTING), (f"{NAME}\n(4 KiB)", "inplace_4k", OURS_LIGHT),
              (f"{NAME}\n(2 MiB)", "inplace_thp", OURS))
     fig, ax = panel()
     values = [float(pages[mode]["generation_vs_copy"]) for _, mode, _ in order]

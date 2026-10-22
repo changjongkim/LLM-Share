@@ -28,9 +28,12 @@ RES = os.path.join(HERE, "..", "results")
 
 # One colour per entity, the same in every figure. The proposed design is
 # teal; a lighter step of the same hue is its variant with the whole tail
-# allocated. Upstream (copy) is the neutral grey.
-OURS, OURS_LIGHT = "#1a9a8f", "#8fd3cb"
-COPY = "#898781"
+# allocated.
+# One color per system in every figure (10-20): STATOR teal, its variants light teal; Copy blue (10-23, in place
+# of a grey that did not show well on white): worst-case OKLab difference 11.3 to every other colour under
+# deutan, protan and tritan simulation
+OURS, OURS_LIGHT = "#138a7e", "#7fcfc4"
+COPY = "#1f4e96"
 COW = "#eb6834"
 DEVICE = "#7b61c9"
 INK, MUTED, GRID, AXIS = "#0b0b0b", "#52514e", "#e1e0d9", "#c3c2b7"
@@ -689,7 +692,7 @@ def bg_state():
     counts = [1, 4, 8]
     fig, ax = plt.subplots(figsize=PANEL)
     series = []
-    for size, colour in zip(sizes, ("#c3c2b7", COPY)):
+    for size, colour in zip(sizes, ("#6f97d4", COPY)):   # the shorter prefix in the tint of Copy (10-23)
         tokens = int(share[size, "restore", 1]["prefix_tokens"])
         series.append((f"{tokens:,} tokens", colour,
                        [float(share[size, "restore", n]["memory_mib"]) / 1024 for n in counts]))
