@@ -1315,8 +1315,12 @@ def linux_scale():
             if not points:
                 continue
             top = max(top, max(value for _, value in points))
+            # Copy is drawn on top: its TTFT lies between those of STATOR and Read-Only Map, and it serves no fault,
+            # which puts it on the zero line of STATOR in the fault panel, where it is dashed (10-23)
+            on_zero = m == "copy" and all(value == 0 for _, value in points)
             ax.plot([p[0] for p in points], [p[1] for p in points], color=colour, marker=marker,
-                    markersize=7, linewidth=2, label=label, markeredgecolor="white", markeredgewidth=1.2)
+                    markersize=7, linewidth=2, label=label, markeredgecolor="white", markeredgewidth=1.2,
+                    zorder=4 if m == "copy" else 3, linestyle=(0, (3, 2)) if on_zero else "-")
         ax.set_xscale("log", base=2)
         ax.set_xticks(ticks, [str(n) for n in ticks])
         ax.minorticks_off()
