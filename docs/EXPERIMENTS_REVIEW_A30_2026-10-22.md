@@ -11,6 +11,7 @@
 | T3 | 반복 fork (131, 133) | Thor | 실행 중인 에이전트를 여러 번 fork할 때의 멈춤과 메모리는? | fork당 Copy 527-626 / Copied File 81-92 / STATOR 5.7-12.2 ms, 정점 메모리 9.7-12.9 / 7.9-8.1 / 6.9-7.0 GiB | 평가 4.4, Figure 15 (f4c9ca0 이후) |
 | T4 | 에이전트 세션 (132) | Thor | 세션 실험에서 Copied File과 STATOR가 다른가? | 거의 같음(TTFT p50 861 vs 868 ms, 메모리 43.4 vs 46.3 GiB) | 미반영 |
 | T5 | 결함 sharer (135) | Thor | 잘못된 GPU 쓰기가 다른 에이전트에 무엇을 하는가? | Device: 자식 24/24와 부모가 1-7토큰 안에 텍스트가 바뀜, 오류 없음. STATOR: illegal address, 텍스트와 속도 그대로 | Figure 16(b), 평가 4.4 |
+| T6 | Delta-Copy 반복 fork (136, 리뷰 4) | Thor | 새 행만 복사하는 최적 복사가 STATOR만큼 빠른가? | 이후 fork는 delta 5.8-9.0 ms로 STATOR 8.5-9.5 ms와 같거나 짧음. 첫 fork 82-84 vs 11.5-12.2 ms, 8회 합계 127-129 vs 73-76 ms, 정점 메모리 7.7-8.0 vs 5.8-6.9 GiB | Figure 15, 평가 4.4 "Repeated Forks." |
 | A1 | Linux 메커니즘 프로브 | A30 | Thor에서 본 문제가 x86 + 분리 메모리(HMM)에서도 생기는가? | GPU 읽기에 1 GiB 복사, fork/KSM 공유 깨짐, reclaim 폴트 4.3 M | 배경 2.2-2.3, Figure 3(a)(b) |
 | A2 | 계층별 비용 프로브 | A30 | afblock, 항목당 무효화는 어느 계층의 비용인가? | afblock 복사 0, 항목당 +0.1-0.9 µs (Thor 9.6-10.9 µs) | 배경 2.2 |
 | A3 | 보호(G3) 프로브 | A30 | 읽기 전용 매핑으로의 GPU 쓰기가 거부되는가? | 6/6 거부, VMM importer는 6/6 쓰기 성공 | 근거 자료 |
@@ -95,6 +96,22 @@
   - STATOR: 첫 쓰기에서 illegal address가 났다. 자식과 부모의 텍스트가 모두 같았고, 쓰기 뒤 생성 속도는 대조 실행의 1.002배였다.
 - **반영:** Figure 16(b) "Children after a Faulty Write.", 평가 4.4 Shared Device Memory 문단 (커밋 5c8b2cb).
 - **데이터:** `llm_share/results/20261022-review-fault-writer-v2`, 도구 `stator_campaign_20261016/{src/fault_writer.cu, src/kv_spawn_fault.cpp, tools/run_fault_writer.py, tools/summarize_fault_writer.py}`, 그림 `llm_share/figures/make_fault_figure.py`.
+
+### T6. Delta-Copy 반복 fork (큐 136, 리뷰 (4) 대응)
+- **질문:** 반복 fork에서 지난 fork 이후 새로 쓴 행만 복사하는 최적 복사(STATOR (Copied Delta))가 제자리 전환만큼 빠른가?
+- **구성:** T3(133)와 같은 조건이다(16,321 토큰, fork 8회, 256토큰 간격, 6회). 엔진은 tuned5(tuned4에 `LLAMA_KV_PUBLISH_COPY=2` 추가)이다. 파일은 첫 publish 때 만들어 부모에 쓰기 가능하게 매핑해 두고, 이후 publish는 새 행만 복사한다. 네 방식 모두 tuned5로 돌렸다.
+- **결과:** 24케이스 모두 정상, GPU 폴트 0, 자식 8명의 텍스트가 네 방식에서 모두 같았다.
+
+| 방식 | 첫 fork | 이후 fork당 | 8회 합계 | 정점 메모리 | 자식 TTFT 중앙값 |
+|---|---:|---:|---:|---:|---:|
+| Copy | 568-582 ms | 518-636 ms (한 번 1,035) | 4,552-5,197 ms | 10.4-13.1 GiB | 1,194 ms |
+| STATOR (Copied File) | 80-84 ms | 84-91 ms | 686-701 ms | 7.95-8.19 GiB | 855 ms |
+| STATOR (Copied Delta) | 82-84 ms | 5.8-9.0 ms | 127-129 ms | 7.72-8.01 GiB | 858 ms |
+| STATOR | 11.5-12.2 ms | 8.5-9.5 ms | 73-76 ms | 5.78-6.88 GiB | 854 ms |
+
+- **해석:** 새 행만 복사하면 이후 fork는 STATOR와 같거나 더 짧다. 첫 fork의 전체 복사와 공개된 행의 두 번째 사본(약 1 GiB)은 제자리 전환만 없앤다. 논문은 이 방향으로 썼다(리뷰어 제안과 같음).
+- **반영:** Figure 15(네 방식), 평가 4.4 "Repeated Forks." 문단.
+- **데이터:** `llm_share/results/20261022-review-repeatfork-delta-v1`, 엔진 `llm_share/llama.cpp-tuned5`, 실행기 `stator_campaign_20261016/tools/run_repeat_fork_v2.py`.
 
 ## 3. A30 실험 (CloudLab d7525, x86 + NVIDIA A30, HMM)
 

@@ -12,6 +12,7 @@ import os
 import make_paper_figures as paper
 from make_paper_figures import (COW, COW_LIGHT, DEMAND, DEMAND_LIGHT, DENSE, MECHS, TICK2, compact, finish, full,
                                 grouped, labels, legend, panel, rows, save, style, tip)
+import matplotlib.pyplot as plt
 from matplotlib.ticker import FuncFormatter
 
 A30 = "/home/thor/kcj/portable_bench_a30/results/a30_20261022/node0-20261022-020702/mech/mech_probe_summary.csv"
@@ -38,7 +39,13 @@ def main():
             thor[key] = r
     a30 = summary(csv.DictReader(open(A30)))
     platform = {"thor": thor, "a30": a30}
-    legend("bg_mech_legend", [(label, colour) for label, colour, _, _ in READERS], 4)
+    # the strip stands above (a) and (b) only, the half of the figure whose bars it names, in one row with narrow
+    # spacing so that it fits that width
+    strip = plt.figure(figsize=(6.6, 0.38))
+    strip.legend([plt.Rectangle((0, 0), 1, 1, color=colour) for _, colour, _, _ in READERS],
+                 [label for label, _, _, _ in READERS], loc="center", ncol=4, columnspacing=0.8, handlelength=1.0,
+                 handletextpad=0.4, fontsize=12.5)
+    save(strip, "bg_mech_legend")
 
     def value(where, mech, step, access, column):
         row = platform[where].get((mech, step, access, ""))
