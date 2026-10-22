@@ -1,0 +1,4 @@
+
+
+User request for agent 5: Calculate the magnetic field produced at the center of a circular loop carrying current of 5 Ampere with a radius of 4 meters
+Call:

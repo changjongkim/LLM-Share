@@ -1,0 +1,13 @@
+Shared-prefix ratio workload (make_workload_ratio.py): 16384 tokens per agent, 4096 shared, 12288 private, 8 agents
+
+shared: BFCL v4 simple_python (https://github.com/ShishirPatil/gorilla at 6ea57973c7a6097fd7c5915698c54c17c5b1b6c8, Apache-2.0), system prompt and 30 functions
+private: Markdown files of llama.cpp-tuned4 at 6f767fe960c3b97cf37fac4626c86400561ca1e4 (124 files, 327521 tokens), agent i from token i * 14336, and a BFCL request
+
+agent 0: request of entry simple_python_0 (calculate_triangle_area)
+agent 1: request of entry simple_python_249 (religion.history_info)
+agent 2: request of entry simple_python_96 (database.query)
+agent 3: request of entry simple_python_342 (game_list.get_games)
+agent 4: request of entry simple_python_193 (local_nursery.find)
+agent 5: request of entry simple_python_40 (calculate_magnetic_field)
+agent 6: request of entry simple_python_286 (concert.get_details)
+agent 7: request of entry simple_python_134 (investment.predictProfit)

@@ -1,0 +1,398 @@
+
+
+# Reference documents of agent 6
+
+32-correctly-rounded-divide-sqrt`
+
+### III. Run the inference
+
+#### Retrieve and prepare model
+
+You can refer to the general [*Obtaining and quantizing models*](../../README.md#obtaining-and-quantizing-models) guide for model preparation, or download an already quantized model like [llama-2-7b.Q4_0.gguf](https://huggingface.co/TheBloke/Llama-2-7B-GGUF/resolve/main/llama-2-7b.Q4_0.gguf?download=true) or [Meta-Llama-3-8B-Instruct-Q4_0.gguf](https://huggingface.co/aptha/Meta-Llama-3-8B-Instruct-Q4_0-GGUF/resolve/main/Meta-Llama-3-8B-Instruct-Q4_0.gguf).
+
+##### Check device
+
+1. Enable oneAPI running environment
+
+```sh
+source /opt/intel/oneapi/setvars.sh
+```
+
+2. List devices information
+
+Similar to the native `sycl-ls`, available SYCL devices can be queried as follow:
+
+```sh
+./build/bin/llama-ls-sycl-device
+```
+
+This command will only display the selected backend that is supported by SYCL. The default backend is level_zero. For example, in a system with 2 *Intel GPU* it would look like the following:
+```
+found 2 SYCL devices:
+
+|  |                  |                                             |Compute   |Max compute|Max work|Max sub|               |
+|ID|       Device Type|                                         Name|capability|units      |group   |group  |Global mem size|
+|--|------------------|---------------------------------------------|----------|-----------|--------|-------|---------------|
+| 0|[level_zero:gpu:0]|               Intel(R) Arc(TM) A770 Graphics|       1.3|        512|    1024|     32|    16225243136|
+| 1|[level_zero:gpu:1]|                    Intel(R) UHD Graphics 770|       1.3|         32|     512|     32|    53651849216|
+```
+
+#### Choose level-zero devices
+
+|Chosen Device ID|Setting|
+|-|-|
+|0|`export ONEAPI_DEVICE_SELECTOR="level_zero:0"` or no action|
+|1|`export ONEAPI_DEVICE_SELECTOR="level_zero:1"`|
+|0 & 1|`export ONEAPI_DEVICE_SELECTOR="level_zero:0;level_zero:1"`|
+
+#### Execute
+
+Choose one of following methods to run.
+
+1. Script
+
+- Use device 0:
+
+```sh
+./examples/sycl/test.sh -mg 0
+```
+- Use multiple devices:
+
+```sh
+./examples/sycl/test.sh
+```
+
+- Run llama-server:
+
+```sh
+./examples/sycl/start-svr.sh -m PATH/MODEL_FILE
+```
+
+2. Command line
+Launch inference
+
+There are two device selection modes:
+
+- Single device: Use one device assigned by user. Default device id is 0.
+- Multiple devices: Automatically choose the devices with the same backend.
+
+In two device selection modes, the default SYCL backend is level_zero, you can choose other backend supported by SYCL by setting environment variable ONEAPI_DEVICE_SELECTOR.
+
+| Device selection | Parameter                              |
+|------------------|----------------------------------------|
+| Single device    | --split-mode none --main-gpu DEVICE_ID |
+| Multiple devices | --split-mode layer (default)           |
+| Multiple devices | --split-mode tensor (tensor parallelism) |
+
+`--split-mode tensor` (tensor parallelism) shards each layer across the selected
+GPUs. It requires flash attention, which is auto-enabled when `--flash-attn` is
+left at its default `auto`, so `--split-mode tensor` works out of the box.
+Passing `--flash-attn off` together with `--split-mode tensor` is rejected at
+context creation. The default `f16` KV cache is recommended. Tensor parallelism
+is currently optimized for 2 GPUs; other device counts fall back to a generic
+all-reduce.
+
+Examples:
+
+- Use device 0:
+
+```sh
+ZES_ENABLE_SYSMAN=1 ./build/bin/llama-completion -no-cnv -m models/llama-2-7b.Q4_0.gguf -p "Building a website can be done in 10 simple steps:" -n 400 -e -ngl 99 -sm none -mg 0 --load-mode auto
+```
+
+- Use multiple devices:
+
+```sh
+ZES_ENABLE_SYSMAN=1 ./build/bin/llama-completion -no-cnv -m models/llama-2-7b.Q4_0.gguf -p "Building a website can be done in 10 simple steps:" -n 400 -e -ngl 99 -sm layer --load-mode auto
+```
+
+*Notes:*
+
+- Upon execution, verify the selected device(s) ID(s) in the output log, which can for instance be displayed as follow:
+
+```sh
+detect 1 SYCL GPUs: [0] with top Max compute units:512
+```
+Or
+```sh
+use 1 SYCL GPUs: [0] with Max compute units:512
+```
+
+User can use the device management in [docs/multi-gpu.md](https://github.com/ggml-org/llama.cpp/blob/master/docs/multi-gpu.md), like parameter `--device SYCL0,SYCL1` to assign one or more devices.
+
+## Windows
+
+### Install GPU driver
+
+Intel GPU drivers instructions guide and download page can be found here: [Get Intel GPU Drivers](https://www.intel.com/content/www/us/en/products/docs/discrete-gpus/arc/software/drivers.html).
+
+### Option 1: download the binary package directly
+
+Download the binary package for Windows from: https://github.com/ggml-org/llama.cpp/releases.
+
+Extract the package to local folder, run the llama tools directly. Refer to [Run the inference](#iii-run-the-inference-1).
+
+Note, the package includes the SYCL running time and all depended dll files, no need to install oneAPI package and activte them.
+
+### Option 2: build locally from the source code.
+
+#### I. Setup environment
+
+1. Install Visual Studio
+
+If you already have a recent version of Microsoft Visual Studio, you can skip this step. Otherwise, please refer to the official download page for [Microsoft Visual Studio](https://visualstudio.microsoft.com/).
+
+2. Install Intel oneAPI Base toolkit
+
+SYCL backend depends on:
+  - Intel oneAPI DPC++/C++ compiler/running-time.
+  - Intel oneAPI DPC++/C++ library (oneDPL).
+  - Intel oneAPI Deep Neural Network Library (oneDNN).
+  - Intel oneAPI Math Kernel Library (oneMKL).
+
+All above are included in both **Intel oneAPI Base toolkit** and **Intel Deep Learning Essentials** packages.
+
+It's recommended to install **Intel Deep Learning Essentials** which only provides the necessary libraries with less size.
+
+The **Intel oneAPI Base toolkit** and **Intel Deep Learning Essentials** can be obtained from the official [Intel oneAPI Base Toolkit](https://www.intel.com/content/www/us/en/developer/tools/oneapi/base-toolkit.html) page.
+
+Please follow the instructions for downloading and installing the Toolkit for Windows, and preferably keep the default installation values unchanged, notably the installation path *(`C:\Program Files (x86)\Intel\oneAPI` by default)*.
+
+Following guidelines/code snippets assume the default installation values. Otherwise, please make sure the necessary changes are reflected where applicable.
+
+b. Enable oneAPI running environment:
+
+- Type "oneAPI" in the search bar, then open the `Intel oneAPI command prompt for Intel 64 for Visual Studio 2022` App.
+
+- On the command prompt, enable the runtime environment with the following:
+```
+"C:\Program Files (x86)\Intel\oneAPI\setvars.bat" intel64
+```
+
+- if you are using Powershell, enable the runtime environment with the following:
+
+```
+cmd.exe "/K" '"C:\Program Files (x86)\Intel\oneAPI\setvars.bat" && powershell'
+```
+
+c. Verify installation
+
+In the oneAPI command line, run the following to print the available SYCL devices:
+
+```
+sycl-ls.exe
+```
+
+There should be one or more *level-zero* GPU devices displayed as **[ext_oneapi_level_zero:gpu]**. Below is example of such output detecting an *Intel Iris Xe* GPU as a Level-zero SYCL device:
+
+Output (example):
+```
+[opencl:acc:0] Intel(R) FPGA Emulation Platform for OpenCL(TM), Intel(R) FPGA Emulation Device OpenCL 1.2  [2023.16.10.0.17_160000]
+[opencl:cpu:1] Intel(R) OpenCL, 11th Gen Intel(R) Core(TM) i7-1185G7 @ 3.00GHz OpenCL 3.0 (Build 0) [2023.16.10.0.17_160000]
+[opencl:gpu:2] Intel(R) OpenCL Graphics, Intel(R) Iris(R) Xe Graphics OpenCL 3.0 NEO  [31.0.101.5186]
+[ext_oneapi_level_zero:gpu:0] Intel(R) Level-Zero, Intel(R) Iris(R) Xe Graphics 1.3 [1.3.28044]
+```
+
+3. Install build tools
+
+a. Download & install cmake for Windows: https://cmake.org/download/ (CMake can also be installed from Visual Studio Installer)
+b. The new Visual Studio will install Ninja as default. (If not, please install it manually: https://ninja-build.org/)
+
+
+#### II. Build llama.cpp
+
+You could download the release package for Windows directly, which including binary files and depended oneAPI dll files.
+
+Choose one of following methods to build from source code.
+
+##### Option 1: Script
+
+```sh
+# Uses FP32, consider using FP16 for better performance in most cases
+.\examples\sycl\win-build-sycl.bat
+```
+
+##### Option 2: CMake
+
+On the oneAPI command line window, step into the llama.cpp main directory and run the following:
+
+```
+@call "C:\Program Files (x86)\Intel\oneAPI\setvars.bat" intel64 --force
+
+# Option 1: Use FP16 (recommended for better performance in most cases)
+cmake -B build -G "Ninja" -DGGML_SYCL=ON -DCMAKE_C_COMPILER=cl -DCMAKE_CXX_COMPILER=icx -DCMAKE_BUILD_TYPE=Release -DGGML_SYCL_F16=ON
+
+# Option 2: Or FP32
+cmake -B build -G "Ninja" -DGGML_SYCL=ON -DCMAKE_C_COMPILER=cl -DCMAKE_CXX_COMPILER=icx -DCMAKE_BUILD_TYPE=Release
+
+cmake --build build --config Release -j
+```
+
+Or, use CMake presets to build:
+
+```sh
+cmake -DGGML_SYCL_F16=ON --preset x64-windows-sycl-release
+cmake --build build-x64-windows-sycl-release -j --target llama-completion
+
+cmake --preset x64-windows-sycl-release
+cmake --build build-x64-windows-sycl-release -j --target llama-completion
+
+cmake --preset x64-windows-sycl-debug
+cmake --build build-x64-windows-sycl-debug -j --target llama-completion
+```
+
+##### Option 3: Visual Studio
+
+You have two options to use Visual Studio to build llama.cpp:
+- As CMake Project using CMake presets.
+- Creating a Visual Studio solution to handle the project.
+
+**Note**:
+
+All following commands are executed in PowerShell.
+
+###### - Open as a CMake Project
+
+You can use Visual Studio to open the `llama.cpp` folder directly as a CMake project. Before compiling, select one of the SYCL CMake presets:
+
+- `x64-windows-sycl-release`
+
+- `x64-windows-sycl-debug`
+
+*Notes:*
+- For a minimal experimental setup, you can build only the inference executable using:
+
+    ```Powershell
+    cmake --build build --config Release -j --target llama-completion
+    ```
+
+###### - Generating a Visual Studio Solution
+
+You can use Visual Studio solution to build and work on llama.cpp on Windows. You need to convert the CMake Project into a `.sln` file.
+
+If you want to use the Intel C++ Compiler for the entire `llama.cpp` project, run the following command:
+
+```Powershell
+cmake -B build -G "Visual Studio 17 2022" -T "Intel C++ Compiler 2025" -A x64 -DGGML_SYCL=ON -DCMAKE_BUILD_TYPE=Release
+```
+
+If you prefer to use the Intel C++ Compiler only for `ggml-sycl`, ensure that `ggml` and its backend libraries are built as shared libraries ( i.e. `-DBUILD_SHARED_LIBRARIES=ON`, this is default behaviour):
+
+```Powershell
+cmake -B build -G "Visual Studio 17 2022" -A x64 -DGGML_SYCL=ON -DCMAKE_BUILD_TYPE=Release \
+      -DSYCL_INCLUDE_DIR="C:\Program Files (x86)\Intel\oneAPI\compiler\latest\include" \
+      -DSYCL_LIBRARY_DIR="C:\Program Files (x86)\Intel\oneAPI\compiler\latest\lib"
+```
+
+If successful the build files have been written to: *path/to/llama.cpp/build*
+Open the project file **build/llama.cpp.sln** with Visual Studio.
+
+Once the Visual Studio solution is created, follow these steps:
+
+1. Open the solution in Visual Studio.
+
+2. Right-click on `ggml-sycl` and select **Properties**.
+
+3. In the left column, expand **C/C++** and select **DPC++**.
+
+4. In the right panel, find **Enable SYCL Offload** and set it to `Yes`.
+
+5. Apply the changes and save.
+
+
+*Navigation Path:*
+
+```
+Properties -> C/C++ -> DPC++ -> Enable SYCL Offload (Yes)
+```
+
+Now, you can build `llama.cpp` with the SYCL backend as a Visual Studio project.
+To do it from menu: `Build -> Build Solution`.
+Once it is completed, final results will be in **build/Release/bin**
+
+*Additional Note*
+
+- You can avoid specifying `SYCL_INCLUDE_DIR` and `SYCL_LIBRARY_DIR` in the CMake command by setting the environment variables:
+
+    - `SYCL_INCLUDE_DIR_HINT`
+
+    - `SYCL_LIBRARY_DIR_HINT`
+
+- Above instruction has been tested with Visual Studio 17 Community edition and oneAPI 2025.0. We expect them to work also with future version if the instructions are adapted accordingly.
+
+### III. Run the inference
+
+#### Retrieve and prepare model
+
+You can refer to the general [*Obtaining and quantizing models*](../../README.md#obtaining-and-quantizing-models) guide for model preparation, or download an already quantized model like [llama-2-7b.Q4_0.gguf](https://huggingface.co/TheBloke/Llama-2-7B-GGUF/blob/main/llama-2-7b.Q4_0.gguf) or [Meta-Llama-3-8B-Instruct-Q4_0.gguf](https://huggingface.co/aptha/Meta-Llama-3-8B-Instruct-Q4_0-GGUF/resolve/main/Meta-Llama-3-8B-Instruct-Q4_0.gguf).
+
+##### Check device
+
+1. Enable oneAPI running environment
+
+On the oneAPI command line window, run the following and step into the llama.cpp directory:
+```
+"C:\Program Files (x86)\Intel\oneAPI\setvars.bat" intel64
+```
+
+2. List devices information
+
+Similar to the native `sycl-ls`, available SYCL devices can be queried as follow:
+
+```
+build\bin\llama-ls-sycl-device.exe
+```
+
+This command will only display the selected backend that is supported by SYCL. The default backend is level_zero. For example, in a system with 2 *Intel GPU* it would look like the following:
+```
+found 2 SYCL devices:
+|  |                  |                                             |Compute   |Max compute|Max work|Max sub|               |
+|ID|       Device Type|                                         Name|capability|units      |group   |group  |Global mem size|
+|--|------------------|---------------------------------------------|----------|-----------|--------|-------|---------------|
+| 0|[level_zero:gpu:0]|               Intel(R) Arc(TM) A770 Graphics|       1.3|        512|    1024|     32|    16225243136|
+| 1|[level_zero:gpu:1]|                    Intel(R) UHD Graphics 770|       1.3|         32|     512|     32|    53651849216|
+
+```
+
+##### Choose level-zero devices
+
+|Chosen Device ID|Setting|
+|-|-|
+|0|Default option. You may also want to `set ONEAPI_DEVICE_SELECTOR="level_zero:0"`|
+|1|`set ONEAPI_DEVICE_SELECTOR="level_zero:1"`|
+|0 & 1|`set ONEAPI_DEVICE_SELECTOR="level_zero:0;level_zero:1"` or `set ONEAPI_DEVICE_SELECTOR="level_zero:*"`|
+
+##### Execute
+
+Choose one of following methods to run.
+
+1. Script
+
+- Run test:
+
+```
+examples\sycl\win-test.bat
+```
+
+- Run llama-server:
+
+```
+examples\sycl\win-start-svr.bat -m PATH\MODEL_FILE
+```
+
+2. Command line
+
+Launch inference
+
+There are two device selection modes:
+
+- Single device: Use one device assigned by user. Default device id is 0.
+- Multiple devices: Automatically choose the devices with the same backend.
+
+In two device selection modes, the default SYCL backend is level_zero, you can choose other backend supported by SYCL by setting environment variable ONEAPI_DEVICE_SELECTOR.
+
+| Device selection | Parameter                              |
+|------------------|-----------
+
+User request for agent 6: Get concert details for the artist Beyonce performing in San Diego next month (April 2022).
+Call:

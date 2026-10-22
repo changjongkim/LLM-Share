@@ -1,0 +1,30 @@
+Find the area of a triangle with a base of 10 units and height of 5 units.
+Tell me more about Christianity and its history till the 14th century
+Find records in database in user table where age is greater than 25 and job is 'engineer'.
+Find all multi-player games released in 2019 with an ESRB rating of 'Everyone'
+Find the best local nurseries in Toronto with a good variety of annual plants.
+Calculate the magnetic field produced at the center of a circular loop carrying current of 5 Ampere with a radius of 4 meters
+Get concert details for the artist Beyonce performing in San Diego next month (April 2022).
+Predict the total expected profit of stocks XYZ in 5 years given I have invested $5000 and annual return rate is 7%.
+Convert time 3pm from New York time zone to London time zone.
+Who was the King of France in 1510?
+Find a nearby restaurant that serves vegan food in Los Angeles.
+Fetch the basketball league standings, where Golden State Warriors stand in current 2022-2023 season with details
+How to obtain the detailed case information of the 'R vs Adams' legal case?
+Find the prime factors of 450
+Find me sculptures near Chicago that were made in the 19th century.
+Find the probability of getting exactly 5 heads in 10 fair coin tosses.
+Get the recipe for vegan chocolate cake including the steps for preparation.
+Locate the nearest public library in Boston, Massachusetts with English fiction section and free Wi-Fi.
+What is the function of ATP synthase in mitochondria?
+What is the third major chord in C major scale?
+Find the highest grossing bank in the U.S for year 2020.
+Find a hospital within 5 km radius around Denver, Colorado with pediatrics department.
+Who discovered radium?
+Find all movies starring Leonardo DiCaprio in the year 2010 from IMDB database.
+In a texas holdem game, Who won in the poker game with players Alex, Sam, Robert and Steve given the cards Alex':['A of spades', 'K of spades'], 'Sam': ['2 of diamonds', '3 of clubs'], 'Robert': ['Q of hearts', '10 of hearts'], 'Steve': ['4 of spades', '5 of spades']?
+Get weather information for New York, USA for the next 3 days with details.
+Find the shortest driving distance between New York City and Washington D.C.
+Find a Yamaha flute with the specifications of open hole, C foot, and silver headjoint available for sale.
+music.theory.chordProgression(progression=['I', 'V', 'vi', 'IV'])
+Find ten major historical events related to Christianity in the 16th century sort by importance.

@@ -1,0 +1,1328 @@
+
+
+# Reference documents of agent 4
+
+ recognition, including the 2023 James H. Wilkinson Prize for Numerical Software and the 2020 SIAM Activity Group on Supercomputing Best Paper Prize. BLIS provides a new BLAS-like API and a compatibility layer for traditional BLAS routine calls. It offers features such as object-based API, typed API, BLAS and CBLAS compatibility layers.
+
+Project URL: https://github.com/flame/blis
+
+### Prepare:
+
+Compile BLIS:
+
+```bash
+git clone https://github.com/flame/blis
+cd blis
+./configure --enable-cblas -t openmp,pthreads auto
+# will install to /usr/local/ by default.
+make -j
+```
+
+Install BLIS:
+
+```bash
+sudo make install
+```
+
+We recommend using openmp since it's easier to modify the cores being used.
+
+### llama.cpp compilation
+
+CMake:
+
+```bash
+mkdir build
+cd build
+cmake -DGGML_BLAS=ON -DGGML_BLAS_VENDOR=FLAME ..
+make -j
+```
+
+### llama.cpp execution
+
+According to the BLIS documentation, we could set the following
+environment variables to modify the behavior of openmp:
+
+```bash
+export GOMP_CPU_AFFINITY="0-19"
+export BLIS_NUM_THREADS=14
+```
+
+And then run the binaries as normal.
+
+
+### Intel specific issue
+
+Some might get the error message saying that `libimf.so` cannot be found.
+Please follow this [stackoverflow page](https://stackoverflow.com/questions/70687930/intel-oneapi-2022-libimf-so-no-such-file-or-directory-during-openmpi-compila).
+
+### Reference:
+
+1. https://github.com/flame/blis#getting-started
+2. https://github.com/flame/blis/blob/master/docs/Multithreading.md
+
+## docs/backend/CANN.md
+
+# llama.cpp for CANN
+
+ - [Background](#background)
+ - [News](#news)
+ - [OS](#os)
+ - [Hardware](#hardware)
+ - [Model Supports](#model-supports)
+ - [DataType Supports](#datatype-supports)
+ - [Docker](#docker)
+ - [Linux](#linux)
+ - [Environment variable setup](#environment-variable-setup)
+ - [TODO](#todo)
+
+
+## Background
+
+**Ascend NPU** is a range of AI processors using Neural Processing Unit. It will efficiently handle matrix-matrix multiplication, dot-product and scalars.
+
+**CANN** (Compute Architecture for Neural Networks) is a heterogeneous computing architecture for AI scenarios, providing support for multiple AI frameworks on the top and serving AI processors and programming at the bottom. It plays a crucial role in bridging the gap between upper and lower layers, and is a key platform for improving the computing efficiency of Ascend AI processors. Meanwhile, it offers a highly efficient and easy-to-use programming interface for diverse application scenarios, allowing users to rapidly build AI applications and services based on the Ascend platform.
+
+**Llama.cpp + CANN**
+
+The llama.cpp CANN backend is designed to support Ascend NPU. It utilize the ability of AscendC and ACLNN which are integrated to CANN Toolkit and kernels to using Ascend NPU directly.
+
+## News
+
+- 2024.11
+  - Support F16 and F32 data type model for Ascend 310P NPU.
+- 2024.8
+  - Support `Q4_0` and `Q8_0` data type for Ascend NPU.
+- 2024.7
+  - Create CANN backend for Ascend NPU.
+
+## OS
+
+| OS      | Status  | Verified                                       |
+|:-------:|:-------:|:----------------------------------------------:|
+| Linux   | Support | Ubuntu 22.04, OpenEuler22.03                   |
+
+
+## Hardware
+
+### Ascend NPU
+
+You can retrieve your Ascend device IDs using the following command:
+
+```sh
+lspci -n | grep -Eo '19e5:d[0-9a-f]{3}' | cut -d: -f2
+```
+
+**Devices**
+
+| Device Id | Product Series | Product Models | Chip Model | Verified Status |
+|:---------:|----------------|----------------|:----------:|:---------------:|
+|    d803   | Atlas A3 Train |                |    910C    |                 |
+|    d803   | Atlas A3 Infer |                |    910C    |                 |
+|    d802   | Atlas A2 Train |                |    910B    |                 |
+|    d802   | Atlas A2 Infer | Atlas 300I A2  |    910B    |     Support     |
+|    d801   | Atlas Train    |                |     910    |                 |
+|    d500   | Atlas Infer    | Atlas 300I Duo |    310P    |     Support     |
+
+*Notes:*
+
+- If you have trouble with Ascend NPU device, please create a issue with **[CANN]** prefix/tag.
+- If you run successfully with your Ascend NPU device, please help update the upper table.
+
+
+## Model Supports
+
+<details>
+<summary>Text-only</summary>
+
+| Model Name                  | FP16  | Q4_0 | Q8_0 |
+|:----------------------------|:-----:|:----:|:----:|
+| Llama-2                     |      |     |     |
+| Llama-3                     |      |     |     |
+| Mistral-7B                  |      |     |     |
+| Mistral MOE                 |      |     |     |
+| DBRX                        |   -   |   -  |   -  |
+| Falcon                      |      |     |     |
+| Chinese LLaMA/Alpaca        |      |     |     |
+| Vigogne(French)             |      |     |     |
+| BERT                        |   x   |   x  |   x  |
+| Koala                       |      |     |     |
+| Baichuan                    |      |     |     |
+| Aquila 1 & 2                |      |     |     |
+| Starcoder models            |      |     |     |
+| Refact                      |      |     |     |
+| MPT                         |      |     |     |
+| Bloom                       |      |     |     |
+| Yi models                   |      |     |     |
+| stablelm models             |      |     |     |
+| DeepSeek models             |   x   |   x  |   x  |
+| Qwen models                 |      |     |     |
+| PLaMo-13B                   |      |     |     |
+| Phi models                  |      |     |     |
+| PhiMoE                      |      |     |     |
+| GPT-2                       |      |     |     |
+| Orion                       |      |     |     |
+| InternlLM2                  |      |     |     |
+| CodeShell                   |      |     |     |
+| Gemma                       |      |     |     |
+| Mamba                       |      |     |     |
+| Xverse                      |      |     |     |
+| command-r models            |      |     |     |
+| Grok-1                      |   -   |   -  |   -  |
+| SEA-LION                    |      |     |     |
+| GritLM-7B                   |      |     |     |
+| OLMo                        |      |     |     |
+| OLMo 2                      |      |     |     |
+| OLMoE                       |      |     |     |
+| Granite models              |      |     |     |
+| GPT-NeoX                    |      |     |     |
+| Pythia                      |      |     |     |
+| Snowflake-Arctic MoE        |   -   |   -  |   -  |
+| Smaug                       |      |     |     |
+| Poro 34B                    |      |     |     |
+| Bitnet b1.58 models         |      |   x  |   x  |
+| Flan-T5                     |      |     |     |
+| Open Elm models             |   x   |     |     |
+| chatGLM3-6B + ChatGLM4-9b +  GLMEdge-1.5b + GLMEdge-4b    |      |     |     |
+| GLM-4-0414                  |      |     |     |
+| SmolLM                      |      |     |     |
+| EXAONE-3.0-7.8B-Instruct    |      |     |     |
+| FalconMamba Models          |      |     |     |
+| Jais Models                 |   -   |   x  |   x  |
+| Bielik-11B-v2.3             |      |     |     |
+| RWKV-6                      |   -   |     |     |
+| QRWKV-6                     |      |     |     |
+| GigaChat-20B-A3B            |   x   |   x  |   x  |
+| Trillion-7B-preview         |      |     |     |
+| Ling models                 |      |     |     |
+
+</details>
+
+<details>
+<summary>Multimodal</summary>
+
+| Model Name                  | FP16  | Q4_0 | Q8_0 |
+|:----------------------------|:-----:|:----:|:----:|
+| LLaVA 1.5 models, LLaVA 1.6 models      |   x   |   x  |   x  |
+|  BakLLaVA                   |      |     |     |
+|  Obsidian                   |      |   -  |   -  |
+|  ShareGPT4V                 |   x   |   -  |   -  |
+|  MobileVLM 1.7B/3B models   |   -   |   -  |   -  |
+|  Yi-VL                      |   -   |   -  |   -  |
+|  Mini CPM                   |      |     |     |
+|  Moondream                  |      |     |     |
+|  Bunny                      |      |   -  |   -  |
+|  GLM-EDGE                   |      |     |     |
+|  Qwen2-VL                   |      |     |     |
+
+</details>
+
+
+
+## DataType Supports
+
+| DataType               | 910B    | 310P    |
+|:----------------------:|:-------:|:-------:|
+| FP16                   | Support | Support |
+| Q8_0                   | Support | Partial |
+| Q4_0                   | Support | Partial |
+| BF16                   | Support |         |
+
+> **310P note**
+> - `Q8_0`: data transform / buffer path is implemented, and `GET_ROWS` is supported, but quantized `MUL_MAT` / `MUL_MAT_ID` are not supported.
+> - `Q4_0`: data transform / buffer path is implemented, but quantized `MUL_MAT` / `MUL_MAT_ID` are not supported.
+
+## Docker
+
+### Build Images
+You can get a image with llama.cpp in one command.
+```sh
+docker build -t llama-cpp-cann -f .devops/llama-cli-cann.Dockerfile .
+```
+
+### Run container
+
+```sh
+# Find all cards.
+npu-smi info
+
+# Select the cards that you want to use, make sure these cards are not used by someone.
+# Following using cards of device0.
+docker run --name llamacpp \
+  --device /dev/davinci0 \
+  --device /dev/davinci_manager \
+  --device /dev/devmm_svm \
+  --device /dev/hisi_hdc \
+  -v /usr/local/dcmi:/usr/local/dcmi \
+  -v /usr/local/bin/npu-smi:/usr/local/bin/npu-smi \
+  -v /usr/local/Ascend/driver/lib64/:/usr/local/Ascend/driver/lib64/ \
+  -v /usr/local/Ascend/driver/version.info:/usr/local/Ascend/driver/version.info \
+  -v /PATH_TO_YOUR_MODELS/:/app/models \
+  -it llama-cpp-cann \
+  -m /app/models/MODEL_PATH \
+  -ngl 32 \
+  -p "Building a website can be done in 10 simple steps:"
+```
+
+*Notes:*
+
+- You may need to install Ascend Driver and firmware on the **host** machine *(Please refer to the [Linux configuration](#linux) for details)*.
+
+## Linux
+
+### I. Setup Environment
+
+1. **Configure Ascend user and group**
+
+    ```sh
+    sudo groupadd HwHiAiUser
+    sudo useradd -g HwHiAiUser -d /home/HwHiAiUser -m HwHiAiUser -s /bin/bash
+    sudo usermod -aG HwHiAiUser $USER
+    ```
+
+2. **Install dependencies**
+
+    **Ubuntu/Debian:**
+    ```sh
+    sudo apt-get update
+    sudo apt-get install -y gcc python3 python3-pip linux-headers-$(uname -r)
+    ```
+
+    **RHEL/CentOS:**
+    ```sh
+    sudo yum makecache
+    sudo yum install -y gcc python3 python3-pip kernel-headers-$(uname -r) kernel-devel-$(uname -r)
+    ```
+
+3. **Install CANN (driver + toolkit)**
+
+    > The `Ascend-cann` package includes both the driver and toolkit.
+    > `$ARCH` can be `x86_64` or `aarch64`, `$CHIP` can be `910b` or `310p`.
+
+    ```sh
+    wget https://ascend-repo.obs.cn-east-2.myhuaweicloud.com/CANN/CANN%208.5.T63/Ascend-cann_8.5.0_linux-$ARCH.run
+    sudo bash ./Ascend-cann_8.5.0_linux-$ARCH.run --install
+
+    wget https://ascend-repo.obs.cn-east-2.myhuaweicloud.com/CANN/CANN%208.5.T63/Ascend-cann-$CHIP-ops_8.5.0_linux-$ARCH.run
+    sudo bash ./Ascend-cann-$CHIP-ops_8.5.0_linux-$ARCH.run --install
+    ```
+
+4. **Verify installation**
+
+    ```sh
+    npu-smi info
+    ```
+
+    If device information is displayed correctly, the driver is functioning properly.
+
+    ```sh
+    # Set environment variables (adjust path if needed)
+    source /usr/local/Ascend/cann/set_env.sh
+
+    python3 -c "import acl; print(acl.get_soc_name())"
+    ```
+
+    If the command outputs the chip model, the installation was successful.
+
+### II. Build llama.cpp
+
+```sh
+cmake -B build -DGGML_CANN=on -DCMAKE_BUILD_TYPE=release
+cmake --build build --config release
+```
+
+### III. Run the inference
+
+1. **Retrieve and prepare model**
+
+    You can refer to the general [*Obtaining and quantizing models*](../../README.md#obtaining-and-quantizing-models) guide for model prepration.
+
+    **Notes**:
+
+      - CANN backend only supports FP16/Q4_0/Q8_0 models currently.
+
+2. **Launch inference**
+
+    There are two device selection modes:
+
+    - Single device: Use one device target specified by the user.
+    - Multiple devices: Automatically choose the devices with the same backend.
+
+    | Device selection | Parameter                              |
+    |:----------------:|:--------------------------------------:|
+    | Single device    | --split-mode none --main-gpu DEVICE_ID |
+    | Multiple devices | --split-mode layer (default)           |
+
+    Examples:
+
+    - Use device 0:
+
+    ```sh
+    ./build/bin/llama-cli -m path_to_model -p "Building a website can be done in 10 simple steps:" -n 400 -e -ngl 33 -sm none -mg 0
+    ```
+
+    - Use multiple devices:
+
+    ```sh
+    ./build/bin/llama-cli -m path_to_model -p "Building a website can be done in 10 simple steps:" -n 400 -e -ngl 33 -sm layer
+    ```
+
+### **GitHub contribution**:
+Please add the **[CANN]** prefix/tag in issues/PRs titles to help the CANN-team check/address them without delay.
+
+## Updates
+### Basic Flash Attention Support
+The basic FA kernel with aclnnops has been added in aclnn_ops.cpp.
+Currently, the FA only supports the cases with FP16 KV tensors and NO logit softcap.
+Since the aclnn interface for flash attention cannot support the logit softcap, we will only update the quantized version in the future.
+
+Authors from Peking University: Bizhao Shi (bshi@pku.edu.cn), Yuxin Yang (yxyang@pku.edu.cn), Ruiyang Ma (ruiyang@stu.pku.edu.cn), and Guojie Luo (gluo@pku.edu.cn).
+
+We would like to thank Tuo Dai, Shanni Li, and all of the project maintainers from Huawei Technologies Co., Ltd for their help during the code development and pull request.
+
+## Environment variable setup
+
+### GGML_CANN_MEM_POOL
+
+Specifies the memory pool management strategy, Default is vmm.
+
+- vmm: Utilizes a virtual memory manager pool. If hardware support for VMM is unavailable, falls back to the legacy (leg) memory pool.
+
+- prio: Employs a priority queue-based memory pool management.
+
+- leg: Uses a fixed-size buffer pool.
+
+### GGML_CANN_DISABLE_BUF_POOL_CLEAN
+
+Controls automatic cleanup of the memory pool. This option is only effective when using the prio or leg memory pool strategies.
+
+### GGML_CANN_WEIGHT_NZ
+
+Converting the matmul weight format from ND to NZ to improve performance. Enabled by default.
+
+### GGML_CANN_ACL_GRAPH
+
+Operators are executed using ACL graph execution, rather than in op-by-op (eager) mode. Enabled by default. This option is only effective if `USE_ACL_GRAPH` was enabled at compilation time. To enable it, recompile using:
+
+```sh
+cmake -B build -DGGML_CANN=on -DCMAKE_BUILD_TYPE=release -DUSE_ACL_GRAPH=ON
+cmake --build build --config release
+```
+
+### GGML_CANN_GRAPH_CACHE_CAPACITY
+
+Maximum number of compiled CANN graphs kept in the LRU cache, default is 12. When the number of cached graphs exceeds this capacity, the least recently used graph will be evicted.
+
+### GGML_CANN_PREFILL_USE_GRAPH
+
+Enable ACL graph execution during the prefill stage, default is false. This option is only effective when FA is enabled.
+
+### GGML_CANN_OPERATOR_FUSION
+
+Enable operator fusion during computation, default is false. This option fuses compatible operators (e.g., ADD + RMS_NORM) to reduce overhead and improve performance.
+
+## docs/backend/CUDA-FEDORA.md
+
+# Setting Up CUDA on Fedora
+
+In this guide we setup [Nvidia CUDA](https://docs.nvidia.com/cuda/) in a toolbox container. This guide is applicable for:
+
+- [Fedora Workstation](https://fedoraproject.org/workstation/)
+- [Atomic Desktops for Fedora](https://fedoraproject.org/atomic-desktops/)
+- [Fedora Spins](https://fedoraproject.org/spins)
+- [Other Distributions](https://containertoolbx.org/distros/), including `Red Hat Enterprise Linux >= 8.5`, `Arch Linux`, and `Ubuntu`.
+
+## Table of Contents
+
+- [Prerequisites](#prerequisites)
+- [Using the Fedora 41 CUDA Repository](#using-the-fedora-41-cuda-repository)
+- [Creating a Fedora Toolbox Environment](#creating-a-fedora-toolbox-environment)
+- [Installing Essential Development Tools](#installing-essential-development-tools)
+- [Adding the CUDA Repository](#adding-the-cuda-repository)
+- [Installing Nvidia Driver Libraries](#installing-nvidia-driver-libraries)
+- [Installing the CUDA Meta-Package](#installing-the-cuda-meta-package)
+- [Configuring the Environment](#configuring-the-environment)
+- [Verifying the Installation](#verifying-the-installation)
+- [Conclusion](#conclusion)
+- [Troubleshooting](#troubleshooting)
+- [Additional Notes](#additional-notes)
+- [References](#references)
+
+## Prerequisites
+
+- **Toolbox Installed on the Host System** `Fedora Silverblue` and `Fedora Workstation` both have toolbox by default, other distributions may need to install the [toolbox package](https://containertoolbx.org/install/).
+- **NVIDIA Drivers and Graphics Card installed on Host System (recommended)** To run CUDA program, such as `llama.cpp`, the host should be setup to access your NVIDIA hardware. Fedora Hosts can use the [RPM Fusion Repository](https://rpmfusion.org/Howto/NVIDIA).
+- **Internet connectivity** to download packages.
+
+### Using the Fedora 41 CUDA Repository
+
+The latest release is 41.
+
+- [Fedora 41 CUDA Repository](https://developer.download.nvidia.com/compute/cuda/repos/fedora41/x86_64/)
+
+**Note:** We recommend using a toolbox environment to prevent system conflicts.
+
+## Creating a Fedora Toolbox Environment
+
+This guide focuses on Fedora hosts, but with small adjustments, it can work for other hosts. Using the Fedora Toolbox allows us to install the necessary packages without affecting the host system.
+
+**Note:** Toolbox is available for other systems, and even without Toolbox, it is possible to use Podman or Docker.
+
+1. **Create a Fedora 41 Toolbox:**
+
+   ```bash
+   toolbox create --image registry.fedoraproject.org/fedora-toolbox:41 --container fedora-toolbox-41-cuda
+   ```
+
+2. **Enter the Toolbox:**
+
+   ```bash
+   toolbox enter --container fedora-toolbox-41-cuda
+   ```
+
+   Inside the toolbox, you have root privileges and can install packages without affecting the host system.
+
+## Installing Essential Development Tools
+
+1. **Synchronize the DNF Package Manager:**
+
+   ```bash
+   sudo dnf distro-sync
+   ```
+
+2. **Install **Vim** the default text editor (Optional):**
+
+   ```bash
+   sudo dnf install vim-default-editor --allowerasing
+   ```
+
+   The `--allowerasing` flag will allow the removal of the conflicting `nano-default-editor` package.
+
+3. **Install Development Tools and Libraries:**
+
+   ```bash
+   sudo dnf install @c-development @development-tools cmake
+   ```
+
+   This installs essential packages for compiling software, including `gcc`, `make`, and other development headers.
+
+## Adding the CUDA Repository
+
+Add the NVIDIA CUDA repository to your DNF configuration:
+
+```bash
+sudo dnf config-manager addrepo --from-repofile=https://developer.download.nvidia.com/compute/cuda/repos/fedora41/x86_64/cuda-fedora41.repo
+```
+
+After adding the repository, synchronize the package manager again:
+
+```bash
+sudo dnf distro-sync
+```
+
+## Installing Nvidia Driver Libraries
+
+First, we need to detect if the host is supplying the [NVIDIA driver libraries into the toolbox](https://github.com/containers/toolbox/blob/main/src/pkg/nvidia/nvidia.go):
+
+```bash
+ls -la /usr/lib64/libcuda.so.1
+```
+
+### If *`libcuda.so.1`* is missing:
+
+```
+ls: cannot access '/usr/lib64/libcuda.so.1': No such file or directory
+```
+
+**Explanation:**
+The host dose not supply the CUDA drivers, **install them now:**
+
+#### Install the Nvidia Driver Libraries on Guest:
+
+```bash
+sudo dnf install nvidia-driver-cuda nvidia-driver-libs nvidia-driver-cuda-libs nvidia-persistenced
+```
+
+### If *`libcuda.so.1`* exists:
+```
+lrwxrwxrwx. 1 root root 21 Mar 24 11:26 /usr/lib64/libcuda.so.1 -> libcuda.so.570.133.07
+```
+
+**Explanation:**
+The host is supply the CUDA drivers, **we need to update the guest RPM Database accordingly:**
+
+#### Update the Toolbox RPM Database to include the Host-Supplied Libraries:
+
+Note: we do not actually install the libraries, we just update the DB so that the guest system knows they are supplied by the host.
+
+##### 1. Download `nvidia-` parts that are supplied by the host RPM's (with dependencies)
+
+```bash
+sudo dnf download --destdir=/tmp/nvidia-driver-libs --resolve --arch x86_64 nvidia-driver-cuda nvidia-driver-libs nvidia-driver-cuda-libs nvidia-persistenced
+```
+
+##### 2. Update the RPM database to assume the installation of these packages.
+
+```bash
+sudo rpm --install --verbose --hash --justdb /tmp/nvidia-driver-libs/*
+```
+
+**Note:**
+
+- The `--justdb` option only updates the RPM database, without touching the filesystem elsewhere.
+
+##### Check that the RPM Database has been correctly updated:
+
+**Note:** This is the same command as in the *"Install the Nvidia Driver Libraries on Guest"* for if *`libcuda.so.1`* was missing.
+
+
+```bash
+sudo dnf install nvidia-driver-cuda nvidia-driver-libs nvidia-driver-cuda-libs nvidia-persistenced
+```
+
+*(this time it will not install anything, as the database things that these packages are already installed)*
+
+```
+Updating and loading repositories:
+Repositories loaded.
+Package "nvidia-driver-cuda-3:570.124.06-1.fc41.x86_64" is already installed.
+Package "nvidia-driver-libs-3:570.124.06-1.fc41.x86_64" is already installed.
+Package "nvidia-driver-cuda-libs-3:570.124.06-1.fc41.x86_64" is already installed.
+Package "nvidia-persistenced-3:570.124.06-1.fc41.x86_64" is already installed.
+
+Nothing to do.
+```
+
+## Installing the CUDA Meta-Package
+
+Now that the driver libraries are installed, proceed to install CUDA:
+
+```bash
+sudo dnf install cuda
+```
+
+This installs the CUDA toolkit and associated packages.
+
+## Configuring the Environment
+
+To use CUDA, add its binary directory to your system's `PATH`.
+
+1. **Create a Profile Script:**
+
+   ```bash
+   sudo sh -c 'echo "export PATH=\$PATH:/usr/local/cuda/bin" >> /etc/profile.d/cuda.sh'
+   ```
+
+   **Explanation:**
+
+   - We add to `/etc/profile.d/` as the `/etc/` folder is unique to this particular container, and is not shared with other containers or the host system.
+   - The backslash `\` before `$PATH` ensures the variable is correctly written into the script.
+
+2. **Make the Script Executable:**
+
+   ```bash
+   sudo chmod +x /etc/profile.d/cuda.sh
+   ```
+
+3. **Source the Script to Update Your Environment:**
+
+   ```bash
+   source /etc/profile.d/cuda.sh
+   ```
+
+   **Note:** This command updates your current shell session with the new `PATH`. The `/etc/profile.d/cuda.sh` script ensures that the CUDA binaries are available in your `PATH` for all future sessions.
+
+## Verifying the Installation
+
+To confirm that CUDA is correctly installed and configured, check the version of the NVIDIA CUDA Compiler (`nvcc`):
+
+```bash
+nvcc --version
+```
+
+You should see output similar to:
+
+```
+nvcc: NVIDIA (R) Cuda compiler driver
+Copyright (c) 2005-2025 NVIDIA Corporation
+Built on Fri_Feb_21_20:23:50_PST_2025
+Cuda compilation tools, release 12.8, V12.8.93
+Build cuda_12.8.r12.8/compiler.35583870_0
+```
+
+This output confirms that the CUDA compiler is accessible and indicates the installed version.
+
+## Conclusion
+
+You have successfully set up CUDA on Fedora within a toolbox environment using the Fedora 41 CUDA repository. By manually updating the RPM db and configuring the environment, you can develop CUDA applications without affecting your host system.
+
+## Troubleshooting
+
+- **Installation Failures:**
+
+  - If you encounter errors during installation, carefully read the error messages. They often indicate conflicting files or missing dependencies.
+  - You may use the `--excludepath` option with `rpm` to exclude conflicting files during manual RPM installations.
+
+- **Rebooting the Container:**
+
+  - Sometimes there may be a bug in the NVIDIA driver host passthrough (such as missing a shared library). Rebooting the container may solve this issue:
+
+  ```bash
+  # on the host system
+  podman container restart --all
+  ```
+
+- **Environment Variables Not Set:**
+  - If `nvcc` is not found after installation, ensure that `/usr/local/cuda/bin` is in your `PATH`.
+  - Run `echo $PATH` to check if the path is included.
+  - Re-source the profile script or open a new terminal session.
+
+## Additional Notes
+
+- **Updating CUDA in the Future:**
+
+  - Keep an eye on the official NVIDIA repositories for updates to your Fedora version.
+  - When an updated repository becomes available, adjust your `dnf` configuration accordingly.
+
+- **Building `llama.cpp`:**
+
+  - With CUDA installed, you can follow these [build instructions for `llama.cpp`](https://github.com/ggml-org/llama.cpp/blob/master/docs/build.md) to compile it with CUDA support.
+  - Ensure that any CUDA-specific build flags or paths are correctly set in your build configuration.
+
+- **Using the Toolbox Environment:**
+  - The toolbox environment is isolated from your host system, which helps prevent conflicts.
+  - Remember that system files and configurations inside the toolbox are separate from the host. By default the home directory of the user is shared between the host and the toolbox.
+
+---
+
+**Disclaimer:** Manually installing and modifying system packages can lead to instability of the container. The above steps are provided as a guideline and may need adjustments based on your specific system configuration. Always back up important data before making significant system changes, especially as your home folder is writable and shared with the toolbox.
+
+**Acknowledgments:** Special thanks to the Fedora community and NVIDIA documentation for providing resources that assisted in creating this guide.
+
+## References
+
+- [Fedora Toolbox Documentation](https://docs.fedoraproject.org/en-US/fedora-silverblue/toolbox/)
+- [NVIDIA CUDA Installation Guide](https://docs.nvidia.com/cuda/cuda-installation-guide-linux/index.html)
+- [Podman Documentation](https://podman.io/get-started)
+
+---
+
+## docs/backend/ET.md
+
+# llama.cpp for ET
+
+- [Background](#background)
+- [Limitations](#limitations)
+- [Build](#build)
+- [Develop](#develop)
+- [Roadmap](#roadmap)
+
+
+## Background
+
+**ET** is a llama.cpp backend targeting the fully open source manycore
+RISC-V accelerator platform [ET-SOC](https://github.com/aifoundry-org/et-man).
+
+
+## Limitations
+
+The ET backend runs several of the major OSS models with some limitations:
+
+- Only limited set of operations is supported (check [../ops.md](../ops.md)
+  and [../ops/ET.csv](../ops/ET.csv)).
+- Only `q8_0`, `q4_0` (and partially `fp16`, `q4_K`) quantization is supported.
+- Only one llama.cpp instance can use device at the same time (current firmware
+  limitation).
+- Limited (but working) MoE model support
+
+As a result of the above, only select models can run fully on ET-SOC
+(you can actually run any model llama.cpp supports, but some/most operations
+will likely fallback to CPU backend).
+
+Fully supported models:
+- Qwen3 models (without MoE), e.g.
+  [ggml-org/Qwen3-0.6B-GGUF:q8_0](https://huggingface.co/ggml-org/Qwen3-0.6B-GGUF/blob/main/Qwen3-0.6B-Q8_0.gguf) or
+  [ggml-org/Qwen3-14B-GGUF:q8_0](https://huggingface.co/ggml-org/Qwen3-14B-GGUF/blob/main/Qwen3-14B-Q8_0.gguf).
+- Llama3.2 (1B/3B), e.g.
+  [lmstudio-community/Llama-3.2-1B-Instruct-GGUF:q8_0](https://huggingface.co/lmstudio-community/Llama-3.2-1B-Instruct-GGUF/blob/main/Llama-3.2-1B-Instruct-Q8_0.gguf).
+- SmolLM2, e.g.
+  [unsloth/SmolLM2-135M-Instruct-GGUF:q8_0](https://huggingface.co/unsloth/SmolLM2-135M-Instruct-GGUF/blob/main/SmolLM2-135M-Instruct-Q8_0.gguf)
+- Llama 3.1 model family.
+- RWKV v7 model family.
+- TinyLLaMA
+
+
+## Build
+
+### I. Prerequisites
+
+1. **Install custom RISC-V toolchain** - Follow instructions at:
+   [https://github.com/aifoundry-org/riscv-gnu-toolchain/tree/et/aifoundry](https://github.com/aifoundry-org/riscv-gnu-toolchain/tree/et/aifoundry)
+
+2. **Install ET platform** - Follow instructions at:
+   [https://github.com/aifoundry-org/et-platform](https://github.com/aifoundry-org/et-platform)
+
+Both should be installed to `/opt/et` (or set `ET_TOOLCHAIN` and `ET_PLATFORM`
+environment variables accordingly).
+
+```sh
+# Set toolchain and ET platform path (/opt/et is default)
+export ET_TOOLCHAIN=/opt/et
+export ET_PLATFORM=/opt/et
+```
+
+### II. Build llama.cpp
+
+Check out llama.cpp with ET backend (this should checkout `et` branch):
+
+```sh
+git clone https://github.com/aifoundry-org/llama.cpp
+cd llama.cpp
+```
+
+Build:
+
+```sh
+cmake -B build -DGGML_ET=ON
+cmake --build build --config Release
+# Optionally:
+# cmake --install build
+```
+
+Build targeting sysemu backend instead of physical hardware:
+```sh
+cmake -B build -DGGML_ET=ON -DGGML_ET_SYSEMU=ON
+cmake --build build --config Release
+```
+
+### III. Run
+
+Run llama.cpp binaries as usual. (Of course, please make sure you have the
+ET-SOC device installed and kernel driver loaded).
+
+```sh
+llama-cli -m mymodel.gguf
+# or
+llama-server -hf ggml-org/Qwen3-8B-GGUF:q8_0
+```
+
+If you want to run llama.cpp binaries (e.g. `llama-cli`) inside docker
+container, you should let it access device files:
+
+```sh
+docker run \
+    --device=/dev/et0_mgmt:/dev/et0_mgmt \
+    --device=/dev/et0_ops:/dev/et0_ops \
+    ...
+```
+
+## Develop
+
+Compute kernels are developed within `ggml/src/ggml-et/et-kernels` folder.
+Build is performed using custom RISC-V GNU toolchain and is managed by cmake.
+At the moment kernels are build as baremetal elf files, without
+standard lib or any other dependencies. All the yummy parts are written
+in inline assembler.
+
+Most kernels are very naive with lots of low hanging fruits left:
+
+> [!IMPORTANT]
+> Several assembly instructions emitted by the compiler are not implemented
+> in hardware and software emulation in firmware is not ready yet.
+> Eventually firmware will transparently trap unimplemented instructions
+> and will emulate them inside exception handler. Until then, kernel
+> build process includes step that checks compiled kernels and fails if any unimplemented
+> instructions are found. Problematic ones follow:
+> `FDIV.PI`, `FDIVU.PI`, `FREMU.PI`, `FREM.PI`, `FDIV.S`, `FDIV.PS`, `FSQRT.S`, `FSQRT.PS`, `FRSQ.PS`, `FSIN.PS`
+>  and (long cast) `FCVT.S.L`, `FCVT.S.LU`, `FCVT.L.S`, `FCVT.LU.S`
+> What this means, is that for now you should avoid doing any division involving floats,
+> any trigonometry or casting longs into floats.
+> Some workarounds are implemented in `math_fp.h` (`et_fdiv`, `et_powf` etc) and
+> long casting (presuming longs are small enough to fit into 32bits) can be
+> done via `int` like `a = (float)(int)(b)`.
+
+> [!TIP]
+> There are some slightly higher level helpers (abstracting more
+> complex instructions like tensor extension or synchronization primitives)
+> inside `et_platform`, directory `et-common-libs/include/etsoc/isa/`. It was
+> originally developed for firmware needs and is not included into compute
+> kernel build process. Feel free to take ideas/code from there or try linking
+> it in.
+
+Before committing any changes to operations and/or kernels, don't forget
+to update supported ops reports (instructions at `docs/ops.md`).
+
+When logging is enabled (e.g. by setting `--log-file` cli param),
+each compute kernel run outputs a line with
+pipe-delimited key-value pairs containing kernel level performance information.
+Line is prefixed with `ET_PERF`:
+
+```
+ET_PERF|op=MUL_MAT|kernel=mul_mat_f32_Q8_0xf32|duration_us=3112|tensor=Qcur-0|shape=[4096,2,1,1]|start_us=48437862009|end_us=48437865121|flops=67100672
+ET_PERF|op=ROPE|kernel=rope_f32|duration_us=9266|tensor=Qcur-0|shape=[128,32,2,1]|start_us=48437865128|end_us=48437874394|mode=0x0|n_dims=128|freq_base=500000.00|freq_scale=1.00
+```
+Keys depend on the operation, but some are always present.
+`flops` in this case counts effective floating point operations and not floating
+point operations per second.
+
+You can enable ET-SOC runtime level ET-SOC profiling by setting environment
+variable `GGML_ET_PROFILE` to a path. Profiling/tracing results will be written
+to `GGML_ET_PROFILE/et_runtime_trace.json` and `GGML_ET_PROFILE/kernel_map` on exit.
+
+### Uberkernel
+
+The in-kernel implementation of device dispatch/kernel fusion. The ET SDK has a non-trivial op-to-op gap. `Uberkernel` (name taken from the original Esperanto AI's compiler)
+dispatches multiple already existing kernel implementations with device side synchronization. Due to the processor's design, there is no natural memory visibility
+horizon between sub-kernel invocations. This makes uberkernel much more difficult to develop and debug. Currently Uberkerel is hidden begind the
+`GGML_ET_UBERKERNEL` environment variable and is disabled by default. Setting it to 1 enables it and provides significant performance improvements but is only
+validated for the LLaMA 3.2 model family and Qwen 3.5.
+
+## Roadmap
+
+As of writing the documentation the ET backend is capable of running most models and smaller ones at usable speed given the low power profile of the processor. We'd
+address the following capabilities in the future:
+
+* Enable Uberkernel for all models
+* More oprtator support
+* Better TTS model support
+* Enable more quantization format support
+
+## docs/backend/OPENCL.md
+
+# llama.cpp for OpenCL
+
+- [llama.cpp for OpenCL](#llamacpp-for-opencl)
+  - [Background](#background)
+    - [Llama.cpp + OpenCL](#llamacpp--opencl)
+  - [OS](#os)
+  - [Hardware](#hardware)
+    - [Adreno GPU](#adreno-gpu)
+  - [DataType Supports](#datatype-supports)
+  - [Model Preparation](#model-preparation)
+  - [Binary Kernel Library](#binary-kernel-library)
+  - [CMake Options](#cmake-options)
+  - [Android](#android)
+    - [I. Setup Environment](#i-setup-environment)
+    - [II. Build llama.cpp](#ii-build-llamacpp)
+  - [Windows 11 Arm64](#windows-11-arm64)
+    - [I. Setup Environment](#i-setup-environment-1)
+    - [II. Build llama.cpp](#ii-build-llamacpp-1)
+  - [Linux](#linux)
+    - [I. Setup Environment](#i-setup-environment-2)
+    - [II. Build llama.cpp](#ii-build-llamacpp-2)
+  - [Known Issues](#known-issues)
+  - [TODO](#todo)
+
+## Background
+
+OpenCL (Open Computing Language) is an open, royalty-free standard for cross-platform, parallel programming of diverse accelerators found in supercomputers, cloud servers, personal computers, mobile devices and embedded platforms. OpenCL specifies a programming language (based on C99) for programming these devices and application programming interfaces (APIs) to control the platform and execute programs on the compute devices. Similar to CUDA, OpenCL has been widely used to program GPUs and is supported by most GPU vendors.
+
+### Llama.cpp + OpenCL
+
+The llama.cpp OpenCL backend is designed to enable llama.cpp on **Qualcomm Adreno GPU** firstly via OpenCL. Thanks to the portabilty of OpenCL, the OpenCL backend can also run on certain Intel GPUs such as those that do not have [SYCL](/docs/backend/SYCL.md) support although the performance is not optimal.
+
+## OS
+
+| OS      | Status  | Verified                                       |
+|---------|---------|------------------------------------------------|
+| Android | Support | Snapdragon 8 Gen 3, Snapdragon 8 Elite         |
+| Windows | Support | Windows 11 Arm64 with Snapdragon X Elite       |
+| Linux   | Support | Ubuntu 22.04 WSL2 with Intel 12700H            |
+
+## Hardware
+
+### Adreno GPU
+
+**Verified devices**
+
+| Adreno GPU                            | Status  |
+|:-------------------------------------:|:-------:|
+| Adreno 750 (Snapdragon 8 Gen 3)       | Support |
+| Adreno 810 (Snapdragon 7s Gen 3)      | Support |
+| Adreno 830 (Snapdragon 8 Elite)       | Support |
+| Adreno 840 (Snapdragon 8 Elite Gen 5) | Support |
+| Adreno X1-85 (Snapdragon X Elite)     | Support |
+| Adreno X2-90 (Snapdragon X2 Elite)    | Support |
+
+> A6x GPUs with a recent driver and compiler are supported; they are usually found in IoT platforms.
+However, A6x GPUs in phones are likely not supported due to the outdated driver and compiler.
+
+## DataType Supports
+
+| DataType               | Status                     |
+|:----------------------:|:--------------------------:|
+| Q1_0                   | Support                    |
+| Q4_0                   | Support                    |
+| Q4_1                   | Support                    |
+| Q5_0                   | Support                    |
+| Q5_1                   | Support                    |
+| Q8_0                   | Support                    |
+| Q4_K                   | Support                    |
+| Q5_K                   | Support                    |
+| Q6_K                   | Support                    |
+| MXFP4                  | Support                    |
+| IQ4_NL                 | Support                    |
+
+## Model Preparation
+
+Since common quantizations are supported now, it is recommanded to download GGUF models directly from Huggingface.
+
+## Binary Kernel Library
+
+A prebuilt binary kernel library has been introduced for Adreno GPUs.
+It currently targets X2 GPUs (X2-90, X2-85 and X2-45) found in Snapdragon X2 SoC.
+The library currently contains kernels for MUL_MAT_ID with Q4_0, Q4_1, Q4_K, MXFP4.
+The library must be manually downloaded from https://softwarecenter.qualcomm.com/catalog/item/Adreno_Kernel_Library_GGML.
+
+To allow using the kernel library, add `-DGGML_OPENCL_USE_ADRENO_BIN_KERNELS=ON` when configuring with CMake.
+Then, extract `adreno-opencl-kernels.dll` from the zip file downloaded from the above URL and put it alongside the executables.
+If kernels compatible with the current GPU are found in the library, they will be loaded and used.
+
+
+## CMake Options
+
+The OpenCL backend has the following CMake options that control the behavior of the backend.
+
+| CMake options                        | Default value  | Description                               |
+|:------------------------------------:|:--------------:|:------------------------------------------|
+| `GGML_OPENCL_EMBED_KERNELS`          | `ON`           | Embed OpenCL kernels into the executable. |
+| `GGML_OPENCL_USE_ADRENO_KERNELS`     | `ON`           | Use kernels optimized for Adreno.         |
+| `GGML_OPENCL_USE_ADRENO_BIN_KERNELS` | `OFF`          | Allow using binary kernel lib for Adreno. |
+
+## Program Binary Cache
+
+Compiled `cl_program` binaries are cached on disk, so subsequent runs skip the expensive
+compile-from-source step when nothing relevant has changed (kernel source, compile options,
+device, driver, or platform version).
+
+The cache is controlled with the `GGML_OPENCL_KERNEL_CACHE_DIR` environment variable:
+
+| Value                                  | Behavior                                       |
+|:---------------------------------------|:-----------------------------------------------|
+| unset / empty / `1` / `default`        | Enabled in the platform default cache directory: `%LOCALAPPDATA%\llama.cpp\cl-cache` (Windows), `~/Library/Caches/llama.cpp/cl-cache` (macOS), `<temp dir>/llama.cpp/cl-cache` elsewhere. |
+| `0` / `off` / `none` / `disable(d)`    | Disabled.                                      |
+| any other value                        | Used verbatim as the cache directory path.     |
+
+If the chosen directory cannot be created or used, the cache disables itself for the process
+and kernels are compiled from source as usual. Set `GGML_OPENCL_KERNEL_CACHE_DEBUG=1` to
+print a HIT/MISS/SAVE trace to stderr.
+
+## Android
+
+Ubuntu 22.04 is used for targeting Android. Make sure the following tools are accessible from command line,
+
+* Git
+* CMake 3.29
+* Ninja
+* Python3
+
+### I. Setup Environment
+
+1. **Install NDK**
+
+```sh
+cd ~
+wget https://dl.google.com/android/repository/commandlinetools-linux-8512546_latest.zip && \
+unzip commandlinetools-linux-8512546_latest.zip && \
+mkdir -p ~/android-sdk/cmdline-tools && \
+mv cmdline-tools latest && \
+mv latest ~/android-sdk/cmdline-tools/ && \
+rm -rf commandlinetools-linux-8512546_latest.zip
+
+yes | ~/android-sdk/cmdline-tools/latest/bin/sdkmanager "ndk;26.3.11579264"
+```
+
+2. **Install OpenCL Headers and Library**
+
+```sh
+mkdir -p ~/dev/llm
+cd ~/dev/llm
+
+git clone https://github.com/KhronosGroup/OpenCL-Headers && \
+cd OpenCL-Headers && \
+cp -r CL ~/android-sdk/ndk/26.3.11579264/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include
+
+cd ~/dev/llm
+
+git clone https://github.com/KhronosGroup/OpenCL-ICD-Loader && \
+cd OpenCL-ICD-Loader && \
+mkdir build_ndk26 && cd build_ndk26 && \
+cmake .. -G Ninja -DCMAKE_BUILD_TYPE=Release \
+  -DCMAKE_TOOLCHAIN_FILE=$HOME/android-sdk/ndk/26.3.11579264/build/cmake/android.toolchain.cmake \
+  -DOPENCL_ICD_LOADER_HEADERS_DIR=$HOME/android-sdk/ndk/26.3.11579264/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include \
+  -DANDROID_ABI=arm64-v8a \
+  -DANDROID_PLATFORM=24 \
+  -DANDROID_STL=c++_shared && \
+ninja && \
+cp libOpenCL.so ~/android-sdk/ndk/26.3.11579264/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/lib/aarch64-linux-android
+```
+
+### II. Build llama.cpp
+
+```sh
+cd ~/dev/llm
+
+git clone https://github.com/ggml-org/llama.cpp && \
+cd llama.cpp && \
+mkdir build-android && cd build-android
+
+cmake .. -G Ninja \
+  -DCMAKE_TOOLCHAIN_FILE=$HOME/android-sdk/ndk/26.3.11579264/build/cmake/android.toolchain.cmake \
+  -DANDROID_ABI=arm64-v8a \
+  -DANDROID_PLATFORM=android-28 \
+  -DBUILD_SHARED_LIBS=OFF \
+  -DGGML_OPENCL=ON
+
+ninja
+```
+
+## Windows 11 Arm64
+
+A Snapdragon X Elite device with Windows 11 Arm64 is used. Make sure the following tools are accessible from command line,
+
+* Git
+* CMake 3.29
+* Clang 19
+* Ninja
+* Visual Studio 2022
+* Powershell 7
+* Python
+
+Visual Studio provides necessary headers and libraries although it is not directly used for building.
+Alternatively, Visual Studio Build Tools can be installed instead of the full Visual Studio.
+
+> Note that building using Visual Studio's cl compiler is not supported. Clang must be used. Clang depends on libraries provided by Visual Studio to work. Therefore, Visual Studio must be installed. Alternatively, Visual Studio Build Tools can be installed instead of the full Visual Studio.
+
+Powershell 7 is used for the following commands.
+If an older version of Powershell is used, these commands may not work as they are.
+
+### I. Setup Environment
+
+1. **Install OpenCL Headers and Library**
+
+```powershell
+mkdir -p ~/dev/llm
+
+cd ~/dev/llm
+git clone https://github.com/KhronosGroup/OpenCL-Headers && cd OpenCL-Headers
+mkdir build && cd build
+cmake .. -G Ninja `
+  -DBUILD_TESTING=OFF `
+  -DOPENCL_HEADERS_BUILD_TESTING=OFF `
+  -DOPENCL_HEADERS_BUILD_CXX_TESTS=OFF `
+  -DCMAKE_INSTALL_PREFIX="$HOME/dev/llm/opencl"
+cmake --build . --target install
+
+cd ~/dev/llm
+git clone https://github.com/KhronosGroup/OpenCL-ICD-Loader && cd OpenCL-ICD-Loader
+mkdir build && cd build
+cmake .. -G Ninja `
+  -DCMAKE_BUILD_TYPE=Release `
+  -DCMAKE_PREFIX_PATH="$HOME/dev/llm/opencl" `
+  -DCMAKE_INSTALL_PREFIX="$HOME/dev/llm/opencl"
+cmake --build . --target install
+```
+
+### II. Build llama.cpp
+
+```powershell
+
+mkdir -p ~/dev/llm
+cd ~/dev/llm
+
+git clone https://github.com/ggml-org/llama.cpp && cd llama.cpp
+mkdir build && cd build
+
+cmake .. -G Ninja `
+  -DCMAKE_TOOLCHAIN_FILE="$HOME/dev/llm/llama.cpp/cmake/arm64-windows-llvm.cmake" `
+  -DCMAKE_BUILD_TYPE=Release `
+  -DCMAKE_PREFIX_PATH="$HOME/dev/llm/opencl" `
+  -DBUILD_SHARED_LIBS=OFF `
+  -DGGML_OPENCL=ON
+ninja
+```
+
+## Linux
+
+The two steps just above also apply to Linux. When building for linux, the commands are mostly the same as those for PowerShell on Windows, but in the second step they do not have the `-DCMAKE_TOOLCHAIN_FILE` parameter, and then in both steps the backticks are replaced with back slashes.
+
+If not installed already, install Git, CMake, Clang, Ninja and Python, then run in the terminal the following:
+
+### I. Setup Environment
+
+1. **Install OpenCL Headers and Library**
+
+```bash
+mkdir -p ~/dev/llm
+
+cd ~/dev/llm
+git clone https://github.com/KhronosGroup/OpenCL-Headers && cd OpenCL-Headers
+mkdir build && cd build
+cmake .. -G Ninja \
+  -DBUILD_TESTING=OFF \
+  -DOPENCL_HEADERS_BUILD_TESTING=OFF \
+  -DOPENCL_HEADERS_BUILD_CXX_TESTS=OFF \
+  -DCMAKE_INSTALL_PREFIX="$HOME/dev/llm/opencl"
+cmake --build . --target install
+
+cd ~/dev/llm
+git clone https://github.com/KhronosGroup/OpenCL-ICD-Loader && cd OpenCL-ICD-Loader
+mkdir build && cd build
+cmake .. -G Ninja \
+  -DCMAKE_BUILD_TYPE=Release \
+  -DCMAKE_PREFIX_PATH="$HOME/dev/llm/opencl" \
+  -DCMAKE_INSTALL_PREFIX="$HOME/dev/llm/opencl"
+cmake --build . --target install
+```
+
+### II. Build llama.cpp
+
+```bash
+mkdir -p ~/dev/llm
+cd ~/dev/llm
+
+git clone https://github.com/ggml-org/llama.cpp && cd llama.cpp
+mkdir build && cd build
+
+cmake .. -G Ninja \
+  -DCMAKE_BUILD_TYPE=Release \
+  -DCMAKE_PREFIX_PATH="$HOME/dev/llm/opencl" \
+  -DBUILD_SHARED_LIBS=OFF \
+  -DGGML_OPENCL=ON
+ninja
+```
+
+## Known Issues
+
+- Flash attention does not always improve performance.
+- Currently OpenCL backend works on A6xx GPUs with recent drivers and compilers (usually found in IoT platforms).
+  However, it does not work on A6xx GPUs found in phones with old drivers and compilers.
+
+## TODO
+
+- Improve flash attention
+- Improve OpenCL C kernels performance
+
+## docs/backend/OPENVINO.md
+
+# OpenVINO Backend for llama.cpp
+
+> [!NOTE]
+> Performance and memory optimizations, accuracy validation, broader quantization coverage, broader operator and model support are work in progress.
+
+[OpenVINO](https://docs.openvino.ai/) is an open-source toolkit for optimizing and deploying high-performance AI inference, specifically designed for Intel hardware, including CPUs, GPUs, and NPUs, in the cloud, on-premises, and on the edge. [OpenVINO backend for llama.cpp](../../ggml/src/ggml-openvino) enables hardware-accelerated inference on **Intel CPUs, GPUs, and NPUs** while remaining compatible with the existing **GGUF model ecosystem**. The backend translates GGML compute graphs into OpenVINO graphs and leverages graph compilation, kernel fusion, and device-specific optimizations to improve inference performance on supported Intel hardware.
+
+The OpenVINO backend is implemented in `ggml/src/ggml-openvino` and provides a translation layer for core GGML operations. The OpenVINO backend replaces the standard GGML graph execution path with Intel's OpenVINO inference engine. This approach allows the same GGUF model file to run on Intel CPUs, Intel GPUs (integrated and discrete), and Intel NPUs without changes to the model or the rest of the llama.cpp stack. When a `ggml_cgraph` is dispatched to OpenVINO backend, it:
+
+- Walks the GGML graph and identifies inputs, outputs, weights, and KV cache tensors.
+- Translates the GGML operations into an `ov::Model` using OpenVINO's frontend API.
+- Compiles and caches the model for the target device.
+- Binds GGML tensor memory to OpenVINO inference tensors and runs inference.
+
+For guidance on contributing to the OpenVINO backend, see the [OpenVINO Backend Contributing Guide](https://github.com/ravi9/llamacpp-ov-dev-guide/blob/main/contributing-llamacpp-ov.md).
+
+## Contents
+
+- [Supported Devices](#supported-devices)
+- [Supported Model Precisions](#supported-model-precisions)
+- [Supported Llama.cpp Tools](#supported-llamacpp-tools)
+- [Validated Models](#validated-models)
+- [Build Instructions](#build-instructions)
+  - [0. Prerequisites](#0-prerequisites)
+  - [1. Install OpenVINO Runtime](#1-install-openvino-runtime)
+  - [2. Build llama.cpp with OpenVINO Backend](#2-build-llamacpp-with-openvino-backend)
+    - [Ubuntu Build Script](#ubuntu-build-script)
+    - [Windows Build Script](#windows-build-script)
+  - [3. Download Sample Model](#3-download-sample-model)
+  - [4. Run Inference with OpenVINO Backend](#4-run-inference-with-openvino-backend)
+  - [5. Docker Build](#5-docker-build)
+- [GGML OpenVINO Backend Runtime Configurations](#ggml-openvino-backend-runtime-configurations)
+- [Known Limitations](#known-limitations)
+- [Work in Progress](#work-in-progress)
+
+## Supported Devices
+
+OpenVINO backend supports the following hardware:
+
+- Intel CPUs
+- Intel GPUs (integrated and discrete)
+- Intel NPUs
+
+Although OpenVINO supports a wide range of [Intel hardware](https://docs.openvino.ai/2026/about-openvino/release-notes-openvino/system-requirements.html), the llama.cpp OpenVINO backend has been validated specifically on AI PCs such as the Intel Core Ultra Series 1 and Series 2.
+
+## Supported Model Precisions
+
+- `FP16`
+- `BF16` (on Intel Xeon)
+- `Q8_0`
+- `Q4_0`
+- `Q4_1`
+- `Q4_K`
+- `Q4_K_M`
+- `Q5_K` (converted to `Q8_0_C` at runtime)
+- `Q6_K` (converted to `Q8_0_C` at runtime)
+
+> [!NOTE]
+> Accuracy validation and performance optimizations for quantized models are a work in progress.
+
+**CPU and GPU Quantization Details:**
+- `Q5_K` and `Q6_K` tensors are converted to `Q8_0_C`
+
+**NPU Quantization Details:**
+- Primary supported quantization scheme is `Q4_0`
+- `Q6_K` tensors are requantized to `Q4_0_128` in general. For embedding weights, `Q6_K` tensors are requantized to `Q8_0_C` except for the token embedding matrix which is dequantized to fp16
+
+**Additional Notes:**
+- Both `Q4_0` and `Q4_1` models use `Q6_K` for the token embedding tensor and the final matmul weight tensor (often the same tensor)
+- `Q4_0` models may produce some `Q4_1` tensors if an imatrix is provided during quantization using `llama-quantize`
+- `Q4_K_M` models may include both `Q6_K` and `Q5_K` tensors (observed in Phi-3)
+- `Q5_1` tensors are dequantized natively (weights, scales, and zero-points extracted directly)
+
+## Supported Llama.cpp Tools
+
+The OpenVINO backend integrates with the standard llama.cpp tools listed below.
+However, all the tools coverage across all devices is not uniform and exhaustive validation is work in progress.
+
+- llama-bench
+- llama-cli
+- llama-completion
+- llama-embedding
+- llama-perplexity
+- llama-run
+- llama-server
+- llama-simple
+
+## Validated Models
+
+Although, the validated models below were tested with `llama-cli` using the `Q4_K_M` quantization format on Intel Core Ultra Series 2 (Lunar Lake), the OpenVINO backend is expected to work across a broader range of [Intel hardware](https://docs.openvino.ai/2026/about-openvino/release-notes-openvino/system-requirements.html), [supported model precisions](#supported-model-precisions), [supported llama.cpp tools](#supported-llamacpp-tools) and additional model architectures.
+
+> [!NOTE]
+> Extensive accuracy validation, performance optimizations, and broader architecture coverage are work in progress.
+
+**Legend & Test Configuration:**
+- **Status:**  = Passed |  = Failed or Unsupported
+- **Execution Modes:**
+  - **SL** = Stateless (`GGML_OPENVINO_STATEFUL_EXECUTION=0`)
+  - **SF** = Stateful (`GGML_OPENVINO_STATEFUL_EXECUTION=1`)
+  - Note: The NPU operates in stateless mode only.
+- **Validation system:** Intel Core Ultra 5 238V (Lunar Lake) | 32 GB RAM | Ubuntu 24.04 | Intel Graphics Compiler 2.41.5 | Intel OpenCL GPU Driver 26.31.39395.13-0 | Intel NPU Driver 1.38.0.
+- See [Known Limitations](#known-limitations) for context on observed failures.
+
+| Model | CPU (SL / SF) | GPU (SL / SF) | NPU (SL) |
+| :--- | :---: | :---: | :---: |
+| [bartowski/Llama-3.2-1B-Instruct-Q4_K_M](https://huggingface.co/bartowski/Llama-3.2-1B-Instruct-GGUF) |  /  |  /  |  |
+| [bartowski/Llama-3.2-3B-Instruct-Q4_K_M](https://huggingface.co/bartowski/Llama-3.2-3B-Instruct-GGUF) |  /  |  /  |  |
+| [bartowski/Meta-Llama-3.1-8B-Instruct-Q4_K_M](https://huggingface.co/bartowski/Meta-Llama-3.1-8B-Instruct-GGUF) |  /  |  /  |  |
+|  |  |  |  |
+| [Qwen/qwen2.5-1.5b-instruct-q4_k_m](https://huggingface.co/Qwen/Qwen2.5-1.5B-Instruct-GGUF) |  /  |  /  |  |
+| [Qwen/qwen2.5-coder-7b-instruct-q4_k_m](https://huggingface.co/Qwen/Qwen2.5-Coder-7B-Instruct-GGUF) |  /  |  /  |  |
+| [bartowski/Qwen_Qwen3-0.6B-Q4_K_M](https://huggingface.co/bartowski/Qwen_Qwen3-0.6B-GGUF) |  /  |  /  |  |
+| [bartowski/Qwen_Qwen3-1.7B-Q4_K_M](https://huggingface.co/bartowski/Qwen_Qwen3-1.7B-GGUF) |  /  |  /  |  |
+| [Qwen/Qwen3-4B-Q4_K_M](https://huggingface.co/Qwen/Qwen3-4B-GGUF) |  /  |  /  |  |
+| [lm-kit/Qwen3-8B-Q4_K_M](https://huggingface.co/lm-kit/qwen-3-8b-instruct-gguf) |  /  |  /  |  |
+| [bartowski/Qwen_Qwen3.5-0.8B-Q4_K_M](https://huggingface.co/bartowski/Qwen_Qwen3.5-0.8B-GGUF) |  /  |  /  |  |
+| [bartowski/Qwen_Qwen3.5-2B-Q4_K_M](https://huggingface.co/bartowski/Qwen_Qwen3.5-2B-GGUF) |  /  |  /  |  |
+| [bartowski/Qwen_Qwen3.5-4B-Q4_K_M](https://huggingface.co/bartowski/Qwen_Qwen3.5-4B-GGUF) |  /  |  /  |  |
+| [lmstudio-community/Qwen3.5-9B-Q4
+
+User request for agent 4: Find the best local nurseries in Toronto with a good variety of annual plants.
+Call:

@@ -1,0 +1,341 @@
+
+
+# Reference documents of agent 7
+
+ Support | 8-bit quantized weights via [dynamic quantization](https://github.com/amd/ZenDNN/blob/main/docs/operator/lowoha_matmul_operator.md) |
+
+*Notes:*
+
+- **BF16** provides best performance on Zen 4 and Zen 5 EPYC processors (Genoa, Turin).
+- **Q8_0** is available for quantized model weights since ZenDNN supports dynamic quantization [LowOHA MatMul operator](https://github.com/amd/ZenDNN/blob/main/docs/operator/lowoha_matmul_operator.md).
+- Other quantization formats fall back to the standard CPU backend unless explicitly supported by the ZenDNN backend.
+
+## Linux
+
+### I. Setup Environment
+
+You have two options to set up ZenDNN:
+
+#### Option 1: Automatic Download and Build (Recommended)
+
+CMake will automatically download and build ZenDNN for you:
+
+```sh
+# Build llama.cpp - ZenDNN will be automatically downloaded and built
+cmake -B build -DGGML_ZENDNN=ON -DCMAKE_BUILD_TYPE=Release
+cmake --build build --config Release -j $(nproc)
+```
+
+No manual ZenDNN installation required. CMake will handle everything automatically.
+
+#### Option 2: Use Custom ZenDNN Installation
+
+If you want to build ZenDNN yourself or use a specific version:
+
+**Step 1: Build ZenDNN from source**
+
+```sh
+# Clone ZenDNN repository
+git clone https://github.com/amd/ZenDNN.git
+cd ZenDNN
+
+# Build and install (requires CMake >= 3.25)
+mkdir build && cd build
+cmake ..
+cmake --build . --target all
+```
+
+Default installation path: `ZenDNN/build/install`
+
+**For detailed build instructions**, refer to the [ZenDNN README](https://github.com/amd/ZenDNN/blob/a18adf8c605fb5f5e52cefd7eda08a7b18febbaf/README.md).
+
+**Step 2: Build llama.cpp with custom ZenDNN path**
+
+```sh
+# Using environment variable
+export ZENDNN_ROOT=/path/to/ZenDNN/build/install
+cmake -B build -DGGML_ZENDNN=ON -DCMAKE_BUILD_TYPE=Release
+cmake --build build --config Release -j $(nproc)
+
+# OR specify path directly in CMake
+cmake -B build -DGGML_ZENDNN=ON -DZENDNN_ROOT=/path/to/ZenDNN/build/install -DCMAKE_BUILD_TYPE=Release
+cmake --build build --config Release -j $(nproc)
+```
+
+### II. Run the Server
+
+#### 1. Download Model
+
+Download LLaMA 3.1 8B Instruct BF16 model:
+
+```sh
+# Download from Hugging Face
+huggingface-cli download meta-llama/Llama-3.1-8B-Instruct-GGUF --local-dir models/
+```
+
+You can also use a Q8_0 GGUF model:
+
+```sh
+# Download a Q8_0 GGUF model from Hugging Face
+huggingface-cli download meta-llama/Llama-3.1-8B-Instruct-GGUF \
+    Llama-3.1-8B-Instruct-Q8_0.gguf \
+    --local-dir models/
+```
+
+#### 2. Start Server
+
+Run llama.cpp server with ZenDNN acceleration:
+
+```sh
+# Set optimal configuration
+export ZENDNNL_MATMUL_ALGO=1    # Blocked AOCL DLP algo for best performance
+
+# Start server
+./build/bin/llama-server \
+    -m models/Llama-3.1-8B-Instruct.BF16.gguf \
+    --host 0.0.0.0 \
+    --port 8080 \
+    -t 64
+```
+
+Access the server at `http://localhost:8080`.
+
+**Performance tips**:
+- Use `ZENDNNL_MATMUL_ALGO=1` for optimal performance
+- For NUMA systems: `numactl --cpunodebind=0 --membind=0 ./build/bin/llama-server ...`
+
+## Environment Variable
+
+For environment variables related to ZenDNN, refer to the [ZenDNN Environment Variables Documentation](https://github.com/amd/ZenDNN/blob/a18adf8c605fb5f5e52cefd7eda08a7b18febbaf/docs/runtime_env.md).
+
+### Performance Optimization
+
+ZenDNN's LowOHA MatMul supports multiple backend algorithms. For **best performance**, use the **Blocked AOCL DLP** algorithm:
+
+```sh
+export ZENDNNL_MATMUL_ALGO=1    # Blocked AOCL DLP algo (recommended)
+```
+
+For more details on available algorithms, see the [ZenDNN MatMul Algorithm Documentation](https://github.com/amd/ZenDNN/blob/a18adf8c605fb5f5e52cefd7eda08a7b18febbaf/docs/runtime_env.md#algorithm-details).
+
+### Q8_0 Performance Notes
+
+Q8_0 support is mainly beneficial for prompt processing / prefill workloads where large matrix multiplications dominate execution. Token generation performance may remain close to the standard CPU backend depending on the model, batch size, number of threads, and CPU topology.
+
+### Profiling and Debugging
+
+For detailed profiling and logging options, refer to the [ZenDNN Logging Documentation](https://github.com/amd/ZenDNN/blob/a18adf8c605fb5f5e52cefd7eda08a7b18febbaf/docs/logging.md).
+
+## Known Issues
+
+- **Limited operation support**: Currently matrix multiplication (MUL_MAT) and expert-based matrix multiplication (MUL_MAT_ID) are accelerated via ZenDNN. Other operations fall back to the standard CPU backend. Future updates may expand supported operations.
+- **BF16 support**: BF16 operations require AMD Zen 4 or Zen 5 architecture (EPYC 9004/9005 series). On older CPUs, operations will use FP32.
+- **Q8_0 support scope**: Q8_0 acceleration is available for supported matrix multiplication paths. Other quantization formats still fall back to the standard CPU backend.
+- **NUMA awareness**: For multi-socket systems, manual NUMA binding may be required for optimal performance.
+
+## Q&A
+
+**Q: How do I verify that ZenDNN backend is being used?**
+
+A: Check the log output when running llama.cpp. You should see messages indicating the ZenDNN backend is initialized. You can also check the backend name in the output.
+
+**Q: What performance improvement can I expect?**
+
+A: Performance gains vary depending on the model size, batch size, and CPU architecture. On AMD EPYC processors, you can typically expect 1.1x-2x speedup compared to standard CPU inference for matrix multiplication operations.
+
+**Q: Can I use ZenDNN on non-AMD processors?**
+
+A: ZenDNN is optimized specifically for AMD processors. While it may work on other x86-64 CPUs, performance benefits are only guaranteed on AMD Zen-based architectures.
+
+**Q: Does ZenDNN support quantized models?**
+
+A: Yes. The ZenDNN backend supports Q8_0 quantized models for supported matrix multiplication operations. FP32 and BF16 are also supported. Other quantization formats may fall back to the standard CPU backend unless explicitly supported by the ZenDNN backend.
+
+**Q: Why is my inference not faster with ZenDNN?**
+
+A: Ensure:
+1. You're using an AMD EPYC or Ryzen processor (Zen 2 or newer)
+2. `ZENDNNL_MATMUL_ALGO=1` is set for best performance (Blocked AOCL DLP)
+3. You're using a sufficiently large model (small models may not benefit as much)
+4. Enable profiling to verify ZenDNN MatMul is being called
+
+### **GitHub Contribution**:
+Please add the **[ZenDNN]** prefix/tag in issues/PRs titles to help the ZenDNN-team check/address them without delay.
+
+## TODO
+
+- Expand operation support beyond MUL_MAT and MUL_MAT_ID (attention operations, activations, etc.)
+
+## docs/backend/snapdragon/README.md
+
+# Snapdragon-based devices
+
+## Setup
+
+The cross-compilation toolchain images are provided by the
+[Qualcomm Snapdragon Toolchain registry](https://github.com/snapdragon-toolchain).
+These Docker images include the Android NDK, OpenCL SDK, Hexagon SDK, CMake, and the necessary cross-compilers:
+
+* **Android toolchain**: `ghcr.io/snapdragon-toolchain/arm64-android:v0.7`
+* **Linux toolchain**: `ghcr.io/snapdragon-toolchain/arm64-linux:v0.7`
+
+The unified build utility (`scripts/snapdragon/build.py`) automatically pulls
+and orchestrates these containers to perform target compilation.
+You only need to ensure that Docker (or Docker Desktop on macOS/Windows) is running on your host machine.
+Specific setup, build, and installation details for Linux and Windows on Snapdragon platforms are documented in:
+* [Linux on Snapdragon guide](linux.md)
+* [Windows on Snapdragon guide](windows.md)
+
+## How to Build
+
+### Using build.py script (Recommended)
+
+The easiest way to build llama.cpp is by using the `scripts/snapdragon/build.py` script. It automatically copies the CMake presets,
+launches the correct compilation Docker container, builds the libraries and tools,
+installs them, and optionally pushes them to your ADB device.
+
+Build and deploy for Android target (accepts `android` or `adb` alias):
+```
+$ ./scripts/snapdragon/build.py --target adb --push
+```
+
+Build and deploy for Linux target (accepts `linux` or `lnx` alias):
+```
+$ ./scripts/snapdragon/build.py --target linux:user@host --push
+```
+
+### Manual CMake Build
+
+Alternatively, you can build llama.cpp manually by entering the cross-compilation Docker container and running the CMake commands:
+
+```bash
+# Start the cross-compilation container manually:
+~/src/llama.cpp$ docker run -it --rm -u $(id -u):$(id -g) --volume $(pwd):/workspace --platform linux/amd64 ghcr.io/snapdragon-toolchain/arm64-android:v0.7
+
+# Inside the container, build the project using presets:
+[d]/workspace> cp docs/backend/snapdragon/CMakeUserPresets.json .
+
+[d]/workspace> cmake --preset arm64-android-snapdragon-release -B build-snapdragon
+Preset CMake variables:
+  ANDROID_ABI="arm64-v8a"
+  ...
+  CMAKE_TOOLCHAIN_FILE="/opt/android-ndk-r28b/build/cmake/android.toolchain.cmake"
+  GGML_HEXAGON="ON"
+  GGML_OPENCL="ON"
+  GGML_OPENMP="OFF"
+  HEXAGON_SDK_ROOT="/opt/hexagon/6.6.0.0"
+...
+-- Including OpenCL backend
+-- Including Hexagon backend
+...
+-- Build files have been written to: /workspace/build-snapdragon
+
+[d]/workspace> cmake --build build-snapdragon
+...
+[144/356] Performing build step for 'htp-v73'
+[1/16] Generating htp_iface_skel.c, htp_iface_stub.c, htp_iface.h
+[2/16] Building C object CMakeFiles/ggml-htp-v73.dir/hvx-sigmoid.c.obj
+[3/16] Building C object CMakeFiles/ggml-htp-v73.dir/htp-dma.c.obj
+[4/16] Building C object CMakeFiles/ggml-htp-v73.dir/worker-pool.c.obj
+...
+-- Installing: /workspace/build-snapdragon/ggml/src/ggml-hexagon/libggml-htp-v73.so
+-- Installing: /workspace/build-snapdragon/ggml/src/ggml-hexagon/libggml-htp-v75.so
+...
+```
+
+To generate an installable "package" simply use cmake --install:
+
+```
+[d]/workspace> cmake --install build-snapdragon --prefix pkg-android/llama.cpp
+-- Install configuration: "Release"
+-- Installing: /workspace/pkg-android/llama.cpp/lib/libggml-cpu.so
+-- Installing: /workspace/pkg-android/llama.cpp/lib/libggml-opencl.so
+-- Installing: /workspace/pkg-android/llama.cpp/lib/libggml-hexagon.so
+-- Installing: /workspace/pkg-android/llama.cpp/lib/libggml-htp-v73.so
+-- Installing: /workspace/pkg-android/llama.cpp/lib/libggml-htp-v75.so
+-- Installing: /workspace/pkg-android/llama.cpp/lib/libggml-htp-v79.so
+-- Installing: /workspace/pkg-android/llama.cpp/lib/libggml-htp-v81.so
+-- Installing: /workspace/pkg-android/llama.cpp/lib/libggml.so
+...
+-- Installing: /workspace/pkg-android/llama.cpp/bin/llama-bench
+-- Installing: /workspace/pkg-android/llama.cpp/bin/llama-cli
+...
+```
+
+## How to Install
+
+### Android
+
+For this step, your device needs to be configured for on-device development.
+Please see https://developer.android.com/studio/debug/dev-options for details.
+
+Once ADB is enabled, use `adb push` to install `pkg-android` on the device.
+**Note that the toolchain Docker image doesn't have ADB and doesn't set up the ADB bridge. Please use native ADB on the host.**
+
+```
+~/src/llama.cpp$ adb push pkg-android/llama.cpp /data/local/tmp/
+pkg-android/llama.cpp/bin/: 67 files pushed, 0 skipped. 190.2 MB/s (919095042 bytes in 4.607s)
+pkg-android/llama.cpp/include/: 19 files pushed, 0 skipped. 20.5 MB/s (255173 bytes in 0.012s)
+pkg-android/llama.cpp/lib/: 16 files pushed, 0 skipped. 144.4 MB/s (43801382 bytes in 0.289s)
+102 files pushed, 0 skipped. 186.9 MB/s (963151597 bytes in 4.914s)
+```
+
+At this point, you should also install some models:
+
+```
+~/src/llama.cpp$ wget https://huggingface.co/bartowski/Llama-3.2-1B-Instruct-GGUF/resolve/main/Llama-3.2-1B-Instruct-Q4_0.gguf
+...
+2025-10-11 12:04:52 (10.7 MB/s) - Llama-3.2-1B-Instruct-Q4_0.gguf saved [773025920/773025920]
+
+~/src/llama.cpp$ adb push Llama-3.2-1B-Instruct-Q4_0.gguf /data/local/tmp/gguf
+Llama-3.2-1B-Instruct-Q4_0.gguf: 1 file pushed, 0 skipped. 38.3 MB/s (773025920 bytes in 19.250s)
+```
+
+### Windows
+
+All artifacts are already installed in the `pkg-wos` folder.
+To run, you can use the `scripts/snapdragon/run.py` runner script (see details below).
+
+## How to Run
+
+The easiest way to run llama.cpp cli tools is using the provided `scripts/snapdragon/run.py` wrapper script. This script automatically
+maps CLI options to environment variables, resolves executable paths, and runs the command locally, via ADB, or remotely via SSH on the
+target device.
+
+llama.cpp supports three backends on Snapdragon-based devices: CPU, Adreno GPU (GPUOpenCL), and Hexagon NPU.
+You can select which backend(s) to run the model on using the `--device` option of the tool (or `--devices` option in `run.py`).
+
+Hexagon NPU behaves as a "GPU" device when it comes to `-ngl` and other offload-related options.
+
+Here are some examples of running various llama.cpp tools.
+
+Generating a completion with Gemma on Android (relying on default `HTP0:0` device and default thread count `-t 6`):
+
+```
+~/src/llama.cpp$ ./scripts/snapdragon/run.py --target adb -- llama-completion -m models/gemma-2-2b-it-Q4_0.gguf -f prompts/sample_prompt_1024.txt --jinja -st
+...
+ggml-hex: Hexagon backend (experimental) : allocating new registry : ndev 1
+ggml-hex: Hexagon Arch version v79
+ggml-hex: allocating new session: HTP0:0
+...
+load_tensors: offloading output layer to GPU
+load_tensors: offloaded 27/27 layers to GPU
+load_tensors:          CPU model buffer size =   300.00 MiB
+load_tensors:      HTP0:0 model buffer size  =  1400.26 MiB
+...
+llama_perf_context_print: prompt eval time =     320.00 ms /  1024 tokens (    0.31 ms per token,  3200.00 tokens per second)
+llama_perf_context_print:        eval time =     2100.00 ms /   100 runs   (   21.00 ms per token,    47.62 tokens per second)
+```
+
+Simple question for Llama-3.2-1B:
+
+```
+~/src/llama.cpp$ ./scripts/snapdragon/run.py --target android --devices HTP0 -- llama-cli -m Llama-3.2-1B-Instruct-Q4_0.gguf -p "what is the most popular cookie in the world?"
+...
+ggml-hex: Hexagon backend (experimental) : allocating new registry : ndev 1
+ggml-hex: Hexagon Arch version v79
+ggml-hex: allocating new session: HTP0
+ggml-hex: new session: HTP0 : session-id 0 domain-id 3 uri file:///libggml-htp-v79.so?htp_iface_s
+
+User request for agent 7: Predict the total expected profit of stocks XYZ in 5 years given I have invested $5000 and annual return rate is 7%.
+Call:

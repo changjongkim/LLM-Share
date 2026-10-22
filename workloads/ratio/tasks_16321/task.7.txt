@@ -1,0 +1,4 @@
+
+
+User request for agent 7: Predict the total expected profit of stocks XYZ in 5 years given I have invested $5000 and annual return rate is 7%.
+Call:
