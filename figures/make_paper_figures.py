@@ -113,10 +113,26 @@ def panel(size=PANEL):
     return plt.subplots(figsize=size)
 
 
+def hatch_of(colour):
+    """The hatch of an entity (10-23): every configuration but STATOR and the existing engine has a pattern of its
+    own in every figure, so that the bars stay apart in a print in black and white. STATOR and its variants
+    stay solid. The lines of a plot are told apart by their markers."""
+    from matplotlib.colors import to_hex
+    table = {COPY: "///", COPY_LIGHT: "\\\\\\", COPY_PALE: "..", DEMAND: "\\\\\\", DEMAND_LIGHT: "\\\\\\",
+             DEVICE: "xxx", DEVICE_LIGHT: "xxx", COW: "...", COW_LIGHT: "...", SHARED_MAP: "---", RO_MAP: "|||",
+             OLLAMA: "++"}
+    return {to_hex(k): v for k, v in table.items()}.get(to_hex(colour), "")
+
+
+def swatch(colour):
+    """A legend entry of a bar: the colour with its hatch, drawn in white as on the bars."""
+    return plt.Rectangle((0, 0), 1, 1, facecolor=colour, edgecolor="white", hatch=hatch_of(colour))
+
+
 def legend(name, entries, ncol):
     """A strip that holds only the legend, shared by the panels below it."""
     fig = plt.figure(figsize=(1.9 * ncol + 0.6, 0.38))
-    handles = [plt.Rectangle((0, 0), 1, 1, color=colour) for _, colour in entries]
+    handles = [swatch(colour) for _, colour in entries]
     fig.legend(handles, [label for label, _ in entries], loc="center", ncol=ncol,
                columnspacing=1.6, handlelength=1.3, fontsize=12.5)
     save(fig, name)
@@ -155,6 +171,18 @@ def emphasize(ax):
     thin line over it, so that both show; so is a line marked with the gid "over"."""
     import numpy as np
     from matplotlib.colors import to_hex
+    from matplotlib.patches import Rectangle
+    for patch in ax.patches:
+        if isinstance(patch, Rectangle) and not patch.get_hatch():
+            patch.set_hatch(hatch_of(patch.get_facecolor()))
+    # a legend of the panel or of its canvas was made before the hatches: its entries take them too
+    for found in [ax.get_legend()] + list(ax.figure.legends):
+        if found is None:
+            continue
+        for handle in found.legendHandles:
+            if isinstance(handle, Rectangle) and hatch_of(handle.get_facecolor()) and not handle.get_hatch():
+                handle.set_hatch(hatch_of(handle.get_facecolor()))
+                handle.set_edgecolor("white")
     data = [line for line in ax.lines if line.get_linestyle() not in ("None", "") and len(line.get_xdata()) > 1]
     ours = [line for line in data if to_hex(line.get_color()) == OURS]
     for line in ours:
@@ -175,6 +203,10 @@ def emphasize(ax):
             line.set_zorder(6)
             line.set_linewidth(1.4)
             line.set_markersize(min(line.get_markersize(), 5))
+
+
+# every panel that the base module saves (the background panels of Figure 1 among them) takes the same rule
+base.PANEL_HOOK = emphasize
 
 
 # ------------------------------------------------------------------ memory

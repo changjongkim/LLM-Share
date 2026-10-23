@@ -192,7 +192,7 @@ def resident_117(D=RES + "/20261020-e3-resident-formal-v1"):
     modes = (("Copy", COPY, "copy", "s"), (NAME, OURS, "extent", "o"))
     # the legend strip: the colours of the modes and the line of each statistic
     fig = plt.figure(figsize=(1.9 * 4 + 0.6, 0.38))
-    handles = [plt.Rectangle((0, 0), 1, 1, color=col) for _, col, _, _ in modes] + \
+    handles = [base.swatch(col) for _, col, _, _ in modes] + \
         [plt.Line2D([], [], color=base.INK, linewidth=2), plt.Line2D([], [], color=base.INK, linewidth=2, linestyle=(0, (3, 2)))]
     fig.legend(handles, [lab for lab, _, _, _ in modes] + ["Median", "95th Percentile"], loc="center", ncol=4,
                columnspacing=1.6, handlelength=1.6, fontsize=12.5)

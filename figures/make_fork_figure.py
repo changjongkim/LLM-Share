@@ -11,7 +11,7 @@ import statistics
 
 import matplotlib.pyplot as plt
 
-from make_paper_figures import COPY, NAME, OURS, OURS_LIGHT, OURS_PALE, finish, labels, legend, panel, save
+from make_paper_figures import hatch_of, COPY, NAME, OURS, OURS_LIGHT, OURS_PALE, finish, labels, legend, panel, save
 
 # STATOR (Copied Delta) (review of 2026-10-22, campaign 136) copies only the rows written since the last fork; it is
 # drawn when the result holds it, in the paler tint of a second ablation of STATOR
@@ -26,7 +26,7 @@ def fork_figure(result):
         legend("eval_fork_legend", [(label, colour) for label, colour, _, _ in modes], len(modes))
     else:   # four names do not fit the width of a column in one row
         strip = plt.figure(figsize=(5.2, 0.62))
-        strip.legend([plt.Rectangle((0, 0), 1, 1, facecolor=colour, edgecolor=OURS if colour == OURS_PALE else colour)
+        strip.legend([plt.Rectangle((0, 0), 1, 1, facecolor=colour, edgecolor=OURS if colour == OURS_PALE else "white", hatch=hatch_of(colour))
                       for _, colour, _, _ in modes], [label for label, _, _, _ in modes], loc="center", ncol=2,
                      columnspacing=1.0, handlelength=1.1, handletextpad=0.4, fontsize=12.5, labelspacing=0.3)
         save(strip, "eval_fork_legend")

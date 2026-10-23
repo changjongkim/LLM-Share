@@ -56,6 +56,7 @@ TIP = 10.5
 LABEL_MIN, TICK_MIN, VALUE_MIN = 11.0, 10.0, 9.0
 PAD = 1.08       # margin of the layout around a plot, in units of the text size
 FIXED = False    # a plot is saved as its whole canvas, so that all panels have one size
+PANEL_HOOK = None  # set by make_paper_figures.py: applied to every axis of a saved figure (hatches, emphasis)
 
 
 # The campaigns of the paper were measured again on the whole GPU with MIG
@@ -338,6 +339,9 @@ def fit_texts(fig, name):
 
 
 def save(fig, name):
+    if PANEL_HOOK is not None:
+        for ax in fig.axes:
+            PANEL_HOOK(ax)
     if FIXED:   # the panels of the paper; the figures of the README are saved as drawn
         fit_texts(fig, name)
     # Matplotlib otherwise embeds the wall-clock creation time, which makes
