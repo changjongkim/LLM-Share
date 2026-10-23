@@ -703,8 +703,7 @@ def bg_state():
     ax.set_xlabel("Agents on One Prefix")
     ax.set_ylabel("Memory (GiB)")
     ax.set_ylim(0, 23)
-    ax.legend(loc="upper left", title="Prefix", title_fontsize=11.5, handlelength=1.2)
-    style(ax)
+    style(ax)   # the prefix lengths are named by a strip above the panel (bg_state_legend, 10-23)
     fig.tight_layout()
     save(fig, "bg_state_kv")
 

@@ -113,13 +113,20 @@ def panel(size=PANEL):
     return plt.subplots(figsize=size)
 
 
-def legend(name, entries, ncol):
-    """A strip that holds only the legend, shared by the panels below it."""
+def legend(name, entries, ncol, half=False):
+    """A strip that holds only the legend, shared by the panels below it. A strip above one half-column panel
+    (half) keeps the text size and spaces its entries closer, so that it fits the width of that panel."""
     fig = plt.figure(figsize=(1.9 * ncol + 0.6, 0.38))
     handles = [plt.Rectangle((0, 0), 1, 1, color=colour) for _, colour in entries]
-    fig.legend(handles, [label for label, _ in entries], loc="center", ncol=ncol,
-               columnspacing=1.6, handlelength=1.3, fontsize=12.5)
+    spacing = dict(columnspacing=0.7, handlelength=1.0, handletextpad=0.4) if half else \
+        dict(columnspacing=1.6, handlelength=1.3)
+    fig.legend(handles, [label for label, _ in entries], loc="center", ncol=ncol, fontsize=12.5, **spacing)
     save(fig, name)
+
+
+def bg_state_legend():
+    """The strip above (b) of Figure 1: the two prefix lengths (10-23, in place of the legend inside the panel)."""
+    legend("bg_state_legend", [("4,081 Tokens", COPY_LIGHT), ("16,321 Tokens", COPY)], 2, half=True)
 
 
 def pair_legend():
@@ -206,7 +213,8 @@ def weights():
               for label, colour, mode in (("Existing Engine", EXISTING, "copy"), (NAME, OURS, "inplace"))]
     for group in grouped(ax, [str(n) for n in counts], series, 0.38):
         labels(ax, group)
-    ax.legend(loc="upper left", handlelength=1.2)
+    # the legend is a strip above (a) and (b), as in the other figures (10-23)
+    legend("eval_weights_legend", [("Existing Engine", EXISTING), (NAME, OURS)], 2)
     finish(fig, ax, "eval_weights_mem", "Serving Processes", "Memory (GiB)", 47)
 
     pages = {r["mode"]: r for r in rows("20261005-engine-pages-v1", "engine_pages_summary.csv")}
@@ -1027,8 +1035,8 @@ def local():
         ax.axhline(1.0, color=AXIS, linewidth=1.0)
         ax.set_ylim(0.8, 1.2)
         ax.set_yticks([0.8, 0.9, 1.0, 1.1])
-        ax.legend(loc="upper center", ncol=3, handlelength=1.0, columnspacing=0.7, handletextpad=0.4,
-                  fontsize=LEGEND, borderaxespad=0.1)
+        # the legends of (a) and (b) are strips above their panels, as in the other figures (10-23)
+        legend("eval_local_speed_legend", [(label, colour) for label, colour, _ in forms], 2, half=True)
         ax.set_ylabel("Speed vs. Device")
         style(ax)
         fig.tight_layout()
@@ -1056,7 +1064,7 @@ def local():
             labels(ax, group, "{:.2f}")
         ax.axhline(1.0, color=AXIS, linewidth=1.0)
         ax.tick_params(axis="x", labelsize=TICK2)
-        ax.legend(loc="upper right", handlelength=1.1, fontsize=LEGEND, labelspacing=0.25)
+        legend("eval_local_probe_legend", [("2 MiB Pages", OURS), ("4 KiB Pages", OURS_LIGHT)], 2, half=True)
         finish(fig, ax, "eval_local_probe", "", "Rate vs. Device", 1.45)
 
 
@@ -1648,7 +1656,7 @@ if __name__ == "__main__":
     every = (base.bg_state, bg_place, pair_legend, mem, weights, hand, speed, reach, mode, cow, resident, latency,
              dev, sota, attach, protect, tree, scale, variants, inproc, server, limit, stack, local, pipe, deep,
              wshare, prefix_length, vshare)
-    paper = (base.bg_state, pair_legend, mem, weights, hand, mode, cow, resident, sota, attach, protect, tree,
+    paper = (base.bg_state, bg_state_legend, pair_legend, mem, weights, hand, mode, cow, resident, sota, attach, protect, tree,
              scale, variants, inproc, stack, local, vshare)
     for figure in (every if base.MODE == "0" else paper):
         figure()
