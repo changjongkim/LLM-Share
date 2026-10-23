@@ -10,7 +10,7 @@ import csv
 import os
 
 import make_paper_figures as paper
-from make_paper_figures import (swatch, COW, COW_LIGHT, DEMAND, DEMAND_LIGHT, DENSE, MECHS, TICK2, compact, finish, full,
+from make_paper_figures import (COW, COW_LIGHT, DEMAND, DEMAND_LIGHT, DENSE, MECHS, TICK2, compact, finish, full,
                                 grouped, labels, legend, panel, rows, save, style, tip)
 import matplotlib.pyplot as plt
 from matplotlib.ticker import FuncFormatter
@@ -42,7 +42,7 @@ def main():
     # the strip stands above (a) and (b) only, the half of the figure whose bars it names, in one row with narrow
     # spacing so that it fits that width
     strip = plt.figure(figsize=(6.6, 0.38))
-    strip.legend([swatch(colour) for _, colour, _, _ in READERS],
+    strip.legend([plt.Rectangle((0, 0), 1, 1, color=colour) for _, colour, _, _ in READERS],
                  [label for label, _, _, _ in READERS], loc="center", ncol=4, columnspacing=0.8, handlelength=1.0,
                  handletextpad=0.4, fontsize=12.5)
     save(strip, "bg_mech_legend")
