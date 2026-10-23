@@ -141,11 +141,40 @@ def finish(fig, ax, name, xlabel, ylabel, top=None, log=False, xtick=None, plain
             ax.yaxis.set_major_formatter(FuncFormatter(lambda value, _: f"{value:g}"))
     if top is not None:
         ax.set_ylim(ax.get_ylim()[0] if log else 0, top)
+    emphasize(ax)
     style(ax)
     if xtick is not None:
         ax.tick_params(axis="x", labelsize=xtick)
     fig.tight_layout()
     save(fig, name)
+
+
+def emphasize(ax):
+    """The lines of STATOR stand out in every line plot (10-23): drawn over the other lines and thicker. A line of
+    another configuration that lies on a line of STATOR (within 4 px at most of their common points) is drawn as a
+    thin line over it, so that both show; so is a line marked with the gid "over"."""
+    import numpy as np
+    from matplotlib.colors import to_hex
+    data = [line for line in ax.lines if line.get_linestyle() not in ("None", "") and len(line.get_xdata()) > 1]
+    ours = [line for line in data if to_hex(line.get_color()) == OURS]
+    for line in ours:
+        line.set_linewidth(2.8)
+        line.set_zorder(5)
+
+    def pixels(line):
+        points = np.column_stack([np.asarray(line.get_xdata(), float), np.asarray(line.get_ydata(), float)])
+        return {round(x, 9): y for (x, _), (_, y) in zip(points, ax.transData.transform(points))}
+
+    for line in data:
+        if line in ours:
+            continue
+        mine = pixels(line)
+        close = any(sum(abs(mine[x] - theirs[x]) <= 4 for x in common) * 2 >= len(common) > 0
+                    for theirs in map(pixels, ours) for common in [set(mine) & set(theirs)])
+        if close or line.get_gid() == "over":
+            line.set_zorder(6)
+            line.set_linewidth(1.4)
+            line.set_markersize(min(line.get_markersize(), 5))
 
 
 # ------------------------------------------------------------------ memory
@@ -1320,11 +1349,13 @@ def linux_scale():
             on_zero = m == "copy" and all(value == 0 for _, value in points)
             ax.plot([p[0] for p in points], [p[1] for p in points], color=colour, marker=marker,
                     markersize=7, linewidth=2, label=label, markeredgecolor="white", markeredgewidth=1.2,
-                    zorder=4 if m == "copy" else 3, linestyle=(0, (3, 2)) if on_zero else "-")
+                    linestyle=(0, (3, 2)) if on_zero else "-", gid="over" if on_zero else None)
         ax.set_xscale("log", base=2)
         ax.set_xticks(ticks, [str(n) for n in ticks])
         ax.minorticks_off()
-        finish(fig, ax, name, "Agents", ylabel, top * 1.15)
+        # the TTFT on a log axis, where the lines of the small counts separate
+        log = column == "child_first_token_ms"
+        finish(fig, ax, name, "Agents", ylabel.replace(")", ", log)") if log else ylabel, None if log else top * 1.15, log=log)
 
 
 # Model weights read in place under the reclaim of the kernel.
