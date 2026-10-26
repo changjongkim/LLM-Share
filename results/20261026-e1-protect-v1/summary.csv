@@ -1,0 +1,16 @@
+mode,attempt,runs,writer_steps,reader_before_wrong,reader_after_wrong,file_wrong_words
+default,map,3,gpu_write=cudaErrorIllegalAddress,0,0,0,0,0
+default,raise,3,mprotect_rw=ok;gpu_write=cudaSuccess,0,0,0,0,0
+default,remap,3,mmap_shared_rw=EACCES,0,0,0,0,0
+default,reopen,3,open_rdwr=ok;pwrite=ok;mmap_shared_rw=ok;gpu_write=cudaSuccess,0,0,525312,525312,525312
+default,truncate,3,open_rdwr=ok;ftruncate_0=ok,0,0,-1:cudaErrorIllegalAddress,-1:cudaErrorIllegalAddress,size=0
+immutable,map,3,gpu_write=cudaErrorIllegalAddress,0,0,0,0,0
+immutable,raise,3,mprotect_rw=ok;gpu_write=cudaSuccess,0,0,0,0,0
+immutable,remap,3,mmap_shared_rw=EACCES,0,0,0,0,0
+immutable,reopen,3,open_rdwr=ok;pwrite=EPERM;mmap_shared_rw=EPERM,0,0,0,0,0
+immutable,truncate,3,open_rdwr=ok;ftruncate_0=EPERM,0,0,0,0,0
+device,map,3,gpu_write=cudaErrorIllegalAddress,0,0,0,0,not_applicable
+device,raise,3,set_access_rw=CUDA_SUCCESS;gpu_write=cudaSuccess,0,0,524288,524288,not_applicable
+device,remap,3,remap=not_applicable,0,0,0,0,not_applicable
+device,reopen,3,reopen=not_applicable,0,0,0,0,not_applicable
+device,truncate,3,truncate=not_applicable,0,0,0,0,not_applicable

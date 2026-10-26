@@ -2230,6 +2230,34 @@ device의 1.06배, pagecache가 0.96배이다. 게이트 R1~R3가 성립한다.
 보고하고, 블록 하나가 SM 하나를 끝까지 점유하는 커널에서 동시에 실행되는 블록 수도 12회 모두 20이다.
 논문은 "20 SMs"로 쓴다.
 
+### 4.17 같은 수준의 쓰기 시도 (E1, 리뷰 10-26)
+
+리뷰는 결함 쓰기 실험의 위협 모델이 비대칭이라고 지적했다. Device의 writer는 자기 매핑의 권한을
+읽기-쓰기로 올린 뒤 쓰고, STATOR의 writer는 읽기 전용 매핑으로 쓰기만 시도했기 때문이다.
+`e1_protect/protect_e1.cu`는 세 방식에 같은 시도를 한다. 게시자가 64 MiB를 게시하고, reader 두 개가
+에이전트처럼 매핑해 GPU로 틀린 단어 수를 센 뒤, 같은 사용자의 writer가 한 가지 시도를 하고 reader가
+다시 센다. 기본 모드는 `/dev/shm`의 파일을 보호 변경으로 게시하고, immutable 모드는 자식이 물려받는
+memfd를 읽기 전용으로 다시 매핑한 뒤 쓰기, 축소, 확대, 추가 봉인을 막는다. 결과는
+`results/20261026-e1-protect-v1`이고, 시도마다 3회 반복에서 매번 같다.
+
+| 시도 | 기본 모드 | immutable 모드 | Device (CUDA VMM) |
+|---|---|---|---|
+| 매핑으로 GPU 쓰기 | illegal address, 변화 없음 | illegal address, 변화 없음 | illegal address, 변화 없음 |
+| 매핑 권한을 올리고 GPU 쓰기 | 성공하나 private 사본에만 씀, 변화 없음 | 같음 | 성공, reader 둘이 2 MiB 변경을 읽음 |
+| 같은 descriptor로 쓰기 가능한 공유 매핑 | EACCES | EACCES | 해당 없음 |
+| 쓰기로 다시 열어 pwrite, 공유 매핑, GPU 쓰기 | 모두 성공, 2 MiB+4 KiB 변경 | 열기만 성공, pwrite와 매핑은 EPERM | 해당 없음 |
+| 쓰기로 열어 0바이트로 축소 | 성공, reader의 GPU 읽기가 illegal address | EPERM | 해당 없음 |
+
+기본 모드는 에이전트 매핑을 통한 쓰기를 막고, 같은 사용자가 파일을 다시 여는 것은 막지 못한다.
+immutable 모드는 둘 다 막는다. 논문 4.4절의 문장과 Table 2의 G3 정의(에이전트 매핑을 통한 쓰기)가
+이 결과를 따른다.
+
+```bash
+nvcc -O2 -std=c++17 -arch=sm_110 -o e1_protect/protect_e1 e1_protect/protect_e1.cu -lcuda
+for rep in 1 2 3; do for mode in default immutable device; do for a in map raise remap reopen truncate; do
+  e1_protect/protect_e1 run $mode $a $rep; done; done; done
+```
+
 ## 5. 한계
 
 - 주 평가는 장치 한 대, 엔진 하나, 7B 모델 하나에서 수행하였고, 8B와 14B

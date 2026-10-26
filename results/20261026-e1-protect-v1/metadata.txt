@@ -1,0 +1,8 @@
+date=2026-10-26T19:17:14+09:00
+kernel=6.8.12-1021-tegra
+driver=NVRM version: NVIDIA UNIX Open Kernel Module for aarch64  TempVersion  Release Build  (r595_00)  (buildbrain@03d5624e-58e4-4d2e-841c-817f5277e6d6-bv5r-zgps2)  Mon Jun  1 01:55:33 PM PDT 2026
+nvcc=Build cuda_13.0.r13.0/compiler.36260728_0
+power=NV Power Mode: MAXN
+source_sha256=939aa0835d6d90b203baa0b0436bdb3d1b1e185c81deca653418c6e381873bff
+binary_sha256=90309d86acc73f197402a3ce67602c64323f9b6f06e3852bf0ce3bb3a1e8c993
+size=64MiB written=2MiB readers=2 file=/dev/shm (default), memfd (immutable), CUDA VMM POSIX fd (device)
