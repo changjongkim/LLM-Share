@@ -1,35 +1,40 @@
---- a/src/llama-kv-cache.cpp	2026-10-10 17:57:43.107768538 +0900
-+++ b/src/llama-kv-cache.cpp	2026-10-21 19:07:25.129323328 +0900
-@@ -61,6 +61,9 @@
+--- a/b/src/llama-kv-cache.cpp	2026-10-10 17:57:43.107768538 +0900
++++ b/src/llama-kv-cache.cpp	2026-10-21 23:34:51.082042078 +0900
+@@ -61,6 +61,12 @@
      bool publisher = false; // this process fills the file
      bool agent = false;     // this process maps rows of the file
      bool cow = false;       // agent that maps the whole file, writable and private
 +    bool copy_publish = false; // LLAMA_KV_PUBLISH_COPY=1: the publisher keeps its rows private and copies the published ones into the file
 +    bool seal = false;         // LLAMA_KV_SEAL=1: the file is a sealable memfd that a publish seals against every write
 +    int seal_fd = -1;          // publisher with LLAMA_KV_SEAL: the memfd, which the processes it starts inherit
++    std::string file_base;     // LLAMA_KV_HOST of a publisher that copies; publish k > 1 writes FILE_BASE.fK.INDEX
++    int file_index = 0;
++    int publishes = 0;
      // device memory composed with the virtual memory interface of the backend (LLAMA_KV_VMM)
      bool vmm = false;
      bool demand = false;    // LLAMA_KV_VMM=2: private, follows the rows in use, neither published nor imported
-@@ -281,6 +284,80 @@
+@@ -281,6 +287,82 @@
          host->rows_mapped = rows;
          return true;
      }
 +    if (host->copy_publish) {
 +        // the read-only mapping of a file: the publisher copies the published rows into it and keeps its own
-+        if (host->rows_mapped > 0) {
-+            throw std::runtime_error("kv cache: a publisher that copies publishes once");
-+        }
++        // every publish copies all rows so far into a file of its own, which the agents of that publish map:
++        // the first into the file of the cache, publish k > 1 into FILE_BASE.fK.INDEX
++        host->publishes += 1;
++        const std::string path = host->publishes == 1 ? host->path :
++            host->file_base + ".f" + std::to_string(host->publishes) + "." + std::to_string(host->file_index);
 +        size_t total = 0;
 +        for (const auto & t : host->tensors) {
 +            total = std::max(total, t.offset + t.size);
 +        }
-+        const int fd = open(host->path.c_str(), O_RDWR | O_CREAT | O_TRUNC, 0600);
++        const int fd = open(path.c_str(), O_RDWR | O_CREAT | O_TRUNC, 0600);
 +        if (fd < 0 || ftruncate(fd, (off_t) total) != 0) {
-+            throw std::runtime_error("kv cache: cannot create " + host->path);
++            throw std::runtime_error("kv cache: cannot create " + path);
 +        }
 +        char * file = (char *) mmap(nullptr, total, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0);
 +        if (file == MAP_FAILED) {
-+            throw std::runtime_error("kv cache: cannot map " + host->path);
++            throw std::runtime_error("kv cache: cannot map " + path);
 +        }
 +        for (const auto & t : host->tensors) {
 +            memcpy(file + t.offset, host->base + t.offset, std::min(rows, t.rows) * t.row);
@@ -91,7 +96,7 @@
      for (const auto & t : host->tensors) {
          const size_t whole = std::min(rows, t.rows) * t.row / llama_kv_host_page * llama_kv_host_page;
          if (whole > 0 && mprotect(host->base + t.offset, whole, PROT_READ) != 0) {
-@@ -577,6 +654,12 @@
+@@ -577,6 +659,12 @@
  // LLAMA_KV_HOST=PATH LLAMA_KV_PREFIX=ROWS: agent, the first ROWS rows are a read-only mapping of the file, the rest is private.
  // LLAMA_KV_COW=1 with the above: agent, the whole file as a writable private mapping (copy-on-write); 2: the same without the CPU read of the prefix.
  // LLAMA_KV_GROW=ROWS: memory follows the rows in use, ROWS at a time.
@@ -104,13 +109,15 @@
  // Returns nullptr when the mode is off or the device cannot do it.
  static ggml_backend_buffer_t llama_kv_alloc_host(ggml_context * ctx, ggml_backend_buffer_type_t buft, int index, bool rows_are_cells) {
      const char * vmm = getenv("LLAMA_KV_VMM");
-@@ -634,6 +717,21 @@
+@@ -634,6 +722,23 @@
      const bool touch = !(host.cow && cow_env[0] == '2');
      host.path = anonymous ? "" : std::string(mode) + "." + std::to_string(index);
      host.grow = !host.cow && grow_env != nullptr ? strtoull(grow_env, nullptr, 10) : 0;
 +    const char * copy_env = getenv("LLAMA_KV_PUBLISH_COPY");
 +    const char * seal_env = getenv("LLAMA_KV_SEAL");
 +    host.copy_publish = host.publisher && copy_env != nullptr && copy_env[0] == '1';
++    host.file_base = anonymous ? "" : std::string(mode);
++    host.file_index = index;
 +    host.seal = !anonymous && !host.cow && seal_env != nullptr && seal_env[0] == '1';
 +    if (host.copy_publish && host.seal) {
 +        throw std::runtime_error("kv cache: LLAMA_KV_PUBLISH_COPY and LLAMA_KV_SEAL exclude each other");
@@ -126,7 +133,7 @@
  
      // rows must be cells: with a transposed value tensor or several streams a prefix is not a leading range
      if (host.agent && !(rows_are_cells && one_stream)) {
-@@ -653,6 +751,26 @@
+@@ -653,6 +758,26 @@
              throw std::runtime_error("kv cache: cannot map " + host.path);
          }
          close(fd);
@@ -153,7 +160,7 @@
      } else if (host.publisher) {
          const int fd = open(host.path.c_str(), O_RDWR | O_CREAT | O_TRUNC, 0600);
          if (fd < 0 || ftruncate(fd, (off_t) total) != 0) {
-@@ -683,6 +801,13 @@
+@@ -683,6 +808,13 @@
          if (fd < 0) {
              throw std::runtime_error("kv cache: cannot open " + host.path);
          }
@@ -167,7 +174,7 @@
          for (const auto & t : host.tensors) {
              const size_t filled = std::min(host.rows_mapped, t.rows) * t.row;
              const size_t whole = filled / page * page;
-@@ -690,6 +815,9 @@
+@@ -690,6 +822,9 @@
                  if (mmap(base + t.offset, whole, PROT_READ, MAP_PRIVATE | MAP_FIXED | MAP_NORESERVE, fd, (off_t) t.offset) == MAP_FAILED) {
                      throw std::runtime_error("kv cache: cannot map the prefix");
                  }

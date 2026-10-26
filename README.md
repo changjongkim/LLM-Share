@@ -2456,6 +2456,22 @@ cmake --build llama.cpp-chain2/build -j 12 --target llama-server
 make kv_fork2 kv_batch2 kv_tree2 kv_fork_tuned2 kv_spawn_tuned2
 ```
 
+리뷰(10-21, 10-22)의 캠페인이 쓰는 두 엔진도 같은 커밋에 전체 패치 하나씩을 적용하여 만든다.
+`kv_tuned5.patch`(`llama.cpp-tuned5`)는 `tuned4`(`tuned3`에 `kv_review.patch`)에 Copied Delta 모드
+(`LLAMA_KV_PUBLISH_COPY=2`)를 더한 것이고, `kv_chain3.patch`(`llama.cpp-chain3r`)는 `kv_chain2.patch`에
+체인의 Copied File 모드(`LLAMA_KV_PUBLISH_COPY=1`)를 더한 것이다. 환경 변수가 꺼져 있으면 각각 `tuned4`,
+`chain2`와 같다.
+
+```bash
+for pair in tuned5:kv_tuned5 chain3r:kv_chain3; do
+  git clone <llama.cpp> llama.cpp-${pair%%:*} && git -C llama.cpp-${pair%%:*} checkout 6f767fe96
+  git -C llama.cpp-${pair%%:*} apply ../${pair##*:}.patch
+  cmake -S llama.cpp-${pair%%:*} -B llama.cpp-${pair%%:*}/build -DGGML_CUDA=ON \
+    -DCMAKE_BUILD_TYPE=Release -DCMAKE_CUDA_ARCHITECTURES=110 -DLLAMA_CURL=OFF
+  cmake --build llama.cpp-${pair%%:*}/build -j 12 --target llama
+done
+```
+
 `kv_extents.patch`는 `inplace_weights.patch`를 포함하고, `kv_vmm.patch`는
 `kv_extents.patch`를 포함하며, `kv_tuned.patch`는 `kv_sota.patch`를 포함한다. 각 클론에는 해당 패치만 적용되어 있다. 클론,
 모델, 어댑터, 빌드된 프로그램은 저장소에 포함되지 않는다.

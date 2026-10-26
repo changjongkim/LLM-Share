@@ -78,3 +78,6 @@ __pycache__/
 /llama.cpp-kv3/
 /kv_fork3
 /e1_protect/protect_e1
+/llama.cpp-tuned4/
+/llama.cpp-tuned5/
+/llama.cpp-chain3r/
