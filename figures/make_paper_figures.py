@@ -602,7 +602,7 @@ def tree():
         return
     data = {r["mode"]: r for r in rows(directory, "engine_kvtree_summary.csv")}
     order = (("Copy", "copy", COPY), (f"{NAME}\n(One Level)", "flat", OURS_LIGHT),
-             (f"{NAME}\n(Chains)", "chain", OURS))
+             (NAME, "chain", OURS))
     fig, ax = panel()
     values = [float(data[m]["tree_memory_mib"]) / 1024 for _, m, _ in order]
     bars = ax.bar([label for label, _, _ in order], values, 0.6, color=[c for _, _, c in order],
@@ -1058,8 +1058,8 @@ def local():
         groups, order = [], []
         for kernel, name in (("gather", "Read"), ("scatter", "Write")):
             for count in sms:
-                label = f"{count} SM"
-                groups.append(f"{name}\n{label}")
+                # the whole GPU alone needs no count of SMs under the bars
+                groups.append(name if len(sms) == 1 else f"{name}\n{count} SM")
                 order.append((kernel, count))
         series = [(label, colour, [float(cell[count, kind][f"{kernel}_vs_device"]) for kernel, count in order])
                   for label, colour, kind in (("Host, 2 MiB Pages", OURS, "host_huge"),
@@ -1401,7 +1401,7 @@ def reclaim():
 # the rerun with the file opened read-write (mech-probe-shared).
 ACCESS = (("CPU", DEMAND, "cpu"), ("GPU", COW, "gpu"))
 COW_LIGHT = "#f6b28f"   # orange tint: the GPU with the page cache locked
-MECHS = (("Private", "private"), ("Shared", "shared"), ("fork", "fork"), ("KSM", "ksm"))
+MECHS = (("Private", "private"), ("Shared", "shared"), ("fork", "fork"), ("Merging", "ksm"))
 
 
 def compact(value):

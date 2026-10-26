@@ -152,7 +152,7 @@ def tree_e2():
     rows = csv_rows(REPORTS + "/109-tree11-formal/analysis_summary.csv") + \
         csv_rows(REPORTS + "/110-tree23-31-formal/analysis_summary.csv")
     data = {(r["agents"], r["mode"]): r for r in rows}
-    order = (("Copy", COPY, "copy"), (f"{NAME} (One Level)", OURS_LIGHT, "flat"), (f"{NAME} (Chains)", OURS, "chain"))
+    order = (("Copy", COPY, "copy"), (f"{NAME} (One Level)", OURS_LIGHT, "flat"), (NAME, OURS, "chain"))
     sizes = sorted({a for a, _ in data}, key=int)
     legend("eval_tree_legend", [(lab, col) for lab, col, _ in order], 3)
     for name, column, ylabel, scale, form in (("eval_tree_mem", "total_peak_gib", "Memory (GiB)", 1.0, "{:.1f}"),
