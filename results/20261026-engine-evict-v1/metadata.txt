@@ -1,0 +1,13 @@
+reps=6
+wait_s=2.0
+systems=both weights none
+n_gen=32
+context=16384
+model=Qwen2.5-7B-Instruct-Q4_K_M.gguf
+prefix_file=agent_prefix.txt
+776821004d8ae1bfed6d38fb85215c1ec359ccf2946d985133e8324d3c444df7  /home/thor/kcj/llm_share/kv_agent2
+950ee53a1631a54edcbd1023e255904f92823de4250dabaf973eb55684bb67e2  /home/thor/kcj/llm_share/kv_agent_stock
+a123574b855c5c32fcc2dd3cc13b403f5759e015994dd9d4532bde42f841826d  /home/thor/kcj/llm_share/llama.cpp-chain2/build/bin/libllama.so
+dd5d5cdc3631092b86b9b073ab4dd0e3bb7b2f7414b26e6357b77b438cce168f  /home/thor/kcj/llm_share/run_engine_evict.py
+b8d62dee31fd01c0abcb41aa745772c0bf205956786392d7500250f359637479  /home/thor/kcj/llm_share/run_engine_kvdynamic.py
+boot_id=4d056bf1-b143-4898-9e50-112ee0af3d04

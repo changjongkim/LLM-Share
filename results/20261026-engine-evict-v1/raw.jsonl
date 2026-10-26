@@ -1,0 +1,36 @@
+{"system": "both", "sid": 1000, "policy": "resident", "resume_ms": 78.4, "exit": 0}
+{"system": "both", "sid": 1000, "policy": "evicted", "resume_ms": 1069.8, "model_ms": 595.8, "context_ms": 25.5, "state_ms": 6.04, "decode_ms": 147.5, "decoded_tokens": 93, "exit": 0}
+{"system": "both", "sid": 1001, "policy": "evicted", "resume_ms": 1089.8, "model_ms": 599.0, "context_ms": 25.8, "state_ms": 6.1, "decode_ms": 159.4, "decoded_tokens": 88, "exit": 0}
+{"system": "both", "sid": 1001, "policy": "resident", "resume_ms": 78.8, "exit": 0}
+{"system": "both", "sid": 1002, "policy": "resident", "resume_ms": 76.5, "exit": 0}
+{"system": "both", "sid": 1002, "policy": "evicted", "resume_ms": 1052.0, "model_ms": 601.3, "context_ms": 25.9, "state_ms": 6.16, "decode_ms": 145.0, "decoded_tokens": 90, "exit": 0}
+{"system": "both", "sid": 1003, "policy": "evicted", "resume_ms": 1116.8, "model_ms": 612.7, "context_ms": 26.0, "state_ms": 6.1, "decode_ms": 173.2, "decoded_tokens": 98, "exit": 0}
+{"system": "both", "sid": 1003, "policy": "resident", "resume_ms": 77.8, "exit": 0}
+{"system": "both", "sid": 1004, "policy": "resident", "resume_ms": 77.0, "exit": 0}
+{"system": "both", "sid": 1004, "policy": "evicted", "resume_ms": 1092.9, "model_ms": 604.2, "context_ms": 26.8, "state_ms": 6.04, "decode_ms": 162.4, "decoded_tokens": 88, "exit": 0}
+{"system": "both", "sid": 1005, "policy": "evicted", "resume_ms": 1076.8, "model_ms": 603.5, "context_ms": 25.1, "state_ms": 5.97, "decode_ms": 143.7, "decoded_tokens": 92, "exit": 0}
+{"system": "both", "sid": 1005, "policy": "resident", "resume_ms": 74.9, "exit": 0}
+{"system": "weights", "sid": 1000, "policy": "resident", "resume_ms": 74.9, "exit": 0}
+{"system": "weights", "sid": 1000, "policy": "evicted", "resume_ms": 1197.6, "model_ms": 604.1, "context_ms": 36.4, "state_ms": 108.28, "decode_ms": 150.5, "decoded_tokens": 93, "exit": 0}
+{"system": "weights", "sid": 1001, "policy": "evicted", "resume_ms": 1189.8, "model_ms": 600.3, "context_ms": 36.0, "state_ms": 106.45, "decode_ms": 145.1, "decoded_tokens": 88, "exit": 0}
+{"system": "weights", "sid": 1001, "policy": "resident", "resume_ms": 81.9, "exit": 0}
+{"system": "weights", "sid": 1002, "policy": "resident", "resume_ms": 76.4, "exit": 0}
+{"system": "weights", "sid": 1002, "policy": "evicted", "resume_ms": 1162.2, "model_ms": 595.8, "context_ms": 35.8, "state_ms": 106.18, "decode_ms": 143.1, "decoded_tokens": 90, "exit": 0}
+{"system": "weights", "sid": 1003, "policy": "evicted", "resume_ms": 1191.0, "model_ms": 597.1, "context_ms": 35.8, "state_ms": 106.26, "decode_ms": 158.2, "decoded_tokens": 98, "exit": 0}
+{"system": "weights", "sid": 1003, "policy": "resident", "resume_ms": 83.6, "exit": 0}
+{"system": "weights", "sid": 1004, "policy": "resident", "resume_ms": 81.7, "exit": 0}
+{"system": "weights", "sid": 1004, "policy": "evicted", "resume_ms": 1189.7, "model_ms": 603.9, "context_ms": 35.8, "state_ms": 106.12, "decode_ms": 150.9, "decoded_tokens": 88, "exit": 0}
+{"system": "weights", "sid": 1005, "policy": "evicted", "resume_ms": 1196.8, "model_ms": 602.2, "context_ms": 37.0, "state_ms": 107.46, "decode_ms": 148.5, "decoded_tokens": 92, "exit": 0}
+{"system": "weights", "sid": 1005, "policy": "resident", "resume_ms": 76.2, "exit": 0}
+{"system": "none", "sid": 1000, "policy": "resident", "resume_ms": 81.2, "exit": 0}
+{"system": "none", "sid": 1000, "policy": "evicted", "resume_ms": 1655.1, "model_ms": 1045.8, "context_ms": 35.6, "state_ms": 123.62, "decode_ms": 162.1, "decoded_tokens": 93, "exit": 0}
+{"system": "none", "sid": 1001, "policy": "evicted", "resume_ms": 1706.6, "model_ms": 1046.8, "context_ms": 38.7, "state_ms": 149.24, "decode_ms": 173.4, "decoded_tokens": 88, "exit": 0}
+{"system": "none", "sid": 1001, "policy": "resident", "resume_ms": 75.3, "exit": 0}
+{"system": "none", "sid": 1002, "policy": "resident", "resume_ms": 65.1, "exit": 0}
+{"system": "none", "sid": 1002, "policy": "evicted", "resume_ms": 1705.4, "model_ms": 1045.1, "context_ms": 38.3, "state_ms": 157.57, "decode_ms": 181.4, "decoded_tokens": 90, "exit": 0}
+{"system": "none", "sid": 1003, "policy": "evicted", "resume_ms": 1718.3, "model_ms": 1042.5, "context_ms": 38.2, "state_ms": 150.09, "decode_ms": 198.8, "decoded_tokens": 98, "exit": 0}
+{"system": "none", "sid": 1003, "policy": "resident", "resume_ms": 79.7, "exit": 0}
+{"system": "none", "sid": 1004, "policy": "resident", "resume_ms": 73.1, "exit": 0}
+{"system": "none", "sid": 1004, "policy": "evicted", "resume_ms": 1774.0, "model_ms": 1123.2, "context_ms": 44.4, "state_ms": 147.58, "decode_ms": 163.3, "decoded_tokens": 88, "exit": 0}
+{"system": "none", "sid": 1005, "policy": "evicted", "resume_ms": 1715.9, "model_ms": 1057.5, "context_ms": 38.5, "state_ms": 162.56, "decode_ms": 161.5, "decoded_tokens": 92, "exit": 0}
+{"system": "none", "sid": 1005, "policy": "resident", "resume_ms": 81.7, "exit": 0}

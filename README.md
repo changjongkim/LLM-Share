@@ -2258,6 +2258,30 @@ for rep in 1 2 3; do for mode in default immutable device; do for a in map raise
   e1_protect/protect_e1 run $mode $a $rep; done; done; done
 ```
 
+### 4.18 기다리는 동안 쫓아내는 정책 (E2, 리뷰 10-26)
+
+리뷰는 4.6절의 결과가 "기다리는 에이전트가 상태를 붙잡고 있다"는 정책에 얼마나 기대는지 물었다.
+`run_engine_evict.py`는 4.6절 워크로드(`run_engine_kvdynamic.py`의 프리픽스 게시, 스택, 드라이버)에서
+한 에이전트를 두 정책으로 돌린다. 상주(resident)는 한 프로세스가 프리픽스를 붙이고 태스크를 decode하고
+생성한 뒤 기다렸다가 도구 결과를 decode한다(RELEASED에서 DECODED까지). 쫓겨남(evicted)은 첫 프로세스가
+생성한 뒤 종료하고, 도구 결과에서 새 프로세스가 프리픽스를 다시 불러 태스크, 첫 프로세스가 생성한 텍스트,
+도구 결과를 decode한다(실행에서 DECODED까지). GPU에는 다른 작업이 없다. 결과는
+`results/20261026-engine-evict-v1`이고 스택마다 6회이다.
+
+| 스택 | 상주 재개 (중앙값, P95) | 쫓겨난 재개 (중앙값, P95) | 쫓겨난 재개의 구성 (평균) |
+|---|---|---|---|
+| STATOR | 77 ms, 79 ms | 1,083 ms, 1,117 ms | 모델 603, 컨텍스트 26, 프리픽스 attach 6, decode 155 ms |
+| Copy | 79 ms, 84 ms | 1,190 ms, 1,198 ms | 모델 601, 컨텍스트 36, 프리픽스 복사 107, decode 149 ms |
+| 기존 엔진 | 78 ms, 82 ms | 1,711 ms, 1,774 ms | 모델 1,060(디바이스 복사), 컨텍스트 39, 프리픽스 복사 148, decode 173 ms |
+
+쫓아내면 기다리는 동안의 메모리는 0이 되지만 재개마다 1.0~1.6초가 붙고, 그 대부분은 프로세스를 다시
+시작하는 비용이다. 상주하는 STATOR 에이전트는 에이전트당 0.73 GiB(4.5절)로 이 비용 없이 재개한다.
+
+```bash
+. /home/thor/kcj/stator_campaign_logs/env.sh
+REPS=6 SYSTEMS="both weights none" python3 run_engine_evict.py
+```
+
 ## 5. 한계
 
 - 주 평가는 장치 한 대, 엔진 하나, 7B 모델 하나에서 수행하였고, 8B와 14B
