@@ -215,15 +215,15 @@ def weights():
     counts = sorted({k[2] for k in agents if k[0] == config})
     fig, ax = panel()
     series = [(label, colour, [float(agents[config, mode, n]["memory_total_mib"]) / 1024 for n in counts])
-              for label, colour, mode in (("Existing Engine", EXISTING, "copy"), (NAME, OURS, "inplace"))]
+              for label, colour, mode in (("llama.cpp", EXISTING, "copy"), (NAME, OURS, "inplace"))]
     for group in grouped(ax, [str(n) for n in counts], series, 0.38):
         labels(ax, group)
     # the legend is a strip above (a) and (b), as in the other figures (10-23)
-    legend("eval_weights_legend", [("Existing Engine", EXISTING), (NAME, OURS)], 2)
+    legend("eval_weights_legend", [("llama.cpp", EXISTING), (NAME, OURS)], 2)
     finish(fig, ax, "eval_weights_mem", "Serving Processes", "Memory (GiB)", 47)
 
     pages = {r["mode"]: r for r in rows("20261005-engine-pages-v1", "engine_pages_summary.csv")}
-    order = (("Existing\nEngine", "copy", EXISTING), (f"{NAME}\n(4 KiB)", "inplace_4k", OURS_LIGHT),
+    order = (("llama.cpp", "copy", EXISTING), (f"{NAME}\n(4 KiB)", "inplace_4k", OURS_LIGHT),
              (f"{NAME}\n(2 MiB)", "inplace_thp", OURS))
     fig, ax = panel()
     values = [float(pages[mode]["generation_vs_copy"]) for _, mode, _ in order]
@@ -868,7 +868,7 @@ def limit():
 # ------------------------------------------------------------ whole stack
 # The two stacks between the existing engine and STATOR apply one of its two
 # mechanisms; they are parts of STATOR and carry its colour in a lighter tint.
-STACKS = (("Existing Engine", EXISTING, "none", "s"), (f"{NAME} (KV)", OURS_PALE, "kv", "D"),
+STACKS = (("llama.cpp", EXISTING, "none", "s"), (f"{NAME} (KV)", OURS_PALE, "kv", "D"),
           (f"{NAME} (Weights)", OURS_LIGHT, "weights", "^"), (NAME, OURS, "both", "o"))
 
 
@@ -887,7 +887,9 @@ def stack():
             for r in rows(directory, "engine_kvstack_summary.csv") if int(r["runs"]) > 0}
     fit = {r["mode"]: r for r in rows(directory, "engine_kvstack_fit.csv")}
     legend("eval_stack_legend", [(label, colour) for label, colour, _, _ in STACKS], 4)
-    # the larger counts of the stack that shares both, run as a campaign of their own
+    # the larger counts of the stack that shares both, run as a campaign of their own; a count at which an
+    # agent failed is not drawn (10-26: the rerun with the model file in the page cache failed at 136 and
+    # 140 agents, and the paper reports the 136 agents without a failure on 2 MiB pages, as eval_stack_fit)
     line = dict(data)
     for more in ("20261008-engine-kvstack-capacity-v2",
                  "20261008-engine-kvstack-capacity-136-v1",
@@ -895,7 +897,8 @@ def stack():
                  "20261009-engine-kvstack-capacity-copy-v1"):
         if have(more, "engine_kvstack_summary.csv"):
             line.update({(r["mode"], int(r["agents"])): r
-                         for r in rows(more, "engine_kvstack_summary.csv") if int(r["runs"]) > 0})
+                         for r in rows(more, "engine_kvstack_summary.csv")
+                         if int(r["runs"]) > 0 and int(r["failed_agents"]) == 0})
 
     # memory against the number of agents; the line of the fit goes on to the
     # memory that was available, where the stack stops fitting
@@ -931,7 +934,7 @@ def stack():
              ("Agent State", COPY_PALE, (both, both, both, both)),
              ("Shared Files", OURS, (0.0, cache_file, model_file, model_file + cache_file)))
     fig, ax = panel()
-    names = ["Existing\nEngine", f"{NAME}\n(KV)", f"{NAME}\n(Weights)", NAME]
+    names = ["llama.cpp", f"{NAME}\n(KV)", f"{NAME}\n(Weights)", NAME]
     bottom = np.zeros(4)
     for label, colour, values in parts:
         ax.bar(names, values, 0.54, bottom=bottom, color=colour, edgecolor="white", linewidth=1.5,
@@ -1080,7 +1083,7 @@ def pipe():
     if not have(directory, "engine_kvpipe_summary.csv"):
         return
     data = {r["mode"]: r for r in rows(directory, "engine_kvpipe_summary.csv")}
-    stacks = [(label, m, colour) for label, m, colour in (("Existing\nEngine", "stock", COPY), ("Copy", "copy", COPY_LIGHT),
+    stacks = [(label, m, colour) for label, m, colour in (("llama.cpp", "stock", COPY), ("Copy", "copy", COPY_LIGHT),
                                                            (NAME, "chain", OURS)) if m in data]
     names = [label for label, _, _ in stacks]
     phases = (("Prefix", "prefix", COPY_PALE), ("Leaders", "leaders", COPY_LIGHT), ("Leaves", "workers", COPY))
@@ -1162,7 +1165,7 @@ def wshare():
     model_gib = 4.36
     placements = [(label, key) for label, key in (("Same\nInstance", "same"), ("Across\nInstances", "cross"))
                   if (key, "stock") in data]
-    stacks = (("Existing llama.cpp Engine", COPY, "stock"), ("CUDA IPC Library", DEVICE, "ipc"), (NAME, OURS, "inplace"))
+    stacks = (("llama.cpp", COPY, "stock"), ("CUDA IPC Library", DEVICE, "ipc"), (NAME, OURS, "inplace"))
     fig, ax = panel()
     series = [(label, colour, [(float(data[key, m]["memory_mib"]) / 1024 + (model_gib if m == "inplace" else 0.0))
                                for _, key in placements]) for label, colour, m in stacks]
@@ -1223,7 +1226,7 @@ def bg_place():
     if have(directory, "ext_weightshare_summary.csv"):
         data = {(r["placement"], r["stack"]): r for r in rows(directory, "ext_weightshare_summary.csv")}
         placements = (("Same\nInstance", "same"), ("Across\nInstances", "cross"))
-        stacks = (("Existing Engine", COPY, "stock"), ("CUDA IPC Library", DEVICE, "ipc"))
+        stacks = (("llama.cpp", COPY, "stock"), ("CUDA IPC Library", DEVICE, "ipc"))
         fig, ax = panel()
         series = [(label, colour, [float(data[key, m]["memory_mib"]) / 1024 for _, key in placements])
                   for label, colour, m in stacks]
@@ -1372,7 +1375,7 @@ def linux_scale():
 
 
 # Model weights read in place under the reclaim of the kernel.
-RECLAIM = (("Existing Engine", EXISTING, "device"), (f"{NAME} (4 KiB)", OURS_LIGHT, "pagecache"),
+RECLAIM = (("llama.cpp", EXISTING, "device"), (f"{NAME} (4 KiB)", OURS_LIGHT, "pagecache"),
            (f"{NAME} (2 MiB)", OURS, "memfs"))
 
 

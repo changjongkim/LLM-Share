@@ -314,7 +314,7 @@ def dynamic_e4b():
                 stats[(system, mean)]["p50"].append(v["ttft_p50_s"] * 1000)
                 stats[(system, mean)]["live"].append(v["live_peak"])
                 stats[(system, mean)]["queue"].append(v["queue_peak"])
-    modes = (("Existing Engine", EXISTING, "none", "s"), ("Copy", COPY, "weights", "D"), (NAME, OURS, "both", "o"))
+    modes = (("llama.cpp", EXISTING, "none", "s"), ("Copy", COPY, "weights", "D"), (NAME, OURS, "both", "o"))
     present = [m for m in modes if any((m[2], x) in stats for x in means)]
     legend("eval_dyn_legend", [(lab, col) for lab, col, _, _ in present], len(present))
     for name, metric, ylabel, log in (("eval_dyn_mem", "mem", "Peak Memory (GiB)", False),
