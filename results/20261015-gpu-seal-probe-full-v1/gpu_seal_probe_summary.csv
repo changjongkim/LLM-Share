@@ -1,0 +1,9 @@
+step,runs,allowed,refused,other
+write_while_mapped,3,0,3,0
+future_write,3,3,0,0
+old_mapping_write,3,3,0,0
+new_shared_write,3,0,3,0
+private_write,3,3,0,0
+write_after_unmap,3,3,0,0
+gpu_read,3,3,0,0
+gpu_sum_ok,3,3,0,0

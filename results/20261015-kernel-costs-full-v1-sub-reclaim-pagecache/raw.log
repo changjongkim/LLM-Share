@@ -1,0 +1,20 @@
+BEGIN_RECLAIM run=1
+CASE mode=pagecache pressure=reclaim agents=4
+AGENT index=0 tps=6.98 text=a22f6234dff865a1 bytes=2811
+AGENT index=1 tps=6.98 text=a22f6234dff865a1 bytes=2811
+AGENT index=2 tps=6.97 text=a22f6234dff865a1 bytes=2811
+AGENT index=3 tps=6.97 text=a22f6234dff865a1 bytes=2811
+KERNEL gpu_fault_pages=17939488 fault_thread_ms=7530 major_faults=1001 refault_file=18015 file_before_mib=4687 file_last_mib=4118
+RECLAIM attempts=1 succeeded=1
+END_CASE exit=0 timed_out=0
+END_RECLAIM
+BEGIN_RECLAIM run=2
+CASE mode=pagecache pressure=reclaim agents=4
+AGENT index=0 tps=7.00 text=a22f6234dff865a1 bytes=2811
+AGENT index=1 tps=7.00 text=a22f6234dff865a1 bytes=2811
+AGENT index=2 tps=7.01 text=a22f6234dff865a1 bytes=2811
+AGENT index=3 tps=7.00 text=a22f6234dff865a1 bytes=2811
+KERNEL gpu_fault_pages=17773138 fault_thread_ms=7450 major_faults=965 refault_file=15153 file_before_mib=4674 file_last_mib=4115
+RECLAIM attempts=1 succeeded=1
+END_CASE exit=0 timed_out=0
+END_RECLAIM

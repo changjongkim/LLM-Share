@@ -1,0 +1,8 @@
+timestamp=2026-10-21T18:59:48+09:00
+gpu=GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600
+repetitions=6
+size_mib=896
+default_fault_around_bytes=65536
+boot_id=f9776703-a137-43bc-822b-124c6147ff68
+GPU 0: NVIDIA Thor (UUID: GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600)
+615df5c36c94f3729a7fb68bbb7b1f0f53e4b5ad4d169b4470ea84c91cd9066c  /home/thor/kcj/llm_share/gpu_populate_probe

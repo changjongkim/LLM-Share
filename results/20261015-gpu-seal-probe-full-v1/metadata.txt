@@ -1,0 +1,7 @@
+timestamp=2026-10-15T13:36:32+09:00
+mig=GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600
+repetitions=3
+size_mib=896
+boot_id=f9776703-a137-43bc-822b-124c6147ff68
+6.8.12-1021-tegra
+18c1c444db6880dadef14fd4038ad6fe2d9de44830ffb987a09ed9b612a565b3  /home/thor/kcj/llm_share/gpu_seal_probe

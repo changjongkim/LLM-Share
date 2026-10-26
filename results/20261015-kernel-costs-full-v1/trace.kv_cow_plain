@@ -1,0 +1,15 @@
+TP_READY
+TP name=kmem:mm_page_alloc count=5392454
+TP name=kmem:mm_page_free count=6111189
+TP name=filemap:mm_filemap_add_to_page_cache count=1486
+TP name=filemap:mm_filemap_delete_from_page_cache count=350762
+TP name=vmscan:mm_vmscan_lru_shrink_inactive count=0
+TP name=vmscan:mm_vmscan_memcg_reclaim_begin count=0
+TP name=tlb:tlb_flush count=0
+TP name=iommu:io_page_fault count=0
+TP name=mmap_lock:mmap_lock_start_locking count=399998
+TP name=migrate:mm_migrate_pages count=0
+TP name=ksm:ksm_merge_one_page count=0
+TP name=pagemap:mm_lru_insertion count=5099101
+TP name=faults-minor count=1604208
+TP name=faults-major count=33

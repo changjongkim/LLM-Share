@@ -2481,6 +2481,11 @@ done
 vLLM 캠페인의 서버 로그(`results/*vllm*/server*.log`)에서는 vLLM이 기록한 호스트의 네트워크
 주소를 `HOST-ADDRESS`로 바꾸었다. 요약은 `raw.log`에서 계산하므로 검증에는 영향이 없다.
 
+10-14 이후의 캠페인 폴더에는 요약(`*_summary.csv`, `analysis_summary.csv`, `cases.json`, `metadata.txt`)과
+맨 위의 기록만 넣는다. 실행별 폴더(`r01-...`), vLLM 요청 덤프(`requests/`), vmstat 기록(`*.vmstat.jsonl`)은
+합계 약 4.8 GiB라 저장소에 넣지 않고 `.gitignore`로 제외한다. 이 캠페인의 vLLM 로그에서도 호스트의
+네트워크 주소를 `HOST-ADDRESS`로 바꾸었다.
+
 GPU 캠페인은 동시에 실행하지 않는다. MPS 서버를 시작하는 캠페인은 제어 소켓을
 둘 짧은 디렉터리가 필요하고(`MPS_ROOT`, 약 85자 이하), 다른 MPS 데몬이 실행
 중이면 실행을 거부한다. `run_engine_pages.sh`는 `sudo`로 tmpfs와 hugetlbfs를

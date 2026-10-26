@@ -5,7 +5,7 @@
 # mode:
 #
 #   mlock      the weights are read in place from the page cache of the model
-#              file on ext4, which every agent locks (llama.cpp --mlock), as a
+#              file on ext4, which every agent locks (llama.cpp --load-mode mmap+mlock), as a
 #              system that shares weights through the page cache and keeps them
 #              resident would
 #
@@ -133,7 +133,7 @@ run_case() {  # mode pressure
   [[ "$mode" == memfs ]] && path="$memfs_dir/model.gguf"
   [[ "$mode" == device ]] || extra=(GGML_CUDA_HOST_PTR=1)
   local lock_flag=
-  [[ "$mode" == mlock ]] && lock_flag=--mlock
+  [[ "$mode" == mlock ]] && lock_flag="--load-mode mmap+mlock"
   rm -f "$memfs_dir/model.gguf"
   drop_cache "$model"
   rm -rf "$work/out"; mkdir -p "$work/out"

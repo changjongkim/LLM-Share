@@ -1,0 +1,7 @@
+{"schema":1,"pid":3123435,"event":"process_start","mono_ns":421082756808775,"generation":0,"value":0,"sequence":0}
+{"schema":1,"pid":3123435,"event":"backend_start","mono_ns":421082756816979,"generation":0,"value":0,"sequence":0}
+{"schema":1,"pid":3123435,"event":"backend_end","mono_ns":421085027757542,"generation":0,"value":0,"sequence":0}
+{"schema":1,"pid":3123435,"event":"model_start","mono_ns":421085027759338,"generation":0,"value":0,"sequence":0}
+{"schema":1,"pid":3123435,"event":"model_end","mono_ns":421121726847425,"generation":0,"value":0,"sequence":0}
+{"schema":1,"pid":3123435,"event":"context_start","mono_ns":421121726850944,"generation":0,"value":0,"sequence":0}
+{"schema":1,"pid":3123435,"event":"context_end","mono_ns":421122307091051,"generation":0,"value":0,"sequence":0}

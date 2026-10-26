@@ -1,0 +1,30 @@
+BEGIN_KVLINUX run=1
+CASE placement=same mode=cow_plain children=8 paragraphs=320 context=32768
+PARENT exit=0 text=f55a5c79226da128 prefix_tokens=16321 prefix_ms=12648.3 publish_ms=11.97 state_bytes=261845 model_ms=602.4 context_ms=38.1 suffix_ms=44.1 generation_ms=8359.1 generated=64 generation_tps=7.656 total_ms=37183.1
+CHILD index=0 own_instance=1 exit=0 text=75dec9288e8250ab role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1352.6 context_ms=38.2 state_ms=7.50 prefix_ms=0.0 suffix_ms=5242.1 first_token_ms=6783.0 generation_ms=16421.8 generated=64 generation_tps=3.897
+CHILD index=1 own_instance=1 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1295.4 context_ms=45.2 state_ms=7.54 prefix_ms=0.0 suffix_ms=5167.8 first_token_ms=6644.2 generation_ms=16526.7 generated=64 generation_tps=3.873
+CHILD index=2 own_instance=1 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1227.2 context_ms=37.4 state_ms=7.58 prefix_ms=0.0 suffix_ms=4891.8 first_token_ms=6303.5 generation_ms=16665.8 generated=64 generation_tps=3.840
+CHILD index=3 own_instance=1 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1321.5 context_ms=38.6 state_ms=7.61 prefix_ms=0.0 suffix_ms=5094.3 first_token_ms=6594.0 generation_ms=16548.9 generated=64 generation_tps=3.867
+CHILD index=4 own_instance=1 exit=0 text=960b23624425fcdf role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1267.7 context_ms=37.8 state_ms=7.53 prefix_ms=0.0 suffix_ms=5120.5 first_token_ms=6569.9 generation_ms=16542.2 generated=64 generation_tps=3.869
+CHILD index=5 own_instance=1 exit=0 text=45d93d75d8c246b5 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1275.4 context_ms=47.9 state_ms=8.29 prefix_ms=0.0 suffix_ms=5123.4 first_token_ms=6603.1 generation_ms=16536.3 generated=64 generation_tps=3.870
+CHILD index=6 own_instance=1 exit=0 text=6b8b416287b3809b role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1308.2 context_ms=40.4 state_ms=7.43 prefix_ms=0.0 suffix_ms=5119.6 first_token_ms=6622.5 generation_ms=16529.9 generated=64 generation_tps=3.872
+CHILD index=7 own_instance=1 exit=0 text=4a8f18b77dbe0332 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1385.6 context_ms=36.6 state_ms=7.33 prefix_ms=0.0 suffix_ms=5172.4 first_token_ms=6735.0 generation_ms=16462.3 generated=64 generation_tps=3.888
+KERNEL gpu_fault_pages=7534728 fault_thread_ms=4230
+MEMORY mem_available_drop_mib=13419
+END_CASE failed=0 timed_out=0 guard=0
+END_KVLINUX
+BEGIN_KVLINUX run=2
+CASE placement=same mode=cow_plain children=8 paragraphs=320 context=32768
+PARENT exit=0 text=f55a5c79226da128 prefix_tokens=16321 prefix_ms=12593.2 publish_ms=11.73 state_bytes=261845 model_ms=616.6 context_ms=37.6 suffix_ms=44.2 generation_ms=8025.9 generated=64 generation_tps=7.974 total_ms=37012.2
+CHILD index=0 own_instance=1 exit=0 text=75dec9288e8250ab role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1373.9 context_ms=40.8 state_ms=7.48 prefix_ms=0.0 suffix_ms=5093.0 first_token_ms=6655.5 generation_ms=16390.8 generated=64 generation_tps=3.905
+CHILD index=1 own_instance=1 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1295.0 context_ms=39.3 state_ms=7.63 prefix_ms=0.0 suffix_ms=4879.2 first_token_ms=6349.5 generation_ms=16556.2 generated=64 generation_tps=3.866
+CHILD index=2 own_instance=1 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1313.8 context_ms=39.2 state_ms=7.51 prefix_ms=0.0 suffix_ms=4875.3 first_token_ms=6369.8 generation_ms=16561.3 generated=64 generation_tps=3.864
+CHILD index=3 own_instance=1 exit=0 text=3fd8649867d4bb41 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1332.2 context_ms=43.7 state_ms=7.45 prefix_ms=0.0 suffix_ms=5051.5 first_token_ms=6566.1 generation_ms=16455.4 generated=64 generation_tps=3.889
+CHILD index=4 own_instance=1 exit=0 text=960b23624425fcdf role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1374.7 context_ms=43.4 state_ms=7.31 prefix_ms=0.0 suffix_ms=5051.1 first_token_ms=6621.6 generation_ms=16414.4 generated=64 generation_tps=3.899
+CHILD index=5 own_instance=1 exit=0 text=45d93d75d8c246b5 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1308.5 context_ms=42.3 state_ms=7.57 prefix_ms=0.0 suffix_ms=4892.9 first_token_ms=6397.4 generation_ms=16531.5 generated=64 generation_tps=3.871
+CHILD index=6 own_instance=1 exit=0 text=6b8b416287b3809b role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1372.7 context_ms=40.7 state_ms=7.55 prefix_ms=0.0 suffix_ms=4995.9 first_token_ms=6548.0 generation_ms=16460.4 generated=64 generation_tps=3.888
+CHILD index=7 own_instance=1 exit=0 text=4a8f18b77dbe0332 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1325.6 context_ms=38.9 state_ms=7.64 prefix_ms=0.0 suffix_ms=4876.0 first_token_ms=6392.8 generation_ms=16544.7 generated=64 generation_tps=3.868
+KERNEL gpu_fault_pages=7521308 fault_thread_ms=4060
+MEMORY mem_available_drop_mib=13432
+END_CASE failed=0 timed_out=0 guard=0
+END_KVLINUX

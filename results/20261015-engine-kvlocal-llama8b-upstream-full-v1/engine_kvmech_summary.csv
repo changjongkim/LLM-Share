@@ -1,0 +1,7 @@
+placement,children,paragraphs,mode,runs,parents_completed,timed_out,prefix_tokens,publish_ms,publish_ci95,state_mib,children_started,children_finished,own_instance_finished,own_instance_started,other_instance_finished,other_instance_started,child_attach_ms,child_attach_ci95,child_first_token_ms,child_first_token_ci95,children_tps_sum,children_tps_vs_copy,vs_copy_low,vs_copy_high,vs_copy_median,parent_tps,parent_tps_vs_copy,parent_vs_copy_median,children_memory_mib,children_memory_ci95,texts_equal_to_copy,texts_compared
+same,4,320,copy,6,6,0,16322,1160.84,23.01,2040.50,24,24,24,24,0,0,1001.5,78.3,2402,72,22.79,1.0000,1.0000,1.0000,1.0000,7.374,1.0000,1.0000,19479,16,24,24
+same,4,320,host_copy_huge,6,6,0,16322,1177.66,8.78,2040.50,24,24,24,24,0,0,1041.5,19.9,2442,22,21.62,0.9489,0.9371,0.9608,0.9487,6.973,0.9457,0.9519,19339,23,24,24
+same,4,320,host_copy,6,6,0,16322,1148.94,10.98,2040.50,24,24,24,24,0,0,1270.5,39.5,2692,50,21.80,0.9567,0.9417,0.9720,0.9524,7.393,1.0028,1.0079,11745,1254,24,24
+same,4,320,extent,6,6,0,16322,16.75,1.41,0.25,24,24,24,24,0,0,55.1,3.2,1457,15,20.92,0.9179,0.9045,0.9315,0.9131,6.124,0.8306,0.8351,3140,17,24,24
+same,4,320,grow_all,6,6,0,16322,16.23,1.42,0.25,24,24,24,24,0,0,126.8,11.1,1531,12,20.94,0.9188,0.9058,0.9320,0.9142,6.112,0.8291,0.8306,11087,14,24,24
+same,4,320,small_pages,6,6,0,16322,20.37,5.35,0.25,24,24,24,24,0,0,78.5,2.7,1474,38,20.53,0.9010,0.8892,0.9129,0.8979,5.950,0.8069,0.8117,3049,20,24,24

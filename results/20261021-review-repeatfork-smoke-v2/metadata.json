@@ -1,0 +1,20 @@
+{
+  "arguments": {
+    "tag": "20261021-review-repeatfork-smoke-v2",
+    "repetitions": 2,
+    "modes": "copy copy_map extent",
+    "paragraphs": 80,
+    "forks": 2,
+    "children": 1,
+    "step": 32,
+    "tokens": 64,
+    "model": "/home/thor/kcj/llm_share/models/Qwen2.5-7B-Instruct-Q4_K_M.gguf",
+    "guard_gib": 12,
+    "timeout": 900
+  },
+  "gpu": "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600",
+  "boot_id": "f9776703-a137-43bc-822b-124c6147ff68",
+  "runner_sha256": "237514444994ae63f79c5749bbe47e559e78a79ec5f34e589129c4b06f35220a",
+  "driver_sha256": "926ff3f3eb94ac8f303d9402649da4438dc9d23d1ef6fc2b3dfeffed10b00f68",
+  "gqa": "2"
+}

@@ -1,0 +1,4 @@
+FAILED Phi-3.5-mini-instruct-Q4_K_M.gguf.device.1
+FAILED Phi-3.5-mini-instruct-Q4_K_M.gguf.host.1
+FAILED Phi-3.5-mini-instruct-Q4_K_M.gguf.device.2
+FAILED Phi-3.5-mini-instruct-Q4_K_M.gguf.host.2

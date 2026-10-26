@@ -1,0 +1,20 @@
+BEGIN_RECLAIM run=1
+CASE mode=memfs pressure=reclaim agents=4
+AGENT index=0 tps=10.38 text=a22f6234dff865a1 bytes=2811
+AGENT index=1 tps=10.38 text=a22f6234dff865a1 bytes=2811
+AGENT index=2 tps=10.38 text=a22f6234dff865a1 bytes=2811
+AGENT index=3 tps=10.38 text=a22f6234dff865a1 bytes=2811
+KERNEL gpu_fault_pages=0 fault_thread_ms=0 major_faults=131 refault_file=0 file_before_mib=4675 file_last_mib=4546
+RECLAIM attempts=43 succeeded=0
+END_CASE exit=0 timed_out=0
+END_RECLAIM
+BEGIN_RECLAIM run=2
+CASE mode=memfs pressure=reclaim agents=4
+AGENT index=0 tps=10.37 text=a22f6234dff865a1 bytes=2811
+AGENT index=1 tps=10.36 text=a22f6234dff865a1 bytes=2811
+AGENT index=2 tps=10.37 text=a22f6234dff865a1 bytes=2811
+AGENT index=3 tps=10.37 text=a22f6234dff865a1 bytes=2811
+KERNEL gpu_fault_pages=0 fault_thread_ms=0 major_faults=247 refault_file=0 file_before_mib=4675 file_last_mib=4520
+RECLAIM attempts=43 succeeded=0
+END_CASE exit=0 timed_out=0
+END_RECLAIM

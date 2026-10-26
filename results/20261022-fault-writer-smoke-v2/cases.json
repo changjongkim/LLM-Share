@@ -1,0 +1,129 @@
+[
+  {
+    "case": "r01-device_merged-control",
+    "run": 1,
+    "mode": "device_merged",
+    "fault": false,
+    "children": 2,
+    "paragraphs": 80,
+    "n_gen": 64,
+    "status": "ok",
+    "context": 8192,
+    "command": [
+      "/home/thor/kcj/stator_campaign_20261016/bin/kv_spawn_fault_tuned4",
+      "/home/thor/kcj/llm_share/models/Qwen2.5-7B-Instruct-Q4_K_M.gguf",
+      "8192",
+      "/home/thor/kcj/llm_share/results/20261022-fault-writer-smoke-v2/r01-device_merged-control/prefix.txt",
+      "/home/thor/kcj/llm_share/results/20261022-fault-writer-smoke-v2/r01-device_merged-control/state",
+      "64",
+      "/home/thor/kcj/llm_share/results/20261022-fault-writer-smoke-v2/r01-device_merged-control/go",
+      "/home/thor/kcj/llm_share/results/20261022-fault-writer-smoke-v2/r01-device_merged-control/out",
+      "/home/thor/kcj/stator_campaign_20261016/bin/kv_fork_tuned4",
+      "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600",
+      "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600"
+    ],
+    "environment": {
+      "GGML_CUDA_FATTN_HOST_GQA": "2",
+      "CUDA_VISIBLE_DEVICES": "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600",
+      "GGML_CUDA_HOST_PTR": "1",
+      "LLAMA_KV_VMM": "1",
+      "LLAMA_KV_VMM_BATCH": "2",
+      "LLAMA_KV_GROW": "256",
+      "STATOR_TIMING_DIR": "/home/thor/kcj/llm_share/results/20261022-fault-writer-smoke-v2/r01-device_merged-control/timing",
+      "STATOR_TRACE": "1"
+    },
+    "parent_pid": 382227,
+    "exit": 0,
+    "release_ns": 666418611665005,
+    "wall_s": 10.946302783,
+    "children_exit": [
+      {
+        "index": "0",
+        "exit": "0"
+      },
+      {
+        "index": "1",
+        "exit": "0"
+      }
+    ],
+    "writer_exit": [],
+    "write": [],
+    "parent_text_sha256": "d216769be7a41ad2a3a47a9d26c2e7b6da2bf7df2ef94cb5f58a691c22f70389",
+    "child_text_sha256": [
+      "1c1aa5e2198e4777ace8a14b4afe33082bc6e720df8c798606a496fe2f0d7926",
+      "a3778a462d8bbe962ca99d0aa8767a06a94a096da583ecfb8665fe6b4aaa7c19"
+    ],
+    "publish_ms": 29.075629
+  },
+  {
+    "case": "r01-device_merged-fault",
+    "run": 1,
+    "mode": "device_merged",
+    "fault": true,
+    "children": 2,
+    "paragraphs": 80,
+    "n_gen": 64,
+    "status": "ok",
+    "context": 8192,
+    "command": [
+      "/home/thor/kcj/stator_campaign_20261016/bin/kv_spawn_fault_tuned4",
+      "/home/thor/kcj/llm_share/models/Qwen2.5-7B-Instruct-Q4_K_M.gguf",
+      "8192",
+      "/home/thor/kcj/llm_share/results/20261022-fault-writer-smoke-v2/r01-device_merged-fault/prefix.txt",
+      "/home/thor/kcj/llm_share/results/20261022-fault-writer-smoke-v2/r01-device_merged-fault/state",
+      "64",
+      "/home/thor/kcj/llm_share/results/20261022-fault-writer-smoke-v2/r01-device_merged-fault/go",
+      "/home/thor/kcj/llm_share/results/20261022-fault-writer-smoke-v2/r01-device_merged-fault/out",
+      "/home/thor/kcj/stator_campaign_20261016/bin/kv_fork_tuned4",
+      "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600",
+      "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600"
+    ],
+    "environment": {
+      "GGML_CUDA_FATTN_HOST_GQA": "2",
+      "CUDA_VISIBLE_DEVICES": "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600",
+      "GGML_CUDA_HOST_PTR": "1",
+      "LLAMA_KV_VMM": "1",
+      "LLAMA_KV_VMM_BATCH": "2",
+      "LLAMA_KV_GROW": "256",
+      "STATOR_TIMING_DIR": "/home/thor/kcj/llm_share/results/20261022-fault-writer-smoke-v2/r01-device_merged-fault/timing",
+      "STATOR_TRACE": "1",
+      "STATOR_FAULT_WRITER": "/home/thor/kcj/stator_campaign_20261016/bin/fault_writer",
+      "STATOR_FAULT_DELAY_MS": "1200"
+    },
+    "parent_pid": 382328,
+    "exit": 0,
+    "release_ns": 666433174391021,
+    "wall_s": 11.116869606,
+    "children_exit": [
+      {
+        "index": "0",
+        "exit": "0"
+      },
+      {
+        "index": "1",
+        "exit": "0"
+      }
+    ],
+    "writer_exit": [
+      {
+        "exit": "0"
+      }
+    ],
+    "write": [
+      {
+        "route": "vmm",
+        "start_ns": "666434648880980",
+        "end_ns": "666435169653595",
+        "targets": "112",
+        "written": "112",
+        "result": "CUDA_SUCCESS"
+      }
+    ],
+    "parent_text_sha256": "4151d6c697ad503100fc0162672a3e6cde853e8078e3c0f5475fb0fcac736f43",
+    "child_text_sha256": [
+      "ec22746d6f6289904fbcb26c9a2be55e845a6c2eb62826e225fddf31f19f13c6",
+      "e67e0a9f38f452d698f0995a2dcd091d33012d3b432959ae9018731f8c901eab"
+    ],
+    "publish_ms": 28.699787
+  }
+]

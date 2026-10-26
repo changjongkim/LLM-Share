@@ -240,6 +240,14 @@ linux_share_probe: linux_share_probe.cu
 ksm_probe: ksm_probe.cu
 	$(NVCC) $(NVCCFLAGS) $< -o $@
 
+# The sharing mechanisms of the kernel when the CPU or the GPU accesses the pages.
+mech_probe: mech_probe.cu
+	$(NVCC) $(NVCCFLAGS) $< -o $@
+
+# mech_probe with the shared mapping opened read-write.
+mech_probe2: mech_probe2.cu
+	$(NVCC) $(NVCCFLAGS) $< -o $@
+
 # Every word that the GPU reads when it faults on a read-only file mapping.
 gpu_read_check: gpu_read_check.cu
 	$(NVCC) $(NVCCFLAGS) $< -o $@

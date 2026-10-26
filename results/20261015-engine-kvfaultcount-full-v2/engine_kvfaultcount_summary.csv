@@ -1,0 +1,10 @@
+kind,mode,runs,failed,fault_pages,fault_pages_min,fault_pages_max,first_token_ms,generation_tps_total,texts_equal_to_copy,texts_compared,fault_pages_before_publish,publish_ms,next_task_ms
+agents,copy,6,0,0,0,0,2363,31.76,48,48,,,
+agents,extent,6,0,0,0,0,1774,31.89,48,48,,,
+agents,no_read,6,0,1796463,1729826,1842978,2554,31.86,48,48,,,
+agents,no_populate,6,0,35924,35138,36284,1947,31.02,48,48,,,
+agents,cow,6,0,557358,556448,558796,2355,31.31,48,48,,,
+agents,cow_noread,6,0,7519401,7515428,7523212,5733,31.30,48,48,,,
+publisher,fork_copy,6,0,0,0,0,,,,,0,583.95,44.9
+publisher,fork_extent,6,0,0,0,0,,,,,0,10.89,39.2
+publisher,fork_refill,6,0,0,0,0,,,,,0,15.88,39.2

@@ -1,0 +1,21 @@
+{
+  "arguments": {
+    "tag": "20261022-review-repeatfork-delta-v1",
+    "repetitions": 6,
+    "modes": "copy copy_map copy_delta extent",
+    "paragraphs": 320,
+    "forks": 8,
+    "children": 1,
+    "step": 256,
+    "tokens": 64,
+    "model": "/home/thor/kcj/llm_share/models/Qwen2.5-7B-Instruct-Q4_K_M.gguf",
+    "guard_gib": 12,
+    "timeout": 900,
+    "unlink": true
+  },
+  "gpu": "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600",
+  "boot_id": "f9776703-a137-43bc-822b-124c6147ff68",
+  "runner_sha256": "2a05dd2e32e5f673eb6f06cd192fa5d8356b3f984a066d57aa4dd4835cea093a",
+  "driver_sha256": "41d66ff10ab44ccfebf9b40ecd74e025738b6b728bc07ab5c7c4f0826d4f9ab8",
+  "gqa": "2"
+}

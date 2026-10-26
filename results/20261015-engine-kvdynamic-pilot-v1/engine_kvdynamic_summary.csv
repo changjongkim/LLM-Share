@@ -1,0 +1,4 @@
+system,name,rate,sessions,completed,failed_procs,unfinished_procs,guard_events,ended,wall_s,ttft_p50_s,ttft_p99_s,ttft_p99_with_unserved_s,unserved_sessions,ttft_mean_s,turn_p50_s,turn_p99_s,child_p50_s,child_p99_s,fork_pause_ms,mem_peak_gib,mem_mean_gib,live_peak,live_mean,queue_peak,residual_gib,texts_equal
+both,STATOR,0.210,30,29,0,1,0,limit,425.460,0.940,1.334,1.334,0,0.985,0.093,0.376,1.240,1.654,8.254,32.163,16.596,42,21.457,0,0.602,53/53
+weights,Copy,0.210,30,29,0,1,0,limit,425.480,1.224,1.854,1.854,0,1.248,0.096,0.321,1.570,2.262,586.110,67.462,34.500,43,21.607,0,0.535,53/53
+none,Existing,0.210,30,19,0,16,0,limit,428.300,116.087,279.294,303.038,1,123.059,0.090,0.110,5.886,44.309,527.409,97.423,90.190,17,15.080,19,1.175,35/35

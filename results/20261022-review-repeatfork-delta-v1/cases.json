@@ -1,0 +1,6770 @@
+[
+  {
+    "case": "r01-copy",
+    "run": 1,
+    "mode": "copy",
+    "forks": 8,
+    "children_per_fork": 1,
+    "step": 256,
+    "paragraphs": 320,
+    "context": 32768,
+    "command": [
+      "/home/thor/kcj/stator_campaign_20261016/bin/kv_spawn_repeat_tuned5",
+      "/home/thor/kcj/llm_share/models/Qwen2.5-7B-Instruct-Q4_K_M.gguf",
+      "32768",
+      "/home/thor/kcj/llm_share/results/20261022-review-repeatfork-delta-v1/r01-copy/prefix.txt",
+      "/home/thor/kcj/llm_share/results/20261022-review-repeatfork-delta-v1/r01-copy/state",
+      "64",
+      "8",
+      "1",
+      "256",
+      "/home/thor/kcj/llm_share/results/20261022-review-repeatfork-delta-v1/r01-copy/out",
+      "/home/thor/kcj/stator_campaign_20261016/bin/kv_fork_tuned5",
+      "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600"
+    ],
+    "environment": {
+      "GGML_CUDA_FATTN_HOST_GQA": "2",
+      "CUDA_VISIBLE_DEVICES": "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600",
+      "GGML_CUDA_HOST_PTR": "1",
+      "STATOR_TRACE": "0",
+      "STATOR_TIMING_DIR": "/home/thor/kcj/llm_share/results/20261022-review-repeatfork-delta-v1/r01-copy/timing",
+      "STATOR_REPEAT_UNLINK": "1"
+    },
+    "exit": 0,
+    "status": "ok",
+    "publishes": [
+      {
+        "fork": 1,
+        "rows": 16321,
+        "publish_ms": 582.05
+      },
+      {
+        "fork": 2,
+        "rows": 16590,
+        "publish_ms": 569.36
+      },
+      {
+        "fork": 3,
+        "rows": 16846,
+        "publish_ms": 545.78
+      },
+      {
+        "fork": 4,
+        "rows": 17102,
+        "publish_ms": 596.47
+      },
+      {
+        "fork": 5,
+        "rows": 17358,
+        "publish_ms": 607.08
+      },
+      {
+        "fork": 6,
+        "rows": 17614,
+        "publish_ms": 617.05
+      },
+      {
+        "fork": 7,
+        "rows": 17870,
+        "publish_ms": 629.3
+      },
+      {
+        "fork": 8,
+        "rows": 18126,
+        "publish_ms": 597.19
+      }
+    ],
+    "parent": {
+      "role": "parent",
+      "forks": "8",
+      "children": "8",
+      "prefix_ms": "12609.5",
+      "publish_total_ms": "4744.28",
+      "parent_ms": "85220.6",
+      "total_ms": "98959.3",
+      "rows": "18382"
+    },
+    "parent_text_sha256": "ea5b439b0f9f0dbc4f323e4dc8430c741caac96e2fd29433f9b837edf55a49b7",
+    "children": [
+      {
+        "fork": 1,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "16321",
+          "suffix_tokens": "16",
+          "model_ms": "690.7",
+          "context_ms": "70.6",
+          "state_ms": "273.43",
+          "prefix_ms": "0.0",
+          "suffix_ms": "131.5",
+          "first_token_ms": "1192.8",
+          "generation_ms": "4047.7",
+          "generated": "64",
+          "generation_tps": "15.812"
+        },
+        "text_sha256": "82c46914f5662c7b16675c19e332649544364baa47250dcacb03158209a84103"
+      },
+      {
+        "fork": 2,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "16590",
+          "suffix_tokens": "16",
+          "model_ms": "684.6",
+          "context_ms": "69.7",
+          "state_ms": "293.48",
+          "prefix_ms": "0.0",
+          "suffix_ms": "146.2",
+          "first_token_ms": "1220.4",
+          "generation_ms": "4065.5",
+          "generated": "64",
+          "generation_tps": "15.742"
+        },
+        "text_sha256": "e27425defb9c2f4caa898e9d10a93dfc780bc87f4d79f49a62d7dd1ca7e6b298"
+      },
+      {
+        "fork": 3,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "16846",
+          "suffix_tokens": "16",
+          "model_ms": "706.6",
+          "context_ms": "69.0",
+          "state_ms": "280.92",
+          "prefix_ms": "0.0",
+          "suffix_ms": "140.3",
+          "first_token_ms": "1223.3",
+          "generation_ms": "4056.4",
+          "generated": "64",
+          "generation_tps": "15.778"
+        },
+        "text_sha256": "c7833424a049b55aa807a43c55ff45b0e01369cb1dd23e149c19bbd1f67208b8"
+      },
+      {
+        "fork": 4,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "17102",
+          "suffix_tokens": "16",
+          "model_ms": "699.9",
+          "context_ms": "63.8",
+          "state_ms": "281.03",
+          "prefix_ms": "0.0",
+          "suffix_ms": "127.8",
+          "first_token_ms": "1197.8",
+          "generation_ms": "4078.5",
+          "generated": "64",
+          "generation_tps": "15.692"
+        },
+        "text_sha256": "91ccb0062230d15cfde2b3c7067ec39e6dfee61daa5c01a53b3255888e93d5b2"
+      },
+      {
+        "fork": 5,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "17358",
+          "suffix_tokens": "16",
+          "model_ms": "695.9",
+          "context_ms": "68.7",
+          "state_ms": "290.58",
+          "prefix_ms": "0.0",
+          "suffix_ms": "148.5",
+          "first_token_ms": "1229.0",
+          "generation_ms": "4109.0",
+          "generated": "64",
+          "generation_tps": "15.575"
+        },
+        "text_sha256": "e27425defb9c2f4caa898e9d10a93dfc780bc87f4d79f49a62d7dd1ca7e6b298"
+      },
+      {
+        "fork": 6,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "17614",
+          "suffix_tokens": "16",
+          "model_ms": "632.1",
+          "context_ms": "64.5",
+          "state_ms": "266.36",
+          "prefix_ms": "0.0",
+          "suffix_ms": "167.7",
+          "first_token_ms": "1158.6",
+          "generation_ms": "4118.8",
+          "generated": "64",
+          "generation_tps": "15.538"
+        },
+        "text_sha256": "9e83d4114143736981272633ead73f7ec6daabf0283f3345e7976ef21a321db8"
+      },
+      {
+        "fork": 7,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "17870",
+          "suffix_tokens": "16",
+          "model_ms": "633.3",
+          "context_ms": "68.8",
+          "state_ms": "264.64",
+          "prefix_ms": "0.0",
+          "suffix_ms": "151.3",
+          "first_token_ms": "1145.7",
+          "generation_ms": "4136.3",
+          "generated": "64",
+          "generation_tps": "15.473"
+        },
+        "text_sha256": "e27425defb9c2f4caa898e9d10a93dfc780bc87f4d79f49a62d7dd1ca7e6b298"
+      },
+      {
+        "fork": 8,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "18126",
+          "suffix_tokens": "16",
+          "model_ms": "634.8",
+          "context_ms": "67.0",
+          "state_ms": "270.06",
+          "prefix_ms": "0.0",
+          "suffix_ms": "167.4",
+          "first_token_ms": "1166.9",
+          "generation_ms": "4134.0",
+          "generated": "64",
+          "generation_tps": "15.481"
+        },
+        "text_sha256": "ca533101c47bd4e99c3c3e9248229c86c5e836bddfa51e711a46fa8ee6c77a2d"
+      }
+    ],
+    "children_exit": [
+      {
+        "index": "0",
+        "exit": "0"
+      },
+      {
+        "index": "1",
+        "exit": "0"
+      },
+      {
+        "index": "2",
+        "exit": "0"
+      },
+      {
+        "index": "3",
+        "exit": "0"
+      },
+      {
+        "index": "4",
+        "exit": "0"
+      },
+      {
+        "index": "5",
+        "exit": "0"
+      },
+      {
+        "index": "6",
+        "exit": "0"
+      },
+      {
+        "index": "7",
+        "exit": "0"
+      }
+    ],
+    "peak_drop_bytes": 9422237696,
+    "total_peak_accounted_bytes": 14105311936,
+    "tmpfs_peak_bytes": 0,
+    "gpu_faults_total": 0,
+    "wall_s": 99.568659304
+  },
+  {
+    "case": "r01-copy_map",
+    "run": 1,
+    "mode": "copy_map",
+    "forks": 8,
+    "children_per_fork": 1,
+    "step": 256,
+    "paragraphs": 320,
+    "context": 32768,
+    "command": [
+      "/home/thor/kcj/stator_campaign_20261016/bin/kv_spawn_repeat_tuned5",
+      "/home/thor/kcj/llm_share/models/Qwen2.5-7B-Instruct-Q4_K_M.gguf",
+      "32768",
+      "/home/thor/kcj/llm_share/results/20261022-review-repeatfork-delta-v1/r01-copy_map/prefix.txt",
+      "/home/thor/kcj/llm_share/results/20261022-review-repeatfork-delta-v1/r01-copy_map/state",
+      "64",
+      "8",
+      "1",
+      "256",
+      "/home/thor/kcj/llm_share/results/20261022-review-repeatfork-delta-v1/r01-copy_map/out",
+      "/home/thor/kcj/stator_campaign_20261016/bin/kv_fork_tuned5",
+      "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600"
+    ],
+    "environment": {
+      "GGML_CUDA_FATTN_HOST_GQA": "2",
+      "CUDA_VISIBLE_DEVICES": "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600",
+      "GGML_CUDA_HOST_PTR": "1",
+      "STATOR_TRACE": "0",
+      "LLAMA_KV_HOST": "/home/thor/kcj/llm_share/results/20261022-review-repeatfork-delta-v1/tmpfs/kv",
+      "LLAMA_KV_GROW": "256",
+      "LLAMA_KV_PUBLISH_COPY": "1",
+      "STATOR_TIMING_DIR": "/home/thor/kcj/llm_share/results/20261022-review-repeatfork-delta-v1/r01-copy_map/timing",
+      "STATOR_REPEAT_UNLINK": "1"
+    },
+    "exit": 0,
+    "status": "ok",
+    "publishes": [
+      {
+        "fork": 1,
+        "rows": 16321,
+        "publish_ms": 82.62
+      },
+      {
+        "fork": 2,
+        "rows": 16590,
+        "publish_ms": 85.81
+      },
+      {
+        "fork": 3,
+        "rows": 16846,
+        "publish_ms": 86.41
+      },
+      {
+        "fork": 4,
+        "rows": 17102,
+        "publish_ms": 88.11
+      },
+      {
+        "fork": 5,
+        "rows": 17358,
+        "publish_ms": 88.48
+      },
+      {
+        "fork": 6,
+        "rows": 17614,
+        "publish_ms": 89.03
+      },
+      {
+        "fork": 7,
+        "rows": 17870,
+        "publish_ms": 90.07
+      },
+      {
+        "fork": 8,
+        "rows": 18126,
+        "publish_ms": 88.08
+      }
+    ],
+    "parent": {
+      "role": "parent",
+      "forks": "8",
+      "children": "8",
+      "prefix_ms": "12833.6",
+      "publish_total_ms": "698.61",
+      "parent_ms": "79674.7",
+      "total_ms": "93616.7",
+      "rows": "18382"
+    },
+    "parent_text_sha256": "ea5b439b0f9f0dbc4f323e4dc8430c741caac96e2fd29433f9b837edf55a49b7",
+    "children": [
+      {
+        "fork": 1,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "16321",
+          "suffix_tokens": "16",
+          "model_ms": "654.2",
+          "context_ms": "39.2",
+          "state_ms": "7.41",
+          "prefix_ms": "0.0",
+          "suffix_ms": "128.8",
+          "first_token_ms": "854.5",
+          "generation_ms": "3974.3",
+          "generated": "64",
+          "generation_tps": "16.104"
+        },
+        "text_sha256": "82c46914f5662c7b16675c19e332649544364baa47250dcacb03158209a84103"
+      },
+      {
+        "fork": 2,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "16590",
+          "suffix_tokens": "16",
+          "model_ms": "750.5",
+          "context_ms": "37.7",
+          "state_ms": "7.66",
+          "prefix_ms": "0.0",
+          "suffix_ms": "137.2",
+          "first_token_ms": "960.4",
+          "generation_ms": "3972.2",
+          "generated": "64",
+          "generation_tps": "16.112"
+        },
+        "text_sha256": "e27425defb9c2f4caa898e9d10a93dfc780bc87f4d79f49a62d7dd1ca7e6b298"
+      },
+      {
+        "fork": 3,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "16846",
+          "suffix_tokens": "16",
+          "model_ms": "731.8",
+          "context_ms": "38.7",
+          "state_ms": "7.63",
+          "prefix_ms": "0.0",
+          "suffix_ms": "144.6",
+          "first_token_ms": "950.7",
+          "generation_ms": "4001.4",
+          "generated": "64",
+          "generation_tps": "15.994"
+        },
+        "text_sha256": "c7833424a049b55aa807a43c55ff45b0e01369cb1dd23e149c19bbd1f67208b8"
+      },
+      {
+        "fork": 4,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "17102",
+          "suffix_tokens": "16",
+          "model_ms": "746.9",
+          "context_ms": "37.0",
+          "state_ms": "7.73",
+          "prefix_ms": "0.0",
+          "suffix_ms": "134.8",
+          "first_token_ms": "954.1",
+          "generation_ms": "3995.3",
+          "generated": "64",
+          "generation_tps": "16.019"
+        },
+        "text_sha256": "91ccb0062230d15cfde2b3c7067ec39e6dfee61daa5c01a53b3255888e93d5b2"
+      },
+      {
+        "fork": 5,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "17358",
+          "suffix_tokens": "16",
+          "model_ms": "728.7",
+          "context_ms": "38.6",
+          "state_ms": "7.98",
+          "prefix_ms": "0.0",
+          "suffix_ms": "138.6",
+          "first_token_ms": "941.4",
+          "generation_ms": "3995.1",
+          "generated": "64",
+          "generation_tps": "16.020"
+        },
+        "text_sha256": "e27425defb9c2f4caa898e9d10a93dfc780bc87f4d79f49a62d7dd1ca7e6b298"
+      },
+      {
+        "fork": 6,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "17614",
+          "suffix_tokens": "16",
+          "model_ms": "747.7",
+          "context_ms": "38.8",
+          "state_ms": "8.29",
+          "prefix_ms": "0.0",
+          "suffix_ms": "134.4",
+          "first_token_ms": "957.2",
+          "generation_ms": "4012.9",
+          "generated": "64",
+          "generation_tps": "15.949"
+        },
+        "text_sha256": "9e83d4114143736981272633ead73f7ec6daabf0283f3345e7976ef21a321db8"
+      },
+      {
+        "fork": 7,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "17870",
+          "suffix_tokens": "16",
+          "model_ms": "718.2",
+          "context_ms": "37.3",
+          "state_ms": "8.08",
+          "prefix_ms": "0.0",
+          "suffix_ms": "131.4",
+          "first_token_ms": "923.2",
+          "generation_ms": "4026.5",
+          "generated": "64",
+          "generation_tps": "15.895"
+        },
+        "text_sha256": "e27425defb9c2f4caa898e9d10a93dfc780bc87f4d79f49a62d7dd1ca7e6b298"
+      },
+      {
+        "fork": 8,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "18126",
+          "suffix_tokens": "16",
+          "model_ms": "687.6",
+          "context_ms": "37.4",
+          "state_ms": "8.27",
+          "prefix_ms": "0.0",
+          "suffix_ms": "134.7",
+          "first_token_ms": "897.4",
+          "generation_ms": "4035.7",
+          "generated": "64",
+          "generation_tps": "15.858"
+        },
+        "text_sha256": "ca533101c47bd4e99c3c3e9248229c86c5e836bddfa51e711a46fa8ee6c77a2d"
+      }
+    ],
+    "children_exit": [
+      {
+        "index": "0",
+        "exit": "0"
+      },
+      {
+        "index": "1",
+        "exit": "0"
+      },
+      {
+        "index": "2",
+        "exit": "0"
+      },
+      {
+        "index": "3",
+        "exit": "0"
+      },
+      {
+        "index": "4",
+        "exit": "0"
+      },
+      {
+        "index": "5",
+        "exit": "0"
+      },
+      {
+        "index": "6",
+        "exit": "0"
+      },
+      {
+        "index": "7",
+        "exit": "0"
+      }
+    ],
+    "peak_drop_bytes": 3859869696,
+    "total_peak_accounted_bytes": 8542943936,
+    "tmpfs_peak_bytes": 1986002944,
+    "gpu_faults_total": 0,
+    "wall_s": 94.33392323
+  },
+  {
+    "case": "r01-copy_delta",
+    "run": 1,
+    "mode": "copy_delta",
+    "forks": 8,
+    "children_per_fork": 1,
+    "step": 256,
+    "paragraphs": 320,
+    "context": 32768,
+    "command": [
+      "/home/thor/kcj/stator_campaign_20261016/bin/kv_spawn_repeat_tuned5",
+      "/home/thor/kcj/llm_share/models/Qwen2.5-7B-Instruct-Q4_K_M.gguf",
+      "32768",
+      "/home/thor/kcj/llm_share/results/20261022-review-repeatfork-delta-v1/r01-copy_delta/prefix.txt",
+      "/home/thor/kcj/llm_share/results/20261022-review-repeatfork-delta-v1/r01-copy_delta/state",
+      "64",
+      "8",
+      "1",
+      "256",
+      "/home/thor/kcj/llm_share/results/20261022-review-repeatfork-delta-v1/r01-copy_delta/out",
+      "/home/thor/kcj/stator_campaign_20261016/bin/kv_fork_tuned5",
+      "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600"
+    ],
+    "environment": {
+      "GGML_CUDA_FATTN_HOST_GQA": "2",
+      "CUDA_VISIBLE_DEVICES": "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600",
+      "GGML_CUDA_HOST_PTR": "1",
+      "STATOR_TRACE": "0",
+      "LLAMA_KV_HOST": "/home/thor/kcj/llm_share/results/20261022-review-repeatfork-delta-v1/tmpfs/kv",
+      "LLAMA_KV_GROW": "256",
+      "LLAMA_KV_PUBLISH_COPY": "2",
+      "STATOR_TIMING_DIR": "/home/thor/kcj/llm_share/results/20261022-review-repeatfork-delta-v1/r01-copy_delta/timing",
+      "STATOR_REPEAT_UNLINK": "1"
+    },
+    "exit": 0,
+    "status": "ok",
+    "publishes": [
+      {
+        "fork": 1,
+        "rows": 16321,
+        "publish_ms": 83.73
+      },
+      {
+        "fork": 2,
+        "rows": 16590,
+        "publish_ms": 8.97
+      },
+      {
+        "fork": 3,
+        "rows": 16846,
+        "publish_ms": 5.84
+      },
+      {
+        "fork": 4,
+        "rows": 17102,
+        "publish_ms": 6.03
+      },
+      {
+        "fork": 5,
+        "rows": 17358,
+        "publish_ms": 6.07
+      },
+      {
+        "fork": 6,
+        "rows": 17614,
+        "publish_ms": 6.13
+      },
+      {
+        "fork": 7,
+        "rows": 17870,
+        "publish_ms": 6.19
+      },
+      {
+        "fork": 8,
+        "rows": 18126,
+        "publish_ms": 6.35
+      }
+    ],
+    "parent": {
+      "role": "parent",
+      "forks": "8",
+      "children": "8",
+      "prefix_ms": "12772.5",
+      "publish_total_ms": "129.32",
+      "parent_ms": "79082.4",
+      "total_ms": "92952.9",
+      "rows": "18382"
+    },
+    "parent_text_sha256": "ea5b439b0f9f0dbc4f323e4dc8430c741caac96e2fd29433f9b837edf55a49b7",
+    "children": [
+      {
+        "fork": 1,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "16321",
+          "suffix_tokens": "16",
+          "model_ms": "697.8",
+          "context_ms": "35.9",
+          "state_ms": "7.41",
+          "prefix_ms": "0.0",
+          "suffix_ms": "137.8",
+          "first_token_ms": "904.9",
+          "generation_ms": "3986.5",
+          "generated": "64",
+          "generation_tps": "16.054"
+        },
+        "text_sha256": "82c46914f5662c7b16675c19e332649544364baa47250dcacb03158209a84103"
+      },
+      {
+        "fork": 2,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "16590",
+          "suffix_tokens": "16",
+          "model_ms": "711.5",
+          "context_ms": "36.4",
+          "state_ms": "7.51",
+          "prefix_ms": "0.0",
+          "suffix_ms": "140.0",
+          "first_token_ms": "922.8",
+          "generation_ms": "3981.9",
+          "generated": "64",
+          "generation_tps": "16.073"
+        },
+        "text_sha256": "e27425defb9c2f4caa898e9d10a93dfc780bc87f4d79f49a62d7dd1ca7e6b298"
+      },
+      {
+        "fork": 3,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "16846",
+          "suffix_tokens": "16",
+          "model_ms": "696.2",
+          "context_ms": "36.8",
+          "state_ms": "7.56",
+          "prefix_ms": "0.0",
+          "suffix_ms": "140.2",
+          "first_token_ms": "908.8",
+          "generation_ms": "4003.7",
+          "generated": "64",
+          "generation_tps": "15.985"
+        },
+        "text_sha256": "c7833424a049b55aa807a43c55ff45b0e01369cb1dd23e149c19bbd1f67208b8"
+      },
+      {
+        "fork": 4,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "17102",
+          "suffix_tokens": "16",
+          "model_ms": "644.3",
+          "context_ms": "35.7",
+          "state_ms": "7.84",
+          "prefix_ms": "0.0",
+          "suffix_ms": "131.7",
+          "first_token_ms": "846.9",
+          "generation_ms": "3986.6",
+          "generated": "64",
+          "generation_tps": "16.054"
+        },
+        "text_sha256": "91ccb0062230d15cfde2b3c7067ec39e6dfee61daa5c01a53b3255888e93d5b2"
+      },
+      {
+        "fork": 5,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "17358",
+          "suffix_tokens": "16",
+          "model_ms": "630.8",
+          "context_ms": "36.4",
+          "state_ms": "8.02",
+          "prefix_ms": "0.0",
+          "suffix_ms": "135.7",
+          "first_token_ms": "837.9",
+          "generation_ms": "4005.9",
+          "generated": "64",
+          "generation_tps": "15.977"
+        },
+        "text_sha256": "e27425defb9c2f4caa898e9d10a93dfc780bc87f4d79f49a62d7dd1ca7e6b298"
+      },
+      {
+        "fork": 6,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "17614",
+          "suffix_tokens": "16",
+          "model_ms": "632.8",
+          "context_ms": "36.8",
+          "state_ms": "8.05",
+          "prefix_ms": "0.0",
+          "suffix_ms": "133.2",
+          "first_token_ms": "838.0",
+          "generation_ms": "4016.3",
+          "generated": "64",
+          "generation_tps": "15.935"
+        },
+        "text_sha256": "9e83d4114143736981272633ead73f7ec6daabf0283f3345e7976ef21a321db8"
+      },
+      {
+        "fork": 7,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "17870",
+          "suffix_tokens": "16",
+          "model_ms": "628.9",
+          "context_ms": "37.9",
+          "state_ms": "8.11",
+          "prefix_ms": "0.0",
+          "suffix_ms": "134.8",
+          "first_token_ms": "837.4",
+          "generation_ms": "4025.0",
+          "generated": "64",
+          "generation_tps": "15.901"
+        },
+        "text_sha256": "e27425defb9c2f4caa898e9d10a93dfc780bc87f4d79f49a62d7dd1ca7e6b298"
+      },
+      {
+        "fork": 8,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "18126",
+          "suffix_tokens": "16",
+          "model_ms": "636.0",
+          "context_ms": "37.0",
+          "state_ms": "8.04",
+          "prefix_ms": "0.0",
+          "suffix_ms": "136.4",
+          "first_token_ms": "845.9",
+          "generation_ms": "4034.9",
+          "generated": "64",
+          "generation_tps": "15.861"
+        },
+        "text_sha256": "ca533101c47bd4e99c3c3e9248229c86c5e836bddfa51e711a46fa8ee6c77a2d"
+      }
+    ],
+    "children_exit": [
+      {
+        "index": "0",
+        "exit": "0"
+      },
+      {
+        "index": "1",
+        "exit": "0"
+      },
+      {
+        "index": "2",
+        "exit": "0"
+      },
+      {
+        "index": "3",
+        "exit": "0"
+      },
+      {
+        "index": "4",
+        "exit": "0"
+      },
+      {
+        "index": "5",
+        "exit": "0"
+      },
+      {
+        "index": "6",
+        "exit": "0"
+      },
+      {
+        "index": "7",
+        "exit": "0"
+      }
+    ],
+    "peak_drop_bytes": 3741032448,
+    "total_peak_accounted_bytes": 8424106688,
+    "tmpfs_peak_bytes": 1056964608,
+    "gpu_faults_total": 0,
+    "wall_s": 93.618997266
+  },
+  {
+    "case": "r01-extent",
+    "run": 1,
+    "mode": "extent",
+    "forks": 8,
+    "children_per_fork": 1,
+    "step": 256,
+    "paragraphs": 320,
+    "context": 32768,
+    "command": [
+      "/home/thor/kcj/stator_campaign_20261016/bin/kv_spawn_repeat_tuned5",
+      "/home/thor/kcj/llm_share/models/Qwen2.5-7B-Instruct-Q4_K_M.gguf",
+      "32768",
+      "/home/thor/kcj/llm_share/results/20261022-review-repeatfork-delta-v1/r01-extent/prefix.txt",
+      "/home/thor/kcj/llm_share/results/20261022-review-repeatfork-delta-v1/r01-extent/state",
+      "64",
+      "8",
+      "1",
+      "256",
+      "/home/thor/kcj/llm_share/results/20261022-review-repeatfork-delta-v1/r01-extent/out",
+      "/home/thor/kcj/stator_campaign_20261016/bin/kv_fork_tuned5",
+      "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600"
+    ],
+    "environment": {
+      "GGML_CUDA_FATTN_HOST_GQA": "2",
+      "CUDA_VISIBLE_DEVICES": "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600",
+      "GGML_CUDA_HOST_PTR": "1",
+      "STATOR_TRACE": "0",
+      "LLAMA_KV_HOST": "/home/thor/kcj/llm_share/results/20261022-review-repeatfork-delta-v1/tmpfs/kv",
+      "LLAMA_KV_GROW": "256",
+      "STATOR_TIMING_DIR": "/home/thor/kcj/llm_share/results/20261022-review-repeatfork-delta-v1/r01-extent/timing",
+      "STATOR_REPEAT_UNLINK": "1"
+    },
+    "exit": 0,
+    "status": "ok",
+    "publishes": [
+      {
+        "fork": 1,
+        "rows": 16321,
+        "publish_ms": 11.56
+      },
+      {
+        "fork": 2,
+        "rows": 16590,
+        "publish_ms": 8.94
+      },
+      {
+        "fork": 3,
+        "rows": 16846,
+        "publish_ms": 8.5
+      },
+      {
+        "fork": 4,
+        "rows": 17102,
+        "publish_ms": 8.47
+      },
+      {
+        "fork": 5,
+        "rows": 17358,
+        "publish_ms": 8.93
+      },
+      {
+        "fork": 6,
+        "rows": 17614,
+        "publish_ms": 8.98
+      },
+      {
+        "fork": 7,
+        "rows": 17870,
+        "publish_ms": 8.92
+      },
+      {
+        "fork": 8,
+        "rows": 18126,
+        "publish_ms": 8.81
+      }
+    ],
+    "parent": {
+      "role": "parent",
+      "forks": "8",
+      "children": "8",
+      "prefix_ms": "12657.6",
+      "publish_total_ms": "73.12",
+      "parent_ms": "78997.2",
+      "total_ms": "92759.8",
+      "rows": "18382"
+    },
+    "parent_text_sha256": "ea5b439b0f9f0dbc4f323e4dc8430c741caac96e2fd29433f9b837edf55a49b7",
+    "children": [
+      {
+        "fork": 1,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "16321",
+          "suffix_tokens": "16",
+          "model_ms": "648.3",
+          "context_ms": "37.1",
+          "state_ms": "7.36",
+          "prefix_ms": "0.0",
+          "suffix_ms": "139.7",
+          "first_token_ms": "856.4",
+          "generation_ms": "3971.7",
+          "generated": "64",
+          "generation_tps": "16.114"
+        },
+        "text_sha256": "82c46914f5662c7b16675c19e332649544364baa47250dcacb03158209a84103"
+      },
+      {
+        "fork": 2,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "16590",
+          "suffix_tokens": "16",
+          "model_ms": "629.0",
+          "context_ms": "37.8",
+          "state_ms": "7.57",
+          "prefix_ms": "0.0",
+          "suffix_ms": "131.2",
+          "first_token_ms": "831.8",
+          "generation_ms": "3983.3",
+          "generated": "64",
+          "generation_tps": "16.067"
+        },
+        "text_sha256": "e27425defb9c2f4caa898e9d10a93dfc780bc87f4d79f49a62d7dd1ca7e6b298"
+      },
+      {
+        "fork": 3,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "16846",
+          "suffix_tokens": "16",
+          "model_ms": "634.8",
+          "context_ms": "35.9",
+          "state_ms": "7.91",
+          "prefix_ms": "0.0",
+          "suffix_ms": "127.2",
+          "first_token_ms": "832.9",
+          "generation_ms": "3991.8",
+          "generated": "64",
+          "generation_tps": "16.033"
+        },
+        "text_sha256": "c7833424a049b55aa807a43c55ff45b0e01369cb1dd23e149c19bbd1f67208b8"
+      },
+      {
+        "fork": 4,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "17102",
+          "suffix_tokens": "16",
+          "model_ms": "637.8",
+          "context_ms": "36.9",
+          "state_ms": "7.50",
+          "prefix_ms": "0.0",
+          "suffix_ms": "136.8",
+          "first_token_ms": "845.7",
+          "generation_ms": "3991.1",
+          "generated": "64",
+          "generation_tps": "16.036"
+        },
+        "text_sha256": "91ccb0062230d15cfde2b3c7067ec39e6dfee61daa5c01a53b3255888e93d5b2"
+      },
+      {
+        "fork": 5,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "17358",
+          "suffix_tokens": "16",
+          "model_ms": "648.2",
+          "context_ms": "37.0",
+          "state_ms": "7.73",
+          "prefix_ms": "0.0",
+          "suffix_ms": "140.6",
+          "first_token_ms": "860.4",
+          "generation_ms": "4010.7",
+          "generated": "64",
+          "generation_tps": "15.957"
+        },
+        "text_sha256": "e27425defb9c2f4caa898e9d10a93dfc780bc87f4d79f49a62d7dd1ca7e6b298"
+      },
+      {
+        "fork": 6,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "17614",
+          "suffix_tokens": "16",
+          "model_ms": "634.4",
+          "context_ms": "36.4",
+          "state_ms": "8.04",
+          "prefix_ms": "0.0",
+          "suffix_ms": "121.7",
+          "first_token_ms": "828.6",
+          "generation_ms": "4025.0",
+          "generated": "64",
+          "generation_tps": "15.901"
+        },
+        "text_sha256": "9e83d4114143736981272633ead73f7ec6daabf0283f3345e7976ef21a321db8"
+      },
+      {
+        "fork": 7,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "17870",
+          "suffix_tokens": "16",
+          "model_ms": "635.4",
+          "context_ms": "36.3",
+          "state_ms": "7.95",
+          "prefix_ms": "0.0",
+          "suffix_ms": "138.0",
+          "first_token_ms": "845.2",
+          "generation_ms": "4008.4",
+          "generated": "64",
+          "generation_tps": "15.967"
+        },
+        "text_sha256": "e27425defb9c2f4caa898e9d10a93dfc780bc87f4d79f49a62d7dd1ca7e6b298"
+      },
+      {
+        "fork": 8,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "18126",
+          "suffix_tokens": "16",
+          "model_ms": "636.6",
+          "context_ms": "36.9",
+          "state_ms": "8.33",
+          "prefix_ms": "0.0",
+          "suffix_ms": "129.3",
+          "first_token_ms": "838.1",
+          "generation_ms": "4030.9",
+          "generated": "64",
+          "generation_tps": "15.877"
+        },
+        "text_sha256": "ca533101c47bd4e99c3c3e9248229c86c5e836bddfa51e711a46fa8ee6c77a2d"
+      }
+    ],
+    "children_exit": [
+      {
+        "index": "0",
+        "exit": "0"
+      },
+      {
+        "index": "1",
+        "exit": "0"
+      },
+      {
+        "index": "2",
+        "exit": "0"
+      },
+      {
+        "index": "3",
+        "exit": "0"
+      },
+      {
+        "index": "4",
+        "exit": "0"
+      },
+      {
+        "index": "5",
+        "exit": "0"
+      },
+      {
+        "index": "6",
+        "exit": "0"
+      },
+      {
+        "index": "7",
+        "exit": "0"
+      }
+    ],
+    "peak_drop_bytes": 2685804544,
+    "total_peak_accounted_bytes": 7368878784,
+    "tmpfs_peak_bytes": 1056964608,
+    "gpu_faults_total": 0,
+    "wall_s": 93.368463175
+  },
+  {
+    "case": "r02-copy_map",
+    "run": 2,
+    "mode": "copy_map",
+    "forks": 8,
+    "children_per_fork": 1,
+    "step": 256,
+    "paragraphs": 320,
+    "context": 32768,
+    "command": [
+      "/home/thor/kcj/stator_campaign_20261016/bin/kv_spawn_repeat_tuned5",
+      "/home/thor/kcj/llm_share/models/Qwen2.5-7B-Instruct-Q4_K_M.gguf",
+      "32768",
+      "/home/thor/kcj/llm_share/results/20261022-review-repeatfork-delta-v1/r02-copy_map/prefix.txt",
+      "/home/thor/kcj/llm_share/results/20261022-review-repeatfork-delta-v1/r02-copy_map/state",
+      "64",
+      "8",
+      "1",
+      "256",
+      "/home/thor/kcj/llm_share/results/20261022-review-repeatfork-delta-v1/r02-copy_map/out",
+      "/home/thor/kcj/stator_campaign_20261016/bin/kv_fork_tuned5",
+      "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600"
+    ],
+    "environment": {
+      "GGML_CUDA_FATTN_HOST_GQA": "2",
+      "CUDA_VISIBLE_DEVICES": "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600",
+      "GGML_CUDA_HOST_PTR": "1",
+      "STATOR_TRACE": "0",
+      "LLAMA_KV_HOST": "/home/thor/kcj/llm_share/results/20261022-review-repeatfork-delta-v1/tmpfs/kv",
+      "LLAMA_KV_GROW": "256",
+      "LLAMA_KV_PUBLISH_COPY": "1",
+      "STATOR_TIMING_DIR": "/home/thor/kcj/llm_share/results/20261022-review-repeatfork-delta-v1/r02-copy_map/timing",
+      "STATOR_REPEAT_UNLINK": "1"
+    },
+    "exit": 0,
+    "status": "ok",
+    "publishes": [
+      {
+        "fork": 1,
+        "rows": 16321,
+        "publish_ms": 83.35
+      },
+      {
+        "fork": 2,
+        "rows": 16590,
+        "publish_ms": 85.93
+      },
+      {
+        "fork": 3,
+        "rows": 16846,
+        "publish_ms": 86.85
+      },
+      {
+        "fork": 4,
+        "rows": 17102,
+        "publish_ms": 87.4
+      },
+      {
+        "fork": 5,
+        "rows": 17358,
+        "publish_ms": 89.28
+      },
+      {
+        "fork": 6,
+        "rows": 17614,
+        "publish_ms": 86.65
+      },
+      {
+        "fork": 7,
+        "rows": 17870,
+        "publish_ms": 89.14
+      },
+      {
+        "fork": 8,
+        "rows": 18126,
+        "publish_ms": 89.26
+      }
+    ],
+    "parent": {
+      "role": "parent",
+      "forks": "8",
+      "children": "8",
+      "prefix_ms": "12785.4",
+      "publish_total_ms": "697.84",
+      "parent_ms": "79715.5",
+      "total_ms": "93592.3",
+      "rows": "18382"
+    },
+    "parent_text_sha256": "ea5b439b0f9f0dbc4f323e4dc8430c741caac96e2fd29433f9b837edf55a49b7",
+    "children": [
+      {
+        "fork": 1,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "16321",
+          "suffix_tokens": "16",
+          "model_ms": "641.5",
+          "context_ms": "36.1",
+          "state_ms": "7.57",
+          "prefix_ms": "0.0",
+          "suffix_ms": "136.4",
+          "first_token_ms": "845.6",
+          "generation_ms": "3965.8",
+          "generated": "64",
+          "generation_tps": "16.138"
+        },
+        "text_sha256": "82c46914f5662c7b16675c19e332649544364baa47250dcacb03158209a84103"
+      },
+      {
+        "fork": 2,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "16590",
+          "suffix_tokens": "16",
+          "model_ms": "632.7",
+          "context_ms": "35.7",
+          "state_ms": "7.56",
+          "prefix_ms": "0.0",
+          "suffix_ms": "124.7",
+          "first_token_ms": "827.3",
+          "generation_ms": "3986.7",
+          "generated": "64",
+          "generation_tps": "16.053"
+        },
+        "text_sha256": "e27425defb9c2f4caa898e9d10a93dfc780bc87f4d79f49a62d7dd1ca7e6b298"
+      },
+      {
+        "fork": 3,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "16846",
+          "suffix_tokens": "16",
+          "model_ms": "673.4",
+          "context_ms": "37.3",
+          "state_ms": "7.65",
+          "prefix_ms": "0.0",
+          "suffix_ms": "131.9",
+          "first_token_ms": "878.3",
+          "generation_ms": "3981.4",
+          "generated": "64",
+          "generation_tps": "16.075"
+        },
+        "text_sha256": "c7833424a049b55aa807a43c55ff45b0e01369cb1dd23e149c19bbd1f67208b8"
+      },
+      {
+        "fork": 4,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "17102",
+          "suffix_tokens": "16",
+          "model_ms": "712.1",
+          "context_ms": "36.9",
+          "state_ms": "7.76",
+          "prefix_ms": "0.0",
+          "suffix_ms": "138.1",
+          "first_token_ms": "922.8",
+          "generation_ms": "3999.0",
+          "generated": "64",
+          "generation_tps": "16.004"
+        },
+        "text_sha256": "91ccb0062230d15cfde2b3c7067ec39e6dfee61daa5c01a53b3255888e93d5b2"
+      },
+      {
+        "fork": 5,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "17358",
+          "suffix_tokens": "16",
+          "model_ms": "633.6",
+          "context_ms": "37.9",
+          "state_ms": "8.10",
+          "prefix_ms": "0.0",
+          "suffix_ms": "144.8",
+          "first_token_ms": "850.9",
+          "generation_ms": "3994.2",
+          "generated": "64",
+          "generation_tps": "16.023"
+        },
+        "text_sha256": "e27425defb9c2f4caa898e9d10a93dfc780bc87f4d79f49a62d7dd1ca7e6b298"
+      },
+      {
+        "fork": 6,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "17614",
+          "suffix_tokens": "16",
+          "model_ms": "684.9",
+          "context_ms": "36.6",
+          "state_ms": "8.00",
+          "prefix_ms": "0.0",
+          "suffix_ms": "131.1",
+          "first_token_ms": "889.8",
+          "generation_ms": "4014.9",
+          "generated": "64",
+          "generation_tps": "15.941"
+        },
+        "text_sha256": "9e83d4114143736981272633ead73f7ec6daabf0283f3345e7976ef21a321db8"
+      },
+      {
+        "fork": 7,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "17870",
+          "suffix_tokens": "16",
+          "model_ms": "694.4",
+          "context_ms": "38.1",
+          "state_ms": "8.05",
+          "prefix_ms": "0.0",
+          "suffix_ms": "130.0",
+          "first_token_ms": "898.1",
+          "generation_ms": "4027.1",
+          "generated": "64",
+          "generation_tps": "15.892"
+        },
+        "text_sha256": "e27425defb9c2f4caa898e9d10a93dfc780bc87f4d79f49a62d7dd1ca7e6b298"
+      },
+      {
+        "fork": 8,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "18126",
+          "suffix_tokens": "16",
+          "model_ms": "630.0",
+          "context_ms": "35.9",
+          "state_ms": "8.31",
+          "prefix_ms": "0.0",
+          "suffix_ms": "140.7",
+          "first_token_ms": "842.9",
+          "generation_ms": "4033.2",
+          "generated": "64",
+          "generation_tps": "15.868"
+        },
+        "text_sha256": "ca533101c47bd4e99c3c3e9248229c86c5e836bddfa51e711a46fa8ee6c77a2d"
+      }
+    ],
+    "children_exit": [
+      {
+        "index": "0",
+        "exit": "0"
+      },
+      {
+        "index": "1",
+        "exit": "0"
+      },
+      {
+        "index": "2",
+        "exit": "0"
+      },
+      {
+        "index": "3",
+        "exit": "0"
+      },
+      {
+        "index": "4",
+        "exit": "0"
+      },
+      {
+        "index": "5",
+        "exit": "0"
+      },
+      {
+        "index": "6",
+        "exit": "0"
+      },
+      {
+        "index": "7",
+        "exit": "0"
+      }
+    ],
+    "peak_drop_bytes": 3856539648,
+    "total_peak_accounted_bytes": 8539613888,
+    "tmpfs_peak_bytes": 2113929216,
+    "gpu_faults_total": 0,
+    "wall_s": 94.307839027
+  },
+  {
+    "case": "r02-copy_delta",
+    "run": 2,
+    "mode": "copy_delta",
+    "forks": 8,
+    "children_per_fork": 1,
+    "step": 256,
+    "paragraphs": 320,
+    "context": 32768,
+    "command": [
+      "/home/thor/kcj/stator_campaign_20261016/bin/kv_spawn_repeat_tuned5",
+      "/home/thor/kcj/llm_share/models/Qwen2.5-7B-Instruct-Q4_K_M.gguf",
+      "32768",
+      "/home/thor/kcj/llm_share/results/20261022-review-repeatfork-delta-v1/r02-copy_delta/prefix.txt",
+      "/home/thor/kcj/llm_share/results/20261022-review-repeatfork-delta-v1/r02-copy_delta/state",
+      "64",
+      "8",
+      "1",
+      "256",
+      "/home/thor/kcj/llm_share/results/20261022-review-repeatfork-delta-v1/r02-copy_delta/out",
+      "/home/thor/kcj/stator_campaign_20261016/bin/kv_fork_tuned5",
+      "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600"
+    ],
+    "environment": {
+      "GGML_CUDA_FATTN_HOST_GQA": "2",
+      "CUDA_VISIBLE_DEVICES": "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600",
+      "GGML_CUDA_HOST_PTR": "1",
+      "STATOR_TRACE": "0",
+      "LLAMA_KV_HOST": "/home/thor/kcj/llm_share/results/20261022-review-repeatfork-delta-v1/tmpfs/kv",
+      "LLAMA_KV_GROW": "256",
+      "LLAMA_KV_PUBLISH_COPY": "2",
+      "STATOR_TIMING_DIR": "/home/thor/kcj/llm_share/results/20261022-review-repeatfork-delta-v1/r02-copy_delta/timing",
+      "STATOR_REPEAT_UNLINK": "1"
+    },
+    "exit": 0,
+    "status": "ok",
+    "publishes": [
+      {
+        "fork": 1,
+        "rows": 16321,
+        "publish_ms": 81.78
+      },
+      {
+        "fork": 2,
+        "rows": 16590,
+        "publish_ms": 8.89
+      },
+      {
+        "fork": 3,
+        "rows": 16846,
+        "publish_ms": 5.94
+      },
+      {
+        "fork": 4,
+        "rows": 17102,
+        "publish_ms": 5.89
+      },
+      {
+        "fork": 5,
+        "rows": 17358,
+        "publish_ms": 5.95
+      },
+      {
+        "fork": 6,
+        "rows": 17614,
+        "publish_ms": 5.98
+      },
+      {
+        "fork": 7,
+        "rows": 17870,
+        "publish_ms": 6.09
+      },
+      {
+        "fork": 8,
+        "rows": 18126,
+        "publish_ms": 6.2
+      }
+    ],
+    "parent": {
+      "role": "parent",
+      "forks": "8",
+      "children": "8",
+      "prefix_ms": "12781.1",
+      "publish_total_ms": "126.72",
+      "parent_ms": "79184.2",
+      "total_ms": "93042.4",
+      "rows": "18382"
+    },
+    "parent_text_sha256": "ea5b439b0f9f0dbc4f323e4dc8430c741caac96e2fd29433f9b837edf55a49b7",
+    "children": [
+      {
+        "fork": 1,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "16321",
+          "suffix_tokens": "16",
+          "model_ms": "648.4",
+          "context_ms": "36.6",
+          "state_ms": "7.38",
+          "prefix_ms": "0.0",
+          "suffix_ms": "138.2",
+          "first_token_ms": "854.4",
+          "generation_ms": "3985.5",
+          "generated": "64",
+          "generation_tps": "16.058"
+        },
+        "text_sha256": "82c46914f5662c7b16675c19e332649544364baa47250dcacb03158209a84103"
+      },
+      {
+        "fork": 2,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "16590",
+          "suffix_tokens": "16",
+          "model_ms": "725.6",
+          "context_ms": "36.6",
+          "state_ms": "7.52",
+          "prefix_ms": "0.0",
+          "suffix_ms": "137.8",
+          "first_token_ms": "935.1",
+          "generation_ms": "3975.4",
+          "generated": "64",
+          "generation_tps": "16.099"
+        },
+        "text_sha256": "e27425defb9c2f4caa898e9d10a93dfc780bc87f4d79f49a62d7dd1ca7e6b298"
+      },
+      {
+        "fork": 3,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "16846",
+          "suffix_tokens": "16",
+          "model_ms": "721.2",
+          "context_ms": "37.6",
+          "state_ms": "7.67",
+          "prefix_ms": "0.0",
+          "suffix_ms": "132.9",
+          "first_token_ms": "926.7",
+          "generation_ms": "3992.0",
+          "generated": "64",
+          "generation_tps": "16.032"
+        },
+        "text_sha256": "c7833424a049b55aa807a43c55ff45b0e01369cb1dd23e149c19bbd1f67208b8"
+      },
+      {
+        "fork": 4,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "17102",
+          "suffix_tokens": "16",
+          "model_ms": "698.9",
+          "context_ms": "38.6",
+          "state_ms": "7.72",
+          "prefix_ms": "0.0",
+          "suffix_ms": "141.9",
+          "first_token_ms": "914.7",
+          "generation_ms": "3998.2",
+          "generated": "64",
+          "generation_tps": "16.007"
+        },
+        "text_sha256": "91ccb0062230d15cfde2b3c7067ec39e6dfee61daa5c01a53b3255888e93d5b2"
+      },
+      {
+        "fork": 5,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "17358",
+          "suffix_tokens": "16",
+          "model_ms": "737.9",
+          "context_ms": "36.8",
+          "state_ms": "7.71",
+          "prefix_ms": "0.0",
+          "suffix_ms": "134.7",
+          "first_token_ms": "944.6",
+          "generation_ms": "4014.8",
+          "generated": "64",
+          "generation_tps": "15.941"
+        },
+        "text_sha256": "e27425defb9c2f4caa898e9d10a93dfc780bc87f4d79f49a62d7dd1ca7e6b298"
+      },
+      {
+        "fork": 6,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "17614",
+          "suffix_tokens": "16",
+          "model_ms": "760.8",
+          "context_ms": "37.9",
+          "state_ms": "7.95",
+          "prefix_ms": "0.0",
+          "suffix_ms": "142.1",
+          "first_token_ms": "976.8",
+          "generation_ms": "4026.9",
+          "generated": "64",
+          "generation_tps": "15.893"
+        },
+        "text_sha256": "9e83d4114143736981272633ead73f7ec6daabf0283f3345e7976ef21a321db8"
+      },
+      {
+        "fork": 7,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "17870",
+          "suffix_tokens": "16",
+          "model_ms": "732.6",
+          "context_ms": "38.2",
+          "state_ms": "8.09",
+          "prefix_ms": "0.0",
+          "suffix_ms": "141.0",
+          "first_token_ms": "948.6",
+          "generation_ms": "4035.4",
+          "generated": "64",
+          "generation_tps": "15.860"
+        },
+        "text_sha256": "e27425defb9c2f4caa898e9d10a93dfc780bc87f4d79f49a62d7dd1ca7e6b298"
+      },
+      {
+        "fork": 8,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "18126",
+          "suffix_tokens": "16",
+          "model_ms": "701.3",
+          "context_ms": "36.6",
+          "state_ms": "8.28",
+          "prefix_ms": "0.0",
+          "suffix_ms": "141.3",
+          "first_token_ms": "914.8",
+          "generation_ms": "4020.9",
+          "generated": "64",
+          "generation_tps": "15.917"
+        },
+        "text_sha256": "ca533101c47bd4e99c3c3e9248229c86c5e836bddfa51e711a46fa8ee6c77a2d"
+      }
+    ],
+    "children_exit": [
+      {
+        "index": "0",
+        "exit": "0"
+      },
+      {
+        "index": "1",
+        "exit": "0"
+      },
+      {
+        "index": "2",
+        "exit": "0"
+      },
+      {
+        "index": "3",
+        "exit": "0"
+      },
+      {
+        "index": "4",
+        "exit": "0"
+      },
+      {
+        "index": "5",
+        "exit": "0"
+      },
+      {
+        "index": "6",
+        "exit": "0"
+      },
+      {
+        "index": "7",
+        "exit": "0"
+      }
+    ],
+    "peak_drop_bytes": 3922472960,
+    "total_peak_accounted_bytes": 8605547200,
+    "tmpfs_peak_bytes": 1056964608,
+    "gpu_faults_total": 0,
+    "wall_s": 93.722581528
+  },
+  {
+    "case": "r02-extent",
+    "run": 2,
+    "mode": "extent",
+    "forks": 8,
+    "children_per_fork": 1,
+    "step": 256,
+    "paragraphs": 320,
+    "context": 32768,
+    "command": [
+      "/home/thor/kcj/stator_campaign_20261016/bin/kv_spawn_repeat_tuned5",
+      "/home/thor/kcj/llm_share/models/Qwen2.5-7B-Instruct-Q4_K_M.gguf",
+      "32768",
+      "/home/thor/kcj/llm_share/results/20261022-review-repeatfork-delta-v1/r02-extent/prefix.txt",
+      "/home/thor/kcj/llm_share/results/20261022-review-repeatfork-delta-v1/r02-extent/state",
+      "64",
+      "8",
+      "1",
+      "256",
+      "/home/thor/kcj/llm_share/results/20261022-review-repeatfork-delta-v1/r02-extent/out",
+      "/home/thor/kcj/stator_campaign_20261016/bin/kv_fork_tuned5",
+      "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600"
+    ],
+    "environment": {
+      "GGML_CUDA_FATTN_HOST_GQA": "2",
+      "CUDA_VISIBLE_DEVICES": "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600",
+      "GGML_CUDA_HOST_PTR": "1",
+      "STATOR_TRACE": "0",
+      "LLAMA_KV_HOST": "/home/thor/kcj/llm_share/results/20261022-review-repeatfork-delta-v1/tmpfs/kv",
+      "LLAMA_KV_GROW": "256",
+      "STATOR_TIMING_DIR": "/home/thor/kcj/llm_share/results/20261022-review-repeatfork-delta-v1/r02-extent/timing",
+      "STATOR_REPEAT_UNLINK": "1"
+    },
+    "exit": 0,
+    "status": "ok",
+    "publishes": [
+      {
+        "fork": 1,
+        "rows": 16321,
+        "publish_ms": 11.72
+      },
+      {
+        "fork": 2,
+        "rows": 16590,
+        "publish_ms": 8.93
+      },
+      {
+        "fork": 3,
+        "rows": 16846,
+        "publish_ms": 8.49
+      },
+      {
+        "fork": 4,
+        "rows": 17102,
+        "publish_ms": 8.64
+      },
+      {
+        "fork": 5,
+        "rows": 17358,
+        "publish_ms": 8.62
+      },
+      {
+        "fork": 6,
+        "rows": 17614,
+        "publish_ms": 8.77
+      },
+      {
+        "fork": 7,
+        "rows": 17870,
+        "publish_ms": 9.01
+      },
+      {
+        "fork": 8,
+        "rows": 18126,
+        "publish_ms": 9.08
+      }
+    ],
+    "parent": {
+      "role": "parent",
+      "forks": "8",
+      "children": "8",
+      "prefix_ms": "12665.9",
+      "publish_total_ms": "73.25",
+      "parent_ms": "79188.6",
+      "total_ms": "92939.3",
+      "rows": "18382"
+    },
+    "parent_text_sha256": "ea5b439b0f9f0dbc4f323e4dc8430c741caac96e2fd29433f9b837edf55a49b7",
+    "children": [
+      {
+        "fork": 1,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "16321",
+          "suffix_tokens": "16",
+          "model_ms": "650.0",
+          "context_ms": "37.4",
+          "state_ms": "7.30",
+          "prefix_ms": "0.0",
+          "suffix_ms": "138.9",
+          "first_token_ms": "857.3",
+          "generation_ms": "3989.5",
+          "generated": "64",
+          "generation_tps": "16.042"
+        },
+        "text_sha256": "82c46914f5662c7b16675c19e332649544364baa47250dcacb03158209a84103"
+      },
+      {
+        "fork": 2,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "16590",
+          "suffix_tokens": "16",
+          "model_ms": "669.7",
+          "context_ms": "36.5",
+          "state_ms": "7.54",
+          "prefix_ms": "0.0",
+          "suffix_ms": "136.3",
+          "first_token_ms": "877.6",
+          "generation_ms": "3995.2",
+          "generated": "64",
+          "generation_tps": "16.019"
+        },
+        "text_sha256": "e27425defb9c2f4caa898e9d10a93dfc780bc87f4d79f49a62d7dd1ca7e6b298"
+      },
+      {
+        "fork": 3,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "16846",
+          "suffix_tokens": "16",
+          "model_ms": "698.1",
+          "context_ms": "35.4",
+          "state_ms": "7.68",
+          "prefix_ms": "0.0",
+          "suffix_ms": "136.5",
+          "first_token_ms": "907.3",
+          "generation_ms": "4004.4",
+          "generated": "64",
+          "generation_tps": "15.982"
+        },
+        "text_sha256": "c7833424a049b55aa807a43c55ff45b0e01369cb1dd23e149c19bbd1f67208b8"
+      },
+      {
+        "fork": 4,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "17102",
+          "suffix_tokens": "16",
+          "model_ms": "660.7",
+          "context_ms": "37.7",
+          "state_ms": "7.71",
+          "prefix_ms": "0.0",
+          "suffix_ms": "127.3",
+          "first_token_ms": "860.3",
+          "generation_ms": "4002.5",
+          "generated": "64",
+          "generation_tps": "15.990"
+        },
+        "text_sha256": "91ccb0062230d15cfde2b3c7067ec39e6dfee61daa5c01a53b3255888e93d5b2"
+      },
+      {
+        "fork": 5,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "17358",
+          "suffix_tokens": "16",
+          "model_ms": "736.2",
+          "context_ms": "36.9",
+          "state_ms": "7.88",
+          "prefix_ms": "0.0",
+          "suffix_ms": "142.4",
+          "first_token_ms": "950.8",
+          "generation_ms": "4013.9",
+          "generated": "64",
+          "generation_tps": "15.945"
+        },
+        "text_sha256": "e27425defb9c2f4caa898e9d10a93dfc780bc87f4d79f49a62d7dd1ca7e6b298"
+      },
+      {
+        "fork": 6,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "17614",
+          "suffix_tokens": "16",
+          "model_ms": "634.7",
+          "context_ms": "38.5",
+          "state_ms": "7.88",
+          "prefix_ms": "0.0",
+          "suffix_ms": "125.3",
+          "first_token_ms": "834.1",
+          "generation_ms": "4016.3",
+          "generated": "64",
+          "generation_tps": "15.935"
+        },
+        "text_sha256": "9e83d4114143736981272633ead73f7ec6daabf0283f3345e7976ef21a321db8"
+      },
+      {
+        "fork": 7,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "17870",
+          "suffix_tokens": "16",
+          "model_ms": "663.9",
+          "context_ms": "36.3",
+          "state_ms": "7.91",
+          "prefix_ms": "0.0",
+          "suffix_ms": "139.8",
+          "first_token_ms": "874.3",
+          "generation_ms": "4027.8",
+          "generated": "64",
+          "generation_tps": "15.889"
+        },
+        "text_sha256": "e27425defb9c2f4caa898e9d10a93dfc780bc87f4d79f49a62d7dd1ca7e6b298"
+      },
+      {
+        "fork": 8,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "18126",
+          "suffix_tokens": "16",
+          "model_ms": "674.1",
+          "context_ms": "38.1",
+          "state_ms": "8.12",
+          "prefix_ms": "0.0",
+          "suffix_ms": "137.9",
+          "first_token_ms": "886.2",
+          "generation_ms": "4045.2",
+          "generated": "64",
+          "generation_tps": "15.821"
+        },
+        "text_sha256": "ca533101c47bd4e99c3c3e9248229c86c5e836bddfa51e711a46fa8ee6c77a2d"
+      }
+    ],
+    "children_exit": [
+      {
+        "index": "0",
+        "exit": "0"
+      },
+      {
+        "index": "1",
+        "exit": "0"
+      },
+      {
+        "index": "2",
+        "exit": "0"
+      },
+      {
+        "index": "3",
+        "exit": "0"
+      },
+      {
+        "index": "4",
+        "exit": "0"
+      },
+      {
+        "index": "5",
+        "exit": "0"
+      },
+      {
+        "index": "6",
+        "exit": "0"
+      },
+      {
+        "index": "7",
+        "exit": "0"
+      }
+    ],
+    "peak_drop_bytes": 2686009344,
+    "total_peak_accounted_bytes": 7369083584,
+    "tmpfs_peak_bytes": 1056964608,
+    "gpu_faults_total": 0,
+    "wall_s": 93.563815708
+  },
+  {
+    "case": "r02-copy",
+    "run": 2,
+    "mode": "copy",
+    "forks": 8,
+    "children_per_fork": 1,
+    "step": 256,
+    "paragraphs": 320,
+    "context": 32768,
+    "command": [
+      "/home/thor/kcj/stator_campaign_20261016/bin/kv_spawn_repeat_tuned5",
+      "/home/thor/kcj/llm_share/models/Qwen2.5-7B-Instruct-Q4_K_M.gguf",
+      "32768",
+      "/home/thor/kcj/llm_share/results/20261022-review-repeatfork-delta-v1/r02-copy/prefix.txt",
+      "/home/thor/kcj/llm_share/results/20261022-review-repeatfork-delta-v1/r02-copy/state",
+      "64",
+      "8",
+      "1",
+      "256",
+      "/home/thor/kcj/llm_share/results/20261022-review-repeatfork-delta-v1/r02-copy/out",
+      "/home/thor/kcj/stator_campaign_20261016/bin/kv_fork_tuned5",
+      "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600"
+    ],
+    "environment": {
+      "GGML_CUDA_FATTN_HOST_GQA": "2",
+      "CUDA_VISIBLE_DEVICES": "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600",
+      "GGML_CUDA_HOST_PTR": "1",
+      "STATOR_TRACE": "0",
+      "STATOR_TIMING_DIR": "/home/thor/kcj/llm_share/results/20261022-review-repeatfork-delta-v1/r02-copy/timing",
+      "STATOR_REPEAT_UNLINK": "1"
+    },
+    "exit": 0,
+    "status": "ok",
+    "publishes": [
+      {
+        "fork": 1,
+        "rows": 16321,
+        "publish_ms": 573.21
+      },
+      {
+        "fork": 2,
+        "rows": 16590,
+        "publish_ms": 569.07
+      },
+      {
+        "fork": 3,
+        "rows": 16846,
+        "publish_ms": 577.11
+      },
+      {
+        "fork": 4,
+        "rows": 17102,
+        "publish_ms": 544.36
+      },
+      {
+        "fork": 5,
+        "rows": 17358,
+        "publish_ms": 563.83
+      },
+      {
+        "fork": 6,
+        "rows": 17614,
+        "publish_ms": 566.36
+      },
+      {
+        "fork": 7,
+        "rows": 17870,
+        "publish_ms": 579.32
+      },
+      {
+        "fork": 8,
+        "rows": 18126,
+        "publish_ms": 592.46
+      }
+    ],
+    "parent": {
+      "role": "parent",
+      "forks": "8",
+      "children": "8",
+      "prefix_ms": "12610.7",
+      "publish_total_ms": "4565.73",
+      "parent_ms": "84969.6",
+      "total_ms": "98705.1",
+      "rows": "18382"
+    },
+    "parent_text_sha256": "ea5b439b0f9f0dbc4f323e4dc8430c741caac96e2fd29433f9b837edf55a49b7",
+    "children": [
+      {
+        "fork": 1,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "16321",
+          "suffix_tokens": "16",
+          "model_ms": "714.7",
+          "context_ms": "69.7",
+          "state_ms": "288.24",
+          "prefix_ms": "0.0",
+          "suffix_ms": "154.0",
+          "first_token_ms": "1252.6",
+          "generation_ms": "4062.4",
+          "generated": "64",
+          "generation_tps": "15.754"
+        },
+        "text_sha256": "82c46914f5662c7b16675c19e332649544364baa47250dcacb03158209a84103"
+      },
+      {
+        "fork": 2,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "16590",
+          "suffix_tokens": "16",
+          "model_ms": "692.8",
+          "context_ms": "67.4",
+          "state_ms": "281.77",
+          "prefix_ms": "0.0",
+          "suffix_ms": "148.2",
+          "first_token_ms": "1218.0",
+          "generation_ms": "4064.7",
+          "generated": "64",
+          "generation_tps": "15.745"
+        },
+        "text_sha256": "e27425defb9c2f4caa898e9d10a93dfc780bc87f4d79f49a62d7dd1ca7e6b298"
+      },
+      {
+        "fork": 3,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "16846",
+          "suffix_tokens": "16",
+          "model_ms": "693.3",
+          "context_ms": "70.2",
+          "state_ms": "279.73",
+          "prefix_ms": "0.0",
+          "suffix_ms": "147.9",
+          "first_token_ms": "1217.5",
+          "generation_ms": "4075.0",
+          "generated": "64",
+          "generation_tps": "15.705"
+        },
+        "text_sha256": "c7833424a049b55aa807a43c55ff45b0e01369cb1dd23e149c19bbd1f67208b8"
+      },
+      {
+        "fork": 4,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "17102",
+          "suffix_tokens": "16",
+          "model_ms": "718.3",
+          "context_ms": "69.6",
+          "state_ms": "283.70",
+          "prefix_ms": "0.0",
+          "suffix_ms": "135.2",
+          "first_token_ms": "1233.4",
+          "generation_ms": "4096.4",
+          "generated": "64",
+          "generation_tps": "15.624"
+        },
+        "text_sha256": "91ccb0062230d15cfde2b3c7067ec39e6dfee61daa5c01a53b3255888e93d5b2"
+      },
+      {
+        "fork": 5,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "17358",
+          "suffix_tokens": "16",
+          "model_ms": "660.7",
+          "context_ms": "71.0",
+          "state_ms": "294.92",
+          "prefix_ms": "0.0",
+          "suffix_ms": "144.7",
+          "first_token_ms": "1197.8",
+          "generation_ms": "4081.4",
+          "generated": "64",
+          "generation_tps": "15.681"
+        },
+        "text_sha256": "e27425defb9c2f4caa898e9d10a93dfc780bc87f4d79f49a62d7dd1ca7e6b298"
+      },
+      {
+        "fork": 6,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "17614",
+          "suffix_tokens": "16",
+          "model_ms": "699.6",
+          "context_ms": "69.8",
+          "state_ms": "290.48",
+          "prefix_ms": "0.0",
+          "suffix_ms": "137.3",
+          "first_token_ms": "1222.2",
+          "generation_ms": "4101.2",
+          "generated": "64",
+          "generation_tps": "15.605"
+        },
+        "text_sha256": "9e83d4114143736981272633ead73f7ec6daabf0283f3345e7976ef21a321db8"
+      },
+      {
+        "fork": 7,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "17870",
+          "suffix_tokens": "16",
+          "model_ms": "701.4",
+          "context_ms": "62.5",
+          "state_ms": "290.74",
+          "prefix_ms": "0.0",
+          "suffix_ms": "140.5",
+          "first_token_ms": "1222.4",
+          "generation_ms": "4136.2",
+          "generated": "64",
+          "generation_tps": "15.473"
+        },
+        "text_sha256": "e27425defb9c2f4caa898e9d10a93dfc780bc87f4d79f49a62d7dd1ca7e6b298"
+      },
+      {
+        "fork": 8,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "18126",
+          "suffix_tokens": "16",
+          "model_ms": "726.9",
+          "context_ms": "69.6",
+          "state_ms": "286.36",
+          "prefix_ms": "0.0",
+          "suffix_ms": "136.0",
+          "first_token_ms": "1245.6",
+          "generation_ms": "4122.0",
+          "generated": "64",
+          "generation_tps": "15.526"
+        },
+        "text_sha256": "ca533101c47bd4e99c3c3e9248229c86c5e836bddfa51e711a46fa8ee6c77a2d"
+      }
+    ],
+    "children_exit": [
+      {
+        "index": "0",
+        "exit": "0"
+      },
+      {
+        "index": "1",
+        "exit": "0"
+      },
+      {
+        "index": "2",
+        "exit": "0"
+      },
+      {
+        "index": "3",
+        "exit": "0"
+      },
+      {
+        "index": "4",
+        "exit": "0"
+      },
+      {
+        "index": "5",
+        "exit": "0"
+      },
+      {
+        "index": "6",
+        "exit": "0"
+      },
+      {
+        "index": "7",
+        "exit": "0"
+      }
+    ],
+    "peak_drop_bytes": 9321033728,
+    "total_peak_accounted_bytes": 14004107968,
+    "tmpfs_peak_bytes": 0,
+    "gpu_faults_total": 0,
+    "wall_s": 99.310174223
+  },
+  {
+    "case": "r03-copy_delta",
+    "run": 3,
+    "mode": "copy_delta",
+    "forks": 8,
+    "children_per_fork": 1,
+    "step": 256,
+    "paragraphs": 320,
+    "context": 32768,
+    "command": [
+      "/home/thor/kcj/stator_campaign_20261016/bin/kv_spawn_repeat_tuned5",
+      "/home/thor/kcj/llm_share/models/Qwen2.5-7B-Instruct-Q4_K_M.gguf",
+      "32768",
+      "/home/thor/kcj/llm_share/results/20261022-review-repeatfork-delta-v1/r03-copy_delta/prefix.txt",
+      "/home/thor/kcj/llm_share/results/20261022-review-repeatfork-delta-v1/r03-copy_delta/state",
+      "64",
+      "8",
+      "1",
+      "256",
+      "/home/thor/kcj/llm_share/results/20261022-review-repeatfork-delta-v1/r03-copy_delta/out",
+      "/home/thor/kcj/stator_campaign_20261016/bin/kv_fork_tuned5",
+      "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600"
+    ],
+    "environment": {
+      "GGML_CUDA_FATTN_HOST_GQA": "2",
+      "CUDA_VISIBLE_DEVICES": "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600",
+      "GGML_CUDA_HOST_PTR": "1",
+      "STATOR_TRACE": "0",
+      "LLAMA_KV_HOST": "/home/thor/kcj/llm_share/results/20261022-review-repeatfork-delta-v1/tmpfs/kv",
+      "LLAMA_KV_GROW": "256",
+      "LLAMA_KV_PUBLISH_COPY": "2",
+      "STATOR_TIMING_DIR": "/home/thor/kcj/llm_share/results/20261022-review-repeatfork-delta-v1/r03-copy_delta/timing",
+      "STATOR_REPEAT_UNLINK": "1"
+    },
+    "exit": 0,
+    "status": "ok",
+    "publishes": [
+      {
+        "fork": 1,
+        "rows": 16321,
+        "publish_ms": 82.19
+      },
+      {
+        "fork": 2,
+        "rows": 16590,
+        "publish_ms": 8.94
+      },
+      {
+        "fork": 3,
+        "rows": 16846,
+        "publish_ms": 5.86
+      },
+      {
+        "fork": 4,
+        "rows": 17102,
+        "publish_ms": 5.91
+      },
+      {
+        "fork": 5,
+        "rows": 17358,
+        "publish_ms": 5.95
+      },
+      {
+        "fork": 6,
+        "rows": 17614,
+        "publish_ms": 6.24
+      },
+      {
+        "fork": 7,
+        "rows": 17870,
+        "publish_ms": 6.13
+      },
+      {
+        "fork": 8,
+        "rows": 18126,
+        "publish_ms": 6.34
+      }
+    ],
+    "parent": {
+      "role": "parent",
+      "forks": "8",
+      "children": "8",
+      "prefix_ms": "12810.4",
+      "publish_total_ms": "127.56",
+      "parent_ms": "79109.8",
+      "total_ms": "93020.9",
+      "rows": "18382"
+    },
+    "parent_text_sha256": "ea5b439b0f9f0dbc4f323e4dc8430c741caac96e2fd29433f9b837edf55a49b7",
+    "children": [
+      {
+        "fork": 1,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "16321",
+          "suffix_tokens": "16",
+          "model_ms": "659.3",
+          "context_ms": "36.3",
+          "state_ms": "7.47",
+          "prefix_ms": "0.0",
+          "suffix_ms": "133.6",
+          "first_token_ms": "862.0",
+          "generation_ms": "3973.8",
+          "generated": "64",
+          "generation_tps": "16.105"
+        },
+        "text_sha256": "82c46914f5662c7b16675c19e332649544364baa47250dcacb03158209a84103"
+      },
+      {
+        "fork": 2,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "16590",
+          "suffix_tokens": "16",
+          "model_ms": "631.2",
+          "context_ms": "35.6",
+          "state_ms": "7.76",
+          "prefix_ms": "0.0",
+          "suffix_ms": "127.2",
+          "first_token_ms": "829.7",
+          "generation_ms": "3982.9",
+          "generated": "64",
+          "generation_tps": "16.069"
+        },
+        "text_sha256": "e27425defb9c2f4caa898e9d10a93dfc780bc87f4d79f49a62d7dd1ca7e6b298"
+      },
+      {
+        "fork": 3,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "16846",
+          "suffix_tokens": "16",
+          "model_ms": "673.8",
+          "context_ms": "36.2",
+          "state_ms": "7.95",
+          "prefix_ms": "0.0",
+          "suffix_ms": "139.2",
+          "first_token_ms": "884.8",
+          "generation_ms": "3999.3",
+          "generated": "64",
+          "generation_tps": "16.003"
+        },
+        "text_sha256": "c7833424a049b55aa807a43c55ff45b0e01369cb1dd23e149c19bbd1f67208b8"
+      },
+      {
+        "fork": 4,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "17102",
+          "suffix_tokens": "16",
+          "model_ms": "633.9",
+          "context_ms": "36.1",
+          "state_ms": "8.17",
+          "prefix_ms": "0.0",
+          "suffix_ms": "134.2",
+          "first_token_ms": "839.0",
+          "generation_ms": "3998.6",
+          "generated": "64",
+          "generation_tps": "16.005"
+        },
+        "text_sha256": "91ccb0062230d15cfde2b3c7067ec39e6dfee61daa5c01a53b3255888e93d5b2"
+      },
+      {
+        "fork": 5,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "17358",
+          "suffix_tokens": "16",
+          "model_ms": "644.0",
+          "context_ms": "36.5",
+          "state_ms": "7.89",
+          "prefix_ms": "0.0",
+          "suffix_ms": "137.0",
+          "first_token_ms": "853.2",
+          "generation_ms": "3996.3",
+          "generated": "64",
+          "generation_tps": "16.015"
+        },
+        "text_sha256": "e27425defb9c2f4caa898e9d10a93dfc780bc87f4d79f49a62d7dd1ca7e6b298"
+      },
+      {
+        "fork": 6,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "17614",
+          "suffix_tokens": "16",
+          "model_ms": "668.9",
+          "context_ms": "36.0",
+          "state_ms": "8.01",
+          "prefix_ms": "0.0",
+          "suffix_ms": "136.5",
+          "first_token_ms": "876.6",
+          "generation_ms": "3998.8",
+          "generated": "64",
+          "generation_tps": "16.005"
+        },
+        "text_sha256": "9e83d4114143736981272633ead73f7ec6daabf0283f3345e7976ef21a321db8"
+      },
+      {
+        "fork": 7,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "17870",
+          "suffix_tokens": "16",
+          "model_ms": "674.1",
+          "context_ms": "37.0",
+          "state_ms": "8.10",
+          "prefix_ms": "0.0",
+          "suffix_ms": "140.1",
+          "first_token_ms": "887.4",
+          "generation_ms": "4036.3",
+          "generated": "64",
+          "generation_tps": "15.856"
+        },
+        "text_sha256": "e27425defb9c2f4caa898e9d10a93dfc780bc87f4d79f49a62d7dd1ca7e6b298"
+      },
+      {
+        "fork": 8,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "18126",
+          "suffix_tokens": "16",
+          "model_ms": "674.2",
+          "context_ms": "37.6",
+          "state_ms": "7.98",
+          "prefix_ms": "0.0",
+          "suffix_ms": "137.4",
+          "first_token_ms": "883.3",
+          "generation_ms": "4020.7",
+          "generated": "64",
+          "generation_tps": "15.918"
+        },
+        "text_sha256": "ca533101c47bd4e99c3c3e9248229c86c5e836bddfa51e711a46fa8ee6c77a2d"
+      }
+    ],
+    "children_exit": [
+      {
+        "index": "0",
+        "exit": "0"
+      },
+      {
+        "index": "1",
+        "exit": "0"
+      },
+      {
+        "index": "2",
+        "exit": "0"
+      },
+      {
+        "index": "3",
+        "exit": "0"
+      },
+      {
+        "index": "4",
+        "exit": "0"
+      },
+      {
+        "index": "5",
+        "exit": "0"
+      },
+      {
+        "index": "6",
+        "exit": "0"
+      },
+      {
+        "index": "7",
+        "exit": "0"
+      }
+    ],
+    "peak_drop_bytes": 3728715776,
+    "total_peak_accounted_bytes": 8411790016,
+    "tmpfs_peak_bytes": 1056964608,
+    "gpu_faults_total": 0,
+    "wall_s": 93.712040485
+  },
+  {
+    "case": "r03-extent",
+    "run": 3,
+    "mode": "extent",
+    "forks": 8,
+    "children_per_fork": 1,
+    "step": 256,
+    "paragraphs": 320,
+    "context": 32768,
+    "command": [
+      "/home/thor/kcj/stator_campaign_20261016/bin/kv_spawn_repeat_tuned5",
+      "/home/thor/kcj/llm_share/models/Qwen2.5-7B-Instruct-Q4_K_M.gguf",
+      "32768",
+      "/home/thor/kcj/llm_share/results/20261022-review-repeatfork-delta-v1/r03-extent/prefix.txt",
+      "/home/thor/kcj/llm_share/results/20261022-review-repeatfork-delta-v1/r03-extent/state",
+      "64",
+      "8",
+      "1",
+      "256",
+      "/home/thor/kcj/llm_share/results/20261022-review-repeatfork-delta-v1/r03-extent/out",
+      "/home/thor/kcj/stator_campaign_20261016/bin/kv_fork_tuned5",
+      "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600"
+    ],
+    "environment": {
+      "GGML_CUDA_FATTN_HOST_GQA": "2",
+      "CUDA_VISIBLE_DEVICES": "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600",
+      "GGML_CUDA_HOST_PTR": "1",
+      "STATOR_TRACE": "0",
+      "LLAMA_KV_HOST": "/home/thor/kcj/llm_share/results/20261022-review-repeatfork-delta-v1/tmpfs/kv",
+      "LLAMA_KV_GROW": "256",
+      "STATOR_TIMING_DIR": "/home/thor/kcj/llm_share/results/20261022-review-repeatfork-delta-v1/r03-extent/timing",
+      "STATOR_REPEAT_UNLINK": "1"
+    },
+    "exit": 0,
+    "status": "ok",
+    "publishes": [
+      {
+        "fork": 1,
+        "rows": 16321,
+        "publish_ms": 11.66
+      },
+      {
+        "fork": 2,
+        "rows": 16590,
+        "publish_ms": 9.49
+      },
+      {
+        "fork": 3,
+        "rows": 16846,
+        "publish_ms": 8.92
+      },
+      {
+        "fork": 4,
+        "rows": 17102,
+        "publish_ms": 8.63
+      },
+      {
+        "fork": 5,
+        "rows": 17358,
+        "publish_ms": 9.53
+      },
+      {
+        "fork": 6,
+        "rows": 17614,
+        "publish_ms": 9.24
+      },
+      {
+        "fork": 7,
+        "rows": 17870,
+        "publish_ms": 9.05
+      },
+      {
+        "fork": 8,
+        "rows": 18126,
+        "publish_ms": 9.14
+      }
+    ],
+    "parent": {
+      "role": "parent",
+      "forks": "8",
+      "children": "8",
+      "prefix_ms": "12649.6",
+      "publish_total_ms": "75.66",
+      "parent_ms": "79109.4",
+      "total_ms": "92860.0",
+      "rows": "18382"
+    },
+    "parent_text_sha256": "ea5b439b0f9f0dbc4f323e4dc8430c741caac96e2fd29433f9b837edf55a49b7",
+    "children": [
+      {
+        "fork": 1,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "16321",
+          "suffix_tokens": "16",
+          "model_ms": "680.2",
+          "context_ms": "36.6",
+          "state_ms": "7.36",
+          "prefix_ms": "0.0",
+          "suffix_ms": "136.3",
+          "first_token_ms": "886.1",
+          "generation_ms": "3977.9",
+          "generated": "64",
+          "generation_tps": "16.089"
+        },
+        "text_sha256": "82c46914f5662c7b16675c19e332649544364baa47250dcacb03158209a84103"
+      },
+      {
+        "fork": 2,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "16590",
+          "suffix_tokens": "16",
+          "model_ms": "703.5",
+          "context_ms": "37.1",
+          "state_ms": "7.34",
+          "prefix_ms": "0.0",
+          "suffix_ms": "131.5",
+          "first_token_ms": "906.7",
+          "generation_ms": "3992.6",
+          "generated": "64",
+          "generation_tps": "16.030"
+        },
+        "text_sha256": "e27425defb9c2f4caa898e9d10a93dfc780bc87f4d79f49a62d7dd1ca7e6b298"
+      },
+      {
+        "fork": 3,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "16846",
+          "suffix_tokens": "16",
+          "model_ms": "688.7",
+          "context_ms": "35.9",
+          "state_ms": "7.90",
+          "prefix_ms": "0.0",
+          "suffix_ms": "124.7",
+          "first_token_ms": "884.4",
+          "generation_ms": "3995.4",
+          "generated": "64",
+          "generation_tps": "16.018"
+        },
+        "text_sha256": "c7833424a049b55aa807a43c55ff45b0e01369cb1dd23e149c19bbd1f67208b8"
+      },
+      {
+        "fork": 4,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "17102",
+          "suffix_tokens": "16",
+          "model_ms": "695.7",
+          "context_ms": "36.5",
+          "state_ms": "7.88",
+          "prefix_ms": "0.0",
+          "suffix_ms": "133.9",
+          "first_token_ms": "901.4",
+          "generation_ms": "3991.1",
+          "generated": "64",
+          "generation_tps": "16.036"
+        },
+        "text_sha256": "91ccb0062230d15cfde2b3c7067ec39e6dfee61daa5c01a53b3255888e93d5b2"
+      },
+      {
+        "fork": 5,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "17358",
+          "suffix_tokens": "16",
+          "model_ms": "718.7",
+          "context_ms": "37.0",
+          "state_ms": "7.76",
+          "prefix_ms": "0.0",
+          "suffix_ms": "128.5",
+          "first_token_ms": "919.5",
+          "generation_ms": "4010.5",
+          "generated": "64",
+          "generation_tps": "15.958"
+        },
+        "text_sha256": "e27425defb9c2f4caa898e9d10a93dfc780bc87f4d79f49a62d7dd1ca7e6b298"
+      },
+      {
+        "fork": 6,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "17614",
+          "suffix_tokens": "16",
+          "model_ms": "687.5",
+          "context_ms": "37.0",
+          "state_ms": "7.96",
+          "prefix_ms": "0.0",
+          "suffix_ms": "127.5",
+          "first_token_ms": "887.5",
+          "generation_ms": "4013.9",
+          "generated": "64",
+          "generation_tps": "15.945"
+        },
+        "text_sha256": "9e83d4114143736981272633ead73f7ec6daabf0283f3345e7976ef21a321db8"
+      },
+      {
+        "fork": 7,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "17870",
+          "suffix_tokens": "16",
+          "model_ms": "700.0",
+          "context_ms": "37.7",
+          "state_ms": "7.99",
+          "prefix_ms": "0.0",
+          "suffix_ms": "137.3",
+          "first_token_ms": "911.3",
+          "generation_ms": "4013.0",
+          "generated": "64",
+          "generation_tps": "15.948"
+        },
+        "text_sha256": "e27425defb9c2f4caa898e9d10a93dfc780bc87f4d79f49a62d7dd1ca7e6b298"
+      },
+      {
+        "fork": 8,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "18126",
+          "suffix_tokens": "16",
+          "model_ms": "716.4",
+          "context_ms": "38.8",
+          "state_ms": "8.60",
+          "prefix_ms": "0.0",
+          "suffix_ms": "133.1",
+          "first_token_ms": "924.8",
+          "generation_ms": "4042.3",
+          "generated": "64",
+          "generation_tps": "15.833"
+        },
+        "text_sha256": "ca533101c47bd4e99c3c3e9248229c86c5e836bddfa51e711a46fa8ee6c77a2d"
+      }
+    ],
+    "children_exit": [
+      {
+        "index": "0",
+        "exit": "0"
+      },
+      {
+        "index": "1",
+        "exit": "0"
+      },
+      {
+        "index": "2",
+        "exit": "0"
+      },
+      {
+        "index": "3",
+        "exit": "0"
+      },
+      {
+        "index": "4",
+        "exit": "0"
+      },
+      {
+        "index": "5",
+        "exit": "0"
+      },
+      {
+        "index": "6",
+        "exit": "0"
+      },
+      {
+        "index": "7",
+        "exit": "0"
+      }
+    ],
+    "peak_drop_bytes": 1521156096,
+    "total_peak_accounted_bytes": 6204230336,
+    "tmpfs_peak_bytes": 1056964608,
+    "gpu_faults_total": 0,
+    "wall_s": 93.469766028
+  },
+  {
+    "case": "r03-copy",
+    "run": 3,
+    "mode": "copy",
+    "forks": 8,
+    "children_per_fork": 1,
+    "step": 256,
+    "paragraphs": 320,
+    "context": 32768,
+    "command": [
+      "/home/thor/kcj/stator_campaign_20261016/bin/kv_spawn_repeat_tuned5",
+      "/home/thor/kcj/llm_share/models/Qwen2.5-7B-Instruct-Q4_K_M.gguf",
+      "32768",
+      "/home/thor/kcj/llm_share/results/20261022-review-repeatfork-delta-v1/r03-copy/prefix.txt",
+      "/home/thor/kcj/llm_share/results/20261022-review-repeatfork-delta-v1/r03-copy/state",
+      "64",
+      "8",
+      "1",
+      "256",
+      "/home/thor/kcj/llm_share/results/20261022-review-repeatfork-delta-v1/r03-copy/out",
+      "/home/thor/kcj/stator_campaign_20261016/bin/kv_fork_tuned5",
+      "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600"
+    ],
+    "environment": {
+      "GGML_CUDA_FATTN_HOST_GQA": "2",
+      "CUDA_VISIBLE_DEVICES": "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600",
+      "GGML_CUDA_HOST_PTR": "1",
+      "STATOR_TRACE": "0",
+      "STATOR_TIMING_DIR": "/home/thor/kcj/llm_share/results/20261022-review-repeatfork-delta-v1/r03-copy/timing",
+      "STATOR_REPEAT_UNLINK": "1"
+    },
+    "exit": 0,
+    "status": "ok",
+    "publishes": [
+      {
+        "fork": 1,
+        "rows": 16321,
+        "publish_ms": 578.37
+      },
+      {
+        "fork": 2,
+        "rows": 16590,
+        "publish_ms": 569.55
+      },
+      {
+        "fork": 3,
+        "rows": 16846,
+        "publish_ms": 589.38
+      },
+      {
+        "fork": 4,
+        "rows": 17102,
+        "publish_ms": 591.51
+      },
+      {
+        "fork": 5,
+        "rows": 17358,
+        "publish_ms": 608.79
+      },
+      {
+        "fork": 6,
+        "rows": 17614,
+        "publish_ms": 1034.78
+      },
+      {
+        "fork": 7,
+        "rows": 17870,
+        "publish_ms": 626.72
+      },
+      {
+        "fork": 8,
+        "rows": 18126,
+        "publish_ms": 598.31
+      }
+    ],
+    "parent": {
+      "role": "parent",
+      "forks": "8",
+      "children": "8",
+      "prefix_ms": "12573.1",
+      "publish_total_ms": "5197.40",
+      "parent_ms": "85661.2",
+      "total_ms": "99351.1",
+      "rows": "18382"
+    },
+    "parent_text_sha256": "ea5b439b0f9f0dbc4f323e4dc8430c741caac96e2fd29433f9b837edf55a49b7",
+    "children": [
+      {
+        "fork": 1,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "16321",
+          "suffix_tokens": "16",
+          "model_ms": "718.4",
+          "context_ms": "69.4",
+          "state_ms": "275.13",
+          "prefix_ms": "0.0",
+          "suffix_ms": "134.5",
+          "first_token_ms": "1228.2",
+          "generation_ms": "4043.5",
+          "generated": "64",
+          "generation_tps": "15.828"
+        },
+        "text_sha256": "82c46914f5662c7b16675c19e332649544364baa47250dcacb03158209a84103"
+      },
+      {
+        "fork": 2,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "16590",
+          "suffix_tokens": "16",
+          "model_ms": "668.5",
+          "context_ms": "68.7",
+          "state_ms": "278.04",
+          "prefix_ms": "0.0",
+          "suffix_ms": "145.2",
+          "first_token_ms": "1188.4",
+          "generation_ms": "4072.0",
+          "generated": "64",
+          "generation_tps": "15.717"
+        },
+        "text_sha256": "e27425defb9c2f4caa898e9d10a93dfc780bc87f4d79f49a62d7dd1ca7e6b298"
+      },
+      {
+        "fork": 3,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "16846",
+          "suffix_tokens": "16",
+          "model_ms": "674.9",
+          "context_ms": "70.3",
+          "state_ms": "280.18",
+          "prefix_ms": "0.0",
+          "suffix_ms": "147.6",
+          "first_token_ms": "1199.7",
+          "generation_ms": "4066.4",
+          "generated": "64",
+          "generation_tps": "15.739"
+        },
+        "text_sha256": "c7833424a049b55aa807a43c55ff45b0e01369cb1dd23e149c19bbd1f67208b8"
+      },
+      {
+        "fork": 4,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "17102",
+          "suffix_tokens": "16",
+          "model_ms": "699.1",
+          "context_ms": "70.1",
+          "state_ms": "293.58",
+          "prefix_ms": "0.0",
+          "suffix_ms": "137.9",
+          "first_token_ms": "1228.0",
+          "generation_ms": "4100.2",
+          "generated": "64",
+          "generation_tps": "15.609"
+        },
+        "text_sha256": "91ccb0062230d15cfde2b3c7067ec39e6dfee61daa5c01a53b3255888e93d5b2"
+      },
+      {
+        "fork": 5,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "17358",
+          "suffix_tokens": "16",
+          "model_ms": "677.3",
+          "context_ms": "69.3",
+          "state_ms": "289.97",
+          "prefix_ms": "0.0",
+          "suffix_ms": "133.3",
+          "first_token_ms": "1195.7",
+          "generation_ms": "4102.8",
+          "generated": "64",
+          "generation_tps": "15.599"
+        },
+        "text_sha256": "e27425defb9c2f4caa898e9d10a93dfc780bc87f4d79f49a62d7dd1ca7e6b298"
+      },
+      {
+        "fork": 6,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "17614",
+          "suffix_tokens": "16",
+          "model_ms": "668.1",
+          "context_ms": "68.3",
+          "state_ms": "270.33",
+          "prefix_ms": "0.0",
+          "suffix_ms": "144.0",
+          "first_token_ms": "1177.4",
+          "generation_ms": "4094.3",
+          "generated": "64",
+          "generation_tps": "15.632"
+        },
+        "text_sha256": "9e83d4114143736981272633ead73f7ec6daabf0283f3345e7976ef21a321db8"
+      },
+      {
+        "fork": 7,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "17870",
+          "suffix_tokens": "16",
+          "model_ms": "655.1",
+          "context_ms": "70.7",
+          "state_ms": "281.94",
+          "prefix_ms": "0.0",
+          "suffix_ms": "126.0",
+          "first_token_ms": "1166.2",
+          "generation_ms": "4110.2",
+          "generated": "64",
+          "generation_tps": "15.571"
+        },
+        "text_sha256": "e27425defb9c2f4caa898e9d10a93dfc780bc87f4d79f49a62d7dd1ca7e6b298"
+      },
+      {
+        "fork": 8,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "18126",
+          "suffix_tokens": "16",
+          "model_ms": "684.7",
+          "context_ms": "70.6",
+          "state_ms": "287.35",
+          "prefix_ms": "0.0",
+          "suffix_ms": "143.4",
+          "first_token_ms": "1214.2",
+          "generation_ms": "4130.1",
+          "generated": "64",
+          "generation_tps": "15.496"
+        },
+        "text_sha256": "ca533101c47bd4e99c3c3e9248229c86c5e836bddfa51e711a46fa8ee6c77a2d"
+      }
+    ],
+    "children_exit": [
+      {
+        "index": "0",
+        "exit": "0"
+      },
+      {
+        "index": "1",
+        "exit": "0"
+      },
+      {
+        "index": "2",
+        "exit": "0"
+      },
+      {
+        "index": "3",
+        "exit": "0"
+      },
+      {
+        "index": "4",
+        "exit": "0"
+      },
+      {
+        "index": "5",
+        "exit": "0"
+      },
+      {
+        "index": "6",
+        "exit": "0"
+      },
+      {
+        "index": "7",
+        "exit": "0"
+      }
+    ],
+    "peak_drop_bytes": 8242073600,
+    "total_peak_accounted_bytes": 12925147840,
+    "tmpfs_peak_bytes": 0,
+    "gpu_faults_total": 0,
+    "wall_s": 99.934300695
+  },
+  {
+    "case": "r03-copy_map",
+    "run": 3,
+    "mode": "copy_map",
+    "forks": 8,
+    "children_per_fork": 1,
+    "step": 256,
+    "paragraphs": 320,
+    "context": 32768,
+    "command": [
+      "/home/thor/kcj/stator_campaign_20261016/bin/kv_spawn_repeat_tuned5",
+      "/home/thor/kcj/llm_share/models/Qwen2.5-7B-Instruct-Q4_K_M.gguf",
+      "32768",
+      "/home/thor/kcj/llm_share/results/20261022-review-repeatfork-delta-v1/r03-copy_map/prefix.txt",
+      "/home/thor/kcj/llm_share/results/20261022-review-repeatfork-delta-v1/r03-copy_map/state",
+      "64",
+      "8",
+      "1",
+      "256",
+      "/home/thor/kcj/llm_share/results/20261022-review-repeatfork-delta-v1/r03-copy_map/out",
+      "/home/thor/kcj/stator_campaign_20261016/bin/kv_fork_tuned5",
+      "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600"
+    ],
+    "environment": {
+      "GGML_CUDA_FATTN_HOST_GQA": "2",
+      "CUDA_VISIBLE_DEVICES": "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600",
+      "GGML_CUDA_HOST_PTR": "1",
+      "STATOR_TRACE": "0",
+      "LLAMA_KV_HOST": "/home/thor/kcj/llm_share/results/20261022-review-repeatfork-delta-v1/tmpfs/kv",
+      "LLAMA_KV_GROW": "256",
+      "LLAMA_KV_PUBLISH_COPY": "1",
+      "STATOR_TIMING_DIR": "/home/thor/kcj/llm_share/results/20261022-review-repeatfork-delta-v1/r03-copy_map/timing",
+      "STATOR_REPEAT_UNLINK": "1"
+    },
+    "exit": 0,
+    "status": "ok",
+    "publishes": [
+      {
+        "fork": 1,
+        "rows": 16321,
+        "publish_ms": 84.37
+      },
+      {
+        "fork": 2,
+        "rows": 16590,
+        "publish_ms": 86.02
+      },
+      {
+        "fork": 3,
+        "rows": 16846,
+        "publish_ms": 86.81
+      },
+      {
+        "fork": 4,
+        "rows": 17102,
+        "publish_ms": 85.91
+      },
+      {
+        "fork": 5,
+        "rows": 17358,
+        "publish_ms": 86.47
+      },
+      {
+        "fork": 6,
+        "rows": 17614,
+        "publish_ms": 88.58
+      },
+      {
+        "fork": 7,
+        "rows": 17870,
+        "publish_ms": 89.03
+      },
+      {
+        "fork": 8,
+        "rows": 18126,
+        "publish_ms": 89.21
+      }
+    ],
+    "parent": {
+      "role": "parent",
+      "forks": "8",
+      "children": "8",
+      "prefix_ms": "12800.4",
+      "publish_total_ms": "696.39",
+      "parent_ms": "79791.2",
+      "total_ms": "93681.2",
+      "rows": "18382"
+    },
+    "parent_text_sha256": "ea5b439b0f9f0dbc4f323e4dc8430c741caac96e2fd29433f9b837edf55a49b7",
+    "children": [
+      {
+        "fork": 1,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "16321",
+          "suffix_tokens": "16",
+          "model_ms": "651.6",
+          "context_ms": "37.4",
+          "state_ms": "8.09",
+          "prefix_ms": "0.0",
+          "suffix_ms": "135.6",
+          "first_token_ms": "857.1",
+          "generation_ms": "3985.6",
+          "generated": "64",
+          "generation_tps": "16.058"
+        },
+        "text_sha256": "82c46914f5662c7b16675c19e332649544364baa47250dcacb03158209a84103"
+      },
+      {
+        "fork": 2,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "16590",
+          "suffix_tokens": "16",
+          "model_ms": "625.6",
+          "context_ms": "37.2",
+          "state_ms": "7.62",
+          "prefix_ms": "0.0",
+          "suffix_ms": "124.0",
+          "first_token_ms": "822.6",
+          "generation_ms": "3992.8",
+          "generated": "64",
+          "generation_tps": "16.029"
+        },
+        "text_sha256": "e27425defb9c2f4caa898e9d10a93dfc780bc87f4d79f49a62d7dd1ca7e6b298"
+      },
+      {
+        "fork": 3,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "16846",
+          "suffix_tokens": "16",
+          "model_ms": "708.3",
+          "context_ms": "36.5",
+          "state_ms": "7.54",
+          "prefix_ms": "0.0",
+          "suffix_ms": "146.8",
+          "first_token_ms": "927.3",
+          "generation_ms": "3990.5",
+          "generated": "64",
+          "generation_tps": "16.038"
+        },
+        "text_sha256": "c7833424a049b55aa807a43c55ff45b0e01369cb1dd23e149c19bbd1f67208b8"
+      },
+      {
+        "fork": 4,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "17102",
+          "suffix_tokens": "16",
+          "model_ms": "689.7",
+          "context_ms": "37.0",
+          "state_ms": "7.75",
+          "prefix_ms": "0.0",
+          "suffix_ms": "129.1",
+          "first_token_ms": "892.7",
+          "generation_ms": "3998.4",
+          "generated": "64",
+          "generation_tps": "16.007"
+        },
+        "text_sha256": "91ccb0062230d15cfde2b3c7067ec39e6dfee61daa5c01a53b3255888e93d5b2"
+      },
+      {
+        "fork": 5,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "17358",
+          "suffix_tokens": "16",
+          "model_ms": "668.1",
+          "context_ms": "37.5",
+          "state_ms": "7.99",
+          "prefix_ms": "0.0",
+          "suffix_ms": "126.0",
+          "first_token_ms": "866.8",
+          "generation_ms": "4006.7",
+          "generated": "64",
+          "generation_tps": "15.973"
+        },
+        "text_sha256": "e27425defb9c2f4caa898e9d10a93dfc780bc87f4d79f49a62d7dd1ca7e6b298"
+      },
+      {
+        "fork": 6,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "17614",
+          "suffix_tokens": "16",
+          "model_ms": "637.6",
+          "context_ms": "35.9",
+          "state_ms": "7.91",
+          "prefix_ms": "0.0",
+          "suffix_ms": "139.0",
+          "first_token_ms": "850.1",
+          "generation_ms": "4000.9",
+          "generated": "64",
+          "generation_tps": "15.997"
+        },
+        "text_sha256": "9e83d4114143736981272633ead73f7ec6daabf0283f3345e7976ef21a321db8"
+      },
+      {
+        "fork": 7,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "17870",
+          "suffix_tokens": "16",
+          "model_ms": "642.1",
+          "context_ms": "38.0",
+          "state_ms": "8.07",
+          "prefix_ms": "0.0",
+          "suffix_ms": "119.1",
+          "first_token_ms": "833.4",
+          "generation_ms": "4033.3",
+          "generated": "64",
+          "generation_tps": "15.868"
+        },
+        "text_sha256": "e27425defb9c2f4caa898e9d10a93dfc780bc87f4d79f49a62d7dd1ca7e6b298"
+      },
+      {
+        "fork": 8,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "18126",
+          "suffix_tokens": "16",
+          "model_ms": "639.2",
+          "context_ms": "37.6",
+          "state_ms": "8.16",
+          "prefix_ms": "0.0",
+          "suffix_ms": "134.1",
+          "first_token_ms": "846.2",
+          "generation_ms": "4035.3",
+          "generated": "64",
+          "generation_tps": "15.860"
+        },
+        "text_sha256": "ca533101c47bd4e99c3c3e9248229c86c5e836bddfa51e711a46fa8ee6c77a2d"
+      }
+    ],
+    "children_exit": [
+      {
+        "index": "0",
+        "exit": "0"
+      },
+      {
+        "index": "1",
+        "exit": "0"
+      },
+      {
+        "index": "2",
+        "exit": "0"
+      },
+      {
+        "index": "3",
+        "exit": "0"
+      },
+      {
+        "index": "4",
+        "exit": "0"
+      },
+      {
+        "index": "5",
+        "exit": "0"
+      },
+      {
+        "index": "6",
+        "exit": "0"
+      },
+      {
+        "index": "7",
+        "exit": "0"
+      }
+    ],
+    "peak_drop_bytes": 3990360064,
+    "total_peak_accounted_bytes": 8673434304,
+    "tmpfs_peak_bytes": 2113929216,
+    "gpu_faults_total": 0,
+    "wall_s": 94.358563102
+  },
+  {
+    "case": "r04-extent",
+    "run": 4,
+    "mode": "extent",
+    "forks": 8,
+    "children_per_fork": 1,
+    "step": 256,
+    "paragraphs": 320,
+    "context": 32768,
+    "command": [
+      "/home/thor/kcj/stator_campaign_20261016/bin/kv_spawn_repeat_tuned5",
+      "/home/thor/kcj/llm_share/models/Qwen2.5-7B-Instruct-Q4_K_M.gguf",
+      "32768",
+      "/home/thor/kcj/llm_share/results/20261022-review-repeatfork-delta-v1/r04-extent/prefix.txt",
+      "/home/thor/kcj/llm_share/results/20261022-review-repeatfork-delta-v1/r04-extent/state",
+      "64",
+      "8",
+      "1",
+      "256",
+      "/home/thor/kcj/llm_share/results/20261022-review-repeatfork-delta-v1/r04-extent/out",
+      "/home/thor/kcj/stator_campaign_20261016/bin/kv_fork_tuned5",
+      "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600"
+    ],
+    "environment": {
+      "GGML_CUDA_FATTN_HOST_GQA": "2",
+      "CUDA_VISIBLE_DEVICES": "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600",
+      "GGML_CUDA_HOST_PTR": "1",
+      "STATOR_TRACE": "0",
+      "LLAMA_KV_HOST": "/home/thor/kcj/llm_share/results/20261022-review-repeatfork-delta-v1/tmpfs/kv",
+      "LLAMA_KV_GROW": "256",
+      "STATOR_TIMING_DIR": "/home/thor/kcj/llm_share/results/20261022-review-repeatfork-delta-v1/r04-extent/timing",
+      "STATOR_REPEAT_UNLINK": "1"
+    },
+    "exit": 0,
+    "status": "ok",
+    "publishes": [
+      {
+        "fork": 1,
+        "rows": 16321,
+        "publish_ms": 11.69
+      },
+      {
+        "fork": 2,
+        "rows": 16590,
+        "publish_ms": 9.03
+      },
+      {
+        "fork": 3,
+        "rows": 16846,
+        "publish_ms": 8.61
+      },
+      {
+        "fork": 4,
+        "rows": 17102,
+        "publish_ms": 8.91
+      },
+      {
+        "fork": 5,
+        "rows": 17358,
+        "publish_ms": 8.81
+      },
+      {
+        "fork": 6,
+        "rows": 17614,
+        "publish_ms": 8.71
+      },
+      {
+        "fork": 7,
+        "rows": 17870,
+        "publish_ms": 9.19
+      },
+      {
+        "fork": 8,
+        "rows": 18126,
+        "publish_ms": 8.8
+      }
+    ],
+    "parent": {
+      "role": "parent",
+      "forks": "8",
+      "children": "8",
+      "prefix_ms": "12654.6",
+      "publish_total_ms": "73.76",
+      "parent_ms": "79157.0",
+      "total_ms": "92907.0",
+      "rows": "18382"
+    },
+    "parent_text_sha256": "ea5b439b0f9f0dbc4f323e4dc8430c741caac96e2fd29433f9b837edf55a49b7",
+    "children": [
+      {
+        "fork": 1,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "16321",
+          "suffix_tokens": "16",
+          "model_ms": "649.0",
+          "context_ms": "35.7",
+          "state_ms": "7.38",
+          "prefix_ms": "0.0",
+          "suffix_ms": "137.5",
+          "first_token_ms": "854.6",
+          "generation_ms": "3987.6",
+          "generated": "64",
+          "generation_tps": "16.050"
+        },
+        "text_sha256": "82c46914f5662c7b16675c19e332649544364baa47250dcacb03158209a84103"
+      },
+      {
+        "fork": 2,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "16590",
+          "suffix_tokens": "16",
+          "model_ms": "634.9",
+          "context_ms": "36.7",
+          "state_ms": "7.34",
+          "prefix_ms": "0.0",
+          "suffix_ms": "125.0",
+          "first_token_ms": "831.0",
+          "generation_ms": "3986.7",
+          "generated": "64",
+          "generation_tps": "16.054"
+        },
+        "text_sha256": "e27425defb9c2f4caa898e9d10a93dfc780bc87f4d79f49a62d7dd1ca7e6b298"
+      },
+      {
+        "fork": 3,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "16846",
+          "suffix_tokens": "16",
+          "model_ms": "634.6",
+          "context_ms": "36.8",
+          "state_ms": "8.21",
+          "prefix_ms": "0.0",
+          "suffix_ms": "125.4",
+          "first_token_ms": "832.3",
+          "generation_ms": "3990.7",
+          "generated": "64",
+          "generation_tps": "16.037"
+        },
+        "text_sha256": "c7833424a049b55aa807a43c55ff45b0e01369cb1dd23e149c19bbd1f67208b8"
+      },
+      {
+        "fork": 4,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "17102",
+          "suffix_tokens": "16",
+          "model_ms": "644.8",
+          "context_ms": "36.6",
+          "state_ms": "7.73",
+          "prefix_ms": "0.0",
+          "suffix_ms": "140.5",
+          "first_token_ms": "856.8",
+          "generation_ms": "4006.8",
+          "generated": "64",
+          "generation_tps": "15.973"
+        },
+        "text_sha256": "91ccb0062230d15cfde2b3c7067ec39e6dfee61daa5c01a53b3255888e93d5b2"
+      },
+      {
+        "fork": 5,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "17358",
+          "suffix_tokens": "16",
+          "model_ms": "633.9",
+          "context_ms": "37.5",
+          "state_ms": "8.59",
+          "prefix_ms": "0.0",
+          "suffix_ms": "131.6",
+          "first_token_ms": "836.3",
+          "generation_ms": "4005.7",
+          "generated": "64",
+          "generation_tps": "15.977"
+        },
+        "text_sha256": "e27425defb9c2f4caa898e9d10a93dfc780bc87f4d79f49a62d7dd1ca7e6b298"
+      },
+      {
+        "fork": 6,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "17614",
+          "suffix_tokens": "16",
+          "model_ms": "635.7",
+          "context_ms": "37.6",
+          "state_ms": "8.07",
+          "prefix_ms": "0.0",
+          "suffix_ms": "137.3",
+          "first_token_ms": "846.2",
+          "generation_ms": "4001.9",
+          "generated": "64",
+          "generation_tps": "15.992"
+        },
+        "text_sha256": "9e83d4114143736981272633ead73f7ec6daabf0283f3345e7976ef21a321db8"
+      },
+      {
+        "fork": 7,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "17870",
+          "suffix_tokens": "16",
+          "model_ms": "635.5",
+          "context_ms": "38.1",
+          "state_ms": "8.22",
+          "prefix_ms": "0.0",
+          "suffix_ms": "130.9",
+          "first_token_ms": "839.9",
+          "generation_ms": "4023.4",
+          "generated": "64",
+          "generation_tps": "15.907"
+        },
+        "text_sha256": "e27425defb9c2f4caa898e9d10a93dfc780bc87f4d79f49a62d7dd1ca7e6b298"
+      },
+      {
+        "fork": 8,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "18126",
+          "suffix_tokens": "16",
+          "model_ms": "635.5",
+          "context_ms": "38.0",
+          "state_ms": "8.41",
+          "prefix_ms": "0.0",
+          "suffix_ms": "131.6",
+          "first_token_ms": "841.8",
+          "generation_ms": "4033.2",
+          "generated": "64",
+          "generation_tps": "15.868"
+        },
+        "text_sha256": "ca533101c47bd4e99c3c3e9248229c86c5e836bddfa51e711a46fa8ee6c77a2d"
+      }
+    ],
+    "children_exit": [
+      {
+        "index": "0",
+        "exit": "0"
+      },
+      {
+        "index": "1",
+        "exit": "0"
+      },
+      {
+        "index": "2",
+        "exit": "0"
+      },
+      {
+        "index": "3",
+        "exit": "0"
+      },
+      {
+        "index": "4",
+        "exit": "0"
+      },
+      {
+        "index": "5",
+        "exit": "0"
+      },
+      {
+        "index": "6",
+        "exit": "0"
+      },
+      {
+        "index": "7",
+        "exit": "0"
+      }
+    ],
+    "peak_drop_bytes": 2674978816,
+    "total_peak_accounted_bytes": 7358053056,
+    "tmpfs_peak_bytes": 1056964608,
+    "gpu_faults_total": 0,
+    "wall_s": 93.514739122
+  },
+  {
+    "case": "r04-copy",
+    "run": 4,
+    "mode": "copy",
+    "forks": 8,
+    "children_per_fork": 1,
+    "step": 256,
+    "paragraphs": 320,
+    "context": 32768,
+    "command": [
+      "/home/thor/kcj/stator_campaign_20261016/bin/kv_spawn_repeat_tuned5",
+      "/home/thor/kcj/llm_share/models/Qwen2.5-7B-Instruct-Q4_K_M.gguf",
+      "32768",
+      "/home/thor/kcj/llm_share/results/20261022-review-repeatfork-delta-v1/r04-copy/prefix.txt",
+      "/home/thor/kcj/llm_share/results/20261022-review-repeatfork-delta-v1/r04-copy/state",
+      "64",
+      "8",
+      "1",
+      "256",
+      "/home/thor/kcj/llm_share/results/20261022-review-repeatfork-delta-v1/r04-copy/out",
+      "/home/thor/kcj/stator_campaign_20261016/bin/kv_fork_tuned5",
+      "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600"
+    ],
+    "environment": {
+      "GGML_CUDA_FATTN_HOST_GQA": "2",
+      "CUDA_VISIBLE_DEVICES": "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600",
+      "GGML_CUDA_HOST_PTR": "1",
+      "STATOR_TRACE": "0",
+      "STATOR_TIMING_DIR": "/home/thor/kcj/llm_share/results/20261022-review-repeatfork-delta-v1/r04-copy/timing",
+      "STATOR_REPEAT_UNLINK": "1"
+    },
+    "exit": 0,
+    "status": "ok",
+    "publishes": [
+      {
+        "fork": 1,
+        "rows": 16321,
+        "publish_ms": 570.4
+      },
+      {
+        "fork": 2,
+        "rows": 16590,
+        "publish_ms": 568.64
+      },
+      {
+        "fork": 3,
+        "rows": 16846,
+        "publish_ms": 574.91
+      },
+      {
+        "fork": 4,
+        "rows": 17102,
+        "publish_ms": 553.55
+      },
+      {
+        "fork": 5,
+        "rows": 17358,
+        "publish_ms": 560.12
+      },
+      {
+        "fork": 6,
+        "rows": 17614,
+        "publish_ms": 574.29
+      },
+      {
+        "fork": 7,
+        "rows": 17870,
+        "publish_ms": 608.7
+      },
+      {
+        "fork": 8,
+        "rows": 18126,
+        "publish_ms": 601.04
+      }
+    ],
+    "parent": {
+      "role": "parent",
+      "forks": "8",
+      "children": "8",
+      "prefix_ms": "12594.9",
+      "publish_total_ms": "4611.66",
+      "parent_ms": "85156.6",
+      "total_ms": "98881.3",
+      "rows": "18382"
+    },
+    "parent_text_sha256": "ea5b439b0f9f0dbc4f323e4dc8430c741caac96e2fd29433f9b837edf55a49b7",
+    "children": [
+      {
+        "fork": 1,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "16321",
+          "suffix_tokens": "16",
+          "model_ms": "712.3",
+          "context_ms": "67.3",
+          "state_ms": "279.18",
+          "prefix_ms": "0.0",
+          "suffix_ms": "136.7",
+          "first_token_ms": "1224.9",
+          "generation_ms": "4049.9",
+          "generated": "64",
+          "generation_tps": "15.803"
+        },
+        "text_sha256": "82c46914f5662c7b16675c19e332649544364baa47250dcacb03158209a84103"
+      },
+      {
+        "fork": 2,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "16590",
+          "suffix_tokens": "16",
+          "model_ms": "703.9",
+          "context_ms": "69.0",
+          "state_ms": "265.06",
+          "prefix_ms": "0.0",
+          "suffix_ms": "163.0",
+          "first_token_ms": "1229.5",
+          "generation_ms": "4075.7",
+          "generated": "64",
+          "generation_tps": "15.703"
+        },
+        "text_sha256": "e27425defb9c2f4caa898e9d10a93dfc780bc87f4d79f49a62d7dd1ca7e6b298"
+      },
+      {
+        "fork": 3,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "16846",
+          "suffix_tokens": "16",
+          "model_ms": "629.2",
+          "context_ms": "69.2",
+          "state_ms": "261.92",
+          "prefix_ms": "0.0",
+          "suffix_ms": "159.2",
+          "first_token_ms": "1147.4",
+          "generation_ms": "4114.3",
+          "generated": "64",
+          "generation_tps": "15.556"
+        },
+        "text_sha256": "c7833424a049b55aa807a43c55ff45b0e01369cb1dd23e149c19bbd1f67208b8"
+      },
+      {
+        "fork": 4,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "17102",
+          "suffix_tokens": "16",
+          "model_ms": "714.6",
+          "context_ms": "63.5",
+          "state_ms": "265.65",
+          "prefix_ms": "0.0",
+          "suffix_ms": "162.2",
+          "first_token_ms": "1234.7",
+          "generation_ms": "4085.9",
+          "generated": "64",
+          "generation_tps": "15.664"
+        },
+        "text_sha256": "91ccb0062230d15cfde2b3c7067ec39e6dfee61daa5c01a53b3255888e93d5b2"
+      },
+      {
+        "fork": 5,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "17358",
+          "suffix_tokens": "16",
+          "model_ms": "627.4",
+          "context_ms": "62.3",
+          "state_ms": "255.57",
+          "prefix_ms": "0.0",
+          "suffix_ms": "175.2",
+          "first_token_ms": "1149.2",
+          "generation_ms": "4113.6",
+          "generated": "64",
+          "generation_tps": "15.558"
+        },
+        "text_sha256": "e27425defb9c2f4caa898e9d10a93dfc780bc87f4d79f49a62d7dd1ca7e6b298"
+      },
+      {
+        "fork": 6,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "17614",
+          "suffix_tokens": "16",
+          "model_ms": "659.8",
+          "context_ms": "69.2",
+          "state_ms": "253.20",
+          "prefix_ms": "0.0",
+          "suffix_ms": "179.6",
+          "first_token_ms": "1189.4",
+          "generation_ms": "4113.7",
+          "generated": "64",
+          "generation_tps": "15.558"
+        },
+        "text_sha256": "9e83d4114143736981272633ead73f7ec6daabf0283f3345e7976ef21a321db8"
+      },
+      {
+        "fork": 7,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "17870",
+          "suffix_tokens": "16",
+          "model_ms": "632.9",
+          "context_ms": "67.2",
+          "state_ms": "268.64",
+          "prefix_ms": "0.0",
+          "suffix_ms": "177.4",
+          "first_token_ms": "1173.3",
+          "generation_ms": "4109.9",
+          "generated": "64",
+          "generation_tps": "15.572"
+        },
+        "text_sha256": "e27425defb9c2f4caa898e9d10a93dfc780bc87f4d79f49a62d7dd1ca7e6b298"
+      },
+      {
+        "fork": 8,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "18126",
+          "suffix_tokens": "16",
+          "model_ms": "633.3",
+          "context_ms": "70.2",
+          "state_ms": "259.10",
+          "prefix_ms": "0.0",
+          "suffix_ms": "170.8",
+          "first_token_ms": "1160.8",
+          "generation_ms": "4142.4",
+          "generated": "64",
+          "generation_tps": "15.450"
+        },
+        "text_sha256": "ca533101c47bd4e99c3c3e9248229c86c5e836bddfa51e711a46fa8ee6c77a2d"
+      }
+    ],
+    "children_exit": [
+      {
+        "index": "0",
+        "exit": "0"
+      },
+      {
+        "index": "1",
+        "exit": "0"
+      },
+      {
+        "index": "2",
+        "exit": "0"
+      },
+      {
+        "index": "3",
+        "exit": "0"
+      },
+      {
+        "index": "4",
+        "exit": "0"
+      },
+      {
+        "index": "5",
+        "exit": "0"
+      },
+      {
+        "index": "6",
+        "exit": "0"
+      },
+      {
+        "index": "7",
+        "exit": "0"
+      }
+    ],
+    "peak_drop_bytes": 6482051072,
+    "total_peak_accounted_bytes": 11165125312,
+    "tmpfs_peak_bytes": 0,
+    "gpu_faults_total": 0,
+    "wall_s": 99.506730806
+  },
+  {
+    "case": "r04-copy_map",
+    "run": 4,
+    "mode": "copy_map",
+    "forks": 8,
+    "children_per_fork": 1,
+    "step": 256,
+    "paragraphs": 320,
+    "context": 32768,
+    "command": [
+      "/home/thor/kcj/stator_campaign_20261016/bin/kv_spawn_repeat_tuned5",
+      "/home/thor/kcj/llm_share/models/Qwen2.5-7B-Instruct-Q4_K_M.gguf",
+      "32768",
+      "/home/thor/kcj/llm_share/results/20261022-review-repeatfork-delta-v1/r04-copy_map/prefix.txt",
+      "/home/thor/kcj/llm_share/results/20261022-review-repeatfork-delta-v1/r04-copy_map/state",
+      "64",
+      "8",
+      "1",
+      "256",
+      "/home/thor/kcj/llm_share/results/20261022-review-repeatfork-delta-v1/r04-copy_map/out",
+      "/home/thor/kcj/stator_campaign_20261016/bin/kv_fork_tuned5",
+      "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600"
+    ],
+    "environment": {
+      "GGML_CUDA_FATTN_HOST_GQA": "2",
+      "CUDA_VISIBLE_DEVICES": "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600",
+      "GGML_CUDA_HOST_PTR": "1",
+      "STATOR_TRACE": "0",
+      "LLAMA_KV_HOST": "/home/thor/kcj/llm_share/results/20261022-review-repeatfork-delta-v1/tmpfs/kv",
+      "LLAMA_KV_GROW": "256",
+      "LLAMA_KV_PUBLISH_COPY": "1",
+      "STATOR_TIMING_DIR": "/home/thor/kcj/llm_share/results/20261022-review-repeatfork-delta-v1/r04-copy_map/timing",
+      "STATOR_REPEAT_UNLINK": "1"
+    },
+    "exit": 0,
+    "status": "ok",
+    "publishes": [
+      {
+        "fork": 1,
+        "rows": 16321,
+        "publish_ms": 80.31
+      },
+      {
+        "fork": 2,
+        "rows": 16590,
+        "publish_ms": 84.0
+      },
+      {
+        "fork": 3,
+        "rows": 16846,
+        "publish_ms": 85.79
+      },
+      {
+        "fork": 4,
+        "rows": 17102,
+        "publish_ms": 86.69
+      },
+      {
+        "fork": 5,
+        "rows": 17358,
+        "publish_ms": 85.81
+      },
+      {
+        "fork": 6,
+        "rows": 17614,
+        "publish_ms": 87.02
+      },
+      {
+        "fork": 7,
+        "rows": 17870,
+        "publish_ms": 88.15
+      },
+      {
+        "fork": 8,
+        "rows": 18126,
+        "publish_ms": 88.32
+      }
+    ],
+    "parent": {
+      "role": "parent",
+      "forks": "8",
+      "children": "8",
+      "prefix_ms": "12779.0",
+      "publish_total_ms": "686.08",
+      "parent_ms": "79646.2",
+      "total_ms": "93556.5",
+      "rows": "18382"
+    },
+    "parent_text_sha256": "ea5b439b0f9f0dbc4f323e4dc8430c741caac96e2fd29433f9b837edf55a49b7",
+    "children": [
+      {
+        "fork": 1,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "16321",
+          "suffix_tokens": "16",
+          "model_ms": "659.1",
+          "context_ms": "36.2",
+          "state_ms": "7.49",
+          "prefix_ms": "0.0",
+          "suffix_ms": "139.1",
+          "first_token_ms": "866.9",
+          "generation_ms": "3978.1",
+          "generated": "64",
+          "generation_tps": "16.088"
+        },
+        "text_sha256": "82c46914f5662c7b16675c19e332649544364baa47250dcacb03158209a84103"
+      },
+      {
+        "fork": 2,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "16590",
+          "suffix_tokens": "16",
+          "model_ms": "633.2",
+          "context_ms": "35.9",
+          "state_ms": "7.26",
+          "prefix_ms": "0.0",
+          "suffix_ms": "124.6",
+          "first_token_ms": "827.3",
+          "generation_ms": "3996.8",
+          "generated": "64",
+          "generation_tps": "16.013"
+        },
+        "text_sha256": "e27425defb9c2f4caa898e9d10a93dfc780bc87f4d79f49a62d7dd1ca7e6b298"
+      },
+      {
+        "fork": 3,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "16846",
+          "suffix_tokens": "16",
+          "model_ms": "639.4",
+          "context_ms": "36.2",
+          "state_ms": "7.82",
+          "prefix_ms": "0.0",
+          "suffix_ms": "135.3",
+          "first_token_ms": "846.5",
+          "generation_ms": "3980.4",
+          "generated": "64",
+          "generation_tps": "16.079"
+        },
+        "text_sha256": "c7833424a049b55aa807a43c55ff45b0e01369cb1dd23e149c19bbd1f67208b8"
+      },
+      {
+        "fork": 4,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "17102",
+          "suffix_tokens": "16",
+          "model_ms": "631.3",
+          "context_ms": "36.2",
+          "state_ms": "7.71",
+          "prefix_ms": "0.0",
+          "suffix_ms": "138.3",
+          "first_token_ms": "840.6",
+          "generation_ms": "4001.1",
+          "generated": "64",
+          "generation_tps": "15.996"
+        },
+        "text_sha256": "91ccb0062230d15cfde2b3c7067ec39e6dfee61daa5c01a53b3255888e93d5b2"
+      },
+      {
+        "fork": 5,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "17358",
+          "suffix_tokens": "16",
+          "model_ms": "630.4",
+          "context_ms": "37.4",
+          "state_ms": "7.90",
+          "prefix_ms": "0.0",
+          "suffix_ms": "137.6",
+          "first_token_ms": "840.1",
+          "generation_ms": "4002.6",
+          "generated": "64",
+          "generation_tps": "15.989"
+        },
+        "text_sha256": "e27425defb9c2f4caa898e9d10a93dfc780bc87f4d79f49a62d7dd1ca7e6b298"
+      },
+      {
+        "fork": 6,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "17614",
+          "suffix_tokens": "16",
+          "model_ms": "653.1",
+          "context_ms": "36.2",
+          "state_ms": "7.95",
+          "prefix_ms": "0.0",
+          "suffix_ms": "136.4",
+          "first_token_ms": "861.7",
+          "generation_ms": "4014.9",
+          "generated": "64",
+          "generation_tps": "15.941"
+        },
+        "text_sha256": "9e83d4114143736981272633ead73f7ec6daabf0283f3345e7976ef21a321db8"
+      },
+      {
+        "fork": 7,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "17870",
+          "suffix_tokens": "16",
+          "model_ms": "635.5",
+          "context_ms": "36.4",
+          "state_ms": "8.30",
+          "prefix_ms": "0.0",
+          "suffix_ms": "119.2",
+          "first_token_ms": "826.5",
+          "generation_ms": "4035.2",
+          "generated": "64",
+          "generation_tps": "15.860"
+        },
+        "text_sha256": "e27425defb9c2f4caa898e9d10a93dfc780bc87f4d79f49a62d7dd1ca7e6b298"
+      },
+      {
+        "fork": 8,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "18126",
+          "suffix_tokens": "16",
+          "model_ms": "722.1",
+          "context_ms": "38.1",
+          "state_ms": "8.31",
+          "prefix_ms": "0.0",
+          "suffix_ms": "127.4",
+          "first_token_ms": "924.1",
+          "generation_ms": "4033.7",
+          "generated": "64",
+          "generation_tps": "15.866"
+        },
+        "text_sha256": "ca533101c47bd4e99c3c3e9248229c86c5e836bddfa51e711a46fa8ee6c77a2d"
+      }
+    ],
+    "children_exit": [
+      {
+        "index": "0",
+        "exit": "0"
+      },
+      {
+        "index": "1",
+        "exit": "0"
+      },
+      {
+        "index": "2",
+        "exit": "0"
+      },
+      {
+        "index": "3",
+        "exit": "0"
+      },
+      {
+        "index": "4",
+        "exit": "0"
+      },
+      {
+        "index": "5",
+        "exit": "0"
+      },
+      {
+        "index": "6",
+        "exit": "0"
+      },
+      {
+        "index": "7",
+        "exit": "0"
+      }
+    ],
+    "peak_drop_bytes": 4033310720,
+    "total_peak_accounted_bytes": 8716384960,
+    "tmpfs_peak_bytes": 2078277632,
+    "gpu_faults_total": 0,
+    "wall_s": 94.234808261
+  },
+  {
+    "case": "r04-copy_delta",
+    "run": 4,
+    "mode": "copy_delta",
+    "forks": 8,
+    "children_per_fork": 1,
+    "step": 256,
+    "paragraphs": 320,
+    "context": 32768,
+    "command": [
+      "/home/thor/kcj/stator_campaign_20261016/bin/kv_spawn_repeat_tuned5",
+      "/home/thor/kcj/llm_share/models/Qwen2.5-7B-Instruct-Q4_K_M.gguf",
+      "32768",
+      "/home/thor/kcj/llm_share/results/20261022-review-repeatfork-delta-v1/r04-copy_delta/prefix.txt",
+      "/home/thor/kcj/llm_share/results/20261022-review-repeatfork-delta-v1/r04-copy_delta/state",
+      "64",
+      "8",
+      "1",
+      "256",
+      "/home/thor/kcj/llm_share/results/20261022-review-repeatfork-delta-v1/r04-copy_delta/out",
+      "/home/thor/kcj/stator_campaign_20261016/bin/kv_fork_tuned5",
+      "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600"
+    ],
+    "environment": {
+      "GGML_CUDA_FATTN_HOST_GQA": "2",
+      "CUDA_VISIBLE_DEVICES": "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600",
+      "GGML_CUDA_HOST_PTR": "1",
+      "STATOR_TRACE": "0",
+      "LLAMA_KV_HOST": "/home/thor/kcj/llm_share/results/20261022-review-repeatfork-delta-v1/tmpfs/kv",
+      "LLAMA_KV_GROW": "256",
+      "LLAMA_KV_PUBLISH_COPY": "2",
+      "STATOR_TIMING_DIR": "/home/thor/kcj/llm_share/results/20261022-review-repeatfork-delta-v1/r04-copy_delta/timing",
+      "STATOR_REPEAT_UNLINK": "1"
+    },
+    "exit": 0,
+    "status": "ok",
+    "publishes": [
+      {
+        "fork": 1,
+        "rows": 16321,
+        "publish_ms": 82.34
+      },
+      {
+        "fork": 2,
+        "rows": 16590,
+        "publish_ms": 8.98
+      },
+      {
+        "fork": 3,
+        "rows": 16846,
+        "publish_ms": 6.0
+      },
+      {
+        "fork": 4,
+        "rows": 17102,
+        "publish_ms": 5.99
+      },
+      {
+        "fork": 5,
+        "rows": 17358,
+        "publish_ms": 6.02
+      },
+      {
+        "fork": 6,
+        "rows": 17614,
+        "publish_ms": 6.06
+      },
+      {
+        "fork": 7,
+        "rows": 17870,
+        "publish_ms": 6.19
+      },
+      {
+        "fork": 8,
+        "rows": 18126,
+        "publish_ms": 6.25
+      }
+    ],
+    "parent": {
+      "role": "parent",
+      "forks": "8",
+      "children": "8",
+      "prefix_ms": "12818.3",
+      "publish_total_ms": "127.84",
+      "parent_ms": "79178.3",
+      "total_ms": "93085.0",
+      "rows": "18382"
+    },
+    "parent_text_sha256": "ea5b439b0f9f0dbc4f323e4dc8430c741caac96e2fd29433f9b837edf55a49b7",
+    "children": [
+      {
+        "fork": 1,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "16321",
+          "suffix_tokens": "16",
+          "model_ms": "655.6",
+          "context_ms": "37.7",
+          "state_ms": "7.58",
+          "prefix_ms": "0.0",
+          "suffix_ms": "135.7",
+          "first_token_ms": "861.2",
+          "generation_ms": "3973.6",
+          "generated": "64",
+          "generation_tps": "16.106"
+        },
+        "text_sha256": "82c46914f5662c7b16675c19e332649544364baa47250dcacb03158209a84103"
+      },
+      {
+        "fork": 2,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "16590",
+          "suffix_tokens": "16",
+          "model_ms": "741.4",
+          "context_ms": "38.6",
+          "state_ms": "7.49",
+          "prefix_ms": "0.0",
+          "suffix_ms": "130.3",
+          "first_token_ms": "944.7",
+          "generation_ms": "3984.1",
+          "generated": "64",
+          "generation_tps": "16.064"
+        },
+        "text_sha256": "e27425defb9c2f4caa898e9d10a93dfc780bc87f4d79f49a62d7dd1ca7e6b298"
+      },
+      {
+        "fork": 3,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "16846",
+          "suffix_tokens": "16",
+          "model_ms": "729.2",
+          "context_ms": "38.3",
+          "state_ms": "7.62",
+          "prefix_ms": "0.0",
+          "suffix_ms": "142.8",
+          "first_token_ms": "945.7",
+          "generation_ms": "3999.7",
+          "generated": "64",
+          "generation_tps": "16.001"
+        },
+        "text_sha256": "c7833424a049b55aa807a43c55ff45b0e01369cb1dd23e149c19bbd1f67208b8"
+      },
+      {
+        "fork": 4,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "17102",
+          "suffix_tokens": "16",
+          "model_ms": "724.2",
+          "context_ms": "36.4",
+          "state_ms": "7.85",
+          "prefix_ms": "0.0",
+          "suffix_ms": "143.5",
+          "first_token_ms": "940.4",
+          "generation_ms": "4009.8",
+          "generated": "64",
+          "generation_tps": "15.961"
+        },
+        "text_sha256": "91ccb0062230d15cfde2b3c7067ec39e6dfee61daa5c01a53b3255888e93d5b2"
+      },
+      {
+        "fork": 5,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "17358",
+          "suffix_tokens": "16",
+          "model_ms": "730.4",
+          "context_ms": "37.2",
+          "state_ms": "7.76",
+          "prefix_ms": "0.0",
+          "suffix_ms": "136.6",
+          "first_token_ms": "938.7",
+          "generation_ms": "3998.4",
+          "generated": "64",
+          "generation_tps": "16.006"
+        },
+        "text_sha256": "e27425defb9c2f4caa898e9d10a93dfc780bc87f4d79f49a62d7dd1ca7e6b298"
+      },
+      {
+        "fork": 6,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "17614",
+          "suffix_tokens": "16",
+          "model_ms": "745.3",
+          "context_ms": "36.9",
+          "state_ms": "8.06",
+          "prefix_ms": "0.0",
+          "suffix_ms": "142.4",
+          "first_token_ms": "960.2",
+          "generation_ms": "4012.1",
+          "generated": "64",
+          "generation_tps": "15.952"
+        },
+        "text_sha256": "9e83d4114143736981272633ead73f7ec6daabf0283f3345e7976ef21a321db8"
+      },
+      {
+        "fork": 7,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "17870",
+          "suffix_tokens": "16",
+          "model_ms": "727.2",
+          "context_ms": "37.3",
+          "state_ms": "8.36",
+          "prefix_ms": "0.0",
+          "suffix_ms": "129.5",
+          "first_token_ms": "930.2",
+          "generation_ms": "4029.1",
+          "generated": "64",
+          "generation_tps": "15.884"
+        },
+        "text_sha256": "e27425defb9c2f4caa898e9d10a93dfc780bc87f4d79f49a62d7dd1ca7e6b298"
+      },
+      {
+        "fork": 8,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "18126",
+          "suffix_tokens": "16",
+          "model_ms": "729.6",
+          "context_ms": "39.2",
+          "state_ms": "8.34",
+          "prefix_ms": "0.0",
+          "suffix_ms": "129.9",
+          "first_token_ms": "936.0",
+          "generation_ms": "4034.5",
+          "generated": "64",
+          "generation_tps": "15.863"
+        },
+        "text_sha256": "ca533101c47bd4e99c3c3e9248229c86c5e836bddfa51e711a46fa8ee6c77a2d"
+      }
+    ],
+    "children_exit": [
+      {
+        "index": "0",
+        "exit": "0"
+      },
+      {
+        "index": "1",
+        "exit": "0"
+      },
+      {
+        "index": "2",
+        "exit": "0"
+      },
+      {
+        "index": "3",
+        "exit": "0"
+      },
+      {
+        "index": "4",
+        "exit": "0"
+      },
+      {
+        "index": "5",
+        "exit": "0"
+      },
+      {
+        "index": "6",
+        "exit": "0"
+      },
+      {
+        "index": "7",
+        "exit": "0"
+      }
+    ],
+    "peak_drop_bytes": 3642380288,
+    "total_peak_accounted_bytes": 8325454528,
+    "tmpfs_peak_bytes": 1056964608,
+    "gpu_faults_total": 0,
+    "wall_s": 93.804307153
+  },
+  {
+    "case": "r05-copy",
+    "run": 5,
+    "mode": "copy",
+    "forks": 8,
+    "children_per_fork": 1,
+    "step": 256,
+    "paragraphs": 320,
+    "context": 32768,
+    "command": [
+      "/home/thor/kcj/stator_campaign_20261016/bin/kv_spawn_repeat_tuned5",
+      "/home/thor/kcj/llm_share/models/Qwen2.5-7B-Instruct-Q4_K_M.gguf",
+      "32768",
+      "/home/thor/kcj/llm_share/results/20261022-review-repeatfork-delta-v1/r05-copy/prefix.txt",
+      "/home/thor/kcj/llm_share/results/20261022-review-repeatfork-delta-v1/r05-copy/state",
+      "64",
+      "8",
+      "1",
+      "256",
+      "/home/thor/kcj/llm_share/results/20261022-review-repeatfork-delta-v1/r05-copy/out",
+      "/home/thor/kcj/stator_campaign_20261016/bin/kv_fork_tuned5",
+      "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600"
+    ],
+    "environment": {
+      "GGML_CUDA_FATTN_HOST_GQA": "2",
+      "CUDA_VISIBLE_DEVICES": "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600",
+      "GGML_CUDA_HOST_PTR": "1",
+      "STATOR_TRACE": "0",
+      "STATOR_TIMING_DIR": "/home/thor/kcj/llm_share/results/20261022-review-repeatfork-delta-v1/r05-copy/timing",
+      "STATOR_REPEAT_UNLINK": "1"
+    },
+    "exit": 0,
+    "status": "ok",
+    "publishes": [
+      {
+        "fork": 1,
+        "rows": 16321,
+        "publish_ms": 568.23
+      },
+      {
+        "fork": 2,
+        "rows": 16590,
+        "publish_ms": 566.92
+      },
+      {
+        "fork": 3,
+        "rows": 16846,
+        "publish_ms": 576.97
+      },
+      {
+        "fork": 4,
+        "rows": 17102,
+        "publish_ms": 518.25
+      },
+      {
+        "fork": 5,
+        "rows": 17358,
+        "publish_ms": 562.86
+      },
+      {
+        "fork": 6,
+        "rows": 17614,
+        "publish_ms": 577.11
+      },
+      {
+        "fork": 7,
+        "rows": 17870,
+        "publish_ms": 584.85
+      },
+      {
+        "fork": 8,
+        "rows": 18126,
+        "publish_ms": 596.85
+      }
+    ],
+    "parent": {
+      "role": "parent",
+      "forks": "8",
+      "children": "8",
+      "prefix_ms": "12584.3",
+      "publish_total_ms": "4552.04",
+      "parent_ms": "85556.1",
+      "total_ms": "99257.5",
+      "rows": "18382"
+    },
+    "parent_text_sha256": "ea5b439b0f9f0dbc4f323e4dc8430c741caac96e2fd29433f9b837edf55a49b7",
+    "children": [
+      {
+        "fork": 1,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "16321",
+          "suffix_tokens": "16",
+          "model_ms": "648.7",
+          "context_ms": "68.3",
+          "state_ms": "265.38",
+          "prefix_ms": "0.0",
+          "suffix_ms": "178.7",
+          "first_token_ms": "1188.9",
+          "generation_ms": "4062.1",
+          "generated": "64",
+          "generation_tps": "15.755"
+        },
+        "text_sha256": "82c46914f5662c7b16675c19e332649544364baa47250dcacb03158209a84103"
+      },
+      {
+        "fork": 2,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "16590",
+          "suffix_tokens": "16",
+          "model_ms": "626.8",
+          "context_ms": "69.0",
+          "state_ms": "261.17",
+          "prefix_ms": "0.0",
+          "suffix_ms": "152.0",
+          "first_token_ms": "1138.0",
+          "generation_ms": "4077.9",
+          "generated": "64",
+          "generation_tps": "15.694"
+        },
+        "text_sha256": "e27425defb9c2f4caa898e9d10a93dfc780bc87f4d79f49a62d7dd1ca7e6b298"
+      },
+      {
+        "fork": 3,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "16846",
+          "suffix_tokens": "16",
+          "model_ms": "652.6",
+          "context_ms": "62.0",
+          "state_ms": "259.06",
+          "prefix_ms": "0.0",
+          "suffix_ms": "169.6",
+          "first_token_ms": "1170.3",
+          "generation_ms": "4128.1",
+          "generated": "64",
+          "generation_tps": "15.503"
+        },
+        "text_sha256": "c7833424a049b55aa807a43c55ff45b0e01369cb1dd23e149c19bbd1f67208b8"
+      },
+      {
+        "fork": 4,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "17102",
+          "suffix_tokens": "16",
+          "model_ms": "632.0",
+          "context_ms": "69.1",
+          "state_ms": "262.91",
+          "prefix_ms": "0.0",
+          "suffix_ms": "152.2",
+          "first_token_ms": "1142.9",
+          "generation_ms": "4106.8",
+          "generated": "64",
+          "generation_tps": "15.584"
+        },
+        "text_sha256": "91ccb0062230d15cfde2b3c7067ec39e6dfee61daa5c01a53b3255888e93d5b2"
+      },
+      {
+        "fork": 5,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "17358",
+          "suffix_tokens": "16",
+          "model_ms": "634.4",
+          "context_ms": "62.5",
+          "state_ms": "265.38",
+          "prefix_ms": "0.0",
+          "suffix_ms": "164.3",
+          "first_token_ms": "1154.3",
+          "generation_ms": "4117.5",
+          "generated": "64",
+          "generation_tps": "15.544"
+        },
+        "text_sha256": "e27425defb9c2f4caa898e9d10a93dfc780bc87f4d79f49a62d7dd1ca7e6b298"
+      },
+      {
+        "fork": 6,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "17614",
+          "suffix_tokens": "16",
+          "model_ms": "677.2",
+          "context_ms": "67.5",
+          "state_ms": "268.19",
+          "prefix_ms": "0.0",
+          "suffix_ms": "172.1",
+          "first_token_ms": "1212.4",
+          "generation_ms": "4134.2",
+          "generated": "64",
+          "generation_tps": "15.481"
+        },
+        "text_sha256": "9e83d4114143736981272633ead73f7ec6daabf0283f3345e7976ef21a321db8"
+      },
+      {
+        "fork": 7,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "17870",
+          "suffix_tokens": "16",
+          "model_ms": "639.4",
+          "context_ms": "69.4",
+          "state_ms": "268.02",
+          "prefix_ms": "0.0",
+          "suffix_ms": "181.1",
+          "first_token_ms": "1186.0",
+          "generation_ms": "4138.0",
+          "generated": "64",
+          "generation_tps": "15.467"
+        },
+        "text_sha256": "e27425defb9c2f4caa898e9d10a93dfc780bc87f4d79f49a62d7dd1ca7e6b298"
+      },
+      {
+        "fork": 8,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "18126",
+          "suffix_tokens": "16",
+          "model_ms": "654.6",
+          "context_ms": "68.1",
+          "state_ms": "260.65",
+          "prefix_ms": "0.0",
+          "suffix_ms": "168.3",
+          "first_token_ms": "1178.7",
+          "generation_ms": "4144.4",
+          "generated": "64",
+          "generation_tps": "15.443"
+        },
+        "text_sha256": "ca533101c47bd4e99c3c3e9248229c86c5e836bddfa51e711a46fa8ee6c77a2d"
+      }
+    ],
+    "children_exit": [
+      {
+        "index": "0",
+        "exit": "0"
+      },
+      {
+        "index": "1",
+        "exit": "0"
+      },
+      {
+        "index": "2",
+        "exit": "0"
+      },
+      {
+        "index": "3",
+        "exit": "0"
+      },
+      {
+        "index": "4",
+        "exit": "0"
+      },
+      {
+        "index": "5",
+        "exit": "0"
+      },
+      {
+        "index": "6",
+        "exit": "0"
+      },
+      {
+        "index": "7",
+        "exit": "0"
+      }
+    ],
+    "peak_drop_bytes": 7747969024,
+    "total_peak_accounted_bytes": 12431043264,
+    "tmpfs_peak_bytes": 0,
+    "gpu_faults_total": 0,
+    "wall_s": 99.857271764
+  },
+  {
+    "case": "r05-copy_map",
+    "run": 5,
+    "mode": "copy_map",
+    "forks": 8,
+    "children_per_fork": 1,
+    "step": 256,
+    "paragraphs": 320,
+    "context": 32768,
+    "command": [
+      "/home/thor/kcj/stator_campaign_20261016/bin/kv_spawn_repeat_tuned5",
+      "/home/thor/kcj/llm_share/models/Qwen2.5-7B-Instruct-Q4_K_M.gguf",
+      "32768",
+      "/home/thor/kcj/llm_share/results/20261022-review-repeatfork-delta-v1/r05-copy_map/prefix.txt",
+      "/home/thor/kcj/llm_share/results/20261022-review-repeatfork-delta-v1/r05-copy_map/state",
+      "64",
+      "8",
+      "1",
+      "256",
+      "/home/thor/kcj/llm_share/results/20261022-review-repeatfork-delta-v1/r05-copy_map/out",
+      "/home/thor/kcj/stator_campaign_20261016/bin/kv_fork_tuned5",
+      "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600"
+    ],
+    "environment": {
+      "GGML_CUDA_FATTN_HOST_GQA": "2",
+      "CUDA_VISIBLE_DEVICES": "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600",
+      "GGML_CUDA_HOST_PTR": "1",
+      "STATOR_TRACE": "0",
+      "LLAMA_KV_HOST": "/home/thor/kcj/llm_share/results/20261022-review-repeatfork-delta-v1/tmpfs/kv",
+      "LLAMA_KV_GROW": "256",
+      "LLAMA_KV_PUBLISH_COPY": "1",
+      "STATOR_TIMING_DIR": "/home/thor/kcj/llm_share/results/20261022-review-repeatfork-delta-v1/r05-copy_map/timing",
+      "STATOR_REPEAT_UNLINK": "1"
+    },
+    "exit": 0,
+    "status": "ok",
+    "publishes": [
+      {
+        "fork": 1,
+        "rows": 16321,
+        "publish_ms": 82.48
+      },
+      {
+        "fork": 2,
+        "rows": 16590,
+        "publish_ms": 85.62
+      },
+      {
+        "fork": 3,
+        "rows": 16846,
+        "publish_ms": 86.26
+      },
+      {
+        "fork": 4,
+        "rows": 17102,
+        "publish_ms": 86.52
+      },
+      {
+        "fork": 5,
+        "rows": 17358,
+        "publish_ms": 89.0
+      },
+      {
+        "fork": 6,
+        "rows": 17614,
+        "publish_ms": 90.58
+      },
+      {
+        "fork": 7,
+        "rows": 17870,
+        "publish_ms": 89.28
+      },
+      {
+        "fork": 8,
+        "rows": 18126,
+        "publish_ms": 90.85
+      }
+    ],
+    "parent": {
+      "role": "parent",
+      "forks": "8",
+      "children": "8",
+      "prefix_ms": "12761.1",
+      "publish_total_ms": "700.59",
+      "parent_ms": "79678.0",
+      "total_ms": "93521.2",
+      "rows": "18382"
+    },
+    "parent_text_sha256": "ea5b439b0f9f0dbc4f323e4dc8430c741caac96e2fd29433f9b837edf55a49b7",
+    "children": [
+      {
+        "fork": 1,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "16321",
+          "suffix_tokens": "16",
+          "model_ms": "651.8",
+          "context_ms": "37.1",
+          "state_ms": "7.69",
+          "prefix_ms": "0.0",
+          "suffix_ms": "134.5",
+          "first_token_ms": "855.7",
+          "generation_ms": "3980.8",
+          "generated": "64",
+          "generation_tps": "16.077"
+        },
+        "text_sha256": "82c46914f5662c7b16675c19e332649544364baa47250dcacb03158209a84103"
+      },
+      {
+        "fork": 2,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "16590",
+          "suffix_tokens": "16",
+          "model_ms": "660.9",
+          "context_ms": "36.8",
+          "state_ms": "7.38",
+          "prefix_ms": "0.0",
+          "suffix_ms": "136.4",
+          "first_token_ms": "868.8",
+          "generation_ms": "3970.8",
+          "generated": "64",
+          "generation_tps": "16.118"
+        },
+        "text_sha256": "e27425defb9c2f4caa898e9d10a93dfc780bc87f4d79f49a62d7dd1ca7e6b298"
+      },
+      {
+        "fork": 3,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "16846",
+          "suffix_tokens": "16",
+          "model_ms": "649.3",
+          "context_ms": "36.1",
+          "state_ms": "7.65",
+          "prefix_ms": "0.0",
+          "suffix_ms": "137.8",
+          "first_token_ms": "858.6",
+          "generation_ms": "3994.4",
+          "generated": "64",
+          "generation_tps": "16.023"
+        },
+        "text_sha256": "c7833424a049b55aa807a43c55ff45b0e01369cb1dd23e149c19bbd1f67208b8"
+      },
+      {
+        "fork": 4,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "17102",
+          "suffix_tokens": "16",
+          "model_ms": "698.4",
+          "context_ms": "35.5",
+          "state_ms": "7.97",
+          "prefix_ms": "0.0",
+          "suffix_ms": "133.9",
+          "first_token_ms": "904.3",
+          "generation_ms": "3989.1",
+          "generated": "64",
+          "generation_tps": "16.044"
+        },
+        "text_sha256": "91ccb0062230d15cfde2b3c7067ec39e6dfee61daa5c01a53b3255888e93d5b2"
+      },
+      {
+        "fork": 5,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "17358",
+          "suffix_tokens": "16",
+          "model_ms": "719.1",
+          "context_ms": "37.7",
+          "state_ms": "8.16",
+          "prefix_ms": "0.0",
+          "suffix_ms": "133.0",
+          "first_token_ms": "926.1",
+          "generation_ms": "4008.4",
+          "generated": "64",
+          "generation_tps": "15.966"
+        },
+        "text_sha256": "e27425defb9c2f4caa898e9d10a93dfc780bc87f4d79f49a62d7dd1ca7e6b298"
+      },
+      {
+        "fork": 6,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "17614",
+          "suffix_tokens": "16",
+          "model_ms": "635.8",
+          "context_ms": "36.9",
+          "state_ms": "7.97",
+          "prefix_ms": "0.0",
+          "suffix_ms": "137.2",
+          "first_token_ms": "845.8",
+          "generation_ms": "4006.2",
+          "generated": "64",
+          "generation_tps": "15.975"
+        },
+        "text_sha256": "9e83d4114143736981272633ead73f7ec6daabf0283f3345e7976ef21a321db8"
+      },
+      {
+        "fork": 7,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "17870",
+          "suffix_tokens": "16",
+          "model_ms": "734.0",
+          "context_ms": "37.5",
+          "state_ms": "8.06",
+          "prefix_ms": "0.0",
+          "suffix_ms": "141.6",
+          "first_token_ms": "950.7",
+          "generation_ms": "4030.3",
+          "generated": "64",
+          "generation_tps": "15.880"
+        },
+        "text_sha256": "e27425defb9c2f4caa898e9d10a93dfc780bc87f4d79f49a62d7dd1ca7e6b298"
+      },
+      {
+        "fork": 8,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "18126",
+          "suffix_tokens": "16",
+          "model_ms": "628.4",
+          "context_ms": "37.6",
+          "state_ms": "8.36",
+          "prefix_ms": "0.0",
+          "suffix_ms": "130.7",
+          "first_token_ms": "833.2",
+          "generation_ms": "4034.3",
+          "generated": "64",
+          "generation_tps": "15.864"
+        },
+        "text_sha256": "ca533101c47bd4e99c3c3e9248229c86c5e836bddfa51e711a46fa8ee6c77a2d"
+      }
+    ],
+    "children_exit": [
+      {
+        "index": "0",
+        "exit": "0"
+      },
+      {
+        "index": "1",
+        "exit": "0"
+      },
+      {
+        "index": "2",
+        "exit": "0"
+      },
+      {
+        "index": "3",
+        "exit": "0"
+      },
+      {
+        "index": "4",
+        "exit": "0"
+      },
+      {
+        "index": "5",
+        "exit": "0"
+      },
+      {
+        "index": "6",
+        "exit": "0"
+      },
+      {
+        "index": "7",
+        "exit": "0"
+      }
+    ],
+    "peak_drop_bytes": 4109316096,
+    "total_peak_accounted_bytes": 8792390336,
+    "tmpfs_peak_bytes": 2113929216,
+    "gpu_faults_total": 0,
+    "wall_s": 94.200714882
+  },
+  {
+    "case": "r05-copy_delta",
+    "run": 5,
+    "mode": "copy_delta",
+    "forks": 8,
+    "children_per_fork": 1,
+    "step": 256,
+    "paragraphs": 320,
+    "context": 32768,
+    "command": [
+      "/home/thor/kcj/stator_campaign_20261016/bin/kv_spawn_repeat_tuned5",
+      "/home/thor/kcj/llm_share/models/Qwen2.5-7B-Instruct-Q4_K_M.gguf",
+      "32768",
+      "/home/thor/kcj/llm_share/results/20261022-review-repeatfork-delta-v1/r05-copy_delta/prefix.txt",
+      "/home/thor/kcj/llm_share/results/20261022-review-repeatfork-delta-v1/r05-copy_delta/state",
+      "64",
+      "8",
+      "1",
+      "256",
+      "/home/thor/kcj/llm_share/results/20261022-review-repeatfork-delta-v1/r05-copy_delta/out",
+      "/home/thor/kcj/stator_campaign_20261016/bin/kv_fork_tuned5",
+      "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600"
+    ],
+    "environment": {
+      "GGML_CUDA_FATTN_HOST_GQA": "2",
+      "CUDA_VISIBLE_DEVICES": "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600",
+      "GGML_CUDA_HOST_PTR": "1",
+      "STATOR_TRACE": "0",
+      "LLAMA_KV_HOST": "/home/thor/kcj/llm_share/results/20261022-review-repeatfork-delta-v1/tmpfs/kv",
+      "LLAMA_KV_GROW": "256",
+      "LLAMA_KV_PUBLISH_COPY": "2",
+      "STATOR_TIMING_DIR": "/home/thor/kcj/llm_share/results/20261022-review-repeatfork-delta-v1/r05-copy_delta/timing",
+      "STATOR_REPEAT_UNLINK": "1"
+    },
+    "exit": 0,
+    "status": "ok",
+    "publishes": [
+      {
+        "fork": 1,
+        "rows": 16321,
+        "publish_ms": 82.35
+      },
+      {
+        "fork": 2,
+        "rows": 16590,
+        "publish_ms": 9.02
+      },
+      {
+        "fork": 3,
+        "rows": 16846,
+        "publish_ms": 5.84
+      },
+      {
+        "fork": 4,
+        "rows": 17102,
+        "publish_ms": 6.0
+      },
+      {
+        "fork": 5,
+        "rows": 17358,
+        "publish_ms": 6.11
+      },
+      {
+        "fork": 6,
+        "rows": 17614,
+        "publish_ms": 6.1
+      },
+      {
+        "fork": 7,
+        "rows": 17870,
+        "publish_ms": 6.17
+      },
+      {
+        "fork": 8,
+        "rows": 18126,
+        "publish_ms": 6.27
+      }
+    ],
+    "parent": {
+      "role": "parent",
+      "forks": "8",
+      "children": "8",
+      "prefix_ms": "12758.3",
+      "publish_total_ms": "127.86",
+      "parent_ms": "79124.8",
+      "total_ms": "92972.5",
+      "rows": "18382"
+    },
+    "parent_text_sha256": "ea5b439b0f9f0dbc4f323e4dc8430c741caac96e2fd29433f9b837edf55a49b7",
+    "children": [
+      {
+        "fork": 1,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "16321",
+          "suffix_tokens": "16",
+          "model_ms": "636.0",
+          "context_ms": "36.1",
+          "state_ms": "7.43",
+          "prefix_ms": "0.0",
+          "suffix_ms": "144.5",
+          "first_token_ms": "849.9",
+          "generation_ms": "3986.9",
+          "generated": "64",
+          "generation_tps": "16.053"
+        },
+        "text_sha256": "82c46914f5662c7b16675c19e332649544364baa47250dcacb03158209a84103"
+      },
+      {
+        "fork": 2,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "16590",
+          "suffix_tokens": "16",
+          "model_ms": "628.2",
+          "context_ms": "37.3",
+          "state_ms": "7.59",
+          "prefix_ms": "0.0",
+          "suffix_ms": "137.1",
+          "first_token_ms": "838.6",
+          "generation_ms": "3973.5",
+          "generated": "64",
+          "generation_tps": "16.107"
+        },
+        "text_sha256": "e27425defb9c2f4caa898e9d10a93dfc780bc87f4d79f49a62d7dd1ca7e6b298"
+      },
+      {
+        "fork": 3,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "16846",
+          "suffix_tokens": "16",
+          "model_ms": "629.8",
+          "context_ms": "37.2",
+          "state_ms": "7.87",
+          "prefix_ms": "0.0",
+          "suffix_ms": "129.0",
+          "first_token_ms": "831.1",
+          "generation_ms": "3995.1",
+          "generated": "64",
+          "generation_tps": "16.020"
+        },
+        "text_sha256": "c7833424a049b55aa807a43c55ff45b0e01369cb1dd23e149c19bbd1f67208b8"
+      },
+      {
+        "fork": 4,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "17102",
+          "suffix_tokens": "16",
+          "model_ms": "648.2",
+          "context_ms": "37.3",
+          "state_ms": "7.63",
+          "prefix_ms": "0.0",
+          "suffix_ms": "143.4",
+          "first_token_ms": "864.0",
+          "generation_ms": "3998.6",
+          "generated": "64",
+          "generation_tps": "16.006"
+        },
+        "text_sha256": "91ccb0062230d15cfde2b3c7067ec39e6dfee61daa5c01a53b3255888e93d5b2"
+      },
+      {
+        "fork": 5,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "17358",
+          "suffix_tokens": "16",
+          "model_ms": "630.1",
+          "context_ms": "37.4",
+          "state_ms": "7.75",
+          "prefix_ms": "0.0",
+          "suffix_ms": "135.7",
+          "first_token_ms": "838.5",
+          "generation_ms": "4010.7",
+          "generated": "64",
+          "generation_tps": "15.957"
+        },
+        "text_sha256": "e27425defb9c2f4caa898e9d10a93dfc780bc87f4d79f49a62d7dd1ca7e6b298"
+      },
+      {
+        "fork": 6,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "17614",
+          "suffix_tokens": "16",
+          "model_ms": "634.7",
+          "context_ms": "37.5",
+          "state_ms": "8.02",
+          "prefix_ms": "0.0",
+          "suffix_ms": "129.5",
+          "first_token_ms": "837.0",
+          "generation_ms": "4017.2",
+          "generated": "64",
+          "generation_tps": "15.931"
+        },
+        "text_sha256": "9e83d4114143736981272633ead73f7ec6daabf0283f3345e7976ef21a321db8"
+      },
+      {
+        "fork": 7,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "17870",
+          "suffix_tokens": "16",
+          "model_ms": "632.3",
+          "context_ms": "37.6",
+          "state_ms": "8.04",
+          "prefix_ms": "0.0",
+          "suffix_ms": "128.2",
+          "first_token_ms": "835.1",
+          "generation_ms": "4028.8",
+          "generated": "64",
+          "generation_tps": "15.885"
+        },
+        "text_sha256": "e27425defb9c2f4caa898e9d10a93dfc780bc87f4d79f49a62d7dd1ca7e6b298"
+      },
+      {
+        "fork": 8,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "18126",
+          "suffix_tokens": "16",
+          "model_ms": "638.3",
+          "context_ms": "38.5",
+          "state_ms": "8.35",
+          "prefix_ms": "0.0",
+          "suffix_ms": "124.4",
+          "first_token_ms": "838.4",
+          "generation_ms": "4039.4",
+          "generated": "64",
+          "generation_tps": "15.844"
+        },
+        "text_sha256": "ca533101c47bd4e99c3c3e9248229c86c5e836bddfa51e711a46fa8ee6c77a2d"
+      }
+    ],
+    "children_exit": [
+      {
+        "index": "0",
+        "exit": "0"
+      },
+      {
+        "index": "1",
+        "exit": "0"
+      },
+      {
+        "index": "2",
+        "exit": "0"
+      },
+      {
+        "index": "3",
+        "exit": "0"
+      },
+      {
+        "index": "4",
+        "exit": "0"
+      },
+      {
+        "index": "5",
+        "exit": "0"
+      },
+      {
+        "index": "6",
+        "exit": "0"
+      },
+      {
+        "index": "7",
+        "exit": "0"
+      }
+    ],
+    "peak_drop_bytes": 3608707072,
+    "total_peak_accounted_bytes": 8291781312,
+    "tmpfs_peak_bytes": 1056964608,
+    "gpu_faults_total": 0,
+    "wall_s": 93.628947984
+  },
+  {
+    "case": "r05-extent",
+    "run": 5,
+    "mode": "extent",
+    "forks": 8,
+    "children_per_fork": 1,
+    "step": 256,
+    "paragraphs": 320,
+    "context": 32768,
+    "command": [
+      "/home/thor/kcj/stator_campaign_20261016/bin/kv_spawn_repeat_tuned5",
+      "/home/thor/kcj/llm_share/models/Qwen2.5-7B-Instruct-Q4_K_M.gguf",
+      "32768",
+      "/home/thor/kcj/llm_share/results/20261022-review-repeatfork-delta-v1/r05-extent/prefix.txt",
+      "/home/thor/kcj/llm_share/results/20261022-review-repeatfork-delta-v1/r05-extent/state",
+      "64",
+      "8",
+      "1",
+      "256",
+      "/home/thor/kcj/llm_share/results/20261022-review-repeatfork-delta-v1/r05-extent/out",
+      "/home/thor/kcj/stator_campaign_20261016/bin/kv_fork_tuned5",
+      "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600"
+    ],
+    "environment": {
+      "GGML_CUDA_FATTN_HOST_GQA": "2",
+      "CUDA_VISIBLE_DEVICES": "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600",
+      "GGML_CUDA_HOST_PTR": "1",
+      "STATOR_TRACE": "0",
+      "LLAMA_KV_HOST": "/home/thor/kcj/llm_share/results/20261022-review-repeatfork-delta-v1/tmpfs/kv",
+      "LLAMA_KV_GROW": "256",
+      "STATOR_TIMING_DIR": "/home/thor/kcj/llm_share/results/20261022-review-repeatfork-delta-v1/r05-extent/timing",
+      "STATOR_REPEAT_UNLINK": "1"
+    },
+    "exit": 0,
+    "status": "ok",
+    "publishes": [
+      {
+        "fork": 1,
+        "rows": 16321,
+        "publish_ms": 11.51
+      },
+      {
+        "fork": 2,
+        "rows": 16590,
+        "publish_ms": 8.97
+      },
+      {
+        "fork": 3,
+        "rows": 16846,
+        "publish_ms": 8.59
+      },
+      {
+        "fork": 4,
+        "rows": 17102,
+        "publish_ms": 8.69
+      },
+      {
+        "fork": 5,
+        "rows": 17358,
+        "publish_ms": 8.47
+      },
+      {
+        "fork": 6,
+        "rows": 17614,
+        "publish_ms": 9.4
+      },
+      {
+        "fork": 7,
+        "rows": 17870,
+        "publish_ms": 8.96
+      },
+      {
+        "fork": 8,
+        "rows": 18126,
+        "publish_ms": 8.84
+      }
+    ],
+    "parent": {
+      "role": "parent",
+      "forks": "8",
+      "children": "8",
+      "prefix_ms": "12681.1",
+      "publish_total_ms": "73.44",
+      "parent_ms": "79146.9",
+      "total_ms": "92914.1",
+      "rows": "18382"
+    },
+    "parent_text_sha256": "ea5b439b0f9f0dbc4f323e4dc8430c741caac96e2fd29433f9b837edf55a49b7",
+    "children": [
+      {
+        "fork": 1,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "16321",
+          "suffix_tokens": "16",
+          "model_ms": "642.3",
+          "context_ms": "36.2",
+          "state_ms": "7.33",
+          "prefix_ms": "0.0",
+          "suffix_ms": "136.4",
+          "first_token_ms": "845.5",
+          "generation_ms": "3969.9",
+          "generated": "64",
+          "generation_tps": "16.121"
+        },
+        "text_sha256": "82c46914f5662c7b16675c19e332649544364baa47250dcacb03158209a84103"
+      },
+      {
+        "fork": 2,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "16590",
+          "suffix_tokens": "16",
+          "model_ms": "650.3",
+          "context_ms": "36.4",
+          "state_ms": "7.43",
+          "prefix_ms": "0.0",
+          "suffix_ms": "142.4",
+          "first_token_ms": "866.0",
+          "generation_ms": "3981.7",
+          "generated": "64",
+          "generation_tps": "16.074"
+        },
+        "text_sha256": "e27425defb9c2f4caa898e9d10a93dfc780bc87f4d79f49a62d7dd1ca7e6b298"
+      },
+      {
+        "fork": 3,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "16846",
+          "suffix_tokens": "16",
+          "model_ms": "664.9",
+          "context_ms": "35.6",
+          "state_ms": "7.67",
+          "prefix_ms": "0.0",
+          "suffix_ms": "131.4",
+          "first_token_ms": "867.2",
+          "generation_ms": "3988.9",
+          "generated": "64",
+          "generation_tps": "16.045"
+        },
+        "text_sha256": "c7833424a049b55aa807a43c55ff45b0e01369cb1dd23e149c19bbd1f67208b8"
+      },
+      {
+        "fork": 4,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "17102",
+          "suffix_tokens": "16",
+          "model_ms": "655.0",
+          "context_ms": "38.4",
+          "state_ms": "7.91",
+          "prefix_ms": "0.0",
+          "suffix_ms": "135.3",
+          "first_token_ms": "863.2",
+          "generation_ms": "3996.1",
+          "generated": "64",
+          "generation_tps": "16.016"
+        },
+        "text_sha256": "91ccb0062230d15cfde2b3c7067ec39e6dfee61daa5c01a53b3255888e93d5b2"
+      },
+      {
+        "fork": 5,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "17358",
+          "suffix_tokens": "16",
+          "model_ms": "723.2",
+          "context_ms": "37.6",
+          "state_ms": "7.88",
+          "prefix_ms": "0.0",
+          "suffix_ms": "132.1",
+          "first_token_ms": "927.7",
+          "generation_ms": "3998.2",
+          "generated": "64",
+          "generation_tps": "16.007"
+        },
+        "text_sha256": "e27425defb9c2f4caa898e9d10a93dfc780bc87f4d79f49a62d7dd1ca7e6b298"
+      },
+      {
+        "fork": 6,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "17614",
+          "suffix_tokens": "16",
+          "model_ms": "706.7",
+          "context_ms": "36.9",
+          "state_ms": "8.22",
+          "prefix_ms": "0.0",
+          "suffix_ms": "141.2",
+          "first_token_ms": "920.4",
+          "generation_ms": "4012.1",
+          "generated": "64",
+          "generation_tps": "15.952"
+        },
+        "text_sha256": "9e83d4114143736981272633ead73f7ec6daabf0283f3345e7976ef21a321db8"
+      },
+      {
+        "fork": 7,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "17870",
+          "suffix_tokens": "16",
+          "model_ms": "636.8",
+          "context_ms": "36.8",
+          "state_ms": "8.09",
+          "prefix_ms": "0.0",
+          "suffix_ms": "128.8",
+          "first_token_ms": "837.5",
+          "generation_ms": "4028.9",
+          "generated": "64",
+          "generation_tps": "15.885"
+        },
+        "text_sha256": "e27425defb9c2f4caa898e9d10a93dfc780bc87f4d79f49a62d7dd1ca7e6b298"
+      },
+      {
+        "fork": 8,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "18126",
+          "suffix_tokens": "16",
+          "model_ms": "631.5",
+          "context_ms": "38.1",
+          "state_ms": "8.70",
+          "prefix_ms": "0.0",
+          "suffix_ms": "132.7",
+          "first_token_ms": "838.7",
+          "generation_ms": "4033.6",
+          "generated": "64",
+          "generation_tps": "15.867"
+        },
+        "text_sha256": "ca533101c47bd4e99c3c3e9248229c86c5e836bddfa51e711a46fa8ee6c77a2d"
+      }
+    ],
+    "children_exit": [
+      {
+        "index": "0",
+        "exit": "0"
+      },
+      {
+        "index": "1",
+        "exit": "0"
+      },
+      {
+        "index": "2",
+        "exit": "0"
+      },
+      {
+        "index": "3",
+        "exit": "0"
+      },
+      {
+        "index": "4",
+        "exit": "0"
+      },
+      {
+        "index": "5",
+        "exit": "0"
+      },
+      {
+        "index": "6",
+        "exit": "0"
+      },
+      {
+        "index": "7",
+        "exit": "0"
+      }
+    ],
+    "peak_drop_bytes": 2670256128,
+    "total_peak_accounted_bytes": 7353330368,
+    "tmpfs_peak_bytes": 1056964608,
+    "gpu_faults_total": 0,
+    "wall_s": 93.518027068
+  },
+  {
+    "case": "r06-copy_map",
+    "run": 6,
+    "mode": "copy_map",
+    "forks": 8,
+    "children_per_fork": 1,
+    "step": 256,
+    "paragraphs": 320,
+    "context": 32768,
+    "command": [
+      "/home/thor/kcj/stator_campaign_20261016/bin/kv_spawn_repeat_tuned5",
+      "/home/thor/kcj/llm_share/models/Qwen2.5-7B-Instruct-Q4_K_M.gguf",
+      "32768",
+      "/home/thor/kcj/llm_share/results/20261022-review-repeatfork-delta-v1/r06-copy_map/prefix.txt",
+      "/home/thor/kcj/llm_share/results/20261022-review-repeatfork-delta-v1/r06-copy_map/state",
+      "64",
+      "8",
+      "1",
+      "256",
+      "/home/thor/kcj/llm_share/results/20261022-review-repeatfork-delta-v1/r06-copy_map/out",
+      "/home/thor/kcj/stator_campaign_20261016/bin/kv_fork_tuned5",
+      "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600"
+    ],
+    "environment": {
+      "GGML_CUDA_FATTN_HOST_GQA": "2",
+      "CUDA_VISIBLE_DEVICES": "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600",
+      "GGML_CUDA_HOST_PTR": "1",
+      "STATOR_TRACE": "0",
+      "LLAMA_KV_HOST": "/home/thor/kcj/llm_share/results/20261022-review-repeatfork-delta-v1/tmpfs/kv",
+      "LLAMA_KV_GROW": "256",
+      "LLAMA_KV_PUBLISH_COPY": "1",
+      "STATOR_TIMING_DIR": "/home/thor/kcj/llm_share/results/20261022-review-repeatfork-delta-v1/r06-copy_map/timing",
+      "STATOR_REPEAT_UNLINK": "1"
+    },
+    "exit": 0,
+    "status": "ok",
+    "publishes": [
+      {
+        "fork": 1,
+        "rows": 16321,
+        "publish_ms": 82.32
+      },
+      {
+        "fork": 2,
+        "rows": 16590,
+        "publish_ms": 84.99
+      },
+      {
+        "fork": 3,
+        "rows": 16846,
+        "publish_ms": 85.0
+      },
+      {
+        "fork": 4,
+        "rows": 17102,
+        "publish_ms": 85.59
+      },
+      {
+        "fork": 5,
+        "rows": 17358,
+        "publish_ms": 84.96
+      },
+      {
+        "fork": 6,
+        "rows": 17614,
+        "publish_ms": 87.44
+      },
+      {
+        "fork": 7,
+        "rows": 17870,
+        "publish_ms": 90.27
+      },
+      {
+        "fork": 8,
+        "rows": 18126,
+        "publish_ms": 86.98
+      }
+    ],
+    "parent": {
+      "role": "parent",
+      "forks": "8",
+      "children": "8",
+      "prefix_ms": "12736.5",
+      "publish_total_ms": "687.55",
+      "parent_ms": "79724.8",
+      "total_ms": "93552.7",
+      "rows": "18382"
+    },
+    "parent_text_sha256": "ea5b439b0f9f0dbc4f323e4dc8430c741caac96e2fd29433f9b837edf55a49b7",
+    "children": [
+      {
+        "fork": 1,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "16321",
+          "suffix_tokens": "16",
+          "model_ms": "632.6",
+          "context_ms": "36.3",
+          "state_ms": "7.51",
+          "prefix_ms": "0.0",
+          "suffix_ms": "141.3",
+          "first_token_ms": "843.2",
+          "generation_ms": "3990.6",
+          "generated": "64",
+          "generation_tps": "16.038"
+        },
+        "text_sha256": "82c46914f5662c7b16675c19e332649544364baa47250dcacb03158209a84103"
+      },
+      {
+        "fork": 2,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "16590",
+          "suffix_tokens": "16",
+          "model_ms": "637.4",
+          "context_ms": "36.4",
+          "state_ms": "7.55",
+          "prefix_ms": "0.0",
+          "suffix_ms": "134.7",
+          "first_token_ms": "843.0",
+          "generation_ms": "3973.1",
+          "generated": "64",
+          "generation_tps": "16.108"
+        },
+        "text_sha256": "e27425defb9c2f4caa898e9d10a93dfc780bc87f4d79f49a62d7dd1ca7e6b298"
+      },
+      {
+        "fork": 3,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "16846",
+          "suffix_tokens": "16",
+          "model_ms": "631.6",
+          "context_ms": "37.1",
+          "state_ms": "7.64",
+          "prefix_ms": "0.0",
+          "suffix_ms": "125.6",
+          "first_token_ms": "829.0",
+          "generation_ms": "3993.7",
+          "generated": "64",
+          "generation_tps": "16.025"
+        },
+        "text_sha256": "c7833424a049b55aa807a43c55ff45b0e01369cb1dd23e149c19bbd1f67208b8"
+      },
+      {
+        "fork": 4,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "17102",
+          "suffix_tokens": "16",
+          "model_ms": "640.2",
+          "context_ms": "37.1",
+          "state_ms": "7.76",
+          "prefix_ms": "0.0",
+          "suffix_ms": "136.3",
+          "first_token_ms": "847.4",
+          "generation_ms": "3987.1",
+          "generated": "64",
+          "generation_tps": "16.052"
+        },
+        "text_sha256": "91ccb0062230d15cfde2b3c7067ec39e6dfee61daa5c01a53b3255888e93d5b2"
+      },
+      {
+        "fork": 5,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "17358",
+          "suffix_tokens": "16",
+          "model_ms": "630.4",
+          "context_ms": "36.2",
+          "state_ms": "7.86",
+          "prefix_ms": "0.0",
+          "suffix_ms": "137.0",
+          "first_token_ms": "838.4",
+          "generation_ms": "4011.3",
+          "generated": "64",
+          "generation_tps": "15.955"
+        },
+        "text_sha256": "e27425defb9c2f4caa898e9d10a93dfc780bc87f4d79f49a62d7dd1ca7e6b298"
+      },
+      {
+        "fork": 6,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "17614",
+          "suffix_tokens": "16",
+          "model_ms": "630.8",
+          "context_ms": "38.2",
+          "state_ms": "8.07",
+          "prefix_ms": "0.0",
+          "suffix_ms": "127.8",
+          "first_token_ms": "833.0",
+          "generation_ms": "4020.7",
+          "generated": "64",
+          "generation_tps": "15.918"
+        },
+        "text_sha256": "9e83d4114143736981272633ead73f7ec6daabf0283f3345e7976ef21a321db8"
+      },
+      {
+        "fork": 7,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "17870",
+          "suffix_tokens": "16",
+          "model_ms": "630.4",
+          "context_ms": "36.2",
+          "state_ms": "8.08",
+          "prefix_ms": "0.0",
+          "suffix_ms": "132.9",
+          "first_token_ms": "834.6",
+          "generation_ms": "4025.2",
+          "generated": "64",
+          "generation_tps": "15.900"
+        },
+        "text_sha256": "e27425defb9c2f4caa898e9d10a93dfc780bc87f4d79f49a62d7dd1ca7e6b298"
+      },
+      {
+        "fork": 8,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "18126",
+          "suffix_tokens": "16",
+          "model_ms": "631.2",
+          "context_ms": "36.6",
+          "state_ms": "8.17",
+          "prefix_ms": "0.0",
+          "suffix_ms": "129.9",
+          "first_token_ms": "833.6",
+          "generation_ms": "4036.1",
+          "generated": "64",
+          "generation_tps": "15.857"
+        },
+        "text_sha256": "ca533101c47bd4e99c3c3e9248229c86c5e836bddfa51e711a46fa8ee6c77a2d"
+      }
+    ],
+    "children_exit": [
+      {
+        "index": "0",
+        "exit": "0"
+      },
+      {
+        "index": "1",
+        "exit": "0"
+      },
+      {
+        "index": "2",
+        "exit": "0"
+      },
+      {
+        "index": "3",
+        "exit": "0"
+      },
+      {
+        "index": "4",
+        "exit": "0"
+      },
+      {
+        "index": "5",
+        "exit": "0"
+      },
+      {
+        "index": "6",
+        "exit": "0"
+      },
+      {
+        "index": "7",
+        "exit": "0"
+      }
+    ],
+    "peak_drop_bytes": 3852218368,
+    "total_peak_accounted_bytes": 8535292608,
+    "tmpfs_peak_bytes": 2113929216,
+    "gpu_faults_total": 0,
+    "wall_s": 94.260708925
+  },
+  {
+    "case": "r06-copy_delta",
+    "run": 6,
+    "mode": "copy_delta",
+    "forks": 8,
+    "children_per_fork": 1,
+    "step": 256,
+    "paragraphs": 320,
+    "context": 32768,
+    "command": [
+      "/home/thor/kcj/stator_campaign_20261016/bin/kv_spawn_repeat_tuned5",
+      "/home/thor/kcj/llm_share/models/Qwen2.5-7B-Instruct-Q4_K_M.gguf",
+      "32768",
+      "/home/thor/kcj/llm_share/results/20261022-review-repeatfork-delta-v1/r06-copy_delta/prefix.txt",
+      "/home/thor/kcj/llm_share/results/20261022-review-repeatfork-delta-v1/r06-copy_delta/state",
+      "64",
+      "8",
+      "1",
+      "256",
+      "/home/thor/kcj/llm_share/results/20261022-review-repeatfork-delta-v1/r06-copy_delta/out",
+      "/home/thor/kcj/stator_campaign_20261016/bin/kv_fork_tuned5",
+      "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600"
+    ],
+    "environment": {
+      "GGML_CUDA_FATTN_HOST_GQA": "2",
+      "CUDA_VISIBLE_DEVICES": "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600",
+      "GGML_CUDA_HOST_PTR": "1",
+      "STATOR_TRACE": "0",
+      "LLAMA_KV_HOST": "/home/thor/kcj/llm_share/results/20261022-review-repeatfork-delta-v1/tmpfs/kv",
+      "LLAMA_KV_GROW": "256",
+      "LLAMA_KV_PUBLISH_COPY": "2",
+      "STATOR_TIMING_DIR": "/home/thor/kcj/llm_share/results/20261022-review-repeatfork-delta-v1/r06-copy_delta/timing",
+      "STATOR_REPEAT_UNLINK": "1"
+    },
+    "exit": 0,
+    "status": "ok",
+    "publishes": [
+      {
+        "fork": 1,
+        "rows": 16321,
+        "publish_ms": 81.96
+      },
+      {
+        "fork": 2,
+        "rows": 16590,
+        "publish_ms": 9.03
+      },
+      {
+        "fork": 3,
+        "rows": 16846,
+        "publish_ms": 6.3
+      },
+      {
+        "fork": 4,
+        "rows": 17102,
+        "publish_ms": 5.95
+      },
+      {
+        "fork": 5,
+        "rows": 17358,
+        "publish_ms": 6.09
+      },
+      {
+        "fork": 6,
+        "rows": 17614,
+        "publish_ms": 6.12
+      },
+      {
+        "fork": 7,
+        "rows": 17870,
+        "publish_ms": 6.67
+      },
+      {
+        "fork": 8,
+        "rows": 18126,
+        "publish_ms": 6.36
+      }
+    ],
+    "parent": {
+      "role": "parent",
+      "forks": "8",
+      "children": "8",
+      "prefix_ms": "12757.7",
+      "publish_total_ms": "128.48",
+      "parent_ms": "79008.2",
+      "total_ms": "92860.4",
+      "rows": "18382"
+    },
+    "parent_text_sha256": "ea5b439b0f9f0dbc4f323e4dc8430c741caac96e2fd29433f9b837edf55a49b7",
+    "children": [
+      {
+        "fork": 1,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "16321",
+          "suffix_tokens": "16",
+          "model_ms": "649.3",
+          "context_ms": "37.3",
+          "state_ms": "7.37",
+          "prefix_ms": "0.0",
+          "suffix_ms": "134.3",
+          "first_token_ms": "852.2",
+          "generation_ms": "3984.6",
+          "generated": "64",
+          "generation_tps": "16.062"
+        },
+        "text_sha256": "82c46914f5662c7b16675c19e332649544364baa47250dcacb03158209a84103"
+      },
+      {
+        "fork": 2,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "16590",
+          "suffix_tokens": "16",
+          "model_ms": "630.7",
+          "context_ms": "35.6",
+          "state_ms": "7.71",
+          "prefix_ms": "0.0",
+          "suffix_ms": "118.2",
+          "first_token_ms": "820.5",
+          "generation_ms": "3994.2",
+          "generated": "64",
+          "generation_tps": "16.023"
+        },
+        "text_sha256": "e27425defb9c2f4caa898e9d10a93dfc780bc87f4d79f49a62d7dd1ca7e6b298"
+      },
+      {
+        "fork": 3,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "16846",
+          "suffix_tokens": "16",
+          "model_ms": "636.2",
+          "context_ms": "36.2",
+          "state_ms": "7.41",
+          "prefix_ms": "0.0",
+          "suffix_ms": "136.2",
+          "first_token_ms": "843.7",
+          "generation_ms": "3980.9",
+          "generated": "64",
+          "generation_tps": "16.077"
+        },
+        "text_sha256": "c7833424a049b55aa807a43c55ff45b0e01369cb1dd23e149c19bbd1f67208b8"
+      },
+      {
+        "fork": 4,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "17102",
+          "suffix_tokens": "16",
+          "model_ms": "633.9",
+          "context_ms": "37.6",
+          "state_ms": "7.62",
+          "prefix_ms": "0.0",
+          "suffix_ms": "125.7",
+          "first_token_ms": "831.9",
+          "generation_ms": "3998.7",
+          "generated": "64",
+          "generation_tps": "16.005"
+        },
+        "text_sha256": "91ccb0062230d15cfde2b3c7067ec39e6dfee61daa5c01a53b3255888e93d5b2"
+      },
+      {
+        "fork": 5,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "17358",
+          "suffix_tokens": "16",
+          "model_ms": "626.9",
+          "context_ms": "36.9",
+          "state_ms": "8.04",
+          "prefix_ms": "0.0",
+          "suffix_ms": "138.3",
+          "first_token_ms": "837.6",
+          "generation_ms": "4003.9",
+          "generated": "64",
+          "generation_tps": "15.984"
+        },
+        "text_sha256": "e27425defb9c2f4caa898e9d10a93dfc780bc87f4d79f49a62d7dd1ca7e6b298"
+      },
+      {
+        "fork": 6,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "17614",
+          "suffix_tokens": "16",
+          "model_ms": "632.9",
+          "context_ms": "36.3",
+          "state_ms": "7.95",
+          "prefix_ms": "0.0",
+          "suffix_ms": "130.4",
+          "first_token_ms": "834.5",
+          "generation_ms": "4012.9",
+          "generated": "64",
+          "generation_tps": "15.949"
+        },
+        "text_sha256": "9e83d4114143736981272633ead73f7ec6daabf0283f3345e7976ef21a321db8"
+      },
+      {
+        "fork": 7,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "17870",
+          "suffix_tokens": "16",
+          "model_ms": "629.6",
+          "context_ms": "37.2",
+          "state_ms": "8.48",
+          "prefix_ms": "0.0",
+          "suffix_ms": "136.1",
+          "first_token_ms": "839.8",
+          "generation_ms": "4024.4",
+          "generated": "64",
+          "generation_tps": "15.903"
+        },
+        "text_sha256": "e27425defb9c2f4caa898e9d10a93dfc780bc87f4d79f49a62d7dd1ca7e6b298"
+      },
+      {
+        "fork": 8,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "18126",
+          "suffix_tokens": "16",
+          "model_ms": "634.5",
+          "context_ms": "36.3",
+          "state_ms": "8.30",
+          "prefix_ms": "0.0",
+          "suffix_ms": "129.7",
+          "first_token_ms": "836.6",
+          "generation_ms": "4033.4",
+          "generated": "64",
+          "generation_tps": "15.868"
+        },
+        "text_sha256": "ca533101c47bd4e99c3c3e9248229c86c5e836bddfa51e711a46fa8ee6c77a2d"
+      }
+    ],
+    "children_exit": [
+      {
+        "index": "0",
+        "exit": "0"
+      },
+      {
+        "index": "1",
+        "exit": "0"
+      },
+      {
+        "index": "2",
+        "exit": "0"
+      },
+      {
+        "index": "3",
+        "exit": "0"
+      },
+      {
+        "index": "4",
+        "exit": "0"
+      },
+      {
+        "index": "5",
+        "exit": "0"
+      },
+      {
+        "index": "6",
+        "exit": "0"
+      },
+      {
+        "index": "7",
+        "exit": "0"
+      }
+    ],
+    "peak_drop_bytes": 3707342848,
+    "total_peak_accounted_bytes": 8390417088,
+    "tmpfs_peak_bytes": 1056964608,
+    "gpu_faults_total": 0,
+    "wall_s": 93.518364986
+  },
+  {
+    "case": "r06-extent",
+    "run": 6,
+    "mode": "extent",
+    "forks": 8,
+    "children_per_fork": 1,
+    "step": 256,
+    "paragraphs": 320,
+    "context": 32768,
+    "command": [
+      "/home/thor/kcj/stator_campaign_20261016/bin/kv_spawn_repeat_tuned5",
+      "/home/thor/kcj/llm_share/models/Qwen2.5-7B-Instruct-Q4_K_M.gguf",
+      "32768",
+      "/home/thor/kcj/llm_share/results/20261022-review-repeatfork-delta-v1/r06-extent/prefix.txt",
+      "/home/thor/kcj/llm_share/results/20261022-review-repeatfork-delta-v1/r06-extent/state",
+      "64",
+      "8",
+      "1",
+      "256",
+      "/home/thor/kcj/llm_share/results/20261022-review-repeatfork-delta-v1/r06-extent/out",
+      "/home/thor/kcj/stator_campaign_20261016/bin/kv_fork_tuned5",
+      "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600"
+    ],
+    "environment": {
+      "GGML_CUDA_FATTN_HOST_GQA": "2",
+      "CUDA_VISIBLE_DEVICES": "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600",
+      "GGML_CUDA_HOST_PTR": "1",
+      "STATOR_TRACE": "0",
+      "LLAMA_KV_HOST": "/home/thor/kcj/llm_share/results/20261022-review-repeatfork-delta-v1/tmpfs/kv",
+      "LLAMA_KV_GROW": "256",
+      "STATOR_TIMING_DIR": "/home/thor/kcj/llm_share/results/20261022-review-repeatfork-delta-v1/r06-extent/timing",
+      "STATOR_REPEAT_UNLINK": "1"
+    },
+    "exit": 0,
+    "status": "ok",
+    "publishes": [
+      {
+        "fork": 1,
+        "rows": 16321,
+        "publish_ms": 12.25
+      },
+      {
+        "fork": 2,
+        "rows": 16590,
+        "publish_ms": 8.88
+      },
+      {
+        "fork": 3,
+        "rows": 16846,
+        "publish_ms": 8.76
+      },
+      {
+        "fork": 4,
+        "rows": 17102,
+        "publish_ms": 8.67
+      },
+      {
+        "fork": 5,
+        "rows": 17358,
+        "publish_ms": 8.86
+      },
+      {
+        "fork": 6,
+        "rows": 17614,
+        "publish_ms": 8.9
+      },
+      {
+        "fork": 7,
+        "rows": 17870,
+        "publish_ms": 8.82
+      },
+      {
+        "fork": 8,
+        "rows": 18126,
+        "publish_ms": 9.24
+      }
+    ],
+    "parent": {
+      "role": "parent",
+      "forks": "8",
+      "children": "8",
+      "prefix_ms": "12661.3",
+      "publish_total_ms": "74.39",
+      "parent_ms": "79079.9",
+      "total_ms": "92843.9",
+      "rows": "18382"
+    },
+    "parent_text_sha256": "ea5b439b0f9f0dbc4f323e4dc8430c741caac96e2fd29433f9b837edf55a49b7",
+    "children": [
+      {
+        "fork": 1,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "16321",
+          "suffix_tokens": "16",
+          "model_ms": "645.6",
+          "context_ms": "37.0",
+          "state_ms": "7.27",
+          "prefix_ms": "0.0",
+          "suffix_ms": "138.3",
+          "first_token_ms": "852.6",
+          "generation_ms": "3988.3",
+          "generated": "64",
+          "generation_tps": "16.047"
+        },
+        "text_sha256": "82c46914f5662c7b16675c19e332649544364baa47250dcacb03158209a84103"
+      },
+      {
+        "fork": 2,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "16590",
+          "suffix_tokens": "16",
+          "model_ms": "636.3",
+          "context_ms": "38.6",
+          "state_ms": "7.52",
+          "prefix_ms": "0.0",
+          "suffix_ms": "134.8",
+          "first_token_ms": "843.1",
+          "generation_ms": "3977.0",
+          "generated": "64",
+          "generation_tps": "16.093"
+        },
+        "text_sha256": "e27425defb9c2f4caa898e9d10a93dfc780bc87f4d79f49a62d7dd1ca7e6b298"
+      },
+      {
+        "fork": 3,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "16846",
+          "suffix_tokens": "16",
+          "model_ms": "639.5",
+          "context_ms": "37.0",
+          "state_ms": "7.66",
+          "prefix_ms": "0.0",
+          "suffix_ms": "135.7",
+          "first_token_ms": "846.4",
+          "generation_ms": "3979.9",
+          "generated": "64",
+          "generation_tps": "16.081"
+        },
+        "text_sha256": "c7833424a049b55aa807a43c55ff45b0e01369cb1dd23e149c19bbd1f67208b8"
+      },
+      {
+        "fork": 4,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "17102",
+          "suffix_tokens": "16",
+          "model_ms": "635.1",
+          "context_ms": "36.5",
+          "state_ms": "7.84",
+          "prefix_ms": "0.0",
+          "suffix_ms": "126.8",
+          "first_token_ms": "832.8",
+          "generation_ms": "3995.6",
+          "generated": "64",
+          "generation_tps": "16.018"
+        },
+        "text_sha256": "91ccb0062230d15cfde2b3c7067ec39e6dfee61daa5c01a53b3255888e93d5b2"
+      },
+      {
+        "fork": 5,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "17358",
+          "suffix_tokens": "16",
+          "model_ms": "628.0",
+          "context_ms": "38.4",
+          "state_ms": "8.04",
+          "prefix_ms": "0.0",
+          "suffix_ms": "130.9",
+          "first_token_ms": "831.9",
+          "generation_ms": "4007.5",
+          "generated": "64",
+          "generation_tps": "15.970"
+        },
+        "text_sha256": "e27425defb9c2f4caa898e9d10a93dfc780bc87f4d79f49a62d7dd1ca7e6b298"
+      },
+      {
+        "fork": 6,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "17614",
+          "suffix_tokens": "16",
+          "model_ms": "631.2",
+          "context_ms": "37.3",
+          "state_ms": "7.79",
+          "prefix_ms": "0.0",
+          "suffix_ms": "131.0",
+          "first_token_ms": "834.5",
+          "generation_ms": "4014.9",
+          "generated": "64",
+          "generation_tps": "15.941"
+        },
+        "text_sha256": "9e83d4114143736981272633ead73f7ec6daabf0283f3345e7976ef21a321db8"
+      },
+      {
+        "fork": 7,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "17870",
+          "suffix_tokens": "16",
+          "model_ms": "634.2",
+          "context_ms": "37.6",
+          "state_ms": "8.10",
+          "prefix_ms": "0.0",
+          "suffix_ms": "132.6",
+          "first_token_ms": "839.4",
+          "generation_ms": "4018.7",
+          "generated": "64",
+          "generation_tps": "15.926"
+        },
+        "text_sha256": "e27425defb9c2f4caa898e9d10a93dfc780bc87f4d79f49a62d7dd1ca7e6b298"
+      },
+      {
+        "fork": 8,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "18126",
+          "suffix_tokens": "16",
+          "model_ms": "639.1",
+          "context_ms": "36.3",
+          "state_ms": "8.09",
+          "prefix_ms": "0.0",
+          "suffix_ms": "128.9",
+          "first_token_ms": "840.8",
+          "generation_ms": "4030.0",
+          "generated": "64",
+          "generation_tps": "15.881"
+        },
+        "text_sha256": "ca533101c47bd4e99c3c3e9248229c86c5e836bddfa51e711a46fa8ee6c77a2d"
+      }
+    ],
+    "children_exit": [
+      {
+        "index": "0",
+        "exit": "0"
+      },
+      {
+        "index": "1",
+        "exit": "0"
+      },
+      {
+        "index": "2",
+        "exit": "0"
+      },
+      {
+        "index": "3",
+        "exit": "0"
+      },
+      {
+        "index": "4",
+        "exit": "0"
+      },
+      {
+        "index": "5",
+        "exit": "0"
+      },
+      {
+        "index": "6",
+        "exit": "0"
+      },
+      {
+        "index": "7",
+        "exit": "0"
+      }
+    ],
+    "peak_drop_bytes": 2706948096,
+    "total_peak_accounted_bytes": 7390022336,
+    "tmpfs_peak_bytes": 1056964608,
+    "gpu_faults_total": 0,
+    "wall_s": 93.436865474
+  },
+  {
+    "case": "r06-copy",
+    "run": 6,
+    "mode": "copy",
+    "forks": 8,
+    "children_per_fork": 1,
+    "step": 256,
+    "paragraphs": 320,
+    "context": 32768,
+    "command": [
+      "/home/thor/kcj/stator_campaign_20261016/bin/kv_spawn_repeat_tuned5",
+      "/home/thor/kcj/llm_share/models/Qwen2.5-7B-Instruct-Q4_K_M.gguf",
+      "32768",
+      "/home/thor/kcj/llm_share/results/20261022-review-repeatfork-delta-v1/r06-copy/prefix.txt",
+      "/home/thor/kcj/llm_share/results/20261022-review-repeatfork-delta-v1/r06-copy/state",
+      "64",
+      "8",
+      "1",
+      "256",
+      "/home/thor/kcj/llm_share/results/20261022-review-repeatfork-delta-v1/r06-copy/out",
+      "/home/thor/kcj/stator_campaign_20261016/bin/kv_fork_tuned5",
+      "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600"
+    ],
+    "environment": {
+      "GGML_CUDA_FATTN_HOST_GQA": "2",
+      "CUDA_VISIBLE_DEVICES": "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600",
+      "GGML_CUDA_HOST_PTR": "1",
+      "STATOR_TRACE": "0",
+      "STATOR_TIMING_DIR": "/home/thor/kcj/llm_share/results/20261022-review-repeatfork-delta-v1/r06-copy/timing",
+      "STATOR_REPEAT_UNLINK": "1"
+    },
+    "exit": 0,
+    "status": "ok",
+    "publishes": [
+      {
+        "fork": 1,
+        "rows": 16321,
+        "publish_ms": 575.69
+      },
+      {
+        "fork": 2,
+        "rows": 16590,
+        "publish_ms": 567.91
+      },
+      {
+        "fork": 3,
+        "rows": 16846,
+        "publish_ms": 584.7
+      },
+      {
+        "fork": 4,
+        "rows": 17102,
+        "publish_ms": 597.24
+      },
+      {
+        "fork": 5,
+        "rows": 17358,
+        "publish_ms": 613.92
+      },
+      {
+        "fork": 6,
+        "rows": 17614,
+        "publish_ms": 613.8
+      },
+      {
+        "fork": 7,
+        "rows": 17870,
+        "publish_ms": 623.55
+      },
+      {
+        "fork": 8,
+        "rows": 18126,
+        "publish_ms": 636.08
+      }
+    ],
+    "parent": {
+      "role": "parent",
+      "forks": "8",
+      "children": "8",
+      "prefix_ms": "12590.7",
+      "publish_total_ms": "4812.88",
+      "parent_ms": "85228.4",
+      "total_ms": "98935.9",
+      "rows": "18382"
+    },
+    "parent_text_sha256": "ea5b439b0f9f0dbc4f323e4dc8430c741caac96e2fd29433f9b837edf55a49b7",
+    "children": [
+      {
+        "fork": 1,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "16321",
+          "suffix_tokens": "16",
+          "model_ms": "724.7",
+          "context_ms": "69.9",
+          "state_ms": "280.93",
+          "prefix_ms": "0.0",
+          "suffix_ms": "148.3",
+          "first_token_ms": "1253.5",
+          "generation_ms": "4054.9",
+          "generated": "64",
+          "generation_tps": "15.784"
+        },
+        "text_sha256": "82c46914f5662c7b16675c19e332649544364baa47250dcacb03158209a84103"
+      },
+      {
+        "fork": 2,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "16590",
+          "suffix_tokens": "16",
+          "model_ms": "657.4",
+          "context_ms": "70.1",
+          "state_ms": "284.04",
+          "prefix_ms": "0.0",
+          "suffix_ms": "147.9",
+          "first_token_ms": "1185.9",
+          "generation_ms": "4064.4",
+          "generated": "64",
+          "generation_tps": "15.746"
+        },
+        "text_sha256": "e27425defb9c2f4caa898e9d10a93dfc780bc87f4d79f49a62d7dd1ca7e6b298"
+      },
+      {
+        "fork": 3,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "16846",
+          "suffix_tokens": "16",
+          "model_ms": "651.8",
+          "context_ms": "70.0",
+          "state_ms": "278.60",
+          "prefix_ms": "0.0",
+          "suffix_ms": "143.6",
+          "first_token_ms": "1171.8",
+          "generation_ms": "4074.4",
+          "generated": "64",
+          "generation_tps": "15.708"
+        },
+        "text_sha256": "c7833424a049b55aa807a43c55ff45b0e01369cb1dd23e149c19bbd1f67208b8"
+      },
+      {
+        "fork": 4,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "17102",
+          "suffix_tokens": "16",
+          "model_ms": "661.9",
+          "context_ms": "71.1",
+          "state_ms": "288.45",
+          "prefix_ms": "0.0",
+          "suffix_ms": "128.4",
+          "first_token_ms": "1176.0",
+          "generation_ms": "4097.5",
+          "generated": "64",
+          "generation_tps": "15.619"
+        },
+        "text_sha256": "91ccb0062230d15cfde2b3c7067ec39e6dfee61daa5c01a53b3255888e93d5b2"
+      },
+      {
+        "fork": 5,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "17358",
+          "suffix_tokens": "16",
+          "model_ms": "641.7",
+          "context_ms": "61.4",
+          "state_ms": "290.61",
+          "prefix_ms": "0.0",
+          "suffix_ms": "132.2",
+          "first_token_ms": "1152.1",
+          "generation_ms": "4084.8",
+          "generated": "64",
+          "generation_tps": "15.668"
+        },
+        "text_sha256": "e27425defb9c2f4caa898e9d10a93dfc780bc87f4d79f49a62d7dd1ca7e6b298"
+      },
+      {
+        "fork": 6,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "17614",
+          "suffix_tokens": "16",
+          "model_ms": "715.3",
+          "context_ms": "70.2",
+          "state_ms": "280.85",
+          "prefix_ms": "0.0",
+          "suffix_ms": "142.2",
+          "first_token_ms": "1236.5",
+          "generation_ms": "4104.5",
+          "generated": "64",
+          "generation_tps": "15.593"
+        },
+        "text_sha256": "9e83d4114143736981272633ead73f7ec6daabf0283f3345e7976ef21a321db8"
+      },
+      {
+        "fork": 7,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "17870",
+          "suffix_tokens": "16",
+          "model_ms": "666.0",
+          "context_ms": "69.8",
+          "state_ms": "286.31",
+          "prefix_ms": "0.0",
+          "suffix_ms": "140.5",
+          "first_token_ms": "1188.6",
+          "generation_ms": "4110.4",
+          "generated": "64",
+          "generation_tps": "15.570"
+        },
+        "text_sha256": "e27425defb9c2f4caa898e9d10a93dfc780bc87f4d79f49a62d7dd1ca7e6b298"
+      },
+      {
+        "fork": 8,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "18126",
+          "suffix_tokens": "16",
+          "model_ms": "731.1",
+          "context_ms": "65.9",
+          "state_ms": "282.76",
+          "prefix_ms": "0.0",
+          "suffix_ms": "142.5",
+          "first_token_ms": "1251.0",
+          "generation_ms": "4120.8",
+          "generated": "64",
+          "generation_tps": "15.531"
+        },
+        "text_sha256": "ca533101c47bd4e99c3c3e9248229c86c5e836bddfa51e711a46fa8ee6c77a2d"
+      }
+    ],
+    "children_exit": [
+      {
+        "index": "0",
+        "exit": "0"
+      },
+      {
+        "index": "1",
+        "exit": "0"
+      },
+      {
+        "index": "2",
+        "exit": "0"
+      },
+      {
+        "index": "3",
+        "exit": "0"
+      },
+      {
+        "index": "4",
+        "exit": "0"
+      },
+      {
+        "index": "5",
+        "exit": "0"
+      },
+      {
+        "index": "6",
+        "exit": "0"
+      },
+      {
+        "index": "7",
+        "exit": "0"
+      }
+    ],
+    "peak_drop_bytes": 9209442304,
+    "total_peak_accounted_bytes": 13892516544,
+    "tmpfs_peak_bytes": 0,
+    "gpu_faults_total": 0,
+    "wall_s": 99.522285402
+  }
+]

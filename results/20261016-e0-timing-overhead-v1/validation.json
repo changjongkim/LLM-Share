@@ -1,0 +1,93 @@
+{
+  "case_count": 24,
+  "expected_cases": 24,
+  "text_comparisons_including_reference": 48,
+  "errors": [],
+  "valid": true,
+  "instrumentation_controls": [
+    {
+      "run": 1,
+      "mode": "copy",
+      "children": 1,
+      "paragraphs": 80,
+      "on_off_generation_time": 0.9952351730859472
+    },
+    {
+      "run": 1,
+      "mode": "extent",
+      "children": 1,
+      "paragraphs": 80,
+      "on_off_generation_time": 0.9816520019098289
+    },
+    {
+      "run": 2,
+      "mode": "extent",
+      "children": 1,
+      "paragraphs": 80,
+      "on_off_generation_time": 1.0195091252359976
+    },
+    {
+      "run": 2,
+      "mode": "copy",
+      "children": 1,
+      "paragraphs": 80,
+      "on_off_generation_time": 0.9965898784690731
+    },
+    {
+      "run": 3,
+      "mode": "copy",
+      "children": 1,
+      "paragraphs": 80,
+      "on_off_generation_time": 1.0034610994513788
+    },
+    {
+      "run": 3,
+      "mode": "extent",
+      "children": 1,
+      "paragraphs": 80,
+      "on_off_generation_time": 1.0310211267605633
+    },
+    {
+      "run": 4,
+      "mode": "extent",
+      "children": 1,
+      "paragraphs": 80,
+      "on_off_generation_time": 0.9968600056449336
+    },
+    {
+      "run": 4,
+      "mode": "copy",
+      "children": 1,
+      "paragraphs": 80,
+      "on_off_generation_time": 0.9742832444892666
+    },
+    {
+      "run": 5,
+      "mode": "copy",
+      "children": 1,
+      "paragraphs": 80,
+      "on_off_generation_time": 1.0399562742658977
+    },
+    {
+      "run": 5,
+      "mode": "extent",
+      "children": 1,
+      "paragraphs": 80,
+      "on_off_generation_time": 0.9819250350223803
+    },
+    {
+      "run": 6,
+      "mode": "extent",
+      "children": 1,
+      "paragraphs": 80,
+      "on_off_generation_time": 1.0
+    },
+    {
+      "run": 6,
+      "mode": "copy",
+      "children": 1,
+      "paragraphs": 80,
+      "on_off_generation_time": 0.9764057331863286
+    }
+  ]
+}

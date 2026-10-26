@@ -1,0 +1,7 @@
+model,kind,device_ms,host_ms,host_vs_device
+Phi-3.5-mini-instruct-Q4_K_M.gguf,attn_vec,0.0,0.0,0.0000
+Phi-3.5-mini-instruct-Q4_K_M.gguf,attn_other,26146.7,26127.2,0.9993
+Phi-3.5-mini-instruct-Q4_K_M.gguf,matvec,5723.2,5695.2,0.9951
+Phi-3.5-mini-instruct-Q4_K_M.gguf,matmul,5641.2,5655.4,1.0025
+Phi-3.5-mini-instruct-Q4_K_M.gguf,other,1223.4,1188.2,0.9712
+Phi-3.5-mini-instruct-Q4_K_M.gguf,all,38734.5,38666.0,0.9982

@@ -1,0 +1,24 @@
+systems=['both', 'weights', 'none']
+rates=[0.21]
+window_s=120.0
+limit_s=420.0
+seed=1
+n_gen=32
+context=16384
+mix=[0.2, 0.6, 0.2]
+tool_mean_s=120.0
+tool_min_s=10.0
+tool_max_s=300.0
+fork_k=3
+reserve_gib=16.0
+guard_gib=12.0
+estimate={'none': 6400.0, 'weights': 1800.0, 'both': 850.0}
+tmpfs_mib=16384
+model=Qwen2.5-7B-Instruct-Q4_K_M.gguf
+prefix_file=agent_prefix.txt
+mem_total_mib=125748
+776821004d8ae1bfed6d38fb85215c1ec359ccf2946d985133e8324d3c444df7  /home/thor/kcj/llm_share/kv_agent2
+950ee53a1631a54edcbd1023e255904f92823de4250dabaf973eb55684bb67e2  /home/thor/kcj/llm_share/kv_agent_stock
+a123574b855c5c32fcc2dd3cc13b403f5759e015994dd9d4532bde42f841826d  /home/thor/kcj/llm_share/llama.cpp-chain2/build/bin/libllama.so
+8ec5331dd6e132ca81e0227677cc99606c3b4c55d1f9e2d4ac1d51011f2897b2  /home/thor/kcj/llm_share/run_engine_kvdynamic.py
+boot_id=f9776703-a137-43bc-822b-124c6147ff68

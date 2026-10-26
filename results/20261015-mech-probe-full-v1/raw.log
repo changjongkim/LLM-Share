@@ -1,0 +1,424 @@
+BEGIN_RUN run=1 traced=0
+CASE mech=private access=cpu variant=all traced=0
+STEP mech=private step=read access=cpu seconds=0.1764 right=1 anon_mib=0.0 dirty_mib=156.0 minor=24523 major=0 gpu_fault_pages=0 gpu_fault_ms=0
+STEP mech=private step=write access=cpu seconds=3.2034 right=1 anon_mib=1025.6 dirty_mib=869.6 minor=262144 major=0 gpu_fault_pages=0 gpu_fault_ms=0
+END_CASE status=0
+CASE mech=private access=gpu variant=all traced=0
+STEP mech=private step=read access=gpu seconds=0.7030 right=1 anon_mib=1024.1 dirty_mib=1024.1 minor=21 major=0 gpu_fault_pages=1358808 gpu_fault_ms=650
+STEP mech=private step=write access=gpu seconds=0.0011 right=1 anon_mib=0.0 dirty_mib=0.0 minor=4 major=0 gpu_fault_pages=0 gpu_fault_ms=0
+END_CASE status=0
+CASE mech=shared access=cpu variant=all traced=0
+
+END_CASE status=1
+CASE mech=shared access=gpu variant=all traced=0
+
+END_CASE status=1
+CASE mech=fork access=cpu variant=all traced=0
+STEP mech=fork step=read access=cpu seconds=0.0522 right=1 anon_mib=0.0 dirty_mib=0.0 minor=4 major=0 gpu_fault_pages=0 gpu_fault_ms=0
+STEP mech=fork step=write access=cpu seconds=3.3466 right=1 anon_mib=0.0 dirty_mib=1024.0 minor=262144 major=0 gpu_fault_pages=0 gpu_fault_ms=0
+END_CASE status=0
+CASE mech=fork access=gpu variant=all traced=0
+STEP mech=fork step=read access=gpu seconds=3.2712 right=1 anon_mib=0.1 dirty_mib=1016.1 minor=21 major=0 gpu_fault_pages=524288 gpu_fault_ms=3220
+STEP mech=fork step=write access=gpu seconds=0.0259 right=1 anon_mib=0.0 dirty_mib=8.0 minor=4 major=0 gpu_fault_pages=7168 gpu_fault_ms=40
+END_CASE status=0
+CASE mech=ksm access=cpu variant=all traced=0
+MERGE merged_pages=262144 of=262144 merge_s=7.51
+KSMSTEP access=cpu merged_before=262144 read_s=0.0934 right=1 merged_after_read=262144 read_minor=4 read_gpu_fault_pages=0 write_s=3.6256 merged_after_write=0 write_minor=262144 write_gpu_fault_pages=0
+END_CASE status=0
+CASE mech=ksm access=gpu variant=all traced=0
+MERGE merged_pages=260173 of=262144 merge_s=7.61
+KSMSTEP access=gpu merged_before=262144 read_s=0.0197 right=1 merged_after_read=262144 read_minor=25 read_gpu_fault_pages=0 write_s=9.3998 merged_after_write=0 write_minor=5 write_gpu_fault_pages=1005568
+END_CASE status=0
+CASE mech=reclaim access=cpu variant=none-none traced=0
+RECLAIM access=cpu pin=none passes=366 seconds=20.009 pass_ms=54.67 right=1 minor=0 major=0 gpu_fault_pages=0 gpu_fault_ms=0 lock_s=0.0000 hot_resident=1.0000 cold_resident=1.0000 pressure=none reclaim_attempts=0 reclaim_succeeded=0 reclaim_write_ms=0 reclaim_write_max_ms=0 memcg_before_mib=2098 memcg_after_mib=2098
+END_CASE status=0
+CASE mech=reclaim access=gpu variant=none-none traced=0
+RECLAIM access=gpu pin=none passes=3704 seconds=20.000 pass_ms=5.40 right=1 minor=0 major=0 gpu_fault_pages=0 gpu_fault_ms=0 lock_s=0.0000 hot_resident=1.0000 cold_resident=1.0000 pressure=none reclaim_attempts=0 reclaim_succeeded=0 reclaim_write_ms=0 reclaim_write_max_ms=0 memcg_before_mib=2097 memcg_after_mib=2097
+END_CASE status=0
+CASE mech=reclaim access=gpu variant=lock-none traced=0
+RECLAIM access=gpu pin=lock passes=3685 seconds=20.001 pass_ms=5.43 right=1 minor=0 major=0 gpu_fault_pages=0 gpu_fault_ms=0 lock_s=0.1195 hot_resident=1.0000 cold_resident=1.0000 pressure=none reclaim_attempts=0 reclaim_succeeded=0 reclaim_write_ms=0 reclaim_write_max_ms=0 memcg_before_mib=2098 memcg_after_mib=2098
+END_CASE status=0
+CASE mech=reclaim access=gpu variant=memfs-none traced=0
+RECLAIM access=gpu pin=none passes=4242 seconds=20.001 pass_ms=4.71 right=1 minor=0 major=0 gpu_fault_pages=0 gpu_fault_ms=0 lock_s=0.0000 hot_resident=1.0000 cold_resident=1.0000 pressure=none reclaim_attempts=0 reclaim_succeeded=0 reclaim_write_ms=0 reclaim_write_max_ms=0 memcg_before_mib=1070 memcg_after_mib=1070
+END_CASE status=0
+CASE mech=reclaim access=cpu variant=none-pressure traced=0
+RECLAIM access=cpu pin=none passes=365 seconds=20.024 pass_ms=54.86 right=1 minor=0 major=1 gpu_fault_pages=0 gpu_fault_ms=0 lock_s=0.0000 hot_resident=1.0000 cold_resident=0.0011 pressure=pressure reclaim_attempts=4 reclaim_succeeded=4 reclaim_write_ms=17020 reclaim_write_max_ms=13508 memcg_before_mib=2099 memcg_after_mib=2099
+END_CASE status=0
+CASE mech=reclaim access=gpu variant=none-pressure traced=0
+RECLAIM access=gpu pin=none passes=1962 seconds=20.009 pass_ms=10.20 right=1 minor=0 major=0 gpu_fault_pages=10756096 gpu_fault_ms=7820 lock_s=0.0000 hot_resident=1.0000 cold_resident=0.0130 pressure=pressure reclaim_attempts=4 reclaim_succeeded=4 reclaim_write_ms=17002 reclaim_write_max_ms=7351 memcg_before_mib=2096 memcg_after_mib=2096
+END_CASE status=0
+CASE mech=reclaim access=gpu variant=lock-pressure traced=0
+RECLAIM access=gpu pin=lock passes=3500 seconds=20.003 pass_ms=5.72 right=1 minor=0 major=0 gpu_fault_pages=0 gpu_fault_ms=0 lock_s=0.1194 hot_resident=1.0000 cold_resident=0.0000 pressure=pressure reclaim_attempts=6 reclaim_succeeded=3 reclaim_write_ms=6541 reclaim_write_max_ms=4034 memcg_before_mib=2098 memcg_after_mib=1074
+END_CASE status=0
+CASE mech=reclaim access=gpu variant=memfs-pressure traced=0
+RECLAIM access=gpu pin=none passes=4189 seconds=20.001 pass_ms=4.77 right=1 minor=0 major=0 gpu_fault_pages=0 gpu_fault_ms=0 lock_s=0.0000 hot_resident=1.0000 cold_resident=0.0000 pressure=pressure reclaim_attempts=6 reclaim_succeeded=3 reclaim_write_ms=6783 reclaim_write_max_ms=4191 memcg_before_mib=1070 memcg_after_mib=44
+END_CASE status=0
+END_RUN
+BEGIN_RUN run=2 traced=0
+CASE mech=reclaim access=gpu variant=memfs-pressure traced=0
+RECLAIM access=gpu pin=none passes=4195 seconds=20.000 pass_ms=4.77 right=1 minor=0 major=0 gpu_fault_pages=0 gpu_fault_ms=0 lock_s=0.0000 hot_resident=1.0000 cold_resident=0.0000 pressure=pressure reclaim_attempts=6 reclaim_succeeded=3 reclaim_write_ms=6768 reclaim_write_max_ms=4191 memcg_before_mib=1070 memcg_after_mib=44
+END_CASE status=0
+CASE mech=reclaim access=gpu variant=lock-pressure traced=0
+RECLAIM access=gpu pin=lock passes=3547 seconds=20.001 pass_ms=5.64 right=1 minor=0 major=0 gpu_fault_pages=0 gpu_fault_ms=0 lock_s=0.1201 hot_resident=1.0000 cold_resident=0.0000 pressure=pressure reclaim_attempts=6 reclaim_succeeded=3 reclaim_write_ms=6601 reclaim_write_max_ms=4079 memcg_before_mib=2099 memcg_after_mib=1074
+END_CASE status=0
+CASE mech=reclaim access=gpu variant=none-pressure traced=0
+RECLAIM access=gpu pin=none passes=2011 seconds=20.021 pass_ms=9.96 right=1 minor=2 major=0 gpu_fault_pages=10841088 gpu_fault_ms=7810 lock_s=0.0000 hot_resident=1.0000 cold_resident=0.0134 pressure=pressure reclaim_attempts=4 reclaim_succeeded=4 reclaim_write_ms=16978 reclaim_write_max_ms=7343 memcg_before_mib=2097 memcg_after_mib=2097
+END_CASE status=0
+CASE mech=reclaim access=cpu variant=none-pressure traced=0
+RECLAIM access=cpu pin=none passes=366 seconds=20.044 pass_ms=54.76 right=1 minor=0 major=1 gpu_fault_pages=0 gpu_fault_ms=0 lock_s=0.0000 hot_resident=1.0000 cold_resident=0.0009 pressure=pressure reclaim_attempts=4 reclaim_succeeded=4 reclaim_write_ms=17023 reclaim_write_max_ms=13537 memcg_before_mib=2099 memcg_after_mib=2099
+END_CASE status=0
+CASE mech=reclaim access=gpu variant=memfs-none traced=0
+RECLAIM access=gpu pin=none passes=4221 seconds=20.001 pass_ms=4.74 right=1 minor=0 major=0 gpu_fault_pages=0 gpu_fault_ms=0 lock_s=0.0000 hot_resident=1.0000 cold_resident=1.0000 pressure=none reclaim_attempts=0 reclaim_succeeded=0 reclaim_write_ms=0 reclaim_write_max_ms=0 memcg_before_mib=1070 memcg_after_mib=1070
+END_CASE status=0
+CASE mech=reclaim access=gpu variant=lock-none traced=0
+RECLAIM access=gpu pin=lock passes=3718 seconds=20.000 pass_ms=5.38 right=1 minor=0 major=0 gpu_fault_pages=0 gpu_fault_ms=0 lock_s=0.1209 hot_resident=1.0000 cold_resident=1.0000 pressure=none reclaim_attempts=0 reclaim_succeeded=0 reclaim_write_ms=0 reclaim_write_max_ms=0 memcg_before_mib=2098 memcg_after_mib=2098
+END_CASE status=0
+CASE mech=reclaim access=gpu variant=none-none traced=0
+RECLAIM access=gpu pin=none passes=3688 seconds=20.000 pass_ms=5.42 right=1 minor=2 major=0 gpu_fault_pages=0 gpu_fault_ms=0 lock_s=0.0000 hot_resident=1.0000 cold_resident=1.0000 pressure=none reclaim_attempts=0 reclaim_succeeded=0 reclaim_write_ms=0 reclaim_write_max_ms=0 memcg_before_mib=2097 memcg_after_mib=2097
+END_CASE status=0
+CASE mech=reclaim access=cpu variant=none-none traced=0
+RECLAIM access=cpu pin=none passes=365 seconds=20.001 pass_ms=54.80 right=1 minor=0 major=0 gpu_fault_pages=0 gpu_fault_ms=0 lock_s=0.0000 hot_resident=1.0000 cold_resident=1.0000 pressure=none reclaim_attempts=0 reclaim_succeeded=0 reclaim_write_ms=0 reclaim_write_max_ms=0 memcg_before_mib=2099 memcg_after_mib=2099
+END_CASE status=0
+CASE mech=ksm access=gpu variant=all traced=0
+MERGE merged_pages=260606 of=262144 merge_s=7.62
+KSMSTEP access=gpu merged_before=262144 read_s=0.0197 right=1 merged_after_read=262144 read_minor=25 read_gpu_fault_pages=0 write_s=9.3907 merged_after_write=0 write_minor=4 write_gpu_fault_pages=998400
+END_CASE status=0
+CASE mech=ksm access=cpu variant=all traced=0
+MERGE merged_pages=259732 of=262144 merge_s=7.31
+KSMSTEP access=cpu merged_before=262144 read_s=0.0866 right=1 merged_after_read=262144 read_minor=4 read_gpu_fault_pages=0 write_s=3.5777 merged_after_write=0 write_minor=262144 write_gpu_fault_pages=0
+END_CASE status=0
+CASE mech=fork access=gpu variant=all traced=0
+STEP mech=fork step=read access=gpu seconds=3.2917 right=1 anon_mib=0.1 dirty_mib=1018.1 minor=21 major=0 gpu_fault_pages=522240 gpu_fault_ms=3240
+STEP mech=fork step=write access=gpu seconds=0.0205 right=1 anon_mib=0.0 dirty_mib=6.0 minor=4 major=0 gpu_fault_pages=3072 gpu_fault_ms=20
+END_CASE status=0
+CASE mech=fork access=cpu variant=all traced=0
+STEP mech=fork step=read access=cpu seconds=0.0523 right=1 anon_mib=0.0 dirty_mib=0.0 minor=4 major=0 gpu_fault_pages=0 gpu_fault_ms=0
+STEP mech=fork step=write access=cpu seconds=3.1595 right=1 anon_mib=0.0 dirty_mib=1024.0 minor=262144 major=0 gpu_fault_pages=0 gpu_fault_ms=0
+END_CASE status=0
+CASE mech=shared access=gpu variant=all traced=0
+
+END_CASE status=1
+CASE mech=shared access=cpu variant=all traced=0
+
+END_CASE status=1
+CASE mech=private access=gpu variant=all traced=0
+STEP mech=private step=read access=gpu seconds=0.7022 right=1 anon_mib=1024.1 dirty_mib=1024.1 minor=21 major=0 gpu_fault_pages=1316386 gpu_fault_ms=660
+STEP mech=private step=write access=gpu seconds=0.0009 right=1 anon_mib=0.0 dirty_mib=0.0 minor=4 major=0 gpu_fault_pages=0 gpu_fault_ms=0
+END_CASE status=0
+CASE mech=private access=cpu variant=all traced=0
+STEP mech=private step=read access=cpu seconds=0.1169 right=1 anon_mib=0.0 dirty_mib=0.0 minor=16388 major=0 gpu_fault_pages=0 gpu_fault_ms=0
+STEP mech=private step=write access=cpu seconds=3.2317 right=1 anon_mib=1024.0 dirty_mib=1024.0 minor=262144 major=0 gpu_fault_pages=0 gpu_fault_ms=0
+END_CASE status=0
+END_RUN
+BEGIN_RUN run=3 traced=0
+CASE mech=private access=cpu variant=all traced=0
+STEP mech=private step=read access=cpu seconds=0.1169 right=1 anon_mib=0.0 dirty_mib=0.0 minor=16388 major=0 gpu_fault_pages=0 gpu_fault_ms=0
+STEP mech=private step=write access=cpu seconds=3.4826 right=1 anon_mib=1024.0 dirty_mib=1024.0 minor=262144 major=0 gpu_fault_pages=0 gpu_fault_ms=0
+END_CASE status=0
+CASE mech=private access=gpu variant=all traced=0
+STEP mech=private step=read access=gpu seconds=0.6695 right=1 anon_mib=1024.1 dirty_mib=1024.1 minor=21 major=0 gpu_fault_pages=1332770 gpu_fault_ms=650
+STEP mech=private step=write access=gpu seconds=0.0011 right=1 anon_mib=0.0 dirty_mib=0.0 minor=4 major=0 gpu_fault_pages=0 gpu_fault_ms=0
+END_CASE status=0
+CASE mech=shared access=cpu variant=all traced=0
+
+END_CASE status=1
+CASE mech=shared access=gpu variant=all traced=0
+
+END_CASE status=1
+CASE mech=fork access=cpu variant=all traced=0
+STEP mech=fork step=read access=cpu seconds=0.0523 right=1 anon_mib=0.0 dirty_mib=0.0 minor=4 major=0 gpu_fault_pages=0 gpu_fault_ms=0
+STEP mech=fork step=write access=cpu seconds=3.3873 right=1 anon_mib=0.0 dirty_mib=1024.0 minor=262144 major=0 gpu_fault_pages=0 gpu_fault_ms=0
+END_CASE status=0
+CASE mech=fork access=gpu variant=all traced=0
+STEP mech=fork step=read access=gpu seconds=3.3305 right=1 anon_mib=0.1 dirty_mib=1020.1 minor=21 major=0 gpu_fault_pages=523264 gpu_fault_ms=3260
+STEP mech=fork step=write access=gpu seconds=0.0129 right=1 anon_mib=0.0 dirty_mib=4.0 minor=4 major=0 gpu_fault_pages=3072 gpu_fault_ms=20
+END_CASE status=0
+CASE mech=ksm access=cpu variant=all traced=0
+MERGE merged_pages=261663 of=262144 merge_s=7.31
+KSMSTEP access=cpu merged_before=262144 read_s=0.0853 right=1 merged_after_read=262144 read_minor=4 read_gpu_fault_pages=0 write_s=3.5658 merged_after_write=0 write_minor=262144 write_gpu_fault_pages=0
+END_CASE status=0
+CASE mech=ksm access=gpu variant=all traced=0
+MERGE merged_pages=260724 of=262144 merge_s=7.71
+KSMSTEP access=gpu merged_before=262144 read_s=0.0211 right=1 merged_after_read=262144 read_minor=25 read_gpu_fault_pages=0 write_s=9.3993 merged_after_write=0 write_minor=4 write_gpu_fault_pages=999424
+END_CASE status=0
+CASE mech=reclaim access=cpu variant=none-none traced=0
+RECLAIM access=cpu pin=none passes=365 seconds=20.006 pass_ms=54.81 right=1 minor=0 major=0 gpu_fault_pages=0 gpu_fault_ms=0 lock_s=0.0000 hot_resident=1.0000 cold_resident=1.0000 pressure=none reclaim_attempts=0 reclaim_succeeded=0 reclaim_write_ms=0 reclaim_write_max_ms=0 memcg_before_mib=2099 memcg_after_mib=2099
+END_CASE status=0
+CASE mech=reclaim access=gpu variant=none-none traced=0
+RECLAIM access=gpu pin=none passes=3712 seconds=20.004 pass_ms=5.39 right=1 minor=0 major=0 gpu_fault_pages=0 gpu_fault_ms=0 lock_s=0.0000 hot_resident=1.0000 cold_resident=1.0000 pressure=none reclaim_attempts=0 reclaim_succeeded=0 reclaim_write_ms=0 reclaim_write_max_ms=0 memcg_before_mib=2096 memcg_after_mib=2096
+END_CASE status=0
+CASE mech=reclaim access=gpu variant=lock-none traced=0
+RECLAIM access=gpu pin=lock passes=3706 seconds=20.005 pass_ms=5.40 right=1 minor=0 major=0 gpu_fault_pages=0 gpu_fault_ms=0 lock_s=0.1211 hot_resident=1.0000 cold_resident=1.0000 pressure=none reclaim_attempts=0 reclaim_succeeded=0 reclaim_write_ms=0 reclaim_write_max_ms=0 memcg_before_mib=2098 memcg_after_mib=2098
+END_CASE status=0
+CASE mech=reclaim access=gpu variant=memfs-none traced=0
+RECLAIM access=gpu pin=none passes=4233 seconds=20.002 pass_ms=4.73 right=1 minor=0 major=0 gpu_fault_pages=0 gpu_fault_ms=0 lock_s=0.0000 hot_resident=1.0000 cold_resident=1.0000 pressure=none reclaim_attempts=0 reclaim_succeeded=0 reclaim_write_ms=0 reclaim_write_max_ms=0 memcg_before_mib=1070 memcg_after_mib=1070
+END_CASE status=0
+CASE mech=reclaim access=cpu variant=none-pressure traced=0
+RECLAIM access=cpu pin=none passes=365 seconds=20.035 pass_ms=54.89 right=1 minor=0 major=1 gpu_fault_pages=0 gpu_fault_ms=0 lock_s=0.0000 hot_resident=1.0000 cold_resident=0.0000 pressure=pressure reclaim_attempts=4 reclaim_succeeded=4 reclaim_write_ms=16960 reclaim_write_max_ms=13572 memcg_before_mib=2098 memcg_after_mib=2098
+END_CASE status=0
+CASE mech=reclaim access=gpu variant=none-pressure traced=0
+RECLAIM access=gpu pin=none passes=2058 seconds=20.006 pass_ms=9.72 right=1 minor=2 major=0 gpu_fault_pages=10438656 gpu_fault_ms=7320 lock_s=0.0000 hot_resident=1.0000 cold_resident=0.0144 pressure=pressure reclaim_attempts=4 reclaim_succeeded=4 reclaim_write_ms=17009 reclaim_write_max_ms=7295 memcg_before_mib=2096 memcg_after_mib=2096
+END_CASE status=0
+CASE mech=reclaim access=gpu variant=lock-pressure traced=0
+RECLAIM access=gpu pin=lock passes=3490 seconds=20.001 pass_ms=5.73 right=1 minor=0 major=0 gpu_fault_pages=0 gpu_fault_ms=0 lock_s=0.1223 hot_resident=1.0000 cold_resident=0.0000 pressure=pressure reclaim_attempts=6 reclaim_succeeded=3 reclaim_write_ms=6640 reclaim_write_max_ms=4107 memcg_before_mib=2099 memcg_after_mib=1074
+END_CASE status=0
+CASE mech=reclaim access=gpu variant=memfs-pressure traced=0
+RECLAIM access=gpu pin=none passes=4219 seconds=20.002 pass_ms=4.74 right=1 minor=0 major=0 gpu_fault_pages=0 gpu_fault_ms=0 lock_s=0.0000 hot_resident=1.0000 cold_resident=0.0000 pressure=pressure reclaim_attempts=6 reclaim_succeeded=3 reclaim_write_ms=6775 reclaim_write_max_ms=4188 memcg_before_mib=1070 memcg_after_mib=44
+END_CASE status=0
+END_RUN
+BEGIN_RUN run=4 traced=0
+CASE mech=reclaim access=gpu variant=memfs-pressure traced=0
+RECLAIM access=gpu pin=none passes=4207 seconds=20.003 pass_ms=4.75 right=1 minor=2 major=0 gpu_fault_pages=0 gpu_fault_ms=0 lock_s=0.0000 hot_resident=1.0000 cold_resident=0.0000 pressure=pressure reclaim_attempts=6 reclaim_succeeded=3 reclaim_write_ms=6788 reclaim_write_max_ms=4190 memcg_before_mib=1070 memcg_after_mib=44
+END_CASE status=0
+CASE mech=reclaim access=gpu variant=lock-pressure traced=0
+RECLAIM access=gpu pin=lock passes=3489 seconds=20.003 pass_ms=5.73 right=1 minor=0 major=0 gpu_fault_pages=0 gpu_fault_ms=0 lock_s=0.1210 hot_resident=1.0000 cold_resident=0.0000 pressure=pressure reclaim_attempts=6 reclaim_succeeded=3 reclaim_write_ms=6596 reclaim_write_max_ms=4063 memcg_before_mib=2098 memcg_after_mib=1074
+END_CASE status=0
+CASE mech=reclaim access=gpu variant=none-pressure traced=0
+RECLAIM access=gpu pin=none passes=1995 seconds=20.031 pass_ms=10.04 right=1 minor=0 major=0 gpu_fault_pages=10758144 gpu_fault_ms=7870 lock_s=0.0000 hot_resident=1.0000 cold_resident=0.0139 pressure=pressure reclaim_attempts=4 reclaim_succeeded=4 reclaim_write_ms=16984 reclaim_write_max_ms=7333 memcg_before_mib=2096 memcg_after_mib=2096
+END_CASE status=0
+CASE mech=reclaim access=cpu variant=none-pressure traced=0
+RECLAIM access=cpu pin=none passes=366 seconds=20.032 pass_ms=54.73 right=1 minor=0 major=1 gpu_fault_pages=0 gpu_fault_ms=0 lock_s=0.0000 hot_resident=1.0000 cold_resident=0.0000 pressure=pressure reclaim_attempts=4 reclaim_succeeded=4 reclaim_write_ms=16953 reclaim_write_max_ms=13342 memcg_before_mib=2098 memcg_after_mib=2098
+END_CASE status=0
+CASE mech=reclaim access=gpu variant=memfs-none traced=0
+RECLAIM access=gpu pin=none passes=4262 seconds=20.001 pass_ms=4.69 right=1 minor=0 major=0 gpu_fault_pages=0 gpu_fault_ms=0 lock_s=0.0000 hot_resident=1.0000 cold_resident=1.0000 pressure=none reclaim_attempts=0 reclaim_succeeded=0 reclaim_write_ms=0 reclaim_write_max_ms=0 memcg_before_mib=1070 memcg_after_mib=1070
+END_CASE status=0
+CASE mech=reclaim access=gpu variant=lock-none traced=0
+RECLAIM access=gpu pin=lock passes=3738 seconds=20.004 pass_ms=5.35 right=1 minor=2 major=0 gpu_fault_pages=0 gpu_fault_ms=0 lock_s=0.1212 hot_resident=1.0000 cold_resident=1.0000 pressure=none reclaim_attempts=0 reclaim_succeeded=0 reclaim_write_ms=0 reclaim_write_max_ms=0 memcg_before_mib=2099 memcg_after_mib=2099
+END_CASE status=0
+CASE mech=reclaim access=gpu variant=none-none traced=0
+RECLAIM access=gpu pin=none passes=3727 seconds=20.005 pass_ms=5.37 right=1 minor=4 major=0 gpu_fault_pages=0 gpu_fault_ms=0 lock_s=0.0000 hot_resident=1.0000 cold_resident=1.0000 pressure=none reclaim_attempts=0 reclaim_succeeded=0 reclaim_write_ms=0 reclaim_write_max_ms=0 memcg_before_mib=2096 memcg_after_mib=2096
+END_CASE status=0
+CASE mech=reclaim access=cpu variant=none-none traced=0
+RECLAIM access=cpu pin=none passes=366 seconds=20.017 pass_ms=54.69 right=1 minor=0 major=0 gpu_fault_pages=0 gpu_fault_ms=0 lock_s=0.0000 hot_resident=1.0000 cold_resident=1.0000 pressure=none reclaim_attempts=0 reclaim_succeeded=0 reclaim_write_ms=0 reclaim_write_max_ms=0 memcg_before_mib=2099 memcg_after_mib=2099
+END_CASE status=0
+CASE mech=ksm access=gpu variant=all traced=0
+MERGE merged_pages=260143 of=262144 merge_s=7.82
+KSMSTEP access=gpu merged_before=262144 read_s=0.0195 right=1 merged_after_read=262144 read_minor=25 read_gpu_fault_pages=0 write_s=9.4953 merged_after_write=0 write_minor=5 write_gpu_fault_pages=1018880
+END_CASE status=0
+CASE mech=ksm access=cpu variant=all traced=0
+MERGE merged_pages=260464 of=262144 merge_s=7.51
+KSMSTEP access=cpu merged_before=262144 read_s=0.0980 right=1 merged_after_read=262144 read_minor=4 read_gpu_fault_pages=0 write_s=3.6481 merged_after_write=0 write_minor=262144 write_gpu_fault_pages=0
+END_CASE status=0
+CASE mech=fork access=gpu variant=all traced=0
+STEP mech=fork step=read access=gpu seconds=3.3065 right=1 anon_mib=0.1 dirty_mib=1018.1 minor=21 major=0 gpu_fault_pages=521216 gpu_fault_ms=3250
+STEP mech=fork step=write access=gpu seconds=0.0197 right=1 anon_mib=0.0 dirty_mib=6.0 minor=4 major=0 gpu_fault_pages=4096 gpu_fault_ms=20
+END_CASE status=0
+CASE mech=fork access=cpu variant=all traced=0
+STEP mech=fork step=read access=cpu seconds=0.0529 right=1 anon_mib=0.0 dirty_mib=0.0 minor=4 major=0 gpu_fault_pages=0 gpu_fault_ms=0
+STEP mech=fork step=write access=cpu seconds=3.2422 right=1 anon_mib=0.0 dirty_mib=1024.0 minor=262144 major=0 gpu_fault_pages=0 gpu_fault_ms=0
+END_CASE status=0
+CASE mech=shared access=gpu variant=all traced=0
+
+END_CASE status=1
+CASE mech=shared access=cpu variant=all traced=0
+
+END_CASE status=1
+CASE mech=private access=gpu variant=all traced=0
+STEP mech=private step=read access=gpu seconds=0.6697 right=1 anon_mib=1024.1 dirty_mib=1024.1 minor=21 major=0 gpu_fault_pages=1312846 gpu_fault_ms=600
+STEP mech=private step=write access=gpu seconds=0.0009 right=1 anon_mib=0.0 dirty_mib=0.0 minor=4 major=0 gpu_fault_pages=0 gpu_fault_ms=0
+END_CASE status=0
+CASE mech=private access=cpu variant=all traced=0
+STEP mech=private step=read access=cpu seconds=0.1187 right=1 anon_mib=0.0 dirty_mib=0.0 minor=16388 major=0 gpu_fault_pages=0 gpu_fault_ms=0
+STEP mech=private step=write access=cpu seconds=3.1980 right=1 anon_mib=1024.0 dirty_mib=1024.0 minor=262144 major=0 gpu_fault_pages=0 gpu_fault_ms=0
+END_CASE status=0
+END_RUN
+BEGIN_RUN run=5 traced=0
+CASE mech=private access=cpu variant=all traced=0
+STEP mech=private step=read access=cpu seconds=0.1189 right=1 anon_mib=0.0 dirty_mib=0.0 minor=16388 major=0 gpu_fault_pages=0 gpu_fault_ms=0
+STEP mech=private step=write access=cpu seconds=3.5066 right=1 anon_mib=1024.0 dirty_mib=1024.0 minor=262144 major=0 gpu_fault_pages=0 gpu_fault_ms=0
+END_CASE status=0
+CASE mech=private access=gpu variant=all traced=0
+STEP mech=private step=read access=gpu seconds=0.6637 right=1 anon_mib=1024.1 dirty_mib=1024.1 minor=20 major=0 gpu_fault_pages=1364000 gpu_fault_ms=660
+STEP mech=private step=write access=gpu seconds=0.0011 right=1 anon_mib=0.0 dirty_mib=0.0 minor=5 major=0 gpu_fault_pages=0 gpu_fault_ms=0
+END_CASE status=0
+CASE mech=shared access=cpu variant=all traced=0
+
+END_CASE status=1
+CASE mech=shared access=gpu variant=all traced=0
+
+END_CASE status=1
+CASE mech=fork access=cpu variant=all traced=0
+STEP mech=fork step=read access=cpu seconds=0.0523 right=1 anon_mib=0.0 dirty_mib=0.0 minor=4 major=0 gpu_fault_pages=0 gpu_fault_ms=0
+STEP mech=fork step=write access=cpu seconds=3.4049 right=1 anon_mib=0.0 dirty_mib=1024.0 minor=262144 major=0 gpu_fault_pages=0 gpu_fault_ms=0
+END_CASE status=0
+CASE mech=fork access=gpu variant=all traced=0
+STEP mech=fork step=read access=gpu seconds=3.2842 right=1 anon_mib=0.1 dirty_mib=1016.1 minor=21 major=0 gpu_fault_pages=522240 gpu_fault_ms=3270
+STEP mech=fork step=write access=gpu seconds=0.0256 right=1 anon_mib=0.0 dirty_mib=8.0 minor=4 major=0 gpu_fault_pages=6144 gpu_fault_ms=30
+END_CASE status=0
+CASE mech=ksm access=cpu variant=all traced=0
+MERGE merged_pages=260663 of=262144 merge_s=7.51
+KSMSTEP access=cpu merged_before=262144 read_s=0.0977 right=1 merged_after_read=262144 read_minor=4 read_gpu_fault_pages=0 write_s=3.6418 merged_after_write=0 write_minor=262144 write_gpu_fault_pages=0
+END_CASE status=0
+CASE mech=ksm access=gpu variant=all traced=0
+MERGE merged_pages=261586 of=262144 merge_s=7.82
+KSMSTEP access=gpu merged_before=262144 read_s=0.0197 right=1 merged_after_read=262144 read_minor=25 read_gpu_fault_pages=0 write_s=9.5075 merged_after_write=0 write_minor=5 write_gpu_fault_pages=1019904
+END_CASE status=0
+CASE mech=reclaim access=cpu variant=none-none traced=0
+RECLAIM access=cpu pin=none passes=365 seconds=20.032 pass_ms=54.88 right=1 minor=0 major=0 gpu_fault_pages=0 gpu_fault_ms=0 lock_s=0.0000 hot_resident=1.0000 cold_resident=1.0000 pressure=none reclaim_attempts=0 reclaim_succeeded=0 reclaim_write_ms=0 reclaim_write_max_ms=0 memcg_before_mib=2098 memcg_after_mib=2098
+END_CASE status=0
+CASE mech=reclaim access=gpu variant=none-none traced=0
+RECLAIM access=gpu pin=none passes=3672 seconds=20.002 pass_ms=5.45 right=1 minor=0 major=0 gpu_fault_pages=0 gpu_fault_ms=0 lock_s=0.0000 hot_resident=1.0000 cold_resident=1.0000 pressure=none reclaim_attempts=0 reclaim_succeeded=0 reclaim_write_ms=0 reclaim_write_max_ms=0 memcg_before_mib=2096 memcg_after_mib=2096
+END_CASE status=0
+CASE mech=reclaim access=gpu variant=lock-none traced=0
+RECLAIM access=gpu pin=lock passes=3701 seconds=20.004 pass_ms=5.40 right=1 minor=2 major=0 gpu_fault_pages=0 gpu_fault_ms=0 lock_s=0.1226 hot_resident=1.0000 cold_resident=1.0000 pressure=none reclaim_attempts=0 reclaim_succeeded=0 reclaim_write_ms=0 reclaim_write_max_ms=0 memcg_before_mib=2099 memcg_after_mib=2099
+END_CASE status=0
+CASE mech=reclaim access=gpu variant=memfs-none traced=0
+RECLAIM access=gpu pin=none passes=4257 seconds=20.002 pass_ms=4.70 right=1 minor=0 major=0 gpu_fault_pages=0 gpu_fault_ms=0 lock_s=0.0000 hot_resident=1.0000 cold_resident=1.0000 pressure=none reclaim_attempts=0 reclaim_succeeded=0 reclaim_write_ms=0 reclaim_write_max_ms=0 memcg_before_mib=1070 memcg_after_mib=1070
+END_CASE status=0
+CASE mech=reclaim access=cpu variant=none-pressure traced=0
+RECLAIM access=cpu pin=none passes=365 seconds=20.003 pass_ms=54.80 right=1 minor=0 major=1 gpu_fault_pages=0 gpu_fault_ms=0 lock_s=0.0000 hot_resident=1.0000 cold_resident=0.0000 pressure=pressure reclaim_attempts=4 reclaim_succeeded=4 reclaim_write_ms=17001 reclaim_write_max_ms=13309 memcg_before_mib=2099 memcg_after_mib=2099
+END_CASE status=0
+CASE mech=reclaim access=gpu variant=none-pressure traced=0
+RECLAIM access=gpu pin=none passes=2009 seconds=20.005 pass_ms=9.96 right=1 minor=0 major=0 gpu_fault_pages=10754048 gpu_fault_ms=7880 lock_s=0.0000 hot_resident=1.0000 cold_resident=0.0145 pressure=pressure reclaim_attempts=4 reclaim_succeeded=4 reclaim_write_ms=17017 reclaim_write_max_ms=7290 memcg_before_mib=2096 memcg_after_mib=2096
+END_CASE status=0
+CASE mech=reclaim access=gpu variant=lock-pressure traced=0
+RECLAIM access=gpu pin=lock passes=3533 seconds=20.001 pass_ms=5.66 right=1 minor=0 major=0 gpu_fault_pages=0 gpu_fault_ms=0 lock_s=0.1229 hot_resident=1.0000 cold_resident=0.0000 pressure=pressure reclaim_attempts=6 reclaim_succeeded=3 reclaim_write_ms=6640 reclaim_write_max_ms=4093 memcg_before_mib=2099 memcg_after_mib=1074
+END_CASE status=0
+CASE mech=reclaim access=gpu variant=memfs-pressure traced=0
+RECLAIM access=gpu pin=none passes=4240 seconds=20.004 pass_ms=4.72 right=1 minor=0 major=0 gpu_fault_pages=0 gpu_fault_ms=0 lock_s=0.0000 hot_resident=1.0000 cold_resident=0.0000 pressure=pressure reclaim_attempts=6 reclaim_succeeded=3 reclaim_write_ms=6783 reclaim_write_max_ms=4193 memcg_before_mib=1070 memcg_after_mib=44
+END_CASE status=0
+END_RUN
+BEGIN_RUN run=6 traced=0
+CASE mech=reclaim access=gpu variant=memfs-pressure traced=0
+RECLAIM access=gpu pin=none passes=4239 seconds=20.001 pass_ms=4.72 right=1 minor=0 major=0 gpu_fault_pages=0 gpu_fault_ms=0 lock_s=0.0000 hot_resident=1.0000 cold_resident=0.0000 pressure=pressure reclaim_attempts=6 reclaim_succeeded=3 reclaim_write_ms=6832 reclaim_write_max_ms=4217 memcg_before_mib=1070 memcg_after_mib=44
+END_CASE status=0
+CASE mech=reclaim access=gpu variant=lock-pressure traced=0
+RECLAIM access=gpu pin=lock passes=3539 seconds=20.005 pass_ms=5.65 right=1 minor=2 major=0 gpu_fault_pages=0 gpu_fault_ms=0 lock_s=0.1229 hot_resident=1.0000 cold_resident=0.0000 pressure=pressure reclaim_attempts=6 reclaim_succeeded=3 reclaim_write_ms=6625 reclaim_write_max_ms=4086 memcg_before_mib=2098 memcg_after_mib=1074
+END_CASE status=0
+CASE mech=reclaim access=gpu variant=none-pressure traced=0
+RECLAIM access=gpu pin=none passes=2457 seconds=20.001 pass_ms=8.14 right=1 minor=0 major=0 gpu_fault_pages=10630144 gpu_fault_ms=5230 lock_s=0.0000 hot_resident=1.0000 cold_resident=0.0135 pressure=pressure reclaim_attempts=4 reclaim_succeeded=4 reclaim_write_ms=16986 reclaim_write_max_ms=7171 memcg_before_mib=2096 memcg_after_mib=2096
+END_CASE status=0
+CASE mech=reclaim access=cpu variant=none-pressure traced=0
+RECLAIM access=cpu pin=none passes=365 seconds=20.018 pass_ms=54.84 right=1 minor=0 major=1 gpu_fault_pages=0 gpu_fault_ms=0 lock_s=0.0000 hot_resident=1.0000 cold_resident=0.0000 pressure=pressure reclaim_attempts=4 reclaim_succeeded=4 reclaim_write_ms=16923 reclaim_write_max_ms=13617 memcg_before_mib=2098 memcg_after_mib=2098
+END_CASE status=0
+CASE mech=reclaim access=gpu variant=memfs-none traced=0
+RECLAIM access=gpu pin=none passes=4244 seconds=20.001 pass_ms=4.71 right=1 minor=0 major=0 gpu_fault_pages=0 gpu_fault_ms=0 lock_s=0.0000 hot_resident=1.0000 cold_resident=1.0000 pressure=none reclaim_attempts=0 reclaim_succeeded=0 reclaim_write_ms=0 reclaim_write_max_ms=0 memcg_before_mib=1070 memcg_after_mib=1070
+END_CASE status=0
+CASE mech=reclaim access=gpu variant=lock-none traced=0
+RECLAIM access=gpu pin=lock passes=3736 seconds=20.001 pass_ms=5.35 right=1 minor=0 major=0 gpu_fault_pages=0 gpu_fault_ms=0 lock_s=0.1227 hot_resident=1.0000 cold_resident=1.0000 pressure=none reclaim_attempts=0 reclaim_succeeded=0 reclaim_write_ms=0 reclaim_write_max_ms=0 memcg_before_mib=2098 memcg_after_mib=2098
+END_CASE status=0
+CASE mech=reclaim access=gpu variant=none-none traced=0
+RECLAIM access=gpu pin=none passes=3718 seconds=20.005 pass_ms=5.38 right=1 minor=0 major=0 gpu_fault_pages=0 gpu_fault_ms=0 lock_s=0.0000 hot_resident=1.0000 cold_resident=1.0000 pressure=none reclaim_attempts=0 reclaim_succeeded=0 reclaim_write_ms=0 reclaim_write_max_ms=0 memcg_before_mib=2096 memcg_after_mib=2096
+END_CASE status=0
+CASE mech=reclaim access=cpu variant=none-none traced=0
+RECLAIM access=cpu pin=none passes=367 seconds=20.051 pass_ms=54.64 right=1 minor=0 major=0 gpu_fault_pages=0 gpu_fault_ms=0 lock_s=0.0000 hot_resident=1.0000 cold_resident=1.0000 pressure=none reclaim_attempts=0 reclaim_succeeded=0 reclaim_write_ms=0 reclaim_write_max_ms=0 memcg_before_mib=2099 memcg_after_mib=2099
+END_CASE status=0
+CASE mech=ksm access=gpu variant=all traced=0
+MERGE merged_pages=260000 of=262144 merge_s=7.81
+KSMSTEP access=gpu merged_before=262144 read_s=0.0195 right=1 merged_after_read=262144 read_minor=25 read_gpu_fault_pages=0 write_s=9.4128 merged_after_write=0 write_minor=4 write_gpu_fault_pages=1005568
+END_CASE status=0
+CASE mech=ksm access=cpu variant=all traced=0
+MERGE merged_pages=260496 of=262144 merge_s=7.52
+KSMSTEP access=cpu merged_before=262144 read_s=0.0977 right=1 merged_after_read=262144 read_minor=4 read_gpu_fault_pages=0 write_s=3.6505 merged_after_write=0 write_minor=262144 write_gpu_fault_pages=0
+END_CASE status=0
+CASE mech=fork access=gpu variant=all traced=0
+STEP mech=fork step=read access=gpu seconds=3.2839 right=1 anon_mib=0.1 dirty_mib=1020.1 minor=21 major=0 gpu_fault_pages=524288 gpu_fault_ms=3250
+STEP mech=fork step=write access=gpu seconds=0.0187 right=1 anon_mib=0.0 dirty_mib=4.0 minor=4 major=0 gpu_fault_pages=3072 gpu_fault_ms=10
+END_CASE status=0
+CASE mech=fork access=cpu variant=all traced=0
+STEP mech=fork step=read access=cpu seconds=0.0523 right=1 anon_mib=0.0 dirty_mib=0.0 minor=4 major=0 gpu_fault_pages=0 gpu_fault_ms=0
+STEP mech=fork step=write access=cpu seconds=3.1603 right=1 anon_mib=0.0 dirty_mib=1024.0 minor=262144 major=0 gpu_fault_pages=0 gpu_fault_ms=0
+END_CASE status=0
+CASE mech=shared access=gpu variant=all traced=0
+
+END_CASE status=1
+CASE mech=shared access=cpu variant=all traced=0
+
+END_CASE status=1
+CASE mech=private access=gpu variant=all traced=0
+STEP mech=private step=read access=gpu seconds=0.7405 right=1 anon_mib=1024.1 dirty_mib=1024.1 minor=21 major=0 gpu_fault_pages=1359212 gpu_fault_ms=700
+STEP mech=private step=write access=gpu seconds=0.0009 right=1 anon_mib=0.0 dirty_mib=0.0 minor=4 major=0 gpu_fault_pages=0 gpu_fault_ms=0
+END_CASE status=0
+CASE mech=private access=cpu variant=all traced=0
+STEP mech=private step=read access=cpu seconds=0.1187 right=1 anon_mib=0.0 dirty_mib=0.0 minor=16388 major=0 gpu_fault_pages=0 gpu_fault_ms=0
+STEP mech=private step=write access=cpu seconds=3.2608 right=1 anon_mib=1024.0 dirty_mib=1024.0 minor=262144 major=0 gpu_fault_pages=0 gpu_fault_ms=0
+END_CASE status=0
+END_RUN
+BEGIN_RUN run=trace traced=1
+CASE mech=private access=cpu variant=read traced=1
+STEP mech=private step=read access=cpu seconds=0.1187 right=1 anon_mib=0.0 dirty_mib=0.0 minor=16388 major=0 gpu_fault_pages=0 gpu_fault_ms=0
+EVENTS
+END_CASE status=1
+CASE mech=private access=gpu variant=read traced=1
+STEP mech=private step=read access=gpu seconds=0.6804 right=1 anon_mib=1024.1 dirty_mib=1024.1 minor=21 major=0 gpu_fault_pages=1340024 gpu_fault_ms=670
+EVENTS
+END_CASE status=1
+CASE mech=fork access=cpu variant=read traced=1
+STEP mech=fork step=read access=cpu seconds=0.0524 right=1 anon_mib=0.0 dirty_mib=0.0 minor=4 major=0 gpu_fault_pages=0 gpu_fault_ms=0
+EVENTS
+END_CASE status=1
+CASE mech=fork access=gpu variant=read traced=1
+STEP mech=fork step=read access=gpu seconds=3.2820 right=1 anon_mib=0.1 dirty_mib=1012.1 minor=21 major=0 gpu_fault_pages=519168 gpu_fault_ms=3210
+EVENTS
+END_CASE status=1
+CASE mech=private access=cpu variant=all traced=1
+STEP mech=private step=read access=cpu seconds=0.1192 right=1 anon_mib=0.0 dirty_mib=0.0 minor=16388 major=0 gpu_fault_pages=0 gpu_fault_ms=0
+STEP mech=private step=write access=cpu seconds=3.3041 right=1 anon_mib=1024.0 dirty_mib=1024.0 minor=262144 major=0 gpu_fault_pages=0 gpu_fault_ms=0
+EVENTS
+END_CASE status=1
+CASE mech=private access=gpu variant=all traced=1
+STEP mech=private step=read access=gpu seconds=0.7473 right=1 anon_mib=1024.1 dirty_mib=1024.1 minor=21 major=0 gpu_fault_pages=1353362 gpu_fault_ms=670
+STEP mech=private step=write access=gpu seconds=0.0009 right=1 anon_mib=0.0 dirty_mib=0.0 minor=4 major=0 gpu_fault_pages=0 gpu_fault_ms=0
+EVENTS
+END_CASE status=1
+CASE mech=shared access=cpu variant=all traced=1
+
+EVENTS
+END_CASE status=1
+CASE mech=shared access=gpu variant=all traced=1
+
+EVENTS
+END_CASE status=1
+CASE mech=fork access=cpu variant=all traced=1
+STEP mech=fork step=read access=cpu seconds=0.0523 right=1 anon_mib=0.0 dirty_mib=0.0 minor=4 major=0 gpu_fault_pages=0 gpu_fault_ms=0
+STEP mech=fork step=write access=cpu seconds=3.3502 right=1 anon_mib=0.0 dirty_mib=1024.0 minor=262144 major=0 gpu_fault_pages=0 gpu_fault_ms=0
+EVENTS
+END_CASE status=1
+CASE mech=fork access=gpu variant=all traced=1
+STEP mech=fork step=read access=gpu seconds=3.2963 right=1 anon_mib=0.1 dirty_mib=1018.1 minor=21 major=0 gpu_fault_pages=522240 gpu_fault_ms=3240
+STEP mech=fork step=write access=gpu seconds=0.0193 right=1 anon_mib=0.0 dirty_mib=6.0 minor=4 major=0 gpu_fault_pages=5120 gpu_fault_ms=30
+EVENTS
+END_CASE status=1
+CASE mech=ksm access=cpu variant=all traced=1
+MERGE merged_pages=261817 of=262144 merge_s=7.41
+KSMSTEP access=cpu merged_before=262144 read_s=0.0963 right=1 merged_after_read=262144 read_minor=4 read_gpu_fault_pages=0 write_s=3.6361 merged_after_write=0 write_minor=262144 write_gpu_fault_pages=0
+EVENTS
+END_CASE status=1
+CASE mech=ksm access=gpu variant=all traced=1
+MERGE merged_pages=261181 of=262144 merge_s=7.52
+KSMSTEP access=gpu merged_before=262144 read_s=0.0192 right=1 merged_after_read=262144 read_minor=25 read_gpu_fault_pages=0 write_s=9.3114 merged_after_write=0 write_minor=5 write_gpu_fault_pages=984064
+EVENTS
+END_CASE status=1
+CASE mech=reclaim access=cpu variant=none-none traced=1
+RECLAIM access=cpu pin=none passes=365 seconds=20.027 pass_ms=54.87 right=1 minor=0 major=0 gpu_fault_pages=0 gpu_fault_ms=0 lock_s=0.0000 hot_resident=1.0000 cold_resident=1.0000 pressure=none reclaim_attempts=0 reclaim_succeeded=0 reclaim_write_ms=0 reclaim_write_max_ms=0 memcg_before_mib=2099 memcg_after_mib=2099
+EVENTS
+END_CASE status=1
+CASE mech=reclaim access=gpu variant=none-none traced=1
+RECLAIM access=gpu pin=none passes=3686 seconds=20.002 pass_ms=5.43 right=1 minor=0 major=0 gpu_fault_pages=0 gpu_fault_ms=0 lock_s=0.0000 hot_resident=1.0000 cold_resident=1.0000 pressure=none reclaim_attempts=0 reclaim_succeeded=0 reclaim_write_ms=0 reclaim_write_max_ms=0 memcg_before_mib=2096 memcg_after_mib=2096
+EVENTS
+END_CASE status=1
+CASE mech=reclaim access=gpu variant=lock-none traced=1
+RECLAIM access=gpu pin=lock passes=3694 seconds=20.002 pass_ms=5.41 right=1 minor=0 major=0 gpu_fault_pages=0 gpu_fault_ms=0 lock_s=0.1248 hot_resident=1.0000 cold_resident=1.0000 pressure=none reclaim_attempts=0 reclaim_succeeded=0 reclaim_write_ms=0 reclaim_write_max_ms=0 memcg_before_mib=2098 memcg_after_mib=2098
+EVENTS
+END_CASE status=1
+CASE mech=reclaim access=gpu variant=memfs-none traced=1
+RECLAIM access=gpu pin=none passes=4240 seconds=20.000 pass_ms=4.72 right=1 minor=0 major=0 gpu_fault_pages=0 gpu_fault_ms=0 lock_s=0.0000 hot_resident=1.0000 cold_resident=1.0000 pressure=none reclaim_attempts=0 reclaim_succeeded=0 reclaim_write_ms=0 reclaim_write_max_ms=0 memcg_before_mib=1070 memcg_after_mib=1070
+EVENTS
+END_CASE status=1
+CASE mech=reclaim access=cpu variant=none-pressure traced=1
+RECLAIM access=cpu pin=none passes=364 seconds=20.023 pass_ms=55.01 right=1 minor=0 major=1 gpu_fault_pages=0 gpu_fault_ms=0 lock_s=0.0000 hot_resident=1.0000 cold_resident=0.0000 pressure=pressure reclaim_attempts=4 reclaim_succeeded=4 reclaim_write_ms=16928 reclaim_write_max_ms=13372 memcg_before_mib=2099 memcg_after_mib=2099
+EVENTS
+END_CASE status=1
+CASE mech=reclaim access=gpu variant=none-pressure traced=1
+RECLAIM access=gpu pin=none passes=2045 seconds=20.011 pass_ms=9.79 right=1 minor=0 major=0 gpu_fault_pages=10782720 gpu_fault_ms=7770 lock_s=0.0000 hot_resident=1.0000 cold_resident=0.0146 pressure=pressure reclaim_attempts=4 reclaim_succeeded=4 reclaim_write_ms=16993 reclaim_write_max_ms=7237 memcg_before_mib=2096 memcg_after_mib=2096
+EVENTS
+END_CASE status=1
+CASE mech=reclaim access=gpu variant=lock-pressure traced=1
+RECLAIM access=gpu pin=lock passes=3537 seconds=20.004 pass_ms=5.66 right=1 minor=2 major=0 gpu_fault_pages=0 gpu_fault_ms=0 lock_s=0.1257 hot_resident=1.0000 cold_resident=0.0000 pressure=pressure reclaim_attempts=6 reclaim_succeeded=3 reclaim_write_ms=6643 reclaim_write_max_ms=4109 memcg_before_mib=2099 memcg_after_mib=1074
+EVENTS
+END_CASE status=1
+CASE mech=reclaim access=gpu variant=memfs-pressure traced=1
+RECLAIM access=gpu pin=none passes=4194 seconds=20.001 pass_ms=4.77 right=1 minor=0 major=0 gpu_fault_pages=0 gpu_fault_ms=0 lock_s=0.0000 hot_resident=1.0000 cold_resident=0.0000 pressure=pressure reclaim_attempts=6 reclaim_succeeded=3 reclaim_write_ms=6874 reclaim_write_max_ms=4225 memcg_before_mib=1070 memcg_after_mib=44
+EVENTS
+END_CASE status=1
+END_RUN

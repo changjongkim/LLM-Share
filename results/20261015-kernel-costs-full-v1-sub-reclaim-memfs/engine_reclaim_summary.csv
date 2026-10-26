@@ -1,0 +1,2 @@
+mode,pressure,runs,failed,timed_out,agents,agents_with_speed,texts_equal_to_none,texts_compared,tps_sum,tps_ci95,tps_vs_none,vs_none_low,vs_none_high,gpu_fault_pages,gpu_fault_pages_ci95,fault_thread_ms,fault_thread_ci95,major_faults,major_faults_ci95,refault_file_pages,refault_file_ci95,reclaim_attempts,reclaim_succeeded
+memfs,reclaim,2,0,0,8,8,0,0,41.49,0.32,0.0000,0.0000,0.0000,0,0,0,0,189,737,0,0,86,0

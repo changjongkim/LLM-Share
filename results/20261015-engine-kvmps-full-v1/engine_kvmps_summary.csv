@@ -1,0 +1,5 @@
+config,children,prefix_tokens,mode,runs,failed_processes,timed_out,publish_ms,state_mib,child_attach_ms,child_first_token_ms,children_tps_sum,parent_tps,children_wall_s,children_memory_mib,prefix_pss_mib,cache_file_mib,children_finished,texts_equal_to_copy,texts_equal_to_alone,texts_compared_to_alone
+timeslice,8,16321,copy,6,0,0,554.25,892.80,591.8,2434,31.21,11.12,19.77,20496,0,0,48,48,24,48
+timeslice,8,16321,extent,6,0,0,10.86,0.25,64.4,1836,30.96,8.76,19.11,6111,1080,896,48,48,24,48
+mps,8,16321,copy,6,0,0,553.02,892.80,526.2,2244,35.89,13.47,17.43,20440,0,0,48,48,24,48
+mps,8,16321,extent,6,0,0,10.03,0.25,64.5,1768,35.60,10.38,16.83,6042,957,896,48,48,24,48

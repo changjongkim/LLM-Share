@@ -1,0 +1,7 @@
+fault_around_bytes,step,runs,failed,checked,prepare_ms,gpu_ms,gpu_fault_pages,fault_thread_ms
+65536,none,6,0,6,0.00,384.33,920779,337
+65536,touch,6,0,6,50.00,6.77,0,0
+65536,populate,6,0,6,47.10,178.87,475648,132
+4096,none,6,0,6,0.00,458.76,918702,375
+4096,touch,6,0,6,160.35,10.73,0,0
+4096,populate,6,0,6,80.01,7.96,0,0

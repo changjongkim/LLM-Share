@@ -1,0 +1,58 @@
+BEGIN_RUN run=1 traced=0
+CASE mech=shared access=cpu variant=all traced=0
+STEP mech=shared step=read access=cpu seconds=0.1186 right=1 anon_mib=0.0 dirty_mib=1020.0 minor=16388 major=0 gpu_fault_pages=0 gpu_fault_ms=0
+END_CASE status=0
+CASE mech=shared access=gpu variant=all traced=0
+STEP mech=shared step=read access=gpu seconds=5.7803 right=1 anon_mib=0.1 dirty_mib=925.2 minor=21 major=0 gpu_fault_pages=1023192 gpu_fault_ms=3440
+END_CASE status=0
+END_RUN
+BEGIN_RUN run=2 traced=0
+CASE mech=shared access=gpu variant=all traced=0
+STEP mech=shared step=read access=gpu seconds=1.2554 right=1 anon_mib=0.1 dirty_mib=1024.1 minor=21 major=0 gpu_fault_pages=1145480 gpu_fault_ms=910
+END_CASE status=0
+CASE mech=shared access=cpu variant=all traced=0
+STEP mech=shared step=read access=cpu seconds=0.1189 right=1 anon_mib=0.0 dirty_mib=1024.0 minor=16388 major=0 gpu_fault_pages=0 gpu_fault_ms=0
+END_CASE status=0
+END_RUN
+BEGIN_RUN run=3 traced=0
+CASE mech=shared access=cpu variant=all traced=0
+STEP mech=shared step=read access=cpu seconds=0.1182 right=1 anon_mib=0.0 dirty_mib=1024.0 minor=16388 major=0 gpu_fault_pages=0 gpu_fault_ms=0
+END_CASE status=0
+CASE mech=shared access=gpu variant=all traced=0
+STEP mech=shared step=read access=gpu seconds=0.3366 right=1 anon_mib=0.1 dirty_mib=1024.1 minor=21 major=0 gpu_fault_pages=1175092 gpu_fault_ms=320
+END_CASE status=0
+END_RUN
+BEGIN_RUN run=4 traced=0
+CASE mech=shared access=gpu variant=all traced=0
+STEP mech=shared step=read access=gpu seconds=0.4494 right=1 anon_mib=0.1 dirty_mib=1024.1 minor=21 major=0 gpu_fault_pages=1065060 gpu_fault_ms=420
+END_CASE status=0
+CASE mech=shared access=cpu variant=all traced=0
+STEP mech=shared step=read access=cpu seconds=0.1182 right=1 anon_mib=0.0 dirty_mib=1024.0 minor=16388 major=0 gpu_fault_pages=0 gpu_fault_ms=0
+END_CASE status=0
+END_RUN
+BEGIN_RUN run=5 traced=0
+CASE mech=shared access=cpu variant=all traced=0
+STEP mech=shared step=read access=cpu seconds=0.1178 right=1 anon_mib=0.0 dirty_mib=1024.0 minor=16388 major=0 gpu_fault_pages=0 gpu_fault_ms=0
+END_CASE status=0
+CASE mech=shared access=gpu variant=all traced=0
+STEP mech=shared step=read access=gpu seconds=1.0918 right=1 anon_mib=0.1 dirty_mib=895.4 minor=21 major=0 gpu_fault_pages=1126202 gpu_fault_ms=860
+END_CASE status=0
+END_RUN
+BEGIN_RUN run=6 traced=0
+CASE mech=shared access=gpu variant=all traced=0
+STEP mech=shared step=read access=gpu seconds=0.4976 right=1 anon_mib=0.1 dirty_mib=1024.1 minor=21 major=0 gpu_fault_pages=1155162 gpu_fault_ms=480
+END_CASE status=0
+CASE mech=shared access=cpu variant=all traced=0
+STEP mech=shared step=read access=cpu seconds=0.1184 right=1 anon_mib=0.0 dirty_mib=1024.0 minor=16388 major=0 gpu_fault_pages=0 gpu_fault_ms=0
+END_CASE status=0
+END_RUN
+BEGIN_RUN run=trace traced=1
+CASE mech=shared access=cpu variant=all traced=1
+STEP mech=shared step=read access=cpu seconds=0.1180 right=1 anon_mib=0.0 dirty_mib=1024.0 minor=16388 major=0 gpu_fault_pages=0 gpu_fault_ms=0
+EVENTS
+END_CASE status=1
+CASE mech=shared access=gpu variant=all traced=1
+STEP mech=shared step=read access=gpu seconds=0.5642 right=1 anon_mib=0.1 dirty_mib=1024.1 minor=21 major=0 gpu_fault_pages=1178098 gpu_fault_ms=480
+EVENTS
+END_CASE status=1
+END_RUN

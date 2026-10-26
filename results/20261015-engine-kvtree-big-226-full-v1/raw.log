@@ -1,0 +1,144 @@
+BEGIN_KVDEEP run=1 paragraphs=320 context=32768
+CASE mode=copy fanouts=2x2x6 processes=31 leaves=24
+ROOT exit=0 tokens=16321 publish_ms=587.35 state_bytes=936173269
+INNER node=r.0 mig=a7c66ad2 exit=0 text=213385c1efd5171e tokens=17094 context_ms=60.6 load_ms=186.31 publish_ms=616.48 state_bytes=980512549
+INNER node=r.1 mig=a7c66ad2 exit=0 text=2a8e9a7930c4b5a2 tokens=17094 context_ms=62.9 load_ms=256.27 publish_ms=595.57 state_bytes=980512549
+INNER node=r.0.0 mig=a7c66ad2 exit=0 text=72dd5b5b22374b7d tokens=17907 context_ms=56.4 load_ms=174.36 publish_ms=877.96 state_bytes=1027146229
+INNER node=r.0.1 mig=a7c66ad2 exit=0 text=7a9be50b0084b9b0 tokens=17907 context_ms=85.6 load_ms=316.13 publish_ms=666.10 state_bytes=1027146229
+INNER node=r.1.0 mig=a7c66ad2 exit=0 text=43a6b8875ff9a4a1 tokens=17907 context_ms=69.8 load_ms=319.96 publish_ms=631.64 state_bytes=1027146229
+INNER node=r.1.1 mig=a7c66ad2 exit=0 text=4c57d301813fe0ec tokens=17907 context_ms=85.5 load_ms=209.12 publish_ms=603.71 state_bytes=1027146229
+LEAF node=r.0.0.0 mig=a7c66ad2 exit=0 text=0770f05606ac68af context_ms=297.7 load_ms=1408.64 first_token_ms=7915.5 generation_tps=1.049
+LEAF node=r.0.0.1 mig=a7c66ad2 exit=0 text=132bff72234434ae context_ms=161.5 load_ms=861.88 first_token_ms=4538.5 generation_tps=1.072
+LEAF node=r.0.0.2 mig=a7c66ad2 exit=0 text=132bff72234434ae context_ms=470.8 load_ms=1450.21 first_token_ms=7451.2 generation_tps=1.048
+LEAF node=r.0.0.3 mig=a7c66ad2 exit=0 text=132bff72234434ae context_ms=498.4 load_ms=1432.58 first_token_ms=7704.8 generation_tps=1.047
+LEAF node=r.0.0.4 mig=a7c66ad2 exit=0 text=132bff72234434ae context_ms=453.4 load_ms=1412.83 first_token_ms=7993.6 generation_tps=1.048
+LEAF node=r.0.0.5 mig=a7c66ad2 exit=0 text=132bff72234434ae context_ms=307.7 load_ms=1413.87 first_token_ms=8106.8 generation_tps=1.050
+LEAF node=r.0.1.0 mig=a7c66ad2 exit=0 text=132bff72234434ae context_ms=326.6 load_ms=1498.13 first_token_ms=6944.0 generation_tps=1.045
+LEAF node=r.0.1.1 mig=a7c66ad2 exit=0 text=0ede13ad0d94dc55 context_ms=197.5 load_ms=1491.32 first_token_ms=6427.9 generation_tps=1.046
+LEAF node=r.0.1.2 mig=a7c66ad2 exit=0 text=132bff72234434ae context_ms=450.1 load_ms=1489.28 first_token_ms=7977.7 generation_tps=1.049
+LEAF node=r.0.1.3 mig=a7c66ad2 exit=0 text=132bff72234434ae context_ms=404.4 load_ms=1437.36 first_token_ms=8152.9 generation_tps=1.049
+LEAF node=r.0.1.4 mig=a7c66ad2 exit=0 text=0625d94a479b4370 context_ms=340.7 load_ms=1482.41 first_token_ms=7318.2 generation_tps=1.047
+LEAF node=r.0.1.5 mig=a7c66ad2 exit=0 text=0ede13ad0d94dc55 context_ms=379.8 load_ms=1457.40 first_token_ms=8144.2 generation_tps=1.050
+LEAF node=r.1.0.0 mig=a7c66ad2 exit=0 text=6fcdc7bfda259ec5 context_ms=454.1 load_ms=1481.39 first_token_ms=7962.1 generation_tps=1.590
+LEAF node=r.1.0.1 mig=a7c66ad2 exit=0 text=08c9c1d7befe562d context_ms=398.1 load_ms=1415.11 first_token_ms=8073.7 generation_tps=1.591
+LEAF node=r.1.0.2 mig=a7c66ad2 exit=0 text=3dc4b002573e78cd context_ms=411.7 load_ms=1422.09 first_token_ms=8149.6 generation_tps=1.591
+LEAF node=r.1.0.3 mig=a7c66ad2 exit=0 text=4df56be361ceb7c2 context_ms=411.4 load_ms=1443.72 first_token_ms=8157.8 generation_tps=1.591
+LEAF node=r.1.0.4 mig=a7c66ad2 exit=0 text=413b66771147eba1 context_ms=208.8 load_ms=1503.33 first_token_ms=6825.9 generation_tps=1.582
+LEAF node=r.1.0.5 mig=a7c66ad2 exit=0 text=16ed6339559a5f56 context_ms=459.0 load_ms=1448.43 first_token_ms=8091.1 generation_tps=1.593
+LEAF node=r.1.1.0 mig=a7c66ad2 exit=0 text=720fbd4f766d1604 context_ms=372.0 load_ms=1392.77 first_token_ms=8365.2 generation_tps=1.594
+LEAF node=r.1.1.1 mig=a7c66ad2 exit=0 text=b19bc4780caba99c context_ms=231.0 load_ms=1507.21 first_token_ms=6654.4 generation_tps=1.580
+LEAF node=r.1.1.2 mig=a7c66ad2 exit=0 text=5d6bbcee8b5f341b context_ms=527.7 load_ms=1435.27 first_token_ms=7995.1 generation_tps=1.590
+LEAF node=r.1.1.3 mig=a7c66ad2 exit=0 text=7ebc7d6ceda76403 context_ms=473.5 load_ms=1472.28 first_token_ms=8100.4 generation_tps=1.592
+LEAF node=r.1.1.4 mig=a7c66ad2 exit=0 text=dacd57fe8156465c context_ms=385.9 load_ms=1470.78 first_token_ms=8032.0 generation_tps=1.590
+LEAF node=r.1.1.5 mig=a7c66ad2 exit=0 text=0d070f17212a1ba1 context_ms=313.7 load_ms=1453.56 first_token_ms=8276.0 generation_tps=1.593
+MEMORY tree_drop_mib=79621 files_attached_mib=0 files_removed=0 files_all_alive_mib=0 files_first_subtree_left_mib=0 files_end_mib=0
+GUARD guard=0
+END_CASE failed=0 timed_out=0 wall_ms=152511
+CASE mode=chain fanouts=2x2x6 processes=31 leaves=24
+ROOT exit=0 tokens=16321 publish_ms=11.53 state_bytes=261845
+INNER node=r.0 mig=a7c66ad2 exit=0 text=213385c1efd5171e tokens=17094 context_ms=40.7 load_ms=7.49 publish_ms=8.29 state_bytes=274213
+INNER node=r.1 mig=a7c66ad2 exit=0 text=2a8e9a7930c4b5a2 tokens=17094 context_ms=43.3 load_ms=7.38 publish_ms=8.70 state_bytes=274213
+INNER node=r.0.0 mig=a7c66ad2 exit=0 text=72dd5b5b22374b7d tokens=17907 context_ms=47.8 load_ms=7.68 publish_ms=10.40 state_bytes=287221
+INNER node=r.0.1 mig=a7c66ad2 exit=0 text=7a9be50b0084b9b0 tokens=17907 context_ms=44.1 load_ms=7.56 publish_ms=8.64 state_bytes=287221
+INNER node=r.1.0 mig=a7c66ad2 exit=0 text=43a6b8875ff9a4a1 tokens=17907 context_ms=43.8 load_ms=7.76 publish_ms=7.82 state_bytes=287221
+INNER node=r.1.1 mig=a7c66ad2 exit=0 text=4c57d301813fe0ec tokens=17907 context_ms=42.7 load_ms=7.74 publish_ms=7.84 state_bytes=287221
+LEAF node=r.0.0.0 mig=a7c66ad2 exit=0 text=0770f05606ac68af context_ms=48.6 load_ms=8.28 first_token_ms=6209.9 generation_tps=1.059
+LEAF node=r.0.0.1 mig=a7c66ad2 exit=0 text=132bff72234434ae context_ms=49.4 load_ms=8.36 first_token_ms=6116.2 generation_tps=1.057
+LEAF node=r.0.0.2 mig=a7c66ad2 exit=0 text=132bff72234434ae context_ms=123.2 load_ms=8.05 first_token_ms=3890.8 generation_tps=1.067
+LEAF node=r.0.0.3 mig=a7c66ad2 exit=0 text=132bff72234434ae context_ms=61.7 load_ms=8.40 first_token_ms=6160.6 generation_tps=1.062
+LEAF node=r.0.0.4 mig=a7c66ad2 exit=0 text=132bff72234434ae context_ms=86.0 load_ms=16.31 first_token_ms=4714.6 generation_tps=1.050
+LEAF node=r.0.0.5 mig=a7c66ad2 exit=0 text=132bff72234434ae context_ms=92.6 load_ms=8.67 first_token_ms=3854.5 generation_tps=1.069
+LEAF node=r.0.1.0 mig=a7c66ad2 exit=0 text=132bff72234434ae context_ms=54.3 load_ms=8.81 first_token_ms=5362.1 generation_tps=1.057
+LEAF node=r.0.1.1 mig=a7c66ad2 exit=0 text=0ede13ad0d94dc55 context_ms=59.5 load_ms=8.26 first_token_ms=6201.6 generation_tps=1.058
+LEAF node=r.0.1.2 mig=a7c66ad2 exit=0 text=132bff72234434ae context_ms=77.3 load_ms=8.33 first_token_ms=5012.9 generation_tps=1.051
+LEAF node=r.0.1.3 mig=a7c66ad2 exit=0 text=132bff72234434ae context_ms=44.6 load_ms=8.07 first_token_ms=6200.9 generation_tps=1.064
+LEAF node=r.0.1.4 mig=a7c66ad2 exit=0 text=0625d94a479b4370 context_ms=59.1 load_ms=8.59 first_token_ms=6429.4 generation_tps=1.060
+LEAF node=r.0.1.5 mig=a7c66ad2 exit=0 text=0ede13ad0d94dc55 context_ms=58.9 load_ms=8.45 first_token_ms=5717.3 generation_tps=1.058
+LEAF node=r.1.0.0 mig=a7c66ad2 exit=0 text=6fcdc7bfda259ec5 context_ms=56.2 load_ms=11.99 first_token_ms=4750.2 generation_tps=1.595
+LEAF node=r.1.0.1 mig=a7c66ad2 exit=0 text=08c9c1d7befe562d context_ms=50.7 load_ms=7.95 first_token_ms=6551.0 generation_tps=1.610
+LEAF node=r.1.0.2 mig=a7c66ad2 exit=0 text=3dc4b002573e78cd context_ms=45.3 load_ms=8.36 first_token_ms=6489.9 generation_tps=1.611
+LEAF node=r.1.0.3 mig=a7c66ad2 exit=0 text=4df56be361ceb7c2 context_ms=47.2 load_ms=10.17 first_token_ms=6027.8 generation_tps=1.607
+LEAF node=r.1.0.4 mig=a7c66ad2 exit=0 text=413b66771147eba1 context_ms=57.1 load_ms=8.28 first_token_ms=5691.7 generation_tps=1.602
+LEAF node=r.1.0.5 mig=a7c66ad2 exit=0 text=16ed6339559a5f56 context_ms=53.4 load_ms=8.15 first_token_ms=6133.3 generation_tps=1.606
+LEAF node=r.1.1.0 mig=a7c66ad2 exit=0 text=720fbd4f766d1604 context_ms=51.7 load_ms=8.17 first_token_ms=5889.8 generation_tps=1.603
+LEAF node=r.1.1.1 mig=a7c66ad2 exit=0 text=b19bc4780caba99c context_ms=56.4 load_ms=8.76 first_token_ms=5539.8 generation_tps=1.603
+LEAF node=r.1.1.2 mig=a7c66ad2 exit=0 text=5d6bbcee8b5f341b context_ms=48.6 load_ms=8.22 first_token_ms=5935.1 generation_tps=1.604
+LEAF node=r.1.1.3 mig=a7c66ad2 exit=0 text=7ebc7d6ceda76403 context_ms=49.5 load_ms=8.36 first_token_ms=6442.9 generation_tps=1.610
+LEAF node=r.1.1.4 mig=a7c66ad2 exit=0 text=dacd57fe8156465c context_ms=55.9 load_ms=10.23 first_token_ms=6033.3 generation_tps=1.604
+LEAF node=r.1.1.5 mig=a7c66ad2 exit=0 text=0d070f17212a1ba1 context_ms=60.3 load_ms=8.65 first_token_ms=6395.5 generation_tps=1.609
+MEMORY tree_drop_mib=25605 files_attached_mib=2240 files_removed=1 files_all_alive_mib=2352 files_first_subtree_left_mib=1680 files_end_mib=0
+GUARD guard=0
+END_CASE failed=0 timed_out=0 wall_ms=147670
+END_KVDEEP
+BEGIN_KVDEEP run=2 paragraphs=320 context=32768
+CASE mode=chain fanouts=2x2x6 processes=31 leaves=24
+ROOT exit=0 tokens=16321 publish_ms=11.72 state_bytes=261845
+INNER node=r.0 mig=a7c66ad2 exit=0 text=213385c1efd5171e tokens=17094 context_ms=38.8 load_ms=7.33 publish_ms=8.97 state_bytes=274213
+INNER node=r.1 mig=a7c66ad2 exit=0 text=2a8e9a7930c4b5a2 tokens=17094 context_ms=38.9 load_ms=7.28 publish_ms=9.43 state_bytes=274213
+INNER node=r.0.0 mig=a7c66ad2 exit=0 text=72dd5b5b22374b7d tokens=17907 context_ms=39.5 load_ms=7.58 publish_ms=11.00 state_bytes=287221
+INNER node=r.0.1 mig=a7c66ad2 exit=0 text=7a9be50b0084b9b0 tokens=17907 context_ms=42.6 load_ms=7.78 publish_ms=10.86 state_bytes=287221
+INNER node=r.1.0 mig=a7c66ad2 exit=0 text=43a6b8875ff9a4a1 tokens=17907 context_ms=44.3 load_ms=7.80 publish_ms=10.78 state_bytes=287221
+INNER node=r.1.1 mig=a7c66ad2 exit=0 text=4c57d301813fe0ec tokens=17907 context_ms=45.9 load_ms=7.76 publish_ms=10.75 state_bytes=287221
+LEAF node=r.0.0.0 mig=a7c66ad2 exit=0 text=0770f05606ac68af context_ms=52.3 load_ms=8.28 first_token_ms=5765.2 generation_tps=1.053
+LEAF node=r.0.0.1 mig=a7c66ad2 exit=0 text=132bff72234434ae context_ms=46.6 load_ms=9.95 first_token_ms=6047.2 generation_tps=1.057
+LEAF node=r.0.0.2 mig=a7c66ad2 exit=0 text=132bff72234434ae context_ms=43.8 load_ms=9.65 first_token_ms=6261.0 generation_tps=1.057
+LEAF node=r.0.0.3 mig=a7c66ad2 exit=0 text=132bff72234434ae context_ms=46.1 load_ms=8.44 first_token_ms=6045.5 generation_tps=1.059
+LEAF node=r.0.0.4 mig=a7c66ad2 exit=0 text=132bff72234434ae context_ms=43.6 load_ms=8.69 first_token_ms=3750.6 generation_tps=1.076
+LEAF node=r.0.0.5 mig=a7c66ad2 exit=0 text=132bff72234434ae context_ms=58.4 load_ms=11.84 first_token_ms=5468.9 generation_tps=1.058
+LEAF node=r.0.1.0 mig=a7c66ad2 exit=0 text=132bff72234434ae context_ms=42.9 load_ms=8.11 first_token_ms=6250.3 generation_tps=1.055
+LEAF node=r.0.1.1 mig=a7c66ad2 exit=0 text=0ede13ad0d94dc55 context_ms=77.1 load_ms=10.31 first_token_ms=4939.3 generation_tps=1.054
+LEAF node=r.0.1.2 mig=a7c66ad2 exit=0 text=132bff72234434ae context_ms=48.4 load_ms=7.96 first_token_ms=6462.7 generation_tps=1.057
+LEAF node=r.0.1.3 mig=a7c66ad2 exit=0 text=132bff72234434ae context_ms=93.7 load_ms=17.26 first_token_ms=5189.3 generation_tps=1.059
+LEAF node=r.0.1.4 mig=a7c66ad2 exit=0 text=0625d94a479b4370 context_ms=149.0 load_ms=8.14 first_token_ms=4080.4 generation_tps=1.065
+LEAF node=r.0.1.5 mig=a7c66ad2 exit=0 text=0ede13ad0d94dc55 context_ms=43.2 load_ms=8.43 first_token_ms=6343.7 generation_tps=1.058
+LEAF node=r.1.0.0 mig=a7c66ad2 exit=0 text=6fcdc7bfda259ec5 context_ms=46.6 load_ms=8.34 first_token_ms=6411.9 generation_tps=1.610
+LEAF node=r.1.0.1 mig=a7c66ad2 exit=0 text=08c9c1d7befe562d context_ms=52.8 load_ms=8.04 first_token_ms=5997.5 generation_tps=1.606
+LEAF node=r.1.0.2 mig=a7c66ad2 exit=0 text=3dc4b002573e78cd context_ms=42.8 load_ms=8.35 first_token_ms=6489.2 generation_tps=1.610
+LEAF node=r.1.0.3 mig=a7c66ad2 exit=0 text=4df56be361ceb7c2 context_ms=86.1 load_ms=16.44 first_token_ms=5547.5 generation_tps=1.600
+LEAF node=r.1.0.4 mig=a7c66ad2 exit=0 text=413b66771147eba1 context_ms=78.2 load_ms=16.21 first_token_ms=5066.5 generation_tps=1.595
+LEAF node=r.1.0.5 mig=a7c66ad2 exit=0 text=16ed6339559a5f56 context_ms=49.3 load_ms=8.37 first_token_ms=6114.5 generation_tps=1.607
+LEAF node=r.1.1.0 mig=a7c66ad2 exit=0 text=720fbd4f766d1604 context_ms=52.1 load_ms=8.16 first_token_ms=6293.8 generation_tps=1.607
+LEAF node=r.1.1.1 mig=a7c66ad2 exit=0 text=b19bc4780caba99c context_ms=90.9 load_ms=20.37 first_token_ms=5536.4 generation_tps=1.600
+LEAF node=r.1.1.2 mig=a7c66ad2 exit=0 text=5d6bbcee8b5f341b context_ms=47.4 load_ms=10.88 first_token_ms=6204.7 generation_tps=1.607
+LEAF node=r.1.1.3 mig=a7c66ad2 exit=0 text=7ebc7d6ceda76403 context_ms=64.6 load_ms=9.83 first_token_ms=5120.3 generation_tps=1.597
+LEAF node=r.1.1.4 mig=a7c66ad2 exit=0 text=dacd57fe8156465c context_ms=49.7 load_ms=9.02 first_token_ms=6061.9 generation_tps=1.605
+LEAF node=r.1.1.5 mig=a7c66ad2 exit=0 text=0d070f17212a1ba1 context_ms=43.1 load_ms=8.15 first_token_ms=6314.4 generation_tps=1.607
+MEMORY tree_drop_mib=26118 files_attached_mib=2240 files_removed=1 files_all_alive_mib=2352 files_first_subtree_left_mib=1680 files_end_mib=0
+GUARD guard=0
+END_CASE failed=0 timed_out=0 wall_ms=147280
+CASE mode=copy fanouts=2x2x6 processes=31 leaves=24
+ROOT exit=0 tokens=16321 publish_ms=581.60 state_bytes=936173269
+INNER node=r.0 mig=a7c66ad2 exit=0 text=213385c1efd5171e tokens=17094 context_ms=76.7 load_ms=183.79 publish_ms=599.70 state_bytes=980512549
+INNER node=r.1 mig=a7c66ad2 exit=0 text=2a8e9a7930c4b5a2 tokens=17094 context_ms=61.2 load_ms=256.47 publish_ms=578.32 state_bytes=980512549
+INNER node=r.0.0 mig=a7c66ad2 exit=0 text=72dd5b5b22374b7d tokens=17907 context_ms=101.1 load_ms=192.87 publish_ms=692.72 state_bytes=1027146229
+INNER node=r.0.1 mig=a7c66ad2 exit=0 text=7a9be50b0084b9b0 tokens=17907 context_ms=96.6 load_ms=284.32 publish_ms=912.34 state_bytes=1027146229
+INNER node=r.1.0 mig=a7c66ad2 exit=0 text=43a6b8875ff9a4a1 tokens=17907 context_ms=111.6 load_ms=170.71 publish_ms=637.32 state_bytes=1027146229
+INNER node=r.1.1 mig=a7c66ad2 exit=0 text=4c57d301813fe0ec tokens=17907 context_ms=94.2 load_ms=287.50 publish_ms=585.47 state_bytes=1027146229
+LEAF node=r.0.0.0 mig=a7c66ad2 exit=0 text=0770f05606ac68af context_ms=187.9 load_ms=918.37 first_token_ms=5369.7 generation_tps=1.051
+LEAF node=r.0.0.1 mig=a7c66ad2 exit=0 text=132bff72234434ae context_ms=441.0 load_ms=1417.53 first_token_ms=7895.8 generation_tps=1.038
+LEAF node=r.0.0.2 mig=a7c66ad2 exit=0 text=132bff72234434ae context_ms=356.2 load_ms=1411.32 first_token_ms=7915.7 generation_tps=1.037
+LEAF node=r.0.0.3 mig=a7c66ad2 exit=0 text=132bff72234434ae context_ms=170.8 load_ms=1369.26 first_token_ms=6159.7 generation_tps=1.051
+LEAF node=r.0.0.4 mig=a7c66ad2 exit=0 text=132bff72234434ae context_ms=383.2 load_ms=1480.11 first_token_ms=7745.6 generation_tps=1.035
+LEAF node=r.0.0.5 mig=a7c66ad2 exit=0 text=132bff72234434ae context_ms=397.9 load_ms=1427.54 first_token_ms=7902.3 generation_tps=1.038
+LEAF node=r.0.1.0 mig=a7c66ad2 exit=0 text=132bff72234434ae context_ms=398.2 load_ms=1418.40 first_token_ms=7842.0 generation_tps=1.033
+LEAF node=r.0.1.1 mig=a7c66ad2 exit=0 text=0ede13ad0d94dc55 context_ms=425.9 load_ms=1429.28 first_token_ms=7887.0 generation_tps=1.034
+LEAF node=r.0.1.2 mig=a7c66ad2 exit=0 text=132bff72234434ae context_ms=400.1 load_ms=1435.44 first_token_ms=8060.1 generation_tps=1.039
+LEAF node=r.0.1.3 mig=a7c66ad2 exit=0 text=132bff72234434ae context_ms=442.5 load_ms=1471.35 first_token_ms=8006.4 generation_tps=1.040
+LEAF node=r.0.1.4 mig=a7c66ad2 exit=0 text=0625d94a479b4370 context_ms=451.0 load_ms=1341.46 first_token_ms=8275.4 generation_tps=1.043
+LEAF node=r.0.1.5 mig=a7c66ad2 exit=0 text=0ede13ad0d94dc55 context_ms=364.3 load_ms=1480.75 first_token_ms=7986.7 generation_tps=1.043
+LEAF node=r.1.0.0 mig=a7c66ad2 exit=0 text=6fcdc7bfda259ec5 context_ms=443.1 load_ms=1450.59 first_token_ms=8058.9 generation_tps=1.585
+LEAF node=r.1.0.1 mig=a7c66ad2 exit=0 text=08c9c1d7befe562d context_ms=245.6 load_ms=1508.24 first_token_ms=7969.9 generation_tps=1.582
+LEAF node=r.1.0.2 mig=a7c66ad2 exit=0 text=3dc4b002573e78cd context_ms=388.5 load_ms=1343.90 first_token_ms=8284.1 generation_tps=1.587
+LEAF node=r.1.0.3 mig=a7c66ad2 exit=0 text=4df56be361ceb7c2 context_ms=523.9 load_ms=1440.80 first_token_ms=8023.1 generation_tps=1.583
+LEAF node=r.1.0.4 mig=a7c66ad2 exit=0 text=413b66771147eba1 context_ms=349.4 load_ms=1417.20 first_token_ms=8079.4 generation_tps=1.585
+LEAF node=r.1.0.5 mig=a7c66ad2 exit=0 text=16ed6339559a5f56 context_ms=199.8 load_ms=1417.27 first_token_ms=6501.2 generation_tps=1.572
+LEAF node=r.1.1.0 mig=a7c66ad2 exit=0 text=720fbd4f766d1604 context_ms=184.9 load_ms=1400.86 first_token_ms=6445.7 generation_tps=1.575
+LEAF node=r.1.1.1 mig=a7c66ad2 exit=0 text=b19bc4780caba99c context_ms=444.9 load_ms=1471.55 first_token_ms=7980.2 generation_tps=1.583
+LEAF node=r.1.1.2 mig=a7c66ad2 exit=0 text=5d6bbcee8b5f341b context_ms=428.0 load_ms=1353.97 first_token_ms=8233.7 generation_tps=1.586
+LEAF node=r.1.1.3 mig=a7c66ad2 exit=0 text=7ebc7d6ceda76403 context_ms=416.8 load_ms=1422.98 first_token_ms=8082.1 generation_tps=1.585
+LEAF node=r.1.1.4 mig=a7c66ad2 exit=0 text=dacd57fe8156465c context_ms=318.5 load_ms=1478.43 first_token_ms=7976.1 generation_tps=1.583
+LEAF node=r.1.1.5 mig=a7c66ad2 exit=0 text=0d070f17212a1ba1 context_ms=453.1 load_ms=1398.12 first_token_ms=8024.2 generation_tps=1.583
+MEMORY tree_drop_mib=79683 files_attached_mib=0 files_removed=0 files_all_alive_mib=0 files_first_subtree_left_mib=0 files_end_mib=0
+GUARD guard=0
+END_CASE failed=0 timed_out=0 wall_ms=153516
+END_KVDEEP

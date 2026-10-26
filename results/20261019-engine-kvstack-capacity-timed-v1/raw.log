@@ -1,0 +1,48 @@
+BEGIN_KVSTACK run=1 context=16384 publisher_mig=a7c66ad2 mem_free_mib=39258 kernel_reclaimable_mib=76422
+PUBLISH store=stock prefix_tokens=14282 prefix_ms=10810.2 publish_ms=546.00 state_bytes=819216229
+PUBLISH store=device prefix_tokens=14282 prefix_ms=10712.6 publish_ms=531.59 state_bytes=819216229
+PUBLISH store=huge prefix_tokens=14282 prefix_ms=10719.7 publish_ms=10.86 state_bytes=229221 file_used_kib=802816
+SKIPPED mode=none agents=16 mem_available_mib=109625
+SKIPPED mode=weights agents=61 mem_available_mib=109625
+SKIPPED mode=both agents=136 mem_available_mib=109625
+END_KVSTACK
+BEGIN_KVSTACK run=2 context=16384 publisher_mig=a7c66ad2 mem_free_mib=34495 kernel_reclaimable_mib=76421
+PUBLISH store=stock prefix_tokens=14282 prefix_ms=10807.3 publish_ms=530.03 state_bytes=819216229
+PUBLISH store=device prefix_tokens=14282 prefix_ms=10706.0 publish_ms=533.07 state_bytes=819216229
+PUBLISH store=huge prefix_tokens=14282 prefix_ms=10703.1 publish_ms=10.61 state_bytes=229221 file_used_kib=802816
+SKIPPED mode=both agents=136 mem_available_mib=109550
+SKIPPED mode=weights agents=61 mem_available_mib=109550
+SKIPPED mode=none agents=16 mem_available_mib=109550
+END_KVSTACK
+BEGIN_KVSTACK run=3 context=16384 publisher_mig=a7c66ad2 mem_free_mib=34383 kernel_reclaimable_mib=76421
+PUBLISH store=stock prefix_tokens=14282 prefix_ms=10807.3 publish_ms=539.27 state_bytes=819216229
+PUBLISH store=device prefix_tokens=14282 prefix_ms=10696.6 publish_ms=528.09 state_bytes=819216229
+PUBLISH store=huge prefix_tokens=14282 prefix_ms=10721.8 publish_ms=10.69 state_bytes=229221 file_used_kib=802816
+SKIPPED mode=none agents=16 mem_available_mib=109533
+SKIPPED mode=weights agents=61 mem_available_mib=109533
+SKIPPED mode=both agents=136 mem_available_mib=109533
+END_KVSTACK
+BEGIN_KVSTACK run=4 context=16384 publisher_mig=a7c66ad2 mem_free_mib=34623 kernel_reclaimable_mib=76421
+PUBLISH store=stock prefix_tokens=14282 prefix_ms=10806.6 publish_ms=545.05 state_bytes=819216229
+PUBLISH store=device prefix_tokens=14282 prefix_ms=10694.7 publish_ms=528.79 state_bytes=819216229
+PUBLISH store=huge prefix_tokens=14282 prefix_ms=10730.3 publish_ms=10.90 state_bytes=229221 file_used_kib=802816
+SKIPPED mode=both agents=136 mem_available_mib=109450
+SKIPPED mode=weights agents=61 mem_available_mib=109450
+SKIPPED mode=none agents=16 mem_available_mib=109450
+END_KVSTACK
+BEGIN_KVSTACK run=5 context=16384 publisher_mig=a7c66ad2 mem_free_mib=34549 kernel_reclaimable_mib=76421
+PUBLISH store=stock prefix_tokens=14282 prefix_ms=10825.3 publish_ms=537.76 state_bytes=819216229
+PUBLISH store=device prefix_tokens=14282 prefix_ms=10699.4 publish_ms=527.96 state_bytes=819216229
+PUBLISH store=huge prefix_tokens=14282 prefix_ms=10710.4 publish_ms=11.56 state_bytes=229221 file_used_kib=802816
+SKIPPED mode=none agents=16 mem_available_mib=109584
+SKIPPED mode=weights agents=61 mem_available_mib=109584
+SKIPPED mode=both agents=136 mem_available_mib=109584
+END_KVSTACK
+BEGIN_KVSTACK run=6 context=16384 publisher_mig=a7c66ad2 mem_free_mib=34660 kernel_reclaimable_mib=76421
+PUBLISH store=stock prefix_tokens=14282 prefix_ms=10803.6 publish_ms=531.48 state_bytes=819216229
+PUBLISH store=device prefix_tokens=14282 prefix_ms=10693.8 publish_ms=528.77 state_bytes=819216229
+PUBLISH store=huge prefix_tokens=14282 prefix_ms=10720.2 publish_ms=10.58 state_bytes=229221 file_used_kib=802816
+SKIPPED mode=both agents=136 mem_available_mib=109509
+SKIPPED mode=weights agents=61 mem_available_mib=109508
+SKIPPED mode=none agents=16 mem_available_mib=109508
+END_KVSTACK

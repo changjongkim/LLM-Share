@@ -1,0 +1,21 @@
+{
+  "arguments": {
+    "tag": "20261022-review-repeatfork-unlink-v1",
+    "repetitions": 6,
+    "modes": "copy copy_map extent",
+    "paragraphs": 320,
+    "forks": 8,
+    "children": 1,
+    "step": 256,
+    "tokens": 64,
+    "model": "/home/thor/kcj/llm_share/models/Qwen2.5-7B-Instruct-Q4_K_M.gguf",
+    "guard_gib": 12,
+    "timeout": 900,
+    "unlink": true
+  },
+  "gpu": "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600",
+  "boot_id": "f9776703-a137-43bc-822b-124c6147ff68",
+  "runner_sha256": "5291403733b21318ef9c45de5990311626a200f5b68d6838af48bdc3b3d98217",
+  "driver_sha256": "01d034988f5b318c6d56e42c9d9d5070ceb60674853bbbf52e5731d0e647f475",
+  "gqa": "2"
+}

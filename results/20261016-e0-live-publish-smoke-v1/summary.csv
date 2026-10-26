@@ -1,0 +1,5 @@
+case,run,mode,children,paragraphs,trace_on,status,publish_ms_measured,parent_resume_to_token_ms,children_window_tps,all_window_tps,total_peak_accounted_bytes,child_peak_drop_bytes,memory_min_available,gpu_faults_total,gpu_faults_children_and_parent_resume
+r01-copy-n1-p80-trace1,1,copy,1,80,True,ok,235.210519,44.90693,35.92063726730735,26.724026448936,7168109248,1233985536,123815686144,0,0
+r01-extent-n1-p80-trace1,1,extent,1,80,True,ok,4.986452,43.031461,35.39032238716855,27.053364116770204,6612163264,908582912,124336357376,0,0
+r02-extent-n1-p80-trace1,2,extent,1,80,True,ok,5.066739,42.793333,35.8433918515685,27.08113579965959,6581304000,902180864,124301131776,0,0
+r02-copy-n1-p80-trace1,2,copy,1,80,True,ok,229.071903,44.397941,36.23168969005236,26.802509355790708,7158676160,1220591616,123361120256,0,0

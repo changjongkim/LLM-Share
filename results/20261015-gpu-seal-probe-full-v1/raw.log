@@ -1,0 +1,27 @@
+BEGIN_SEAL run=1
+SEAL step=write_while_mapped result=refused errno=16
+SEAL step=future_write result=allowed errno=0
+SEAL step=old_mapping_write result=allowed errno=0
+SEAL step=new_shared_write result=refused errno=1
+SEAL step=private_write result=allowed errno=0
+SEAL step=write_after_unmap result=allowed errno=0
+SEAL step=gpu_read result=allowed errno=0 gpu_ms=9.58 sum_ok=1
+END_SEAL
+BEGIN_SEAL run=2
+SEAL step=write_while_mapped result=refused errno=16
+SEAL step=future_write result=allowed errno=0
+SEAL step=old_mapping_write result=allowed errno=0
+SEAL step=new_shared_write result=refused errno=1
+SEAL step=private_write result=allowed errno=0
+SEAL step=write_after_unmap result=allowed errno=0
+SEAL step=gpu_read result=allowed errno=0 gpu_ms=18.47 sum_ok=1
+END_SEAL
+BEGIN_SEAL run=3
+SEAL step=write_while_mapped result=refused errno=16
+SEAL step=future_write result=allowed errno=0
+SEAL step=old_mapping_write result=allowed errno=0
+SEAL step=new_shared_write result=refused errno=1
+SEAL step=private_write result=allowed errno=0
+SEAL step=write_after_unmap result=allowed errno=0
+SEAL step=gpu_read result=allowed errno=0 gpu_ms=9.79 sum_ok=1
+END_SEAL

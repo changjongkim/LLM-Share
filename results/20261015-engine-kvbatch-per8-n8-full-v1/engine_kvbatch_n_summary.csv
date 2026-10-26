@@ -1,0 +1,5 @@
+config,servers,mode,runs,failed_servers,prefix_tokens,ready_all_servers_ms,generation_tps_total,child_attach_ms,publish_ms,state_mib,memory_mib,texts_equal_to_copy,texts_compared
+1:none,1,none,4,0,16321,14547,462.18,0.0,0.00,0.00,2706,0,0
+1:extent,1,extent,4,0,16321,14626,465.70,0.0,13.09,0.25,2128,256,256
+8:copy,8,copy,4,0,16321,17283,135.69,603.4,572.56,892.80,20551,256,256
+8:extent,8,extent,4,0,16321,16192,134.48,51.2,11.00,0.25,7392,256,256

@@ -1,0 +1,95 @@
+{
+  "cases": [
+    {
+      "run": 1,
+      "mode": "device_merged",
+      "write": {
+        "route": "vmm",
+        "start_ns": "666783057239065",
+        "end_ns": "666783419763803",
+        "targets": "112",
+        "written": "112",
+        "result": "CUDA_SUCCESS"
+      },
+      "writer_exit": [
+        {
+          "exit": "0"
+        }
+      ],
+      "children_exit": [
+        "0",
+        "0"
+      ],
+      "children_text_equal": 1,
+      "parent_text_equal": true,
+      "parent_diverge_token": null,
+      "children": [
+        {
+          "index": 0,
+          "tokens": 48,
+          "first_after_write": 43,
+          "diverge_token": null,
+          "diverge_after_write": null,
+          "rate_after_write": 15.226945749376776,
+          "control_rate_same_window": 15.884765241337933,
+          "on_reference": [
+            true,
+            true,
+            true,
+            true,
+            true
+          ]
+        },
+        {
+          "index": 1,
+          "tokens": 48,
+          "first_after_write": 42,
+          "diverge_token": 47,
+          "diverge_after_write": 5,
+          "rate_after_write": 15.209206298048374,
+          "control_rate_same_window": 15.865927580988975,
+          "on_reference": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            false
+          ]
+        }
+      ]
+    }
+  ],
+  "modes": {
+    "device_merged": {
+      "children": 2,
+      "tokens_after_write": 5,
+      "curve_percent": [
+        100.0,
+        100.0,
+        100.0,
+        100.0,
+        100.0
+      ],
+      "children_diverged": 1,
+      "diverge_after_write_min": 5,
+      "diverge_after_write_max": 5,
+      "tokens_before_write": [
+        43,
+        42
+      ],
+      "controls_equal_across_runs": true,
+      "parent_text_equal": [
+        true
+      ],
+      "rate_after_write": [
+        15.226945749376776,
+        15.209206298048374
+      ],
+      "control_rate": [
+        15.884765241337933,
+        15.865927580988975
+      ]
+    }
+  }
+}

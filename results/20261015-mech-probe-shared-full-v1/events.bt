@@ -1,0 +1,12 @@
+BEGIN { printf("ATTACHED\n"); }
+kprobe:__mmu_notifier_invalidate_range_start { @n["notifier_invalidate"] = count(); }
+kprobe:__mmu_notifier_clear_flush_young, kprobe:__mmu_notifier_clear_young { @n["notifier_young"] = count(); }
+kprobe:arm_smmu_mm_arch_invalidate_secondary_tlbs { @n["smmu_invalidate"] = count(); }
+kprobe:do_wp_page /comm == "mech_probe" || strncmp(comm, "UVM GPU", 7) == 0/ { @n["wp_fault"] = count(); }
+kprobe:try_to_unmap_one { @n["unmap"] = count(); }
+kprobe:folio_referenced_one { @n["referenced_scan"] = count(); }
+kprobe:copy_page_range /comm == "mech_probe"/ { @n["fork_copy"] = count(); }
+kprobe:try_to_merge_one_page { @n["ksm_merge"] = count(); }
+kprobe:handle_mm_fault /comm == "mech_probe"/ { @n["cpu_fault"] = count(); }
+kprobe:handle_mm_fault /strncmp(comm, "UVM GPU", 7) == 0/ { @n["gpu_fault"] = count(); }
+END { print(@n); clear(@n); }

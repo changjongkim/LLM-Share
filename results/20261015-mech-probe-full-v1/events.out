@@ -1,0 +1,15 @@
+/home/thor/kcj/llm_share/results/20261015-mech-probe-full-v1/events.bt:1-2: WARNING: __mmu_notifier_invalidate_range_start is not traceable (either non-existing, inlined, or marked as "notrace"); attaching to it will likely fail
+/home/thor/kcj/llm_share/results/20261015-mech-probe-full-v1/events.bt:2-3: WARNING: __mmu_notifier_clear_flush_young is not traceable (either non-existing, inlined, or marked as "notrace"); attaching to it will likely fail
+/home/thor/kcj/llm_share/results/20261015-mech-probe-full-v1/events.bt:3:41-75: WARNING: __mmu_notifier_clear_young is not traceable (either non-existing, inlined, or marked as "notrace"); attaching to it will likely fail
+kprobe:__mmu_notifier_clear_flush_young, kprobe:__mmu_notifier_clear_young { @n["notifier_young"] = count(); }
+                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/thor/kcj/llm_share/results/20261015-mech-probe-full-v1/events.bt:3-4: WARNING: arm_smmu_mm_arch_invalidate_secondary_tlbs is not traceable (either non-existing, inlined, or marked as "notrace"); attaching to it will likely fail
+/home/thor/kcj/llm_share/results/20261015-mech-probe-full-v1/events.bt:4-5: WARNING: do_wp_page is not traceable (either non-existing, inlined, or marked as "notrace"); attaching to it will likely fail
+/home/thor/kcj/llm_share/results/20261015-mech-probe-full-v1/events.bt:5-6: WARNING: try_to_unmap_one is not traceable (either non-existing, inlined, or marked as "notrace"); attaching to it will likely fail
+/home/thor/kcj/llm_share/results/20261015-mech-probe-full-v1/events.bt:6-7: WARNING: folio_referenced_one is not traceable (either non-existing, inlined, or marked as "notrace"); attaching to it will likely fail
+/home/thor/kcj/llm_share/results/20261015-mech-probe-full-v1/events.bt:7-8: WARNING: copy_page_range is not traceable (either non-existing, inlined, or marked as "notrace"); attaching to it will likely fail
+/home/thor/kcj/llm_share/results/20261015-mech-probe-full-v1/events.bt:8-9: WARNING: try_to_merge_one_page is not traceable (either non-existing, inlined, or marked as "notrace"); attaching to it will likely fail
+/home/thor/kcj/llm_share/results/20261015-mech-probe-full-v1/events.bt:9-10: WARNING: handle_mm_fault is not traceable (either non-existing, inlined, or marked as "notrace"); attaching to it will likely fail
+/home/thor/kcj/llm_share/results/20261015-mech-probe-full-v1/events.bt:10-11: WARNING: handle_mm_fault is not traceable (either non-existing, inlined, or marked as "notrace"); attaching to it will likely fail
+create_probe_event: open(/sys/kernel/debug/tracing/kprobe_events): No such file or directory
+ERROR: Error attaching probe: 'kprobe:handle_mm_fault'

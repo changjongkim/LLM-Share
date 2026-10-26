@@ -1,0 +1,64 @@
+{
+  "suite": "instrumentation_pilot",
+  "seed": 0,
+  "rate": null,
+  "trace_top_rate": null,
+  "window_s": 5,
+  "tool_mean_s": null,
+  "tool_min_s": 1,
+  "tool_max_s": 2,
+  "fork_k": 3,
+  "n_gen": 8,
+  "memory_budget_gib": 96,
+  "reserve_gib": 16,
+  "guard_gib": 12,
+  "trace_derived_limit_s": 180,
+  "total_requested_tokens": 96,
+  "sessions": [
+    {
+      "sid": 0,
+      "arrival": 0.0,
+      "kind": "single",
+      "task": "List the command line options of the server that control the context size and the number of parallel slots.",
+      "tools": [
+        1.0,
+        2.0
+      ],
+      "child_tools": [
+        1.0,
+        1.5,
+        2.0
+      ]
+    },
+    {
+      "sid": 1,
+      "arrival": 1.0,
+      "kind": "tool",
+      "task": "Which tool reports the remaining battery time, and which arguments does it take?",
+      "tools": [
+        1.0,
+        2.0
+      ],
+      "child_tools": [
+        1.0,
+        1.5,
+        2.0
+      ]
+    },
+    {
+      "sid": 2,
+      "arrival": 2.0,
+      "kind": "fork",
+      "task": "Explain in two sentences how the server reuses a prompt that it has seen before.",
+      "tools": [
+        1.0,
+        2.0
+      ],
+      "child_tools": [
+        1.0,
+        1.5,
+        2.0
+      ]
+    }
+  ]
+}

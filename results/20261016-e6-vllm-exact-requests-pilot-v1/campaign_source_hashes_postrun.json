@@ -1,0 +1,5 @@
+{
+  "/home/thor/kcj/stator_campaign_20261016/tools/run_vllm_diagnostic.sh": "8ace38e32c8bce6ef5f637cc7fa77133e5b383e65f698fe7909e4db35887f4fd",
+  "/home/thor/kcj/stator_campaign_20261016/tools/vllm_diagnostic_client.py": "f33396be1de01af514b9ba3b650c82422fd7d29ffbeb2c426bbad3d9fa2eaca8",
+  "/home/thor/kcj/stator_campaign_20261016/tools/guarded_command.py": "77b8767aa1f7ef97a129f6fb4f5b040c90b281868bd3728e16709f6a2e9327f5"
+}

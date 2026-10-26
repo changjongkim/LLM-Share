@@ -1,0 +1,8 @@
+mech,step,access,pressure,runs,failed,seconds,seconds_ci95,copied_mib,copied_mib_ci95,cpu_faults,cpu_faults_ci95,gpu_fault_pages,gpu_fault_pages_ci95,gpu_fault_ms,gpu_fault_ms_ci95,merged_before,merged_before_ci95,merged_after,merged_after_ci95,pass_ms,pass_ms_ci95,passes,passes_ci95,major_faults,major_faults_ci95,reclaim_succeeded,reclaim_succeeded_ci95,hot_resident,hot_resident_ci95,cold_resident,cold_resident_ci95,memcg_freed_mib,memcg_freed_mib_ci95,reclaim_write_max_ms,reclaim_write_max_ms_ci95,lock_s,lock_s_ci95,rate_vs_none,notifier_invalidate,notifier_young,smmu_invalidate,wp_fault,unmap,referenced_scan,fork_copy,ksm_merge,cpu_fault,gpu_fault
+shared,read,cpu,,6,0,0.1183,0.0004,0.0000,0.0000,16388.0000,0.0000,0.0000,0.0000,0.0000,0.0000,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+shared,read,gpu,,6,0,1.5685,2.2007,0.1000,0.0000,21.0000,0.0000,1115031.3333,61563.2495,1071.6667,1243.6558,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+shared,events,cpu,all,1,0,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,0,0,0,0,0,0,0,0,0,0
+shared,events,gpu,all,1,0,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,0,0,0,0,0,0,0,0,0,0
+gate,M1,,,,PASS,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+gate,M2,,,,FAIL,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+gate,M3,,,,PASS,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,

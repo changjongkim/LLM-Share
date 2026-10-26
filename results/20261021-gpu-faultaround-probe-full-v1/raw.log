@@ -1,0 +1,120 @@
+BEGIN_FAULTAROUND run=1
+CASE mode=ro fs=ext4 fab=65536 step=none
+PREPARE mode=ro step=none prepare_ms=0.00 gpu_ms=592.84 sum_ok=1
+KERNEL gpu_fault_pages=916394 fault_thread_ms=460
+CASE mode=ro fs=ext4 fab=65536 step=touch
+PREPARE mode=ro step=touch prepare_ms=49.86 gpu_ms=7.08 sum_ok=1
+KERNEL gpu_fault_pages=0 fault_thread_ms=0
+CASE mode=ro fs=ext4 fab=65536 step=populate
+PREPARE mode=ro step=populate prepare_ms=47.27 gpu_ms=166.82 sum_ok=1
+KERNEL gpu_fault_pages=463872 fault_thread_ms=100
+CASE mode=ro fs=ext4 fab=4096 step=none
+PREPARE mode=ro step=none prepare_ms=0.00 gpu_ms=461.63 sum_ok=1
+KERNEL gpu_fault_pages=914124 fault_thread_ms=370
+CASE mode=ro fs=ext4 fab=4096 step=touch
+PREPARE mode=ro step=touch prepare_ms=155.08 gpu_ms=7.20 sum_ok=1
+KERNEL gpu_fault_pages=0 fault_thread_ms=0
+CASE mode=ro fs=ext4 fab=4096 step=populate
+PREPARE mode=ro step=populate prepare_ms=79.67 gpu_ms=8.51 sum_ok=1
+KERNEL gpu_fault_pages=0 fault_thread_ms=0
+END_FAULTAROUND
+BEGIN_FAULTAROUND run=2
+CASE mode=ro fs=ext4 fab=4096 step=populate
+PREPARE mode=ro step=populate prepare_ms=79.79 gpu_ms=7.24 sum_ok=1
+KERNEL gpu_fault_pages=0 fault_thread_ms=0
+CASE mode=ro fs=ext4 fab=4096 step=touch
+PREPARE mode=ro step=touch prepare_ms=165.11 gpu_ms=15.52 sum_ok=1
+KERNEL gpu_fault_pages=0 fault_thread_ms=0
+CASE mode=ro fs=ext4 fab=4096 step=none
+PREPARE mode=ro step=none prepare_ms=0.00 gpu_ms=466.06 sum_ok=1
+KERNEL gpu_fault_pages=916174 fault_thread_ms=370
+CASE mode=ro fs=ext4 fab=65536 step=populate
+PREPARE mode=ro step=populate prepare_ms=47.01 gpu_ms=142.22 sum_ok=1
+KERNEL gpu_fault_pages=467968 fault_thread_ms=140
+CASE mode=ro fs=ext4 fab=65536 step=touch
+PREPARE mode=ro step=touch prepare_ms=50.77 gpu_ms=6.56 sum_ok=1
+KERNEL gpu_fault_pages=0 fault_thread_ms=0
+CASE mode=ro fs=ext4 fab=65536 step=none
+PREPARE mode=ro step=none prepare_ms=0.00 gpu_ms=333.17 sum_ok=1
+KERNEL gpu_fault_pages=927108 fault_thread_ms=310
+END_FAULTAROUND
+BEGIN_FAULTAROUND run=3
+CASE mode=ro fs=ext4 fab=65536 step=none
+PREPARE mode=ro step=none prepare_ms=0.00 gpu_ms=365.94 sum_ok=1
+KERNEL gpu_fault_pages=919368 fault_thread_ms=330
+CASE mode=ro fs=ext4 fab=65536 step=touch
+PREPARE mode=ro step=touch prepare_ms=49.96 gpu_ms=6.80 sum_ok=1
+KERNEL gpu_fault_pages=0 fault_thread_ms=0
+CASE mode=ro fs=ext4 fab=65536 step=populate
+PREPARE mode=ro step=populate prepare_ms=46.93 gpu_ms=222.21 sum_ok=1
+KERNEL gpu_fault_pages=458752 fault_thread_ms=140
+CASE mode=ro fs=ext4 fab=4096 step=none
+PREPARE mode=ro step=none prepare_ms=0.00 gpu_ms=393.86 sum_ok=1
+KERNEL gpu_fault_pages=920250 fault_thread_ms=350
+CASE mode=ro fs=ext4 fab=4096 step=touch
+PREPARE mode=ro step=touch prepare_ms=161.79 gpu_ms=8.54 sum_ok=1
+KERNEL gpu_fault_pages=0 fault_thread_ms=0
+CASE mode=ro fs=ext4 fab=4096 step=populate
+PREPARE mode=ro step=populate prepare_ms=80.00 gpu_ms=6.62 sum_ok=1
+KERNEL gpu_fault_pages=0 fault_thread_ms=0
+END_FAULTAROUND
+BEGIN_FAULTAROUND run=4
+CASE mode=ro fs=ext4 fab=4096 step=populate
+PREPARE mode=ro step=populate prepare_ms=79.81 gpu_ms=9.74 sum_ok=1
+KERNEL gpu_fault_pages=0 fault_thread_ms=0
+CASE mode=ro fs=ext4 fab=4096 step=touch
+PREPARE mode=ro step=touch prepare_ms=157.09 gpu_ms=9.40 sum_ok=1
+KERNEL gpu_fault_pages=0 fault_thread_ms=0
+CASE mode=ro fs=ext4 fab=4096 step=none
+PREPARE mode=ro step=none prepare_ms=0.00 gpu_ms=351.11 sum_ok=1
+KERNEL gpu_fault_pages=922930 fault_thread_ms=310
+CASE mode=ro fs=ext4 fab=65536 step=populate
+PREPARE mode=ro step=populate prepare_ms=47.15 gpu_ms=148.46 sum_ok=1
+KERNEL gpu_fault_pages=505856 fault_thread_ms=130
+CASE mode=ro fs=ext4 fab=65536 step=touch
+PREPARE mode=ro step=touch prepare_ms=49.58 gpu_ms=6.85 sum_ok=1
+KERNEL gpu_fault_pages=0 fault_thread_ms=0
+CASE mode=ro fs=ext4 fab=65536 step=none
+PREPARE mode=ro step=none prepare_ms=0.00 gpu_ms=344.70 sum_ok=1
+KERNEL gpu_fault_pages=925106 fault_thread_ms=320
+END_FAULTAROUND
+BEGIN_FAULTAROUND run=5
+CASE mode=ro fs=ext4 fab=65536 step=none
+PREPARE mode=ro step=none prepare_ms=0.00 gpu_ms=325.38 sum_ok=1
+KERNEL gpu_fault_pages=922200 fault_thread_ms=300
+CASE mode=ro fs=ext4 fab=65536 step=touch
+PREPARE mode=ro step=touch prepare_ms=49.63 gpu_ms=6.81 sum_ok=1
+KERNEL gpu_fault_pages=0 fault_thread_ms=0
+CASE mode=ro fs=ext4 fab=65536 step=populate
+PREPARE mode=ro step=populate prepare_ms=47.07 gpu_ms=172.16 sum_ok=1
+KERNEL gpu_fault_pages=497664 fault_thread_ms=140
+CASE mode=ro fs=ext4 fab=4096 step=none
+PREPARE mode=ro step=none prepare_ms=0.00 gpu_ms=665.81 sum_ok=1
+KERNEL gpu_fault_pages=917850 fault_thread_ms=490
+CASE mode=ro fs=ext4 fab=4096 step=touch
+PREPARE mode=ro step=touch prepare_ms=156.28 gpu_ms=7.13 sum_ok=1
+KERNEL gpu_fault_pages=0 fault_thread_ms=0
+CASE mode=ro fs=ext4 fab=4096 step=populate
+PREPARE mode=ro step=populate prepare_ms=80.43 gpu_ms=8.44 sum_ok=1
+KERNEL gpu_fault_pages=0 fault_thread_ms=0
+END_FAULTAROUND
+BEGIN_FAULTAROUND run=6
+CASE mode=ro fs=ext4 fab=4096 step=populate
+PREPARE mode=ro step=populate prepare_ms=80.35 gpu_ms=7.19 sum_ok=1
+KERNEL gpu_fault_pages=0 fault_thread_ms=0
+CASE mode=ro fs=ext4 fab=4096 step=touch
+PREPARE mode=ro step=touch prepare_ms=166.74 gpu_ms=16.57 sum_ok=1
+KERNEL gpu_fault_pages=0 fault_thread_ms=0
+CASE mode=ro fs=ext4 fab=4096 step=none
+PREPARE mode=ro step=none prepare_ms=0.00 gpu_ms=414.09 sum_ok=1
+KERNEL gpu_fault_pages=920882 fault_thread_ms=360
+CASE mode=ro fs=ext4 fab=65536 step=populate
+PREPARE mode=ro step=populate prepare_ms=47.18 gpu_ms=221.35 sum_ok=1
+KERNEL gpu_fault_pages=459776 fault_thread_ms=140
+CASE mode=ro fs=ext4 fab=65536 step=touch
+PREPARE mode=ro step=touch prepare_ms=50.18 gpu_ms=6.54 sum_ok=1
+KERNEL gpu_fault_pages=0 fault_thread_ms=0
+CASE mode=ro fs=ext4 fab=65536 step=none
+PREPARE mode=ro step=none prepare_ms=0.00 gpu_ms=343.97 sum_ok=1
+KERNEL gpu_fault_pages=914500 fault_thread_ms=300
+END_FAULTAROUND

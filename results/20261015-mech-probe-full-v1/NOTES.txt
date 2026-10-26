@@ -1,0 +1,6 @@
+2026-10-15: every shared case of this campaign failed in mmap (mech_probe.cu opened the file
+read-only for a shared writable mapping), and summarize_mech_probe.py of this run did not count
+a case without output, so gate M1 here reads PASS although 12 shared cases failed (the fixed
+summarizer reports M1 FAIL for them). The shared cases were rerun with mech_probe2.cu in
+20261015-mech-probe-shared-full-v1; figures take the shared rows from there. bpftrace attached
+no kprobe on this kernel ("not traceable"), so the EVENTS lines are empty.

@@ -1,0 +1,1190 @@
+[
+  {
+    "case": "r01-device_merged-control",
+    "run": 1,
+    "mode": "device_merged",
+    "fault": false,
+    "children": 8,
+    "paragraphs": 320,
+    "n_gen": 96,
+    "status": "ok",
+    "context": 32768,
+    "command": [
+      "/home/thor/kcj/stator_campaign_20261016/bin/kv_spawn_fault_tuned4",
+      "/home/thor/kcj/llm_share/models/Qwen2.5-7B-Instruct-Q4_K_M.gguf",
+      "32768",
+      "/home/thor/kcj/llm_share/results/20261022-review-fault-writer-v2/r01-device_merged-control/prefix.txt",
+      "/home/thor/kcj/llm_share/results/20261022-review-fault-writer-v2/r01-device_merged-control/state",
+      "96",
+      "/home/thor/kcj/llm_share/results/20261022-review-fault-writer-v2/r01-device_merged-control/go",
+      "/home/thor/kcj/llm_share/results/20261022-review-fault-writer-v2/r01-device_merged-control/out",
+      "/home/thor/kcj/stator_campaign_20261016/bin/kv_fork_tuned4",
+      "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600",
+      "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600",
+      "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600",
+      "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600",
+      "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600",
+      "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600",
+      "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600",
+      "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600"
+    ],
+    "environment": {
+      "GGML_CUDA_FATTN_HOST_GQA": "2",
+      "CUDA_VISIBLE_DEVICES": "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600",
+      "GGML_CUDA_HOST_PTR": "1",
+      "LLAMA_KV_VMM": "1",
+      "LLAMA_KV_VMM_BATCH": "2",
+      "LLAMA_KV_GROW": "256",
+      "STATOR_TIMING_DIR": "/home/thor/kcj/llm_share/results/20261022-review-fault-writer-v2/r01-device_merged-control/timing",
+      "STATOR_TRACE": "1"
+    },
+    "parent_pid": 385196,
+    "exit": 0,
+    "release_ns": 666825796779909,
+    "wall_s": 43.391577711,
+    "children_exit": [
+      {
+        "index": "0",
+        "exit": "0"
+      },
+      {
+        "index": "1",
+        "exit": "0"
+      },
+      {
+        "index": "2",
+        "exit": "0"
+      },
+      {
+        "index": "3",
+        "exit": "0"
+      },
+      {
+        "index": "4",
+        "exit": "0"
+      },
+      {
+        "index": "5",
+        "exit": "0"
+      },
+      {
+        "index": "6",
+        "exit": "0"
+      },
+      {
+        "index": "7",
+        "exit": "0"
+      }
+    ],
+    "writer_exit": [],
+    "write": [],
+    "parent_text_sha256": "55a251eeb6748d4dca635bc68a8e513f99e047f2ab877ba6f0eb1273fa878d95",
+    "child_text_sha256": [
+      "c6b8682106a4f4fd0ff11e6f319d99cb58fc699449fb8ae110230eda261aa528",
+      "9443d18f99b7ff13c98a0b643e0abb8cd8605a00e40fa7eac23fa561427574a5",
+      "a0446784ada7164ccb4048891e7608b71e4ff0656b7a4df972d1511336b896b2",
+      "d358fe1c51e9f875f3811721fe7d6ba34bf13386b26fcbf50e3c441a69cbd754",
+      "e27aa66dc70d2f4fc873b2fc3a53cc11679b8260c1e853e8bd36225c0a1200ab",
+      "694752e09e65ecea53180c533e04185aa9cad399b8bb56e64b2063ce85df451c",
+      "dbd31ee405e3a74601e15e87d24898367e1d63454334c57041a1e5125bbab360",
+      "b148f99a8be2f3e1392997caca2c98f2def921e44cf15d9e93bd0e2e5ebd014b"
+    ],
+    "publish_ms": 113.222353
+  },
+  {
+    "case": "r01-device_merged-fault",
+    "run": 1,
+    "mode": "device_merged",
+    "fault": true,
+    "children": 8,
+    "paragraphs": 320,
+    "n_gen": 96,
+    "status": "ok",
+    "context": 32768,
+    "command": [
+      "/home/thor/kcj/stator_campaign_20261016/bin/kv_spawn_fault_tuned4",
+      "/home/thor/kcj/llm_share/models/Qwen2.5-7B-Instruct-Q4_K_M.gguf",
+      "32768",
+      "/home/thor/kcj/llm_share/results/20261022-review-fault-writer-v2/r01-device_merged-fault/prefix.txt",
+      "/home/thor/kcj/llm_share/results/20261022-review-fault-writer-v2/r01-device_merged-fault/state",
+      "96",
+      "/home/thor/kcj/llm_share/results/20261022-review-fault-writer-v2/r01-device_merged-fault/go",
+      "/home/thor/kcj/llm_share/results/20261022-review-fault-writer-v2/r01-device_merged-fault/out",
+      "/home/thor/kcj/stator_campaign_20261016/bin/kv_fork_tuned4",
+      "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600",
+      "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600",
+      "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600",
+      "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600",
+      "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600",
+      "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600",
+      "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600",
+      "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600"
+    ],
+    "environment": {
+      "GGML_CUDA_FATTN_HOST_GQA": "2",
+      "CUDA_VISIBLE_DEVICES": "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600",
+      "GGML_CUDA_HOST_PTR": "1",
+      "LLAMA_KV_VMM": "1",
+      "LLAMA_KV_VMM_BATCH": "2",
+      "LLAMA_KV_GROW": "256",
+      "STATOR_TIMING_DIR": "/home/thor/kcj/llm_share/results/20261022-review-fault-writer-v2/r01-device_merged-fault/timing",
+      "STATOR_TRACE": "1",
+      "STATOR_FAULT_WRITER": "/home/thor/kcj/stator_campaign_20261016/bin/fault_writer",
+      "STATOR_FAULT_DELAY_MS": "5000"
+    },
+    "parent_pid": 385511,
+    "exit": 0,
+    "release_ns": 666872754516851,
+    "wall_s": 43.531701655,
+    "children_exit": [
+      {
+        "index": "0",
+        "exit": "0"
+      },
+      {
+        "index": "1",
+        "exit": "0"
+      },
+      {
+        "index": "2",
+        "exit": "0"
+      },
+      {
+        "index": "3",
+        "exit": "0"
+      },
+      {
+        "index": "4",
+        "exit": "0"
+      },
+      {
+        "index": "5",
+        "exit": "0"
+      },
+      {
+        "index": "6",
+        "exit": "0"
+      },
+      {
+        "index": "7",
+        "exit": "0"
+      }
+    ],
+    "writer_exit": [
+      {
+        "exit": "0"
+      }
+    ],
+    "write": [
+      {
+        "route": "vmm",
+        "start_ns": "666878688088563",
+        "end_ns": "666880348413298",
+        "targets": "112",
+        "written": "112",
+        "result": "CUDA_SUCCESS"
+      }
+    ],
+    "parent_text_sha256": "a29e861c96aca05dbf82ebf250ace6942f29a009233b3a5b35d1f95f16baffda",
+    "child_text_sha256": [
+      "74687c3e309106c9e9481ff4c54621047a04cbfc916cc0c9aa7cd7b2f54e043b",
+      "d51dae3a3c34ae2ddf4dc90113e19d4f90319d3e1f378c944c5689e197b4ec13",
+      "6b31ce7feb8c14d4a26c3633959b61139714bbb5b013dca72dac3aa6306e8c44",
+      "910fa67e62268cd8a377e270b0c8dcc68cb7ebd52c6e8a41803c642474c5fec8",
+      "a8f9b06ed9c83e594c1715d3663658b77d3858e311b29d891e2377b2f12c5ee1",
+      "b9c38805832b13c9aa54a10410d62cd839dd54e4a44181f9734550ed0828f46b",
+      "949613776029dba5e0970e9625c718bab5e4e9aba247e82f0430a75946c43fa8",
+      "395e239c0df81ac61efc49231154a2fbd69e6b9fdf9a93b0ccda18b757ec6ddf"
+    ],
+    "publish_ms": 97.904134
+  },
+  {
+    "case": "r01-extent-control",
+    "run": 1,
+    "mode": "extent",
+    "fault": false,
+    "children": 8,
+    "paragraphs": 320,
+    "n_gen": 96,
+    "status": "ok",
+    "context": 32768,
+    "command": [
+      "/home/thor/kcj/stator_campaign_20261016/bin/kv_spawn_fault_tuned4",
+      "/home/thor/kcj/llm_share/models/Qwen2.5-7B-Instruct-Q4_K_M.gguf",
+      "32768",
+      "/home/thor/kcj/llm_share/results/20261022-review-fault-writer-v2/r01-extent-control/prefix.txt",
+      "/home/thor/kcj/llm_share/results/20261022-review-fault-writer-v2/r01-extent-control/state",
+      "96",
+      "/home/thor/kcj/llm_share/results/20261022-review-fault-writer-v2/r01-extent-control/go",
+      "/home/thor/kcj/llm_share/results/20261022-review-fault-writer-v2/r01-extent-control/out",
+      "/home/thor/kcj/stator_campaign_20261016/bin/kv_fork_tuned4",
+      "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600",
+      "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600",
+      "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600",
+      "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600",
+      "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600",
+      "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600",
+      "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600",
+      "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600"
+    ],
+    "environment": {
+      "GGML_CUDA_FATTN_HOST_GQA": "2",
+      "CUDA_VISIBLE_DEVICES": "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600",
+      "GGML_CUDA_HOST_PTR": "1",
+      "LLAMA_KV_HOST": "/home/thor/kcj/llm_share/results/20261022-review-fault-writer-v2/tmpfs/kv",
+      "LLAMA_KV_GROW": "256",
+      "STATOR_TIMING_DIR": "/home/thor/kcj/llm_share/results/20261022-review-fault-writer-v2/r01-extent-control/timing",
+      "STATOR_TRACE": "1"
+    },
+    "parent_pid": 385831,
+    "exit": 0,
+    "release_ns": 666919672293125,
+    "wall_s": 43.049943756,
+    "children_exit": [
+      {
+        "index": "0",
+        "exit": "0"
+      },
+      {
+        "index": "1",
+        "exit": "0"
+      },
+      {
+        "index": "2",
+        "exit": "0"
+      },
+      {
+        "index": "3",
+        "exit": "0"
+      },
+      {
+        "index": "4",
+        "exit": "0"
+      },
+      {
+        "index": "5",
+        "exit": "0"
+      },
+      {
+        "index": "6",
+        "exit": "0"
+      },
+      {
+        "index": "7",
+        "exit": "0"
+      }
+    ],
+    "writer_exit": [],
+    "write": [],
+    "parent_text_sha256": "55a251eeb6748d4dca635bc68a8e513f99e047f2ab877ba6f0eb1273fa878d95",
+    "child_text_sha256": [
+      "c6b8682106a4f4fd0ff11e6f319d99cb58fc699449fb8ae110230eda261aa528",
+      "9443d18f99b7ff13c98a0b643e0abb8cd8605a00e40fa7eac23fa561427574a5",
+      "a0446784ada7164ccb4048891e7608b71e4ff0656b7a4df972d1511336b896b2",
+      "d358fe1c51e9f875f3811721fe7d6ba34bf13386b26fcbf50e3c441a69cbd754",
+      "e27aa66dc70d2f4fc873b2fc3a53cc11679b8260c1e853e8bd36225c0a1200ab",
+      "694752e09e65ecea53180c533e04185aa9cad399b8bb56e64b2063ce85df451c",
+      "dbd31ee405e3a74601e15e87d24898367e1d63454334c57041a1e5125bbab360",
+      "b148f99a8be2f3e1392997caca2c98f2def921e44cf15d9e93bd0e2e5ebd014b"
+    ],
+    "publish_ms": 11.777295
+  },
+  {
+    "case": "r01-extent-fault",
+    "run": 1,
+    "mode": "extent",
+    "fault": true,
+    "children": 8,
+    "paragraphs": 320,
+    "n_gen": 96,
+    "status": "ok",
+    "context": 32768,
+    "command": [
+      "/home/thor/kcj/stator_campaign_20261016/bin/kv_spawn_fault_tuned4",
+      "/home/thor/kcj/llm_share/models/Qwen2.5-7B-Instruct-Q4_K_M.gguf",
+      "32768",
+      "/home/thor/kcj/llm_share/results/20261022-review-fault-writer-v2/r01-extent-fault/prefix.txt",
+      "/home/thor/kcj/llm_share/results/20261022-review-fault-writer-v2/r01-extent-fault/state",
+      "96",
+      "/home/thor/kcj/llm_share/results/20261022-review-fault-writer-v2/r01-extent-fault/go",
+      "/home/thor/kcj/llm_share/results/20261022-review-fault-writer-v2/r01-extent-fault/out",
+      "/home/thor/kcj/stator_campaign_20261016/bin/kv_fork_tuned4",
+      "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600",
+      "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600",
+      "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600",
+      "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600",
+      "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600",
+      "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600",
+      "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600",
+      "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600"
+    ],
+    "environment": {
+      "GGML_CUDA_FATTN_HOST_GQA": "2",
+      "CUDA_VISIBLE_DEVICES": "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600",
+      "GGML_CUDA_HOST_PTR": "1",
+      "LLAMA_KV_HOST": "/home/thor/kcj/llm_share/results/20261022-review-fault-writer-v2/tmpfs/kv",
+      "LLAMA_KV_GROW": "256",
+      "STATOR_TIMING_DIR": "/home/thor/kcj/llm_share/results/20261022-review-fault-writer-v2/r01-extent-fault/timing",
+      "STATOR_TRACE": "1",
+      "STATOR_FAULT_WRITER": "/home/thor/kcj/stator_campaign_20261016/bin/fault_writer",
+      "STATOR_FAULT_DELAY_MS": "5000"
+    },
+    "parent_pid": 386260,
+    "exit": 0,
+    "release_ns": 666966314129485,
+    "wall_s": 43.109837152,
+    "children_exit": [
+      {
+        "index": "0",
+        "exit": "0"
+      },
+      {
+        "index": "1",
+        "exit": "0"
+      },
+      {
+        "index": "2",
+        "exit": "0"
+      },
+      {
+        "index": "3",
+        "exit": "0"
+      },
+      {
+        "index": "4",
+        "exit": "0"
+      },
+      {
+        "index": "5",
+        "exit": "0"
+      },
+      {
+        "index": "6",
+        "exit": "0"
+      },
+      {
+        "index": "7",
+        "exit": "0"
+      }
+    ],
+    "writer_exit": [
+      {
+        "exit": "0"
+      }
+    ],
+    "write": [
+      {
+        "route": "host",
+        "start_ns": "666971627205662",
+        "end_ns": "666971745930266",
+        "targets": "1",
+        "written": "0",
+        "result": "cudaErrorIllegalAddress"
+      }
+    ],
+    "parent_text_sha256": "55a251eeb6748d4dca635bc68a8e513f99e047f2ab877ba6f0eb1273fa878d95",
+    "child_text_sha256": [
+      "c6b8682106a4f4fd0ff11e6f319d99cb58fc699449fb8ae110230eda261aa528",
+      "9443d18f99b7ff13c98a0b643e0abb8cd8605a00e40fa7eac23fa561427574a5",
+      "a0446784ada7164ccb4048891e7608b71e4ff0656b7a4df972d1511336b896b2",
+      "d358fe1c51e9f875f3811721fe7d6ba34bf13386b26fcbf50e3c441a69cbd754",
+      "e27aa66dc70d2f4fc873b2fc3a53cc11679b8260c1e853e8bd36225c0a1200ab",
+      "694752e09e65ecea53180c533e04185aa9cad399b8bb56e64b2063ce85df451c",
+      "dbd31ee405e3a74601e15e87d24898367e1d63454334c57041a1e5125bbab360",
+      "b148f99a8be2f3e1392997caca2c98f2def921e44cf15d9e93bd0e2e5ebd014b"
+    ],
+    "publish_ms": 11.768776
+  },
+  {
+    "case": "r02-extent-fault",
+    "run": 2,
+    "mode": "extent",
+    "fault": true,
+    "children": 8,
+    "paragraphs": 320,
+    "n_gen": 96,
+    "status": "ok",
+    "context": 32768,
+    "command": [
+      "/home/thor/kcj/stator_campaign_20261016/bin/kv_spawn_fault_tuned4",
+      "/home/thor/kcj/llm_share/models/Qwen2.5-7B-Instruct-Q4_K_M.gguf",
+      "32768",
+      "/home/thor/kcj/llm_share/results/20261022-review-fault-writer-v2/r02-extent-fault/prefix.txt",
+      "/home/thor/kcj/llm_share/results/20261022-review-fault-writer-v2/r02-extent-fault/state",
+      "96",
+      "/home/thor/kcj/llm_share/results/20261022-review-fault-writer-v2/r02-extent-fault/go",
+      "/home/thor/kcj/llm_share/results/20261022-review-fault-writer-v2/r02-extent-fault/out",
+      "/home/thor/kcj/stator_campaign_20261016/bin/kv_fork_tuned4",
+      "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600",
+      "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600",
+      "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600",
+      "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600",
+      "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600",
+      "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600",
+      "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600",
+      "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600"
+    ],
+    "environment": {
+      "GGML_CUDA_FATTN_HOST_GQA": "2",
+      "CUDA_VISIBLE_DEVICES": "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600",
+      "GGML_CUDA_HOST_PTR": "1",
+      "LLAMA_KV_HOST": "/home/thor/kcj/llm_share/results/20261022-review-fault-writer-v2/tmpfs/kv",
+      "LLAMA_KV_GROW": "256",
+      "STATOR_TIMING_DIR": "/home/thor/kcj/llm_share/results/20261022-review-fault-writer-v2/r02-extent-fault/timing",
+      "STATOR_TRACE": "1",
+      "STATOR_FAULT_WRITER": "/home/thor/kcj/stator_campaign_20261016/bin/fault_writer",
+      "STATOR_FAULT_DELAY_MS": "5000"
+    },
+    "parent_pid": 386731,
+    "exit": 0,
+    "release_ns": 667012873238691,
+    "wall_s": 43.0748312,
+    "children_exit": [
+      {
+        "index": "0",
+        "exit": "0"
+      },
+      {
+        "index": "1",
+        "exit": "0"
+      },
+      {
+        "index": "2",
+        "exit": "0"
+      },
+      {
+        "index": "3",
+        "exit": "0"
+      },
+      {
+        "index": "4",
+        "exit": "0"
+      },
+      {
+        "index": "5",
+        "exit": "0"
+      },
+      {
+        "index": "6",
+        "exit": "0"
+      },
+      {
+        "index": "7",
+        "exit": "0"
+      }
+    ],
+    "writer_exit": [
+      {
+        "exit": "0"
+      }
+    ],
+    "write": [
+      {
+        "route": "host",
+        "start_ns": "667018194175514",
+        "end_ns": "667018301656684",
+        "targets": "1",
+        "written": "0",
+        "result": "cudaErrorIllegalAddress"
+      }
+    ],
+    "parent_text_sha256": "55a251eeb6748d4dca635bc68a8e513f99e047f2ab877ba6f0eb1273fa878d95",
+    "child_text_sha256": [
+      "c6b8682106a4f4fd0ff11e6f319d99cb58fc699449fb8ae110230eda261aa528",
+      "9443d18f99b7ff13c98a0b643e0abb8cd8605a00e40fa7eac23fa561427574a5",
+      "a0446784ada7164ccb4048891e7608b71e4ff0656b7a4df972d1511336b896b2",
+      "d358fe1c51e9f875f3811721fe7d6ba34bf13386b26fcbf50e3c441a69cbd754",
+      "e27aa66dc70d2f4fc873b2fc3a53cc11679b8260c1e853e8bd36225c0a1200ab",
+      "694752e09e65ecea53180c533e04185aa9cad399b8bb56e64b2063ce85df451c",
+      "dbd31ee405e3a74601e15e87d24898367e1d63454334c57041a1e5125bbab360",
+      "b148f99a8be2f3e1392997caca2c98f2def921e44cf15d9e93bd0e2e5ebd014b"
+    ],
+    "publish_ms": 12.228867
+  },
+  {
+    "case": "r02-extent-control",
+    "run": 2,
+    "mode": "extent",
+    "fault": false,
+    "children": 8,
+    "paragraphs": 320,
+    "n_gen": 96,
+    "status": "ok",
+    "context": 32768,
+    "command": [
+      "/home/thor/kcj/stator_campaign_20261016/bin/kv_spawn_fault_tuned4",
+      "/home/thor/kcj/llm_share/models/Qwen2.5-7B-Instruct-Q4_K_M.gguf",
+      "32768",
+      "/home/thor/kcj/llm_share/results/20261022-review-fault-writer-v2/r02-extent-control/prefix.txt",
+      "/home/thor/kcj/llm_share/results/20261022-review-fault-writer-v2/r02-extent-control/state",
+      "96",
+      "/home/thor/kcj/llm_share/results/20261022-review-fault-writer-v2/r02-extent-control/go",
+      "/home/thor/kcj/llm_share/results/20261022-review-fault-writer-v2/r02-extent-control/out",
+      "/home/thor/kcj/stator_campaign_20261016/bin/kv_fork_tuned4",
+      "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600",
+      "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600",
+      "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600",
+      "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600",
+      "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600",
+      "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600",
+      "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600",
+      "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600"
+    ],
+    "environment": {
+      "GGML_CUDA_FATTN_HOST_GQA": "2",
+      "CUDA_VISIBLE_DEVICES": "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600",
+      "GGML_CUDA_HOST_PTR": "1",
+      "LLAMA_KV_HOST": "/home/thor/kcj/llm_share/results/20261022-review-fault-writer-v2/tmpfs/kv",
+      "LLAMA_KV_GROW": "256",
+      "STATOR_TIMING_DIR": "/home/thor/kcj/llm_share/results/20261022-review-fault-writer-v2/r02-extent-control/timing",
+      "STATOR_TRACE": "1"
+    },
+    "parent_pid": 387167,
+    "exit": 0,
+    "release_ns": 667059218793919,
+    "wall_s": 42.823463666,
+    "children_exit": [
+      {
+        "index": "0",
+        "exit": "0"
+      },
+      {
+        "index": "1",
+        "exit": "0"
+      },
+      {
+        "index": "2",
+        "exit": "0"
+      },
+      {
+        "index": "3",
+        "exit": "0"
+      },
+      {
+        "index": "4",
+        "exit": "0"
+      },
+      {
+        "index": "5",
+        "exit": "0"
+      },
+      {
+        "index": "6",
+        "exit": "0"
+      },
+      {
+        "index": "7",
+        "exit": "0"
+      }
+    ],
+    "writer_exit": [],
+    "write": [],
+    "parent_text_sha256": "55a251eeb6748d4dca635bc68a8e513f99e047f2ab877ba6f0eb1273fa878d95",
+    "child_text_sha256": [
+      "c6b8682106a4f4fd0ff11e6f319d99cb58fc699449fb8ae110230eda261aa528",
+      "9443d18f99b7ff13c98a0b643e0abb8cd8605a00e40fa7eac23fa561427574a5",
+      "a0446784ada7164ccb4048891e7608b71e4ff0656b7a4df972d1511336b896b2",
+      "d358fe1c51e9f875f3811721fe7d6ba34bf13386b26fcbf50e3c441a69cbd754",
+      "e27aa66dc70d2f4fc873b2fc3a53cc11679b8260c1e853e8bd36225c0a1200ab",
+      "694752e09e65ecea53180c533e04185aa9cad399b8bb56e64b2063ce85df451c",
+      "dbd31ee405e3a74601e15e87d24898367e1d63454334c57041a1e5125bbab360",
+      "b148f99a8be2f3e1392997caca2c98f2def921e44cf15d9e93bd0e2e5ebd014b"
+    ],
+    "publish_ms": 9.644038
+  },
+  {
+    "case": "r02-device_merged-fault",
+    "run": 2,
+    "mode": "device_merged",
+    "fault": true,
+    "children": 8,
+    "paragraphs": 320,
+    "n_gen": 96,
+    "status": "ok",
+    "context": 32768,
+    "command": [
+      "/home/thor/kcj/stator_campaign_20261016/bin/kv_spawn_fault_tuned4",
+      "/home/thor/kcj/llm_share/models/Qwen2.5-7B-Instruct-Q4_K_M.gguf",
+      "32768",
+      "/home/thor/kcj/llm_share/results/20261022-review-fault-writer-v2/r02-device_merged-fault/prefix.txt",
+      "/home/thor/kcj/llm_share/results/20261022-review-fault-writer-v2/r02-device_merged-fault/state",
+      "96",
+      "/home/thor/kcj/llm_share/results/20261022-review-fault-writer-v2/r02-device_merged-fault/go",
+      "/home/thor/kcj/llm_share/results/20261022-review-fault-writer-v2/r02-device_merged-fault/out",
+      "/home/thor/kcj/stator_campaign_20261016/bin/kv_fork_tuned4",
+      "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600",
+      "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600",
+      "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600",
+      "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600",
+      "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600",
+      "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600",
+      "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600",
+      "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600"
+    ],
+    "environment": {
+      "GGML_CUDA_FATTN_HOST_GQA": "2",
+      "CUDA_VISIBLE_DEVICES": "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600",
+      "GGML_CUDA_HOST_PTR": "1",
+      "LLAMA_KV_VMM": "1",
+      "LLAMA_KV_VMM_BATCH": "2",
+      "LLAMA_KV_GROW": "256",
+      "STATOR_TIMING_DIR": "/home/thor/kcj/llm_share/results/20261022-review-fault-writer-v2/r02-device_merged-fault/timing",
+      "STATOR_TRACE": "1",
+      "STATOR_FAULT_WRITER": "/home/thor/kcj/stator_campaign_20261016/bin/fault_writer",
+      "STATOR_FAULT_DELAY_MS": "5000"
+    },
+    "parent_pid": 387598,
+    "exit": 0,
+    "release_ns": 667105740758815,
+    "wall_s": 43.829032173,
+    "children_exit": [
+      {
+        "index": "0",
+        "exit": "0"
+      },
+      {
+        "index": "1",
+        "exit": "0"
+      },
+      {
+        "index": "2",
+        "exit": "0"
+      },
+      {
+        "index": "3",
+        "exit": "0"
+      },
+      {
+        "index": "4",
+        "exit": "0"
+      },
+      {
+        "index": "5",
+        "exit": "0"
+      },
+      {
+        "index": "6",
+        "exit": "0"
+      },
+      {
+        "index": "7",
+        "exit": "0"
+      }
+    ],
+    "writer_exit": [
+      {
+        "exit": "0"
+      }
+    ],
+    "write": [
+      {
+        "route": "vmm",
+        "start_ns": "667111664292385",
+        "end_ns": "667113325799974",
+        "targets": "112",
+        "written": "112",
+        "result": "CUDA_SUCCESS"
+      }
+    ],
+    "parent_text_sha256": "050df0c76a8d871955ebfefb7b11698165b53f20a89261beb756b07072c392ae",
+    "child_text_sha256": [
+      "cc6b18db763cd2bd72dd844ed4bdc11100cb90d52fd9cb3cbeab4b3f8f2dca65",
+      "d9c3aeda4ebc6604e5e085f6791411ccffac2c609600453aaf80c39b38755134",
+      "a8830aa566a58cd1815966a03d685563215fe6d131483f87078d16ec6c9d19a1",
+      "8967f19ee924db41d8736c8a9e07f19b5682f23d0ac71df828351b717f0955c6",
+      "04e88e04a45aaf8ac6f29b0613929c3cd0576fffaeb41b0c31afe401d32a5f00",
+      "c07d843c1b86c50dc22abe23219a7ce09dd7e4da6b68c1760e9f0ab01dfcc7f8",
+      "c954e1f03a60d48302eb3453566a31c02a35eb339b31bdb556f585ee9592b0ae",
+      "11a786cb39f948c40d145a7ea0ac418231f94275cd9b42cd920971606d814689"
+    ],
+    "publish_ms": 104.379595
+  },
+  {
+    "case": "r02-device_merged-control",
+    "run": 2,
+    "mode": "device_merged",
+    "fault": false,
+    "children": 8,
+    "paragraphs": 320,
+    "n_gen": 96,
+    "status": "ok",
+    "context": 32768,
+    "command": [
+      "/home/thor/kcj/stator_campaign_20261016/bin/kv_spawn_fault_tuned4",
+      "/home/thor/kcj/llm_share/models/Qwen2.5-7B-Instruct-Q4_K_M.gguf",
+      "32768",
+      "/home/thor/kcj/llm_share/results/20261022-review-fault-writer-v2/r02-device_merged-control/prefix.txt",
+      "/home/thor/kcj/llm_share/results/20261022-review-fault-writer-v2/r02-device_merged-control/state",
+      "96",
+      "/home/thor/kcj/llm_share/results/20261022-review-fault-writer-v2/r02-device_merged-control/go",
+      "/home/thor/kcj/llm_share/results/20261022-review-fault-writer-v2/r02-device_merged-control/out",
+      "/home/thor/kcj/stator_campaign_20261016/bin/kv_fork_tuned4",
+      "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600",
+      "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600",
+      "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600",
+      "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600",
+      "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600",
+      "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600",
+      "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600",
+      "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600"
+    ],
+    "environment": {
+      "GGML_CUDA_FATTN_HOST_GQA": "2",
+      "CUDA_VISIBLE_DEVICES": "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600",
+      "GGML_CUDA_HOST_PTR": "1",
+      "LLAMA_KV_VMM": "1",
+      "LLAMA_KV_VMM_BATCH": "2",
+      "LLAMA_KV_GROW": "256",
+      "STATOR_TIMING_DIR": "/home/thor/kcj/llm_share/results/20261022-review-fault-writer-v2/r02-device_merged-control/timing",
+      "STATOR_TRACE": "1"
+    },
+    "parent_pid": 387924,
+    "exit": 0,
+    "release_ns": 667152900642881,
+    "wall_s": 43.505347467,
+    "children_exit": [
+      {
+        "index": "0",
+        "exit": "0"
+      },
+      {
+        "index": "1",
+        "exit": "0"
+      },
+      {
+        "index": "2",
+        "exit": "0"
+      },
+      {
+        "index": "3",
+        "exit": "0"
+      },
+      {
+        "index": "4",
+        "exit": "0"
+      },
+      {
+        "index": "5",
+        "exit": "0"
+      },
+      {
+        "index": "6",
+        "exit": "0"
+      },
+      {
+        "index": "7",
+        "exit": "0"
+      }
+    ],
+    "writer_exit": [],
+    "write": [],
+    "parent_text_sha256": "55a251eeb6748d4dca635bc68a8e513f99e047f2ab877ba6f0eb1273fa878d95",
+    "child_text_sha256": [
+      "c6b8682106a4f4fd0ff11e6f319d99cb58fc699449fb8ae110230eda261aa528",
+      "9443d18f99b7ff13c98a0b643e0abb8cd8605a00e40fa7eac23fa561427574a5",
+      "a0446784ada7164ccb4048891e7608b71e4ff0656b7a4df972d1511336b896b2",
+      "d358fe1c51e9f875f3811721fe7d6ba34bf13386b26fcbf50e3c441a69cbd754",
+      "e27aa66dc70d2f4fc873b2fc3a53cc11679b8260c1e853e8bd36225c0a1200ab",
+      "694752e09e65ecea53180c533e04185aa9cad399b8bb56e64b2063ce85df451c",
+      "dbd31ee405e3a74601e15e87d24898367e1d63454334c57041a1e5125bbab360",
+      "b148f99a8be2f3e1392997caca2c98f2def921e44cf15d9e93bd0e2e5ebd014b"
+    ],
+    "publish_ms": 106.131718
+  },
+  {
+    "case": "r03-device_merged-control",
+    "run": 3,
+    "mode": "device_merged",
+    "fault": false,
+    "children": 8,
+    "paragraphs": 320,
+    "n_gen": 96,
+    "status": "ok",
+    "context": 32768,
+    "command": [
+      "/home/thor/kcj/stator_campaign_20261016/bin/kv_spawn_fault_tuned4",
+      "/home/thor/kcj/llm_share/models/Qwen2.5-7B-Instruct-Q4_K_M.gguf",
+      "32768",
+      "/home/thor/kcj/llm_share/results/20261022-review-fault-writer-v2/r03-device_merged-control/prefix.txt",
+      "/home/thor/kcj/llm_share/results/20261022-review-fault-writer-v2/r03-device_merged-control/state",
+      "96",
+      "/home/thor/kcj/llm_share/results/20261022-review-fault-writer-v2/r03-device_merged-control/go",
+      "/home/thor/kcj/llm_share/results/20261022-review-fault-writer-v2/r03-device_merged-control/out",
+      "/home/thor/kcj/stator_campaign_20261016/bin/kv_fork_tuned4",
+      "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600",
+      "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600",
+      "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600",
+      "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600",
+      "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600",
+      "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600",
+      "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600",
+      "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600"
+    ],
+    "environment": {
+      "GGML_CUDA_FATTN_HOST_GQA": "2",
+      "CUDA_VISIBLE_DEVICES": "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600",
+      "GGML_CUDA_HOST_PTR": "1",
+      "LLAMA_KV_VMM": "1",
+      "LLAMA_KV_VMM_BATCH": "2",
+      "LLAMA_KV_GROW": "256",
+      "STATOR_TIMING_DIR": "/home/thor/kcj/llm_share/results/20261022-review-fault-writer-v2/r03-device_merged-control/timing",
+      "STATOR_TRACE": "1"
+    },
+    "parent_pid": 388240,
+    "exit": 0,
+    "release_ns": 667199818018265,
+    "wall_s": 43.418746882,
+    "children_exit": [
+      {
+        "index": "0",
+        "exit": "0"
+      },
+      {
+        "index": "1",
+        "exit": "0"
+      },
+      {
+        "index": "2",
+        "exit": "0"
+      },
+      {
+        "index": "3",
+        "exit": "0"
+      },
+      {
+        "index": "4",
+        "exit": "0"
+      },
+      {
+        "index": "5",
+        "exit": "0"
+      },
+      {
+        "index": "6",
+        "exit": "0"
+      },
+      {
+        "index": "7",
+        "exit": "0"
+      }
+    ],
+    "writer_exit": [],
+    "write": [],
+    "parent_text_sha256": "55a251eeb6748d4dca635bc68a8e513f99e047f2ab877ba6f0eb1273fa878d95",
+    "child_text_sha256": [
+      "c6b8682106a4f4fd0ff11e6f319d99cb58fc699449fb8ae110230eda261aa528",
+      "9443d18f99b7ff13c98a0b643e0abb8cd8605a00e40fa7eac23fa561427574a5",
+      "a0446784ada7164ccb4048891e7608b71e4ff0656b7a4df972d1511336b896b2",
+      "d358fe1c51e9f875f3811721fe7d6ba34bf13386b26fcbf50e3c441a69cbd754",
+      "e27aa66dc70d2f4fc873b2fc3a53cc11679b8260c1e853e8bd36225c0a1200ab",
+      "694752e09e65ecea53180c533e04185aa9cad399b8bb56e64b2063ce85df451c",
+      "dbd31ee405e3a74601e15e87d24898367e1d63454334c57041a1e5125bbab360",
+      "b148f99a8be2f3e1392997caca2c98f2def921e44cf15d9e93bd0e2e5ebd014b"
+    ],
+    "publish_ms": 134.991525
+  },
+  {
+    "case": "r03-device_merged-fault",
+    "run": 3,
+    "mode": "device_merged",
+    "fault": true,
+    "children": 8,
+    "paragraphs": 320,
+    "n_gen": 96,
+    "status": "ok",
+    "context": 32768,
+    "command": [
+      "/home/thor/kcj/stator_campaign_20261016/bin/kv_spawn_fault_tuned4",
+      "/home/thor/kcj/llm_share/models/Qwen2.5-7B-Instruct-Q4_K_M.gguf",
+      "32768",
+      "/home/thor/kcj/llm_share/results/20261022-review-fault-writer-v2/r03-device_merged-fault/prefix.txt",
+      "/home/thor/kcj/llm_share/results/20261022-review-fault-writer-v2/r03-device_merged-fault/state",
+      "96",
+      "/home/thor/kcj/llm_share/results/20261022-review-fault-writer-v2/r03-device_merged-fault/go",
+      "/home/thor/kcj/llm_share/results/20261022-review-fault-writer-v2/r03-device_merged-fault/out",
+      "/home/thor/kcj/stator_campaign_20261016/bin/kv_fork_tuned4",
+      "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600",
+      "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600",
+      "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600",
+      "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600",
+      "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600",
+      "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600",
+      "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600",
+      "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600"
+    ],
+    "environment": {
+      "GGML_CUDA_FATTN_HOST_GQA": "2",
+      "CUDA_VISIBLE_DEVICES": "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600",
+      "GGML_CUDA_HOST_PTR": "1",
+      "LLAMA_KV_VMM": "1",
+      "LLAMA_KV_VMM_BATCH": "2",
+      "LLAMA_KV_GROW": "256",
+      "STATOR_TIMING_DIR": "/home/thor/kcj/llm_share/results/20261022-review-fault-writer-v2/r03-device_merged-fault/timing",
+      "STATOR_TRACE": "1",
+      "STATOR_FAULT_WRITER": "/home/thor/kcj/stator_campaign_20261016/bin/fault_writer",
+      "STATOR_FAULT_DELAY_MS": "5000"
+    },
+    "parent_pid": 388567,
+    "exit": 0,
+    "release_ns": 667246614521057,
+    "wall_s": 43.474678365,
+    "children_exit": [
+      {
+        "index": "0",
+        "exit": "0"
+      },
+      {
+        "index": "1",
+        "exit": "0"
+      },
+      {
+        "index": "2",
+        "exit": "0"
+      },
+      {
+        "index": "3",
+        "exit": "0"
+      },
+      {
+        "index": "4",
+        "exit": "0"
+      },
+      {
+        "index": "5",
+        "exit": "0"
+      },
+      {
+        "index": "6",
+        "exit": "0"
+      },
+      {
+        "index": "7",
+        "exit": "0"
+      }
+    ],
+    "writer_exit": [
+      {
+        "exit": "0"
+      }
+    ],
+    "write": [
+      {
+        "route": "vmm",
+        "start_ns": "667252459291108",
+        "end_ns": "667254118461095",
+        "targets": "112",
+        "written": "112",
+        "result": "CUDA_SUCCESS"
+      }
+    ],
+    "parent_text_sha256": "0b088510c1f701eb9a279a8880fdcc2191b992440278ca4369ab51405a35bb0f",
+    "child_text_sha256": [
+      "aa6fd417a1513bdb1e28b04dda0433f9e7e397e8f9a3bec418307da601672fb2",
+      "59a45bca83823bf403401e0b36504cd60bdc30166904687efebbb73badb6b2cd",
+      "3bf9f62a3b737f27ee55c418cb901614b432c9f539ab6bd05390bc199443c807",
+      "eeac5647b2943c509bbdb2c06e39bef6985bc0c9273e65cb83786ea625f2e733",
+      "c348e71a6a934d7ee581997d9141b963d17b8aad85343accca27c1175d996bc7",
+      "aecddfd6602ff023b52e008ad406dcd6c9bcf72e1a4ad24d41ce078d9b24f2e5",
+      "a290a6153d821fe67cafdc250b4110eb7d65d58aaf43f824a88b692f225822db",
+      "15af0be4468c0df85bca804582ca44e3f47acf564fe94b4c2b5ea9feded71b95"
+    ],
+    "publish_ms": 97.740777
+  },
+  {
+    "case": "r03-extent-control",
+    "run": 3,
+    "mode": "extent",
+    "fault": false,
+    "children": 8,
+    "paragraphs": 320,
+    "n_gen": 96,
+    "status": "ok",
+    "context": 32768,
+    "command": [
+      "/home/thor/kcj/stator_campaign_20261016/bin/kv_spawn_fault_tuned4",
+      "/home/thor/kcj/llm_share/models/Qwen2.5-7B-Instruct-Q4_K_M.gguf",
+      "32768",
+      "/home/thor/kcj/llm_share/results/20261022-review-fault-writer-v2/r03-extent-control/prefix.txt",
+      "/home/thor/kcj/llm_share/results/20261022-review-fault-writer-v2/r03-extent-control/state",
+      "96",
+      "/home/thor/kcj/llm_share/results/20261022-review-fault-writer-v2/r03-extent-control/go",
+      "/home/thor/kcj/llm_share/results/20261022-review-fault-writer-v2/r03-extent-control/out",
+      "/home/thor/kcj/stator_campaign_20261016/bin/kv_fork_tuned4",
+      "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600",
+      "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600",
+      "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600",
+      "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600",
+      "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600",
+      "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600",
+      "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600",
+      "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600"
+    ],
+    "environment": {
+      "GGML_CUDA_FATTN_HOST_GQA": "2",
+      "CUDA_VISIBLE_DEVICES": "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600",
+      "GGML_CUDA_HOST_PTR": "1",
+      "LLAMA_KV_HOST": "/home/thor/kcj/llm_share/results/20261022-review-fault-writer-v2/tmpfs/kv",
+      "LLAMA_KV_GROW": "256",
+      "STATOR_TIMING_DIR": "/home/thor/kcj/llm_share/results/20261022-review-fault-writer-v2/r03-extent-control/timing",
+      "STATOR_TRACE": "1"
+    },
+    "parent_pid": 388896,
+    "exit": 0,
+    "release_ns": 667293403003179,
+    "wall_s": 42.915849911,
+    "children_exit": [
+      {
+        "index": "0",
+        "exit": "0"
+      },
+      {
+        "index": "1",
+        "exit": "0"
+      },
+      {
+        "index": "2",
+        "exit": "0"
+      },
+      {
+        "index": "3",
+        "exit": "0"
+      },
+      {
+        "index": "4",
+        "exit": "0"
+      },
+      {
+        "index": "5",
+        "exit": "0"
+      },
+      {
+        "index": "6",
+        "exit": "0"
+      },
+      {
+        "index": "7",
+        "exit": "0"
+      }
+    ],
+    "writer_exit": [],
+    "write": [],
+    "parent_text_sha256": "55a251eeb6748d4dca635bc68a8e513f99e047f2ab877ba6f0eb1273fa878d95",
+    "child_text_sha256": [
+      "c6b8682106a4f4fd0ff11e6f319d99cb58fc699449fb8ae110230eda261aa528",
+      "9443d18f99b7ff13c98a0b643e0abb8cd8605a00e40fa7eac23fa561427574a5",
+      "a0446784ada7164ccb4048891e7608b71e4ff0656b7a4df972d1511336b896b2",
+      "d358fe1c51e9f875f3811721fe7d6ba34bf13386b26fcbf50e3c441a69cbd754",
+      "e27aa66dc70d2f4fc873b2fc3a53cc11679b8260c1e853e8bd36225c0a1200ab",
+      "694752e09e65ecea53180c533e04185aa9cad399b8bb56e64b2063ce85df451c",
+      "dbd31ee405e3a74601e15e87d24898367e1d63454334c57041a1e5125bbab360",
+      "b148f99a8be2f3e1392997caca2c98f2def921e44cf15d9e93bd0e2e5ebd014b"
+    ],
+    "publish_ms": 12.0666
+  },
+  {
+    "case": "r03-extent-fault",
+    "run": 3,
+    "mode": "extent",
+    "fault": true,
+    "children": 8,
+    "paragraphs": 320,
+    "n_gen": 96,
+    "status": "ok",
+    "context": 32768,
+    "command": [
+      "/home/thor/kcj/stator_campaign_20261016/bin/kv_spawn_fault_tuned4",
+      "/home/thor/kcj/llm_share/models/Qwen2.5-7B-Instruct-Q4_K_M.gguf",
+      "32768",
+      "/home/thor/kcj/llm_share/results/20261022-review-fault-writer-v2/r03-extent-fault/prefix.txt",
+      "/home/thor/kcj/llm_share/results/20261022-review-fault-writer-v2/r03-extent-fault/state",
+      "96",
+      "/home/thor/kcj/llm_share/results/20261022-review-fault-writer-v2/r03-extent-fault/go",
+      "/home/thor/kcj/llm_share/results/20261022-review-fault-writer-v2/r03-extent-fault/out",
+      "/home/thor/kcj/stator_campaign_20261016/bin/kv_fork_tuned4",
+      "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600",
+      "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600",
+      "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600",
+      "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600",
+      "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600",
+      "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600",
+      "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600",
+      "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600"
+    ],
+    "environment": {
+      "GGML_CUDA_FATTN_HOST_GQA": "2",
+      "CUDA_VISIBLE_DEVICES": "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600",
+      "GGML_CUDA_HOST_PTR": "1",
+      "LLAMA_KV_HOST": "/home/thor/kcj/llm_share/results/20261022-review-fault-writer-v2/tmpfs/kv",
+      "LLAMA_KV_GROW": "256",
+      "STATOR_TIMING_DIR": "/home/thor/kcj/llm_share/results/20261022-review-fault-writer-v2/r03-extent-fault/timing",
+      "STATOR_TRACE": "1",
+      "STATOR_FAULT_WRITER": "/home/thor/kcj/stator_campaign_20261016/bin/fault_writer",
+      "STATOR_FAULT_DELAY_MS": "5000"
+    },
+    "parent_pid": 389345,
+    "exit": 0,
+    "release_ns": 667339950278260,
+    "wall_s": 43.138280876,
+    "children_exit": [
+      {
+        "index": "0",
+        "exit": "0"
+      },
+      {
+        "index": "1",
+        "exit": "0"
+      },
+      {
+        "index": "2",
+        "exit": "0"
+      },
+      {
+        "index": "3",
+        "exit": "0"
+      },
+      {
+        "index": "4",
+        "exit": "0"
+      },
+      {
+        "index": "5",
+        "exit": "0"
+      },
+      {
+        "index": "6",
+        "exit": "0"
+      },
+      {
+        "index": "7",
+        "exit": "0"
+      }
+    ],
+    "writer_exit": [
+      {
+        "exit": "0"
+      }
+    ],
+    "write": [
+      {
+        "route": "host",
+        "start_ns": "667345278670600",
+        "end_ns": "667345384751609",
+        "targets": "1",
+        "written": "0",
+        "result": "cudaErrorIllegalAddress"
+      }
+    ],
+    "parent_text_sha256": "55a251eeb6748d4dca635bc68a8e513f99e047f2ab877ba6f0eb1273fa878d95",
+    "child_text_sha256": [
+      "c6b8682106a4f4fd0ff11e6f319d99cb58fc699449fb8ae110230eda261aa528",
+      "9443d18f99b7ff13c98a0b643e0abb8cd8605a00e40fa7eac23fa561427574a5",
+      "a0446784ada7164ccb4048891e7608b71e4ff0656b7a4df972d1511336b896b2",
+      "d358fe1c51e9f875f3811721fe7d6ba34bf13386b26fcbf50e3c441a69cbd754",
+      "e27aa66dc70d2f4fc873b2fc3a53cc11679b8260c1e853e8bd36225c0a1200ab",
+      "694752e09e65ecea53180c533e04185aa9cad399b8bb56e64b2063ce85df451c",
+      "dbd31ee405e3a74601e15e87d24898367e1d63454334c57041a1e5125bbab360",
+      "b148f99a8be2f3e1392997caca2c98f2def921e44cf15d9e93bd0e2e5ebd014b"
+    ],
+    "publish_ms": 11.910444
+  }
+]

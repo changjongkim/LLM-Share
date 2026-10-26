@@ -1,0 +1,32 @@
+timestamp=2026-10-15T15:49:10+09:00
+mig_a=GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600
+mig_b=GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600
+repetitions=6
+none_counts=1 4
+kv_counts=1 2 4 8 12
+weights_counts=1 2 4 8 12 16 32
+both_counts=1 4 8
+context=16384
+n_gen=64
+grow_rows=256
+sample_ms=4000
+prefix_file=agent_prefix.txt
+prefix_sha256=90a958d0f5dff46bf843ce5793764964e21b861549a4ca36b3fb1a607393135e
+tasks_file=agent_tasks.txt
+tasks_sha256=63de90633c5cd9416e901481e0afc0bf173fcef843fbc6c34ff5c84f6eb1ec17
+reserve_gib=16
+estimate_mib=none:14000,kv:5600,weights:2000,both:1800
+model=Qwen2.5-14B-Instruct-Q4_K_M.gguf
+model_bytes=8988110976
+mem_total_kib=128766524
+engine_commit=6f767fe960c3b97cf37fac4626c86400561ca1e4
+stock_engine_commit=6f767fe960c3b97cf37fac4626c86400561ca1e4
+boot_id=f9776703-a137-43bc-822b-124c6147ff68
+GPU 0: NVIDIA Thor (UUID: GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600)
+cd97177383d3b0465cb3f4e42b7dc0d4a55da5d7177b132142c2aa31b4043b49  /home/thor/kcj/llm_share/kv_fork2
+b20546ef8d5d821ac51d751dc0ece2c97cc9d01abda3c472a0ebdffacf54949a  /home/thor/kcj/llm_share/kv_fork_nommap
+61cdd5ca968da3c22bbcc911037e077598b150f3794e8c29a5d64490f4b1e8aa  /home/thor/kcj/llm_share/llama.cpp-kv2/build/bin/libllama.so
+9ef27056a3d5b91f6d69f69fbacc6161cc5158ad2d2256f41eeca78a42daa98b  /home/thor/kcj/llm_share/llama.cpp-kv2/build/bin/libggml-cuda.so
+2184b6f2610f3d2d49eb560218b56aaaba51d0f5e275501d644bd90c6f0da3d4  /home/thor/kcj/llm_share/kv_fork_stock
+ffcd7f217739735343f588ee22b1ffc5b1562df118d3e01cfaef481ab1dcfeb2  /home/thor/kcj/llm_share/llama.cpp-stock/build/bin/libllama.so
+424633fa0a929a6be0adedb63621285d4e43c05f507cbdac82fa6109f7ad2769  /home/thor/kcj/llm_share/llama.cpp-stock/build/bin/libggml-cuda.so

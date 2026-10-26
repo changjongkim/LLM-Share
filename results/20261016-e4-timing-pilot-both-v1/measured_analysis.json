@@ -1,0 +1,328 @@
+{
+  "system": "both",
+  "sessions": 3,
+  "completed": 3,
+  "unfinished": [],
+  "failed_processes": [],
+  "guard_events": 0,
+  "ended": "drained",
+  "actual_recorded_tokens": 96,
+  "requested_tokens": 96,
+  "window_completed_tokens": 56,
+  "window_token_rate": 11.2,
+  "last_generation_end_s": 7.913965023,
+  "drain_wall_s": 13.37,
+  "ttft_count": 3,
+  "ttft_p50_s": 0.835940459,
+  "ttft_p95_s": 0.8689352699,
+  "ttft_p99_s": 0.87186814198,
+  "tool_resume_count": 5,
+  "tool_resume_p50_s": 0.0587681,
+  "tool_resume_p95_s": 0.0919636346,
+  "deadlines": {
+    "1": {
+      "served_within": 3,
+      "all_sessions": 3
+    },
+    "2": {
+      "served_within": 3,
+      "all_sessions": 3
+    },
+    "5": {
+      "served_within": 3,
+      "all_sessions": 3
+    }
+  },
+  "memory_peak_accounted_gib": 8.087890625,
+  "memory_budget_met": true,
+  "queue_peak": 0,
+  "gpu_faults": 0,
+  "tmpfs_before_bytes": 822083584,
+  "tmpfs_after_bytes": 822083584,
+  "extent_reclaimed": true,
+  "requests": [
+    {
+      "sid": 0,
+      "role": "a",
+      "index": 0,
+      "first_token_ns": 171768907674117,
+      "process_to_first_s": 0.801743744,
+      "arrival_to_first_s": 0.835940459,
+      "admission_s": 0.000195619,
+      "phases": {
+        "model_s": 0.647951006,
+        "context_s": 0.027022113,
+        "attach_s": 0.006207909,
+        "input_decode_s": 0.092303861
+      }
+    },
+    {
+      "sid": 1,
+      "role": "a",
+      "index": 0,
+      "first_token_ns": 171769944335018,
+      "process_to_first_s": 0.835010078,
+      "arrival_to_first_s": 0.87260136,
+      "admission_s": 0.005061897999999898,
+      "phases": {
+        "model_s": 0.676305544,
+        "context_s": 0.029171268,
+        "attach_s": 0.006192408,
+        "input_decode_s": 0.09645704
+      }
+    },
+    {
+      "sid": 2,
+      "role": "c",
+      "index": 0,
+      "first_token_ns": 171772151177865,
+      "process_to_first_s": 0.977757478,
+      "arrival_to_first_s": null,
+      "admission_s": null,
+      "phases": {
+        "model_s": 0.803022606,
+        "context_s": 0.02694064,
+        "attach_s": 0.006032057,
+        "input_decode_s": 0.093479737
+      }
+    },
+    {
+      "sid": 2,
+      "role": "c",
+      "index": 1,
+      "first_token_ns": 171772349071934,
+      "process_to_first_s": 1.17449002,
+      "arrival_to_first_s": null,
+      "admission_s": null,
+      "phases": {
+        "model_s": 0.88039029,
+        "context_s": 0.033589011,
+        "attach_s": 0.006043464,
+        "input_decode_s": 0.200435048
+      }
+    },
+    {
+      "sid": 2,
+      "role": "c",
+      "index": 2,
+      "first_token_ns": 171772341494824,
+      "process_to_first_s": 1.164032535,
+      "arrival_to_first_s": null,
+      "admission_s": null,
+      "phases": {
+        "model_s": 0.875634102,
+        "context_s": 0.03312977,
+        "attach_s": 0.006228455,
+        "input_decode_s": 0.192744947
+      }
+    },
+    {
+      "sid": 2,
+      "role": "a",
+      "index": 0,
+      "first_token_ns": 171770842473082,
+      "process_to_first_s": 0.724010138,
+      "arrival_to_first_s": 0.7707394239999998,
+      "admission_s": 0.011458471000000081,
+      "phases": {
+        "model_s": 0.571810365,
+        "context_s": 0.029352831,
+        "attach_s": 0.006044121,
+        "input_decode_s": 0.088135117
+      }
+    }
+  ],
+  "turns": [
+    {
+      "sid": 1,
+      "role": "a",
+      "index": 0,
+      "generation": 2,
+      "kind": "tool",
+      "release_to_first_s": 0.069945009,
+      "release_write_ns": 65926
+    },
+    {
+      "sid": 1,
+      "role": "a",
+      "index": 0,
+      "generation": 3,
+      "kind": "tool",
+      "release_to_first_s": 0.0587681,
+      "release_write_ns": 85185
+    },
+    {
+      "sid": 2,
+      "role": "c",
+      "index": 0,
+      "generation": 2,
+      "kind": "tool",
+      "release_to_first_s": 0.097468291,
+      "release_write_ns": 91426
+    },
+    {
+      "sid": 2,
+      "role": "c",
+      "index": 1,
+      "generation": 2,
+      "kind": "tool",
+      "release_to_first_s": 0.056182308,
+      "release_write_ns": 132398
+    },
+    {
+      "sid": 2,
+      "role": "c",
+      "index": 2,
+      "generation": 2,
+      "kind": "tool",
+      "release_to_first_s": 0.058085805,
+      "release_write_ns": 92602
+    },
+    {
+      "sid": 2,
+      "role": "a",
+      "index": 0,
+      "generation": 2,
+      "kind": "merge",
+      "release_to_first_s": 0.05365341,
+      "release_write_ns": 88713
+    }
+  ],
+  "token_ids": {
+    "0.a0": [
+      [
+        1249,
+        1140,
+        279,
+        3210,
+        1555,
+        2606,
+        315,
+        279
+      ]
+    ],
+    "1.a0": [
+      [
+        785,
+        5392,
+        429,
+        6682,
+        279,
+        9664,
+        11602,
+        882
+      ],
+      [
+        785,
+        5392,
+        429,
+        6682,
+        279,
+        9664,
+        11602,
+        882
+      ],
+      [
+        785,
+        5392,
+        429,
+        6682,
+        279,
+        9664,
+        11602,
+        882
+      ]
+    ],
+    "2.c0": [
+      [
+        785,
+        3538,
+        312,
+        4776,
+        264,
+        9934,
+        429,
+        432
+      ],
+      [
+        785,
+        3538,
+        312,
+        4776,
+        264,
+        9934,
+        429,
+        432
+      ]
+    ],
+    "2.c1": [
+      [
+        785,
+        3538,
+        312,
+        4776,
+        264,
+        9934,
+        429,
+        432
+      ],
+      [
+        785,
+        3538,
+        312,
+        4776,
+        264,
+        9934,
+        429,
+        432
+      ]
+    ],
+    "2.c2": [
+      [
+        785,
+        3538,
+        312,
+        4776,
+        264,
+        9934,
+        429,
+        432
+      ],
+      [
+        785,
+        3538,
+        312,
+        4776,
+        264,
+        9934,
+        429,
+        432
+      ]
+    ],
+    "2.a0": [
+      [
+        785,
+        3538,
+        312,
+        4776,
+        264,
+        9934,
+        429,
+        432
+      ],
+      [
+        785,
+        3538,
+        312,
+        4776,
+        264,
+        9934,
+        429,
+        432
+      ]
+    ]
+  },
+  "errors": [],
+  "measurement_valid": true,
+  "caveat": "P99 descriptive; unfinished requests remain in denominators and are listed separately"
+}

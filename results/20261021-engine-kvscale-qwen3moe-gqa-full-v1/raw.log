@@ -1,0 +1,156 @@
+BEGIN_KVSHARE run=1 paragraphs=320 context=32768 publisher_mig=a7c66ad2
+PUBLISH store=device prefix_tokens=16321 prefix_ms=13087.8 publish_ms=888.16 state_bytes=1604681912
+PUBLISH store=huge prefix_tokens=16321 prefix_ms=13329.6 publish_ms=13.84 state_bytes=262328 file_used_kib=1572864
+CASE mode=restore agents=8
+AGENT index=0 mig=a7c66ad2 exit=0 wall_ms=17042 text=391a1641fadb9440 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1801.0 context_ms=441.9 state_ms=795.03 prefix_ms=0.0 suffix_ms=701.7 first_token_ms=3931.3 generation_ms=12240.9 generated=64 generation_tps=5.228
+AGENT index=1 mig=a7c66ad2 exit=0 wall_ms=17214 text=ecb3ebd1b0b41493 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1800.4 context_ms=446.8 state_ms=788.33 prefix_ms=0.0 suffix_ms=723.5 first_token_ms=3951.8 generation_ms=12260.1 generated=64 generation_tps=5.220
+AGENT index=2 mig=a7c66ad2 exit=0 wall_ms=17458 text=e8755b7d31b2cd22 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1794.0 context_ms=443.8 state_ms=792.69 prefix_ms=0.0 suffix_ms=713.9 first_token_ms=3941.6 generation_ms=12258.2 generated=64 generation_tps=5.221
+AGENT index=3 mig=a7c66ad2 exit=0 wall_ms=17212 text=ae0232f9cac0d983 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1791.2 context_ms=428.5 state_ms=806.99 prefix_ms=0.0 suffix_ms=683.6 first_token_ms=3904.7 generation_ms=12231.0 generated=64 generation_tps=5.233
+AGENT index=4 mig=a7c66ad2 exit=0 wall_ms=17160 text=312d8469c3ff311e role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1785.3 context_ms=457.7 state_ms=777.24 prefix_ms=0.0 suffix_ms=689.7 first_token_ms=3902.5 generation_ms=12268.6 generated=64 generation_tps=5.217
+AGENT index=5 mig=a7c66ad2 exit=0 wall_ms=17006 text=be7ecc46e67f19e0 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1789.4 context_ms=444.9 state_ms=791.13 prefix_ms=0.0 suffix_ms=660.3 first_token_ms=3876.3 generation_ms=12214.4 generated=64 generation_tps=5.240
+AGENT index=6 mig=a7c66ad2 exit=0 wall_ms=17130 text=4a9703d0580a1f58 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1786.8 context_ms=456.8 state_ms=774.60 prefix_ms=0.0 suffix_ms=715.1 first_token_ms=3932.3 generation_ms=12265.4 generated=64 generation_tps=5.218
+AGENT index=7 mig=a7c66ad2 exit=0 wall_ms=14676 text=cd6326b7698c6eb1 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1785.9 context_ms=424.7 state_ms=423.65 prefix_ms=0.0 suffix_ms=173.0 first_token_ms=2998.7 generation_ms=11092.7 generated=64 generation_tps=5.770
+MEMORY mem_available_drop_mib=31408 prefix_pss_mib=0 prefix_rss_mib=0
+END_CASE failed_agents=0 guard=0
+CASE mode=extent_lazy agents=8
+AGENT index=0 mig=a7c66ad2 exit=0 wall_ms=15733 text=391a1641fadb9440 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1802.7 context_ms=74.6 state_ms=7.49 prefix_ms=0.0 suffix_ms=709.4 first_token_ms=2796.9 generation_ms=12377.9 generated=64 generation_tps=5.170
+AGENT index=1 mig=a7c66ad2 exit=0 wall_ms=15854 text=ecb3ebd1b0b41493 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1809.5 context_ms=78.0 state_ms=7.33 prefix_ms=0.0 suffix_ms=731.1 first_token_ms=2818.9 generation_ms=12386.9 generated=64 generation_tps=5.167
+AGENT index=2 mig=a7c66ad2 exit=0 wall_ms=15677 text=e8755b7d31b2cd22 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1795.2 context_ms=60.7 state_ms=7.82 prefix_ms=0.0 suffix_ms=682.0 first_token_ms=2740.8 generation_ms=12352.4 generated=64 generation_tps=5.181
+AGENT index=3 mig=a7c66ad2 exit=0 wall_ms=15627 text=ae0232f9cac0d983 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1783.6 context_ms=70.0 state_ms=7.75 prefix_ms=0.0 suffix_ms=688.6 first_token_ms=2758.0 generation_ms=12367.5 generated=64 generation_tps=5.175
+AGENT index=4 mig=a7c66ad2 exit=0 wall_ms=16047 text=312d8469c3ff311e role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1795.0 context_ms=80.7 state_ms=7.43 prefix_ms=0.0 suffix_ms=769.2 first_token_ms=2856.1 generation_ms=12365.0 generated=64 generation_tps=5.176
+AGENT index=5 mig=a7c66ad2 exit=0 wall_ms=15873 text=be7ecc46e67f19e0 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1799.1 context_ms=83.8 state_ms=7.57 prefix_ms=0.0 suffix_ms=746.5 first_token_ms=2833.2 generation_ms=12377.4 generated=64 generation_tps=5.171
+AGENT index=6 mig=a7c66ad2 exit=0 wall_ms=15696 text=4a9703d0580a1f58 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1791.3 context_ms=72.1 state_ms=7.58 prefix_ms=0.0 suffix_ms=701.2 first_token_ms=2770.8 generation_ms=12361.2 generated=64 generation_tps=5.177
+AGENT index=7 mig=a7c66ad2 exit=0 wall_ms=15770 text=cd6326b7698c6eb1 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1792.3 context_ms=73.1 state_ms=7.40 prefix_ms=0.0 suffix_ms=859.1 first_token_ms=2933.5 generation_ms=12303.6 generated=64 generation_tps=5.202
+MEMORY mem_available_drop_mib=6723 prefix_pss_mib=1530 prefix_rss_mib=12240
+END_CASE failed_agents=0 guard=0
+END_KVSHARE
+BEGIN_KVSHARE run=2 paragraphs=320 context=32768 publisher_mig=a7c66ad2
+PUBLISH store=device prefix_tokens=16321 prefix_ms=13093.2 publish_ms=868.44 state_bytes=1604681912
+PUBLISH store=huge prefix_tokens=16321 prefix_ms=13263.5 publish_ms=13.59 state_bytes=262328 file_used_kib=1572864
+CASE mode=extent_lazy agents=8
+AGENT index=0 mig=a7c66ad2 exit=0 wall_ms=15855 text=391a1641fadb9440 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1806.7 context_ms=74.4 state_ms=7.37 prefix_ms=0.0 suffix_ms=752.5 first_token_ms=2830.6 generation_ms=12393.4 generated=64 generation_tps=5.164
+AGENT index=1 mig=a7c66ad2 exit=0 wall_ms=15754 text=ecb3ebd1b0b41493 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1796.5 context_ms=72.9 state_ms=7.69 prefix_ms=0.0 suffix_ms=709.1 first_token_ms=2780.1 generation_ms=12346.7 generated=64 generation_tps=5.184
+AGENT index=2 mig=a7c66ad2 exit=0 wall_ms=15823 text=e8755b7d31b2cd22 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1801.0 context_ms=77.6 state_ms=7.49 prefix_ms=0.0 suffix_ms=732.7 first_token_ms=2806.6 generation_ms=12396.0 generated=64 generation_tps=5.163
+AGENT index=3 mig=a7c66ad2 exit=0 wall_ms=15725 text=ae0232f9cac0d983 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1794.5 context_ms=79.8 state_ms=7.52 prefix_ms=0.0 suffix_ms=735.8 first_token_ms=2811.5 generation_ms=12406.9 generated=64 generation_tps=5.158
+AGENT index=4 mig=a7c66ad2 exit=0 wall_ms=15822 text=312d8469c3ff311e role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1790.4 context_ms=78.8 state_ms=7.54 prefix_ms=0.0 suffix_ms=738.2 first_token_ms=2809.9 generation_ms=12392.3 generated=64 generation_tps=5.164
+AGENT index=5 mig=a7c66ad2 exit=0 wall_ms=16061 text=be7ecc46e67f19e0 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1781.6 context_ms=84.5 state_ms=7.42 prefix_ms=0.0 suffix_ms=773.0 first_token_ms=2841.2 generation_ms=12378.0 generated=64 generation_tps=5.170
+AGENT index=6 mig=a7c66ad2 exit=0 wall_ms=15670 text=4a9703d0580a1f58 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1786.2 context_ms=70.9 state_ms=7.36 prefix_ms=0.0 suffix_ms=670.7 first_token_ms=2732.9 generation_ms=12359.9 generated=64 generation_tps=5.178
+AGENT index=7 mig=a7c66ad2 exit=0 wall_ms=15620 text=cd6326b7698c6eb1 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1780.8 context_ms=71.5 state_ms=7.50 prefix_ms=0.0 suffix_ms=684.9 first_token_ms=2737.5 generation_ms=12358.1 generated=64 generation_tps=5.179
+MEMORY mem_available_drop_mib=6675 prefix_pss_mib=1530 prefix_rss_mib=12240
+END_CASE failed_agents=0 guard=0
+CASE mode=restore agents=8
+AGENT index=0 mig=a7c66ad2 exit=0 wall_ms=17123 text=391a1641fadb9440 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1821.3 context_ms=419.9 state_ms=724.64 prefix_ms=0.0 suffix_ms=733.7 first_token_ms=3892.9 generation_ms=12325.6 generated=64 generation_tps=5.192
+AGENT index=1 mig=a7c66ad2 exit=0 wall_ms=17461 text=ecb3ebd1b0b41493 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1825.1 context_ms=518.8 state_ms=625.08 prefix_ms=0.0 suffix_ms=722.7 first_token_ms=3881.4 generation_ms=12329.4 generated=64 generation_tps=5.191
+AGENT index=2 mig=a7c66ad2 exit=0 wall_ms=17070 text=e8755b7d31b2cd22 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1817.4 context_ms=498.2 state_ms=644.64 prefix_ms=0.0 suffix_ms=668.2 first_token_ms=3821.7 generation_ms=12305.9 generated=64 generation_tps=5.201
+AGENT index=3 mig=a7c66ad2 exit=0 wall_ms=17192 text=ae0232f9cac0d983 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1806.5 context_ms=450.9 state_ms=693.20 prefix_ms=0.0 suffix_ms=703.3 first_token_ms=3853.9 generation_ms=12357.6 generated=64 generation_tps=5.179
+AGENT index=4 mig=a7c66ad2 exit=0 wall_ms=17216 text=312d8469c3ff311e role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1810.0 context_ms=468.4 state_ms=676.39 prefix_ms=0.0 suffix_ms=711.9 first_token_ms=3865.1 generation_ms=12351.5 generated=64 generation_tps=5.182
+AGENT index=5 mig=a7c66ad2 exit=0 wall_ms=17141 text=be7ecc46e67f19e0 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1807.8 context_ms=412.3 state_ms=732.78 prefix_ms=0.0 suffix_ms=673.3 first_token_ms=3824.6 generation_ms=12310.3 generated=64 generation_tps=5.199
+AGENT index=6 mig=a7c66ad2 exit=0 wall_ms=17065 text=4a9703d0580a1f58 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1818.9 context_ms=496.1 state_ms=645.72 prefix_ms=0.0 suffix_ms=645.5 first_token_ms=3793.4 generation_ms=12313.3 generated=64 generation_tps=5.198
+AGENT index=7 mig=a7c66ad2 exit=0 wall_ms=15261 text=cd6326b7698c6eb1 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1806.3 context_ms=406.3 state_ms=430.47 prefix_ms=0.0 suffix_ms=187.0 first_token_ms=3020.5 generation_ms=11641.0 generated=64 generation_tps=5.498
+MEMORY mem_available_drop_mib=31320 prefix_pss_mib=0 prefix_rss_mib=0
+END_CASE failed_agents=0 guard=0
+END_KVSHARE
+BEGIN_KVSHARE run=3 paragraphs=320 context=32768 publisher_mig=a7c66ad2
+PUBLISH store=device prefix_tokens=16321 prefix_ms=13094.4 publish_ms=886.15 state_bytes=1604681912
+PUBLISH store=huge prefix_tokens=16321 prefix_ms=13242.8 publish_ms=15.40 state_bytes=262328 file_used_kib=1572864
+CASE mode=restore agents=8
+AGENT index=0 mig=a7c66ad2 exit=0 wall_ms=17182 text=391a1641fadb9440 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1819.1 context_ms=498.0 state_ms=641.91 prefix_ms=0.0 suffix_ms=679.7 first_token_ms=3832.0 generation_ms=12344.6 generated=64 generation_tps=5.184
+AGENT index=1 mig=a7c66ad2 exit=0 wall_ms=17183 text=ecb3ebd1b0b41493 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1812.3 context_ms=394.8 state_ms=750.65 prefix_ms=0.0 suffix_ms=684.1 first_token_ms=3835.9 generation_ms=12353.1 generated=64 generation_tps=5.181
+AGENT index=2 mig=a7c66ad2 exit=0 wall_ms=17079 text=e8755b7d31b2cd22 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1810.1 context_ms=464.4 state_ms=677.82 prefix_ms=0.0 suffix_ms=659.4 first_token_ms=3809.4 generation_ms=12359.2 generated=64 generation_tps=5.178
+AGENT index=3 mig=a7c66ad2 exit=0 wall_ms=17153 text=ae0232f9cac0d983 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1805.4 context_ms=398.5 state_ms=745.85 prefix_ms=0.0 suffix_ms=666.2 first_token_ms=3814.9 generation_ms=12367.7 generated=64 generation_tps=5.175
+AGENT index=4 mig=a7c66ad2 exit=0 wall_ms=15301 text=312d8469c3ff311e role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1802.5 context_ms=378.5 state_ms=471.34 prefix_ms=0.0 suffix_ms=182.2 first_token_ms=3030.8 generation_ms=11739.5 generated=64 generation_tps=5.452
+AGENT index=5 mig=a7c66ad2 exit=0 wall_ms=17252 text=be7ecc46e67f19e0 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1804.2 context_ms=462.6 state_ms=677.52 prefix_ms=0.0 suffix_ms=672.2 first_token_ms=3815.9 generation_ms=12373.9 generated=64 generation_tps=5.172
+AGENT index=6 mig=a7c66ad2 exit=0 wall_ms=17490 text=4a9703d0580a1f58 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1806.5 context_ms=394.9 state_ms=746.75 prefix_ms=0.0 suffix_ms=685.6 first_token_ms=3832.0 generation_ms=12360.2 generated=64 generation_tps=5.178
+AGENT index=7 mig=a7c66ad2 exit=0 wall_ms=17222 text=cd6326b7698c6eb1 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1801.1 context_ms=489.8 state_ms=648.96 prefix_ms=0.0 suffix_ms=704.1 first_token_ms=3847.8 generation_ms=12355.5 generated=64 generation_tps=5.180
+MEMORY mem_available_drop_mib=31386 prefix_pss_mib=0 prefix_rss_mib=0
+END_CASE failed_agents=0 guard=0
+CASE mode=extent_lazy agents=8
+AGENT index=0 mig=a7c66ad2 exit=0 wall_ms=15651 text=391a1641fadb9440 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1836.6 context_ms=69.8 state_ms=7.26 prefix_ms=0.0 suffix_ms=716.2 first_token_ms=2824.1 generation_ms=12337.8 generated=64 generation_tps=5.187
+AGENT index=1 mig=a7c66ad2 exit=0 wall_ms=15795 text=ecb3ebd1b0b41493 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1834.1 context_ms=72.3 state_ms=7.27 prefix_ms=0.0 suffix_ms=727.0 first_token_ms=2837.9 generation_ms=12428.2 generated=64 generation_tps=5.150
+AGENT index=2 mig=a7c66ad2 exit=0 wall_ms=15841 text=e8755b7d31b2cd22 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1825.9 context_ms=71.3 state_ms=7.26 prefix_ms=0.0 suffix_ms=726.0 first_token_ms=2833.6 generation_ms=12402.7 generated=64 generation_tps=5.160
+AGENT index=3 mig=a7c66ad2 exit=0 wall_ms=15477 text=ae0232f9cac0d983 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1815.4 context_ms=58.7 state_ms=7.78 prefix_ms=0.0 suffix_ms=663.0 first_token_ms=2754.2 generation_ms=12248.2 generated=64 generation_tps=5.225
+AGENT index=4 mig=a7c66ad2 exit=0 wall_ms=15840 text=312d8469c3ff311e role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1828.0 context_ms=74.0 state_ms=7.26 prefix_ms=0.0 suffix_ms=719.0 first_token_ms=2826.3 generation_ms=12373.9 generated=64 generation_tps=5.172
+AGENT index=5 mig=a7c66ad2 exit=0 wall_ms=16117 text=be7ecc46e67f19e0 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1831.8 context_ms=70.7 state_ms=7.64 prefix_ms=0.0 suffix_ms=735.3 first_token_ms=2837.3 generation_ms=12405.3 generated=64 generation_tps=5.159
+AGENT index=6 mig=a7c66ad2 exit=0 wall_ms=15864 text=4a9703d0580a1f58 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1814.4 context_ms=70.1 state_ms=7.33 prefix_ms=0.0 suffix_ms=693.8 first_token_ms=2789.5 generation_ms=12458.5 generated=64 generation_tps=5.137
+AGENT index=7 mig=a7c66ad2 exit=0 wall_ms=15736 text=cd6326b7698c6eb1 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1823.0 context_ms=73.2 state_ms=7.28 prefix_ms=0.0 suffix_ms=731.3 first_token_ms=2834.7 generation_ms=12391.0 generated=64 generation_tps=5.165
+MEMORY mem_available_drop_mib=6745 prefix_pss_mib=1530 prefix_rss_mib=12240
+END_CASE failed_agents=0 guard=0
+END_KVSHARE
+BEGIN_KVSHARE run=4 paragraphs=320 context=32768 publisher_mig=a7c66ad2
+PUBLISH store=device prefix_tokens=16321 prefix_ms=13098.6 publish_ms=884.91 state_bytes=1604681912
+PUBLISH store=huge prefix_tokens=16321 prefix_ms=13272.1 publish_ms=13.27 state_bytes=262328 file_used_kib=1572864
+CASE mode=extent_lazy agents=8
+AGENT index=0 mig=a7c66ad2 exit=0 wall_ms=15703 text=391a1641fadb9440 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1794.4 context_ms=76.2 state_ms=7.28 prefix_ms=0.0 suffix_ms=706.0 first_token_ms=2775.1 generation_ms=12365.5 generated=64 generation_tps=5.176
+AGENT index=1 mig=a7c66ad2 exit=0 wall_ms=15552 text=ecb3ebd1b0b41493 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1782.7 context_ms=61.8 state_ms=7.39 prefix_ms=0.0 suffix_ms=633.8 first_token_ms=2680.8 generation_ms=12365.5 generated=64 generation_tps=5.176
+AGENT index=2 mig=a7c66ad2 exit=0 wall_ms=15749 text=e8755b7d31b2cd22 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1786.7 context_ms=79.0 state_ms=7.48 prefix_ms=0.0 suffix_ms=739.3 first_token_ms=2809.4 generation_ms=12406.3 generated=64 generation_tps=5.159
+AGENT index=3 mig=a7c66ad2 exit=0 wall_ms=15749 text=ae0232f9cac0d983 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1799.9 context_ms=63.3 state_ms=7.34 prefix_ms=0.0 suffix_ms=728.7 first_token_ms=2796.7 generation_ms=12402.3 generated=64 generation_tps=5.160
+AGENT index=4 mig=a7c66ad2 exit=0 wall_ms=15802 text=312d8469c3ff311e role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1780.8 context_ms=71.4 state_ms=7.32 prefix_ms=0.0 suffix_ms=696.9 first_token_ms=2759.7 generation_ms=12456.8 generated=64 generation_tps=5.138
+AGENT index=5 mig=a7c66ad2 exit=0 wall_ms=15802 text=be7ecc46e67f19e0 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1790.2 context_ms=78.8 state_ms=9.40 prefix_ms=0.0 suffix_ms=743.4 first_token_ms=2821.9 generation_ms=12385.6 generated=64 generation_tps=5.167
+AGENT index=6 mig=a7c66ad2 exit=0 wall_ms=16043 text=4a9703d0580a1f58 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1786.3 context_ms=64.8 state_ms=7.35 prefix_ms=0.0 suffix_ms=753.6 first_token_ms=2805.7 generation_ms=12403.2 generated=64 generation_tps=5.160
+AGENT index=7 mig=a7c66ad2 exit=0 wall_ms=15570 text=cd6326b7698c6eb1 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1772.5 context_ms=60.3 state_ms=12.44 prefix_ms=0.0 suffix_ms=654.0 first_token_ms=2697.8 generation_ms=12370.6 generated=64 generation_tps=5.174
+MEMORY mem_available_drop_mib=6705 prefix_pss_mib=1530 prefix_rss_mib=12240
+END_CASE failed_agents=0 guard=0
+CASE mode=restore agents=8
+AGENT index=0 mig=a7c66ad2 exit=0 wall_ms=17058 text=391a1641fadb9440 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1797.5 context_ms=514.3 state_ms=574.34 prefix_ms=0.0 suffix_ms=689.9 first_token_ms=3771.6 generation_ms=12405.5 generated=64 generation_tps=5.159
+AGENT index=1 mig=a7c66ad2 exit=0 wall_ms=16981 text=ecb3ebd1b0b41493 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1791.4 context_ms=520.3 state_ms=568.48 prefix_ms=0.0 suffix_ms=645.7 first_token_ms=3723.5 generation_ms=12376.6 generated=64 generation_tps=5.171
+AGENT index=2 mig=a7c66ad2 exit=0 wall_ms=17177 text=e8755b7d31b2cd22 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1795.0 context_ms=517.3 state_ms=571.80 prefix_ms=0.0 suffix_ms=709.1 first_token_ms=3789.7 generation_ms=12429.1 generated=64 generation_tps=5.149
+AGENT index=3 mig=a7c66ad2 exit=0 wall_ms=15935 text=ae0232f9cac0d983 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1775.3 context_ms=340.7 state_ms=558.83 prefix_ms=0.0 suffix_ms=185.6 first_token_ms=3064.3 generation_ms=12263.1 generated=64 generation_tps=5.219
+AGENT index=4 mig=a7c66ad2 exit=0 wall_ms=17199 text=312d8469c3ff311e role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1778.1 context_ms=508.5 state_ms=579.06 prefix_ms=0.0 suffix_ms=681.2 first_token_ms=3756.8 generation_ms=12459.0 generated=64 generation_tps=5.137
+AGENT index=5 mig=a7c66ad2 exit=0 wall_ms=17123 text=be7ecc46e67f19e0 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1783.6 context_ms=530.5 state_ms=561.10 prefix_ms=0.0 suffix_ms=694.8 first_token_ms=3768.6 generation_ms=12444.3 generated=64 generation_tps=5.143
+AGENT index=6 mig=a7c66ad2 exit=0 wall_ms=16998 text=4a9703d0580a1f58 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1786.7 context_ms=506.8 state_ms=582.54 prefix_ms=0.0 suffix_ms=656.3 first_token_ms=3732.1 generation_ms=12390.6 generated=64 generation_tps=5.165
+AGENT index=7 mig=a7c66ad2 exit=0 wall_ms=17482 text=cd6326b7698c6eb1 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1778.7 context_ms=354.5 state_ms=739.08 prefix_ms=0.0 suffix_ms=691.5 first_token_ms=3768.8 generation_ms=12439.4 generated=64 generation_tps=5.145
+MEMORY mem_available_drop_mib=31330 prefix_pss_mib=0 prefix_rss_mib=0
+END_CASE failed_agents=0 guard=0
+END_KVSHARE
+BEGIN_KVSHARE run=5 paragraphs=320 context=32768 publisher_mig=a7c66ad2
+PUBLISH store=device prefix_tokens=16321 prefix_ms=13094.5 publish_ms=877.48 state_bytes=1604681912
+PUBLISH store=huge prefix_tokens=16321 prefix_ms=13265.4 publish_ms=13.64 state_bytes=262328 file_used_kib=1572864
+CASE mode=restore agents=8
+AGENT index=0 mig=a7c66ad2 exit=0 wall_ms=16998 text=391a1641fadb9440 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1828.1 context_ms=362.9 state_ms=768.71 prefix_ms=0.0 suffix_ms=676.0 first_token_ms=3832.4 generation_ms=12334.8 generated=64 generation_tps=5.189
+AGENT index=1 mig=a7c66ad2 exit=0 wall_ms=17501 text=ecb3ebd1b0b41493 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1826.1 context_ms=363.0 state_ms=768.81 prefix_ms=0.0 suffix_ms=712.6 first_token_ms=3866.8 generation_ms=12373.2 generated=64 generation_tps=5.172
+AGENT index=2 mig=a7c66ad2 exit=0 wall_ms=17105 text=e8755b7d31b2cd22 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1826.6 context_ms=521.7 state_ms=616.97 prefix_ms=0.0 suffix_ms=695.4 first_token_ms=3852.8 generation_ms=12366.5 generated=64 generation_tps=5.175
+AGENT index=3 mig=a7c66ad2 exit=0 wall_ms=17130 text=ae0232f9cac0d983 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1819.0 context_ms=530.9 state_ms=604.52 prefix_ms=0.0 suffix_ms=689.8 first_token_ms=3838.1 generation_ms=12373.3 generated=64 generation_tps=5.172
+AGENT index=4 mig=a7c66ad2 exit=0 wall_ms=15434 text=312d8469c3ff311e role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1807.2 context_ms=352.7 state_ms=506.85 prefix_ms=0.0 suffix_ms=188.3 first_token_ms=3056.3 generation_ms=11779.1 generated=64 generation_tps=5.433
+AGENT index=5 mig=a7c66ad2 exit=0 wall_ms=17155 text=be7ecc46e67f19e0 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1813.0 context_ms=517.5 state_ms=618.95 prefix_ms=0.0 suffix_ms=714.2 first_token_ms=3861.1 generation_ms=12373.1 generated=64 generation_tps=5.173
+AGENT index=6 mig=a7c66ad2 exit=0 wall_ms=17202 text=4a9703d0580a1f58 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1815.6 context_ms=485.7 state_ms=651.55 prefix_ms=0.0 suffix_ms=731.0 first_token_ms=3875.0 generation_ms=12360.3 generated=64 generation_tps=5.178
+AGENT index=7 mig=a7c66ad2 exit=0 wall_ms=17020 text=cd6326b7698c6eb1 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1808.5 context_ms=510.2 state_ms=626.88 prefix_ms=0.0 suffix_ms=672.6 first_token_ms=3815.6 generation_ms=12282.5 generated=64 generation_tps=5.211
+MEMORY mem_available_drop_mib=31420 prefix_pss_mib=0 prefix_rss_mib=0
+END_CASE failed_agents=0 guard=0
+CASE mode=extent_lazy agents=8
+AGENT index=0 mig=a7c66ad2 exit=0 wall_ms=15415 text=391a1641fadb9440 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1683.4 context_ms=56.2 state_ms=7.58 prefix_ms=0.0 suffix_ms=613.8 first_token_ms=2559.9 generation_ms=12376.2 generated=64 generation_tps=5.171
+AGENT index=1 mig=a7c66ad2 exit=0 wall_ms=15612 text=ecb3ebd1b0b41493 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1686.1 context_ms=76.1 state_ms=7.71 prefix_ms=0.0 suffix_ms=728.1 first_token_ms=2700.0 generation_ms=12384.5 generated=64 generation_tps=5.168
+AGENT index=2 mig=a7c66ad2 exit=0 wall_ms=15585 text=e8755b7d31b2cd22 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1686.3 context_ms=70.3 state_ms=7.71 prefix_ms=0.0 suffix_ms=689.0 first_token_ms=2652.9 generation_ms=12344.6 generated=64 generation_tps=5.184
+AGENT index=3 mig=a7c66ad2 exit=0 wall_ms=15532 text=ae0232f9cac0d983 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1671.2 context_ms=69.2 state_ms=7.44 prefix_ms=0.0 suffix_ms=679.5 first_token_ms=2633.0 generation_ms=12342.3 generated=64 generation_tps=5.185
+AGENT index=4 mig=a7c66ad2 exit=0 wall_ms=15705 text=312d8469c3ff311e role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1679.0 context_ms=78.7 state_ms=7.45 prefix_ms=0.0 suffix_ms=759.7 first_token_ms=2730.8 generation_ms=12378.4 generated=64 generation_tps=5.170
+AGENT index=5 mig=a7c66ad2 exit=0 wall_ms=15705 text=be7ecc46e67f19e0 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1680.3 context_ms=77.5 state_ms=7.37 prefix_ms=0.0 suffix_ms=719.9 first_token_ms=2686.5 generation_ms=12419.7 generated=64 generation_tps=5.153
+AGENT index=6 mig=a7c66ad2 exit=0 wall_ms=16048 text=4a9703d0580a1f58 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1675.4 context_ms=78.6 state_ms=7.62 prefix_ms=0.0 suffix_ms=753.7 first_token_ms=2719.5 generation_ms=12397.7 generated=64 generation_tps=5.162
+AGENT index=7 mig=a7c66ad2 exit=0 wall_ms=15675 text=cd6326b7698c6eb1 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1668.1 context_ms=82.3 state_ms=8.79 prefix_ms=0.0 suffix_ms=761.3 first_token_ms=2732.4 generation_ms=12381.4 generated=64 generation_tps=5.169
+MEMORY mem_available_drop_mib=6793 prefix_pss_mib=1530 prefix_rss_mib=12240
+END_CASE failed_agents=0 guard=0
+END_KVSHARE
+BEGIN_KVSHARE run=6 paragraphs=320 context=32768 publisher_mig=a7c66ad2
+PUBLISH store=device prefix_tokens=16321 prefix_ms=13056.1 publish_ms=884.21 state_bytes=1604681912
+PUBLISH store=huge prefix_tokens=16321 prefix_ms=13241.7 publish_ms=13.34 state_bytes=262328 file_used_kib=1572864
+CASE mode=extent_lazy agents=8
+AGENT index=0 mig=a7c66ad2 exit=0 wall_ms=15816 text=391a1641fadb9440 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1816.0 context_ms=71.8 state_ms=7.58 prefix_ms=0.0 suffix_ms=706.6 first_token_ms=2796.3 generation_ms=12391.6 generated=64 generation_tps=5.165
+AGENT index=1 mig=a7c66ad2 exit=0 wall_ms=15816 text=ecb3ebd1b0b41493 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1812.1 context_ms=64.3 state_ms=8.59 prefix_ms=0.0 suffix_ms=699.7 first_token_ms=2778.2 generation_ms=12398.0 generated=64 generation_tps=5.162
+AGENT index=2 mig=a7c66ad2 exit=0 wall_ms=15841 text=e8755b7d31b2cd22 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1807.3 context_ms=72.6 state_ms=7.47 prefix_ms=0.0 suffix_ms=707.3 first_token_ms=2792.4 generation_ms=12402.0 generated=64 generation_tps=5.160
+AGENT index=3 mig=a7c66ad2 exit=0 wall_ms=15729 text=ae0232f9cac0d983 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1794.9 context_ms=62.9 state_ms=7.87 prefix_ms=0.0 suffix_ms=698.9 first_token_ms=2767.6 generation_ms=12391.2 generated=64 generation_tps=5.165
+AGENT index=4 mig=a7c66ad2 exit=0 wall_ms=15652 text=312d8469c3ff311e role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1800.4 context_ms=53.5 state_ms=7.69 prefix_ms=0.0 suffix_ms=698.5 first_token_ms=2755.6 generation_ms=12363.0 generated=64 generation_tps=5.177
+AGENT index=5 mig=a7c66ad2 exit=0 wall_ms=15886 text=be7ecc46e67f19e0 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1802.1 context_ms=75.7 state_ms=7.40 prefix_ms=0.0 suffix_ms=799.9 first_token_ms=2885.0 generation_ms=12349.7 generated=64 generation_tps=5.182
+AGENT index=6 mig=a7c66ad2 exit=0 wall_ms=15674 text=4a9703d0580a1f58 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1795.6 context_ms=66.4 state_ms=8.55 prefix_ms=0.0 suffix_ms=708.0 first_token_ms=2775.5 generation_ms=12342.6 generated=64 generation_tps=5.185
+AGENT index=7 mig=a7c66ad2 exit=0 wall_ms=16052 text=cd6326b7698c6eb1 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1802.7 context_ms=79.5 state_ms=8.90 prefix_ms=0.0 suffix_ms=750.9 first_token_ms=2829.6 generation_ms=12398.5 generated=64 generation_tps=5.162
+MEMORY mem_available_drop_mib=6692 prefix_pss_mib=1530 prefix_rss_mib=12240
+END_CASE failed_agents=0 guard=0
+CASE mode=restore agents=8
+AGENT index=0 mig=a7c66ad2 exit=0 wall_ms=16799 text=391a1641fadb9440 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1579.6 context_ms=523.8 state_ms=675.34 prefix_ms=0.0 suffix_ms=628.8 first_token_ms=3597.4 generation_ms=12316.0 generated=64 generation_tps=5.196
+AGENT index=1 mig=a7c66ad2 exit=0 wall_ms=15221 text=ecb3ebd1b0b41493 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1581.0 context_ms=357.2 state_ms=534.59 prefix_ms=0.0 suffix_ms=184.0 first_token_ms=2838.9 generation_ms=11779.7 generated=64 generation_tps=5.433
+AGENT index=2 mig=a7c66ad2 exit=0 wall_ms=16969 text=e8755b7d31b2cd22 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1574.4 context_ms=498.9 state_ms=701.87 prefix_ms=0.0 suffix_ms=708.7 first_token_ms=3677.9 generation_ms=12351.7 generated=64 generation_tps=5.181
+AGENT index=3 mig=a7c66ad2 exit=0 wall_ms=16743 text=ae0232f9cac0d983 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1582.7 context_ms=494.2 state_ms=704.11 prefix_ms=0.0 suffix_ms=599.8 first_token_ms=3567.9 generation_ms=12331.1 generated=64 generation_tps=5.190
+AGENT index=4 mig=a7c66ad2 exit=0 wall_ms=16939 text=312d8469c3ff311e role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1565.0 context_ms=509.5 state_ms=689.70 prefix_ms=0.0 suffix_ms=691.8 first_token_ms=3655.6 generation_ms=12363.2 generated=64 generation_tps=5.177
+AGENT index=5 mig=a7c66ad2 exit=0 wall_ms=16989 text=be7ecc46e67f19e0 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1568.3 context_ms=515.0 state_ms=683.03 prefix_ms=0.0 suffix_ms=707.2 first_token_ms=3670.7 generation_ms=12348.1 generated=64 generation_tps=5.183
+AGENT index=6 mig=a7c66ad2 exit=0 wall_ms=17276 text=4a9703d0580a1f58 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1572.4 context_ms=478.5 state_ms=719.42 prefix_ms=0.0 suffix_ms=689.9 first_token_ms=3655.6 generation_ms=12373.4 generated=64 generation_tps=5.172
+AGENT index=7 mig=a7c66ad2 exit=0 wall_ms=16936 text=cd6326b7698c6eb1 role=child prefix_tokens=16321 suffix_tokens=16 model_ms=1574.2 context_ms=538.5 state_ms=659.70 prefix_ms=0.0 suffix_ms=681.0 first_token_ms=3639.0 generation_ms=12345.3 generated=64 generation_tps=5.184
+MEMORY mem_available_drop_mib=31379 prefix_pss_mib=0 prefix_rss_mib=0
+END_CASE failed_agents=0 guard=0
+END_KVSHARE

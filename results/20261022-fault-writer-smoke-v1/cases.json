@@ -1,0 +1,254 @@
+[
+  {
+    "case": "r01-device_merged-control",
+    "run": 1,
+    "mode": "device_merged",
+    "fault": false,
+    "children": 2,
+    "paragraphs": 80,
+    "n_gen": 32,
+    "status": "ok",
+    "context": 8192,
+    "command": [
+      "/home/thor/kcj/stator_campaign_20261016/bin/kv_spawn_fault_tuned4",
+      "/home/thor/kcj/llm_share/models/Qwen2.5-7B-Instruct-Q4_K_M.gguf",
+      "8192",
+      "/home/thor/kcj/llm_share/results/20261022-fault-writer-smoke-v1/r01-device_merged-control/prefix.txt",
+      "/home/thor/kcj/llm_share/results/20261022-fault-writer-smoke-v1/r01-device_merged-control/state",
+      "32",
+      "/home/thor/kcj/llm_share/results/20261022-fault-writer-smoke-v1/r01-device_merged-control/go",
+      "/home/thor/kcj/llm_share/results/20261022-fault-writer-smoke-v1/r01-device_merged-control/out",
+      "/home/thor/kcj/stator_campaign_20261016/bin/kv_fork_tuned4",
+      "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600",
+      "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600"
+    ],
+    "environment": {
+      "GGML_CUDA_FATTN_HOST_GQA": "2",
+      "CUDA_VISIBLE_DEVICES": "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600",
+      "GGML_CUDA_HOST_PTR": "1",
+      "LLAMA_KV_VMM": "1",
+      "LLAMA_KV_VMM_BATCH": "2",
+      "LLAMA_KV_GROW": "256",
+      "STATOR_TIMING_DIR": "/home/thor/kcj/llm_share/results/20261022-fault-writer-smoke-v1/r01-device_merged-control/timing",
+      "STATOR_TRACE": "1"
+    },
+    "parent_pid": 381673,
+    "exit": 0,
+    "release_ns": 666356313934360,
+    "wall_s": 8.292677958,
+    "children_exit": [
+      {
+        "index": "0",
+        "exit": "0"
+      },
+      {
+        "index": "1",
+        "exit": "0"
+      }
+    ],
+    "writer_exit": [],
+    "write": [],
+    "parent_text_sha256": "054e0879ac032cd3fc2b47cde4be8509558892e78cc78f4a70195aa473b08525",
+    "child_text_sha256": [
+      "35e3e4786308c89e813e7755811670de38a1632b3b4ca2b650866f92a67f032f",
+      "f25825fbb683a9cc69aaadabb757cb02ff39ee9f2575ff3cf1092dce8ba049ea"
+    ],
+    "publish_ms": 27.717272
+  },
+  {
+    "case": "r01-device_merged-fault",
+    "run": 1,
+    "mode": "device_merged",
+    "fault": true,
+    "children": 2,
+    "paragraphs": 80,
+    "n_gen": 32,
+    "status": "ok",
+    "context": 8192,
+    "command": [
+      "/home/thor/kcj/stator_campaign_20261016/bin/kv_spawn_fault_tuned4",
+      "/home/thor/kcj/llm_share/models/Qwen2.5-7B-Instruct-Q4_K_M.gguf",
+      "8192",
+      "/home/thor/kcj/llm_share/results/20261022-fault-writer-smoke-v1/r01-device_merged-fault/prefix.txt",
+      "/home/thor/kcj/llm_share/results/20261022-fault-writer-smoke-v1/r01-device_merged-fault/state",
+      "32",
+      "/home/thor/kcj/llm_share/results/20261022-fault-writer-smoke-v1/r01-device_merged-fault/go",
+      "/home/thor/kcj/llm_share/results/20261022-fault-writer-smoke-v1/r01-device_merged-fault/out",
+      "/home/thor/kcj/stator_campaign_20261016/bin/kv_fork_tuned4",
+      "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600",
+      "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600"
+    ],
+    "environment": {
+      "GGML_CUDA_FATTN_HOST_GQA": "2",
+      "CUDA_VISIBLE_DEVICES": "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600",
+      "GGML_CUDA_HOST_PTR": "1",
+      "LLAMA_KV_VMM": "1",
+      "LLAMA_KV_VMM_BATCH": "2",
+      "LLAMA_KV_GROW": "256",
+      "STATOR_TIMING_DIR": "/home/thor/kcj/llm_share/results/20261022-fault-writer-smoke-v1/r01-device_merged-fault/timing",
+      "STATOR_TRACE": "1",
+      "STATOR_FAULT_WRITER": "/home/thor/kcj/stator_campaign_20261016/bin/fault_writer",
+      "STATOR_FAULT_DELAY_MS": "2500"
+    },
+    "parent_pid": 381760,
+    "exit": 0,
+    "release_ns": 666368034987844,
+    "wall_s": 8.317763202,
+    "children_exit": [
+      {
+        "index": "0",
+        "exit": "0"
+      },
+      {
+        "index": "1",
+        "exit": "0"
+      }
+    ],
+    "writer_exit": [
+      {
+        "exit": "0"
+      }
+    ],
+    "write": [
+      {
+        "route": "vmm",
+        "start_ns": "666370831026948",
+        "end_ns": "666370960997547",
+        "targets": "112",
+        "written": "112",
+        "result": "CUDA_SUCCESS"
+      }
+    ],
+    "parent_text_sha256": "054e0879ac032cd3fc2b47cde4be8509558892e78cc78f4a70195aa473b08525",
+    "child_text_sha256": [
+      "35e3e4786308c89e813e7755811670de38a1632b3b4ca2b650866f92a67f032f",
+      "f25825fbb683a9cc69aaadabb757cb02ff39ee9f2575ff3cf1092dce8ba049ea"
+    ],
+    "publish_ms": 27.9363
+  },
+  {
+    "case": "r01-extent-control",
+    "run": 1,
+    "mode": "extent",
+    "fault": false,
+    "children": 2,
+    "paragraphs": 80,
+    "n_gen": 32,
+    "status": "ok",
+    "context": 8192,
+    "command": [
+      "/home/thor/kcj/stator_campaign_20261016/bin/kv_spawn_fault_tuned4",
+      "/home/thor/kcj/llm_share/models/Qwen2.5-7B-Instruct-Q4_K_M.gguf",
+      "8192",
+      "/home/thor/kcj/llm_share/results/20261022-fault-writer-smoke-v1/r01-extent-control/prefix.txt",
+      "/home/thor/kcj/llm_share/results/20261022-fault-writer-smoke-v1/r01-extent-control/state",
+      "32",
+      "/home/thor/kcj/llm_share/results/20261022-fault-writer-smoke-v1/r01-extent-control/go",
+      "/home/thor/kcj/llm_share/results/20261022-fault-writer-smoke-v1/r01-extent-control/out",
+      "/home/thor/kcj/stator_campaign_20261016/bin/kv_fork_tuned4",
+      "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600",
+      "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600"
+    ],
+    "environment": {
+      "GGML_CUDA_FATTN_HOST_GQA": "2",
+      "CUDA_VISIBLE_DEVICES": "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600",
+      "GGML_CUDA_HOST_PTR": "1",
+      "LLAMA_KV_HOST": "/home/thor/kcj/llm_share/results/20261022-fault-writer-smoke-v1/tmpfs/kv",
+      "LLAMA_KV_GROW": "256",
+      "STATOR_TIMING_DIR": "/home/thor/kcj/llm_share/results/20261022-fault-writer-smoke-v1/r01-extent-control/timing",
+      "STATOR_TRACE": "1"
+    },
+    "parent_pid": 381866,
+    "exit": 0,
+    "release_ns": 666379594862750,
+    "wall_s": 8.086426678,
+    "children_exit": [
+      {
+        "index": "0",
+        "exit": "0"
+      },
+      {
+        "index": "1",
+        "exit": "0"
+      }
+    ],
+    "writer_exit": [],
+    "write": [],
+    "parent_text_sha256": "054e0879ac032cd3fc2b47cde4be8509558892e78cc78f4a70195aa473b08525",
+    "child_text_sha256": [
+      "35e3e4786308c89e813e7755811670de38a1632b3b4ca2b650866f92a67f032f",
+      "f25825fbb683a9cc69aaadabb757cb02ff39ee9f2575ff3cf1092dce8ba049ea"
+    ],
+    "publish_ms": 5.323148
+  },
+  {
+    "case": "r01-extent-fault",
+    "run": 1,
+    "mode": "extent",
+    "fault": true,
+    "children": 2,
+    "paragraphs": 80,
+    "n_gen": 32,
+    "status": "ok",
+    "context": 8192,
+    "command": [
+      "/home/thor/kcj/stator_campaign_20261016/bin/kv_spawn_fault_tuned4",
+      "/home/thor/kcj/llm_share/models/Qwen2.5-7B-Instruct-Q4_K_M.gguf",
+      "8192",
+      "/home/thor/kcj/llm_share/results/20261022-fault-writer-smoke-v1/r01-extent-fault/prefix.txt",
+      "/home/thor/kcj/llm_share/results/20261022-fault-writer-smoke-v1/r01-extent-fault/state",
+      "32",
+      "/home/thor/kcj/llm_share/results/20261022-fault-writer-smoke-v1/r01-extent-fault/go",
+      "/home/thor/kcj/llm_share/results/20261022-fault-writer-smoke-v1/r01-extent-fault/out",
+      "/home/thor/kcj/stator_campaign_20261016/bin/kv_fork_tuned4",
+      "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600",
+      "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600"
+    ],
+    "environment": {
+      "GGML_CUDA_FATTN_HOST_GQA": "2",
+      "CUDA_VISIBLE_DEVICES": "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600",
+      "GGML_CUDA_HOST_PTR": "1",
+      "LLAMA_KV_HOST": "/home/thor/kcj/llm_share/results/20261022-fault-writer-smoke-v1/tmpfs/kv",
+      "LLAMA_KV_GROW": "256",
+      "STATOR_TIMING_DIR": "/home/thor/kcj/llm_share/results/20261022-fault-writer-smoke-v1/r01-extent-fault/timing",
+      "STATOR_TRACE": "1",
+      "STATOR_FAULT_WRITER": "/home/thor/kcj/stator_campaign_20261016/bin/fault_writer",
+      "STATOR_FAULT_DELAY_MS": "2500"
+    },
+    "parent_pid": 382011,
+    "exit": 0,
+    "release_ns": 666391232254871,
+    "wall_s": 8.239822095,
+    "children_exit": [
+      {
+        "index": "0",
+        "exit": "0"
+      },
+      {
+        "index": "1",
+        "exit": "0"
+      }
+    ],
+    "writer_exit": [
+      {
+        "exit": "0"
+      }
+    ],
+    "write": [
+      {
+        "route": "host",
+        "start_ns": "666393899698099",
+        "end_ns": "666394004089455",
+        "targets": "1",
+        "written": "0",
+        "result": "cudaErrorIllegalAddress"
+      }
+    ],
+    "parent_text_sha256": "054e0879ac032cd3fc2b47cde4be8509558892e78cc78f4a70195aa473b08525",
+    "child_text_sha256": [
+      "35e3e4786308c89e813e7755811670de38a1632b3b4ca2b650866f92a67f032f",
+      "f25825fbb683a9cc69aaadabb757cb02ff39ee9f2575ff3cf1092dce8ba049ea"
+    ],
+    "publish_ms": 5.201538
+  }
+]

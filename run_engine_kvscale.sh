@@ -15,7 +15,10 @@
 #
 # A case is skipped, and logged as skipped, when starting it would leave
 # less than RESERVE_GIB of available memory by the estimate of
-# ESTIMATE_MIB_PER_AGENT for restore.
+# ESTIMATE_MIB_PER_AGENT for restore and of ESTIMATE_EXTENT_MIB_PER_AGENT for
+# extent_lazy (the same by default). While a case runs, its agents are ended
+# when the available memory falls below GUARD_GIB (logged as guard=1). The
+# tmpfs of the cache file holds TMPFS_MIB.
 #
 # Kill gates, fixed before the campaign:
 #   S1  no agent fails in any case that is not skipped;
@@ -41,6 +44,9 @@ grow=${GROW_ROWS:-256}
 limit_s=${CASE_LIMIT_S:-1200}
 reserve_gib=${RESERVE_GIB:-24}
 estimate_mib=${ESTIMATE_MIB_PER_AGENT:-2600}
+estimate_extent_mib=${ESTIMATE_EXTENT_MIB_PER_AGENT:-$estimate_mib}
+guard_gib=${GUARD_GIB:-12}
+tmpfs_mib=${TMPFS_MIB:-8192}
 model=${MODEL:-"$script_dir/models/Qwen2.5-7B-Instruct-Q4_K_M.gguf"}
 engine=${KV_ENGINE:-"$script_dir/llama.cpp-kv"}
 driver=${DRIVER:-"$script_dir/kv_fork"}
@@ -86,7 +92,7 @@ cleanup() {
 }
 trap cleanup EXIT
 mkdir -p "$huge_dir" "$result_dir"
-sudo -n mount -t tmpfs -o "huge=always,size=8192m,uid=$(id -u),gid=$(id -g)" \
+sudo -n mount -t tmpfs -o "huge=always,size=${tmpfs_mib}m,uid=$(id -u),gid=$(id -g)" \
   tmpfs "$huge_dir"
 mounted_huge=1
 work=$(mktemp -d "$result_dir/work.XXXXXX")
@@ -135,6 +141,8 @@ field_of() {  # name file: value of name=VALUE on the first line that has it
     "${prefix_file:-none}" "$(sha256sum "$prefix" | cut -d' ' -f1)" \
     "${tasks_file:-none}"
   printf 'reserve_gib=%s\nestimate_mib_per_agent=%s\n' "$reserve_gib" "$estimate_mib"
+  printf 'estimate_extent_mib_per_agent=%s\nguard_gib=%s\ntmpfs_mib=%s\n' \
+    "$estimate_extent_mib" "$guard_gib" "$tmpfs_mib"
   printf 'model=%s\n' "$(basename "$model")"
   printf 'engine_commit=%s\n' "$(git -C "$engine" rev-parse HEAD)"
   sed 's/^/boot_id=/' /proc/sys/kernel/random/boot_id
@@ -165,9 +173,10 @@ run_case() {  # mode agents prefix-tokens first-mig other-mig
     envs=(LLAMA_KV_HOST="$huge_dir/kv" LLAMA_KV_PREFIX="$tokens" LLAMA_KV_GROW="$grow")
     store="$huge_dir/kv.0"
   fi
-  local before lowest sample pss=0 rss=0
+  local before lowest sample pss=0 rss=0 guard=0 estimate=$estimate_mib
+  [[ "$mode" == restore ]] || estimate=$estimate_extent_mib
   before=$(awk '/^MemAvailable:/ { print $2 }' /proc/meminfo)
-  if (( before / 1024 - agents * estimate_mib < reserve_gib * 1024 )); then
+  if (( before / 1024 - agents * estimate < reserve_gib * 1024 )); then
     printf 'SKIPPED mode=%s agents=%s mem_available_mib=%s\n' "$mode" "$agents" \
       "$(( before / 1024 ))" >>"$raw_log"
     return 0
@@ -204,6 +213,10 @@ run_case() {  # mode agents prefix-tokens first-mig other-mig
     if (( tick % 5 == 0 )); then
       sample=$(awk '/^MemAvailable:/ { print $2 }' /proc/meminfo)
       (( sample < lowest )) && lowest=$sample
+      if (( guard == 0 && sample / 1024 < guard_gib * 1024 )); then
+        guard=1
+        kill -9 "${pids[@]}" 2>/dev/null || true
+      fi
     fi
     if [[ -n "$store" ]] && (( tick % 25 == 5 )); then
       # An agent may leave between the liveness test and the read.
@@ -245,7 +258,7 @@ run_case() {  # mode agents prefix-tokens first-mig other-mig
     done
     printf 'MEMORY mem_available_drop_mib=%s prefix_pss_mib=%s prefix_rss_mib=%s\n' \
       "$(( (before - lowest) / 1024 ))" "$pss" "$rss"
-    printf 'END_CASE failed_agents=%s\n' "$failed"
+    printf 'END_CASE failed_agents=%s guard=%s\n' "$failed" "$guard"
   } >>"$raw_log"
 }
 

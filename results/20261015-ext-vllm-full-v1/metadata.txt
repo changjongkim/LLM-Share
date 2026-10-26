@@ -1,0 +1,14 @@
+timestamp=2026-10-15T14:38:29+09:00
+repetitions=6
+agents=8
+context=16384
+n_gen=64
+kv_cache_gib=8
+model_dir=models--Qwen--Qwen2.5-7B-Instruct-AWQ
+model_bytes=5582400357
+vllm=0.20.0+cu130
+torch=2.10.0
+extra_args=-O0 --enable-prompt-tokens-details
+device_index=0
+boot_id=f9776703-a137-43bc-822b-124c6147ff68
+GPU 0: NVIDIA Thor (UUID: GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600)

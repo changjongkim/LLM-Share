@@ -1,0 +1,858 @@
+[
+  {
+    "case": "r01-copy_delta",
+    "run": 1,
+    "mode": "copy_delta",
+    "forks": 3,
+    "children_per_fork": 1,
+    "step": 64,
+    "paragraphs": 80,
+    "context": 8192,
+    "command": [
+      "/home/thor/kcj/stator_campaign_20261016/bin/kv_spawn_repeat_tuned5",
+      "/home/thor/kcj/llm_share/models/Qwen2.5-7B-Instruct-Q4_K_M.gguf",
+      "8192",
+      "/home/thor/kcj/llm_share/results/20261022-repeatfork-delta-smoke-v1/r01-copy_delta/prefix.txt",
+      "/home/thor/kcj/llm_share/results/20261022-repeatfork-delta-smoke-v1/r01-copy_delta/state",
+      "16",
+      "3",
+      "1",
+      "64",
+      "/home/thor/kcj/llm_share/results/20261022-repeatfork-delta-smoke-v1/r01-copy_delta/out",
+      "/home/thor/kcj/stator_campaign_20261016/bin/kv_fork_tuned5",
+      "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600"
+    ],
+    "environment": {
+      "GGML_CUDA_FATTN_HOST_GQA": "2",
+      "CUDA_VISIBLE_DEVICES": "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600",
+      "GGML_CUDA_HOST_PTR": "1",
+      "STATOR_TRACE": "0",
+      "LLAMA_KV_HOST": "/home/thor/kcj/llm_share/results/20261022-repeatfork-delta-smoke-v1/tmpfs/kv",
+      "LLAMA_KV_GROW": "256",
+      "LLAMA_KV_PUBLISH_COPY": "2",
+      "STATOR_TIMING_DIR": "/home/thor/kcj/llm_share/results/20261022-repeatfork-delta-smoke-v1/r01-copy_delta/timing",
+      "STATOR_REPEAT_UNLINK": "1"
+    },
+    "exit": 0,
+    "status": "ok",
+    "publishes": [
+      {
+        "fork": 1,
+        "rows": 4081,
+        "publish_ms": 23.51
+      },
+      {
+        "fork": 2,
+        "rows": 4158,
+        "publish_ms": 4.81
+      },
+      {
+        "fork": 3,
+        "rows": 4222,
+        "publish_ms": 1.71
+      }
+    ],
+    "parent": {
+      "role": "parent",
+      "forks": "3",
+      "children": "3",
+      "prefix_ms": "2938.8",
+      "publish_total_ms": "30.03",
+      "parent_ms": "6932.6",
+      "total_ms": "10925.6",
+      "rows": "4286"
+    },
+    "parent_text_sha256": "25eca8e80e99b87178a651708a72225ed3094d5a5edc5beb37be72fd3ea58523",
+    "children": [
+      {
+        "fork": 1,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "4081",
+          "suffix_tokens": "16",
+          "model_ms": "637.9",
+          "context_ms": "23.0",
+          "state_ms": "1.85",
+          "prefix_ms": "0.0",
+          "suffix_ms": "124.7",
+          "first_token_ms": "813.9",
+          "generation_ms": "906.6",
+          "generated": "16",
+          "generation_tps": "17.648"
+        },
+        "text_sha256": "15e7e38330d94aaaeb3458638e41365e8b659208545c032118de1c3816332c77"
+      },
+      {
+        "fork": 2,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "4158",
+          "suffix_tokens": "16",
+          "model_ms": "638.6",
+          "context_ms": "22.6",
+          "state_ms": "1.75",
+          "prefix_ms": "0.0",
+          "suffix_ms": "117.7",
+          "first_token_ms": "806.0",
+          "generation_ms": "916.1",
+          "generated": "16",
+          "generation_tps": "17.466"
+        },
+        "text_sha256": "c52e4a8d8d7a4fac71e4363bdd17c4b98feb23cad46a96f174bc7ae88c255a6e"
+      },
+      {
+        "fork": 3,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "4222",
+          "suffix_tokens": "16",
+          "model_ms": "627.5",
+          "context_ms": "22.9",
+          "state_ms": "2.08",
+          "prefix_ms": "0.0",
+          "suffix_ms": "112.7",
+          "first_token_ms": "790.9",
+          "generation_ms": "911.7",
+          "generated": "16",
+          "generation_tps": "17.549"
+        },
+        "text_sha256": "c88b57425846f6588edc86ae9e459f25b62092cf73a2cc979f316473e9622fda"
+      }
+    ],
+    "children_exit": [
+      {
+        "index": "0",
+        "exit": "0"
+      },
+      {
+        "index": "1",
+        "exit": "0"
+      },
+      {
+        "index": "2",
+        "exit": "0"
+      }
+    ],
+    "peak_drop_bytes": 2156015616,
+    "total_peak_accounted_bytes": 6839089856,
+    "tmpfs_peak_bytes": 352321536,
+    "gpu_faults_total": 0,
+    "wall_s": 11.580982106
+  },
+  {
+    "case": "r01-extent",
+    "run": 1,
+    "mode": "extent",
+    "forks": 3,
+    "children_per_fork": 1,
+    "step": 64,
+    "paragraphs": 80,
+    "context": 8192,
+    "command": [
+      "/home/thor/kcj/stator_campaign_20261016/bin/kv_spawn_repeat_tuned5",
+      "/home/thor/kcj/llm_share/models/Qwen2.5-7B-Instruct-Q4_K_M.gguf",
+      "8192",
+      "/home/thor/kcj/llm_share/results/20261022-repeatfork-delta-smoke-v1/r01-extent/prefix.txt",
+      "/home/thor/kcj/llm_share/results/20261022-repeatfork-delta-smoke-v1/r01-extent/state",
+      "16",
+      "3",
+      "1",
+      "64",
+      "/home/thor/kcj/llm_share/results/20261022-repeatfork-delta-smoke-v1/r01-extent/out",
+      "/home/thor/kcj/stator_campaign_20261016/bin/kv_fork_tuned5",
+      "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600"
+    ],
+    "environment": {
+      "GGML_CUDA_FATTN_HOST_GQA": "2",
+      "CUDA_VISIBLE_DEVICES": "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600",
+      "GGML_CUDA_HOST_PTR": "1",
+      "STATOR_TRACE": "0",
+      "LLAMA_KV_HOST": "/home/thor/kcj/llm_share/results/20261022-repeatfork-delta-smoke-v1/tmpfs/kv",
+      "LLAMA_KV_GROW": "256",
+      "STATOR_TIMING_DIR": "/home/thor/kcj/llm_share/results/20261022-repeatfork-delta-smoke-v1/r01-extent/timing",
+      "STATOR_REPEAT_UNLINK": "1"
+    },
+    "exit": 0,
+    "status": "ok",
+    "publishes": [
+      {
+        "fork": 1,
+        "rows": 4081,
+        "publish_ms": 5.13
+      },
+      {
+        "fork": 2,
+        "rows": 4158,
+        "publish_ms": 7.23
+      },
+      {
+        "fork": 3,
+        "rows": 4222,
+        "publish_ms": 4.12
+      }
+    ],
+    "parent": {
+      "role": "parent",
+      "forks": "3",
+      "children": "3",
+      "prefix_ms": "2872.5",
+      "publish_total_ms": "16.48",
+      "parent_ms": "6932.2",
+      "total_ms": "10854.9",
+      "rows": "4286"
+    },
+    "parent_text_sha256": "25eca8e80e99b87178a651708a72225ed3094d5a5edc5beb37be72fd3ea58523",
+    "children": [
+      {
+        "fork": 1,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "4081",
+          "suffix_tokens": "16",
+          "model_ms": "641.3",
+          "context_ms": "24.6",
+          "state_ms": "1.69",
+          "prefix_ms": "0.0",
+          "suffix_ms": "123.6",
+          "first_token_ms": "816.8",
+          "generation_ms": "914.2",
+          "generated": "16",
+          "generation_tps": "17.502"
+        },
+        "text_sha256": "15e7e38330d94aaaeb3458638e41365e8b659208545c032118de1c3816332c77"
+      },
+      {
+        "fork": 2,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "4158",
+          "suffix_tokens": "16",
+          "model_ms": "634.8",
+          "context_ms": "23.8",
+          "state_ms": "1.64",
+          "prefix_ms": "0.0",
+          "suffix_ms": "128.1",
+          "first_token_ms": "814.0",
+          "generation_ms": "916.5",
+          "generated": "16",
+          "generation_tps": "17.457"
+        },
+        "text_sha256": "c52e4a8d8d7a4fac71e4363bdd17c4b98feb23cad46a96f174bc7ae88c255a6e"
+      },
+      {
+        "fork": 3,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "4222",
+          "suffix_tokens": "16",
+          "model_ms": "634.0",
+          "context_ms": "24.7",
+          "state_ms": "1.87",
+          "prefix_ms": "0.0",
+          "suffix_ms": "130.5",
+          "first_token_ms": "817.3",
+          "generation_ms": "916.7",
+          "generated": "16",
+          "generation_tps": "17.454"
+        },
+        "text_sha256": "c88b57425846f6588edc86ae9e459f25b62092cf73a2cc979f316473e9622fda"
+      }
+    ],
+    "children_exit": [
+      {
+        "index": "0",
+        "exit": "0"
+      },
+      {
+        "index": "1",
+        "exit": "0"
+      },
+      {
+        "index": "2",
+        "exit": "0"
+      }
+    ],
+    "peak_drop_bytes": 1928470528,
+    "total_peak_accounted_bytes": 6611544768,
+    "tmpfs_peak_bytes": 352321536,
+    "gpu_faults_total": 0,
+    "wall_s": 11.447759761
+  },
+  {
+    "case": "r01-copy_map",
+    "run": 1,
+    "mode": "copy_map",
+    "forks": 3,
+    "children_per_fork": 1,
+    "step": 64,
+    "paragraphs": 80,
+    "context": 8192,
+    "command": [
+      "/home/thor/kcj/stator_campaign_20261016/bin/kv_spawn_repeat_tuned5",
+      "/home/thor/kcj/llm_share/models/Qwen2.5-7B-Instruct-Q4_K_M.gguf",
+      "8192",
+      "/home/thor/kcj/llm_share/results/20261022-repeatfork-delta-smoke-v1/r01-copy_map/prefix.txt",
+      "/home/thor/kcj/llm_share/results/20261022-repeatfork-delta-smoke-v1/r01-copy_map/state",
+      "16",
+      "3",
+      "1",
+      "64",
+      "/home/thor/kcj/llm_share/results/20261022-repeatfork-delta-smoke-v1/r01-copy_map/out",
+      "/home/thor/kcj/stator_campaign_20261016/bin/kv_fork_tuned5",
+      "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600"
+    ],
+    "environment": {
+      "GGML_CUDA_FATTN_HOST_GQA": "2",
+      "CUDA_VISIBLE_DEVICES": "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600",
+      "GGML_CUDA_HOST_PTR": "1",
+      "STATOR_TRACE": "0",
+      "LLAMA_KV_HOST": "/home/thor/kcj/llm_share/results/20261022-repeatfork-delta-smoke-v1/tmpfs/kv",
+      "LLAMA_KV_GROW": "256",
+      "LLAMA_KV_PUBLISH_COPY": "1",
+      "STATOR_TIMING_DIR": "/home/thor/kcj/llm_share/results/20261022-repeatfork-delta-smoke-v1/r01-copy_map/timing",
+      "STATOR_REPEAT_UNLINK": "1"
+    },
+    "exit": 0,
+    "status": "ok",
+    "publishes": [
+      {
+        "fork": 1,
+        "rows": 4081,
+        "publish_ms": 23.77
+      },
+      {
+        "fork": 2,
+        "rows": 4158,
+        "publish_ms": 25.59
+      },
+      {
+        "fork": 3,
+        "rows": 4222,
+        "publish_ms": 25.58
+      }
+    ],
+    "parent": {
+      "role": "parent",
+      "forks": "3",
+      "children": "3",
+      "prefix_ms": "2941.2",
+      "publish_total_ms": "74.93",
+      "parent_ms": "6861.1",
+      "total_ms": "10865.0",
+      "rows": "4286"
+    },
+    "parent_text_sha256": "25eca8e80e99b87178a651708a72225ed3094d5a5edc5beb37be72fd3ea58523",
+    "children": [
+      {
+        "fork": 1,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "4081",
+          "suffix_tokens": "16",
+          "model_ms": "630.3",
+          "context_ms": "24.3",
+          "state_ms": "1.92",
+          "prefix_ms": "0.0",
+          "suffix_ms": "122.1",
+          "first_token_ms": "805.9",
+          "generation_ms": "912.8",
+          "generated": "16",
+          "generation_tps": "17.528"
+        },
+        "text_sha256": "15e7e38330d94aaaeb3458638e41365e8b659208545c032118de1c3816332c77"
+      },
+      {
+        "fork": 2,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "4158",
+          "suffix_tokens": "16",
+          "model_ms": "628.6",
+          "context_ms": "23.8",
+          "state_ms": "1.79",
+          "prefix_ms": "0.0",
+          "suffix_ms": "129.3",
+          "first_token_ms": "809.3",
+          "generation_ms": "916.0",
+          "generated": "16",
+          "generation_tps": "17.467"
+        },
+        "text_sha256": "c52e4a8d8d7a4fac71e4363bdd17c4b98feb23cad46a96f174bc7ae88c255a6e"
+      },
+      {
+        "fork": 3,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "4222",
+          "suffix_tokens": "16",
+          "model_ms": "628.9",
+          "context_ms": "24.1",
+          "state_ms": "1.83",
+          "prefix_ms": "0.0",
+          "suffix_ms": "125.5",
+          "first_token_ms": "806.4",
+          "generation_ms": "913.6",
+          "generated": "16",
+          "generation_tps": "17.514"
+        },
+        "text_sha256": "c88b57425846f6588edc86ae9e459f25b62092cf73a2cc979f316473e9622fda"
+      }
+    ],
+    "children_exit": [
+      {
+        "index": "0",
+        "exit": "0"
+      },
+      {
+        "index": "1",
+        "exit": "0"
+      },
+      {
+        "index": "2",
+        "exit": "0"
+      }
+    ],
+    "peak_drop_bytes": 2467708928,
+    "total_peak_accounted_bytes": 7150783168,
+    "tmpfs_peak_bytes": 352321536,
+    "gpu_faults_total": 0,
+    "wall_s": 11.455216694
+  },
+  {
+    "case": "r02-extent",
+    "run": 2,
+    "mode": "extent",
+    "forks": 3,
+    "children_per_fork": 1,
+    "step": 64,
+    "paragraphs": 80,
+    "context": 8192,
+    "command": [
+      "/home/thor/kcj/stator_campaign_20261016/bin/kv_spawn_repeat_tuned5",
+      "/home/thor/kcj/llm_share/models/Qwen2.5-7B-Instruct-Q4_K_M.gguf",
+      "8192",
+      "/home/thor/kcj/llm_share/results/20261022-repeatfork-delta-smoke-v1/r02-extent/prefix.txt",
+      "/home/thor/kcj/llm_share/results/20261022-repeatfork-delta-smoke-v1/r02-extent/state",
+      "16",
+      "3",
+      "1",
+      "64",
+      "/home/thor/kcj/llm_share/results/20261022-repeatfork-delta-smoke-v1/r02-extent/out",
+      "/home/thor/kcj/stator_campaign_20261016/bin/kv_fork_tuned5",
+      "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600"
+    ],
+    "environment": {
+      "GGML_CUDA_FATTN_HOST_GQA": "2",
+      "CUDA_VISIBLE_DEVICES": "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600",
+      "GGML_CUDA_HOST_PTR": "1",
+      "STATOR_TRACE": "0",
+      "LLAMA_KV_HOST": "/home/thor/kcj/llm_share/results/20261022-repeatfork-delta-smoke-v1/tmpfs/kv",
+      "LLAMA_KV_GROW": "256",
+      "STATOR_TIMING_DIR": "/home/thor/kcj/llm_share/results/20261022-repeatfork-delta-smoke-v1/r02-extent/timing",
+      "STATOR_REPEAT_UNLINK": "1"
+    },
+    "exit": 0,
+    "status": "ok",
+    "publishes": [
+      {
+        "fork": 1,
+        "rows": 4081,
+        "publish_ms": 5.33
+      },
+      {
+        "fork": 2,
+        "rows": 4158,
+        "publish_ms": 7.19
+      },
+      {
+        "fork": 3,
+        "rows": 4222,
+        "publish_ms": 4.32
+      }
+    ],
+    "parent": {
+      "role": "parent",
+      "forks": "3",
+      "children": "3",
+      "prefix_ms": "2868.8",
+      "publish_total_ms": "16.84",
+      "parent_ms": "6921.9",
+      "total_ms": "10853.8",
+      "rows": "4286"
+    },
+    "parent_text_sha256": "25eca8e80e99b87178a651708a72225ed3094d5a5edc5beb37be72fd3ea58523",
+    "children": [
+      {
+        "fork": 1,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "4081",
+          "suffix_tokens": "16",
+          "model_ms": "645.3",
+          "context_ms": "22.9",
+          "state_ms": "1.76",
+          "prefix_ms": "0.0",
+          "suffix_ms": "129.7",
+          "first_token_ms": "825.8",
+          "generation_ms": "920.4",
+          "generated": "16",
+          "generation_tps": "17.384"
+        },
+        "text_sha256": "15e7e38330d94aaaeb3458638e41365e8b659208545c032118de1c3816332c77"
+      },
+      {
+        "fork": 2,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "4158",
+          "suffix_tokens": "16",
+          "model_ms": "627.6",
+          "context_ms": "23.7",
+          "state_ms": "1.75",
+          "prefix_ms": "0.0",
+          "suffix_ms": "123.3",
+          "first_token_ms": "801.9",
+          "generation_ms": "906.5",
+          "generated": "16",
+          "generation_tps": "17.651"
+        },
+        "text_sha256": "c52e4a8d8d7a4fac71e4363bdd17c4b98feb23cad46a96f174bc7ae88c255a6e"
+      },
+      {
+        "fork": 3,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "4222",
+          "suffix_tokens": "16",
+          "model_ms": "638.0",
+          "context_ms": "24.0",
+          "state_ms": "2.06",
+          "prefix_ms": "0.0",
+          "suffix_ms": "122.9",
+          "first_token_ms": "813.5",
+          "generation_ms": "907.1",
+          "generated": "16",
+          "generation_tps": "17.639"
+        },
+        "text_sha256": "c88b57425846f6588edc86ae9e459f25b62092cf73a2cc979f316473e9622fda"
+      }
+    ],
+    "children_exit": [
+      {
+        "index": "0",
+        "exit": "0"
+      },
+      {
+        "index": "1",
+        "exit": "0"
+      },
+      {
+        "index": "2",
+        "exit": "0"
+      }
+    ],
+    "peak_drop_bytes": 1893658624,
+    "total_peak_accounted_bytes": 6576732864,
+    "tmpfs_peak_bytes": 352321536,
+    "gpu_faults_total": 0,
+    "wall_s": 11.45277318
+  },
+  {
+    "case": "r02-copy_map",
+    "run": 2,
+    "mode": "copy_map",
+    "forks": 3,
+    "children_per_fork": 1,
+    "step": 64,
+    "paragraphs": 80,
+    "context": 8192,
+    "command": [
+      "/home/thor/kcj/stator_campaign_20261016/bin/kv_spawn_repeat_tuned5",
+      "/home/thor/kcj/llm_share/models/Qwen2.5-7B-Instruct-Q4_K_M.gguf",
+      "8192",
+      "/home/thor/kcj/llm_share/results/20261022-repeatfork-delta-smoke-v1/r02-copy_map/prefix.txt",
+      "/home/thor/kcj/llm_share/results/20261022-repeatfork-delta-smoke-v1/r02-copy_map/state",
+      "16",
+      "3",
+      "1",
+      "64",
+      "/home/thor/kcj/llm_share/results/20261022-repeatfork-delta-smoke-v1/r02-copy_map/out",
+      "/home/thor/kcj/stator_campaign_20261016/bin/kv_fork_tuned5",
+      "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600"
+    ],
+    "environment": {
+      "GGML_CUDA_FATTN_HOST_GQA": "2",
+      "CUDA_VISIBLE_DEVICES": "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600",
+      "GGML_CUDA_HOST_PTR": "1",
+      "STATOR_TRACE": "0",
+      "LLAMA_KV_HOST": "/home/thor/kcj/llm_share/results/20261022-repeatfork-delta-smoke-v1/tmpfs/kv",
+      "LLAMA_KV_GROW": "256",
+      "LLAMA_KV_PUBLISH_COPY": "1",
+      "STATOR_TIMING_DIR": "/home/thor/kcj/llm_share/results/20261022-repeatfork-delta-smoke-v1/r02-copy_map/timing",
+      "STATOR_REPEAT_UNLINK": "1"
+    },
+    "exit": 0,
+    "status": "ok",
+    "publishes": [
+      {
+        "fork": 1,
+        "rows": 4081,
+        "publish_ms": 23.31
+      },
+      {
+        "fork": 2,
+        "rows": 4158,
+        "publish_ms": 25.4
+      },
+      {
+        "fork": 3,
+        "rows": 4222,
+        "publish_ms": 25.9
+      }
+    ],
+    "parent": {
+      "role": "parent",
+      "forks": "3",
+      "children": "3",
+      "prefix_ms": "2931.7",
+      "publish_total_ms": "74.61",
+      "parent_ms": "6928.2",
+      "total_ms": "10916.1",
+      "rows": "4286"
+    },
+    "parent_text_sha256": "25eca8e80e99b87178a651708a72225ed3094d5a5edc5beb37be72fd3ea58523",
+    "children": [
+      {
+        "fork": 1,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "4081",
+          "suffix_tokens": "16",
+          "model_ms": "652.3",
+          "context_ms": "23.8",
+          "state_ms": "1.99",
+          "prefix_ms": "0.0",
+          "suffix_ms": "125.5",
+          "first_token_ms": "829.1",
+          "generation_ms": "912.8",
+          "generated": "16",
+          "generation_tps": "17.529"
+        },
+        "text_sha256": "15e7e38330d94aaaeb3458638e41365e8b659208545c032118de1c3816332c77"
+      },
+      {
+        "fork": 2,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "4158",
+          "suffix_tokens": "16",
+          "model_ms": "630.8",
+          "context_ms": "23.5",
+          "state_ms": "2.07",
+          "prefix_ms": "0.0",
+          "suffix_ms": "117.1",
+          "first_token_ms": "799.1",
+          "generation_ms": "916.1",
+          "generated": "16",
+          "generation_tps": "17.466"
+        },
+        "text_sha256": "c52e4a8d8d7a4fac71e4363bdd17c4b98feb23cad46a96f174bc7ae88c255a6e"
+      },
+      {
+        "fork": 3,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "4222",
+          "suffix_tokens": "16",
+          "model_ms": "633.0",
+          "context_ms": "23.6",
+          "state_ms": "2.09",
+          "prefix_ms": "0.0",
+          "suffix_ms": "124.1",
+          "first_token_ms": "809.0",
+          "generation_ms": "916.5",
+          "generated": "16",
+          "generation_tps": "17.458"
+        },
+        "text_sha256": "c88b57425846f6588edc86ae9e459f25b62092cf73a2cc979f316473e9622fda"
+      }
+    ],
+    "children_exit": [
+      {
+        "index": "0",
+        "exit": "0"
+      },
+      {
+        "index": "1",
+        "exit": "0"
+      },
+      {
+        "index": "2",
+        "exit": "0"
+      }
+    ],
+    "peak_drop_bytes": 2466418688,
+    "total_peak_accounted_bytes": 7149492928,
+    "tmpfs_peak_bytes": 442499072,
+    "gpu_faults_total": 0,
+    "wall_s": 11.519652289
+  },
+  {
+    "case": "r02-copy_delta",
+    "run": 2,
+    "mode": "copy_delta",
+    "forks": 3,
+    "children_per_fork": 1,
+    "step": 64,
+    "paragraphs": 80,
+    "context": 8192,
+    "command": [
+      "/home/thor/kcj/stator_campaign_20261016/bin/kv_spawn_repeat_tuned5",
+      "/home/thor/kcj/llm_share/models/Qwen2.5-7B-Instruct-Q4_K_M.gguf",
+      "8192",
+      "/home/thor/kcj/llm_share/results/20261022-repeatfork-delta-smoke-v1/r02-copy_delta/prefix.txt",
+      "/home/thor/kcj/llm_share/results/20261022-repeatfork-delta-smoke-v1/r02-copy_delta/state",
+      "16",
+      "3",
+      "1",
+      "64",
+      "/home/thor/kcj/llm_share/results/20261022-repeatfork-delta-smoke-v1/r02-copy_delta/out",
+      "/home/thor/kcj/stator_campaign_20261016/bin/kv_fork_tuned5",
+      "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600"
+    ],
+    "environment": {
+      "GGML_CUDA_FATTN_HOST_GQA": "2",
+      "CUDA_VISIBLE_DEVICES": "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600",
+      "GGML_CUDA_HOST_PTR": "1",
+      "STATOR_TRACE": "0",
+      "LLAMA_KV_HOST": "/home/thor/kcj/llm_share/results/20261022-repeatfork-delta-smoke-v1/tmpfs/kv",
+      "LLAMA_KV_GROW": "256",
+      "LLAMA_KV_PUBLISH_COPY": "2",
+      "STATOR_TIMING_DIR": "/home/thor/kcj/llm_share/results/20261022-repeatfork-delta-smoke-v1/r02-copy_delta/timing",
+      "STATOR_REPEAT_UNLINK": "1"
+    },
+    "exit": 0,
+    "status": "ok",
+    "publishes": [
+      {
+        "fork": 1,
+        "rows": 4081,
+        "publish_ms": 22.87
+      },
+      {
+        "fork": 2,
+        "rows": 4158,
+        "publish_ms": 4.75
+      },
+      {
+        "fork": 3,
+        "rows": 4222,
+        "publish_ms": 1.65
+      }
+    ],
+    "parent": {
+      "role": "parent",
+      "forks": "3",
+      "children": "3",
+      "prefix_ms": "2939.4",
+      "publish_total_ms": "29.27",
+      "parent_ms": "6929.5",
+      "total_ms": "10931.0",
+      "rows": "4286"
+    },
+    "parent_text_sha256": "25eca8e80e99b87178a651708a72225ed3094d5a5edc5beb37be72fd3ea58523",
+    "children": [
+      {
+        "fork": 1,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "4081",
+          "suffix_tokens": "16",
+          "model_ms": "643.3",
+          "context_ms": "24.0",
+          "state_ms": "1.78",
+          "prefix_ms": "0.0",
+          "suffix_ms": "126.5",
+          "first_token_ms": "821.0",
+          "generation_ms": "913.6",
+          "generated": "16",
+          "generation_tps": "17.513"
+        },
+        "text_sha256": "15e7e38330d94aaaeb3458638e41365e8b659208545c032118de1c3816332c77"
+      },
+      {
+        "fork": 2,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "4158",
+          "suffix_tokens": "16",
+          "model_ms": "627.4",
+          "context_ms": "23.0",
+          "state_ms": "2.03",
+          "prefix_ms": "0.0",
+          "suffix_ms": "114.9",
+          "first_token_ms": "793.1",
+          "generation_ms": "912.5",
+          "generated": "16",
+          "generation_tps": "17.534"
+        },
+        "text_sha256": "c52e4a8d8d7a4fac71e4363bdd17c4b98feb23cad46a96f174bc7ae88c255a6e"
+      },
+      {
+        "fork": 3,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "4222",
+          "suffix_tokens": "16",
+          "model_ms": "629.9",
+          "context_ms": "23.4",
+          "state_ms": "2.12",
+          "prefix_ms": "0.0",
+          "suffix_ms": "129.1",
+          "first_token_ms": "811.2",
+          "generation_ms": "916.2",
+          "generated": "16",
+          "generation_tps": "17.463"
+        },
+        "text_sha256": "c88b57425846f6588edc86ae9e459f25b62092cf73a2cc979f316473e9622fda"
+      }
+    ],
+    "children_exit": [
+      {
+        "index": "0",
+        "exit": "0"
+      },
+      {
+        "index": "1",
+        "exit": "0"
+      },
+      {
+        "index": "2",
+        "exit": "0"
+      }
+    ],
+    "peak_drop_bytes": 2038743040,
+    "total_peak_accounted_bytes": 6721817280,
+    "tmpfs_peak_bytes": 352321536,
+    "gpu_faults_total": 0,
+    "wall_s": 11.567207219
+  }
+]

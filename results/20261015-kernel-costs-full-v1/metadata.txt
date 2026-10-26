@@ -1,0 +1,6 @@
+timestamp=2026-10-15T13:22:05+09:00
+scenarios=idle kv:copy kv:shared_rw kv:cow_plain kv:ro_plain kv:extent reclaim:pagecache reclaim:memfs fork:gpu fork:cpu
+boot_id=f9776703-a137-43bc-822b-124c6147ff68
+6.8.12-1021-tegra
+events=kmem:mm_page_alloc kmem:mm_page_free filemap:mm_filemap_add_to_page_cache filemap:mm_filemap_delete_from_page_cache vmscan:mm_vmscan_lru_shrink_inactive vmscan:mm_vmscan_memcg_reclaim_begin tlb:tlb_flush iommu:io_page_fault mmap_lock:mmap_lock_start_locking migrate:mm_migrate_pages ksm:ksm_merge_one_page pagemap:mm_lru_insertion faults-minor faults-major
+e826ef122b3ca414ccfa3a16cf2a9834b6bc9ef29f7b44964b691536da12dd35  /home/thor/kcj/llm_share/tp_count

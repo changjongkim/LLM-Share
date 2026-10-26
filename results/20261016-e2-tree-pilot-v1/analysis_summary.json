@@ -1,0 +1,29 @@
+[
+  {
+    "mode": "copy",
+    "wholeGiB": 34.68251293897629,
+    "throughput": 30.67221910367025,
+    "leaf_ttft_ms": 2622.5232946875,
+    "harness_wait_ms": 104.5986593125,
+    "leader_publish_ms": 616.835,
+    "leaf_decode_ms": 580.25625
+  },
+  {
+    "mode": "flat",
+    "wholeGiB": 14.106114089488983,
+    "throughput": 31.580035977962666,
+    "leaf_ttft_ms": 8354.0288524375,
+    "harness_wait_ms": 128.394853375,
+    "leader_publish_ms": 0.0,
+    "leaf_decode_ms": 6856.79375
+  },
+  {
+    "mode": "chain",
+    "wholeGiB": 14.125488936901093,
+    "throughput": 31.265804278543833,
+    "leaf_ttft_ms": 2049.8719739375,
+    "harness_wait_ms": 43.00855175,
+    "leader_publish_ms": 9.2,
+    "leaf_decode_ms": 632.39375
+  }
+]

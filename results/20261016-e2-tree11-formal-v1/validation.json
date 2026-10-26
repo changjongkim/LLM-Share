@@ -1,0 +1,803 @@
+{
+  "expected_cases": 18,
+  "cases": 18,
+  "skipped": [],
+  "missing_copy_reference": [],
+  "comparisons": [
+    {
+      "case": "r01-flat-f2x4",
+      "process": "root",
+      "token_match": true,
+      "text_match": true
+    },
+    {
+      "case": "r01-flat-f2x4",
+      "process": "root_0",
+      "token_match": true,
+      "text_match": true
+    },
+    {
+      "case": "r01-flat-f2x4",
+      "process": "root_1",
+      "token_match": true,
+      "text_match": true
+    },
+    {
+      "case": "r01-flat-f2x4",
+      "process": "leaf0",
+      "token_match": true,
+      "text_match": true
+    },
+    {
+      "case": "r01-flat-f2x4",
+      "process": "leaf1",
+      "token_match": true,
+      "text_match": true
+    },
+    {
+      "case": "r01-flat-f2x4",
+      "process": "leaf2",
+      "token_match": true,
+      "text_match": true
+    },
+    {
+      "case": "r01-flat-f2x4",
+      "process": "leaf3",
+      "token_match": true,
+      "text_match": true
+    },
+    {
+      "case": "r01-flat-f2x4",
+      "process": "leaf4",
+      "token_match": true,
+      "text_match": true
+    },
+    {
+      "case": "r01-flat-f2x4",
+      "process": "leaf5",
+      "token_match": true,
+      "text_match": true
+    },
+    {
+      "case": "r01-flat-f2x4",
+      "process": "leaf6",
+      "token_match": true,
+      "text_match": true
+    },
+    {
+      "case": "r01-flat-f2x4",
+      "process": "leaf7",
+      "token_match": true,
+      "text_match": true
+    },
+    {
+      "case": "r01-chain-f2x4",
+      "process": "root",
+      "token_match": true,
+      "text_match": true
+    },
+    {
+      "case": "r01-chain-f2x4",
+      "process": "root_0",
+      "token_match": true,
+      "text_match": true
+    },
+    {
+      "case": "r01-chain-f2x4",
+      "process": "root_1",
+      "token_match": true,
+      "text_match": true
+    },
+    {
+      "case": "r01-chain-f2x4",
+      "process": "leaf0",
+      "token_match": true,
+      "text_match": true
+    },
+    {
+      "case": "r01-chain-f2x4",
+      "process": "leaf1",
+      "token_match": true,
+      "text_match": true
+    },
+    {
+      "case": "r01-chain-f2x4",
+      "process": "leaf2",
+      "token_match": true,
+      "text_match": true
+    },
+    {
+      "case": "r01-chain-f2x4",
+      "process": "leaf3",
+      "token_match": true,
+      "text_match": true
+    },
+    {
+      "case": "r01-chain-f2x4",
+      "process": "leaf4",
+      "token_match": true,
+      "text_match": true
+    },
+    {
+      "case": "r01-chain-f2x4",
+      "process": "leaf5",
+      "token_match": true,
+      "text_match": true
+    },
+    {
+      "case": "r01-chain-f2x4",
+      "process": "leaf6",
+      "token_match": true,
+      "text_match": true
+    },
+    {
+      "case": "r01-chain-f2x4",
+      "process": "leaf7",
+      "token_match": true,
+      "text_match": true
+    },
+    {
+      "case": "r02-flat-f2x4",
+      "process": "root",
+      "token_match": true,
+      "text_match": true
+    },
+    {
+      "case": "r02-flat-f2x4",
+      "process": "root_0",
+      "token_match": true,
+      "text_match": true
+    },
+    {
+      "case": "r02-flat-f2x4",
+      "process": "root_1",
+      "token_match": true,
+      "text_match": true
+    },
+    {
+      "case": "r02-flat-f2x4",
+      "process": "leaf0",
+      "token_match": true,
+      "text_match": true
+    },
+    {
+      "case": "r02-flat-f2x4",
+      "process": "leaf1",
+      "token_match": true,
+      "text_match": true
+    },
+    {
+      "case": "r02-flat-f2x4",
+      "process": "leaf2",
+      "token_match": true,
+      "text_match": true
+    },
+    {
+      "case": "r02-flat-f2x4",
+      "process": "leaf3",
+      "token_match": true,
+      "text_match": true
+    },
+    {
+      "case": "r02-flat-f2x4",
+      "process": "leaf4",
+      "token_match": true,
+      "text_match": true
+    },
+    {
+      "case": "r02-flat-f2x4",
+      "process": "leaf5",
+      "token_match": true,
+      "text_match": true
+    },
+    {
+      "case": "r02-flat-f2x4",
+      "process": "leaf6",
+      "token_match": true,
+      "text_match": true
+    },
+    {
+      "case": "r02-flat-f2x4",
+      "process": "leaf7",
+      "token_match": true,
+      "text_match": true
+    },
+    {
+      "case": "r02-chain-f2x4",
+      "process": "root",
+      "token_match": true,
+      "text_match": true
+    },
+    {
+      "case": "r02-chain-f2x4",
+      "process": "root_0",
+      "token_match": true,
+      "text_match": true
+    },
+    {
+      "case": "r02-chain-f2x4",
+      "process": "root_1",
+      "token_match": true,
+      "text_match": true
+    },
+    {
+      "case": "r02-chain-f2x4",
+      "process": "leaf0",
+      "token_match": true,
+      "text_match": true
+    },
+    {
+      "case": "r02-chain-f2x4",
+      "process": "leaf1",
+      "token_match": true,
+      "text_match": true
+    },
+    {
+      "case": "r02-chain-f2x4",
+      "process": "leaf2",
+      "token_match": true,
+      "text_match": true
+    },
+    {
+      "case": "r02-chain-f2x4",
+      "process": "leaf3",
+      "token_match": true,
+      "text_match": true
+    },
+    {
+      "case": "r02-chain-f2x4",
+      "process": "leaf4",
+      "token_match": true,
+      "text_match": true
+    },
+    {
+      "case": "r02-chain-f2x4",
+      "process": "leaf5",
+      "token_match": true,
+      "text_match": true
+    },
+    {
+      "case": "r02-chain-f2x4",
+      "process": "leaf6",
+      "token_match": true,
+      "text_match": true
+    },
+    {
+      "case": "r02-chain-f2x4",
+      "process": "leaf7",
+      "token_match": true,
+      "text_match": true
+    },
+    {
+      "case": "r03-chain-f2x4",
+      "process": "root",
+      "token_match": true,
+      "text_match": true
+    },
+    {
+      "case": "r03-chain-f2x4",
+      "process": "root_0",
+      "token_match": true,
+      "text_match": true
+    },
+    {
+      "case": "r03-chain-f2x4",
+      "process": "root_1",
+      "token_match": true,
+      "text_match": true
+    },
+    {
+      "case": "r03-chain-f2x4",
+      "process": "leaf0",
+      "token_match": true,
+      "text_match": true
+    },
+    {
+      "case": "r03-chain-f2x4",
+      "process": "leaf1",
+      "token_match": true,
+      "text_match": true
+    },
+    {
+      "case": "r03-chain-f2x4",
+      "process": "leaf2",
+      "token_match": true,
+      "text_match": true
+    },
+    {
+      "case": "r03-chain-f2x4",
+      "process": "leaf3",
+      "token_match": true,
+      "text_match": true
+    },
+    {
+      "case": "r03-chain-f2x4",
+      "process": "leaf4",
+      "token_match": true,
+      "text_match": true
+    },
+    {
+      "case": "r03-chain-f2x4",
+      "process": "leaf5",
+      "token_match": true,
+      "text_match": true
+    },
+    {
+      "case": "r03-chain-f2x4",
+      "process": "leaf6",
+      "token_match": true,
+      "text_match": true
+    },
+    {
+      "case": "r03-chain-f2x4",
+      "process": "leaf7",
+      "token_match": true,
+      "text_match": true
+    },
+    {
+      "case": "r03-flat-f2x4",
+      "process": "root",
+      "token_match": true,
+      "text_match": true
+    },
+    {
+      "case": "r03-flat-f2x4",
+      "process": "root_0",
+      "token_match": true,
+      "text_match": true
+    },
+    {
+      "case": "r03-flat-f2x4",
+      "process": "root_1",
+      "token_match": true,
+      "text_match": true
+    },
+    {
+      "case": "r03-flat-f2x4",
+      "process": "leaf0",
+      "token_match": true,
+      "text_match": true
+    },
+    {
+      "case": "r03-flat-f2x4",
+      "process": "leaf1",
+      "token_match": true,
+      "text_match": true
+    },
+    {
+      "case": "r03-flat-f2x4",
+      "process": "leaf2",
+      "token_match": true,
+      "text_match": true
+    },
+    {
+      "case": "r03-flat-f2x4",
+      "process": "leaf3",
+      "token_match": true,
+      "text_match": true
+    },
+    {
+      "case": "r03-flat-f2x4",
+      "process": "leaf4",
+      "token_match": true,
+      "text_match": true
+    },
+    {
+      "case": "r03-flat-f2x4",
+      "process": "leaf5",
+      "token_match": true,
+      "text_match": true
+    },
+    {
+      "case": "r03-flat-f2x4",
+      "process": "leaf6",
+      "token_match": true,
+      "text_match": true
+    },
+    {
+      "case": "r03-flat-f2x4",
+      "process": "leaf7",
+      "token_match": true,
+      "text_match": true
+    },
+    {
+      "case": "r04-flat-f2x4",
+      "process": "root",
+      "token_match": true,
+      "text_match": true
+    },
+    {
+      "case": "r04-flat-f2x4",
+      "process": "root_0",
+      "token_match": true,
+      "text_match": true
+    },
+    {
+      "case": "r04-flat-f2x4",
+      "process": "root_1",
+      "token_match": true,
+      "text_match": true
+    },
+    {
+      "case": "r04-flat-f2x4",
+      "process": "leaf0",
+      "token_match": true,
+      "text_match": true
+    },
+    {
+      "case": "r04-flat-f2x4",
+      "process": "leaf1",
+      "token_match": true,
+      "text_match": true
+    },
+    {
+      "case": "r04-flat-f2x4",
+      "process": "leaf2",
+      "token_match": true,
+      "text_match": true
+    },
+    {
+      "case": "r04-flat-f2x4",
+      "process": "leaf3",
+      "token_match": true,
+      "text_match": true
+    },
+    {
+      "case": "r04-flat-f2x4",
+      "process": "leaf4",
+      "token_match": true,
+      "text_match": true
+    },
+    {
+      "case": "r04-flat-f2x4",
+      "process": "leaf5",
+      "token_match": true,
+      "text_match": true
+    },
+    {
+      "case": "r04-flat-f2x4",
+      "process": "leaf6",
+      "token_match": true,
+      "text_match": true
+    },
+    {
+      "case": "r04-flat-f2x4",
+      "process": "leaf7",
+      "token_match": true,
+      "text_match": true
+    },
+    {
+      "case": "r04-chain-f2x4",
+      "process": "root",
+      "token_match": true,
+      "text_match": true
+    },
+    {
+      "case": "r04-chain-f2x4",
+      "process": "root_0",
+      "token_match": true,
+      "text_match": true
+    },
+    {
+      "case": "r04-chain-f2x4",
+      "process": "root_1",
+      "token_match": true,
+      "text_match": true
+    },
+    {
+      "case": "r04-chain-f2x4",
+      "process": "leaf0",
+      "token_match": true,
+      "text_match": true
+    },
+    {
+      "case": "r04-chain-f2x4",
+      "process": "leaf1",
+      "token_match": true,
+      "text_match": true
+    },
+    {
+      "case": "r04-chain-f2x4",
+      "process": "leaf2",
+      "token_match": true,
+      "text_match": true
+    },
+    {
+      "case": "r04-chain-f2x4",
+      "process": "leaf3",
+      "token_match": true,
+      "text_match": true
+    },
+    {
+      "case": "r04-chain-f2x4",
+      "process": "leaf4",
+      "token_match": true,
+      "text_match": true
+    },
+    {
+      "case": "r04-chain-f2x4",
+      "process": "leaf5",
+      "token_match": true,
+      "text_match": true
+    },
+    {
+      "case": "r04-chain-f2x4",
+      "process": "leaf6",
+      "token_match": true,
+      "text_match": true
+    },
+    {
+      "case": "r04-chain-f2x4",
+      "process": "leaf7",
+      "token_match": true,
+      "text_match": true
+    },
+    {
+      "case": "r05-flat-f2x4",
+      "process": "root",
+      "token_match": true,
+      "text_match": true
+    },
+    {
+      "case": "r05-flat-f2x4",
+      "process": "root_0",
+      "token_match": true,
+      "text_match": true
+    },
+    {
+      "case": "r05-flat-f2x4",
+      "process": "root_1",
+      "token_match": true,
+      "text_match": true
+    },
+    {
+      "case": "r05-flat-f2x4",
+      "process": "leaf0",
+      "token_match": true,
+      "text_match": true
+    },
+    {
+      "case": "r05-flat-f2x4",
+      "process": "leaf1",
+      "token_match": true,
+      "text_match": true
+    },
+    {
+      "case": "r05-flat-f2x4",
+      "process": "leaf2",
+      "token_match": true,
+      "text_match": true
+    },
+    {
+      "case": "r05-flat-f2x4",
+      "process": "leaf3",
+      "token_match": true,
+      "text_match": true
+    },
+    {
+      "case": "r05-flat-f2x4",
+      "process": "leaf4",
+      "token_match": true,
+      "text_match": true
+    },
+    {
+      "case": "r05-flat-f2x4",
+      "process": "leaf5",
+      "token_match": true,
+      "text_match": true
+    },
+    {
+      "case": "r05-flat-f2x4",
+      "process": "leaf6",
+      "token_match": true,
+      "text_match": true
+    },
+    {
+      "case": "r05-flat-f2x4",
+      "process": "leaf7",
+      "token_match": true,
+      "text_match": true
+    },
+    {
+      "case": "r05-chain-f2x4",
+      "process": "root",
+      "token_match": true,
+      "text_match": true
+    },
+    {
+      "case": "r05-chain-f2x4",
+      "process": "root_0",
+      "token_match": true,
+      "text_match": true
+    },
+    {
+      "case": "r05-chain-f2x4",
+      "process": "root_1",
+      "token_match": true,
+      "text_match": true
+    },
+    {
+      "case": "r05-chain-f2x4",
+      "process": "leaf0",
+      "token_match": true,
+      "text_match": true
+    },
+    {
+      "case": "r05-chain-f2x4",
+      "process": "leaf1",
+      "token_match": true,
+      "text_match": true
+    },
+    {
+      "case": "r05-chain-f2x4",
+      "process": "leaf2",
+      "token_match": true,
+      "text_match": true
+    },
+    {
+      "case": "r05-chain-f2x4",
+      "process": "leaf3",
+      "token_match": true,
+      "text_match": true
+    },
+    {
+      "case": "r05-chain-f2x4",
+      "process": "leaf4",
+      "token_match": true,
+      "text_match": true
+    },
+    {
+      "case": "r05-chain-f2x4",
+      "process": "leaf5",
+      "token_match": true,
+      "text_match": true
+    },
+    {
+      "case": "r05-chain-f2x4",
+      "process": "leaf6",
+      "token_match": true,
+      "text_match": true
+    },
+    {
+      "case": "r05-chain-f2x4",
+      "process": "leaf7",
+      "token_match": true,
+      "text_match": true
+    },
+    {
+      "case": "r06-chain-f2x4",
+      "process": "root",
+      "token_match": true,
+      "text_match": true
+    },
+    {
+      "case": "r06-chain-f2x4",
+      "process": "root_0",
+      "token_match": true,
+      "text_match": true
+    },
+    {
+      "case": "r06-chain-f2x4",
+      "process": "root_1",
+      "token_match": true,
+      "text_match": true
+    },
+    {
+      "case": "r06-chain-f2x4",
+      "process": "leaf0",
+      "token_match": true,
+      "text_match": true
+    },
+    {
+      "case": "r06-chain-f2x4",
+      "process": "leaf1",
+      "token_match": true,
+      "text_match": true
+    },
+    {
+      "case": "r06-chain-f2x4",
+      "process": "leaf2",
+      "token_match": true,
+      "text_match": true
+    },
+    {
+      "case": "r06-chain-f2x4",
+      "process": "leaf3",
+      "token_match": true,
+      "text_match": true
+    },
+    {
+      "case": "r06-chain-f2x4",
+      "process": "leaf4",
+      "token_match": true,
+      "text_match": true
+    },
+    {
+      "case": "r06-chain-f2x4",
+      "process": "leaf5",
+      "token_match": true,
+      "text_match": true
+    },
+    {
+      "case": "r06-chain-f2x4",
+      "process": "leaf6",
+      "token_match": true,
+      "text_match": true
+    },
+    {
+      "case": "r06-chain-f2x4",
+      "process": "leaf7",
+      "token_match": true,
+      "text_match": true
+    },
+    {
+      "case": "r06-flat-f2x4",
+      "process": "root",
+      "token_match": true,
+      "text_match": true
+    },
+    {
+      "case": "r06-flat-f2x4",
+      "process": "root_0",
+      "token_match": true,
+      "text_match": true
+    },
+    {
+      "case": "r06-flat-f2x4",
+      "process": "root_1",
+      "token_match": true,
+      "text_match": true
+    },
+    {
+      "case": "r06-flat-f2x4",
+      "process": "leaf0",
+      "token_match": true,
+      "text_match": true
+    },
+    {
+      "case": "r06-flat-f2x4",
+      "process": "leaf1",
+      "token_match": true,
+      "text_match": true
+    },
+    {
+      "case": "r06-flat-f2x4",
+      "process": "leaf2",
+      "token_match": true,
+      "text_match": true
+    },
+    {
+      "case": "r06-flat-f2x4",
+      "process": "leaf3",
+      "token_match": true,
+      "text_match": true
+    },
+    {
+      "case": "r06-flat-f2x4",
+      "process": "leaf4",
+      "token_match": true,
+      "text_match": true
+    },
+    {
+      "case": "r06-flat-f2x4",
+      "process": "leaf5",
+      "token_match": true,
+      "text_match": true
+    },
+    {
+      "case": "r06-flat-f2x4",
+      "process": "leaf6",
+      "token_match": true,
+      "text_match": true
+    },
+    {
+      "case": "r06-flat-f2x4",
+      "process": "leaf7",
+      "token_match": true,
+      "text_match": true
+    }
+  ],
+  "errors": [],
+  "valid": true,
+  "all_requested_cases_executed": true
+}

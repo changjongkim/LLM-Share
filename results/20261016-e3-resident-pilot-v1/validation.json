@@ -1,0 +1,203 @@
+{
+  "expected_cases": 8,
+  "cases": 8,
+  "skipped": [],
+  "missing_copy_reference": [],
+  "comparisons": [
+    {
+      "case": "r01-extent-n8",
+      "process": "agent0",
+      "token_match": true,
+      "text_match": true
+    },
+    {
+      "case": "r01-extent-n8",
+      "process": "agent1",
+      "token_match": true,
+      "text_match": true
+    },
+    {
+      "case": "r01-extent-n8",
+      "process": "agent2",
+      "token_match": true,
+      "text_match": true
+    },
+    {
+      "case": "r01-extent-n8",
+      "process": "agent3",
+      "token_match": true,
+      "text_match": true
+    },
+    {
+      "case": "r01-extent-n8",
+      "process": "agent4",
+      "token_match": true,
+      "text_match": true
+    },
+    {
+      "case": "r01-extent-n8",
+      "process": "agent5",
+      "token_match": true,
+      "text_match": true
+    },
+    {
+      "case": "r01-extent-n8",
+      "process": "agent6",
+      "token_match": true,
+      "text_match": true
+    },
+    {
+      "case": "r01-extent-n8",
+      "process": "agent7",
+      "token_match": true,
+      "text_match": true
+    },
+    {
+      "case": "r01-extent-n16",
+      "process": "agent0",
+      "token_match": true,
+      "text_match": true
+    },
+    {
+      "case": "r01-extent-n16",
+      "process": "agent1",
+      "token_match": true,
+      "text_match": true
+    },
+    {
+      "case": "r01-extent-n16",
+      "process": "agent2",
+      "token_match": true,
+      "text_match": true
+    },
+    {
+      "case": "r01-extent-n16",
+      "process": "agent3",
+      "token_match": true,
+      "text_match": true
+    },
+    {
+      "case": "r01-extent-n16",
+      "process": "agent4",
+      "token_match": true,
+      "text_match": true
+    },
+    {
+      "case": "r01-extent-n16",
+      "process": "agent5",
+      "token_match": true,
+      "text_match": true
+    },
+    {
+      "case": "r01-extent-n16",
+      "process": "agent6",
+      "token_match": true,
+      "text_match": true
+    },
+    {
+      "case": "r01-extent-n16",
+      "process": "agent7",
+      "token_match": true,
+      "text_match": true
+    },
+    {
+      "case": "r02-extent-n8",
+      "process": "agent0",
+      "token_match": true,
+      "text_match": true
+    },
+    {
+      "case": "r02-extent-n8",
+      "process": "agent1",
+      "token_match": true,
+      "text_match": true
+    },
+    {
+      "case": "r02-extent-n8",
+      "process": "agent2",
+      "token_match": true,
+      "text_match": true
+    },
+    {
+      "case": "r02-extent-n8",
+      "process": "agent3",
+      "token_match": true,
+      "text_match": true
+    },
+    {
+      "case": "r02-extent-n8",
+      "process": "agent4",
+      "token_match": true,
+      "text_match": true
+    },
+    {
+      "case": "r02-extent-n8",
+      "process": "agent5",
+      "token_match": true,
+      "text_match": true
+    },
+    {
+      "case": "r02-extent-n8",
+      "process": "agent6",
+      "token_match": true,
+      "text_match": true
+    },
+    {
+      "case": "r02-extent-n8",
+      "process": "agent7",
+      "token_match": true,
+      "text_match": true
+    },
+    {
+      "case": "r02-extent-n16",
+      "process": "agent0",
+      "token_match": true,
+      "text_match": true
+    },
+    {
+      "case": "r02-extent-n16",
+      "process": "agent1",
+      "token_match": true,
+      "text_match": true
+    },
+    {
+      "case": "r02-extent-n16",
+      "process": "agent2",
+      "token_match": true,
+      "text_match": true
+    },
+    {
+      "case": "r02-extent-n16",
+      "process": "agent3",
+      "token_match": true,
+      "text_match": true
+    },
+    {
+      "case": "r02-extent-n16",
+      "process": "agent4",
+      "token_match": true,
+      "text_match": true
+    },
+    {
+      "case": "r02-extent-n16",
+      "process": "agent5",
+      "token_match": true,
+      "text_match": true
+    },
+    {
+      "case": "r02-extent-n16",
+      "process": "agent6",
+      "token_match": true,
+      "text_match": true
+    },
+    {
+      "case": "r02-extent-n16",
+      "process": "agent7",
+      "token_match": true,
+      "text_match": true
+    }
+  ],
+  "errors": [],
+  "valid": true,
+  "all_requested_cases_executed": true
+}

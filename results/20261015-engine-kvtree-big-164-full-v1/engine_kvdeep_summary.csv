@@ -1,0 +1,2 @@
+mode,fanouts,processes,leaves,runs,failed_processes,timed_out,root_publish_ms,root_state_mib,inner_attach_ms,inner_publish_ms,inner_state_mib,leaf_attach_ms,leaf_first_token_ms,leaf_first_token_ci95,leaf_tps_sum,tree_memory_mib,tree_memory_ci95,files_attached_mib,files_all_alive_mib,files_first_subtree_left_mib,files_end_mib,leaves_finished,leaf_texts_equal_to_copy,leaf_texts_compared,wall_s
+chain,1x64,66,64,2,0,0,10.47,0.25,46.4,8.04,0.26,252.7,13657,17,33.21,50160,3024,1232,-1,-1,0,128,0,0,159.4

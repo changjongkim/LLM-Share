@@ -1,0 +1,2 @@
+FORK mode=cpu size_mib=1024 cpu_read_s=0.0026 gpu_read_s=0.0048 right=1 child_private_before_mib=29.7 child_private_after_mib=29.8
+FORK mode=cpu size_mib=1024 cpu_read_s=0.0025 gpu_read_s=0.0044 right=1 child_private_before_mib=29.7 child_private_after_mib=29.8

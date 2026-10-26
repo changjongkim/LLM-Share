@@ -1,0 +1,678 @@
+[
+  {
+    "case": "r01-copy",
+    "run": 1,
+    "mode": "copy",
+    "forks": 2,
+    "children_per_fork": 1,
+    "step": 32,
+    "paragraphs": 80,
+    "context": 8192,
+    "command": [
+      "/home/thor/kcj/stator_campaign_20261016/bin/kv_spawn_repeat_tuned4",
+      "/home/thor/kcj/llm_share/models/Qwen2.5-7B-Instruct-Q4_K_M.gguf",
+      "8192",
+      "/home/thor/kcj/llm_share/results/20261021-review-repeatfork-smoke-v2/r01-copy/prefix.txt",
+      "/home/thor/kcj/llm_share/results/20261021-review-repeatfork-smoke-v2/r01-copy/state",
+      "64",
+      "2",
+      "1",
+      "32",
+      "/home/thor/kcj/llm_share/results/20261021-review-repeatfork-smoke-v2/r01-copy/out",
+      "/home/thor/kcj/stator_campaign_20261016/bin/kv_fork_tuned4",
+      "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600"
+    ],
+    "environment": {
+      "GGML_CUDA_FATTN_HOST_GQA": "2",
+      "CUDA_VISIBLE_DEVICES": "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600",
+      "GGML_CUDA_HOST_PTR": "1",
+      "STATOR_TRACE": "0",
+      "STATOR_TIMING_DIR": "/home/thor/kcj/llm_share/results/20261021-review-repeatfork-smoke-v2/r01-copy/timing"
+    },
+    "exit": 0,
+    "status": "ok",
+    "publishes": [
+      {
+        "fork": 1,
+        "rows": 4081,
+        "publish_ms": 234.38
+      },
+      {
+        "fork": 2,
+        "rows": 4126,
+        "publish_ms": 341.51
+      }
+    ],
+    "parent": {
+      "role": "parent",
+      "forks": "2",
+      "children": "2",
+      "prefix_ms": "2899.6",
+      "publish_total_ms": "575.90",
+      "parent_ms": "3787.0",
+      "total_ms": "10266.6",
+      "rows": "4158"
+    },
+    "parent_text_sha256": "d216769be7a41ad2a3a47a9d26c2e7b6da2bf7df2ef94cb5f58a691c22f70389",
+    "children": [
+      {
+        "fork": 1,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "4081",
+          "suffix_tokens": "16",
+          "model_ms": "719.9",
+          "context_ms": "28.9",
+          "state_ms": "119.17",
+          "prefix_ms": "0.0",
+          "suffix_ms": "130.5",
+          "first_token_ms": "1026.4",
+          "generation_ms": "3845.3",
+          "generated": "64",
+          "generation_tps": "16.644"
+        },
+        "text_sha256": "1c1aa5e2198e4777ace8a14b4afe33082bc6e720df8c798606a496fe2f0d7926"
+      },
+      {
+        "fork": 2,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "4126",
+          "suffix_tokens": "16",
+          "model_ms": "679.1",
+          "context_ms": "31.1",
+          "state_ms": "181.48",
+          "prefix_ms": "0.0",
+          "suffix_ms": "204.1",
+          "first_token_ms": "1121.6",
+          "generation_ms": "3199.2",
+          "generated": "64",
+          "generation_tps": "20.005"
+        },
+        "text_sha256": "1e836f511921116303f1dd01acf2d9e00729c6d4b7356a55e02b037a5a228435"
+      }
+    ],
+    "children_exit": [
+      {
+        "index": "0",
+        "exit": "0"
+      },
+      {
+        "index": "1",
+        "exit": "0"
+      }
+    ],
+    "peak_drop_bytes": 4885569536,
+    "total_peak_accounted_bytes": 9568643776,
+    "tmpfs_peak_bytes": 0,
+    "gpu_faults_total": 0,
+    "wall_s": 10.878361684
+  },
+  {
+    "case": "r01-copy_map",
+    "run": 1,
+    "mode": "copy_map",
+    "forks": 2,
+    "children_per_fork": 1,
+    "step": 32,
+    "paragraphs": 80,
+    "context": 8192,
+    "command": [
+      "/home/thor/kcj/stator_campaign_20261016/bin/kv_spawn_repeat_tuned4",
+      "/home/thor/kcj/llm_share/models/Qwen2.5-7B-Instruct-Q4_K_M.gguf",
+      "8192",
+      "/home/thor/kcj/llm_share/results/20261021-review-repeatfork-smoke-v2/r01-copy_map/prefix.txt",
+      "/home/thor/kcj/llm_share/results/20261021-review-repeatfork-smoke-v2/r01-copy_map/state",
+      "64",
+      "2",
+      "1",
+      "32",
+      "/home/thor/kcj/llm_share/results/20261021-review-repeatfork-smoke-v2/r01-copy_map/out",
+      "/home/thor/kcj/stator_campaign_20261016/bin/kv_fork_tuned4",
+      "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600"
+    ],
+    "environment": {
+      "GGML_CUDA_FATTN_HOST_GQA": "2",
+      "CUDA_VISIBLE_DEVICES": "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600",
+      "GGML_CUDA_HOST_PTR": "1",
+      "STATOR_TRACE": "0",
+      "LLAMA_KV_HOST": "/home/thor/kcj/llm_share/results/20261021-review-repeatfork-smoke-v2/tmpfs/kv",
+      "LLAMA_KV_GROW": "256",
+      "LLAMA_KV_PUBLISH_COPY": "1",
+      "STATOR_TIMING_DIR": "/home/thor/kcj/llm_share/results/20261021-review-repeatfork-smoke-v2/r01-copy_map/timing"
+    },
+    "exit": 0,
+    "status": "ok",
+    "publishes": [
+      {
+        "fork": 1,
+        "rows": 4081,
+        "publish_ms": 18.21
+      },
+      {
+        "fork": 2,
+        "rows": 4126,
+        "publish_ms": 21.05
+      }
+    ],
+    "parent": {
+      "role": "parent",
+      "forks": "2",
+      "children": "2",
+      "prefix_ms": "2955.9",
+      "publish_total_ms": "39.26",
+      "parent_ms": "3275.4",
+      "total_ms": "10028.2",
+      "rows": "4158"
+    },
+    "parent_text_sha256": "d216769be7a41ad2a3a47a9d26c2e7b6da2bf7df2ef94cb5f58a691c22f70389",
+    "children": [
+      {
+        "fork": 1,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "4081",
+          "suffix_tokens": "16",
+          "model_ms": "747.6",
+          "context_ms": "24.5",
+          "state_ms": "1.68",
+          "prefix_ms": "0.0",
+          "suffix_ms": "128.0",
+          "first_token_ms": "927.0",
+          "generation_ms": "4077.8",
+          "generated": "64",
+          "generation_tps": "15.695"
+        },
+        "text_sha256": "1c1aa5e2198e4777ace8a14b4afe33082bc6e720df8c798606a496fe2f0d7926"
+      },
+      {
+        "fork": 2,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "4126",
+          "suffix_tokens": "16",
+          "model_ms": "748.6",
+          "context_ms": "23.8",
+          "state_ms": "1.99",
+          "prefix_ms": "0.0",
+          "suffix_ms": "173.3",
+          "first_token_ms": "974.8",
+          "generation_ms": "3520.7",
+          "generated": "64",
+          "generation_tps": "18.178"
+        },
+        "text_sha256": "1e836f511921116303f1dd01acf2d9e00729c6d4b7356a55e02b037a5a228435"
+      }
+    ],
+    "children_exit": [
+      {
+        "index": "0",
+        "exit": "0"
+      },
+      {
+        "index": "1",
+        "exit": "0"
+      }
+    ],
+    "peak_drop_bytes": 2885148672,
+    "total_peak_accounted_bytes": 7568222912,
+    "tmpfs_peak_bytes": 587202560,
+    "gpu_faults_total": 0,
+    "wall_s": 10.664540155
+  },
+  {
+    "case": "r01-extent",
+    "run": 1,
+    "mode": "extent",
+    "forks": 2,
+    "children_per_fork": 1,
+    "step": 32,
+    "paragraphs": 80,
+    "context": 8192,
+    "command": [
+      "/home/thor/kcj/stator_campaign_20261016/bin/kv_spawn_repeat_tuned4",
+      "/home/thor/kcj/llm_share/models/Qwen2.5-7B-Instruct-Q4_K_M.gguf",
+      "8192",
+      "/home/thor/kcj/llm_share/results/20261021-review-repeatfork-smoke-v2/r01-extent/prefix.txt",
+      "/home/thor/kcj/llm_share/results/20261021-review-repeatfork-smoke-v2/r01-extent/state",
+      "64",
+      "2",
+      "1",
+      "32",
+      "/home/thor/kcj/llm_share/results/20261021-review-repeatfork-smoke-v2/r01-extent/out",
+      "/home/thor/kcj/stator_campaign_20261016/bin/kv_fork_tuned4",
+      "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600"
+    ],
+    "environment": {
+      "GGML_CUDA_FATTN_HOST_GQA": "2",
+      "CUDA_VISIBLE_DEVICES": "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600",
+      "GGML_CUDA_HOST_PTR": "1",
+      "STATOR_TRACE": "0",
+      "LLAMA_KV_HOST": "/home/thor/kcj/llm_share/results/20261021-review-repeatfork-smoke-v2/tmpfs/kv",
+      "LLAMA_KV_GROW": "256",
+      "STATOR_TIMING_DIR": "/home/thor/kcj/llm_share/results/20261021-review-repeatfork-smoke-v2/r01-extent/timing"
+    },
+    "exit": 0,
+    "status": "ok",
+    "publishes": [
+      {
+        "fork": 1,
+        "rows": 4081,
+        "publish_ms": 4.92
+      },
+      {
+        "fork": 2,
+        "rows": 4126,
+        "publish_ms": 7.64
+      }
+    ],
+    "parent": {
+      "role": "parent",
+      "forks": "2",
+      "children": "2",
+      "prefix_ms": "2870.0",
+      "publish_total_ms": "12.56",
+      "parent_ms": "3432.8",
+      "total_ms": "9807.3",
+      "rows": "4158"
+    },
+    "parent_text_sha256": "d216769be7a41ad2a3a47a9d26c2e7b6da2bf7df2ef94cb5f58a691c22f70389",
+    "children": [
+      {
+        "fork": 1,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "4081",
+          "suffix_tokens": "16",
+          "model_ms": "695.6",
+          "context_ms": "23.0",
+          "state_ms": "2.10",
+          "prefix_ms": "0.0",
+          "suffix_ms": "118.6",
+          "first_token_ms": "866.6",
+          "generation_ms": "4123.6",
+          "generated": "64",
+          "generation_tps": "15.520"
+        },
+        "text_sha256": "1c1aa5e2198e4777ace8a14b4afe33082bc6e720df8c798606a496fe2f0d7926"
+      },
+      {
+        "fork": 2,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "4126",
+          "suffix_tokens": "16",
+          "model_ms": "645.6",
+          "context_ms": "23.4",
+          "state_ms": "2.03",
+          "prefix_ms": "0.0",
+          "suffix_ms": "168.3",
+          "first_token_ms": "864.1",
+          "generation_ms": "3548.3",
+          "generated": "64",
+          "generation_tps": "18.037"
+        },
+        "text_sha256": "1e836f511921116303f1dd01acf2d9e00729c6d4b7356a55e02b037a5a228435"
+      }
+    ],
+    "children_exit": [
+      {
+        "index": "0",
+        "exit": "0"
+      },
+      {
+        "index": "1",
+        "exit": "0"
+      }
+    ],
+    "peak_drop_bytes": 2359603200,
+    "total_peak_accounted_bytes": 7042677440,
+    "tmpfs_peak_bytes": 352321536,
+    "gpu_faults_total": 0,
+    "wall_s": 10.445171483
+  },
+  {
+    "case": "r02-copy_map",
+    "run": 2,
+    "mode": "copy_map",
+    "forks": 2,
+    "children_per_fork": 1,
+    "step": 32,
+    "paragraphs": 80,
+    "context": 8192,
+    "command": [
+      "/home/thor/kcj/stator_campaign_20261016/bin/kv_spawn_repeat_tuned4",
+      "/home/thor/kcj/llm_share/models/Qwen2.5-7B-Instruct-Q4_K_M.gguf",
+      "8192",
+      "/home/thor/kcj/llm_share/results/20261021-review-repeatfork-smoke-v2/r02-copy_map/prefix.txt",
+      "/home/thor/kcj/llm_share/results/20261021-review-repeatfork-smoke-v2/r02-copy_map/state",
+      "64",
+      "2",
+      "1",
+      "32",
+      "/home/thor/kcj/llm_share/results/20261021-review-repeatfork-smoke-v2/r02-copy_map/out",
+      "/home/thor/kcj/stator_campaign_20261016/bin/kv_fork_tuned4",
+      "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600"
+    ],
+    "environment": {
+      "GGML_CUDA_FATTN_HOST_GQA": "2",
+      "CUDA_VISIBLE_DEVICES": "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600",
+      "GGML_CUDA_HOST_PTR": "1",
+      "STATOR_TRACE": "0",
+      "LLAMA_KV_HOST": "/home/thor/kcj/llm_share/results/20261021-review-repeatfork-smoke-v2/tmpfs/kv",
+      "LLAMA_KV_GROW": "256",
+      "LLAMA_KV_PUBLISH_COPY": "1",
+      "STATOR_TIMING_DIR": "/home/thor/kcj/llm_share/results/20261021-review-repeatfork-smoke-v2/r02-copy_map/timing"
+    },
+    "exit": 0,
+    "status": "ok",
+    "publishes": [
+      {
+        "fork": 1,
+        "rows": 4081,
+        "publish_ms": 23.31
+      },
+      {
+        "fork": 2,
+        "rows": 4126,
+        "publish_ms": 27.16
+      }
+    ],
+    "parent": {
+      "role": "parent",
+      "forks": "2",
+      "children": "2",
+      "prefix_ms": "2929.4",
+      "publish_total_ms": "50.47",
+      "parent_ms": "3533.0",
+      "total_ms": "9893.4",
+      "rows": "4158"
+    },
+    "parent_text_sha256": "d216769be7a41ad2a3a47a9d26c2e7b6da2bf7df2ef94cb5f58a691c22f70389",
+    "children": [
+      {
+        "fork": 1,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "4081",
+          "suffix_tokens": "16",
+          "model_ms": "654.0",
+          "context_ms": "23.7",
+          "state_ms": "1.93",
+          "prefix_ms": "0.0",
+          "suffix_ms": "114.6",
+          "first_token_ms": "819.5",
+          "generation_ms": "4097.7",
+          "generated": "64",
+          "generation_tps": "15.618"
+        },
+        "text_sha256": "1c1aa5e2198e4777ace8a14b4afe33082bc6e720df8c798606a496fe2f0d7926"
+      },
+      {
+        "fork": 2,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "4126",
+          "suffix_tokens": "16",
+          "model_ms": "641.9",
+          "context_ms": "23.6",
+          "state_ms": "1.92",
+          "prefix_ms": "0.0",
+          "suffix_ms": "174.1",
+          "first_token_ms": "867.3",
+          "generation_ms": "3471.5",
+          "generated": "64",
+          "generation_tps": "18.436"
+        },
+        "text_sha256": "1e836f511921116303f1dd01acf2d9e00729c6d4b7356a55e02b037a5a228435"
+      }
+    ],
+    "children_exit": [
+      {
+        "index": "0",
+        "exit": "0"
+      },
+      {
+        "index": "1",
+        "exit": "0"
+      }
+    ],
+    "peak_drop_bytes": 3019857920,
+    "total_peak_accounted_bytes": 7702932160,
+    "tmpfs_peak_bytes": 587202560,
+    "gpu_faults_total": 0,
+    "wall_s": 10.496073872
+  },
+  {
+    "case": "r02-extent",
+    "run": 2,
+    "mode": "extent",
+    "forks": 2,
+    "children_per_fork": 1,
+    "step": 32,
+    "paragraphs": 80,
+    "context": 8192,
+    "command": [
+      "/home/thor/kcj/stator_campaign_20261016/bin/kv_spawn_repeat_tuned4",
+      "/home/thor/kcj/llm_share/models/Qwen2.5-7B-Instruct-Q4_K_M.gguf",
+      "8192",
+      "/home/thor/kcj/llm_share/results/20261021-review-repeatfork-smoke-v2/r02-extent/prefix.txt",
+      "/home/thor/kcj/llm_share/results/20261021-review-repeatfork-smoke-v2/r02-extent/state",
+      "64",
+      "2",
+      "1",
+      "32",
+      "/home/thor/kcj/llm_share/results/20261021-review-repeatfork-smoke-v2/r02-extent/out",
+      "/home/thor/kcj/stator_campaign_20261016/bin/kv_fork_tuned4",
+      "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600"
+    ],
+    "environment": {
+      "GGML_CUDA_FATTN_HOST_GQA": "2",
+      "CUDA_VISIBLE_DEVICES": "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600",
+      "GGML_CUDA_HOST_PTR": "1",
+      "STATOR_TRACE": "0",
+      "LLAMA_KV_HOST": "/home/thor/kcj/llm_share/results/20261021-review-repeatfork-smoke-v2/tmpfs/kv",
+      "LLAMA_KV_GROW": "256",
+      "STATOR_TIMING_DIR": "/home/thor/kcj/llm_share/results/20261021-review-repeatfork-smoke-v2/r02-extent/timing"
+    },
+    "exit": 0,
+    "status": "ok",
+    "publishes": [
+      {
+        "fork": 1,
+        "rows": 4081,
+        "publish_ms": 5.37
+      },
+      {
+        "fork": 2,
+        "rows": 4126,
+        "publish_ms": 8.1
+      }
+    ],
+    "parent": {
+      "role": "parent",
+      "forks": "2",
+      "children": "2",
+      "prefix_ms": "2866.3",
+      "publish_total_ms": "13.47",
+      "parent_ms": "3385.5",
+      "total_ms": "9753.5",
+      "rows": "4158"
+    },
+    "parent_text_sha256": "d216769be7a41ad2a3a47a9d26c2e7b6da2bf7df2ef94cb5f58a691c22f70389",
+    "children": [
+      {
+        "fork": 1,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "4081",
+          "suffix_tokens": "16",
+          "model_ms": "642.4",
+          "context_ms": "22.8",
+          "state_ms": "1.75",
+          "prefix_ms": "0.0",
+          "suffix_ms": "124.0",
+          "first_token_ms": "817.9",
+          "generation_ms": "4115.5",
+          "generated": "64",
+          "generation_tps": "15.551"
+        },
+        "text_sha256": "1c1aa5e2198e4777ace8a14b4afe33082bc6e720df8c798606a496fe2f0d7926"
+      },
+      {
+        "fork": 2,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "4126",
+          "suffix_tokens": "16",
+          "model_ms": "652.0",
+          "context_ms": "23.3",
+          "state_ms": "1.98",
+          "prefix_ms": "0.0",
+          "suffix_ms": "165.5",
+          "first_token_ms": "869.5",
+          "generation_ms": "3533.8",
+          "generated": "64",
+          "generation_tps": "18.111"
+        },
+        "text_sha256": "1e836f511921116303f1dd01acf2d9e00729c6d4b7356a55e02b037a5a228435"
+      }
+    ],
+    "children_exit": [
+      {
+        "index": "0",
+        "exit": "0"
+      },
+      {
+        "index": "1",
+        "exit": "0"
+      }
+    ],
+    "peak_drop_bytes": 2620452864,
+    "total_peak_accounted_bytes": 7303527104,
+    "tmpfs_peak_bytes": 352321536,
+    "gpu_faults_total": 0,
+    "wall_s": 10.348388748
+  },
+  {
+    "case": "r02-copy",
+    "run": 2,
+    "mode": "copy",
+    "forks": 2,
+    "children_per_fork": 1,
+    "step": 32,
+    "paragraphs": 80,
+    "context": 8192,
+    "command": [
+      "/home/thor/kcj/stator_campaign_20261016/bin/kv_spawn_repeat_tuned4",
+      "/home/thor/kcj/llm_share/models/Qwen2.5-7B-Instruct-Q4_K_M.gguf",
+      "8192",
+      "/home/thor/kcj/llm_share/results/20261021-review-repeatfork-smoke-v2/r02-copy/prefix.txt",
+      "/home/thor/kcj/llm_share/results/20261021-review-repeatfork-smoke-v2/r02-copy/state",
+      "64",
+      "2",
+      "1",
+      "32",
+      "/home/thor/kcj/llm_share/results/20261021-review-repeatfork-smoke-v2/r02-copy/out",
+      "/home/thor/kcj/stator_campaign_20261016/bin/kv_fork_tuned4",
+      "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600"
+    ],
+    "environment": {
+      "GGML_CUDA_FATTN_HOST_GQA": "2",
+      "CUDA_VISIBLE_DEVICES": "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600",
+      "GGML_CUDA_HOST_PTR": "1",
+      "STATOR_TRACE": "0",
+      "STATOR_TIMING_DIR": "/home/thor/kcj/llm_share/results/20261021-review-repeatfork-smoke-v2/r02-copy/timing"
+    },
+    "exit": 0,
+    "status": "ok",
+    "publishes": [
+      {
+        "fork": 1,
+        "rows": 4081,
+        "publish_ms": 235.39
+      },
+      {
+        "fork": 2,
+        "rows": 4126,
+        "publish_ms": 348.16
+      }
+    ],
+    "parent": {
+      "role": "parent",
+      "forks": "2",
+      "children": "2",
+      "prefix_ms": "2868.7",
+      "publish_total_ms": "583.54",
+      "parent_ms": "3820.4",
+      "total_ms": "10071.2",
+      "rows": "4158"
+    },
+    "parent_text_sha256": "d216769be7a41ad2a3a47a9d26c2e7b6da2bf7df2ef94cb5f58a691c22f70389",
+    "children": [
+      {
+        "fork": 1,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "4081",
+          "suffix_tokens": "16",
+          "model_ms": "635.1",
+          "context_ms": "29.6",
+          "state_ms": "125.24",
+          "prefix_ms": "0.0",
+          "suffix_ms": "155.6",
+          "first_token_ms": "971.8",
+          "generation_ms": "3734.4",
+          "generated": "64",
+          "generation_tps": "17.138"
+        },
+        "text_sha256": "1c1aa5e2198e4777ace8a14b4afe33082bc6e720df8c798606a496fe2f0d7926"
+      },
+      {
+        "fork": 2,
+        "index": 0,
+        "result": {
+          "role": "child",
+          "prefix_tokens": "4126",
+          "suffix_tokens": "16",
+          "model_ms": "643.3",
+          "context_ms": "29.7",
+          "state_ms": "179.63",
+          "prefix_ms": "0.0",
+          "suffix_ms": "210.9",
+          "first_token_ms": "1090.3",
+          "generation_ms": "3134.0",
+          "generated": "64",
+          "generation_tps": "20.421"
+        },
+        "text_sha256": "1e836f511921116303f1dd01acf2d9e00729c6d4b7356a55e02b037a5a228435"
+      }
+    ],
+    "children_exit": [
+      {
+        "index": "0",
+        "exit": "0"
+      },
+      {
+        "index": "1",
+        "exit": "0"
+      }
+    ],
+    "peak_drop_bytes": 3640987648,
+    "total_peak_accounted_bytes": 8324061888,
+    "tmpfs_peak_bytes": 0,
+    "gpu_faults_total": 0,
+    "wall_s": 10.647045661
+  }
+]

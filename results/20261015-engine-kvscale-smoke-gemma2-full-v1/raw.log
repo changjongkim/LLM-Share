@@ -1,0 +1,24 @@
+BEGIN_KVSHARE run=1 paragraphs=320 context=32768 publisher_mig=a7c66ad2
+PUBLISH store=device prefix_tokens=16322 prefix_ms=18970.5 publish_ms=3031.34 state_bytes=5616270686
+PUBLISH store=huge prefix_tokens=16322 prefix_ms=19440.7 publish_ms=33.53 state_bytes=458078 file_used_kib=2752512
+CASE mode=restore agents=1
+AGENT index=0 mig=a7c66ad2 exit=0 wall_ms=6458 text=204dbc3cc87fddac role=child prefix_tokens=16322 suffix_tokens=16 model_ms=743.6 context_ms=206.6 state_ms=777.77 prefix_ms=0.0 suffix_ms=121.3 first_token_ms=1932.2 generation_ms=3889.8 generated=64 generation_tps=16.453
+MEMORY mem_available_drop_mib=11682 prefix_pss_mib=0 prefix_rss_mib=0
+END_CASE failed_agents=0
+CASE mode=extent_lazy agents=1
+AGENT index=0 mig=a7c66ad2 exit=0 wall_ms=5576 text=ac59cc632666976c role=child prefix_tokens=16322 suffix_tokens=16 model_ms=751.2 context_ms=341.1 state_ms=14.36 prefix_ms=0.0 suffix_ms=166.3 first_token_ms=1358.7 generation_ms=3743.0 generated=64 generation_tps=17.098
+MEMORY mem_available_drop_mib=1154 prefix_pss_mib=2677 prefix_rss_mib=5355
+END_CASE failed_agents=0
+END_KVSHARE
+BEGIN_KVSHARE run=2 paragraphs=320 context=32768 publisher_mig=a7c66ad2
+PUBLISH store=device prefix_tokens=16322 prefix_ms=18979.9 publish_ms=2952.60 state_bytes=5616270686
+PUBLISH store=huge prefix_tokens=16322 prefix_ms=19424.3 publish_ms=36.05 state_bytes=458078 file_used_kib=2752512
+CASE mode=extent_lazy agents=1
+AGENT index=0 mig=a7c66ad2 exit=0 wall_ms=5379 text=ac59cc632666976c role=child prefix_tokens=16322 suffix_tokens=16 model_ms=876.7 context_ms=58.6 state_ms=14.57 prefix_ms=0.0 suffix_ms=118.2 first_token_ms=1152.4 generation_ms=3779.4 generated=64 generation_tps=16.934
+MEMORY mem_available_drop_mib=1120 prefix_pss_mib=2677 prefix_rss_mib=5355
+END_CASE failed_agents=0
+CASE mode=restore agents=1
+AGENT index=0 mig=a7c66ad2 exit=0 wall_ms=6661 text=204dbc3cc87fddac role=child prefix_tokens=16322 suffix_tokens=16 model_ms=763.6 context_ms=192.1 state_ms=795.54 prefix_ms=0.0 suffix_ms=126.0 first_token_ms=1992.2 generation_ms=4023.0 generated=64 generation_tps=15.909
+MEMORY mem_available_drop_mib=11954 prefix_pss_mib=0 prefix_rss_mib=0
+END_CASE failed_agents=0
+END_KVSHARE

@@ -81,3 +81,12 @@ __pycache__/
 /llama.cpp-tuned4/
 /llama.cpp-tuned5/
 /llama.cpp-chain3r/
+# results: per-run folders, request dumps, vmstat traces and empty mounts stay outside the repository
+/results/*/r[0-9]*-*/
+/results/*/work/
+/results/*/requests/
+/results/*/tmpfs/
+/results/*.vmstat.jsonl
+/kv_spawn_linux_tasks
+/mech_probe
+/mech_probe2

@@ -1,0 +1,12 @@
+{"schema":1,"pid":3481602,"event":"process_start","mono_ns":469912833010954,"generation":0,"value":0,"sequence":0}
+{"schema":1,"pid":3481602,"event":"backend_start","mono_ns":469912833016796,"generation":0,"value":0,"sequence":0}
+{"schema":1,"pid":3481602,"event":"backend_end","mono_ns":469912941697701,"generation":0,"value":0,"sequence":0}
+{"schema":1,"pid":3481602,"event":"model_start","mono_ns":469912941698895,"generation":0,"value":0,"sequence":0}
+{"schema":1,"pid":3481602,"event":"model_end","mono_ns":469913835817997,"generation":0,"value":0,"sequence":0}
+{"schema":1,"pid":3481602,"event":"context_start","mono_ns":469913835819849,"generation":0,"value":0,"sequence":0}
+{"schema":1,"pid":3481602,"event":"context_end","mono_ns":469913916163645,"generation":0,"value":0,"sequence":0}
+{"schema":1,"pid":3481602,"event":"prefix_start","mono_ns":469913953438669,"generation":0,"value":0,"sequence":0}
+{"schema":1,"pid":3481602,"event":"prefix_end","mono_ns":469939355398642,"generation":0,"value":14282,"sequence":0}
+{"schema":1,"pid":3481602,"event":"publish_start","mono_ns":469939355400652,"generation":0,"value":0,"sequence":0}
+{"schema":1,"pid":3481602,"event":"publish_end","mono_ns":469940846926547,"generation":0,"value":0,"sequence":0}
+{"schema":1,"pid":3481602,"event":"process_end","mono_ns":469941363504959,"generation":0,"value":0,"sequence":0}

@@ -1,0 +1,17 @@
+timestamp=2026-10-15T23:03:21+09:00
+mig_a=GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600
+mig_b=GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600
+repetitions=2
+fanouts=4 4 6
+paragraphs=320
+level_paragraphs=20
+n_gen=64
+late_factor=3
+grow_rows=256
+model=Qwen2.5-7B-Instruct-Q4_K_M.gguf
+engine_commit=6f767fe960c3b97cf37fac4626c86400561ca1e4
+boot_id=f9776703-a137-43bc-822b-124c6147ff68
+GPU 0: NVIDIA Thor (UUID: GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600)
+f07afbb2741da6679cd3b1c32391dbf7f9d714f6f3212b0afc74ad0ee29e09db  /home/thor/kcj/llm_share/kv_tree2
+a123574b855c5c32fcc2dd3cc13b403f5759e015994dd9d4532bde42f841826d  /home/thor/kcj/llm_share/llama.cpp-chain2/build/bin/libllama.so
+ca904f20acac9d7d83b1eb1bf14f3b4457e20a65e3747851b57840f49285a811  /home/thor/kcj/llm_share/llama.cpp-chain2/build/bin/libggml-cuda.so

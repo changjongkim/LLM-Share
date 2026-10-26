@@ -1,0 +1,152 @@
+{
+  "byte_checks_valid": true,
+  "errors": [],
+  "request_count": 354,
+  "weight_checks": 4528,
+  "weight_matches": 4528,
+  "kv_import_block_checks": 5352,
+  "kv_importers": 6,
+  "kv_publishers": 2,
+  "readonly_kv_mappings": 8,
+  "execution_records_valid": true,
+  "exact_output_valid": false,
+  "modes": [
+    {
+      "mode": "vllm",
+      "whole_case_peak_gib": 57.78271484375,
+      "server_startup_mean_s": 23.779,
+      "both_request_ttft_s": 0.94647594378125,
+      "both_request_window_tps": 99.39233183074974,
+      "gpu_faults": null,
+      "cross_mode_token_matches": {},
+      "both_self_matches": {
+        "matches": 30,
+        "compared": 32
+      },
+      "recompute_unique_salts_per_case": [
+        16,
+        16
+      ],
+      "recompute_missing_cached_token_field": 32,
+      "recompute_explicit_cached_tokens": []
+    },
+    {
+      "mode": "stator_weights",
+      "whole_case_peak_gib": 42.79833984375,
+      "server_startup_mean_s": 30.696125,
+      "both_request_ttft_s": 0.9642926011875,
+      "both_request_window_tps": 99.17960605512172,
+      "gpu_faults": null,
+      "cross_mode_token_matches": {
+        "prefix": {
+          "matches": 2,
+          "compared": 2
+        },
+        "first": {
+          "matches": 8,
+          "compared": 8
+        },
+        "both": {
+          "matches": 31,
+          "compared": 32
+        },
+        "both_self": {
+          "matches": 31,
+          "compared": 32
+        },
+        "exact9": {
+          "matches": 2,
+          "compared": 2
+        },
+        "exact11": {
+          "matches": 2,
+          "compared": 2
+        },
+        "recompute": {
+          "matches": 30,
+          "compared": 32
+        },
+        "alone1": {
+          "matches": 2,
+          "compared": 2
+        },
+        "alone2": {
+          "matches": 2,
+          "compared": 2
+        }
+      },
+      "both_self_matches": {
+        "matches": 32,
+        "compared": 32
+      },
+      "recompute_unique_salts_per_case": [
+        16,
+        16
+      ],
+      "recompute_missing_cached_token_field": 32,
+      "recompute_explicit_cached_tokens": []
+    },
+    {
+      "mode": "stator",
+      "whole_case_peak_gib": 40.9423828125,
+      "server_startup_mean_s": 33.126374999999996,
+      "both_request_ttft_s": 0.95232284596875,
+      "both_request_window_tps": 99.71366640726036,
+      "gpu_faults": null,
+      "cross_mode_token_matches": {
+        "prefix": {
+          "matches": 2,
+          "compared": 2
+        },
+        "first": {
+          "matches": 6,
+          "compared": 8
+        },
+        "both": {
+          "matches": 30,
+          "compared": 32
+        },
+        "both_self": {
+          "matches": 31,
+          "compared": 32
+        },
+        "exact9": {
+          "matches": 2,
+          "compared": 2
+        },
+        "exact11": {
+          "matches": 2,
+          "compared": 2
+        },
+        "recompute": {
+          "matches": 31,
+          "compared": 32
+        },
+        "alone1": {
+          "matches": 2,
+          "compared": 2
+        },
+        "alone2": {
+          "matches": 2,
+          "compared": 2
+        }
+      },
+      "both_self_matches": {
+        "matches": 29,
+        "compared": 32
+      },
+      "recompute_unique_salts_per_case": [
+        16,
+        16
+      ],
+      "recompute_missing_cached_token_field": 32,
+      "recompute_explicit_cached_tokens": []
+    }
+  ],
+  "limitations": [
+    "Hashes were recorded at replacement/attach, not every decoding step.",
+    "Request-window throughput includes TTFT and is not generation-window throughput.",
+    "Diagnostic hashing/logprobs overhead prevents using these timings as formal performance evidence.",
+    "Missing cached_tokens means NA, not measured zero; request-specific salt prevents intended cache-key reuse."
+  ]
+}

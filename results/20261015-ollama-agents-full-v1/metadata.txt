@@ -1,0 +1,16 @@
+timestamp=2026-10-15T14:07:49+09:00
+mig_a=GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600
+mig_b=GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600
+repetitions=6
+agents=8
+paragraphs=320
+context=32768
+n_gen=64
+model=Qwen2.5-7B-Instruct-Q4_K_M.gguf
+ollama=ollama version is 0.16.1
+ollama_library=cuda_v13
+system_ollama_pid_before=2063
+boot_id=f9776703-a137-43bc-822b-124c6147ff68
+GPU 0: NVIDIA Thor (UUID: GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600)
+599ba0f96c7525ea753af3a705a44c35416795c9da32b2cca5aa975753fa2150  /usr/local/bin/ollama
+a616ebcabe5d5a45ee7711dea10290c071878781b6254c51cca7f449f31f8d1a  /home/thor/kcj/llm_share/ollama_mig_visible.so

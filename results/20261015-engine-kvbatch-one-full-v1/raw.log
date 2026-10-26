@@ -1,0 +1,330 @@
+BEGIN_KVBATCH run=1 paragraphs=320 context=32768 agents=8
+CASE config=1:none servers=1 mode=none
+SERVER name=s0 exit=0 started_ms=0 role=alone sequences=8 first_agent=0 prefix_tokens=16321 model_ms=564.8 context_ms=75.2 state_ms=0.00 prefix_ms=12507.6 suffix_ms=153.4 first_token_ms=13439.3 generation_ms=4608.0 generated=512 generation_tps=111.112
+AGENT index=0 text=754a205f430de9c1
+AGENT index=1 text=45a868c7a80b80f9
+AGENT index=2 text=45a868c7a80b80f9
+AGENT index=3 text=45a868c7a80b80f9
+AGENT index=4 text=5ff9b6f7e43686d5
+AGENT index=5 text=5ff9b6f7e43686d5
+AGENT index=6 text=411885d20a70e865
+AGENT index=7 text=411885d20a70e865
+MEMORY mem_available_drop_mib=2647
+END_CASE failed=0
+CASE config=1:extent servers=1 mode=extent
+SERVER name=s0 exit=0 started_ms=0 role=parent sequences=8 first_agent=0 prefix_tokens=16321 model_ms=602.5 context_ms=39.3 state_ms=12.39 prefix_ms=12557.3 suffix_ms=154.5 first_token_ms=13527.6 generation_ms=4562.8 generated=512 generation_tps=112.212
+PUBLISH prefix_tokens=16321 prefix_ms=12557.3 publish_ms=12.39 state_bytes=261845 since_start_ms=13360.4
+AGENT index=0 text=754a205f430de9c1
+AGENT index=1 text=45a868c7a80b80f9
+AGENT index=2 text=45a868c7a80b80f9
+AGENT index=3 text=45a868c7a80b80f9
+AGENT index=4 text=5ff9b6f7e43686d5
+AGENT index=5 text=5ff9b6f7e43686d5
+AGENT index=6 text=411885d20a70e865
+AGENT index=7 text=411885d20a70e865
+MEMORY mem_available_drop_mib=1827
+END_CASE failed=0
+CASE config=2:copy servers=2 mode=copy
+SERVER name=s0 exit=0 started_ms=0 role=parent sequences=4 first_agent=0 prefix_tokens=16321 model_ms=567.6 context_ms=62.1 state_ms=580.64 prefix_ms=12481.3 suffix_ms=88.9 first_token_ms=13931.8 generation_ms=4280.4 generated=256 generation_tps=59.808
+PUBLISH prefix_tokens=16321 prefix_ms=12481.3 publish_ms=580.64 state_bytes=936173269 since_start_ms=13840.4
+AGENT index=0 text=754a205f430de9c1
+AGENT index=1 text=45a868c7a80b80f9
+AGENT index=2 text=45a868c7a80b80f9
+AGENT index=3 text=45a868c7a80b80f9
+SERVER name=s1 exit=0 started_ms=13899 role=child sequences=4 first_agent=4 prefix_tokens=16321 model_ms=535.9 context_ms=69.8 state_ms=276.56 prefix_ms=0.0 suffix_ms=206.8 first_token_ms=1114.9 generation_ms=4250.1 generated=256 generation_tps=60.233
+AGENT index=4 text=5ff9b6f7e43686d5
+AGENT index=5 text=d43e7a3f5fd0958f
+AGENT index=6 text=971cb85cebff21f5
+AGENT index=7 text=411885d20a70e865
+MEMORY mem_available_drop_mib=5208
+END_CASE failed=0
+CASE config=2:extent servers=2 mode=extent
+SERVER name=s0 exit=0 started_ms=0 role=parent sequences=4 first_agent=0 prefix_tokens=16321 model_ms=572.6 context_ms=38.0 state_ms=11.79 prefix_ms=12539.5 suffix_ms=87.6 first_token_ms=13406.0 generation_ms=4503.9 generated=256 generation_tps=56.839
+PUBLISH prefix_tokens=16321 prefix_ms=12539.5 publish_ms=11.79 state_bytes=261845 since_start_ms=13312.0
+AGENT index=0 text=754a205f430de9c1
+AGENT index=1 text=45a868c7a80b80f9
+AGENT index=2 text=45a868c7a80b80f9
+AGENT index=3 text=45a868c7a80b80f9
+SERVER name=s1 exit=0 started_ms=13393 role=child sequences=4 first_agent=4 prefix_tokens=16321 model_ms=538.0 context_ms=41.0 state_ms=7.59 prefix_ms=0.0 suffix_ms=211.9 first_token_ms=822.4 generation_ms=4453.7 generated=256 generation_tps=57.480
+AGENT index=4 text=5ff9b6f7e43686d5
+AGENT index=5 text=d43e7a3f5fd0958f
+AGENT index=6 text=971cb85cebff21f5
+AGENT index=7 text=411885d20a70e865
+MEMORY mem_available_drop_mib=2575
+END_CASE failed=0
+END_KVBATCH
+BEGIN_KVBATCH run=2 paragraphs=320 context=32768 agents=8
+CASE config=2:extent servers=2 mode=extent
+SERVER name=s0 exit=0 started_ms=0 role=parent sequences=4 first_agent=0 prefix_tokens=16321 model_ms=569.9 context_ms=38.1 state_ms=11.83 prefix_ms=12567.1 suffix_ms=88.9 first_token_ms=13428.6 generation_ms=4525.9 generated=256 generation_tps=56.564
+PUBLISH prefix_tokens=16321 prefix_ms=12567.1 publish_ms=11.83 state_bytes=261845 since_start_ms=13334.7
+AGENT index=0 text=754a205f430de9c1
+AGENT index=1 text=45a868c7a80b80f9
+AGENT index=2 text=45a868c7a80b80f9
+AGENT index=3 text=45a868c7a80b80f9
+SERVER name=s1 exit=0 started_ms=13398 role=child sequences=4 first_agent=4 prefix_tokens=16321 model_ms=534.8 context_ms=38.1 state_ms=7.40 prefix_ms=0.0 suffix_ms=190.6 first_token_ms=794.0 generation_ms=4493.3 generated=256 generation_tps=56.974
+AGENT index=4 text=5ff9b6f7e43686d5
+AGENT index=5 text=d43e7a3f5fd0958f
+AGENT index=6 text=971cb85cebff21f5
+AGENT index=7 text=411885d20a70e865
+MEMORY mem_available_drop_mib=2521
+END_CASE failed=0
+CASE config=2:copy servers=2 mode=copy
+SERVER name=s0 exit=0 started_ms=0 role=parent sequences=4 first_agent=0 prefix_tokens=16321 model_ms=565.5 context_ms=61.5 state_ms=569.64 prefix_ms=12495.3 suffix_ms=86.5 first_token_ms=13925.9 generation_ms=4392.0 generated=256 generation_tps=58.287
+PUBLISH prefix_tokens=16321 prefix_ms=12495.3 publish_ms=569.64 state_bytes=936173269 since_start_ms=13837.0
+AGENT index=0 text=754a205f430de9c1
+AGENT index=1 text=45a868c7a80b80f9
+AGENT index=2 text=45a868c7a80b80f9
+AGENT index=3 text=45a868c7a80b80f9
+SERVER name=s1 exit=0 started_ms=13913 role=child sequences=4 first_agent=4 prefix_tokens=16321 model_ms=564.0 context_ms=69.4 state_ms=271.83 prefix_ms=0.0 suffix_ms=197.8 first_token_ms=1126.7 generation_ms=4300.7 generated=256 generation_tps=59.526
+AGENT index=4 text=5ff9b6f7e43686d5
+AGENT index=5 text=d43e7a3f5fd0958f
+AGENT index=6 text=971cb85cebff21f5
+AGENT index=7 text=411885d20a70e865
+MEMORY mem_available_drop_mib=5127
+END_CASE failed=0
+CASE config=1:extent servers=1 mode=extent
+SERVER name=s0 exit=0 started_ms=0 role=parent sequences=8 first_agent=0 prefix_tokens=16321 model_ms=590.1 context_ms=39.1 state_ms=11.55 prefix_ms=12593.6 suffix_ms=155.2 first_token_ms=13552.4 generation_ms=4574.8 generated=512 generation_tps=111.917
+PUBLISH prefix_tokens=16321 prefix_ms=12593.6 publish_ms=11.55 state_bytes=261845 since_start_ms=13384.6
+AGENT index=0 text=754a205f430de9c1
+AGENT index=1 text=45a868c7a80b80f9
+AGENT index=2 text=45a868c7a80b80f9
+AGENT index=3 text=45a868c7a80b80f9
+AGENT index=4 text=5ff9b6f7e43686d5
+AGENT index=5 text=5ff9b6f7e43686d5
+AGENT index=6 text=411885d20a70e865
+AGENT index=7 text=411885d20a70e865
+MEMORY mem_available_drop_mib=1844
+END_CASE failed=0
+CASE config=1:none servers=1 mode=none
+SERVER name=s0 exit=0 started_ms=0 role=alone sequences=8 first_agent=0 prefix_tokens=16321 model_ms=565.9 context_ms=62.3 state_ms=0.00 prefix_ms=12486.5 suffix_ms=153.8 first_token_ms=13427.5 generation_ms=4545.3 generated=512 generation_tps=112.645
+AGENT index=0 text=754a205f430de9c1
+AGENT index=1 text=45a868c7a80b80f9
+AGENT index=2 text=45a868c7a80b80f9
+AGENT index=3 text=45a868c7a80b80f9
+AGENT index=4 text=5ff9b6f7e43686d5
+AGENT index=5 text=5ff9b6f7e43686d5
+AGENT index=6 text=411885d20a70e865
+AGENT index=7 text=411885d20a70e865
+MEMORY mem_available_drop_mib=2588
+END_CASE failed=0
+END_KVBATCH
+BEGIN_KVBATCH run=3 paragraphs=320 context=32768 agents=8
+CASE config=1:none servers=1 mode=none
+SERVER name=s0 exit=0 started_ms=0 role=alone sequences=8 first_agent=0 prefix_tokens=16321 model_ms=569.3 context_ms=62.8 state_ms=0.00 prefix_ms=12474.5 suffix_ms=150.8 first_token_ms=13415.1 generation_ms=4546.0 generated=512 generation_tps=112.627
+AGENT index=0 text=754a205f430de9c1
+AGENT index=1 text=45a868c7a80b80f9
+AGENT index=2 text=45a868c7a80b80f9
+AGENT index=3 text=45a868c7a80b80f9
+AGENT index=4 text=5ff9b6f7e43686d5
+AGENT index=5 text=5ff9b6f7e43686d5
+AGENT index=6 text=411885d20a70e865
+AGENT index=7 text=411885d20a70e865
+MEMORY mem_available_drop_mib=2605
+END_CASE failed=0
+CASE config=1:extent servers=1 mode=extent
+SERVER name=s0 exit=0 started_ms=0 role=parent sequences=8 first_agent=0 prefix_tokens=16321 model_ms=563.8 context_ms=38.5 state_ms=12.30 prefix_ms=12583.3 suffix_ms=147.3 first_token_ms=13504.4 generation_ms=4480.9 generated=512 generation_tps=114.262
+PUBLISH prefix_tokens=16321 prefix_ms=12583.3 publish_ms=12.30 state_bytes=261845 since_start_ms=13344.4
+AGENT index=0 text=754a205f430de9c1
+AGENT index=1 text=45a868c7a80b80f9
+AGENT index=2 text=45a868c7a80b80f9
+AGENT index=3 text=45a868c7a80b80f9
+AGENT index=4 text=5ff9b6f7e43686d5
+AGENT index=5 text=5ff9b6f7e43686d5
+AGENT index=6 text=411885d20a70e865
+AGENT index=7 text=411885d20a70e865
+MEMORY mem_available_drop_mib=1804
+END_CASE failed=0
+CASE config=2:copy servers=2 mode=copy
+SERVER name=s0 exit=0 started_ms=0 role=parent sequences=4 first_agent=0 prefix_tokens=16321 model_ms=575.2 context_ms=61.5 state_ms=583.27 prefix_ms=12511.8 suffix_ms=88.7 first_token_ms=13969.1 generation_ms=4401.5 generated=256 generation_tps=58.162
+PUBLISH prefix_tokens=16321 prefix_ms=12511.8 publish_ms=583.27 state_bytes=936173269 since_start_ms=13878.0
+AGENT index=0 text=754a205f430de9c1
+AGENT index=1 text=45a868c7a80b80f9
+AGENT index=2 text=45a868c7a80b80f9
+AGENT index=3 text=45a868c7a80b80f9
+SERVER name=s1 exit=0 started_ms=13954 role=child sequences=4 first_agent=4 prefix_tokens=16321 model_ms=555.6 context_ms=62.3 state_ms=257.67 prefix_ms=0.0 suffix_ms=220.6 first_token_ms=1119.9 generation_ms=4299.4 generated=256 generation_tps=59.543
+AGENT index=4 text=5ff9b6f7e43686d5
+AGENT index=5 text=d43e7a3f5fd0958f
+AGENT index=6 text=971cb85cebff21f5
+AGENT index=7 text=411885d20a70e865
+MEMORY mem_available_drop_mib=5244
+END_CASE failed=0
+CASE config=2:extent servers=2 mode=extent
+SERVER name=s0 exit=0 started_ms=0 role=parent sequences=4 first_agent=0 prefix_tokens=16321 model_ms=566.1 context_ms=37.8 state_ms=12.05 prefix_ms=12580.2 suffix_ms=85.7 first_token_ms=13589.8 generation_ms=4540.6 generated=256 generation_tps=56.381
+PUBLISH prefix_tokens=16321 prefix_ms=12580.2 publish_ms=12.05 state_bytes=261845 since_start_ms=13497.8
+AGENT index=0 text=754a205f430de9c1
+AGENT index=1 text=45a868c7a80b80f9
+AGENT index=2 text=45a868c7a80b80f9
+AGENT index=3 text=45a868c7a80b80f9
+SERVER name=s1 exit=0 started_ms=13539 role=child sequences=4 first_agent=4 prefix_tokens=16321 model_ms=520.9 context_ms=37.9 state_ms=7.46 prefix_ms=0.0 suffix_ms=209.0 first_token_ms=799.5 generation_ms=4492.9 generated=256 generation_tps=56.979
+AGENT index=4 text=5ff9b6f7e43686d5
+AGENT index=5 text=d43e7a3f5fd0958f
+AGENT index=6 text=971cb85cebff21f5
+AGENT index=7 text=411885d20a70e865
+MEMORY mem_available_drop_mib=1988
+END_CASE failed=0
+END_KVBATCH
+BEGIN_KVBATCH run=4 paragraphs=320 context=32768 agents=8
+CASE config=2:extent servers=2 mode=extent
+SERVER name=s0 exit=0 started_ms=0 role=parent sequences=4 first_agent=0 prefix_tokens=16321 model_ms=566.0 context_ms=37.2 state_ms=11.63 prefix_ms=12591.2 suffix_ms=89.2 first_token_ms=13448.1 generation_ms=4507.8 generated=256 generation_tps=56.791
+PUBLISH prefix_tokens=16321 prefix_ms=12591.2 publish_ms=11.63 state_bytes=261845 since_start_ms=13352.5
+AGENT index=0 text=754a205f430de9c1
+AGENT index=1 text=45a868c7a80b80f9
+AGENT index=2 text=45a868c7a80b80f9
+AGENT index=3 text=45a868c7a80b80f9
+SERVER name=s1 exit=0 started_ms=13448 role=child sequences=4 first_agent=4 prefix_tokens=16321 model_ms=530.2 context_ms=38.6 state_ms=7.32 prefix_ms=0.0 suffix_ms=217.2 first_token_ms=816.2 generation_ms=4467.4 generated=256 generation_tps=57.304
+AGENT index=4 text=5ff9b6f7e43686d5
+AGENT index=5 text=d43e7a3f5fd0958f
+AGENT index=6 text=971cb85cebff21f5
+AGENT index=7 text=411885d20a70e865
+MEMORY mem_available_drop_mib=2541
+END_CASE failed=0
+CASE config=2:copy servers=2 mode=copy
+SERVER name=s0 exit=0 started_ms=0 role=parent sequences=4 first_agent=0 prefix_tokens=16321 model_ms=563.9 context_ms=62.2 state_ms=590.15 prefix_ms=12482.2 suffix_ms=88.0 first_token_ms=13933.8 generation_ms=4436.4 generated=256 generation_tps=57.704
+PUBLISH prefix_tokens=16321 prefix_ms=12482.2 publish_ms=590.15 state_bytes=936173269 since_start_ms=13843.3
+AGENT index=0 text=754a205f430de9c1
+AGENT index=1 text=45a868c7a80b80f9
+AGENT index=2 text=45a868c7a80b80f9
+AGENT index=3 text=45a868c7a80b80f9
+SERVER name=s1 exit=0 started_ms=13902 role=child sequences=4 first_agent=4 prefix_tokens=16321 model_ms=525.3 context_ms=67.9 state_ms=265.48 prefix_ms=0.0 suffix_ms=205.0 first_token_ms=1090.2 generation_ms=4352.9 generated=256 generation_tps=58.811
+AGENT index=4 text=5ff9b6f7e43686d5
+AGENT index=5 text=d43e7a3f5fd0958f
+AGENT index=6 text=971cb85cebff21f5
+AGENT index=7 text=411885d20a70e865
+MEMORY mem_available_drop_mib=5137
+END_CASE failed=0
+CASE config=1:extent servers=1 mode=extent
+SERVER name=s0 exit=0 started_ms=0 role=parent sequences=8 first_agent=0 prefix_tokens=16321 model_ms=564.9 context_ms=39.5 state_ms=11.67 prefix_ms=12579.5 suffix_ms=149.6 first_token_ms=13505.9 generation_ms=4562.7 generated=512 generation_tps=112.213
+PUBLISH prefix_tokens=16321 prefix_ms=12579.5 publish_ms=11.67 state_bytes=261845 since_start_ms=13343.7
+AGENT index=0 text=754a205f430de9c1
+AGENT index=1 text=45a868c7a80b80f9
+AGENT index=2 text=45a868c7a80b80f9
+AGENT index=3 text=45a868c7a80b80f9
+AGENT index=4 text=5ff9b6f7e43686d5
+AGENT index=5 text=5ff9b6f7e43686d5
+AGENT index=6 text=411885d20a70e865
+AGENT index=7 text=411885d20a70e865
+MEMORY mem_available_drop_mib=1845
+END_CASE failed=0
+CASE config=1:none servers=1 mode=none
+SERVER name=s0 exit=0 started_ms=0 role=alone sequences=8 first_agent=0 prefix_tokens=16321 model_ms=574.9 context_ms=62.0 state_ms=0.00 prefix_ms=12476.4 suffix_ms=143.7 first_token_ms=13414.6 generation_ms=4566.7 generated=512 generation_tps=112.115
+AGENT index=0 text=754a205f430de9c1
+AGENT index=1 text=45a868c7a80b80f9
+AGENT index=2 text=45a868c7a80b80f9
+AGENT index=3 text=45a868c7a80b80f9
+AGENT index=4 text=5ff9b6f7e43686d5
+AGENT index=5 text=5ff9b6f7e43686d5
+AGENT index=6 text=411885d20a70e865
+AGENT index=7 text=411885d20a70e865
+MEMORY mem_available_drop_mib=2612
+END_CASE failed=0
+END_KVBATCH
+BEGIN_KVBATCH run=5 paragraphs=320 context=32768 agents=8
+CASE config=1:none servers=1 mode=none
+SERVER name=s0 exit=0 started_ms=0 role=alone sequences=8 first_agent=0 prefix_tokens=16321 model_ms=572.3 context_ms=63.2 state_ms=0.00 prefix_ms=12458.4 suffix_ms=153.9 first_token_ms=13405.4 generation_ms=4584.1 generated=512 generation_tps=111.691
+AGENT index=0 text=754a205f430de9c1
+AGENT index=1 text=45a868c7a80b80f9
+AGENT index=2 text=45a868c7a80b80f9
+AGENT index=3 text=45a868c7a80b80f9
+AGENT index=4 text=5ff9b6f7e43686d5
+AGENT index=5 text=5ff9b6f7e43686d5
+AGENT index=6 text=411885d20a70e865
+AGENT index=7 text=411885d20a70e865
+MEMORY mem_available_drop_mib=2677
+END_CASE failed=0
+CASE config=1:extent servers=1 mode=extent
+SERVER name=s0 exit=0 started_ms=0 role=parent sequences=8 first_agent=0 prefix_tokens=16321 model_ms=572.8 context_ms=39.2 state_ms=11.83 prefix_ms=12590.3 suffix_ms=147.4 first_token_ms=13516.3 generation_ms=4540.2 generated=512 generation_tps=112.771
+PUBLISH prefix_tokens=16321 prefix_ms=12590.3 publish_ms=11.83 state_bytes=261845 since_start_ms=13356.2
+AGENT index=0 text=754a205f430de9c1
+AGENT index=1 text=45a868c7a80b80f9
+AGENT index=2 text=45a868c7a80b80f9
+AGENT index=3 text=45a868c7a80b80f9
+AGENT index=4 text=5ff9b6f7e43686d5
+AGENT index=5 text=5ff9b6f7e43686d5
+AGENT index=6 text=411885d20a70e865
+AGENT index=7 text=411885d20a70e865
+MEMORY mem_available_drop_mib=1809
+END_CASE failed=0
+CASE config=2:copy servers=2 mode=copy
+SERVER name=s0 exit=0 started_ms=0 role=parent sequences=4 first_agent=0 prefix_tokens=16321 model_ms=572.1 context_ms=61.7 state_ms=560.49 prefix_ms=12473.7 suffix_ms=88.9 first_token_ms=13906.1 generation_ms=4462.6 generated=256 generation_tps=57.366
+PUBLISH prefix_tokens=16321 prefix_ms=12473.7 publish_ms=560.49 state_bytes=936173269 since_start_ms=13814.8
+AGENT index=0 text=754a205f430de9c1
+AGENT index=1 text=45a868c7a80b80f9
+AGENT index=2 text=45a868c7a80b80f9
+AGENT index=3 text=45a868c7a80b80f9
+SERVER name=s1 exit=0 started_ms=13858 role=child sequences=4 first_agent=4 prefix_tokens=16321 model_ms=531.3 context_ms=65.1 state_ms=263.88 prefix_ms=0.0 suffix_ms=223.9 first_token_ms=1110.2 generation_ms=4330.4 generated=256 generation_tps=59.117
+AGENT index=4 text=5ff9b6f7e43686d5
+AGENT index=5 text=d43e7a3f5fd0958f
+AGENT index=6 text=971cb85cebff21f5
+AGENT index=7 text=411885d20a70e865
+MEMORY mem_available_drop_mib=5181
+END_CASE failed=0
+CASE config=2:extent servers=2 mode=extent
+SERVER name=s0 exit=0 started_ms=0 role=parent sequences=4 first_agent=0 prefix_tokens=16321 model_ms=568.3 context_ms=37.0 state_ms=11.35 prefix_ms=12575.2 suffix_ms=85.7 first_token_ms=13433.5 generation_ms=4534.6 generated=256 generation_tps=56.455
+PUBLISH prefix_tokens=16321 prefix_ms=12575.2 publish_ms=11.35 state_bytes=261845 since_start_ms=13341.4
+AGENT index=0 text=754a205f430de9c1
+AGENT index=1 text=45a868c7a80b80f9
+AGENT index=2 text=45a868c7a80b80f9
+AGENT index=3 text=45a868c7a80b80f9
+SERVER name=s1 exit=0 started_ms=13385 role=child sequences=4 first_agent=4 prefix_tokens=16321 model_ms=544.0 context_ms=38.5 state_ms=7.57 prefix_ms=0.0 suffix_ms=200.0 first_token_ms=812.8 generation_ms=4502.1 generated=256 generation_tps=56.862
+AGENT index=4 text=5ff9b6f7e43686d5
+AGENT index=5 text=d43e7a3f5fd0958f
+AGENT index=6 text=971cb85cebff21f5
+AGENT index=7 text=411885d20a70e865
+MEMORY mem_available_drop_mib=2599
+END_CASE failed=0
+END_KVBATCH
+BEGIN_KVBATCH run=6 paragraphs=320 context=32768 agents=8
+CASE config=2:extent servers=2 mode=extent
+SERVER name=s0 exit=0 started_ms=0 role=parent sequences=4 first_agent=0 prefix_tokens=16321 model_ms=578.7 context_ms=37.2 state_ms=11.61 prefix_ms=12605.5 suffix_ms=86.6 first_token_ms=13472.5 generation_ms=4512.8 generated=256 generation_tps=56.728
+PUBLISH prefix_tokens=16321 prefix_ms=12605.5 publish_ms=11.61 state_bytes=261845 since_start_ms=13379.5
+AGENT index=0 text=754a205f430de9c1
+AGENT index=1 text=45a868c7a80b80f9
+AGENT index=2 text=45a868c7a80b80f9
+AGENT index=3 text=45a868c7a80b80f9
+SERVER name=s1 exit=0 started_ms=13458 role=child sequences=4 first_agent=4 prefix_tokens=16321 model_ms=545.7 context_ms=38.0 state_ms=7.64 prefix_ms=0.0 suffix_ms=210.5 first_token_ms=823.9 generation_ms=4460.3 generated=256 generation_tps=57.396
+AGENT index=4 text=5ff9b6f7e43686d5
+AGENT index=5 text=d43e7a3f5fd0958f
+AGENT index=6 text=971cb85cebff21f5
+AGENT index=7 text=411885d20a70e865
+MEMORY mem_available_drop_mib=2507
+END_CASE failed=0
+CASE config=2:copy servers=2 mode=copy
+SERVER name=s0 exit=0 started_ms=0 role=parent sequences=4 first_agent=0 prefix_tokens=16321 model_ms=563.6 context_ms=60.1 state_ms=540.83 prefix_ms=12474.7 suffix_ms=87.8 first_token_ms=13874.9 generation_ms=4410.2 generated=256 generation_tps=58.048
+PUBLISH prefix_tokens=16321 prefix_ms=12474.7 publish_ms=540.83 state_bytes=936173269 since_start_ms=13784.7
+AGENT index=0 text=754a205f430de9c1
+AGENT index=1 text=45a868c7a80b80f9
+AGENT index=2 text=45a868c7a80b80f9
+AGENT index=3 text=45a868c7a80b80f9
+SERVER name=s1 exit=0 started_ms=13855 role=child sequences=4 first_agent=4 prefix_tokens=16321 model_ms=523.0 context_ms=67.5 state_ms=268.62 prefix_ms=0.0 suffix_ms=201.5 first_token_ms=1085.9 generation_ms=4345.7 generated=256 generation_tps=58.909
+AGENT index=4 text=5ff9b6f7e43686d5
+AGENT index=5 text=d43e7a3f5fd0958f
+AGENT index=6 text=971cb85cebff21f5
+AGENT index=7 text=411885d20a70e865
+MEMORY mem_available_drop_mib=5068
+END_CASE failed=0
+CASE config=1:extent servers=1 mode=extent
+SERVER name=s0 exit=0 started_ms=0 role=parent sequences=8 first_agent=0 prefix_tokens=16321 model_ms=600.4 context_ms=39.2 state_ms=9.47 prefix_ms=12603.9 suffix_ms=149.0 first_token_ms=13563.5 generation_ms=4544.7 generated=512 generation_tps=112.659
+PUBLISH prefix_tokens=16321 prefix_ms=12603.9 publish_ms=9.47 state_bytes=261845 since_start_ms=13401.8
+AGENT index=0 text=754a205f430de9c1
+AGENT index=1 text=45a868c7a80b80f9
+AGENT index=2 text=45a868c7a80b80f9
+AGENT index=3 text=45a868c7a80b80f9
+AGENT index=4 text=5ff9b6f7e43686d5
+AGENT index=5 text=5ff9b6f7e43686d5
+AGENT index=6 text=411885d20a70e865
+AGENT index=7 text=411885d20a70e865
+MEMORY mem_available_drop_mib=1755
+END_CASE failed=0
+CASE config=1:none servers=1 mode=none
+SERVER name=s0 exit=0 started_ms=0 role=alone sequences=8 first_agent=0 prefix_tokens=16321 model_ms=603.0 context_ms=62.4 state_ms=0.00 prefix_ms=12474.4 suffix_ms=154.5 first_token_ms=13451.7 generation_ms=4608.3 generated=512 generation_tps=111.105
+AGENT index=0 text=754a205f430de9c1
+AGENT index=1 text=45a868c7a80b80f9
+AGENT index=2 text=45a868c7a80b80f9
+AGENT index=3 text=45a868c7a80b80f9
+AGENT index=4 text=5ff9b6f7e43686d5
+AGENT index=5 text=5ff9b6f7e43686d5
+AGENT index=6 text=411885d20a70e865
+AGENT index=7 text=411885d20a70e865
+MEMORY mem_available_drop_mib=2585
+END_CASE failed=0
+END_KVBATCH

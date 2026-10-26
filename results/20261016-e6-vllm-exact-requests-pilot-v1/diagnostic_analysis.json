@@ -1,0 +1,1392 @@
+{
+  "coverage": [
+    {
+      "run": 1,
+      "mode": "vllm",
+      "round": "prefix",
+      "requests": 1,
+      "cached_tokens": [
+        null
+      ]
+    },
+    {
+      "run": 1,
+      "mode": "vllm",
+      "round": "first",
+      "requests": 4,
+      "cached_tokens": [
+        14272,
+        14272,
+        null,
+        14272
+      ]
+    },
+    {
+      "run": 1,
+      "mode": "vllm",
+      "round": "both",
+      "requests": 16,
+      "cached_tokens": [
+        14272,
+        14272,
+        14272,
+        14272,
+        14272,
+        14272,
+        14272,
+        14272,
+        14272,
+        14272,
+        14272,
+        14272,
+        14272,
+        14272,
+        14272,
+        14272
+      ]
+    },
+    {
+      "run": 1,
+      "mode": "vllm",
+      "round": "both_self",
+      "requests": 16,
+      "cached_tokens": [
+        14288,
+        14288,
+        14288,
+        14288,
+        14288,
+        14304,
+        14288,
+        14304,
+        14304,
+        14288,
+        14288,
+        14288,
+        14288,
+        14304,
+        14304,
+        14288
+      ]
+    },
+    {
+      "run": 1,
+      "mode": "vllm",
+      "round": "exact9",
+      "requests": 1,
+      "cached_tokens": [
+        14288
+      ]
+    },
+    {
+      "run": 1,
+      "mode": "vllm",
+      "round": "exact11",
+      "requests": 1,
+      "cached_tokens": [
+        14288
+      ]
+    },
+    {
+      "run": 1,
+      "mode": "vllm",
+      "round": "recompute",
+      "requests": 16,
+      "cached_tokens": [
+        null,
+        null,
+        14272,
+        14272,
+        14272,
+        14272,
+        null,
+        null,
+        14272,
+        14272,
+        14272,
+        14272,
+        14272,
+        14272,
+        14272,
+        14272
+      ]
+    },
+    {
+      "run": 1,
+      "mode": "vllm",
+      "round": "alone1",
+      "requests": 1,
+      "cached_tokens": [
+        14272
+      ]
+    },
+    {
+      "run": 1,
+      "mode": "vllm",
+      "round": "alone2",
+      "requests": 1,
+      "cached_tokens": [
+        14272
+      ]
+    },
+    {
+      "run": 1,
+      "mode": "vllm",
+      "round": "warm3",
+      "requests": 1,
+      "cached_tokens": [
+        null
+      ]
+    },
+    {
+      "run": 1,
+      "mode": "vllm",
+      "round": "warm4",
+      "requests": 1,
+      "cached_tokens": [
+        null
+      ]
+    },
+    {
+      "run": 1,
+      "mode": "stator",
+      "round": "prefix",
+      "requests": 1,
+      "cached_tokens": [
+        null
+      ]
+    },
+    {
+      "run": 1,
+      "mode": "stator",
+      "round": "first",
+      "requests": 4,
+      "cached_tokens": [
+        14272,
+        14272,
+        14272,
+        14272
+      ]
+    },
+    {
+      "run": 1,
+      "mode": "stator",
+      "round": "both",
+      "requests": 16,
+      "cached_tokens": [
+        14272,
+        14272,
+        14272,
+        14272,
+        14272,
+        14272,
+        14272,
+        14272,
+        14272,
+        14272,
+        14272,
+        14272,
+        14272,
+        14272,
+        14272,
+        14272
+      ]
+    },
+    {
+      "run": 1,
+      "mode": "stator",
+      "round": "both_self",
+      "requests": 16,
+      "cached_tokens": [
+        14288,
+        14288,
+        14288,
+        14288,
+        14288,
+        14304,
+        14288,
+        14304,
+        14304,
+        14288,
+        14288,
+        14288,
+        14288,
+        14304,
+        14304,
+        14288
+      ]
+    },
+    {
+      "run": 1,
+      "mode": "stator",
+      "round": "exact9",
+      "requests": 1,
+      "cached_tokens": [
+        14288
+      ]
+    },
+    {
+      "run": 1,
+      "mode": "stator",
+      "round": "exact11",
+      "requests": 1,
+      "cached_tokens": [
+        14288
+      ]
+    },
+    {
+      "run": 1,
+      "mode": "stator",
+      "round": "recompute",
+      "requests": 16,
+      "cached_tokens": [
+        14272,
+        14272,
+        null,
+        14272,
+        14272,
+        null,
+        14272,
+        14272,
+        14272,
+        14272,
+        14272,
+        14272,
+        null,
+        14272,
+        14272,
+        null
+      ]
+    },
+    {
+      "run": 1,
+      "mode": "stator",
+      "round": "alone1",
+      "requests": 1,
+      "cached_tokens": [
+        14272
+      ]
+    },
+    {
+      "run": 1,
+      "mode": "stator",
+      "round": "alone2",
+      "requests": 1,
+      "cached_tokens": [
+        14272
+      ]
+    },
+    {
+      "run": 1,
+      "mode": "stator",
+      "round": "warm3",
+      "requests": 1,
+      "cached_tokens": [
+        14272
+      ]
+    },
+    {
+      "run": 1,
+      "mode": "stator",
+      "round": "warm4",
+      "requests": 1,
+      "cached_tokens": [
+        14272
+      ]
+    },
+    {
+      "run": 2,
+      "mode": "vllm",
+      "round": "prefix",
+      "requests": 1,
+      "cached_tokens": [
+        null
+      ]
+    },
+    {
+      "run": 2,
+      "mode": "vllm",
+      "round": "first",
+      "requests": 4,
+      "cached_tokens": [
+        null,
+        14272,
+        14272,
+        14272
+      ]
+    },
+    {
+      "run": 2,
+      "mode": "vllm",
+      "round": "both",
+      "requests": 16,
+      "cached_tokens": [
+        14272,
+        14272,
+        14272,
+        14272,
+        14272,
+        14272,
+        14272,
+        14272,
+        14272,
+        14272,
+        14272,
+        14272,
+        14272,
+        14272,
+        14272,
+        14272
+      ]
+    },
+    {
+      "run": 2,
+      "mode": "vllm",
+      "round": "both_self",
+      "requests": 16,
+      "cached_tokens": [
+        14288,
+        14288,
+        14288,
+        14288,
+        14288,
+        14304,
+        14288,
+        14304,
+        14304,
+        14288,
+        14288,
+        14288,
+        14288,
+        14304,
+        14304,
+        14288
+      ]
+    },
+    {
+      "run": 2,
+      "mode": "vllm",
+      "round": "exact9",
+      "requests": 1,
+      "cached_tokens": [
+        14288
+      ]
+    },
+    {
+      "run": 2,
+      "mode": "vllm",
+      "round": "exact11",
+      "requests": 1,
+      "cached_tokens": [
+        14288
+      ]
+    },
+    {
+      "run": 2,
+      "mode": "vllm",
+      "round": "recompute",
+      "requests": 16,
+      "cached_tokens": [
+        null,
+        14272,
+        null,
+        null,
+        14272,
+        14272,
+        14272,
+        14272,
+        14272,
+        null,
+        14272,
+        14272,
+        14272,
+        14272,
+        14272,
+        14272
+      ]
+    },
+    {
+      "run": 2,
+      "mode": "vllm",
+      "round": "alone1",
+      "requests": 1,
+      "cached_tokens": [
+        14272
+      ]
+    },
+    {
+      "run": 2,
+      "mode": "vllm",
+      "round": "alone2",
+      "requests": 1,
+      "cached_tokens": [
+        14272
+      ]
+    },
+    {
+      "run": 2,
+      "mode": "vllm",
+      "round": "warm3",
+      "requests": 1,
+      "cached_tokens": [
+        null
+      ]
+    },
+    {
+      "run": 2,
+      "mode": "vllm",
+      "round": "warm4",
+      "requests": 1,
+      "cached_tokens": [
+        null
+      ]
+    },
+    {
+      "run": 2,
+      "mode": "stator",
+      "round": "prefix",
+      "requests": 1,
+      "cached_tokens": [
+        null
+      ]
+    },
+    {
+      "run": 2,
+      "mode": "stator",
+      "round": "first",
+      "requests": 4,
+      "cached_tokens": [
+        14272,
+        14272,
+        14272,
+        14272
+      ]
+    },
+    {
+      "run": 2,
+      "mode": "stator",
+      "round": "both",
+      "requests": 16,
+      "cached_tokens": [
+        14272,
+        14272,
+        14272,
+        14272,
+        14272,
+        14272,
+        14272,
+        14272,
+        14272,
+        14272,
+        14272,
+        14272,
+        14272,
+        14272,
+        14272,
+        14272
+      ]
+    },
+    {
+      "run": 2,
+      "mode": "stator",
+      "round": "both_self",
+      "requests": 16,
+      "cached_tokens": [
+        14288,
+        14288,
+        14288,
+        14288,
+        14288,
+        14304,
+        14288,
+        14304,
+        14304,
+        14288,
+        14288,
+        14288,
+        14288,
+        14304,
+        14304,
+        14288
+      ]
+    },
+    {
+      "run": 2,
+      "mode": "stator",
+      "round": "exact9",
+      "requests": 1,
+      "cached_tokens": [
+        14288
+      ]
+    },
+    {
+      "run": 2,
+      "mode": "stator",
+      "round": "exact11",
+      "requests": 1,
+      "cached_tokens": [
+        14288
+      ]
+    },
+    {
+      "run": 2,
+      "mode": "stator",
+      "round": "recompute",
+      "requests": 16,
+      "cached_tokens": [
+        14272,
+        14272,
+        null,
+        14272,
+        null,
+        14272,
+        14272,
+        14272,
+        14272,
+        14272,
+        14272,
+        14272,
+        14272,
+        null,
+        14272,
+        null
+      ]
+    },
+    {
+      "run": 2,
+      "mode": "stator",
+      "round": "alone1",
+      "requests": 1,
+      "cached_tokens": [
+        14272
+      ]
+    },
+    {
+      "run": 2,
+      "mode": "stator",
+      "round": "alone2",
+      "requests": 1,
+      "cached_tokens": [
+        14272
+      ]
+    },
+    {
+      "run": 2,
+      "mode": "stator",
+      "round": "warm3",
+      "requests": 1,
+      "cached_tokens": [
+        14272
+      ]
+    },
+    {
+      "run": 2,
+      "mode": "stator",
+      "round": "warm4",
+      "requests": 1,
+      "cached_tokens": [
+        14272
+      ]
+    }
+  ],
+  "comparisons": [
+    {
+      "label": "r1/vllm: both vs both_self",
+      "compared": 16,
+      "token_matches": 16,
+      "missing_left": [],
+      "missing_right": [],
+      "differences": []
+    },
+    {
+      "label": "r1/vllm: both vs recompute",
+      "compared": 16,
+      "token_matches": 15,
+      "missing_left": [],
+      "missing_right": [],
+      "differences": [
+        {
+          "task_id": 19,
+          "same_prompt": true,
+          "same_prompt_ids": true,
+          "token_match": false,
+          "text_match": false,
+          "first_different_zero_based": 34,
+          "left_logits": {
+            "token": "token_id:2980",
+            "log_probability": -1.5203663110733032,
+            "top": {
+              "token_id:2980": -1.5203663110733032,
+              "token_id:3555": -0.8016163110733032
+            }
+          },
+          "right_logits": {
+            "token": "token_id:2585",
+            "log_probability": -1.5251617431640625,
+            "top": {
+              "token_id:2585": -1.5251617431640625,
+              "token_id:3555": -0.7907867431640625
+            }
+          }
+        }
+      ]
+    },
+    {
+      "label": "r1/vllm: both vs exact9",
+      "compared": 1,
+      "token_matches": 1,
+      "missing_left": [],
+      "missing_right": [],
+      "differences": []
+    },
+    {
+      "label": "r1/vllm: both vs exact11",
+      "compared": 1,
+      "token_matches": 1,
+      "missing_left": [],
+      "missing_right": [],
+      "differences": []
+    },
+    {
+      "label": "r1/stator: both vs both_self",
+      "compared": 16,
+      "token_matches": 15,
+      "missing_left": [],
+      "missing_right": [],
+      "differences": [
+        {
+          "task_id": 17,
+          "same_prompt": true,
+          "same_prompt_ids": true,
+          "token_match": false,
+          "text_match": false,
+          "first_different_zero_based": 51,
+          "left_logits": {
+            "token": "token_id:11554",
+            "log_probability": -1.0816810131072998,
+            "top": {
+              "token_id:11554": -1.0816810131072998,
+              "token_id:6147": -1.0973060131072998
+            }
+          },
+          "right_logits": {
+            "token": "token_id:6147",
+            "log_probability": -1.0943459272384644,
+            "top": {
+              "token_id:6147": -1.0943459272384644,
+              "token_id:11554": -1.0943459272384644
+            }
+          }
+        }
+      ]
+    },
+    {
+      "label": "r1/stator: both vs recompute",
+      "compared": 16,
+      "token_matches": 14,
+      "missing_left": [],
+      "missing_right": [],
+      "differences": [
+        {
+          "task_id": 17,
+          "same_prompt": true,
+          "same_prompt_ids": true,
+          "token_match": false,
+          "text_match": false,
+          "first_different_zero_based": 51,
+          "left_logits": {
+            "token": "token_id:11554",
+            "log_probability": -1.0816810131072998,
+            "top": {
+              "token_id:11554": -1.0816810131072998,
+              "token_id:6147": -1.0973060131072998
+            }
+          },
+          "right_logits": {
+            "token": "token_id:6147",
+            "log_probability": -1.0899715423583984,
+            "top": {
+              "token_id:6147": -1.0899715423583984,
+              "token_id:11554": -1.0899715423583984
+            }
+          }
+        },
+        {
+          "task_id": 19,
+          "same_prompt": true,
+          "same_prompt_ids": true,
+          "token_match": false,
+          "text_match": false,
+          "first_different_zero_based": 34,
+          "left_logits": {
+            "token": "token_id:2980",
+            "log_probability": -1.5203663110733032,
+            "top": {
+              "token_id:2980": -1.5203663110733032,
+              "token_id:3555": -0.8016163110733032
+            }
+          },
+          "right_logits": {
+            "token": "token_id:2585",
+            "log_probability": -1.534192442893982,
+            "top": {
+              "token_id:2585": -1.534192442893982,
+              "token_id:3555": -0.7841924428939819
+            }
+          }
+        }
+      ]
+    },
+    {
+      "label": "r1/stator: both vs exact9",
+      "compared": 1,
+      "token_matches": 0,
+      "missing_left": [],
+      "missing_right": [],
+      "differences": [
+        {
+          "task_id": 17,
+          "same_prompt": true,
+          "same_prompt_ids": true,
+          "token_match": false,
+          "text_match": false,
+          "first_different_zero_based": 51,
+          "left_logits": {
+            "token": "token_id:11554",
+            "log_probability": -1.0816810131072998,
+            "top": {
+              "token_id:11554": -1.0816810131072998,
+              "token_id:6147": -1.0973060131072998
+            }
+          },
+          "right_logits": {
+            "token": "token_id:6147",
+            "log_probability": -1.0802305936813354,
+            "top": {
+              "token_id:6147": -1.0802305936813354,
+              "token_id:11554": -1.0958555936813354
+            }
+          }
+        }
+      ]
+    },
+    {
+      "label": "r1/stator: both vs exact11",
+      "compared": 1,
+      "token_matches": 1,
+      "missing_left": [],
+      "missing_right": [],
+      "differences": []
+    },
+    {
+      "label": "r1/prefix: vllm vs stator",
+      "compared": 1,
+      "token_matches": 1,
+      "missing_left": [],
+      "missing_right": [],
+      "differences": []
+    },
+    {
+      "label": "r1/first: vllm vs stator",
+      "compared": 4,
+      "token_matches": 3,
+      "missing_left": [],
+      "missing_right": [],
+      "differences": [
+        {
+          "task_id": 3,
+          "same_prompt": true,
+          "same_prompt_ids": true,
+          "token_match": false,
+          "text_match": false,
+          "first_different_zero_based": 37,
+          "left_logits": {
+            "token": "token_id:1035",
+            "log_probability": -1.8854926824569702,
+            "top": {
+              "token_id:1035": -1.8854926824569702,
+              "token_id:374": -1.0729926824569702,
+              "token_id:3118": -1.6511176824569702
+            }
+          },
+          "right_logits": {
+            "token": "token_id:4092",
+            "log_probability": -1.876927375793457,
+            "top": {
+              "token_id:4092": -1.876927375793457,
+              "token_id:374": -1.080052375793457,
+              "token_id:3118": -1.642552375793457
+            }
+          }
+        }
+      ]
+    },
+    {
+      "label": "r1/both: vllm vs stator",
+      "compared": 16,
+      "token_matches": 15,
+      "missing_left": [],
+      "missing_right": [],
+      "differences": [
+        {
+          "task_id": 17,
+          "same_prompt": true,
+          "same_prompt_ids": true,
+          "token_match": false,
+          "text_match": false,
+          "first_different_zero_based": 51,
+          "left_logits": {
+            "token": "token_id:6147",
+            "log_probability": -1.0899715423583984,
+            "top": {
+              "token_id:6147": -1.0899715423583984,
+              "token_id:11554": -1.0899715423583984
+            }
+          },
+          "right_logits": {
+            "token": "token_id:11554",
+            "log_probability": -1.0816810131072998,
+            "top": {
+              "token_id:11554": -1.0816810131072998,
+              "token_id:6147": -1.0973060131072998
+            }
+          }
+        }
+      ]
+    },
+    {
+      "label": "r1/both_self: vllm vs stator",
+      "compared": 16,
+      "token_matches": 16,
+      "missing_left": [],
+      "missing_right": [],
+      "differences": []
+    },
+    {
+      "label": "r1/exact9: vllm vs stator",
+      "compared": 1,
+      "token_matches": 1,
+      "missing_left": [],
+      "missing_right": [],
+      "differences": []
+    },
+    {
+      "label": "r1/exact11: vllm vs stator",
+      "compared": 1,
+      "token_matches": 1,
+      "missing_left": [],
+      "missing_right": [],
+      "differences": []
+    },
+    {
+      "label": "r1/recompute: vllm vs stator",
+      "compared": 16,
+      "token_matches": 16,
+      "missing_left": [],
+      "missing_right": [],
+      "differences": []
+    },
+    {
+      "label": "r1/alone1: vllm vs stator",
+      "compared": 1,
+      "token_matches": 1,
+      "missing_left": [],
+      "missing_right": [],
+      "differences": []
+    },
+    {
+      "label": "r1/alone2: vllm vs stator",
+      "compared": 1,
+      "token_matches": 1,
+      "missing_left": [],
+      "missing_right": [],
+      "differences": []
+    },
+    {
+      "label": "r1/warm3: vllm vs stator",
+      "compared": 1,
+      "token_matches": 1,
+      "missing_left": [],
+      "missing_right": [],
+      "differences": []
+    },
+    {
+      "label": "r1/warm4: vllm vs stator",
+      "compared": 1,
+      "token_matches": 1,
+      "missing_left": [],
+      "missing_right": [],
+      "differences": []
+    },
+    {
+      "label": "r2/vllm: both vs both_self",
+      "compared": 16,
+      "token_matches": 16,
+      "missing_left": [],
+      "missing_right": [],
+      "differences": []
+    },
+    {
+      "label": "r2/vllm: both vs recompute",
+      "compared": 16,
+      "token_matches": 15,
+      "missing_left": [],
+      "missing_right": [],
+      "differences": [
+        {
+          "task_id": 19,
+          "same_prompt": true,
+          "same_prompt_ids": true,
+          "token_match": false,
+          "text_match": false,
+          "first_different_zero_based": 34,
+          "left_logits": {
+            "token": "token_id:2980",
+            "log_probability": -1.5203663110733032,
+            "top": {
+              "token_id:2980": -1.5203663110733032,
+              "token_id:3555": -0.8016163110733032
+            }
+          },
+          "right_logits": {
+            "token": "token_id:2585",
+            "log_probability": -1.5264540910720825,
+            "top": {
+              "token_id:2585": -1.5264540910720825,
+              "token_id:3555": -0.7920790910720825
+            }
+          }
+        }
+      ]
+    },
+    {
+      "label": "r2/vllm: both vs exact9",
+      "compared": 1,
+      "token_matches": 1,
+      "missing_left": [],
+      "missing_right": [],
+      "differences": []
+    },
+    {
+      "label": "r2/vllm: both vs exact11",
+      "compared": 1,
+      "token_matches": 1,
+      "missing_left": [],
+      "missing_right": [],
+      "differences": []
+    },
+    {
+      "label": "r2/stator: both vs both_self",
+      "compared": 16,
+      "token_matches": 14,
+      "missing_left": [],
+      "missing_right": [],
+      "differences": [
+        {
+          "task_id": 17,
+          "same_prompt": true,
+          "same_prompt_ids": true,
+          "token_match": false,
+          "text_match": false,
+          "first_different_zero_based": 51,
+          "left_logits": {
+            "token": "token_id:6147",
+            "log_probability": -1.0943459272384644,
+            "top": {
+              "token_id:6147": -1.0943459272384644,
+              "token_id:11554": -1.0943459272384644
+            }
+          },
+          "right_logits": {
+            "token": "token_id:11554",
+            "log_probability": -1.0816810131072998,
+            "top": {
+              "token_id:11554": -1.0816810131072998,
+              "token_id:6147": -1.0973060131072998
+            }
+          }
+        },
+        {
+          "task_id": 19,
+          "same_prompt": true,
+          "same_prompt_ids": true,
+          "token_match": false,
+          "text_match": false,
+          "first_different_zero_based": 34,
+          "left_logits": {
+            "token": "token_id:2585",
+            "log_probability": -1.5386345386505127,
+            "top": {
+              "token_id:2585": -1.5386345386505127,
+              "token_id:3555": -0.7886345386505127
+            }
+          },
+          "right_logits": {
+            "token": "token_id:2980",
+            "log_probability": -1.5345189571380615,
+            "top": {
+              "token_id:2980": -1.5345189571380615,
+              "token_id:3555": -0.7845189571380615
+            }
+          }
+        }
+      ]
+    },
+    {
+      "label": "r2/stator: both vs recompute",
+      "compared": 16,
+      "token_matches": 16,
+      "missing_left": [],
+      "missing_right": [],
+      "differences": []
+    },
+    {
+      "label": "r2/stator: both vs exact9",
+      "compared": 1,
+      "token_matches": 1,
+      "missing_left": [],
+      "missing_right": [],
+      "differences": []
+    },
+    {
+      "label": "r2/stator: both vs exact11",
+      "compared": 1,
+      "token_matches": 0,
+      "missing_left": [],
+      "missing_right": [],
+      "differences": [
+        {
+          "task_id": 19,
+          "same_prompt": true,
+          "same_prompt_ids": true,
+          "token_match": false,
+          "text_match": false,
+          "first_different_zero_based": 34,
+          "left_logits": {
+            "token": "token_id:2585",
+            "log_probability": -1.5386345386505127,
+            "top": {
+              "token_id:2585": -1.5386345386505127,
+              "token_id:3555": -0.7886345386505127
+            }
+          },
+          "right_logits": {
+            "token": "token_id:2980",
+            "log_probability": -1.5273383855819702,
+            "top": {
+              "token_id:2980": -1.5273383855819702,
+              "token_id:3555": -0.7929633855819702
+            }
+          }
+        }
+      ]
+    },
+    {
+      "label": "r2/prefix: vllm vs stator",
+      "compared": 1,
+      "token_matches": 1,
+      "missing_left": [],
+      "missing_right": [],
+      "differences": []
+    },
+    {
+      "label": "r2/first: vllm vs stator",
+      "compared": 4,
+      "token_matches": 3,
+      "missing_left": [],
+      "missing_right": [],
+      "differences": [
+        {
+          "task_id": 3,
+          "same_prompt": true,
+          "same_prompt_ids": true,
+          "token_match": false,
+          "text_match": false,
+          "first_different_zero_based": 37,
+          "left_logits": {
+            "token": "token_id:1035",
+            "log_probability": -1.8801300525665283,
+            "top": {
+              "token_id:1035": -1.8801300525665283,
+              "token_id:374": -1.0832550525665283,
+              "token_id:3118": -1.6457550525665283
+            }
+          },
+          "right_logits": {
+            "token": "token_id:4092",
+            "log_probability": -1.8752973079681396,
+            "top": {
+              "token_id:4092": -1.8752973079681396,
+              "token_id:374": -1.0784223079681396,
+              "token_id:3118": -1.6409223079681396
+            }
+          }
+        }
+      ]
+    },
+    {
+      "label": "r2/both: vllm vs stator",
+      "compared": 16,
+      "token_matches": 15,
+      "missing_left": [],
+      "missing_right": [],
+      "differences": [
+        {
+          "task_id": 19,
+          "same_prompt": true,
+          "same_prompt_ids": true,
+          "token_match": false,
+          "text_match": false,
+          "first_different_zero_based": 34,
+          "left_logits": {
+            "token": "token_id:2980",
+            "log_probability": -1.5203663110733032,
+            "top": {
+              "token_id:2980": -1.5203663110733032,
+              "token_id:3555": -0.8016163110733032
+            }
+          },
+          "right_logits": {
+            "token": "token_id:2585",
+            "log_probability": -1.5386345386505127,
+            "top": {
+              "token_id:2585": -1.5386345386505127,
+              "token_id:3555": -0.7886345386505127
+            }
+          }
+        }
+      ]
+    },
+    {
+      "label": "r2/both_self: vllm vs stator",
+      "compared": 16,
+      "token_matches": 15,
+      "missing_left": [],
+      "missing_right": [],
+      "differences": [
+        {
+          "task_id": 17,
+          "same_prompt": true,
+          "same_prompt_ids": true,
+          "token_match": false,
+          "text_match": false,
+          "first_different_zero_based": 51,
+          "left_logits": {
+            "token": "token_id:6147",
+            "log_probability": -1.0896928310394287,
+            "top": {
+              "token_id:6147": -1.0896928310394287,
+              "token_id:11554": -1.0896928310394287
+            }
+          },
+          "right_logits": {
+            "token": "token_id:11554",
+            "log_probability": -1.0816810131072998,
+            "top": {
+              "token_id:11554": -1.0816810131072998,
+              "token_id:6147": -1.0973060131072998
+            }
+          }
+        }
+      ]
+    },
+    {
+      "label": "r2/exact9: vllm vs stator",
+      "compared": 1,
+      "token_matches": 1,
+      "missing_left": [],
+      "missing_right": [],
+      "differences": []
+    },
+    {
+      "label": "r2/exact11: vllm vs stator",
+      "compared": 1,
+      "token_matches": 1,
+      "missing_left": [],
+      "missing_right": [],
+      "differences": []
+    },
+    {
+      "label": "r2/recompute: vllm vs stator",
+      "compared": 16,
+      "token_matches": 16,
+      "missing_left": [],
+      "missing_right": [],
+      "differences": []
+    },
+    {
+      "label": "r2/alone1: vllm vs stator",
+      "compared": 1,
+      "token_matches": 1,
+      "missing_left": [],
+      "missing_right": [],
+      "differences": []
+    },
+    {
+      "label": "r2/alone2: vllm vs stator",
+      "compared": 1,
+      "token_matches": 1,
+      "missing_left": [],
+      "missing_right": [],
+      "differences": []
+    },
+    {
+      "label": "r2/warm3: vllm vs stator",
+      "compared": 1,
+      "token_matches": 1,
+      "missing_left": [],
+      "missing_right": [],
+      "differences": []
+    },
+    {
+      "label": "r2/warm4: vllm vs stator",
+      "compared": 1,
+      "token_matches": 1,
+      "missing_left": [],
+      "missing_right": [],
+      "differences": []
+    },
+    {
+      "label": "vllm/first: r1 vs r2",
+      "compared": 4,
+      "token_matches": 4,
+      "missing_left": [],
+      "missing_right": [],
+      "differences": []
+    },
+    {
+      "label": "vllm/both: r1 vs r2",
+      "compared": 16,
+      "token_matches": 16,
+      "missing_left": [],
+      "missing_right": [],
+      "differences": []
+    },
+    {
+      "label": "vllm/both_self: r1 vs r2",
+      "compared": 16,
+      "token_matches": 16,
+      "missing_left": [],
+      "missing_right": [],
+      "differences": []
+    },
+    {
+      "label": "vllm/recompute: r1 vs r2",
+      "compared": 16,
+      "token_matches": 16,
+      "missing_left": [],
+      "missing_right": [],
+      "differences": []
+    },
+    {
+      "label": "stator/first: r1 vs r2",
+      "compared": 4,
+      "token_matches": 4,
+      "missing_left": [],
+      "missing_right": [],
+      "differences": []
+    },
+    {
+      "label": "stator/both: r1 vs r2",
+      "compared": 16,
+      "token_matches": 14,
+      "missing_left": [],
+      "missing_right": [],
+      "differences": [
+        {
+          "task_id": 17,
+          "same_prompt": true,
+          "same_prompt_ids": true,
+          "token_match": false,
+          "text_match": false,
+          "first_different_zero_based": 51,
+          "left_logits": {
+            "token": "token_id:11554",
+            "log_probability": -1.0816810131072998,
+            "top": {
+              "token_id:11554": -1.0816810131072998,
+              "token_id:6147": -1.0973060131072998
+            }
+          },
+          "right_logits": {
+            "token": "token_id:6147",
+            "log_probability": -1.0943459272384644,
+            "top": {
+              "token_id:6147": -1.0943459272384644,
+              "token_id:11554": -1.0943459272384644
+            }
+          }
+        },
+        {
+          "task_id": 19,
+          "same_prompt": true,
+          "same_prompt_ids": true,
+          "token_match": false,
+          "text_match": false,
+          "first_different_zero_based": 34,
+          "left_logits": {
+            "token": "token_id:2980",
+            "log_probability": -1.5203663110733032,
+            "top": {
+              "token_id:2980": -1.5203663110733032,
+              "token_id:3555": -0.8016163110733032
+            }
+          },
+          "right_logits": {
+            "token": "token_id:2585",
+            "log_probability": -1.5386345386505127,
+            "top": {
+              "token_id:2585": -1.5386345386505127,
+              "token_id:3555": -0.7886345386505127
+            }
+          }
+        }
+      ]
+    },
+    {
+      "label": "stator/both_self: r1 vs r2",
+      "compared": 16,
+      "token_matches": 15,
+      "missing_left": [],
+      "missing_right": [],
+      "differences": [
+        {
+          "task_id": 17,
+          "same_prompt": true,
+          "same_prompt_ids": true,
+          "token_match": false,
+          "text_match": false,
+          "first_different_zero_based": 51,
+          "left_logits": {
+            "token": "token_id:6147",
+            "log_probability": -1.0943459272384644,
+            "top": {
+              "token_id:6147": -1.0943459272384644,
+              "token_id:11554": -1.0943459272384644
+            }
+          },
+          "right_logits": {
+            "token": "token_id:11554",
+            "log_probability": -1.0816810131072998,
+            "top": {
+              "token_id:11554": -1.0816810131072998,
+              "token_id:6147": -1.0973060131072998
+            }
+          }
+        }
+      ]
+    },
+    {
+      "label": "stator/recompute: r1 vs r2",
+      "compared": 16,
+      "token_matches": 16,
+      "missing_left": [],
+      "missing_right": [],
+      "differences": []
+    }
+  ],
+  "errors": [],
+  "execution_records_valid": true,
+  "exact_output_valid": false,
+  "caveat": "logprobs-enabled diagnostic, not a performance run; missing cached_tokens is NA, not proven zero"
+}

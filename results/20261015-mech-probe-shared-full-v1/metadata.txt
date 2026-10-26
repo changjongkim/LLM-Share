@@ -1,0 +1,17 @@
+timestamp=2026-10-15T17:36:21+09:00
+gpu=GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600
+repetitions=6
+size_mib=1024
+copies=4
+reclaim_s=20
+reclaim_step_mib=256
+reclaim_total_mib=1536
+ksm_pages_to_scan=20000
+ksm_sleep_millisecs=1
+file=/home/thor/kcj/llm_share/mech_work/mech_buffer.bin
+file_fs=ext2/ext3
+boot_id=f9776703-a137-43bc-822b-124c6147ff68
+6.8.12-1021-tegra
+GPU 0: NVIDIA Thor (UUID: GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600)
+cdca95b0590981703d083e89b7faa186c9740ed091a954f9389cf9f5d2d33973  /home/thor/kcj/llm_share/mech_probe2
+cases=shared cpu;shared gpu

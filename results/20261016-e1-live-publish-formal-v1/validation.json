@@ -1,0 +1,8 @@
+{
+  "case_count": 216,
+  "expected_cases": 216,
+  "text_comparisons_including_reference": 3168,
+  "errors": [],
+  "valid": true,
+  "instrumentation_controls": []
+}

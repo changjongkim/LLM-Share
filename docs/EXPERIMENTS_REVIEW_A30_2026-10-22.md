@@ -6,7 +6,7 @@
 
 | # | 실험 | 플랫폼 | 질문 | 핵심 결과 | 논문 반영 |
 |---|---|---|---|---|---|
-| T1 | Fault-around (126) | Thor | 4 KiB 페이지 캐시에서 populate 뒤에도 GPU 폴트가 남는 이유는? | 기본값에서 475,648개가 남고, fault-around를 1페이지로 줄이면 6/6 실행에서 0 | 평가 4.3 문장 |
+| T1 | Fault-around (126) | Thor | 4 KiB 페이지 캐시에서 populate 뒤에도 GPU 폴트가 남는 이유는? | 기본값에서 475,648개가 남고, fault-around를 1페이지로 줄이면 6/6 실행에서 0 | 평가 4.2 (리뷰 5로 복원, 4353208) |
 | T2 | 인계 전체 (128-130) | Thor | 복사 파일을 읽기 전용으로 매핑하는 방식(Copied File)과 STATOR의 차이는? 쓰기 금지 파일의 비용은? | 멈춤 Copy 574.5 / Copied File 82.7 / STATOR 11.8 ms, immutable 파일 19.1 ms, 쓰기 18/18 거부 | Figure 14, 평가 4.4, 설계 3.3, Table 2 |
 | T3 | 반복 fork (131, 133) | Thor | 실행 중인 에이전트를 여러 번 fork할 때의 멈춤과 메모리는? | fork당 Copy 527-626 / Copied File 81-92 / STATOR 5.7-12.2 ms, 정점 메모리 9.7-12.9 / 7.9-8.1 / 6.9-7.0 GiB | 평가 4.4, Figure 15 (f4c9ca0 이후) |
 | T4 | 에이전트 세션 (132) | Thor | 세션 실험에서 Copied File과 STATOR가 다른가? | 거의 같음(TTFT p50 861 vs 868 ms, 메모리 43.4 vs 46.3 GiB) | 미반영 |
