@@ -1,17 +1,17 @@
 \begin{tabular}{@{}lrrrrr@{}}
 \hline
-Configuration & \makecell[r]{Attach\\(ms)} & \makecell[r]{TTFT\\(s)} & \makecell[r]{Memory\\(GiB)} & \makecell[r]{Speed\\vs. \textit{Copy}} & \makecell[r]{Equal\\Texts} \\
+Configuration & \makecell[r]{Attach\\(ms)} & \makecell[r]{TTFT\\(ms)} & \makecell[r]{Memory\\(GiB)} & \makecell[r]{Speed\\vs. \textit{Copy}} & \makecell[r]{Equal\\Texts} \\
 \hline
-\STATOR & 58 & 1.91 & 6.1 & 0.990 & 48/48 \\
+\STATOR & 58 & 1,913 & 6.1 & 1.007 & 48/48 \\
 \hline
-No CPU read of the prefix & 54 & 2.66 & 6.1 & 0.991 & 48/48 \\
-No populate-ahead & 55 & 2.13 & 6.1 & 0.962 & 48/48 \\
-Writable private mapping & 51 & 2.45 & 7.0 & 0.973 & 48/48 \\
-Writable, no CPU read & 54 & 6.48 & 13.1 & 0.990 & 48/48 \\
-Growth in steps of 1,024 rows & 54 & 1.92 & 6.4 & 0.989 & 48/48 \\
-Growth in steps of 4,096 rows & 56 & 1.93 & 7.9 & 0.990 & 48/48 \\
-Private extent allocated at once & 107 & 1.99 & 12.9 & 0.989 & 48/48 \\
-Cache file on 4~KiB pages & 75 & 1.93 & 6.0 & 0.990 & 48/48 \\
-\textit{Copy} & 647 & 2.57 & 20.0 & 1.000 & 48/48 \\
+No CPU read of the prefix & 54 & 2,662 & 6.1 & 0.993 & 48/48 \\
+No populate-ahead & 55 & 2,127 & 6.1 & 0.976 & 48/48 \\
+Writable private mapping & 51 & 2,451 & 7.0 & 0.963 & 48/48 \\
+Writable, no CPU read & 54 & 6,483 & 13.1 & 1.010 & 48/48 \\
+Growth in steps of 1K rows & 54 & 1,918 & 6.4 & 1.012 & 48/48 \\
+Growth in steps of 4K rows & 56 & 1,929 & 7.9 & 1.011 & 48/48 \\
+Private extent allocated at once & 107 & 1,989 & 12.9 & 1.014 & 48/48 \\
+Cache file on 4~KiB pages & 75 & 1,928 & 6.0 & 1.006 & 48/48 \\
+\textit{Copy} & 647 & 2,567 & 20.0 & 1.000 & 48/48 \\
 \hline
 \end{tabular}

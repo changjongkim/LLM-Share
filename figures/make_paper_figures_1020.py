@@ -118,9 +118,9 @@ def sota_e1(summary=REPORTS + "/107-live-publish-formal/analysis_summary.csv", m
     legend("eval_sota_legend", [(lab, col) for lab, col, _ in MECHS], len(MECHS))
     cells = [("4081", "8"), ("16321", "8"), ("16321", "32")]
     pause_cells = cells[:2]
-    names = ["4,081\n8 Agents", "16,321\n8 Agents", "16,321\n32 Agents"]
+    names = ["4K\n8 Agents", "16K\n8 Agents", "16K\n32 Agents"]
     if long_only:
-        # six mechanisms: the values of three groups do not fit, and the text reads (b)-(d) on 16,321 tokens only
+        # six mechanisms: the values of three groups do not fit, and the text reads (b)-(d) on 16K tokens only
         cells, names = cells[1:], names[1:]
     for name, column, ylabel, scale, form, log, which in (
             ("eval_hand_pause", "publish_ms", "Pause (ms, log)", 1.0, "{:.0f}", True, pause_cells),
@@ -134,7 +134,7 @@ def sota_e1(summary=REPORTS + "/107-live-publish-formal/analysis_summary.csv", m
                 return float(row["child_context_ms"]) + float(row["child_attach_ms"])
             return float(row[column]) / scale
         series = [(lab, col, [value(data[c + (m,)]) for c in which]) for lab, col, m in MECHS]
-        group_names = ["4,081", "16,321"] if which is pause_cells else names
+        group_names = ["4K", "16K"] if which is pause_cells else names
         for group in grouped(ax, group_names, series, 0.85 / len(MECHS)):
             labels(ax, group, form, DENSE)
             for text in ax.texts[-len(group):]:

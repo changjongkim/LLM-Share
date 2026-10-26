@@ -124,9 +124,14 @@ def legend(name, entries, ncol, half=False):
     save(fig, name)
 
 
+def tokens_k(tokens):
+    """A prefix length as the paper writes it: 4,081 -> 4K, 16,321 -> 16K (10-26)."""
+    return f"{round(int(float(tokens)) / 1000)}K"
+
+
 def bg_state_legend():
     """The strip above (b) of Figure 1: the two prefix lengths (10-23, in place of the legend inside the panel)."""
-    legend("bg_state_legend", [("4,081 Tokens", COPY_LIGHT), ("16,321 Tokens", COPY)], 2, half=True)
+    legend("bg_state_legend", [("4K Tokens", COPY_LIGHT), ("16K Tokens", COPY)], 2, half=True)
 
 
 def pair_legend():
@@ -271,7 +276,7 @@ def hand():
     legend("eval_hand_legend", [(label, colour) for label, colour, _ in MECHANISMS], 5)
     sizes = sorted({k[2] for k in data if k[0] == "same" and k[1] == 8})
     counts = sorted({k[1] for k in data if k[0] == "same" and k[2] == max(sizes)})
-    long_tokens = int(float(data["same", 8, max(sizes), "copy"]["prefix_tokens"]))
+    long_tokens = tokens_k(data["same", 8, max(sizes), "copy"]["prefix_tokens"])
 
     def bars(name, groups, cells, column, ylabel, scale, form, log, xlabel):
         fig, ax = panel()
@@ -287,7 +292,7 @@ def hand():
             ax.set_ylim(1, top * 14)
         finish(fig, ax, name, xlabel, ylabel, None if log else top * 1.3, log)
 
-    bars("eval_hand_pause", [f"{int(float(data['same', 8, size, 'copy']['prefix_tokens'])):,}" for size in sizes],
+    bars("eval_hand_pause", [tokens_k(data['same', 8, size, 'copy']['prefix_tokens']) for size in sizes],
          [("same", 8, size) for size in sizes], "publish_ms", "Pause (ms, log)", 1.0, "{:.0f}", True,
          "Prefix (Tokens)")
     if have(MECH_COUNTS, "engine_kvmech_summary.csv"):
@@ -295,9 +300,9 @@ def hand():
         counts = sorted({k[1] for k in data if k[0] == "same" and k[2] == max(sizes)})
     cells = [("same", n, max(sizes)) for n in counts]
     bars("eval_hand_attach", [str(n) for n in counts], cells, "child_attach_ms", "Attach Time (ms, log)",
-         1.0, "{:.0f}", True, f"Agents ({long_tokens:,}-Token Prefix)")
+         1.0, "{:.0f}", True, f"Agents ({long_tokens}-Token Prefix)")
     bars("eval_hand_ttft", [str(n) for n in counts], cells, "child_first_token_ms", "TTFT (s)",
-         1000.0, "{:.2f}", False, f"Agents ({long_tokens:,}-Token Prefix)")
+         1000.0, "{:.2f}", False, f"Agents ({long_tokens}-Token Prefix)")
 
 
 # ------------------------------------------------------------------- speed
@@ -308,7 +313,7 @@ def speed():
     for instance, directory in cells:
         row = next(r for r in rows(directory, "engine_kvspeed_summary.csv")
                    if r["mode"] == "extent_lazy" and r["processes"] == "1")
-        names.append(f"{instance}\n{int(row['prefix_tokens']):,}")
+        names.append(f"{instance}\n{tokens_k(row['prefix_tokens'])}")
         values.append(float(row["generation_vs_device"]))
         low.append(values[-1] - float(row["lower_ci95"]))
         high.append(float(row["upper_ci95"]) - values[-1])

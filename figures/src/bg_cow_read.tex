@@ -1,39 +1,36 @@
-% Background: a GPU read of one page without the accessed flag. In a writable
-% private mapping the fault is served as a write to the 2 MiB block and every
-% page of the block becomes a private copy; in a read-only mapping the pages
-% stay in place.
+% Background: a GPU read of one page whose accessed flag is clear. The driver
+% serves the fault as a write in a writable mapping, and the kernel copies
+% every page of the 2 MiB block; in a read-only mapping the fault is a read,
+% and the pages stay in place.
 \documentclass[border=2pt]{standalone}
 \input{llmshare_style}
 \begin{document}
 \begin{tikzpicture}[x=1cm, y=1cm]
-\draw[layer] (0,0) rectangle (5.8,3.15);
-\node[ttl] at (2.9,2.95) {GPU Read in a 2 MiB Block};
-% the outcome in a writable private mapping: the whole block is copied
-\node[tag, anchor=east, align=right] at (1.45,2.35) {Writable\\[-2pt]Mapping};
+\draw[layer] (0,0) rectangle (5.8,2.8);
+% the GPU reads one page of a shared block whose accessed flag is clear
+\node[comp, fill=gpuc, minimum width=0.9cm, minimum height=0.42cm] (gpu) at (0.95,2.42) {GPU};
 \foreach \k in {0,...,7} {
-  \node[blk, fill=faultc] (c\k) at (1.78+\k*0.5,2.35) {};
+  \node[blk, fill=sharedc, minimum width=0.28cm] (b\k) at (2.22+\k*0.28,2.42) {};
 }
-% the pages of the file, one without the accessed flag
-\node[comp, fill=gpuc, minimum width=0.95cm, minimum height=0.44cm] (gpu) at (0.72,1.55) {GPU};
+\node[blk, fill=white, draw=rwline, line width=0.9pt, minimum width=0.28cm] (flag) at (b3) {};
+\draw[arr, black!75] (gpu.east) -- (b0.west) node[midway, above, note] {read};
+% writable mapping: the fault is served as a write to the whole block
+\node[tag] at (1.5,1.34) {Writable Mapping};
 \foreach \k in {0,...,7} {
-  \node[blk, fill=sharedc] (b\k) at (1.78+\k*0.5,1.55) {};
+  \node[blk, fill=faultc, minimum width=0.28cm] (c\k) at (0.52+\k*0.28,0.94) {};
 }
-\node[blk, fill=white, draw=rwline, line width=0.9pt] (flag) at (b3) {};
-\draw[arr, roline] (gpu.east) -- (b0.west);
-\node[note, text=roline, anchor=south] at (0.72,1.79) {read};
-% the outcome in a read-only mapping: the pages stay shared
-\node[tag, anchor=east, align=right] at (1.45,0.75) {Read-Only\\[-2pt]Mapping};
+\node[tag, text=rwline] at (1.5,0.58) {512 Copies};
+% read-only mapping: the fault is a read, and the page is mapped in place
+\node[tag] at (4.3,1.34) {Read-Only Mapping};
 \foreach \k in {0,...,7} {
-  \node[blk, fill=sharedc] (d\k) at (1.78+\k*0.5,0.75) {};
+  \node[blk, fill=sharedc, minimum width=0.28cm] (d\k) at (3.32+\k*0.28,0.94) {};
 }
-% the two faults
-\draw[arr, rwline] (b3.north) -- (c3.south);
-\node[note, text=rwline, anchor=west] at (3.38,1.95) {write fault};
-\node[tag, text=rwline, anchor=east] at (3.16,1.95) {512 Copies};
-\draw[arr, roline] (b3.south) -- (d3.north);
-\node[note, text=roline, anchor=west] at (3.38,1.15) {read fault};
-\node[tag, text=roline, anchor=east] at (3.16,1.15) {In Place};
+\node[tag, text=roline] at (4.3,0.58) {In Place};
+\draw[arr, rwline] (flag.south) -- (1.5,1.5);
+\node[note, text=rwline, anchor=east] at (2.1,1.88) {write fault};
+\draw[arr, roline] (flag.south) -- (4.3,1.5);
+\node[note, text=roline, anchor=west] at (3.9,1.88) {read fault};
 % legend
-\node[tag] at (2.9,0.22) {\lgdfill{sharedc}\,Shared\quad\lgdfill{faultc}\,Private Copy\quad\tikz[baseline=-0.55ex]{\draw[rwline, line width=0.9pt, fill=white] (0,-0.1) rectangle (0.22,0.1);}\,Flag Clear};
+\node[tag] at (2.9,0.19) {\lgdfill{sharedc}\,Shared\quad\lgdfill{faultc}\,Private Copy\quad\tikz[baseline=-0.55ex]{\draw[rwline, line width=0.9pt, fill=white] (0,-0.1) rectangle (0.22,0.1);}\,Flag Clear};
 \end{tikzpicture}
 \end{document}

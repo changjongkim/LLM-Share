@@ -42,24 +42,27 @@ def ablation():
              ("no_populate", "No populate-ahead"),
              ("writable", "Writable private mapping"),
              ("writable_no_read", "Writable, no CPU read"),
-             ("grow_1024", "Growth in steps of 1,024 rows"),
-             ("grow_4096", "Growth in steps of 4,096 rows"),
+             ("grow_1024", "Growth in steps of 1K rows"),
+             ("grow_4096", "Growth in steps of 4K rows"),
              ("grow_all", "Private extent allocated at once"),
              ("small_pages", "Cache file on 4~KiB pages"),
              ("copy", r"\textit{Copy}"))
     lines = [r"\begin{tabular}{@{}lrrrrr@{}}", r"\hline",
-             r"Configuration & \makecell[r]{Attach\\(ms)} & \makecell[r]{TTFT\\(s)} & "
+             r"Configuration & \makecell[r]{Attach\\(ms)} & \makecell[r]{TTFT\\(ms)} & "
              r"\makecell[r]{Memory\\(GiB)} & \makecell[r]{Speed\\vs. \textit{Copy}} & "
              r"\makecell[r]{Equal\\Texts} \\", r"\hline"]
+    # speed: generation window paired within a repetition (make_paper_figures_1020)
+    from make_paper_figures_1020 import ablation_speed
+    speed = ablation_speed()
     for mode, label in order:
         if mode not in data:
             continue
         r = data[mode]
         lines.append(
             f"{label} & {float(r['child_attach_ms']):.0f} & "
-            f"{float(r['child_first_token_ms']) / 1000:.2f} & "
+            f"{float(r['child_first_token_ms']):,.0f} & "
             f"{float(r['children_memory_mib']) / 1024:.1f} & "
-            f"{float(r['children_tps_vs_copy']):.3f} & "
+            f"{speed[mode]:.3f} & "
             f"{r['texts_equal_to_copy']}/{r['children_finished']} \\\\")
         if mode == "extent":
             lines.append(r"\hline")
