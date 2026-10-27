@@ -113,10 +113,11 @@ def panel(size=PANEL):
     return plt.subplots(figsize=size)
 
 
-def legend(name, entries, ncol, half=False):
+def legend(name, entries, ncol, half=False, rows=1):
     """A strip that holds only the legend, shared by the panels below it. A strip above one half-column panel
-    (half) keeps the text size and spaces its entries closer, so that it fits the width of that panel."""
-    fig = plt.figure(figsize=(1.9 * ncol + 0.6, 0.38))
+    (half) keeps the text size and spaces its entries closer, so that it fits the width of that panel. A strip
+    above a one-column grid of panels sets its entries on several rows."""
+    fig = plt.figure(figsize=(1.9 * ncol + 0.6, 0.38 + 0.24 * (rows - 1)))
     handles = [plt.Rectangle((0, 0), 1, 1, color=colour) for _, colour in entries]
     spacing = dict(columnspacing=0.7, handlelength=1.0, handletextpad=0.4) if half else \
         dict(columnspacing=1.6, handlelength=1.3)
