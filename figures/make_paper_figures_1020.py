@@ -11,7 +11,6 @@ first_token_ms + generation_ms. TTFT is in milliseconds.
     python3 make_paper_figures_1020.py
 """
 import csv
-import itertools
 import json
 import math
 import os
@@ -26,7 +25,7 @@ import matplotlib.pyplot as plt
 import make_paper_figures as base
 from make_eval_figures import AXIS
 from make_paper_figures import (COPY, COW, DEMAND, DEVICE, OURS, OURS_LIGHT, COPY_LIGHT, NAME, DENSE, VALUE, EXISTING, OLLAMA, STACKS,
-                                panel, legend, labels, finish, grouped, save, style)
+                                panel, legend, legend_two_rows, labels, finish, grouped, save, style)
 
 KCJ = "/home/thor/kcj"
 RES = KCJ + "/llm_share/results"
@@ -117,12 +116,7 @@ def sota_e1(summary=REPORTS + "/107-live-publish-formal/analysis_summary.csv", m
     data = {(r["prefix_tokens"], r["children"], r["mode"]): r for r in csv_rows(summary)}
     MECHS = mechs
     legend("eval_sota_legend", [(lab, col) for lab, col, _ in MECHS], len(MECHS))
-    # the one-column 2x2 layout of the paper (10-27): two rows; matplotlib fills the columns first, so the
-    # entries are interleaved to read row by row in the fixed order
-    entries = [(lab, col) for lab, col, _ in MECHS]
-    half = (len(entries) + 1) // 2
-    interleaved = [e for pair in itertools.zip_longest(entries[:half], entries[half:]) for e in pair if e]
-    legend("eval_sota_legend_col", interleaved, half, rows=2)
+    legend_two_rows("eval_sota_legend_col", [(lab, col) for lab, col, _ in MECHS])
     cells = [("4081", "8"), ("16321", "8"), ("16321", "32")]
     pause_cells = cells[:2]
     names = ["4K\n8 Agents", "16K\n8 Agents", "16K\n32 Agents"]

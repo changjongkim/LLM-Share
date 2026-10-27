@@ -18,6 +18,7 @@ its unit on the axis and the value on the bar.
   eval_attach_*    attach cost of shared device memory by allocation size
   eval_scale_*     more agents; eval_model_*, eval_work_*: other models, workload
 """
+import itertools
 import math
 import os
 import re
@@ -123,6 +124,14 @@ def legend(name, entries, ncol, half=False, rows=1):
         dict(columnspacing=1.6, handlelength=1.3)
     fig.legend(handles, [label for label, _ in entries], loc="center", ncol=ncol, fontsize=12.5, **spacing)
     save(fig, name)
+
+
+def legend_two_rows(name, entries):
+    """The strip above a one-column 2x2 grid of panels (10-27): the entries on two rows. Matplotlib fills the
+    columns first, so the entries are interleaved to read row by row in the fixed order."""
+    half = (len(entries) + 1) // 2
+    interleaved = [e for pair in itertools.zip_longest(entries[:half], entries[half:]) for e in pair if e]
+    legend(name, interleaved, half, rows=2)
 
 
 def tokens_k(tokens):
@@ -888,6 +897,7 @@ def stack():
             for r in rows(directory, "engine_kvstack_summary.csv") if int(r["runs"]) > 0}
     fit = {r["mode"]: r for r in rows(directory, "engine_kvstack_fit.csv")}
     legend("eval_stack_legend", [(label, colour) for label, colour, _, _ in STACKS], 4)
+    legend_two_rows("eval_stack_legend_col", [(label, colour) for label, colour, _, _ in STACKS])
     # the larger counts of the stack that shares both, run as a campaign of their own; a count at which an
     # agent failed is not drawn (10-26: the rerun with the model file in the page cache failed at 136 and
     # 140 agents, and the paper reports the 136 agents without a failure on 2 MiB pages, as eval_stack_fit)
