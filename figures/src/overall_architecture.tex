@@ -27,9 +27,9 @@
   \node[ttl] at (#1+1.275,5.68) {#3};
   \node[tag, anchor=base] at (#1+0.47,5.23) {Weights};
   \node[tag, anchor=base] at (#1+1.72,5.23) {KV Cache};
-  \node[blk, fill=modelc, minimum width=0.78cm] (#2m) at (#1+0.47,4.88) {model};
-  \node[blk, fill=sharedc, minimum width=0.78cm] (#2p) at (#1+1.33,4.88) {prefix};
-  \node[blk, fill=tailc, minimum width=0.78cm] (#2t) at (#1+2.11,4.88) {private};
+  \node[blk, fill=modelc, minimum width=0.78cm, inner xsep=0.5pt] (#2m) at (#1+0.47,4.88) {model};
+  \node[blk, fill=sharedc, minimum width=0.78cm, inner xsep=0.5pt] (#2p) at (#1+1.33,4.88) {prefix};
+  \node[blk, fill=tailc, minimum width=0.78cm, inner xsep=0.5pt] (#2t) at (#1+2.11,4.88) {private};
 }
 \process{0.15}{pub}{Publisher}
 \process{2.85}{one}{Agent 1}

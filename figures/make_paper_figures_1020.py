@@ -126,7 +126,7 @@ def sota_e1(summary=REPORTS + "/107-live-publish-formal/analysis_summary.csv", m
     for name, column, ylabel, scale, form, log, which in (
             ("eval_hand_pause", "publish_ms", "Pause (ms, log)", 1.0, "{:.0f}", True, pause_cells),
             ("eval_sota_mem", "child_increment_peak_gib", "Memory (GiB)", 1.0, "{:.1f}", False, cells),
-            ("eval_sota_attach", "child_attach_ms", "Attach Time (ms, log)", 1.0, "{:.0f}", True, cells),
+            ("eval_sota_attach", "child_attach_ms", "Time (ms, log)", 1.0, "{:.0f}", True, cells),
             ("eval_sota_ttft", "child_ttft_ms", "TTFT (ms)", 1.0, "{:.0f}", False, cells)):
         fig, ax = panel()
         def value(row):
@@ -196,7 +196,7 @@ def resident_117(D=RES + "/20261020-e3-resident-formal-v1"):
     handles = [plt.Rectangle((0, 0), 1, 1, color=col) for _, col, _, _ in modes] + \
         [plt.Line2D([], [], color=base.INK, linewidth=2), plt.Line2D([], [], color=base.INK, linewidth=2, linestyle=(0, (3, 2)))]
     fig.legend(handles, [lab for lab, _, _, _ in modes] + ["Median", "95th Percentile"], loc="center", ncol=4,
-               columnspacing=1.6, handlelength=1.6, fontsize=12.5)
+               columnspacing=1.6, handlelength=1.6, fontsize=14, borderpad=0.15)
     save(fig, "eval_resident_legend")
     out = {}
     for name, metric, ylabel in (("eval_resident_mem", "mem", "Memory (GiB)"),):
@@ -318,7 +318,7 @@ def dynamic_e4b():
     modes = (("llama.cpp", EXISTING, "none", "s"), ("Copy", COPY, "weights", "D"), (NAME, OURS, "both", "o"))
     present = [m for m in modes if any((m[2], x) in stats for x in means)]
     legend("eval_dyn_legend", [(lab, col) for lab, col, _, _ in present], len(present))
-    for name, metric, ylabel, log in (("eval_dyn_mem", "mem", "Peak Memory (GiB)", False),
+    for name, metric, ylabel, log in (("eval_dyn_mem", "mem", "Memory (GiB)", False),
                                       ("eval_dyn_p95", "p95", "TTFT P95 (ms, log)", True)):
         fig, ax = panel()
         top = 0

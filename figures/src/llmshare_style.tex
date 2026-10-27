@@ -3,6 +3,8 @@
 % second level of sharing; text is regular weight except the panel titles.
 \usepackage{newtxtext}
 \usepackage{tikz}
+% the text of the figures, 8 pt: printed at about 7 pt, the size of the tick labels of the graphs (10-27, was 7 pt)
+\newcommand{\figsize}{\fontsize{8}{9.5}\selectfont}
 \usetikzlibrary{arrows.meta, positioning, fit, calc, patterns, shapes.geometric, decorations.pathreplacing}
 
 \definecolor{panel}{HTML}{F3F4F6}   % a group of components
@@ -23,21 +25,21 @@
   layer/.style={draw=black!60, fill=panel, line width=0.5pt},
   sub/.style={draw=black!55, line width=0.4pt},
   comp/.style={draw=black!85, fill=white, line width=0.4pt, align=center,
-               font=\scriptsize, inner xsep=3pt, inner ysep=1.5pt, minimum height=0.5cm},
+               font=\figsize, inner xsep=3pt, inner ysep=1.5pt, minimum height=0.5cm},
   seg/.style={draw=black!65, line width=0.35pt, inner sep=0pt, align=center,
-              font=\scriptsize, minimum height=0.4cm},
+              font=\figsize, minimum height=0.4cm},
   free/.style={seg, pattern=north east lines, pattern color=black!40},
   blk/.style={draw=black!65, line width=0.35pt, minimum width=0.42cm, minimum height=0.36cm,
-              inner xsep=2pt, inner ysep=0pt, font=\scriptsize},
+              inner xsep=2pt, inner ysep=0pt, font=\figsize},
   hole/.style={blk, pattern=north east lines, pattern color=black!45},
-  tag/.style={font=\scriptsize, inner sep=1pt},
+  tag/.style={font=\figsize, inner sep=1pt},
   ttl/.style={font=\bfseries\small},
-  lbl/.style={font=\scriptsize},
-  note/.style={font=\itshape\scriptsize, inner sep=1pt},
+  lbl/.style={font=\figsize},
+  note/.style={font=\itshape\figsize, inner sep=1pt},
   arr/.style={-{Latex[length=1.6mm]}, line width=0.8pt},
   thin/.style={-{Latex[length=1.3mm]}, line width=0.5pt},
   fat/.style={-{Triangle[length=2.2mm,width=3.4mm]}, line width=2.4pt},
-  num/.style={circle, fill=black, text=white, font=\bfseries\scriptsize,
+  num/.style={circle, fill=black, text=white, font=\bfseries\figsize,
               inner sep=0.6pt, minimum size=0.33cm},
 }
 % A legend entry: a filled square and its name, at (x,y).

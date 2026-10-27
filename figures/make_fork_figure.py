@@ -28,7 +28,8 @@ def fork_figure(result):
         strip = plt.figure(figsize=(5.2, 0.62))
         strip.legend([plt.Rectangle((0, 0), 1, 1, facecolor=colour, edgecolor=OURS if colour == OURS_PALE else colour)
                       for _, colour, _, _ in modes], [label for label, _, _, _ in modes], loc="center", ncol=2,
-                     columnspacing=1.0, handlelength=1.1, handletextpad=0.4, fontsize=12.5, labelspacing=0.3)
+                     columnspacing=1.0, handlelength=1.1, handletextpad=0.4, fontsize=14, labelspacing=0.3,
+                     borderpad=0.15)
         save(strip, "eval_fork_legend")
 
     fig, ax = panel()

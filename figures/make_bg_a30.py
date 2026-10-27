@@ -44,7 +44,7 @@ def main():
     strip = plt.figure(figsize=(6.6, 0.38))
     strip.legend([plt.Rectangle((0, 0), 1, 1, color=colour) for _, colour, _, _ in READERS],
                  [label for label, _, _, _ in READERS], loc="center", ncol=4, columnspacing=0.8, handlelength=1.0,
-                 handletextpad=0.4, fontsize=12.5)
+                 handletextpad=0.4, fontsize=14, borderpad=0.15)
     save(strip, "bg_mech_legend")
 
     def value(where, mech, step, access, column):

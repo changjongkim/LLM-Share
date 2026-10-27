@@ -55,13 +55,13 @@ OURS_PALE = "#c9e9e5"    # teal (OURS, OURS_LIGHT): a second part left out
 # which takes little height in a column. Every panel is saved as its whole
 # canvas, so that all panels print at one scale. A legend that two panels
 # share is a strip above them (legend()).
-VALUE = 10.5    # a value on a mark
-DENSE = 9.5     # a value above one of five bars of a group, set upright
-LEGEND = 10.5
-TICK2 = 11      # tick labels of two lines
+VALUE = 12      # a value on a mark
+DENSE = 10      # a value above one of five bars of a group, set upright
+LEGEND = 12
+TICK2 = 12.5    # tick labels of two lines
 PANEL = (3.2, 1.75)
-plt.rcParams.update({"font.size": 13, "axes.labelsize": 13.5, "xtick.labelsize": 12.5,
-                     "ytick.labelsize": 12.5, "legend.fontsize": LEGEND})
+plt.rcParams.update({"font.size": 14, "axes.labelsize": 14.5, "xtick.labelsize": 14,
+                     "ytick.labelsize": 14, "legend.fontsize": LEGEND})
 base.PANEL = PANEL
 base.TIP = VALUE
 base.LABEL_MIN, base.TICK_MIN, base.VALUE_MIN = 12.5, 10.0, 9.0
@@ -122,7 +122,8 @@ def legend(name, entries, ncol, half=False, rows=1):
     handles = [plt.Rectangle((0, 0), 1, 1, color=colour) for _, colour in entries]
     spacing = dict(columnspacing=0.7, handlelength=1.0, handletextpad=0.4) if half else \
         dict(columnspacing=1.6, handlelength=1.3)
-    fig.legend(handles, [label for label, _ in entries], loc="center", ncol=ncol, fontsize=12.5, **spacing)
+    fig.legend(handles, [label for label, _ in entries], loc="center", ncol=ncol, fontsize=14, borderpad=0.15,
+               **spacing)
     save(fig, name)
 
 
@@ -233,7 +234,7 @@ def weights():
     finish(fig, ax, "eval_weights_mem", "Serving Processes", "Memory (GiB)", 47)
 
     pages = {r["mode"]: r for r in rows("20261005-engine-pages-v1", "engine_pages_summary.csv")}
-    order = (("llama.cpp", "copy", EXISTING), (f"{NAME}\n(4 KiB)", "inplace_4k", OURS_LIGHT),
+    order = (("llama.\ncpp", "copy", EXISTING), (f"{NAME}\n(4 KiB)", "inplace_4k", OURS_LIGHT),
              (f"{NAME}\n(2 MiB)", "inplace_thp", OURS))
     fig, ax = panel()
     values = [float(pages[mode]["generation_vs_copy"]) for _, mode, _ in order]
@@ -407,7 +408,8 @@ def cow():
         bars = ax.bar([label for label, _, _ in order], values, 0.62,
                       color=[c for _, _, c in order], edgecolor="white", linewidth=1.5)
         labels(ax, bars, form)
-        ax.tick_params(axis="x", labelsize=TICK2)
+        # names of three lines, set smaller so that the label of the value axis keeps one line
+        ax.tick_params(axis="x", labelsize=TICK2 - 2)
         finish(fig, ax, name, "", ylabel, max(values) * 1.18)
 
 
@@ -945,7 +947,7 @@ def stack():
              ("Agent State", COPY_PALE, (both, both, both, both)),
              ("Shared Files", OURS, (0.0, cache_file, model_file, model_file + cache_file)))
     fig, ax = panel()
-    names = ["llama.cpp", f"{NAME}\n(KV)", f"{NAME}\n(Weights)", NAME]
+    names = ["llama.\ncpp", f"{NAME}\n(KV)", f"{NAME}\n(Weights)", NAME]
     bottom = np.zeros(4)
     for label, colour, values in parts:
         ax.bar(names, values, 0.54, bottom=bottom, color=colour, edgecolor="white", linewidth=1.5,
@@ -956,7 +958,7 @@ def stack():
                     ha="center", va="bottom", fontsize=VALUE, color=INK)
     ax.legend(loc="upper right", handlelength=1.1, fontsize=LEGEND, labelspacing=0.3)
     ax.tick_params(axis="x", labelsize=TICK2 - 1)
-    ax.set_xlim(-0.32, len(names) - 0.68)    # the names of two lines need the whole width of the axis
+    ax.set_xlim(-0.28, len(names) - 0.72)    # the names of two lines need the whole width of the axis
     finish(fig, ax, "eval_stack_parts", "", "Memory (GiB)", bottom.max() * 1.18)
 
     # how many agents fit by the line of the unmodified stack and of the stack
@@ -1271,7 +1273,7 @@ def vshare():
     names = [label for label, _, _ in modes]
     colours = [colour for _, colour, _ in modes]
 
-    def bars(name, values, ylabel, form, log=False):
+    def bars(name, values, ylabel, form, log=False, margin=0.38):
         fig, ax = panel()
         drawn = ax.bar(names, values, 0.58, color=colours, edgecolor="white", linewidth=1.5)
         labels(ax, drawn, form)
@@ -1279,11 +1281,12 @@ def vshare():
             ax.set_yscale("log")
             ax.set_ylim(100 if min(values) >= 100 else 0.1, max(values) * 4.0)
         # the names of two lines need the whole width of the axis
-        ax.set_xlim(-0.38, len(names) - 0.62)
+        ax.set_xlim(-margin, len(names) - 1 + margin)
         finish(fig, ax, name, "", ylabel, max(values) * (4.0 if log else 1.18), log=log, xtick=VLLM_TICK,
                plain=log and ylabel != "TTFT (ms)")
 
-    bars("eval_vllm_mem", [float(data[m]["memory_mib"]) / 1024 for _, _, m in modes], "Memory (GiB)", "{:.1f}")
+    bars("eval_vllm_mem", [float(data[m]["memory_mib"]) / 1024 for _, _, m in modes], "Memory (GiB)", "{:.1f}",
+         margin=0.32)
     bars("eval_vllm_ttft", [float(data[m]["first_token_ms"]) for _, _, m in modes],
          "TTFT (ms)", "{:,.0f}", log=True)
     fig, ax = panel()

@@ -12,7 +12,7 @@
 \begin{tikzpicture}[x=1cm, y=1cm,
   tiny/.style={-{Latex[length=1.0mm]}, line width=0.5pt},
   pte/.style={blk, minimum width=0.3cm, minimum height=0.3cm},
-  field/.style={seg, minimum height=0.34cm, font=\scriptsize},
+  field/.style={seg, minimum height=0.34cm, font=\figsize},
   flag/.style={circle, fill=black!80, inner sep=0pt, minimum size=0.09cm}]
 
 % lanes
@@ -82,8 +82,8 @@
 \draw[tiny] (publish.south) -- (2.8,3.6);
 \draw[tiny, roline] (rows.east) -- (4.81,3.28);
 
-\node[num] at (1.66,1.5) {2};
-\node[comp, minimum width=0.85cm, minimum height=0.36cm, inner ysep=0pt] (spawn) at (2.38,1.5) {Spawn};
+\node[num] at (1.73,1.5) {2};
+\node[comp, minimum width=0.85cm, minimum height=0.36cm, inner ysep=0pt] (spawn) at (2.42,1.5) {Spawn};
 \node[comp, fill=actc, minimum width=0.85cm, minimum height=0.36cm, inner ysep=0pt] (attach) at (3.62,1.5) {Attach};
 \draw[tiny] (spawn) -- (attach);
 \draw[tiny, densely dashed] (3.62,2.42) -- (attach.north);
@@ -92,11 +92,11 @@
 \node[note, text=roline] at (4.26,1.27) {read};
 
 % the agent appends in pages of its own; the GPU takes no fault on either kind
-\node[num] at (7.78,1.5) {3};
-\node[tag, anchor=west] at (7.97,1.5) {Append};
+\node[num] at (7.72,1.5) {3};
+\node[tag, anchor=west] at (7.9,1.5) {Append};
 \node[comp, fill=gpuc, minimum width=2.75cm, minimum height=0.34cm, inner ysep=0pt] at (6.165,0.93) {GPU: No Fault};
 
 % legend
-\node[tag] at (4.45,0.3) {\lgdfill{tailc}\,Private, Writable\quad\ \lgdfill{sharedc}\,Immutable, Shared\quad\ \tikz[baseline=-0.55ex]{\node[circle, fill=black!80, inner sep=0pt, minimum size=0.09cm] {};}\,\,Read by CPU\quad\ \tikz[baseline=-0.55ex]{\fill[black!22, rounded corners=1pt] (0,-0.1) rectangle (0.22,0.1);}\,Same Pages};
+\node[tag] at (4.45,0.3) {\lgdfill{tailc}\,Private, Writable\enspace\lgdfill{sharedc}\,Immutable, Shared\enspace\tikz[baseline=-0.55ex]{\node[circle, fill=black!80, inner sep=0pt, minimum size=0.09cm] {};}\,\,Read by CPU\enspace\tikz[baseline=-0.55ex]{\fill[black!22, rounded corners=1pt] (0,-0.1) rectangle (0.22,0.1);}\,Same Pages};
 \end{tikzpicture}
 \end{document}

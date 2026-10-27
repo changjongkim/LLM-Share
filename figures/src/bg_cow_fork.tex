@@ -20,7 +20,7 @@
 \draw[tiny, black!70] (pa.south) -- (pa.south |- 0,1.94);
 \draw[tiny, black!70] (ca.south) -- (ca.south |- 0,1.94);
 \node[comp, fill=gpuc, minimum width=2.5cm, minimum height=0.36cm, inner ysep=0pt] at (1.48,1.16) {GPU Write};
-\node[tag, text=rwline] at (1.48,0.72) {Fault per Page: 2.8 s/GiB};
+\node[tag, text=rwline] at (1.48,0.72) {Page Faults: 2.8 s/GiB};
 % a child spawned as a new program: the memory of the parent stays writable
 \node[tag] at (4.32,2.67) {Spawn};
 \node[comp, minimum width=0.95cm, minimum height=0.32cm, inner ysep=0pt] (pb) at (3.69,2.33) {Parent};

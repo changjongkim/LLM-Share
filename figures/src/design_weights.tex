@@ -82,12 +82,12 @@
 % the three steps
 \node[num] at (6.3,1.5) {1};
 \node[tag, anchor=west] at (6.5,1.5) {Read Once};
-\node[num] at (7.5,3.0) {2};
-\node[tag, anchor=west] at (7.7,3.0) {Map};
-\node[num] at (7.5,3.62) {3};
-\node[tag, anchor=west] at (7.7,3.62) {CPU Read};
+\node[num] at (7.45,3.0) {2};
+\node[tag, anchor=west] at (7.64,3.0) {Map};
+\node[num] at (7.45,3.62) {3};
+\node[tag, anchor=west] at (7.64,3.62) {CPU Read};
 
 % legend
-\node[tag] at (4.45,0.3) {\lgdfill{copyc}\,Private Copy\quad\ \lgdfill{sharedc}\,Shared\quad\ \tikz[baseline=-0.55ex]{\node[circle, fill=black!80, inner sep=0pt, minimum size=0.09cm] {};}\,\,Read by CPU\quad\ \tikz[baseline=-0.55ex]{\fill[black!22, rounded corners=1pt] (0,-0.1) rectangle (0.22,0.1);}\,Same Pages};
+\node[tag] at (4.45,0.3) {\lgdfill{copyc}\,Private Copy\enspace\lgdfill{sharedc}\,Shared\enspace\tikz[baseline=-0.55ex]{\node[circle, fill=black!80, inner sep=0pt, minimum size=0.09cm] {};}\,\,Read by CPU\enspace\tikz[baseline=-0.55ex]{\fill[black!22, rounded corners=1pt] (0,-0.1) rectangle (0.22,0.1);}\,Same Pages};
 \end{tikzpicture}
 \end{document}
