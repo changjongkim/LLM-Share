@@ -26,7 +26,7 @@
 \node[tag, anchor=west] at (0.14,1.28) {(KV Cache)};
 
 % what is handed over, and what stays in place: the prefix and the private extent
-\draw[black!45, line width=0.3pt, densely dashed] (4.58,0.72) -- (4.58,5.96);
+\draw[black!45, line width=0.3pt, densely dashed] (4.65,0.72) -- (4.65,5.96);
 \node[tag] at (3.0,5.82) {Metadata: Handed Over};
 \node[tag] at (6.2,5.82) {Rows: In Place};
 \node[tag] at (5.57,5.38) {Prefix Rows};
@@ -83,13 +83,13 @@
 \draw[tiny, roline] (rows.east) -- (4.81,3.28);
 
 \node[num] at (1.73,1.5) {2};
-\node[comp, minimum width=0.85cm, minimum height=0.36cm, inner ysep=0pt] (spawn) at (2.42,1.5) {Spawn};
-\node[comp, fill=actc, minimum width=0.85cm, minimum height=0.36cm, inner ysep=0pt] (attach) at (3.62,1.5) {Attach};
+\node[comp, minimum width=0.85cm, minimum height=0.36cm, inner ysep=0pt, inner xsep=2pt] (spawn) at (2.4,1.5) {Spawn};
+\node[comp, fill=actc, minimum width=0.85cm, minimum height=0.36cm, inner ysep=0pt, inner xsep=2pt] (attach) at (3.48,1.5) {Attach};
 \draw[tiny] (spawn) -- (attach);
-\draw[tiny, densely dashed] (3.62,2.42) -- (attach.north);
+\draw[tiny, densely dashed] (3.48,2.42) -- (attach.north);
 \draw[tiny, roline] (attach.east) -- (4.72,1.5);
-\node[note, text=roline] at (4.26,1.73) {map};
-\node[note, text=roline] at (4.26,1.27) {read};
+\node[note, text=roline] at (4.27,1.78) {map};
+\node[note, text=roline] at (4.27,1.22) {read};
 
 % the agent appends in pages of its own; the GPU takes no fault on either kind
 \node[num] at (7.72,1.5) {3};
